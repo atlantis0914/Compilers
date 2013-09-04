@@ -1,0 +1,15 @@
+Name:                c0c
+Version:             0.0
+Synopsis:            C0 Compiler Base Code
+Author:              Matthew Maurer
+Maintainer:          mmaurer@andrew.cmu.edu
+Category:            Development
+Build-type:          Simple
+Cabal-version:       >=1.2
+
+Executable c0c
+  Main-Is:        c0c.hs
+  Hs-Source-Dirs: src
+  Build-Depends:  base, filepath, mtl, process, bytestring, syb, containers
+  Extensions:     DeriveDataTypeable, RankNTypes, FlexibleInstances,
+                  MultiParamTypeClasses, FlexibleContexts

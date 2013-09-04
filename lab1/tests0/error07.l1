@@ -1,0 +1,7 @@
+//test error
+
+int main ()
+//@ensures \result >= 0;
+{
+  return 0;
+}

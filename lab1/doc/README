@@ -1,0 +1,35 @@
+15-411 Compiler Design
+Fall 2013
+Instructor: Frank Pfenning
+TAs: Robbie Harwood, Sri Raghavan, and Max Serrano
+
+Lab 1 Handout
+
+doc/       -- lab specification
+driver/    -- driver files (almost) identical to those on Autolab
+           -- test your copiler with
+              % ./driver.pl file1.l1 file2.l1 ...
+runtime/   -- runtime environment for generated assembly
+           -- generate executable with
+	      % gcc -m64 <testfile>.s l1rt.c
+
+fsharp/    -- starter code targeting pseudo assembly, in F#
+haskell/   -- starter code targeting pseudo assembly, in Haskell
+java/      -- starter code targeting pseudo assembly, in Java
+ocaml/     -- starter code targeting pseudo assembly, in OCaml
+scala/     -- starter code targeting pseudo assembly, in Scala
+sml/       -- starter code targeting pseudo assembly, in SML
+
+-- do:
+-- % svn copy <lang> compiler
+-- to obtain a modifiable copy of the starter code in the compiler/
+-- directory, where <lang> is one of the above
+
+tests0/    -- some provided test files
+tests1/    -- test files assembled from all group, shortly after week 1
+tests2/    -- test files from prior semesters, shoftly after week 1
+
+To be created (details see doc/lab1.pdf):
+
+tests/     -- directory with your own test files *.l1
+compiler/  -- directory with your own compiler

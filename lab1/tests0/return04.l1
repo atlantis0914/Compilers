@@ -1,0 +1,23 @@
+//test return 21
+// test register allocation
+int main()
+{
+  int f1;
+  int f2;
+  int f3;
+  int f4;
+  int f5;
+  int f6;
+  int f7;
+  int f8;
+
+  f1 = 1;
+  f2 = 1;
+  f3 = f2+f1;
+  f4 = f3+f2;
+  f5 = f4+f3;
+  f6 = f5+f4;
+  f7 = f6+f5;
+  f8 = f7+f6;
+  return f8;			// fib(8) == 21
+}
