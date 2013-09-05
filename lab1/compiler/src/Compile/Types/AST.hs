@@ -12,7 +12,7 @@ import Compile.Types.Ops
 
 data AST = Block [Decl] [Stmt] SourcePos
 data Decl = Decl {declName :: String, declPos :: SourcePos}
-data Stmt = Asgn String AsgnOp Expr SourcePos 
+data Stmt = Asgn String AsgnOp Expr SourcePos
           | Return Expr SourcePos
 data Expr = ExpInt Integer SourcePos
           | Ident String SourcePos

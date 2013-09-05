@@ -11,29 +11,40 @@ import qualified Data.Map as Map
 
 type Alloc = (Map.Map String Int, Int)
 
+-- Generates the AAsm from an AST
 codeGen :: AST -> [AAsm]
 codeGen (Block decls stmts _) = let
+  -- Creates a mapping from var to its index.
   temps = Map.fromList $ zip (map declName decls) [0..]
   in concatMap (genStmt (temps, (length decls))) stmts
 
+-- Generates AAsm from a statement
 genStmt :: Alloc -> Stmt -> [AAsm]
-genStmt alloc (Return e _) = genExp alloc e (AReg 0)
-genStmt (a,n) (Asgn v o e s) = let
-  l = ATemp $ a Map.! v
-  e' = case o of
-         Nothing -> e
-         Just op -> ExpBinOp op (Ident v s) e s
-  in genExp (a,n) e' l
+genStmt alloc (Return expr _) = genExp alloc expr (AReg 0)
+genStmt (varMap,n) (Asgn var oper expr srcPos) = let
+  -- Look up identity's index
+  l = ATemp $ varMap Map.! var
+  -- If there is an operation, construct the appropriate expression
+  expr' = case oper of
+         Nothing -> expr
+         Just op -> ExpBinOp op (Ident var srcPos) expr srcPos
+  in genExp (varMap,n) expr' l
 
+-- Generates AAsm from an expression
 genExp :: Alloc -> Expr -> ALoc -> [AAsm]
 genExp _ (ExpInt n _) l = [AAsm [l] Nop [AImm $ fromIntegral n]]
-genExp (a,_) (Ident s _) l = [AAsm [l] Nop [ALoc $ ATemp $ a Map.! s]]
-genExp (a,n) (ExpBinOp op e1 e2 _) l = let
-  i1 = genExp (a, n + 1) e1 (ATemp n)
-  i2 = genExp (a, n + 2) e2 (ATemp $ n + 1)
+genExp (varMap,_) (Ident s _) l = [AAsm [l] Nop [ALoc $ ATemp $ varMap Map.! s]]
+genExp (varMap,n) (ExpBinOp op e1 e2 _) l = let
+  -- AAsm for left and right operand
+  -- TODO: Make this more SSL friendly
+  i1 = genExp (varMap, n + 1) e1 (ATemp n)
+  i2 = genExp (varMap, n + 2) e2 (ATemp $ n + 1)
+  -- AAsm for the operation
   c  = [AAsm [l] op [ALoc $ ATemp n, ALoc $ ATemp $ n + 1]]
   in i1 ++ i2 ++ c
-genExp (a,n) (ExpUnOp op e _) l = let
-  i1 = genExp (a, n + 1) e (ATemp n)
+genExp (varMap,n) (ExpUnOp op e _) l = let
+  -- AAsm for operand
+  i1 = genExp (varMap, n + 1) e (ATemp n)
+  -- AAsm for the operation
   c  = [AAsm [l] op [ALoc $ ATemp n]]
   in i1 ++ c
