@@ -30,30 +30,43 @@ parseAST file = do
     Left e  -> throwError (show e)
     Right a -> return a
 
+-- ParsecT s u m a is a monad transformer with 
+--   stream type s
+--   user state type u, 
+--   underlying monad m  
+--   return type a
+
+-- Note that : type Parsec s u = ParsecT s u Identity 
+-- All "Identity" does is to derive a Monad from a monad transformer,
+-- as parsec is by default a monad transformer. 
+
+-- C0Parser AST is actually ParsecT ByteString () Identity AST
 type C0Parser = Parsec ByteString ()
 
 astParser :: C0Parser AST
 astParser = do
-  whiteSpace
-  reserved "int"
-  reserved "main"
-  parens $ return ()
+  whiteSpace -- parse white-space before the program start
+  reserved "int" 
+  reserved "main" 
+  parens $ return () -- parses int main ()
   braces (do
    pos   <- getPosition
-   decls <- many decl
-   stmts <- many stmt
+   decls <- many decl -- applies the input parser (here, decl) 0 or more times 
+   stmts <- many stmt 
    return $ Block decls stmts pos)
-   <?> "block"
+   <?> "block" -- error combinator 
 
+-- Declarations - note that assignment is not supported within a decl
 decl :: C0Parser Decl
 decl = do
    pos   <- getPosition
    reserved "int"
    ident <- identifier
-   semi
+   semi 
    return $ Decl ident pos
    <?> "declaration"
 
+-- Statements - note that declaration is not supported within a stmt
 stmt :: C0Parser Stmt
 stmt = (do
    pos  <- getPosition
@@ -70,6 +83,7 @@ stmt = (do
        return $ Return e pos)
    <?> "statement"
 
+-- Assignment Operators 
 asnOp :: C0Parser (Maybe Op)
 asnOp = do
    op <- operator
@@ -83,23 +97,25 @@ asnOp = do
                x     -> fail $ "Nonexistent assignment operator: " ++ x
    <?> "assignment operator"
 
-
+-- Builds an expression using ops/precedence defined in opTable
 expr :: C0Parser Expr
 expr = buildExpressionParser opTable term <?> "expr"
 
 term :: C0Parser Expr
 term = do
-   parens expr
+   -- A term is either 
+   parens expr -- an expression surrounded by parenthesis 
    <|>
    (do p <- getPosition
        i <- identifier
-       return $ Ident i p)
+       return $ Ident i p) -- an identifier
    <|>
    (do p <- getPosition
        n <- natural
-       return $ ExpInt n p)
+       return $ ExpInt n p) -- or an integer
    <?> "term"
 
+-- Language Definition used by parser generating functions in Tok
 c0Def :: GenLanguageDef ByteString () Identity
 c0Def = LanguageDef
    {commentStart    = string "/*",
@@ -122,30 +138,49 @@ c0Def = LanguageDef
 c0Tokens :: Tok.GenTokenParser ByteString () Identity
 c0Tokens = Tok.makeTokenParser c0Def
 
+-- Identifies that the string is reserved, and returns the updated monad
+-- Note : A reserved word is treated as a single token using try.
 reserved   :: String -> C0Parser ()
 reserved   = Tok.reserved   c0Tokens
+
 comma      :: C0Parser ()
 comma      = do _ <- Tok.comma c0Tokens; return ()
+
+-- A semicolon
 semi       :: C0Parser ()
 semi       = do _ <- Tok.semi c0Tokens; return ()
+
 identifier :: C0Parser String
 identifier = Tok.identifier c0Tokens
+
 operator   :: C0Parser String
 operator   = Tok.operator   c0Tokens
+
+-- (braces p) parses p enclosed in braces '{', '}', and returns p
 braces     :: C0Parser a -> C0Parser a
 braces     = Tok.braces     c0Tokens
+
+-- (parens p) parses p enclosed in parens '(', ')' and returns p 
 parens     :: C0Parser a -> C0Parser a
 parens     = Tok.parens     c0Tokens
+
 reservedOp :: String -> C0Parser ()
 reservedOp = Tok.reservedOp c0Tokens
+
+-- "The parsed number can be specified in decimal, hexadecimal or octal."
 natural    :: C0Parser Integer
 natural    = Tok.natural    c0Tokens
+
+-- Parses white space
 whiteSpace :: C0Parser ()
 whiteSpace = Tok.whiteSpace c0Tokens
+
 commaSep   :: C0Parser a -> C0Parser [a]
-commaSep   = Tok.commaSep c0Tokens
+commaSep   = Tok.commaSep   c0Tokens
+
 semiSep    :: C0Parser a -> C0Parser [a]
-semiSep    = Tok.semiSep c0Tokens
+semiSep    = Tok.semiSep    c0Tokens
+
 brackets   :: C0Parser a -> C0Parser a
 brackets   = Tok.brackets c0Tokens
 
