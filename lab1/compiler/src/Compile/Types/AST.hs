@@ -29,22 +29,22 @@ type AsgnOp = Maybe Op
 
 instance Show AST where
   show (Block decls stmts _) =
-    "int main () {\n" ++ (unlines $ (map show decls)
+    "int main () {\n" ++ unlines (map show decls
                                     ++ [""]
-                                    ++ (map show stmts)) ++ "}\n"
+                                    ++ map show stmts) ++ "}\n"
 
 instance Show Decl where
   show (Decl i _) = "\tint " ++ i ++ ";"
 
 instance Show Stmt where
-  show (Return e _) = "\treturn " ++ (show e) ++ ";"
-  show (Asgn i op e _) = "\t" ++ i ++ " " ++ (mShow op) ++ "=" ++ " " ++ (show e) ++ ";"
+  show (Return e _) = "\treturn " ++ show e ++ ";"
+  show (Asgn i op e _) = "\t" ++ i ++ " " ++ mShow op ++ "=" ++ " " ++ show e ++ ";"
 
 instance Show Expr where
   show (ExpInt n _) = show n
-  show (ExpBinOp op e1 e2 _) = "(" ++ (show e1) ++ ") " ++ (show op) ++ " (" ++ (show e2) ++ ")"
+  show (ExpBinOp op e1 e2 _) = "(" ++ show e1 ++ ") " ++ show op ++ " (" ++ show e2 ++ ")"
   show (Ident i _) = i
-  show (ExpUnOp op e _) = (show op) ++ "(" ++ (show e) ++ ")"
+  show (ExpUnOp op e _) = show op ++ "(" ++ show e ++ ")"
 
 mShow Nothing = ""
 mShow (Just x) = show x

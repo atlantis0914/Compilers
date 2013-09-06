@@ -18,9 +18,9 @@ import System.Exit
 import Control.Monad.Error
 
 import Compile.Types
-import Compile.Parse
-import Compile.CheckAST
-import Compile.CodeGen
+import Compile.Frontend.Parse
+import Compile.Frontend.CheckAST
+import Compile.Backend.CodeGen
 
 import LiftIOE
 
