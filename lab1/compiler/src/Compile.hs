@@ -28,8 +28,8 @@ writer file obj = liftIOE $ writeFile file $ show obj
 
 compile :: Job -> IO ()
 compile job = do
-  res <- runErrorT $ do
-    ast <- parseAST $ jobSource job
+  res <- runErrorT $ do -- Constructor for the error monad transformer
+    ast <- parseAST $ jobSource job 
     liftEIO $ checkAST ast
     if jobOutFormat job == C0
       then writer (jobOut job) ast
