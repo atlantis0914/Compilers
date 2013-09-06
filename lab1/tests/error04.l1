@@ -1,0 +1,11 @@
+//test error
+// duplicate declaration after return
+int main()
+{
+  int x;
+  x = 3 + 5;
+  x *= 2;
+  return x;
+  int x;
+  x = 2;
+}
