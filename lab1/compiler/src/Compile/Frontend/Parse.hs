@@ -8,8 +8,7 @@
    Note that this uses a modified version of Parsec. We do 
    not advise replacing this modified version with a stock one.
 -}
-module Compile.Parse where
-
+module Compile.Frontend.Parse where
 import Control.Monad.Error
 import Data.ByteString as BS
 import Compile.Types
@@ -102,7 +101,7 @@ expr :: C0Parser Expr
 expr = buildExpressionParser opTable term <?> "expr"
 
 term :: C0Parser Expr
-term = do
+term = 
    -- A term is either 
    parens expr -- an expression surrounded by parenthesis 
    <|>
@@ -202,4 +201,3 @@ prefix :: String -> (a -> SourcePos -> a) -> Operator ByteString () Identity a
 prefix  name f = Prefix $ do pos <- getPosition
                              reservedOp name
                              return $ \x -> f x pos
-

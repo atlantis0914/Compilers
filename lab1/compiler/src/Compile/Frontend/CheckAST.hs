@@ -4,7 +4,7 @@
 
    Beginnings of a typechecker
 -}
-module Compile.CheckAST where
+module Compile.Frontend.CheckAST where
 
 import Control.Monad.State
 import Control.Monad.Error
@@ -35,8 +35,8 @@ checkAST :: AST -> Either String ()
 checkAST ast@(Block decls stmts _) = do
   let variables = Set.fromList $ map declName decls
   assertMsgE (findDuplicate decls)
-             $ (length decls) == (Set.size variables)
-  rets <- fmap or $ runErrorState (mapM checkStmt stmts) $
+             $ length decls == Set.size variables
+  rets <- fmap or $ runErrorState (mapM checkStmt stmts)
                                   (variables, Set.empty)
   assertMsgE "main does not return" rets
 
@@ -45,9 +45,9 @@ checkStmt (Return e _) = do
   return True
 checkStmt (Asgn i m e p) = do
   (vars, defined) <- get
-  assertMsg (i ++ " not declared at " ++ (show p)) (Set.member i vars)
+  assertMsg (i ++ " not declared at " ++ show p) (Set.member i vars)
   case m of
-    Just _  -> assertMsg (i ++ " used undefined at " ++ (show p))
+    Just _  -> assertMsg (i ++ " used undefined at " ++ show p)
                          (Set.member i defined)
     Nothing -> return ()
   checkExpr e
@@ -55,12 +55,12 @@ checkStmt (Asgn i m e p) = do
   return False
 
 checkExpr (ExpInt n p) =
-  assertMsg ((show n) ++ " too large at " ++ (show p))
+  assertMsg (show n ++ " too large at " ++ show p)
             (n < 2^32)
 checkExpr (Ident s p) = do
   (vars, defined) <- get
-  assertMsg (s ++ " used undeclared at " ++ (show p)) (Set.member s vars)
-  assertMsg (s ++ " used undefined at " ++ (show p)) (Set.member s defined)
+  assertMsg (s ++ " used undeclared at " ++ show p) (Set.member s vars)
+  assertMsg (s ++ " used undefined at " ++ show p) (Set.member s defined)
 checkExpr (ExpBinOp _ e1 e2 _) = mapM_ checkExpr [e1, e2]
 checkExpr (ExpUnOp _ e _) = checkExpr e
 
@@ -68,5 +68,5 @@ findDuplicate xs = findDuplicate' xs Set.empty
   where findDuplicate' [] _ = error "no duplicate"
         findDuplicate' (Decl x pos : xs) s =
           if Set.member x s
-            then x ++ " re-declared at " ++ (show pos)
+            then x ++ " re-declared at " ++ show pos
             else findDuplicate' xs (Set.insert x s)

@@ -4,7 +4,7 @@
 
    Currently just a pseudolanguage with 3-operand instructions and arbitrarily many temps.
 -}
-module Compile.CodeGen where
+module Compile.Backend.CodeGen where
 
 import Compile.Types
 import qualified Data.Map as Map
@@ -16,7 +16,7 @@ codeGen :: AST -> [AAsm]
 codeGen (Block decls stmts _) = let
   -- Creates a mapping from var to its index.
   temps = Map.fromList $ zip (map declName decls) [0..]
-  in concatMap (genStmt (temps, (length decls))) stmts
+  in concatMap (genStmt (temps, length decls)) stmts
 
 -- Generates AAsm from a statement
 genStmt :: Alloc -> Stmt -> [AAsm]
