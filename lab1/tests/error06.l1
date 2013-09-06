@@ -1,0 +1,9 @@
+//test error
+// Operator not supported
+int main ()
+{
+  int x = 2;
+  int y;
+  y = 33;
+  return (x != y);
+}

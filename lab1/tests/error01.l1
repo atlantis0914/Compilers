@@ -1,13 +1,12 @@
 //test error
-// undeclared variable
+// Improperly named identifier
 
 int main()
 {
   int x;
-  int y;
+  int 9y;
 
   x = 5;
-  y = 10;
-  z = x + y;
-  return z;
+  9y = 10;
+  return x;
 }
