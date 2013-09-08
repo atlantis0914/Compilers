@@ -1,0 +1,7 @@
+//test error
+// Garbage after semicolon - parse error
+int main() {
+    int a;LOL
+    a = 22;
+    return a;
+}
