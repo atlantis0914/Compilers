@@ -1,0 +1,14 @@
+//test return 44
+// tests some ints being uninitialized
+int main()
+{
+  int t1;
+  int t2;
+  int t3;
+  int t4;
+  int t5;
+  t1 = 22;
+  t4 = 22;
+  return t1 + t4;
+}
+
