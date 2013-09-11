@@ -19,4 +19,4 @@ data AVal = ALoc ALoc
           | AImm Int deriving Show
 
 data ALoc = AReg Int
-          | ATemp Int deriving Show
+          | ATemp Int deriving (Show, Eq)
