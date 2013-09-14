@@ -17,16 +17,20 @@ newGraph = Graph (empty)
 newVertex :: a -> Vertex a
 newVertex s = Vertex {vertexData = s, vertexAdjacencies = empty}
 
-addVertexSafe :: (Ord a) => (Graph a) -> a -> (Graph a, Vertex a)
-addVertexSafe (Graph m) s = 
+addVertex :: (Ord a) => (Graph a) -> a -> (Graph a, Vertex a)
+addVertex (Graph m) s = 
   case (Data.Map.lookup s m) of
     Just v -> (Graph m, v)
     Nothing -> let v = newVertex s in (Graph (insert s (newVertex s) m), v)
 
+addVertexGetGraph :: (Ord a) => a -> (Graph a) -> (Graph a)
+addVertexGetGraph s g = g'
+  where (g',_) = addVertex g s
+
 addEdgeSafe :: (Ord a) => (Graph a) -> a -> a  -> (Graph a)
 addEdgeSafe (Graph m) src target = 
   let
-    (Graph m', srcV) = addVertexSafe (Graph m) src
+    (Graph m', srcV) = addVertex (Graph m) src
     adjacencies = vertexAdjacencies srcV
     adjacencies' = insert target () adjacencies
     srcV' = Vertex {vertexData = src, vertexAdjacencies = adjacencies'}
