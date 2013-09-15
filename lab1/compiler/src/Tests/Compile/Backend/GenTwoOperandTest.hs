@@ -1,4 +1,4 @@
-module Tests.Compile.Backend.GenTwoOperandTest (genTwoOperandTest) where 
+module Tests.Compile.Backend.GenTwoOperandTest (genTwoOperandTest) where
 
 import Test.Framework
 import Test.Framework.Providers.HUnit
@@ -43,8 +43,8 @@ t4Expected = [AAsm {aAssign = [ATemp 5], aOp = Nop, aArgs = [ALoc(ATemp 4)]},
               AAsm {aAssign = [ATemp 6], aOp = Nop, aArgs = [ALoc(ATemp 5)]}]
 
 test4 :: Assertion
-test4 = assertEqual "threeToTwo - Larger Test"  
-                     t4Expected 
+test4 = assertEqual "threeToTwo - Larger Test"
+                     t4Expected
                      (genTwoOperand t4List)
 
 t5List = [AAsm {aAssign = [ATemp 3], aOp = Add, aArgs = [ALoc(ATemp 4), ALoc(ATemp 3)]}]
@@ -52,11 +52,31 @@ t5Expected = [AAsm {aAssign = [ATemp 3], aOp = Add, aArgs = [ALoc(ATemp 4), ALoc
 
 test5 :: Assertion
 test5 = assertEqual "threeToTwo - Test d <- a + d"
-                     t5Expected 
+                     t5Expected
                      (genTwoOperand t5List)
+
+t6List = [AAsm {aAssign = [ATemp 3], aOp = Add, aArgs = [AImm 5, ALoc(ATemp 3)]}]
+t6Expected = [AAsm {aAssign = [ATemp 3], aOp = Add, aArgs = [AImm 5, ALoc(ATemp 3)]}]
+
+test6 :: Assertion
+test6 = assertEqual "threeToTwo - Test d <- 5 + d"
+                    t6Expected
+                    (genTwoOperand t6List)
+
+t7List = [AAsm {aAssign = [ATemp 3], aOp = Neg, aArgs = [ALoc $ ATemp 2]}]
+t7Expected = [AAsm {aAssign = [ATemp 3], aOp = Nop, aArgs = [ALoc $ ATemp 2]},
+              AAsm {aAssign = [ATemp 3], aOp = Neg, aArgs = [ALoc $ ATemp 3]}]
+
+test7 :: Assertion
+test7 = assertEqual "threeToTwo - Test d <- neg a"
+                    t7Expected
+                    (genTwoOperand t7List)
+
 
 genTwoOperandTest = [testCase "test threeToTwo - Two Temps" test1,
                      testCase "threeToTwo - One Immediate Move" test2,
                      testCase "test ThreeToTwo - One Immediate Move to Register" test3,
                      testCase "test ThreeToTwo - Larger Test" test4,
-                     testCase "test ThreeToTwo - Test d <- a + d" test5]
+                     testCase "test ThreeToTwo - Test d <- a + d" test5,
+                     testCase "test ThreeToTwo - Test d <- 5 + d" test6,
+                     testCase "test ThreeToTwo - Test d <- neg a" test7]
