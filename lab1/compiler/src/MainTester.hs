@@ -13,6 +13,6 @@ main :: IO ()
 main = defaultMain [
          testGroup "livePredicates" livePredicates,
          testGroup "liveness" livenessTest,
-         testGroup "interference" interferenceTest
+         testGroup "interference" interferenceTest,
          testGroup "coloring" coloringTest
        ]
