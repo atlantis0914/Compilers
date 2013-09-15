@@ -22,7 +22,8 @@ newVertex :: a -> Vertex a
 newVertex s = Vertex {vertexData = s, 
                       vertexAdjacencies = empty, 
                       vertexCardinality = 0, 
-                      vertexIsLive = True}
+                      vertexIsLive = True,
+                      vertexColor = Uncolored}
 
 -- Safely adds a vertex to a graph
 addVertexSafe :: (Ord a) => (Graph a) -> a -> (Graph a, Vertex a)
@@ -33,13 +34,13 @@ addVertexSafe (Graph m) s =
 
 addVertexGetGraph :: (Ord a) => a -> (Graph a) -> (Graph a)
 addVertexGetGraph s g = g'
-  where (g',_) = addVertex g s
+  where (g',_) = addVertexSafe g s
 
 -- Safely adds the edge (src, target) to the graph 
 addEdgeSafe :: (Ord a) => (Graph a) -> a -> a  -> (Graph a)
 addEdgeSafe (Graph m) src target = 
   let
-    (Graph m', srcV) = addVertex (Graph m) src
+    (Graph m', srcV) = addVertexSafe (Graph m) src
     adjacencies = vertexAdjacencies srcV
     adjacencies' = insert target () adjacencies
     srcV' = (newVertex src) {vertexAdjacencies = adjacencies'}
