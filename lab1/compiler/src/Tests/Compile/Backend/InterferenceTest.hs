@@ -1,4 +1,4 @@
-module Tests.Compile.Backend.InterferenceTest (interferenceTest) where 
+module Tests.Compile.Backend.InterferenceTest (interferenceTest) where
 
 import Test.Framework
 import Test.Framework.Providers.HUnit
@@ -8,7 +8,7 @@ import Compile.Types
 import Compile.Backend.Interference
 import Compile.Util.Graph
 
-import Data.List 
+import Data.List
 import qualified Data.Map  as Map
 
 t1aasm1 = AAsm {aAssign = [ATemp 0], aOp = Nop, aArgs = [AImm 2]}
@@ -22,11 +22,11 @@ t1alocsList  = [[]
           ,[ATemp 0]]
 
 test1 :: Assertion
-test1 = assertEqual "testInterferenceEdges" 
+test1 = assertEqual "testInterferenceEdges"
                     (sort $ [Edge(ATemp 0, ATemp 1), Edge(ATemp 1, ATemp 0)])
                     (sort $ getInterferenceEdges t1aasmList t1alocsList)
 
-t2aasmList = 
+t2aasmList =
   [AAsm {aAssign = [ATemp 1], aOp = Nop, aArgs = [AImm 1]}
   ,AAsm {aAssign = [ATemp 2], aOp = Nop, aArgs = [AImm 1]}
   ,AAsm {aAssign = [ATemp 3], aOp = Add, aArgs = [ALoc(ATemp 2), ALoc(ATemp 1)]}
@@ -35,7 +35,7 @@ t2aasmList =
   ,AAsm {aAssign = [ATemp 6], aOp = Nop, aArgs = [ALoc(ATemp 5)]}
   ]
 
-t2alocsList = 
+t2alocsList =
   [[]
   ,[ATemp 1]
   ,[ATemp 2, ATemp 1]
@@ -44,7 +44,7 @@ t2alocsList =
   ,[ATemp 5]
   ]
 
-t2Res = 
+t2Res =
   [Edge(ATemp 1, ATemp 2)
   ,Edge(ATemp 2, ATemp 1)
   ,Edge(ATemp 2, ATemp 3)
@@ -59,7 +59,7 @@ test2 = assertEqual "testInterferenceEdges - Fibonnaci"
                 (sort $ getInterferenceEdges t2aasmList t2alocsList)
 
 g2Output :: Graph ALoc
-g2Output = buildInterferenceGraph t2aasmList t2alocsList 
+g2Output = buildInterferenceGraph t2aasmList t2alocsList
 
 v1@(Vertex {vertexAdjacencies = m1}) = newVertex (ATemp 1)
 v1' = v1 {vertexAdjacencies = (Map.insert (ATemp 2) () m1)}
@@ -79,13 +79,13 @@ v6' = newVertex (ATemp 6)
 
 g2newGraph@(Graph g2Map) = newGraph
 newMap = (Map.insert (ATemp 1) v1' (Map.insert (ATemp 2) v2' (Map.insert (ATemp 3) v3'
-         (Map.insert (ATemp 4) v4' (Map.insert (ATemp 5) v5' 
+         (Map.insert (ATemp 4) v4' (Map.insert (ATemp 5) v5'
          (Map.insert (ATemp 6) v6' g2Map))))))
 g2Correct = Graph newMap
 
 test3 :: Assertion
 test3 = assertEqual "testGraphConstruction - Fibonnaci"
-                     g2Correct 
+                     g2Correct
                      g2Output
 
 tests = [testCase "getInterferenceEdges" test1,

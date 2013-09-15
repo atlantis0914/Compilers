@@ -21,7 +21,7 @@ data AVal = ALoc ALoc
 data ALoc = AReg Int
           | ATemp Int deriving (Show, Eq)
 
-instance Ord ALoc where 
+instance Ord ALoc where
   (AReg _) `compare` (ATemp _) = GT
   (ATemp _) `compare` (AReg _) = LT
   (AReg i) `compare` (AReg i') = i `compare` i'
