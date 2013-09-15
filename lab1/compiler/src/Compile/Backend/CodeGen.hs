@@ -10,6 +10,8 @@ import Compile.Types
 import qualified Data.Map as Map
 import qualified Debug.Trace as Trace
 
+import Compile.Backend.Interference
+
 type Alloc = (Map.Map String Int, Int)
 
 -- Generates the AAsm from an AST
