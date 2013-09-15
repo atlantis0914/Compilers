@@ -6,6 +6,8 @@ import Data.Map
 
 import Compile.Util.Graph
 
+import Debug.Trace
+
 -- Takes an interference graph and outputs a simplicial elimination ordering
 maximumCardinalitySearch :: Graph ALoc -> [ALoc]
 maximumCardinalitySearch (Graph g) = mcs (Graph g) (length (elems g)) []
@@ -27,27 +29,27 @@ chooseVertex g =
   in
     (g', v)
 
-chooseVertex' :: Graph ALoc -> (Graph ALoc, Maybe (Vertex ALoc))
-chooseVertex' (Graph g) = 
+chooseVertex' g@(Graph gMap) = 
   let 
-    v = elems g
-    f = \(vert@(Vertex {vertexIsLive = isLive})) ->
-        \(Graph g, res) -> 
-          if (not isLive) 
-            then (Graph g, res)
-            else case res of 
-                 Nothing -> updateGraphWithVert (Graph g) vert
-                 Just vert' -> updateGraphWithVert (Graph g) 
-                                                   (maxCardinality vert vert')
-  in
-    Data.List.foldr f (Graph g, Nothing) v
-  where updateGraphWithVert (Graph g) (vert@(Vertex {vertexData = v})) = 
-          let
-            g' = setVertexLiveTo (Graph g) v False
-            g'' = incrementOutCardinalities g' v 
-          in
-           (g'', Just vert) 
-    
+    v = elems gMap
+    Just (max) = 
+          Data.List.foldr (\v@(Vertex {vertexIsLive = isLive}) -> 
+                 \curMax -> 
+                    if (not isLive)
+                      then curMax
+                      else case curMax of 
+                          Nothing -> Just v
+                          Just v' -> Just $ maxCardinality v v')
+                 (Nothing) (v)
+   in
+     updateGraphWithVert g max
+    where updateGraphWithVert (Graph g) (vert@(Vertex {vertexData = v})) = 
+            let
+              g' = setVertexLiveTo (Graph g) v False
+              g'' = incrementOutCardinalities g' v 
+            in
+             (g'', Just vert) 
+
 maxCardinality :: Vertex ALoc -> Vertex ALoc -> Vertex ALoc
 maxCardinality (v1@(Vertex {vertexCardinality = v1Card})) 
                (v2@(Vertex {vertexCardinality = v2Card})) = 

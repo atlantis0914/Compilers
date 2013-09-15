@@ -17,9 +17,9 @@ data Op = Mul
 instance Show Op where
   show Mul = "*"
   show Add = "+"
-  show Sub = "-"
+  show Sub = "Sub"
   show Div = "/"
-  show Neg = "-"
+  show Neg = "Neg"
   show Mod = "%"
   show Nop = "[nop]"
 
