@@ -18,9 +18,9 @@ genForIns aasm@(AAsm {aAssign = (loc:locs), aArgs = [fst@(ALoc fst'),snd@(ALoc s
     then [aasm]
     else genForIns' aasm
 
-genForIns' aasm@(AAsm {aAssign = locs, aOp = op, aArgs = [fst, snd]}) = 
-  [AAsm {aAssign = locs, aOp = Nop, aArgs = [fst]}, 
-   AAsm {aAssign = locs, aOp = op, aArgs = [ALoc (loc), snd]}]
+genForIns' aasm@(AAsm {aAssign = loc:locs, aOp = op, aArgs = [fst, snd]}) = 
+  [AAsm {aAssign = loc:locs, aOp = Nop, aArgs = [fst]}, 
+   AAsm {aAssign = loc:locs, aOp = op, aArgs = [ALoc (loc), snd]}]
 
 -- genForIns aasm@(AAsm {aAssign = (loc:locs), aArgs = [fst@(AImm fst'),snd@(ALoc snd')]}) = 
 --   if (loc == snd') 
