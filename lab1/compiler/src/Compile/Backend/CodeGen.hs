@@ -11,6 +11,9 @@ import qualified Data.Map as Map
 import qualified Debug.Trace as Trace
 
 import Compile.Backend.Interference
+import Compile.Backend.Coloring
+import Compile.Backend.GenTwoOperand
+import Compile.Backend.MaximumCardinalitySearch
 
 type Alloc = (Map.Map String Int, Int)
 

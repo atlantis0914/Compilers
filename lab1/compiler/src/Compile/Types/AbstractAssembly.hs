@@ -13,10 +13,10 @@ data AAsm = AAsm {aAssign :: [ALoc]
                  ,aArgs   :: [AVal]
                  }
           | ACtrl COp AVal
-          | AComment String deriving Show
+          | AComment String deriving (Show, Eq)
 
 data AVal = ALoc ALoc
-          | AImm Int deriving Show
+          | AImm Int deriving (Show, Eq)
 
 data ALoc = AReg Int
           | ATemp Int deriving (Show, Eq)
