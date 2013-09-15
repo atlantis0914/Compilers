@@ -23,14 +23,15 @@ type Alloc = (Map.Map String Int, Int)
 codeGen (Block stmts _) = let
   -- Creates a mapping from var to its index.
     decls = filter isDecl stmts
-    temps = Map.fromList $ zip (map declName decls) [0..] -- ident -> int map 
+    temps = Map.fromList $ zip (map declName decls) [0..] -- ident -> int map
     alloc = (temps, length decls)
     aasmList = concatMap (genStmt alloc) stmts
     liveVars = liveness aasmList
     interference_graph = buildInterferenceGraph aasmList liveVars
-    simp_ordering = maximumCardinalitySearch interference_graph 
+    simp_ordering = maximumCardinalitySearch interference_graph
     coloring = greedyColor interference_graph simp_ordering
-  in 
+
+  in
     aasmList
 
 -- Generates AAsm from a statement
@@ -39,7 +40,7 @@ genStmt alloc (Return expr _) = genExp alloc expr (AReg 0)
 genStmt alloc (Decl _ _ Nothing) = []
 genStmt (varMap, n) (Decl _ _ (Just (Asgn var oper expr srcPos))) = let
   l = ATemp $ varMap Map.! var
-  expr' = case oper of 
+  expr' = case oper of
           Nothing -> expr
           Just op -> error "Can't have a binOP in a decl"
   in genExp (varMap, n) expr' l

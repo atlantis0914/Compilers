@@ -7,6 +7,7 @@ import Tests.Compile.Backend.LivenessTest (livenessTest)
 import Tests.Compile.Backend.InterferenceTest (interferenceTest)
 import Tests.Compile.Backend.ColoringTest (coloringTest)
 import Tests.Compile.Backend.GenTwoOperandTest(genTwoOperandTest)
+import Tests.Compile.Backend.ColorTempTest(colorTempTest)
 
 import Test.Framework (defaultMain, testGroup)
 
@@ -16,5 +17,6 @@ main = defaultMain [
          testGroup "liveness" livenessTest,
          testGroup "interference" interferenceTest,
          testGroup "coloring" coloringTest,
-         testGroup "genTwoOperand" genTwoOperandTest
+         testGroup "genTwoOperand" genTwoOperandTest,
+         testGroup "colorTemp" colorTempTest
        ]
