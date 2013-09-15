@@ -13,16 +13,21 @@ genTwoOperand aasmList = concat $ map genForIns aasmList
 -- Generates the 2operand AAsm for the given instruction
 genForIns :: AAsm -> [AAsm]
 genForIns aasm@(AAsm {aAssign = locs, aOp = Nop, aArgs = [fst]}) = [aasm]
--- Transform d <- c + s2 into d <- c, d <- d + s2
-genForIns (AAsm {aAssign = locs, aOp = op, aArgs = [AImm c, snd]}) = 
-  [AAsm {aAssign = locs, aOp = Nop, aArgs = [AImm c]}, 
-   AAsm {aAssign = locs, aOp = op, aArgs = [ALoc (head locs), snd]}]
+genForIns aasm@(AAsm {aAssign = (loc:locs), aArgs = [fst@(ALoc fst'),snd@(ALoc snd')]}) = 
+  if ((loc == fst') || (loc == snd'))
+    then [aasm]
+    else genForIns'
 
-genForIns (AAsm {aAssign = locs, aOp = op, aArgs = [fst, AImm c]}) = 
-  [AAsm {aAssign = locs, aOp = Nop, aArgs = [AImm c]}, 
-   AAsm {aAssign = locs, aOp = op, aArgs = [fst, ALoc (head locs)]}]
+genForIns' aasm@(AAsm {aAssign = (loc:locs), aArgs = [fst, snd]) = 
+  [AAsm {aAssign = locs, aOp = Nop, aArgs = [fst]}, 
+   AAsm {aAssign = locs, aOp = op, aArgs = [ALoc (loc), snd]}]
 
--- Note that this will convert d <- s1 + s1 into d <- s1, d <- d + s1 
-genForIns (AAsm {aAssign = locs, aOp = op, aArgs = [s1, s2]}) = 
-  [AAsm {aAssign = locs, aOp = Nop, aArgs = [s1]},
-   AAsm {aAssign = locs, aOp = op, aArgs = [ALoc (head locs), s2]}]
+-- genForIns aasm@(AAsm {aAssign = (loc:locs), aArgs = [fst@(AImm fst'),snd@(ALoc snd')]}) = 
+--   if (loc == snd') 
+--     then [aasm]
+--     else genForIns'
+-- 
+-- -- Ensure that in genForIns' that loc is not in {fst,snd} 
+-- genForIns' (AAsm {aAssign = locs@(loc:_), aOp = op, aArgs = [fst, snd]}) = 
+--   [AAsm {aAssign = locs, aOp = Nop, aArgs = [fst]}, 
+--    AAsm {aAssign = locs, aOp = op, aArgs = [ALoc (loc), snd]}]
