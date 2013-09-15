@@ -47,7 +47,16 @@ test4 = assertEqual "threeToTwo - Larger Test"
                      t4Expected 
                      (genTwoOperand t4List)
 
+t5List = [AAsm {aAssign = [ATemp 3], aOp = Add, aArgs = [ALoc(ATemp 4), ALoc(ATemp 3)]}]
+t5Expected = [AAsm {aAssign = [ATemp 3], aOp = Add, aArgs = [ALoc(ATemp 4), ALoc(ATemp 3)]}]
+
+test5 :: Assertion
+test5 = assertEqual "threeToTwo - Test d <- a + d"
+                     t5Expected 
+                     (genTwoOperand t5List)
+
 genTwoOperandTest = [testCase "test threeToTwo - Two Temps" test1,
                      testCase "threeToTwo - One Immediate Move" test2,
                      testCase "test ThreeToTwo - One Immediate Move to Register" test3,
-                     testCase "test ThreeToTwo - Larger Test" test4]
+                     testCase "test ThreeToTwo - Larger Test" test4,
+                     testCase "test ThreeToTwo - Test d <- a + d" test5]
