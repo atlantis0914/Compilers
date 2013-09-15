@@ -13,6 +13,7 @@ import qualified Debug.Trace as Trace
 import Compile.Backend.Liveness
 import Compile.Backend.Interference
 import Compile.Backend.Coloring
+import Compile.Backend.ColorTemp
 import Compile.Backend.GenTwoOperand
 import Compile.Backend.MaximumCardinalitySearch
 import Compile.Backend.ColorTemp
