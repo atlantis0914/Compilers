@@ -4,6 +4,8 @@ import Compile.Types
 import Data.Map
 import qualified Data.List as List
 
+import qualified Debug.Trace as Trace
+
 -- Determines whether or not the directed edge (src, target) is in the graph
 isEdge :: (Ord a) => (Graph a) -> a -> a -> Bool
 isEdge (Graph m) src target = 
@@ -23,7 +25,8 @@ newVertex s = Vertex {vertexData = s,
                       vertexAdjacencies = empty, 
                       vertexCardinality = 0, 
                       vertexIsLive = True,
-                      vertexColor = Uncolored}
+                      vertexColor = Uncolored,
+                      prohibitedColors = []}
 
 -- Safely adds a vertex to a graph
 addVertexSafe :: (Ord a) => (Graph a) -> a -> (Graph a, Vertex a)
@@ -37,7 +40,16 @@ addVertexGetGraph s g = g'
   where (g',_) = addVertexSafe g s
 
 -- Safely adds the edge (src, target) to the graph 
-addEdgeSafe :: (Ord a) => (Graph a) -> a -> a  -> (Graph a)
+addEdgeSafe :: (Graph ALoc) -> ALoc -> ALoc  -> (Graph ALoc)
+
+addEdgeSafe g@(Graph m) (AReg _) _ = g
+addEdgeSafe g@(Graph m) src@(ATemp tempNum) reg@(AReg regNum) = 
+  let 
+    (Graph m', srcV@(Vertex {prohibitedColors = colorList})) = addVertexSafe (g) src 
+    srcV' = srcV {prohibitedColors = ([Color regNum] ++ colorList)}
+  in
+    Graph (insert src srcV' m')
+
 addEdgeSafe (Graph m) src target = 
   let
     (Graph m', srcV) = addVertexSafe (Graph m) src

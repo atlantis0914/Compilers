@@ -8,6 +8,7 @@ data Vertex a = Vertex {vertexData :: a
                        ,vertexCardinality :: Int
                        ,vertexIsLive :: Bool 
                        ,vertexColor :: Color
+                       ,prohibitedColors :: [Color] 
                        } deriving (Eq, Show)
 
 data Graph a = Graph (Map a (Vertex a)) deriving (Eq, Show)
