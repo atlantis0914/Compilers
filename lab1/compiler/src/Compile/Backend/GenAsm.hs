@@ -23,7 +23,7 @@ regMap = Map.fromList [(0, "%eax"),
 genAsm :: [AAsm] -> [String]
 genAsm aasms =
   let
-    prelude = [".globl _main\n", "_main:\n"]
+    prelude = [".text\n", ".globl __c0_main\n", "__c0_main:\n"]
     epilogue = ["ret\n"]
   in
     prelude ++ (map aasmToString aasms) ++ epilogue
