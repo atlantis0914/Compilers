@@ -1,0 +1,10 @@
+//test exception
+
+// can't div by 0
+
+int main() {
+    int x = 5;
+    int y = 0;
+
+    return x/y;
+}

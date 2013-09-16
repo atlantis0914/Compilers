@@ -1,0 +1,14 @@
+//test error
+// tests use before declaration
+
+int main () {
+    int a = 0;
+    int b;
+
+    a = 81;
+    b = a;
+    c = b;
+    int c;
+
+    return c;
+}

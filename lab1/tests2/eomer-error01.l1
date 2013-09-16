@@ -1,0 +1,9 @@
+//test error
+// tests hex constants that are too big
+
+int main () {
+    int a = 0xf00ba12;
+    int b = 0x123456789;
+
+    return 0;
+}

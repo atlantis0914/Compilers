@@ -1,0 +1,17 @@
+//test error
+// weird comments
+
+int main() {
+    int x = 3; //this is a thing
+    x += 5;
+
+    /* now we do some comment
+    thing that involves //random crap
+    /* and more openings
+
+    but no closings
+    */
+
+    return x-8;
+}
+

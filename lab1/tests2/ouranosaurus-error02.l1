@@ -1,0 +1,11 @@
+//test error
+// badly nested block comments
+
+int main()
+{
+  /* This is a comment
+    /* inside a comment
+  */
+
+  return 7;
+}

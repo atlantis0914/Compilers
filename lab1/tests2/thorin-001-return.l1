@@ -1,0 +1,18 @@
+//test return 2
+
+/* Brain-dead test of normal stuff */
+int main()
+{
+    int b;
+    b = 1;
+    int c = b + b;
+    c *= 2;
+    int a;
+    a = c / 2;
+    return a;
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */
+

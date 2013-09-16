@@ -1,0 +1,7 @@
+//test exception 8
+// div by 0 error
+int main()
+{
+  int ab = 1;
+  return 67 - 1/0;
+}

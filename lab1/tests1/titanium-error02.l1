@@ -1,0 +1,11 @@
+//test error
+// uses -- improperly 
+int main()
+{
+  int x;
+  int y;
+
+  y = 2;
+  x = y + (--33);
+  return x;
+}

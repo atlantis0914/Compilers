@@ -1,0 +1,45 @@
+//test return 20
+
+int main(){
+	int t1;
+	int t2;
+	int t3;
+	int t4;
+	int t5;
+	int t6;
+	int t7;
+	int t8;
+	int t9;
+	int t10;
+	int t11;
+	int t12;
+	int t13;
+	int t14;
+	int t15;
+	int t16;
+	int t17;
+	int t18;
+	int t19;
+	int t20;
+	t1 = 1;
+	t2 = 1;
+	t3 = 1;
+	t4 = 1;
+	t5 = 1;
+	t6 = 1;
+	t7 = 1;
+	t8 = 1;
+	t9 = 1;
+	t10 = 1;
+	t11 = 1;
+	t12 = 1;
+	t13 = 1;
+	t14 = 1;
+	t15 = 1;
+	t16 = 1;
+	t17 = 1;
+	t18 = 1;
+	t19 = 1;
+	t20 = 1;
+	return t1 + t2 + t3 + t4 + t5 + t6 + t7 + t8 + t9 + t10 + t11 + t12 + t13 + t14 + t15 + t16 + t17 + t18 + t19 + t20;
+}

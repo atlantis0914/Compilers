@@ -1,0 +1,13 @@
+//test error
+
+// check that compiler fails on # comments
+
+int main() {
+    int x = 4;
+
+    x += 2;
+
+    # HAHA DISREGARD THAT
+
+    return x * 6;
+}

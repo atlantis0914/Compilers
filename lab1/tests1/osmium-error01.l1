@@ -1,0 +1,13 @@
+//test error
+// reserved keyword name used in l1
+
+int main() {
+  int x;
+  int y;
+  int return;
+
+  x = 1;
+  y = 2;
+  return = x + y;
+  return x;
+}

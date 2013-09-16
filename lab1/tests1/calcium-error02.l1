@@ -1,0 +1,6 @@
+//test error
+// test comments
+int main()
+{
+  return 3/*poops*/3;
+}

@@ -1,0 +1,6 @@
+//test return 255
+// test hex numbers
+int main()
+{
+  return 0xff;
+}

@@ -1,0 +1,16 @@
+//test return 6
+// test div and mod
+int main()
+{
+    int x;
+    int y;
+    int mult;
+    int div;
+
+    x = 3;
+    y = -2;
+    mult = x * y;
+    div = mult / -1;
+
+    return div;
+}

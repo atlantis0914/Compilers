@@ -1,0 +1,8 @@
+//test error
+// error by use of a variable before assignment
+int main()
+{
+  int a;
+  a += 2;
+  return a;
+}

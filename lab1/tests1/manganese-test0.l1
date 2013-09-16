@@ -1,0 +1,16 @@
+//test return 0
+// test basic arithmetic operations
+int main()
+{
+    int a;
+    int b = 3;
+    int c;
+    int d = -1;
+
+    a = b * d;
+    a = a + a;
+    d = d - d;
+    c = d;
+    c = c / 1;
+    return a * c;
+}

@@ -1,0 +1,10 @@
+//test error
+// Test using undeclared variable
+
+int main() {
+    int x = 3;
+
+    int y = x + z;
+
+    return y;
+}

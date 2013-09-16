@@ -1,0 +1,6 @@
+//test error
+// undefined type
+int main() {
+  double a = 3.3;
+  return 0;
+}

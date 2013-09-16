@@ -1,0 +1,9 @@
+//test error
+// A stand-alone semicolan is an error
+
+int main() {
+	int x = 5;
+	;
+	return x;
+}
+

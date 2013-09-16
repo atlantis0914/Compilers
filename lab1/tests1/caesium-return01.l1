@@ -1,0 +1,12 @@
+//test return 4
+//tests if two consecutive idivs uses %eax and %edx properly
+int main()
+{
+  int a;
+  int b;
+
+  a = 10/5;
+  b = 10%4;
+
+  return a+b;
+}

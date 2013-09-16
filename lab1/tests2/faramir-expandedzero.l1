@@ -1,0 +1,39 @@
+//test exception
+// a glorified div by zero
+int main() {
+    int t0;
+    int t1;
+    int t2;
+    int t3;
+    int t4;
+    int t5;
+    int t6;
+    int t7;
+    int t8;
+    int t9;
+    int tA;
+    int tB;
+    int tC;
+    int tD;
+    int tE;
+    int tF;
+
+    t0 = 1;
+    t1 = t0 + 1;
+    t2 = t1 + 1;
+    t3 = t2 + 1;
+    t4 = t3 + 1;
+    t5 = t4 + 1;
+    t6 = t5 + 1;
+    t7 = t6 + 1;
+    t8 = t7 + 1;
+    t9 = t8 + 1;
+    tA = t9 + 1;
+    tB = tA + 1;
+    tC = tB + 1;
+    tD = tC + 1;
+    tE = tD + 1;
+    tF = tE + 1;
+    
+    return (t1 + t2 + t3 + t4 + t5 + t6 + t7 + t8 + t9 + tA + tB + tC + tD + tE + tF) / (t0 - 1);
+}

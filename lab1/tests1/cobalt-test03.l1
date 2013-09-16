@@ -1,0 +1,37 @@
+//test return 1073741824
+//tests arithmetic expressions
+int main()
+{
+  int x = 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+  x = x * 2;
+
+  return x;
+}

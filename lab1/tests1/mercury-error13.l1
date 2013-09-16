@@ -1,0 +1,7 @@
+//test error
+// Invalid hexadecimal
+int main()
+{
+  int x = 0xfffffffff;
+  return 2;
+}

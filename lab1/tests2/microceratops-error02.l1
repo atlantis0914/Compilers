@@ -1,0 +1,10 @@
+//test error
+// unterminated statement (not in grammar)
+
+int main()
+{
+	int x;
+
+	x = 0
+	return x;
+}

@@ -1,0 +1,6 @@
+//test return 1
+//tests division
+int main()
+{
+	return 3/2;
+}

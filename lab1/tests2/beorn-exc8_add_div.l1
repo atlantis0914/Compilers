@@ -1,0 +1,10 @@
+//test exception 8
+int
+main( ) {
+    int y = 0x40000000 + 0x40000000;
+    int x = - -5 / (0x80000000 + y);
+    x += 14;
+    int z = 19;
+    int g = -3 - -3;
+    return x;
+}

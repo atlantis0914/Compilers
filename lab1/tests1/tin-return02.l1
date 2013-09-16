@@ -1,0 +1,70 @@
+//test return 11
+// Register spilling and divide and 2^20 by a large prime number
+
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+  int e;
+  int f;
+  int g;
+  int h;
+  int i;
+  int j;
+  int k;
+  int l;
+  int m;
+  int n;
+  int o;
+  int p;
+  int q;
+  int r;
+  int s;
+  int twopow;
+  twopow = 2;                    // 2^1 = 2
+  a = twopow + 3;                // 2 + 3 = 5
+  twopow *= 2;                   // 2^2 = 4
+  b = a * twopow;                // 5*4 = 20
+  twopow *= 2;                   // 2^3 = 8
+  c = b % twopow;                // 20 % 8 = 4
+  twopow *= 2;                   // 2^4 = 16
+  d = twopow + c;                // 16 + 4 = 20
+  twopow *= 2;                   // 2^5 = 32
+  e = twopow - d;                // 32 - 20 = 12
+  twopow *= 2;                   // 2^6 = 64
+  f = twopow / 12;               // 64 / 12 = 5
+  twopow *= 2;                   // 2^7 = 128
+  g = twopow - 5;                // 128 - 5 = 123
+  twopow *= 2;                   // 2^8 = 256
+  h = twopow - (g * 2);          // 256 - 2 (123) = 10
+  twopow *= 2;                   // 2^9 = 512
+  i = twopow - (h * 50);          // 512 - (10 * 5) = 12
+  twopow *= 2;                   // 2^10 = 1024
+  j = (twopow - 1000) / i;       // (1024 - 1000) / 12 = 2
+  twopow *= 2;                   // 2^11 = 2048
+  k = twopow + j;                // 2048 % 2 = 2050
+  twopow *= 2;                   // 2^12 = 4096
+  l = (k * 2) - twopow;          // 4100 - 4096 = 4
+  twopow *= 2;                   // 2^13 = 8192
+  m = twopow + (2 * l);          // 8192 + (2 * 4) = 8200
+  twopow *= 2;                   // 2^14 = 16384
+  n = twopow - m;                // 16384 - 8200 = 8184
+  twopow *= 2;                   // 2^15 = 32768
+  o = twopow - (4 * n);          // 32768 - (4 * 8184) = 32
+  twopow *= 2;                   // 2^16 = 65536
+  p = twopow / o;                // 65536 / 32 = 2048
+  twopow *= 2;                   // 2^17 = 131072
+  q = p - (twopow / 100);        // 2048 - (131072 / 100) = 738
+  twopow *= 2;                   // 2^18 = 262144
+  r = (twopow + 1) % q;          // (262144 + 1) % 738 = 155
+  twopow *= 2;                   // 2^19 = 524288
+  s = (twopow + r + 75557);      // 524288 + 155 + 75557 = 600000
+  twopow *= 2;                   // 2^20 = 1048576
+  int prime;
+  prime = 182921;
+  int divres;
+  divres = twopow / prime;       // 1048576 / 182921 = 5
+  return (s / 100000) + divres;
+}

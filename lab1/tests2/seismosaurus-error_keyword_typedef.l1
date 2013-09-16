@@ -1,0 +1,9 @@
+//test error
+// Test compiler error for reserved keywords
+// keyword: typedef
+int main() {
+    int typedef;
+
+    typedef=1;
+    return typedef;
+}

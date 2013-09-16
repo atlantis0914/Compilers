@@ -1,0 +1,17 @@
+//test exception 8
+
+/* 
+ * This is my test program
+ * 2/x when x=0 should fail 
+ */
+int main () {
+  int x;
+  int y = 15;
+  ( x ) = 0;
+  x = 2/x;
+  y = y - ( x );
+  y = -y;
+  x += 1;
+  //should return 4
+  return ( x + y);
+}

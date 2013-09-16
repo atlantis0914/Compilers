@@ -1,0 +1,8 @@
+//test return 7
+// i thought this wouldn't be allowed by the specification, but it's accepted by the reference compiler
+
+int main() {
+    int main;
+    main = 7;
+    return main;
+}

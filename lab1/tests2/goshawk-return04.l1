@@ -1,0 +1,58 @@
+//test return -34342
+// test lots of variables
+int main()
+{
+    int a;
+    int b;
+    int c;
+    int d;
+    int e;
+    int f;
+    int g;
+    int h;
+    int i;
+    int j;
+    int k;
+    int l;
+    int m;
+    int n;
+    int o;
+    int p;
+    int q;
+    int r;
+    int s;
+    int t;
+    int u;
+    int v;
+    int w;
+    int x;
+    int y;
+    int z;
+
+    a = 0;
+    b = a + 1;
+    c = b * 22;
+    d = c / 3;
+    e = d % 4;
+    f = e - 5;
+    h = e + f;
+    g = f * h * (-33);
+    i = h - 70;
+    j = g - i;
+    k = i % j;
+    l = j + 6;
+    m = k - l - 7;
+    n = l * m * 8;
+    o = m / 9;
+    p = n % c;
+    q = p + 11;
+    r = q - 12;
+    s = r * 13;
+    t = s / 14;
+    u = t % 12;
+    v = a + i;
+    w = c * d;
+    x = v - w;
+    z = w * x;
+    return z;
+}

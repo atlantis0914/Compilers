@@ -1,0 +1,9 @@
+//test error
+//undefined identifier
+int main()
+{
+int x;
+x=2;
+x = x+x;
+return y;
+}

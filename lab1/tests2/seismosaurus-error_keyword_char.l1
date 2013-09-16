@@ -1,0 +1,9 @@
+//test error
+// Test compiler error for reserved keywords
+// keyword: char
+int main() {
+    int char;
+
+    char=1;
+    return char;
+}

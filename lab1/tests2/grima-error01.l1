@@ -1,0 +1,11 @@
+//test error
+// reserverd kewword that is part of L1 grammer
+
+int main()
+{
+  int return;
+
+  return = 2;
+
+  return return;
+}

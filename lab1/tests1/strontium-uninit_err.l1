@@ -1,0 +1,10 @@
+//test error
+
+int main()
+{
+    int x = 38;
+    int y;
+    x = y + 1;
+    return x;
+
+}

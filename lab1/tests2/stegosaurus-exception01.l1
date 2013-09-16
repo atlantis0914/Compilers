@@ -1,0 +1,19 @@
+//test exception 8
+// zero division
+int main()
+{
+  int x;
+  int y;
+  int z;
+  int a;
+  int b;
+  int c;
+  
+  y = 2;
+  a = 4;
+  c = 6;
+  x = a / a;
+  z = c / y;
+  b = c - x;
+  return (a+b+c)/(z-y-x);
+}

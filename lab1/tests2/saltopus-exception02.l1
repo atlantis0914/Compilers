@@ -1,0 +1,17 @@
+//test exception
+
+int main()
+{
+		int x;
+		int y;
+
+		x = 34;
+		y = 7;
+
+		x = x % y;
+		y = y % x;
+		x = x % y;
+		y = y % x;
+
+		return y;
+}

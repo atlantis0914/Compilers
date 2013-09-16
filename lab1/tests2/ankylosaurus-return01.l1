@@ -1,0 +1,14 @@
+//test return 27
+// Returns 27. Tests operator precedence
+int main()
+{
+    int x;
+    int y;
+
+    x = 42;
+    y = 3;
+
+    y = x - y * 5;
+
+    return y;
+}

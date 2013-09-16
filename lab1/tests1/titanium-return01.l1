@@ -1,0 +1,8 @@
+//test return 100
+// tests parenthesized version of --
+int main()
+{
+  int x;
+  x = -(-(100));		
+  return x;
+}

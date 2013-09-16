@@ -1,0 +1,15 @@
+//test exception
+/* Causes an error by parsing a number that converts to the largest negative
+ * number, then dividing by -1, causing a division exception.
+ * Similar to the test provided, but reading the intel manual, there are
+ * not really any ways we can trigger the division error, as we use 32 bit
+ * source operands only, and so can only get errors related to the sign
+ * mismatch.
+ */
+int main()
+{
+	int x;
+	x = 2147483648; // 2^31
+	x /= -1;
+	return x;
+}

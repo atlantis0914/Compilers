@@ -1,0 +1,8 @@
+//test exception 8
+
+int main() {
+   int x=128;
+   int y=256;
+   int z=y-2*x;
+   return x/z;
+}

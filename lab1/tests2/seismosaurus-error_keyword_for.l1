@@ -1,0 +1,9 @@
+//test error
+// Test compiler error for reserved keywords
+// keyword: for
+int main() {
+    int for;
+
+    for=1;
+    return for;
+}

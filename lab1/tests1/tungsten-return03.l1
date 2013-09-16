@@ -1,0 +1,12 @@
+//test return 1
+// Green test 03 - tests variable declarations
+
+int main()
+{
+ int a;
+ int b;
+ int c = 5;
+ a = c - 4;
+ b = a + c;
+ return a;
+}

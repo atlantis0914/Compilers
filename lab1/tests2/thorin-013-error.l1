@@ -1,0 +1,10 @@
+//test error
+/* Non-ascii variable names */
+int main()
+{
+    int і = 1;
+    return і;
+}
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

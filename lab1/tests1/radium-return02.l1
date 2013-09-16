@@ -1,0 +1,12 @@
+//test return 1107
+
+int main(){
+   int a;
+   
+   a = 11;
+   a = a * 100;
+   a = a + 7;
+
+   return a;
+}
+

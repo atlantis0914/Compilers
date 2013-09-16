@@ -1,0 +1,17 @@
+//test return 1
+int main()
+{
+  int a = 5 + 5 / 3;
+  int b = a + 4;
+  int c = a / b;
+  b = a * 3;
+  int d = c * 4 - a;
+  int e = 5 - d;
+  int f = b - 5 * a;
+  e = e + 1;
+  int g = e * f;
+  int h = 100 / (g - c);
+  int i = 3 * e - f;
+  int j = b / g + 1;
+  return j + h; 
+}

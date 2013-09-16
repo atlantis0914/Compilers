@@ -1,0 +1,29 @@
+//test return 2
+// tests integer swapping
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+  int e;
+  int f;
+  int g;
+
+  a = 1; //a = 1
+  b = a*2; //b = 2
+  c = 2+b; //c = 4
+  d = 3-c; //d = -1
+  e = -d; //e = 1
+  f = 5*a; //f = 5
+  g = f+2; //g = 7
+  a = g*e; //a = 7
+  d = a-c; //d = 3
+  f = e*d; //f = 3
+  a = a+d; //a = 21
+  a = a-f; //a = 18
+  c += a; //c = 22
+  b -= c; //b = -20
+  a = b+c; //a = 2
+  return a; 
+}

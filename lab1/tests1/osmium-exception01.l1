@@ -1,0 +1,23 @@
+//test exception
+// basic exception test with weird whitespace
+
+int
+main
+()
+{
+int
+x
+=
+0
+;
+int
+y
+=
+42
+;
+return
+y
+/
+x
+;
+}

@@ -1,0 +1,9 @@
+//test return 0
+// Under modulus arithmetic, both number should be the same
+
+int main()
+{
+  int x = 2147483648;
+  int y = -2147483648;
+  return x - y;
+}
