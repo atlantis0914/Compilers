@@ -1,6 +1,6 @@
--- Tests for the c0c compiler. 
+-- Tests for the c0c compiler.
 
-module Main where 
+module Main where
 
 import Tests.Compile.Backend.LivePredicatesTest (livePredicates)
 import Tests.Compile.Backend.LivenessTest (livenessTest)
@@ -8,6 +8,7 @@ import Tests.Compile.Backend.InterferenceTest (interferenceTest)
 import Tests.Compile.Backend.ColoringTest (coloringTest)
 import Tests.Compile.Backend.GenTwoOperandTest(genTwoOperandTest)
 import Tests.Compile.Backend.ColorTempTest(colorTempTest)
+import Tests.Compile.Backend.GenAsmTest(genAsmTest)
 
 import Test.Framework (defaultMain, testGroup)
 
@@ -18,5 +19,6 @@ main = defaultMain [
          testGroup "interference" interferenceTest,
          testGroup "coloring" coloringTest,
          testGroup "genTwoOperand" genTwoOperandTest,
-         testGroup "colorTemp" colorTempTest
+         testGroup "colorTemp" colorTempTest,
+         testGroup "genAsm" genAsmTest
        ]

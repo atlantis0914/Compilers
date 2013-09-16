@@ -15,6 +15,7 @@ import Compile.Backend.Interference
 import Compile.Backend.Coloring
 import Compile.Backend.GenTwoOperand
 import Compile.Backend.MaximumCardinalitySearch
+import Compile.Backend.ColorTemp
 
 type Alloc = (Map.Map String Int, Int)
 
@@ -30,7 +31,8 @@ codeGen (Block stmts _) = let
     interference_graph = buildInterferenceGraph aasmList liveVars
     simp_ordering = maximumCardinalitySearch interference_graph
     coloring = greedyColor interference_graph simp_ordering
-
+    twoOpAasmList = genTwoOperand aasmList
+    coloredAasmList = colorTemps twoOpAasmList coloring
   in
     aasmList
 

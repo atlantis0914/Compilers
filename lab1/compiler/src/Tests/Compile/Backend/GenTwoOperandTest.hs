@@ -11,7 +11,7 @@ t1List = [AAsm {aAssign = [ATemp 3], aOp = Add, aArgs = [ALoc(ATemp 2), ALoc(ATe
          ]
 
 t1Expected = [AAsm {aAssign = [ATemp 3], aOp = Nop, aArgs = [ALoc(ATemp 2)]},
-              AAsm {aAssign = [ATemp 3], aOp = Add, aArgs = [ALoc(ATemp 3), ALoc(ATemp 1)]}
+              AAsm {aAssign = [ATemp 3], aOp = Add, aArgs = [ALoc(ATemp 1)]}
              ]
 
 test1 :: Assertion
@@ -39,7 +39,7 @@ test3 = assertEqual "threeToTwo - One Immediate Move to Register"
 t4List = [AAsm {aAssign = [ATemp 5], aOp = Add, aArgs = [ALoc(ATemp 4), ALoc(ATemp 3)]},
           AAsm {aAssign = [ATemp 6], aOp = Nop, aArgs = [ALoc(ATemp 5)]}]
 t4Expected = [AAsm {aAssign = [ATemp 5], aOp = Nop, aArgs = [ALoc(ATemp 4)]},
-              AAsm {aAssign = [ATemp 5], aOp = Add, aArgs = [ALoc(ATemp 5), ALoc(ATemp 3)]},
+              AAsm {aAssign = [ATemp 5], aOp = Add, aArgs = [ALoc(ATemp 3)]},
               AAsm {aAssign = [ATemp 6], aOp = Nop, aArgs = [ALoc(ATemp 5)]}]
 
 test4 :: Assertion
@@ -48,7 +48,7 @@ test4 = assertEqual "threeToTwo - Larger Test"
                      (genTwoOperand t4List)
 
 t5List = [AAsm {aAssign = [ATemp 3], aOp = Add, aArgs = [ALoc(ATemp 4), ALoc(ATemp 3)]}]
-t5Expected = [AAsm {aAssign = [ATemp 3], aOp = Add, aArgs = [ALoc(ATemp 4), ALoc(ATemp 3)]}]
+t5Expected = [AAsm {aAssign = [ATemp 3], aOp = Add, aArgs = [ALoc(ATemp 4)]}]
 
 test5 :: Assertion
 test5 = assertEqual "threeToTwo - Test d <- a + d"
@@ -56,7 +56,7 @@ test5 = assertEqual "threeToTwo - Test d <- a + d"
                      (genTwoOperand t5List)
 
 t6List = [AAsm {aAssign = [ATemp 3], aOp = Add, aArgs = [AImm 5, ALoc(ATemp 3)]}]
-t6Expected = [AAsm {aAssign = [ATemp 3], aOp = Add, aArgs = [AImm 5, ALoc(ATemp 3)]}]
+t6Expected = [AAsm {aAssign = [ATemp 3], aOp = Add, aArgs = [AImm 5]}]
 
 test6 :: Assertion
 test6 = assertEqual "threeToTwo - Test d <- 5 + d"
