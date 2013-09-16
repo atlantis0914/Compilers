@@ -36,7 +36,7 @@ codeGen (Block stmts _) = let
     coloredAasmList = colorTemps twoOpAasmList coloring
     asm = genAsm coloredAasmList
   in
-    asm
+    concat asm
 
 -- Generates AAsm from a statement
 genStmt :: Alloc -> Stmt -> [AAsm]
