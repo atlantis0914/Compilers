@@ -60,13 +60,13 @@ getInterferenceEdges (a:a':aasm) (l:l':aloc) =
     edges ++ getInterferenceEdges (a':aasm) (l':aloc)
 
 getAAsmEdges :: AAsm -> [ALoc] -> [Edge]
-getAAsmEdges (AAsm {aAssign = assign, aOp = op, aArgs = args}) l' = 
-  case op of
-    Nop -> let 
-             [tmp] = args 
-             loc = maybeToList $ aLocFromAVal tmp
-             in getConflict (assign ++ loc) l' 
-    otherwise -> getConflict assign l'
+getAAsmEdges (AAsm {aAssign = assign, aOp = op, aArgs = args}) l' = getConflict assign l'
+--   case op of
+--     Nop -> let 
+--              [tmp] = args 
+--              loc = maybeToList $ aLocFromAVal tmp
+--              in getConflict (assign ++ loc) l' 
+--     otherwise -> getConflict assign l'
   where getConflict assign [] =  []
         getConflict assign (loc:ls) = 
           let 
