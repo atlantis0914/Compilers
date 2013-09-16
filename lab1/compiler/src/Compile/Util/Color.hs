@@ -5,9 +5,9 @@ import qualified Data.Map as Map
 import Data.List
 
 -- Creates a new ColoringMap where each location points to Uncolored
-instantiateColoringMap :: [ALoc] -> ColoringMap
+instantiateColoringMap :: [Vertex ALoc] -> ColoringMap
 instantiateColoringMap alocs =
-  foldl (\m -> \a -> (Map.insert a Uncolored m)) (Map.empty) alocs
+  foldl (\m -> \(Vertex {vertexData = aloc}) -> (Map.insert aloc Uncolored m)) (Map.empty) alocs
 
 isColor :: Color -> Bool
 isColor (Color i) = True

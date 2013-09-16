@@ -9,18 +9,20 @@ import qualified Data.Map as Map
 
 -- Takes an Interference Graph, and the Simplicial Elimination Ordering
 -- and produces a coloring of the graph 
-greedyColor :: Graph ALoc -> [ALoc] -> ColoringMap
+greedyColor :: Graph ALoc -> [Vertex ALoc] -> ColoringMap
 greedyColor g ordering = foldl (colorStep g) (instantiateColoringMap ordering) ordering
 
 -- Used to foldr an ALoc into a coloring for that set of locs. 
-colorStep :: Graph ALoc -> ColoringMap -> ALoc -> ColoringMap
-colorStep (Graph graphMap) colorMap aloc = 
+colorStep :: Graph ALoc -> ColoringMap -> Vertex ALoc -> ColoringMap
+colorStep (Graph graphMap) colorMap valoc@(Vertex {vertexData = aloc}) = 
   let
-    Vertex {vertexAdjacencies = nghMap} = graphMap Map.! aloc
+    Vertex {vertexAdjacencies = nghMap, 
+            prohibitedColors = prohibitedList} = graphMap Map.! aloc
     neighborsLocs = Map.keys nghMap
     neighborColors = filter (isColor)
                             (map (\a -> colorMap Map.! a) neighborsLocs)
-    color = getLowestColor neighborColors
+    allColors = neighborColors ++ prohibitedList
+    color = getLowestColor allColors
   in
     Map.insert aloc color colorMap
 

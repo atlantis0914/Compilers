@@ -9,16 +9,16 @@ import Compile.Util.Graph
 import Debug.Trace
 
 -- Takes an interference graph and outputs a simplicial elimination ordering
-maximumCardinalitySearch :: Graph ALoc -> [ALoc]
+maximumCardinalitySearch :: Graph ALoc -> [Vertex ALoc]
 maximumCardinalitySearch (Graph g) = mcs (Graph g) (length (elems g)) []
 
-mcs :: Graph ALoc -> Int -> [ALoc] -> [ALoc]
+mcs :: Graph ALoc -> Int -> [Vertex ALoc] -> [Vertex ALoc]
 mcs (Graph g) n l = 
   if (length l == n)
   then reverse l 
   else 
     let
-      (g', Vertex {vertexData = v}) = chooseVertex (Graph g)
+      (g', v) = chooseVertex (Graph g)
     in 
       mcs g' n (v:l)
 
