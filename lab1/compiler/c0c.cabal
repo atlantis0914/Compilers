@@ -5,11 +5,19 @@ Author:              Matthew Maurer
 Maintainer:          mmaurer@andrew.cmu.edu
 Category:            Development
 Build-type:          Simple
-Cabal-version:       >=1.2
+Cabal-version:       >= 1.8
 
 Executable c0c
   Main-Is:        c0c.hs
   Hs-Source-Dirs: src
   Build-Depends:  base, filepath, mtl, process, bytestring, syb, containers
+  Extensions:     DeriveDataTypeable, RankNTypes, FlexibleInstances,
+                  MultiParamTypeClasses, FlexibleContexts
+
+test-suite tests
+  type:           exitcode-stdio-1.0
+  main-is:        MainTester.hs
+  hs-source-dirs: src
+  build-depends:  base, containers, test-framework, test-framework-hunit, HUnit, syb, mtl
   Extensions:     DeriveDataTypeable, RankNTypes, FlexibleInstances,
                   MultiParamTypeClasses, FlexibleContexts

@@ -32,21 +32,40 @@ assertMsgE s True  = Right ()
 assertMsgE s False = Left s
 
 checkAST :: AST -> Either String ()
-checkAST ast@(Block decls stmts _) = do
+checkAST ast@(Block stmts _) = do
+  let decls = filter isDecl stmts  
   let variables = Set.fromList $ map declName decls
   assertMsgE (findDuplicate decls)
              $ length decls == Set.size variables
   rets <- fmap or $ runErrorState (mapM checkStmt stmts)
                                   (variables, Set.empty)
+  -- The state monad has state = (variables, Set.empty) 
   assertMsgE "main does not return" rets
 
 checkStmt (Return e _) = do
   checkExpr e
   return True
+
+checkStmt (Decl i p Nothing) = return False
+
+checkStmt (Decl i p (Just (Asgn i' m e p'))) = do
+  -- At this point we've already checked for duplicate decls
+  (vars, defined) <- get
+  assertMsg "decl/assign error - idents not equal" (i == i')
+  case m of
+    -- Makes sure this is just an assignment operand 
+    Just _ -> throwError (i ++ " used undefined at " ++ show p)
+    Nothing -> return ()
+  checkExpr e
+  put (vars, Set.insert i defined)
+  return False
+
 checkStmt (Asgn i m e p) = do
   (vars, defined) <- get
+  -- Ensure that the ident is already declared
   assertMsg (i ++ " not declared at " ++ show p) (Set.member i vars)
   case m of
+    -- Ensure that an uninitialized ident doesn't do +=, -=, etc
     Just _  -> assertMsg (i ++ " used undefined at " ++ show p)
                          (Set.member i defined)
     Nothing -> return ()
@@ -66,7 +85,7 @@ checkExpr (ExpUnOp _ e _) = checkExpr e
 
 findDuplicate xs = findDuplicate' xs Set.empty
   where findDuplicate' [] _ = error "no duplicate"
-        findDuplicate' (Decl x pos : xs) s =
+        findDuplicate' (Decl x pos _ : xs) s =
           if Set.member x s
             then x ++ " re-declared at " ++ show pos
             else findDuplicate' xs (Set.insert x s)

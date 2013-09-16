@@ -7,3 +7,5 @@ import Compile.Types.Job as X
 import Compile.Types.AbstractAssembly as X
 import Compile.Types.Ops as X
 import Compile.Types.AST as X
+import Compile.Types.Graph as X
+import Compile.Types.Color as X

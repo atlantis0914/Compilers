@@ -12,15 +12,15 @@ data Op = Mul
         | Div
         | Neg
         | Mod
-        | Nop
+        | Nop deriving Eq
 
 instance Show Op where
   show Mul = "*"
   show Add = "+"
-  show Sub = "-"
+  show Sub = "Sub"
   show Div = "/"
-  show Neg = "-"
+  show Neg = "Neg"
   show Mod = "%"
   show Nop = "[nop]"
 
-data COp = Ret deriving Show
+data COp = Ret deriving (Show, Eq)

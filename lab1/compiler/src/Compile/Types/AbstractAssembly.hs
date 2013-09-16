@@ -13,10 +13,16 @@ data AAsm = AAsm {aAssign :: [ALoc]
                  ,aArgs   :: [AVal]
                  }
           | ACtrl COp AVal
-          | AComment String deriving Show
+          | AComment String deriving (Show, Eq)
 
 data AVal = ALoc ALoc
-          | AImm Int deriving Show
+          | AImm Int deriving (Show, Eq)
 
 data ALoc = AReg Int
-          | ATemp Int deriving Show
+          | ATemp Int deriving (Show, Eq)
+
+instance Ord ALoc where
+  (AReg _) `compare` (ATemp _) = GT
+  (ATemp _) `compare` (AReg _) = LT
+  (AReg i) `compare` (AReg i') = i `compare` i'
+  (ATemp i) `compare` (ATemp i') = i `compare` i'

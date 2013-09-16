@@ -50,37 +50,49 @@ astParser = do
   parens $ return () -- parses int main ()
   braces (do
    pos   <- getPosition
-   decls <- many decl -- applies the input parser (here, decl) 0 or more times 
    stmts <- many stmt 
-   return $ Block decls stmts pos)
-   <?> "block" -- error combinator 
+   return $ Block stmts pos)
+   <?> "block" 
 
--- Declarations - note that assignment is not supported within a decl
-decl :: C0Parser Decl
-decl = do
-   pos   <- getPosition
-   reserved "int"
-   ident <- identifier
-   semi 
-   return $ Decl ident pos
-   <?> "declaration"
-
--- Statements - note that declaration is not supported within a stmt
-stmt :: C0Parser Stmt
-stmt = (do
-   pos  <- getPosition
-   dest <- identifier
-   op   <- asnOp
-   e    <- expr
-   semi
-   return $ Asgn dest op e pos)
+decl :: C0Parser Stmt 
+decl = do 
+  pos  <- getPosition
+  dest <- reserved "int"
+  ident <- identifier 
+  (do semi
+      return $ Decl ident pos Nothing)
    <|>
-   (do pos <- getPosition
-       reserved "return"
-       e <- expr
-       semi
-       return $ Return e pos)
-   <?> "statement"
+   do pos' <- getPosition
+      op <- asnOp 
+      e <- expr
+      semi 
+      return $ Decl ident pos (Just (Asgn ident op e pos'))
+   
+asgn :: C0Parser Stmt
+asgn = do
+  pos  <- getPosition
+  dest <- identifier
+  op   <- asnOp
+  e    <- expr
+  semi
+  return $ Asgn dest op e pos
+
+ret :: C0Parser Stmt
+ret = do 
+  pos <- getPosition
+  reserved "return"
+  e <- expr
+  semi
+  return $ Return e pos
+
+stmt :: C0Parser Stmt
+stmt = 
+  decl
+  <|>
+  asgn
+  <|>
+  ret
+  <?> "statement"
 
 -- Assignment Operators 
 asnOp :: C0Parser (Maybe Op)
