@@ -3,22 +3,22 @@ module Compile.Backend.GenAsm where
 import Compile.Types
 import qualified Data.Map as Map
 
-regMap = Map.fromList [(0, "%rax"),
-                       (1, "%rbx"),
-                       (2, "%rcx"),
-                       (3, "%rdx"),
-                       (4, "%rsi"),
-                       (5, "%rdi"),
-                       (6, "%rbp"),
-                       (7, "%rsp"),
-                       (8, "%r8"),
-                       (9, "%r9"),
-                       (10, "%r10"),
-                       (11, "%r11"),
-                       (12, "%r12"),
-                       (13, "%r13"),
-                       (14, "%r14"),
-                       (15, "%r15")]
+regMap = Map.fromList [(0, "%eax"),
+                       (1, "%ebx"),
+                       (2, "%ecx"),
+                       (3, "%edx"),
+                       (4, "%esi"),
+                       (5, "%edi"),
+                       (6, "%ebp"),
+                       (7, "%esp"),
+                       (8, "%r8d"),
+                       (9, "%r9d"),
+                       (10, "%r10d"),
+                       (11, "%r11d"),
+                       (12, "%r12d"),
+                       (13, "%r13d"),
+                       (14, "%r14d"),
+                       (15, "%r15d")]
 
 genAsm :: [AAsm] -> [String]
 genAsm aasms =
