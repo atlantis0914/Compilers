@@ -21,6 +21,8 @@ import Compile.Backend.GenAsm
 
 type Alloc = (Map.Map String Int, Int)
 
+debugFlag = False
+
 -- Generates the AAsm from an AST
 -- codeGen :: AST -> ColoringMap
 codeGen (Block stmts _) = let
@@ -30,14 +32,38 @@ codeGen (Block stmts _) = let
     alloc = (temps, length decls)
     aasmList = concatMap (genStmt alloc) stmts
     liveVars = liveness aasmList
-    interference_graph = buildInterferenceGraph aasmList liveVars
+    interference_graph@(Graph gmap) = buildInterferenceGraph aasmList liveVars
     simp_ordering = maximumCardinalitySearch interference_graph
     coloring = greedyColor interference_graph simp_ordering
     twoOpAasmList = genTwoOperand aasmList
     coloredAasmList = colorTemps twoOpAasmList coloring
     asm = genAsm coloredAasmList
   in
-    concat asm
+    if (debugFlag) 
+      then genDebug stmts aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm
+      else concat asm
+
+genDebug stmts aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAasm asm = 
+  let
+    stmts' = listShow stmts
+    aasm' = listShow aasm
+    liveVars' = listShow liveVars
+    gmap' = listShow $ Map.toList gmap
+    simp_ord' = listShow simp_ord
+    twoOpAasm' = listShow twoOpAasm
+    coloredAasm' = listShow coloredAasm
+    asm' = listShow asm
+  in
+    "Statements\n" ++ stmts' ++ "\n\n" ++ 
+    "Aasm\n" ++ aasm' ++ "\n\n" ++
+    "LiveVars\n" ++ liveVars' ++ "\n\n" ++ 
+    "InterferenceGraph\n" ++ gmap' ++ "\n\n" ++ 
+    "Simp Ordering\n" ++ simp_ord' ++ "\n\n" ++ 
+    "TwoOpAAsm\n" ++ twoOpAasm' ++ "\n\n" ++ 
+    "ColoredAAsm\n" ++ coloredAasm' ++ "\n\n" ++ 
+    "Asm\n" ++ asm' ++ "\n\n"
+
+listShow l = concat (map (\a -> (show a) ++ "\n") l) 
 
 -- Generates AAsm from a statement
 genStmt :: Alloc -> Stmt -> [AAsm]
@@ -64,6 +90,8 @@ genStmt (varMap,n) (Asgn var oper expr srcPos) = let
 genExp :: Alloc -> Expr -> ALoc -> [AAsm]
 genExp _ (ExpInt n _) l = [AAsm [l] Nop [AImm $ fromIntegral n]]
 genExp (varMap,_) (Ident s _) l = [AAsm [l] Nop [ALoc $ ATemp $ varMap Map.! s]]
+
+genExp (varMap,n) (ExpBinOp op e1 e2 _) l | Trace.trace ("genExp : n is " ++ (show n)) False = undefined
 genExp (varMap,n) (ExpBinOp op e1 e2 _) l = let
   -- AAsm for left and right operand
   -- TODO: Make this more SSL friendly
@@ -72,6 +100,8 @@ genExp (varMap,n) (ExpBinOp op e1 e2 _) l = let
   -- AAsm for the operation
   c  = [AAsm [l] op [ALoc $ ATemp n, ALoc $ ATemp $ n + 1]]
   in i1 ++ i2 ++ c
+
+genExp (varMap,n) (ExpUnOp op e _) l | Trace.trace ("genExp : n is " ++ (show n)) False = undefined
 genExp (varMap,n) (ExpUnOp op e _) l = let
   -- AAsm for operand
   i1 = genExp (varMap, n + 1) e (ATemp n)
