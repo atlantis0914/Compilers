@@ -276,7 +276,7 @@ sub grade_compiler {
 
     if ($results{tests0} && $results{tests1} && $results{tests2}) {
         my $result = join(':', @{$results{tests0}}, @{$results{tests1}},
-                               @{$results{tests2}});
+                               @{$results{tests2}}, @{$results{tests3}});
         report_result($result, $Opt_Autograding);
     }
 }
@@ -611,7 +611,7 @@ sub grade_execution {
                     $file, $p);
     }
 
-    print "I can't be here (test $file)! Inconcievable!\n";
+    print "I can't be here (test $file)! Inconceivable!\n";
     print "Send mail to course staff, please.\n";
     return fail("", $file, $p);
 }

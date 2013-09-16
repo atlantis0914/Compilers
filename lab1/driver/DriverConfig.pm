@@ -38,7 +38,7 @@ our $COMPILER_TIMEOUT   = 5;    # timeout for running compiler
 our $GCC_TIMEOUT        = 8;    # timeout for GCC on asm file
 our $RUN_TIMEOUT        = 5;    # timeout for running compiled executable
 
-# path to directory containing tests/, tests0/, tests1/, tests2/
+# path to directory containing tests/, tests0/, tests1/, tests2/, tests3/
 our $TEST_SUITES_PATH = "..";
 
 our $MAX_VALIDATE_SCORE = 20;    # maximal score for test case validation
@@ -50,8 +50,8 @@ my $MAX_SCORE2 = 10;        # maximal score for compiler, test suite 2
 my $TESTS1_N = 10;      # first n failing suite 1 tests...
 my $TESTS1_PTS = 2;     # ...are worth this many points each
 my $TESTS0_MIN = 7;     # number of error cases in tests0
-my $TESTS1_MIN = 0;     # number of error cases in tests1
-my $TESTS2_MIN = 0;     # number of error cases in tests2
+my $TESTS1_MIN = 172;     # number of error cases in tests1
+my $TESTS2_MIN = 211;     # number of error cases in tests2
 
 sub tests_grade {
     my $tried = shift;
@@ -107,6 +107,13 @@ our $CMPL_GRADE = {
             $grade = 0;
         }
         return ($grade, $MAX_SCORE2);
+    },
+    # no score for bonus problems in tests3
+    "tests3" => sub {
+      my $tried = shift;
+      my $succeeded = shift;
+      my $grade = 0;
+      return ($grade, 0);
     },
 };
 
