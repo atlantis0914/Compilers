@@ -25,6 +25,7 @@ import Compile.Backend.CodeGen
 import LiftIOE
 
 writer file obj = liftIOE $ writeFile file $ show obj
+stringWriter file obj = liftIOE $ writeFile file $ obj
 
 compile :: Job -> IO ()
 compile job = do
@@ -35,7 +36,7 @@ compile job = do
       then writer (jobOut job) ast
       else let asm = codeGen ast in
              if jobOutFormat job == Asm
-                then writer (jobOut job) asm
+                then stringWriter (jobOut job) asm
                 else do writer asmFile ast
                         let o = if jobOutFormat job == Obj then "-c" else ""
                         gcc o asmFile (jobOut job)
