@@ -7,18 +7,18 @@ import Test.HUnit hiding (Test)
 import Compile.Types
 import Compile.Backend.GenAsm
 
-prelude = [".globl _main", "_main:"]
-epilogue = ["ret"]
+prelude = [".globl _main\n", "_main:\n"]
+epilogue = ["ret\n"]
 
 t1Input = [AAsm {aAssign = [AReg 1], aOp = Nop, aArgs = [AImm 1]},
            AAsm {aAssign = [AReg 2], aOp = Nop, aArgs = [AImm 2]},
            AAsm {aAssign = [AReg 0], aOp = Nop, aArgs = [ALoc $ AReg 1]},
            AAsm {aAssign = [AReg 0], aOp = Add, aArgs = [ALoc $ AReg 2]}]
 
-t1Expected = prelude ++ ["movl $1, %rbx",
-                         "movl $2, %rcx",
-                         "movl %rbx, %rax",
-                         "addl %rcx, %rax"] ++ epilogue
+t1Expected = prelude ++ ["movl $1, %rbx\n",
+                         "movl $2, %rcx\n",
+                         "movl %rbx, %rax\n",
+                         "addl %rcx, %rax\n"] ++ epilogue
 
 test1 :: Assertion
 test1 = assertEqual "genAsm Basic test 1"

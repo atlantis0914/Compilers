@@ -23,14 +23,14 @@ regMap = Map.fromList [(0, "%rax"),
 genAsm :: [AAsm] -> [String]
 genAsm aasms =
   let
-    prelude = [".globl _main", "_main:"]
-    epilogue = ["ret"]
+    prelude = [".globl _main\n", "_main:\n"]
+    epilogue = ["ret\n"]
   in
     prelude ++ (map aasmToString aasms) ++ epilogue
 
 aasmToString :: AAsm -> String
 aasmToString AAsm {aAssign = [loc], aOp = op, aArgs = [arg]} =
-  (opToString op) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc)
+  (opToString op) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
 
 avalToString :: AVal -> String
 avalToString aval =
