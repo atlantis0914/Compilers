@@ -16,6 +16,7 @@ import Compile.Backend.Coloring
 import Compile.Backend.GenTwoOperand
 import Compile.Backend.MaximumCardinalitySearch
 import Compile.Backend.ColorTemp
+import Compile.Backend.GenAsm
 
 type Alloc = (Map.Map String Int, Int)
 
@@ -33,8 +34,9 @@ codeGen (Block stmts _) = let
     coloring = greedyColor interference_graph simp_ordering
     twoOpAasmList = genTwoOperand aasmList
     coloredAasmList = colorTemps twoOpAasmList coloring
+    asm = genAsm coloredAasmList
   in
-    aasmList
+    asm
 
 -- Generates AAsm from a statement
 genStmt :: Alloc -> Stmt -> [AAsm]
