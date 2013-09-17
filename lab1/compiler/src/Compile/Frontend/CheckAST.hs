@@ -33,7 +33,7 @@ assertMsgE s False = Left s
 
 checkAST :: AST -> Either String ()
 checkAST ast@(Block stmts _) = do
-  let decls = filter isDecl stmts  
+  let decls = filter isDecl stmts
   let variables = Set.fromList $ map declName decls
   assertMsgE (findDuplicate decls)
              $ length decls == Set.size variables
@@ -86,9 +86,12 @@ checkStmt (Asgn i m e p) = do
       return False
 
 
-checkExpr (ExpInt n p) = do
+checkExpr (ExpInt n p Dec) = do
   assertMsg (show n ++ " too large at " ++ show p)
             (n <= (2^31))
+checkExpr (ExpInt n p Hex) = do
+  assertMsg (show n ++ " too large at " ++ show p)
+            (n <= (2^32))
 checkExpr (Ident s p) = do
   (vars, defined, retHit) <- get
   assertMsg (s ++ " used undeclared at " ++ show p) (Set.member s vars)

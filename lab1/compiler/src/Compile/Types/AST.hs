@@ -20,12 +20,15 @@ isDecl :: Stmt -> Bool
 isDecl (Decl {}) = True
 isDecl _ = False 
 
-data Expr = ExpInt Integer SourcePos
+data Expr = ExpInt Integer SourcePos Base
           | Ident String SourcePos
           | ExpBinOp Op Expr Expr SourcePos
           | ExpUnOp Op Expr SourcePos
 
 type AsgnOp = Maybe Op
+
+data Base = Dec
+          | Hex
 
 -- Note to the student: You will probably want to write a new pretty printer
 -- using the module Text.PrettyPrint.HughesPJ from the pretty package
@@ -44,7 +47,7 @@ instance Show Stmt where
   show (Asgn i op e _) = "\t" ++ i ++ " " ++ mShow op ++ "=" ++ " " ++ show e ++ ";"
 
 instance Show Expr where
-  show (ExpInt n _) = show n
+  show (ExpInt n _ _) = show n
   show (ExpBinOp op e1 e2 _) = "(" ++ show e1 ++ ") " ++ show op ++ " (" ++ show e2 ++ ")"
   show (Ident i _) = i
   show (ExpUnOp op e _) = show op ++ "(" ++ show e ++ ")"

@@ -105,7 +105,7 @@ genStmt (varMap,n) (Asgn var oper expr srcPos) = let
 
 -- Generates AAsm from an expression
 genExp :: Alloc -> Expr -> ALoc -> [AAsm]
-genExp _ (ExpInt n _) l = [AAsm [l] Nop [AImm $ fromIntegral n]]
+genExp _ (ExpInt n _ _) l = [AAsm [l] Nop [AImm $ fromIntegral n]]
 genExp (varMap,_) (Ident s _) l = [AAsm [l] Nop [ALoc $ ATemp $ varMap Map.! s]]
 
 genExp (varMap,n) (ExpBinOp op e1 e2 _) l = let
