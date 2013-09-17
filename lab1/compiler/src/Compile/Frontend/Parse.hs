@@ -132,14 +132,13 @@ term =
        i <- identifier
        return $ Ident i p) -- an identifier
    <|>
-   (do
-       (do p <- getPosition
-           n <- Text.Parsec.try hex
-           return $ ExpInt n p Hex)
-       <|>
-       (do p <- getPosition
-           n <- dec
-           return $ ExpInt n p Dec)) -- or an integer
+   (do p <- getPosition
+       n <- Text.Parsec.try hex
+       return $ ExpInt n p Hex)
+   <|>
+   (do p <- getPosition
+       n <- dec
+       return $ ExpInt n p Dec) -- or an integer
    <?> "term"
 
 dec :: C0Parser Integer
