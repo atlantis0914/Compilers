@@ -58,7 +58,8 @@ checkStmt (Decl i p (Just (Asgn i' m e p'))) = do
   -- At this point we've already checked for duplicate decls
   (vars, defined, retHit) <- get
   if (retHit) 
-    then return True
+    then do checkExpr e
+            return True
     else do
       assertMsg "decl/assign error - idents not equal" (i == i')
       case m of
@@ -74,7 +75,9 @@ checkStmt (Asgn i m e p) = do
   -- Ensure that the ident is already declared
   assertMsg (i ++ " not declared at " ++ show p) (Set.member i vars)
   if (retHit) 
-    then return True
+    then do 
+       checkExpr e
+       return True
     else do
       case m of
         -- Ensure that an uninitialized ident doesn't do +=, -=, etc
