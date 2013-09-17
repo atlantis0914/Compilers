@@ -63,7 +63,7 @@ checkStmt (Decl i p (Just (Asgn i' m e p'))) = do
       assertMsg "decl/assign error - idents not equal" (i == i')
       case m of
         -- Makes sure this is just an assignment operand 
-        Just _ -> throwError (i ++ " used undefined at " ++ show p)
+        Just _ -> throwError (i ++ " used undefined 1 at " ++ show p)
         Nothing -> return ()
       checkExpr e
       put (Set.insert i vars, Set.insert i defined, retHit)
@@ -72,13 +72,13 @@ checkStmt (Decl i p (Just (Asgn i' m e p'))) = do
 checkStmt (Asgn i m e p) = do
   (vars, defined, retHit) <- get
   -- Ensure that the ident is already declared
+  assertMsg (i ++ " not declared at " ++ show p) (Set.member i vars)
   if (retHit) 
     then return True
     else do
-      assertMsg (i ++ " not declared at " ++ show p) (Set.member i vars)
       case m of
         -- Ensure that an uninitialized ident doesn't do +=, -=, etc
-        Just _  -> assertMsg (i ++ " used undefined at " ++ show p)
+        Just _  -> assertMsg (i ++ " used undefined 2 at " ++ show p)
                              (Set.member i defined)
         Nothing -> return ()
       checkExpr e
@@ -89,13 +89,19 @@ checkStmt (Asgn i m e p) = do
 checkExpr (ExpInt n p Dec) = do
   assertMsg (show n ++ " too large at " ++ show p)
             (n <= (2^31))
+
 checkExpr (ExpInt n p Hex) = do
   assertMsg (show n ++ " too large at " ++ show p)
             (n <= (2^32))
+
 checkExpr (Ident s p) = do
   (vars, defined, retHit) <- get
   assertMsg (s ++ " used undeclared at " ++ show p) (Set.member s vars)
-  assertMsg (s ++ " used undefined at " ++ show p) (Set.member s defined)
+  if (retHit) 
+    then return ()
+    else do 
+            assertMsg (s ++ " used undefined at " ++ show p) (Set.member s defined)
+            return ()
 
 checkExpr (ExpBinOp _ e1 e2 _) = mapM_ checkExpr [e1, e2]
 checkExpr (ExpUnOp _ e _) = checkExpr e
