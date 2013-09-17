@@ -69,14 +69,24 @@ decl = do
       return $ Decl ident pos (Just (Asgn ident op e pos'))
    
 asgn :: C0Parser Stmt
-asgn = do
+asgn =  (do
   pos  <- getPosition
   dest <- identifier
   op   <- asnOp
   e    <- expr
   semi
-  return $ Asgn dest op e pos
+  return $ Asgn dest op e pos)  
 
+
+--(parens $ do
+--  pos  <- getPosition
+--  dest <- identifier
+--  op   <- asnOp
+--  e    <- expr
+--  semi
+--  return $ Asgn dest op e pos)
+--  <|> 
+   
 ret :: C0Parser Stmt
 ret = do 
   pos <- getPosition
@@ -162,7 +172,7 @@ semi       :: C0Parser ()
 semi       = do _ <- Tok.semi c0Tokens; return ()
 
 identifier :: C0Parser String
-identifier = Tok.identifier c0Tokens
+identifier = (parens $ identifier) <|> (Tok.identifier c0Tokens)
 
 operator   :: C0Parser String
 operator   = Tok.operator   c0Tokens

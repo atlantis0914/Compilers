@@ -38,44 +38,52 @@ checkAST ast@(Block stmts _) = do
   assertMsgE (findDuplicate decls)
              $ length decls == Set.size variables
   rets <- fmap or $ runErrorState (mapM checkStmt stmts)
-                                  (Set.empty, Set.empty)
-  -- The state monad has state = (variables, Set.empty) 
+                                  (Set.empty, Set.empty, False)
+  -- The state monad has state = (variables, Set.empty, returnHit) 
   assertMsgE "main does not return" rets
 
 checkStmt (Return e _) = do
   checkExpr e
+  (vars, def, retHit) <- get
+  put (vars, def, True)
   return True
 
 checkStmt (Decl i p Nothing) = do
-  (vars, defined) <- get
+  (vars, defined, retHit) <- get
   -- we already check the lengths - just have to add i into vars here
-  put (Set.insert i vars, defined)
+  put (Set.insert i vars, defined, retHit)
   return False
 
 checkStmt (Decl i p (Just (Asgn i' m e p'))) = do
   -- At this point we've already checked for duplicate decls
-  (vars, defined) <- get
-  assertMsg "decl/assign error - idents not equal" (i == i')
-  case m of
-    -- Makes sure this is just an assignment operand 
-    Just _ -> throwError (i ++ " used undefined at " ++ show p)
-    Nothing -> return ()
-  checkExpr e
-  put (Set.insert i vars, Set.insert i defined)
-  return False
+  (vars, defined, retHit) <- get
+  if (retHit) 
+    then return True
+    else do
+      assertMsg "decl/assign error - idents not equal" (i == i')
+      case m of
+        -- Makes sure this is just an assignment operand 
+        Just _ -> throwError (i ++ " used undefined at " ++ show p)
+        Nothing -> return ()
+      checkExpr e
+      put (Set.insert i vars, Set.insert i defined, retHit)
+      return False
 
 checkStmt (Asgn i m e p) = do
-  (vars, defined) <- get
+  (vars, defined, retHit) <- get
   -- Ensure that the ident is already declared
-  assertMsg (i ++ " not declared at " ++ show p) (Set.member i vars)
-  case m of
-    -- Ensure that an uninitialized ident doesn't do +=, -=, etc
-    Just _  -> assertMsg (i ++ " used undefined at " ++ show p)
-                         (Set.member i defined)
-    Nothing -> return ()
-  checkExpr e
-  put (vars, Set.insert i defined)
-  return False
+  if (retHit) 
+    then return True
+    else do
+      assertMsg (i ++ " not declared at " ++ show p) (Set.member i vars)
+      case m of
+        -- Ensure that an uninitialized ident doesn't do +=, -=, etc
+        Just _  -> assertMsg (i ++ " used undefined at " ++ show p)
+                             (Set.member i defined)
+        Nothing -> return ()
+      checkExpr e
+      put (vars, Set.insert i defined, retHit)
+      return False
 
 checkNegExpr (ExpInt n p) = do
   assertMsg (show n ++ " too small at " ++ show p)
@@ -86,9 +94,10 @@ checkExpr (ExpInt n p) = do
   assertMsg (show (abs n) ++ " too large at " ++ (show (2^31)) ++ show p)
             ((toInteger $ (abs n)) <= (2^31 :: Integer))
 checkExpr (Ident s p) = do
-  (vars, defined) <- get
+  (vars, defined, retHit) <- get
   assertMsg (s ++ " used undeclared at " ++ show p) (Set.member s vars)
   assertMsg (s ++ " used undefined at " ++ show p) (Set.member s defined)
+
 checkExpr (ExpBinOp _ e1 e2 _) = mapM_ checkExpr [e1, e2]
 checkExpr (ExpUnOp Neg e _) = checkNegExpr e
 checkExpr (ExpUnOp _ e _) = checkExpr e
