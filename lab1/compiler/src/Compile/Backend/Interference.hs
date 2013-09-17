@@ -35,7 +35,6 @@ buildInterferenceGraph aasmList alocList =
     locs = getLocs aasmList
     g' = putVertices locs g
 --    g'' = putEdges edges g'
---    g''' = Trace.trace ("Final graph = " ++ (show g'')) (putEdges edges g')
   in
     putEdges edges g'
 
@@ -57,6 +56,8 @@ getLocs l = getLocs' (Map.empty) l
 
 getInterferenceEdges :: [AAsm] -> [[ALoc]] -> [Edge]
 getInterferenceEdges [] _ = []
+getInterferenceEdges [AAsm {aOp = Div}] [l] = getDivConflict l
+getInterferenceEdges [AAsm {aOp = Mod}] [l] = getDivConflict l
 getInterferenceEdges [x] _ = []
 getInterferenceEdges (a:a':aasm) (l:l':aloc) = 
   let
@@ -90,5 +91,4 @@ getConflict assign (loc:ls) =
 
 getDivConflict :: [ALoc] -> [Edge]
 getDivConflict [] = []
-getDivConflict (x:xs) = [Edge (x, AReg eax_color_num), 
-                         Edge (x, AReg edx_color_num)] ++ (getDivConflict xs)
+getDivConflict (x:xs) = [Edge (x, AReg eax_color_num), Edge (x, AReg edx_color_num)] ++ (getDivConflict xs)
