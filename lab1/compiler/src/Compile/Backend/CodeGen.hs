@@ -8,7 +8,6 @@ module Compile.Backend.CodeGen where
 
 import Compile.Types
 import qualified Data.Map as Map
-import qualified Debug.Trace as Trace
 
 import Compile.Backend.Liveness
 import Compile.Backend.Interference
@@ -25,7 +24,6 @@ type Alloc = (Map.Map String Int, Int)
 debugFlag = False
 
 -- Generates the AAsm from an AST
--- codeGen :: AST -> ColoringMap
 codeGen (Block stmts _) = let
   -- Creates a mapping from var to its index.
     decls = filter isDecl stmts
@@ -103,15 +101,11 @@ genStmt (varMap,n) (Asgn var oper expr srcPos) = let
          Just op -> ExpBinOp op (Ident var srcPos) expr srcPos
   in genExp (varMap,n) expr' l
 
-
-
-
 -- Generates AAsm from an expression
 genExp :: Alloc -> Expr -> ALoc -> [AAsm]
 genExp _ (ExpInt n _) l = [AAsm [l] Nop [AImm $ fromIntegral n]]
 genExp (varMap,_) (Ident s _) l = [AAsm [l] Nop [ALoc $ ATemp $ varMap Map.! s]]
 
-genExp (varMap,n) (ExpBinOp op e1 e2 _) l | Trace.trace ("genExp : n is " ++ (show n) ++ " e1 = " ++ (show e1) ++ " e2 = " ++ (show e2)) False = undefined
 genExp (varMap,n) (ExpBinOp op e1 e2 _) l = let
   -- AAsm for left and right operand
   -- TODO: Make this more SSL friendly
@@ -121,7 +115,6 @@ genExp (varMap,n) (ExpBinOp op e1 e2 _) l = let
   c  = [AAsm [l] op [ALoc $ ATemp n, ALoc $ ATemp $ n + 1]]
   in i1 ++ i2 ++ c
 
-genExp (varMap,n) (ExpUnOp op e _) l | Trace.trace ("genExp : nUnOp is " ++ (show op) ++ " e = " ++ (show e) ++ " res = " ++ (show $ genExp (varMap, n + 1) e (ATemp n))) False = undefined
 genExp (varMap,n) (ExpUnOp op e _) l = let
   -- AAsm for operand
   i1 = genExp (varMap, n + 1) e (ATemp n)

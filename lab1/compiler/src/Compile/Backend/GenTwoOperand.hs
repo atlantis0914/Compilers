@@ -26,13 +26,3 @@ genForIns aasm@(AAsm {aAssign = [loc], aOp = op, aArgs = [fst,snd]})
 genForIns' aasm@(AAsm {aAssign = loc:locs, aOp = op, aArgs = [fst, snd]}) =
   [AAsm {aAssign = loc:locs, aOp = Nop, aArgs = [fst]},
    AAsm {aAssign = loc:locs, aOp = op, aArgs = [snd]}]
-
--- genForIns aasm@(AAsm {aAssign = (loc:locs), aArgs = [fst@(AImm fst'),snd@(ALoc snd')]}) =
---   if (loc == snd')
---     then [aasm]
---     else genForIns'
---
--- -- Ensure that in genForIns' that loc is not in {fst,snd}
--- genForIns' (AAsm {aAssign = locs@(loc:_), aOp = op, aArgs = [fst, snd]}) =
---   [AAsm {aAssign = locs, aOp = Nop, aArgs = [fst]},
---    AAsm {aAssign = locs, aOp = op, aArgs = [ALoc (loc), snd]}]
