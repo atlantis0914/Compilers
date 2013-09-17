@@ -7,6 +7,8 @@ import Compile.Util.Color
 import Data.List
 import qualified Data.Map as Map
 
+import qualified Debug.Trace as Trace
+
 -- Takes an Interference Graph, and the Simplicial Elimination Ordering
 -- and produces a coloring of the graph 
 greedyColor :: Graph ALoc -> [Vertex ALoc] -> ColoringMap
@@ -14,14 +16,16 @@ greedyColor g ordering = foldl (colorStep g) (instantiateColoringMap ordering) o
 
 -- Used to foldr an ALoc into a coloring for that set of locs. 
 colorStep :: Graph ALoc -> ColoringMap -> Vertex ALoc -> ColoringMap
+-- colorStep (Graph graphMap) colorMap valoc@(Vertex {vertexData = aloc}) | Trace.trace
+--   ("colorMap  = " ++ (show colorMap)) False = undefined
 colorStep (Graph graphMap) colorMap valoc@(Vertex {vertexData = aloc}) = 
   let
     Vertex {vertexAdjacencies = nghMap, 
             prohibitedColors = prohibitedList} = graphMap Map.! aloc
-    neighborsLocs = Map.keys nghMap
+    neighborsLocs =  Map.keys nghMap
     neighborColors = filter (isColor)
                             (map (\a -> colorMap Map.! a) neighborsLocs)
-    allColors = neighborColors ++ prohibitedList
+    allColors = nub $ neighborColors ++ prohibitedList
     color = getLowestColor allColors
   in
     Map.insert aloc color colorMap

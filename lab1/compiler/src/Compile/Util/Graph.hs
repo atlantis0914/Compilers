@@ -42,20 +42,21 @@ addVertexGetGraph s g = g'
 -- Safely adds the edge (src, target) to the graph 
 addEdgeSafe :: (Graph ALoc) -> ALoc -> ALoc  -> (Graph ALoc)
 
-addEdgeSafe g@(Graph m) (AReg _) _ = g
+addEdgeSafe g@(Graph m) (AReg _) (_) = g
+
 addEdgeSafe g@(Graph m) src@(ATemp tempNum) reg@(AReg regNum) = 
   let 
     (Graph m', srcV@(Vertex {prohibitedColors = colorList})) = addVertexSafe (g) src 
-    srcV' = srcV {prohibitedColors = ([Color regNum] ++ colorList)}
+    srcV' = srcV {prohibitedColors = ((Color regNum):colorList) }
   in
-    Graph (insert src srcV' m')
+    (Graph $ insert src srcV' m')
 
 addEdgeSafe (Graph m) src target = 
   let
     (Graph m', srcV) = addVertexSafe (Graph m) src
     adjacencies = vertexAdjacencies srcV
     adjacencies' = insert target () adjacencies
-    srcV' = (newVertex src) {vertexAdjacencies = adjacencies'}
+    srcV' = srcV {vertexAdjacencies = adjacencies'}
   in
     Graph (insert src srcV' m')
 

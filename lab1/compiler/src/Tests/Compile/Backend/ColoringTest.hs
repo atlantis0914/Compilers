@@ -35,7 +35,7 @@ newMap = (Map.insert (ATemp 1) v1' (Map.insert (ATemp 2) v2' (Map.insert (ATemp 
          (Map.insert (ATemp 6) v6' g1Map))))))
 g1 = Graph newMap
 
-alloc1 = [ATemp 1, ATemp 2, ATemp 3, ATemp 4, ATemp 5, ATemp 6]
+alloc1 = [v1', v2', v3', v4', v5', v6']
 
 coloring1 = greedyColor g1 alloc1
 
@@ -66,8 +66,15 @@ test4 = assertEqual "getLowestColorTest"
         (Color 0)
         (getLowestColor colors4)
 
+colors5 = [Color 1, Color 2]
+test5 :: Assertion
+test5 = assertEqual "getLowestColorTest"
+        (Color 0)
+        (getLowestColor colors5)
+
 coloringTest = [testCase "graphColor-1" test1,
                 testCase "lowestColor-1" test2,
                 testCase "lowestColor-2" test3,
-                testCase "lowestColor-3" test4
+                testCase "lowestColor-3" test4,
+                testCase "lowestColor-4" test5
                ]

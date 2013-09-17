@@ -3,11 +3,14 @@ module Compile.Backend.Interference where
 import Compile.Types
 import Compile.Util.AbstractAssembly
 import Compile.Util.Graph
+import Compile.Backend.Registers
 
 import Control.Monad.State
 import Data.Maybe
 
 import qualified Data.Map as Map
+
+import qualified Debug.Trace as Trace
 
 import System.IO.Unsafe
 
@@ -31,14 +34,16 @@ buildInterferenceGraph aasmList alocList =
     g = newGraph 
     locs = getLocs aasmList
     g' = putVertices locs g
+--    g'' = putEdges edges g'
+--    g''' = Trace.trace ("Final graph = " ++ (show g'')) (putEdges edges g')
   in
-    putEdges edges g' 
+    putEdges edges g'
 
 putVertices :: [ALoc] -> (Graph ALoc) -> (Graph ALoc)
 putVertices l g = foldr addVertexGetGraph g l 
 
 putEdges :: [Edge] -> (Graph ALoc) -> (Graph ALoc)
-putEdges e g = foldr putEdge g e
+putEdges edgelist g = foldr putEdge g edgelist
 
 putEdge :: Edge -> (Graph ALoc) -> (Graph ALoc)
 putEdge (Edge (src,target)) graph = addEdgeSafe graph src target
@@ -55,23 +60,35 @@ getInterferenceEdges [] _ = []
 getInterferenceEdges [x] _ = []
 getInterferenceEdges (a:a':aasm) (l:l':aloc) = 
   let
-    edges = getAAsmEdges a l'
+    edges = getAAsmEdges a l l'
   in
     edges ++ getInterferenceEdges (a':aasm) (l':aloc)
 
-getAAsmEdges :: AAsm -> [ALoc] -> [Edge]
-getAAsmEdges (AAsm {aAssign = assign, aOp = op, aArgs = args}) l' = getConflict assign l'
+getAAsmEdges :: AAsm -> [ALoc] -> [ALoc] -> [Edge]
+getAAsmEdges (AAsm {aAssign = assign, aOp = Div, aArgs = args}) l l' = 
+  (getConflict assign l') ++ (getDivConflict l') ++ (getDivConflict l)
+
+getAAsmEdges (AAsm {aAssign = assign, aOp = Mod, aArgs = args}) l l' = 
+  (getConflict assign l') ++ (getDivConflict l') ++ (getDivConflict l)
+
+getAAsmEdges (AAsm {aAssign = assign, aOp = op, aArgs = args}) l l' = getConflict assign l'
 --   case op of
 --     Nop -> let 
 --              [tmp] = args 
 --              loc = maybeToList $ aLocFromAVal tmp
 --              in getConflict (assign ++ loc) l' 
 --     otherwise -> getConflict assign l'
-  where getConflict assign [] =  []
-        getConflict assign (loc:ls) = 
-          let 
-            to = head(assign) -- should probably make the "assigned" temp an ADT
-          in
-            if (loc `elem` assign) 
-              then getConflict assign ls
-              else [Edge (to, loc), Edge (loc, to)] ++ (getConflict assign ls)
+
+getConflict assign [] =  []
+getConflict assign (loc:ls) = 
+  let 
+    to = head(assign) -- should probably make the "assigned" temp an ADT
+  in
+    if (loc `elem` assign) 
+      then getConflict assign ls
+      else [Edge (to, loc), Edge (loc, to)] ++ (getConflict assign ls)
+
+getDivConflict :: [ALoc] -> [Edge]
+getDivConflict [] = []
+getDivConflict (x:xs) = [Edge (x, AReg eax_color_num), 
+                         Edge (x, AReg edx_color_num)] ++ (getDivConflict xs)

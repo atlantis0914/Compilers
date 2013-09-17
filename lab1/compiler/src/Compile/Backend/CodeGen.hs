@@ -50,6 +50,7 @@ genDebug stmts aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAas
     aasm' = listShow aasm
     liveVars' = listShow liveVars
     gmap' = listShow $ Map.toList gmap
+    coloring' = listShow $ Map.toList coloring
     simp_ord' = listShow simp_ord
     twoOpAasm' = listShow twoOpAasm
     coloredAasm' = listShow coloredAasm
@@ -60,6 +61,7 @@ genDebug stmts aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAas
     "LiveVars\n" ++ liveVars' ++ "\n\n" ++
     "InterferenceGraph\n" ++ gmap' ++ "\n\n" ++
     "Simp Ordering\n" ++ simp_ord' ++ "\n\n" ++
+    "Coloring\n" ++ coloring' ++ "\n\n" ++ 
     "TwoOpAAsm\n" ++ twoOpAasm' ++ "\n\n" ++
     "ColoredAAsm\n" ++ coloredAasm' ++ "\n\n" ++
     "Asm\n" ++ asm' ++ "\n\n"
