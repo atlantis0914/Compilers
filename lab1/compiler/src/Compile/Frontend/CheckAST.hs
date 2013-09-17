@@ -38,7 +38,7 @@ checkAST ast@(Block stmts _) = do
   assertMsgE (findDuplicate decls)
              $ length decls == Set.size variables
   rets <- fmap or $ runErrorState (mapM checkStmt stmts)
-                                  (variables, Set.empty)
+                                  (Set.empty, Set.empty)
   -- The state monad has state = (variables, Set.empty) 
   assertMsgE "main does not return" rets
 
@@ -46,7 +46,11 @@ checkStmt (Return e _) = do
   checkExpr e
   return True
 
-checkStmt (Decl i p Nothing) = return False
+checkStmt (Decl i p Nothing) = do
+  (vars, defined) <- get
+  -- we already check the lengths - just have to add i into vars here
+  put (Set.insert i vars, defined)
+  return False
 
 checkStmt (Decl i p (Just (Asgn i' m e p'))) = do
   -- At this point we've already checked for duplicate decls
@@ -57,7 +61,7 @@ checkStmt (Decl i p (Just (Asgn i' m e p'))) = do
     Just _ -> throwError (i ++ " used undefined at " ++ show p)
     Nothing -> return ()
   checkExpr e
-  put (vars, Set.insert i defined)
+  put (Set.insert i vars, Set.insert i defined)
   return False
 
 checkStmt (Asgn i m e p) = do
@@ -79,8 +83,8 @@ checkNegExpr (ExpInt n p) = do
 checkNegExpr expr = checkExpr expr
 
 checkExpr (ExpInt n p) = do
-  assertMsg (show n ++ " too large at " ++ show p)
-            (n < (2^31))
+  assertMsg (show (abs n) ++ " too large at " ++ (show (2^31)) ++ show p)
+            ((toInteger $ (abs n)) <= (2^31 :: Integer))
 checkExpr (Ident s p) = do
   (vars, defined) <- get
   assertMsg (s ++ " used undeclared at " ++ show p) (Set.member s vars)
