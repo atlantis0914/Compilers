@@ -222,7 +222,9 @@ brackets   :: C0Parser a -> C0Parser a
 brackets   = Tok.brackets c0Tokens
 
 opTable :: [[Operator ByteString () Identity Expr]]
-opTable = [[prefix "-"   (ExpUnOp  Neg)],
+opTable = [[prefix "--" (ExpUnOp  Decr)],
+           [prefix "-"   (ExpUnOp  Neg)],
+           [binary "--" (ExpBinOp  Decr) AssocLeft],
            [binary "*"   (ExpBinOp Mul)  AssocLeft,
             binary "/"   (ExpBinOp Div)  AssocLeft,
             binary "%"   (ExpBinOp Mod)  AssocLeft],

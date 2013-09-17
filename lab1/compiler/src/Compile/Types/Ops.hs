@@ -12,6 +12,7 @@ data Op = Mul
         | Div
         | Neg
         | Mod
+        | Decr
         | Nop deriving Eq
 
 instance Show Op where
@@ -22,5 +23,6 @@ instance Show Op where
   show Neg = "Neg"
   show Mod = "%"
   show Nop = "[nop]"
+  show Decr = "Decr"
 
 data COp = Ret deriving (Show, Eq)

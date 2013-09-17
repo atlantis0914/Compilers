@@ -58,7 +58,8 @@ checkStmt (Decl i p (Just (Asgn i' m e p'))) = do
   -- At this point we've already checked for duplicate decls
   (vars, defined, retHit) <- get
   if (retHit) 
-    then do checkExpr e
+    then do put (Set.insert i vars, defined, retHit)
+            checkExpr e
             return True
     else do
       assertMsg "decl/assign error - idents not equal" (i == i')
@@ -106,8 +107,13 @@ checkExpr (Ident s p) = do
             assertMsg (s ++ " used undefined at " ++ show p) (Set.member s defined)
             return ()
 
-checkExpr (ExpBinOp _ e1 e2 _) = mapM_ checkExpr [e1, e2]
-checkExpr (ExpUnOp _ e _) = checkExpr e
+checkExpr (ExpBinOp op e1 e2 p) = do checkOp op p 
+                                     mapM_ checkExpr [e1, e2]
+
+checkExpr (ExpUnOp op e p) = do checkOp op p 
+                                checkExpr e
+
+checkOp op p = assertMsg ("Saw unqualified -- at " ++ show p) (not $ op == Decr)
 
 findDuplicate xs = findDuplicate' xs Set.empty
   where findDuplicate' [] _ = error "no duplicate"
