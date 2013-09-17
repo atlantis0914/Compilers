@@ -30,7 +30,7 @@ stringWriter file obj = liftIOE $ writeFile file $ obj
 compile :: Job -> IO ()
 compile job = do
   res <- runErrorT $ do -- Constructor for the error monad transformer
-    ast <- parseAST $ jobSource job 
+    ast <- parseAST $ jobSource job
     liftEIO $ checkAST ast
     if jobOutFormat job == C0
       then writer (jobOut job) ast

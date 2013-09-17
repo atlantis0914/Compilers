@@ -19,7 +19,8 @@ data AVal = ALoc ALoc
           | AImm Int deriving (Show, Eq)
 
 data ALoc = AReg Int
-          | ATemp Int deriving (Show, Eq)
+          | ATemp Int
+          | AMem Int deriving (Show, Eq)
 
 instance Ord ALoc where
   (AReg _) `compare` (ATemp _) = GT

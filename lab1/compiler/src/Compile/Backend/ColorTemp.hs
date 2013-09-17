@@ -17,7 +17,7 @@ replaceAsm coloring aasm@(AAsm {aAssign = assigns, aOp = op, aArgs = args}) =
 replaceAssigns :: ColoringMap -> ALoc -> ALoc
 replaceAssigns coloring (ATemp i) =
   let
-    Color c = coloring Map.! (ATemp i) 
+    Color c = coloring Map.! (ATemp i)
   in
     AReg c
 replaceAssigns coloring loc = loc

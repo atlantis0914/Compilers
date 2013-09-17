@@ -14,7 +14,7 @@ genAsm aasms =
     prelude ++ (map aasmToString aasms) ++ epilogue
 
 aasmToString :: AAsm -> String
-aasmToString AAsm {aAssign = [loc], aOp = Neg, aArgs = [arg]} = 
+aasmToString AAsm {aAssign = [loc], aOp = Neg, aArgs = [arg]} =
   (aasmToString (AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]}) ++ "  " ++ (opToString Neg) ++ " " ++ (alocToString loc) ++ "\n")
 aasmToString AAsm {aAssign = [loc], aOp = op, aArgs = [arg]} =
   "  " ++ (opToString op) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
@@ -25,7 +25,11 @@ avalToString aval =
                AImm i -> "$" ++ (show i)
 
 alocToString :: ALoc -> String
-alocToString (AReg i) = regMap Map.! i
+alocToString (AReg i) =
+  if i > max_color_num + 1
+    then alocToString (AMem $ i - max_color_num)
+    else regMap Map.! i
+alocToString (AMem i) =  "-" ++ (show (i * 4)) ++ "(%rsp)"
 
 opToString :: Op -> String
 opToString op =

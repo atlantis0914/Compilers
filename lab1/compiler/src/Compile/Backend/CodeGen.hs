@@ -18,6 +18,7 @@ import Compile.Backend.GenTwoOperand
 import Compile.Backend.MaximumCardinalitySearch
 import Compile.Backend.ColorTemp
 import Compile.Backend.GenAsm
+import Compile.Backend.Spill
 
 type Alloc = (Map.Map String Int, Int)
 
@@ -38,13 +39,14 @@ codeGen (Block stmts _) = let
     simp_ordering = maximumCardinalitySearch interference_graph -- now a [Vertex ALoc]
     coloring = greedyColor interference_graph simp_ordering
     coloredAasmList = colorTemps twoOpAasmList coloring
-    asm = genAsm coloredAasmList
+    spilledAasmList = spill coloredAasmList
+    asm = genAsm spilledAasmList
   in
-    if (debugFlag) 
+    if (debugFlag)
       then genDebug stmts aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm
       else concat asm
 
-genDebug stmts aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAasm asm = 
+genDebug stmts aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAasm asm =
   let
     stmts' = listShow stmts
     aasm' = listShow aasm
@@ -55,30 +57,30 @@ genDebug stmts aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAas
     coloredAasm' = listShow coloredAasm
     asm' = listShow asm
   in
-    "Statements\n" ++ stmts' ++ "\n\n" ++ 
+    "Statements\n" ++ stmts' ++ "\n\n" ++
     "Aasm\n" ++ aasm' ++ "\n\n" ++
-    "LiveVars\n" ++ liveVars' ++ "\n\n" ++ 
-    "InterferenceGraph\n" ++ gmap' ++ "\n\n" ++ 
-    "Simp Ordering\n" ++ simp_ord' ++ "\n\n" ++ 
-    "TwoOpAAsm\n" ++ twoOpAasm' ++ "\n\n" ++ 
-    "ColoredAAsm\n" ++ coloredAasm' ++ "\n\n" ++ 
+    "LiveVars\n" ++ liveVars' ++ "\n\n" ++
+    "InterferenceGraph\n" ++ gmap' ++ "\n\n" ++
+    "Simp Ordering\n" ++ simp_ord' ++ "\n\n" ++
+    "TwoOpAAsm\n" ++ twoOpAasm' ++ "\n\n" ++
+    "ColoredAAsm\n" ++ coloredAasm' ++ "\n\n" ++
     "Asm\n" ++ asm' ++ "\n\n"
 
-listShow l = concat (map (\a -> (show a) ++ "\n") l) 
+listShow l = concat (map (\a -> (show a) ++ "\n") l)
 
--- Modify to just find the index of the first return, and 
--- take that many statments. 
+-- Modify to just find the index of the first return, and
+-- take that many statments.
 dropAfterFirstReturn :: [Stmt] -> [Stmt]
-dropAfterFirstReturn stmts = 
+dropAfterFirstReturn stmts =
   let
     -- (foldl) :: (a -> b -> a) -> a -> [b] -> a
-    f = \(acc, st) -> 
+    f = \(acc, st) ->
         \stmt ->
-          case (st,stmt) of 
+          case (st,stmt) of
             (Nothing, Return _ _) -> (acc ++ [stmt], Just ())
             (Nothing, _) -> (acc ++ [stmt], Nothing)
             (Just _, _) -> (acc, st)
-  in 
+  in
     fst $ foldl f ([], Nothing) stmts
 
 -- Generates AAsm from a statement

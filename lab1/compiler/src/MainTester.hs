@@ -9,6 +9,7 @@ import Tests.Compile.Backend.ColoringTest (coloringTest)
 import Tests.Compile.Backend.GenTwoOperandTest(genTwoOperandTest)
 import Tests.Compile.Backend.ColorTempTest(colorTempTest)
 import Tests.Compile.Backend.GenAsmTest(genAsmTest)
+import Tests.Compile.Backend.SpillTest(spillTest)
 
 import Test.Framework (defaultMain, testGroup)
 
@@ -20,5 +21,6 @@ main = defaultMain [
          testGroup "coloring" coloringTest,
          testGroup "genTwoOperand" genTwoOperandTest,
          testGroup "colorTemp" colorTempTest,
-         testGroup "genAsm" genAsmTest
+         testGroup "genAsm" genAsmTest,
+         testGroup "spill" spillTest
        ]
