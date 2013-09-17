@@ -75,7 +75,7 @@ checkStmt (Asgn i m e p) = do
 
 checkExpr (ExpInt n p) =
   assertMsg (show n ++ " too large at " ++ show p)
-            (n < 2^32)
+            (n < (2^31))
 checkExpr (Ident s p) = do
   (vars, defined) <- get
   assertMsg (s ++ " used undeclared at " ++ show p) (Set.member s vars)
