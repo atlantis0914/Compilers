@@ -85,21 +85,16 @@ checkStmt (Asgn i m e p) = do
       put (vars, Set.insert i defined, retHit)
       return False
 
-checkNegExpr (ExpInt n p) = do
-  assertMsg (show n ++ " too small at " ++ show p)
-            (n <= (2^31))
-checkNegExpr expr = checkExpr expr
 
 checkExpr (ExpInt n p) = do
-  assertMsg (show (abs n) ++ " too large at " ++ (show (2^31)) ++ show p)
-            ((toInteger $ (abs n)) <= (2^31 :: Integer))
+  assertMsg (show n ++ " too large at " ++ show p)
+            (n <= (2^31))
 checkExpr (Ident s p) = do
   (vars, defined, retHit) <- get
   assertMsg (s ++ " used undeclared at " ++ show p) (Set.member s vars)
   assertMsg (s ++ " used undefined at " ++ show p) (Set.member s defined)
 
 checkExpr (ExpBinOp _ e1 e2 _) = mapM_ checkExpr [e1, e2]
-checkExpr (ExpUnOp Neg e _) = checkNegExpr e
 checkExpr (ExpUnOp _ e _) = checkExpr e
 
 findDuplicate xs = findDuplicate' xs Set.empty
