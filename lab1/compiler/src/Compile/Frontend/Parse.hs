@@ -180,7 +180,7 @@ semi       :: C0Parser ()
 semi       = do _ <- Tok.semi c0Tokens; return ()
 
 identifier :: C0Parser String
-identifier = Tok.identifier c0Tokens
+identifier = (parens identifier) <|> (Tok.identifier c0Tokens)
 
 operator   :: C0Parser String
 operator   = Tok.operator   c0Tokens
