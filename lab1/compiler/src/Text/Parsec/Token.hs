@@ -567,7 +567,7 @@ makeTokenParser languageDef
                         }
                       <?> ""
 
-    decimal         = number 10 digit
+    decimal         = number2 10 digit
     hexadecimal     = do{ oneOf "xX"; number 16 hexDigit }
     octal           = do{ oneOf "oO"; number 8 octDigit  }
 
@@ -576,6 +576,14 @@ makeTokenParser languageDef
             ; let n = foldl (\x d -> base*x + toInteger (digitToInt d)) 0 digits
             ; seq n (return n)
             }
+
+    number2 base baseDigit
+        = do digits <- many1 baseDigit
+             if length digits > 1 && head digits == '0'
+               then fail "leading 0"
+               else let n = foldl (\x d -> base*x + toInteger (digitToInt d)) 0 digits
+                    in seq n (return n)
+            
 
     -----------------------------------------------------------
     -- Operators & reserved ops
