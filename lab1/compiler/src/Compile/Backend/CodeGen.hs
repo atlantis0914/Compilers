@@ -25,7 +25,7 @@ type Alloc = (Map.Map String Int, Int)
 
 debugFlag = True
 
-maxTempsBeforeSpilling = 50
+maxTempsBeforeSpilling = 800
 
 -- Generates the AAsm from an AST
 codeGen (Block stmts _) = let
