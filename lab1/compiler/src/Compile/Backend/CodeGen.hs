@@ -25,20 +25,20 @@ type Alloc = (Map.Map String Int, Int)
 
 debugFlag = True
 
-maxTempsBeforeSpilling = 800
+maxTempsBeforeSpilling = 600
 
 -- Generates the AAsm from an AST
 codeGen (Block stmts _) = let
   -- Creates a mapping from var to its index.
     decls = filter isDecl stmts
     temps = Map.fromList $ zip (map declName decls) [0..] -- ident -> int map
-    alloc = Trace.trace ("Number of temps is : " ++ (show $ length (Map.keys temps))) $ (temps, length decls)
+    alloc = (temps, length decls)
     stmts' = dropAfterFirstReturn stmts
     aasmList = concatMap (genStmt alloc) stmts'
     twoOpAasmList = genTwoOperand aasmList
     allLocs = getLocs aasmList
   in
-    if (length (Map.keys temps) > maxTempsBeforeSpilling) 
+    if (length (aasmList) > maxTempsBeforeSpilling) 
       then (let 
              coloring = naiveColor allLocs
              coloredAasmList = colorTemps twoOpAasmList coloring
