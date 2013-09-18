@@ -162,7 +162,7 @@ c0Def = LanguageDef
                        "return", "break", "continue", "NULL", "alloc",
                        "alloc_array", "typedef", "struct", "else", "assert",
                        "true", "false", "bool"],
-    reservedOpNames = ["+",  "*",  "-",  "/",  "%", "?", ":", "->", ".", "--"],
+    reservedOpNames = ["+",  "*",  "-",  "/",  "%", "?", ":", "->", ".", "--", "=="],
     caseSensitive   = True}
 
 c0Tokens :: Tok.GenTokenParser ByteString () Identity
