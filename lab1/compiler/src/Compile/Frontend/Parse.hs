@@ -61,15 +61,16 @@ decl :: C0Parser Stmt
 decl = do
   pos  <- getPosition
   dest <- reserved "int"
-  ident <- identifier
+  ident <- declidentifier
   (do semi
       return $ Decl ident pos Nothing)
    <|>
-   do pos' <- getPosition
-      op <- asnOp
-      e <- expr
-      semi
-      return $ Decl ident pos (Just (Asgn ident op e pos'))
+   (do pos' <- getPosition
+       op <- asnOp
+       e <- expr
+       semi
+       return $ Decl ident pos (Just (Asgn ident op e pos')))
+   <?> "decl"
 
 asgn :: C0Parser Stmt
 asgn = do
@@ -99,7 +100,7 @@ stmt =
 
 -- Assignment Operators
 asnOp :: C0Parser (Maybe Op)
-asnOp = do
+asnOp = (do
    op <- operator
    return $ case op of
                "+="  -> Just Add
@@ -108,7 +109,7 @@ asnOp = do
                "/="  -> Just Div
                "%="  -> Just Mod
                "="   -> Nothing
-               x     -> fail $ "Nonexistent assignment operator: " ++ x
+               x     -> fail $ "Nonexistent assignment operator: " ++ x)
    <?> "assignment operator"
 
 -- Builds an expression using ops/precedence defined in opTable
@@ -151,7 +152,7 @@ c0Def = LanguageDef
     commentStartStr = "/*",
     commentEnd      = string "*/",
     commentEndStr   = "*/",
-    commentLine     = string "#" <|> string "//",
+    commentLine     = string "//",
     nestedComments  = True,
     identStart      = letter <|> char '_',
     identLetter     = alphaNum <|> char '_',
@@ -161,7 +162,7 @@ c0Def = LanguageDef
                        "return", "break", "continue", "NULL", "alloc",
                        "alloc_array", "typedef", "struct", "else", "assert",
                        "true", "false", "bool"],
-    reservedOpNames = ["+",  "*",  "-",  "/",  "%", "?", ":", "->", "."],
+    reservedOpNames = ["+",  "*",  "-",  "/",  "%", "?", ":", "->", ".", "--"],
     caseSensitive   = True}
 
 c0Tokens :: Tok.GenTokenParser ByteString () Identity
@@ -178,6 +179,9 @@ comma      = do _ <- Tok.comma c0Tokens; return ()
 -- A semicolon
 semi       :: C0Parser ()
 semi       = do _ <- Tok.semi c0Tokens; return ()
+
+declidentifier :: C0Parser String
+declidentifier = Tok.identifier c0Tokens
 
 identifier :: C0Parser String
 identifier = (parens identifier) <|> (Tok.identifier c0Tokens)
