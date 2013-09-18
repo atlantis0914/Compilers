@@ -9,6 +9,13 @@ import qualified Data.Map as Map
 
 import qualified Debug.Trace as Trace
 
+naiveColor :: [ALoc] -> ColoringMap
+naiveColor locList = naiveColor' locList (Map.empty) 0
+  where
+    naiveColor' [] m _ = m
+    naiveColor' (aloc:alocs) m c = naiveColor' (alocs) (Map.insert aloc (Color c) m) (c+1)
+    
+
 -- Takes an Interference Graph, and the Simplicial Elimination Ordering
 -- and produces a coloring of the graph 
 greedyColor :: Graph ALoc -> [Vertex ALoc] -> ColoringMap
