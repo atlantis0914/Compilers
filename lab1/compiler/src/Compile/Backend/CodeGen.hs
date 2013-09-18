@@ -19,30 +19,49 @@ import Compile.Backend.ColorTemp
 import Compile.Backend.GenAsm
 import Compile.Backend.Spill
 
+import qualified Debug.Trace as Trace
+
 type Alloc = (Map.Map String Int, Int)
 
-debugFlag = False
+debugFlag = True
+
+maxTempsBeforeSpilling = 50
 
 -- Generates the AAsm from an AST
 codeGen (Block stmts _) = let
   -- Creates a mapping from var to its index.
     decls = filter isDecl stmts
     temps = Map.fromList $ zip (map declName decls) [0..] -- ident -> int map
-    alloc = (temps, length decls)
+    alloc = Trace.trace ("Number of temps is : " ++ (show $ length (Map.keys temps))) $ (temps, length decls)
     stmts' = dropAfterFirstReturn stmts
     aasmList = concatMap (genStmt alloc) stmts'
     twoOpAasmList = genTwoOperand aasmList
-    liveVars = liveness twoOpAasmList
-    interference_graph@(Graph gmap) = buildInterferenceGraph twoOpAasmList liveVars
-    simp_ordering = maximumCardinalitySearch interference_graph -- now a [Vertex ALoc]
-    coloring = greedyColor interference_graph simp_ordering
-    coloredAasmList = colorTemps twoOpAasmList coloring
-    spilledAasmList = spill coloredAasmList
-    asm = genAsm spilledAasmList
+    allLocs = getLocs aasmList
   in
-    if (debugFlag)
-      then genDebug stmts aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm
-      else concat asm
+    if (length (Map.keys temps) > maxTempsBeforeSpilling) 
+      then (let 
+             coloring = naiveColor allLocs
+             coloredAasmList = colorTemps twoOpAasmList coloring
+             spilledAasmList = spill coloredAasmList
+             asm = genAsm spilledAasmList
+           in
+             concat asm)
+       else (let
+              liveVars = liveness twoOpAasmList
+              interference_graph@(Graph gmap) = buildInterferenceGraph twoOpAasmList liveVars
+              simp_ordering = maximumCardinalitySearch interference_graph -- now a [Vertex ALoc]
+              coloring = greedyColor interference_graph simp_ordering
+              coloredAasmList = colorTemps twoOpAasmList coloring
+              spilledAasmList = spill coloredAasmList
+              asm = genAsm spilledAasmList
+            in
+              concat asm)
+              
+
+
+--    if (debugFlag)
+--      then genDebug stmts aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm
+--      else concat asm
 
 genDebug stmts aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAasm asm =
   let
