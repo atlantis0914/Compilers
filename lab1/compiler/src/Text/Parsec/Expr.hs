@@ -97,24 +97,22 @@ buildExpressionParser operators simpleExpr
               prefixOp   = choice prefix  <?> ""
               postfixOp  = choice postfix <?> ""
 
-              ambigious assoc op= try $
-                                  do{ op; fail ("ambiguous use of a " ++ assoc
+              ambigious assoc op= try $ do _ <- op
+                                           fail ("ambiguous use of a " ++ assoc
                                                  ++ " associative operator")
-                                    }
 
               ambigiousRight    = ambigious "right" rassocOp
               ambigiousLeft     = ambigious "left" lassocOp
               ambigiousNon      = ambigious "non" nassocOp
 
-              termP      = do{ pre  <- prefixP
+              manyFunc :: ParsecT s u m (a -> a) -> ParsecT s u m (a -> a)
+              manyFunc p = fmap (foldr (.) id) $ many p
+
+              termP      = do{ pre  <- manyFunc prefixOp
                              ; x    <- term
-                             ; post <- postfixP
+                             ; post <- manyFunc postfixOp
                              ; return (post (pre x))
                              }
-
-              postfixP   = postfixOp <|> return id
-
-              prefixP    = prefixOp <|> return id
 
               rassocP x  = do{ f <- rassocOp
                              ; y  <- do{ z <- termP; rassocP1 z }

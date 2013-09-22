@@ -117,7 +117,7 @@ expr :: C0Parser Expr
 expr = buildExpressionParser opTable term <?> "expr"
 
 term :: C0Parser Expr
-term =
+term = 
    -- A term is either
    parens expr -- an expression surrounded by parenthesis
    <|>
@@ -129,9 +129,15 @@ term =
        n <- Text.Parsec.try hex
        return $ ExpInt n p Hex)
    <|>
-   (do p <- getPosition
+   (do whiteSpace
+       p <- getPosition
        n <- dec
        return $ ExpInt n p Dec) -- or an integer
+   <|>
+   (do char '-'
+       p <- getPosition
+       e <- expr
+       return $ ExpUnOp Neg (e) p)
    <?> "term"
 
 dec :: C0Parser Integer
@@ -226,8 +232,8 @@ brackets   :: C0Parser a -> C0Parser a
 brackets   = Tok.brackets c0Tokens
 
 opTable :: [[Operator ByteString () Identity Expr]]
-opTable = [[prefix "--" (ExpUnOp  Decr)],
-           [prefix "-"  (ExpUnOp  Neg)],
+opTable = [[prefix "-"  (ExpUnOp  Neg)],
+           [prefix "--" (ExpUnOp  Decr)],
            [binary "--" (ExpBinOp  Decr) AssocLeft],
            [binary "*"   (ExpBinOp Mul)  AssocLeft,
             binary "/"   (ExpBinOp Div)  AssocLeft,
@@ -237,10 +243,12 @@ opTable = [[prefix "--" (ExpUnOp  Decr)],
 {-
 We used a few helper functions which are in the Parsec documentation of Text.Parsec.Expr, located at \url{http://hackage.haskell.org/packages/archive/parsec/3.1.0/doc/html/Text-Parsec-Expr.html} The functions ``binary'', ``prefix'', and ``postfix'' were taken from there and are not my work, however they are used because rewriting them would look much the same, and they do not provide any core functionality, just make my code easier to read. Type signatures and location annotations were added by me.
 -}
+
 binary :: String -> (a -> a -> SourcePos -> a) -> Assoc -> Operator ByteString () Identity a
 binary  name f = Infix $ do pos <- getPosition
                             reservedOp name
                             return $ \x y -> f x y pos
+
 prefix :: String -> (a -> SourcePos -> a) -> Operator ByteString () Identity a
 prefix  name f = Prefix $ do pos <- getPosition
                              reservedOp name
