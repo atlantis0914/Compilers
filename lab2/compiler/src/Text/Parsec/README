@@ -1,0 +1,11 @@
+Author: Matthew Maurer <mmaurer@andrew.cmu.edu>
+
+This is a modified version of parsec with the following additional
+features:
+
+* Generalize Line Comments: generalizes the line comment facility by
+allowing you to use a parser instead of a string. The main purpose of
+this is to allow parsing of languages which have multiple valid comment
+indicators.
+
+* Added multiple pre/postfix operator support

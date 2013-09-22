@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/15411-f13/!svn/ver/1587/public/lab2/driver
+END
+driver.pl
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/15411-f13/!svn/ver/1068/public/lab2/driver/driver.pl
+END
+README-driver
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/15411-f13/!svn/ver/1068/public/lab2/driver/README-driver
+END
+DriverConfig.pm
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/15411-f13/!svn/ver/1587/public/lab2/driver/DriverConfig.pm
+END
+Driverlib.pm
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/15411-f13/!svn/ver/1068/public/lab2/driver/Driverlib.pm
+END

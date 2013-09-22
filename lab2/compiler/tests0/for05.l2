@@ -1,0 +1,26 @@
+//test return 110
+
+int main ()
+{
+  int n;
+  int sum;
+  int i;
+  int j = 0;
+  int k = 0;
+  bool done = false;
+
+  n = 21;
+  sum = 0;
+  for (i = 2; !done && i < n; i = i + j + k) {
+    sum += i;
+    if (i % 17 == 0)
+      done = true;  // break;
+    else 
+      j = 1;
+    if (!done) k = 1;
+  }
+  if (i % 17 != 0)
+    return sum;
+  else
+    return 0;
+}

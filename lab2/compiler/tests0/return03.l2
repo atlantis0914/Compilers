@@ -1,0 +1,17 @@
+//test return 2
+
+int main ()
+{
+  int x;
+  int y;
+  int z;
+  int u;
+
+  x = 1;
+  if (x != 0)
+    return x+1;
+  else
+    return x-1;
+  x = y + z;			/* no error, because not reachable */
+  return u;			/* ditto */
+}
