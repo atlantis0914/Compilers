@@ -1,0 +1,9 @@
+//test error
+// uninit x
+
+int main ()
+{
+  for (int z = 0; z < x; z++){
+  }
+  return 1;
+}

@@ -1,0 +1,8 @@
+//test return 3
+// Exception in branch not taken 
+
+int main ()
+{
+  int z = true ? 3 : 2/0;
+  return z;
+}
