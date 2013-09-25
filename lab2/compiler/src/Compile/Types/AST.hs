@@ -48,20 +48,28 @@ data Base = Dec
 -- back to the deriving Show instances.
 
 instance Show AST where
-  show (Block stmts _) =
-    "int main () {\n" ++ unlines (map show stmts) ++ "}\n"
+  show (AST stmt _) =
+    "int main () {\n" ++ show stmt ++ "}\n"
 
 instance Show Stmt where
-  show (Return e _) = "\treturn " ++ show e ++ ";"
+  show (Asgn s o e _) = "\t" ++ s ++ " " ++ mShow o ++ "=" ++ " " ++ show e ++ ";"
   show (Decl i t _ Nothing) = "\t" ++ (show t) ++  i ++ ";"
   show (Decl i t _ (Just st')) = "\t" ++ "decl " ++ (show t) ++ i ++ " as " ++ show st'
-  show (Asgn i op e _) = "\t" ++ i ++ " " ++ mShow op ++ "=" ++ " " ++ show e ++ ";"
+  show (Ctrl c) = show c
+  show (Block stmts) = "{\n" ++ (unlines (map show stmts)) ++ "\n" ++ ";" 
+
+instance Show Ctrl where 
+  show (If e1 s1 s2 _) = "if(" ++ show e1 ++ ")\n" ++ show s1 ++ "else" ++ show s2 ++ "\n"
+  show (While e1 s1 _) = "while(" ++ show e1 ++ ")\n" ++ show s1
+  show (Return e1 _) = "return " ++ show e1 ++ ";"
 
 instance Show Expr where
   show (ExpInt n _ _) = show n
+  show (ExpBool b _) = show b
   show (ExpBinOp op e1 e2 _) = "(" ++ show e1 ++ ") " ++ show op ++ " (" ++ show e2 ++ ")"
   show (Ident i _) = i
   show (ExpUnOp op e _) = show op ++ "(" ++ show e ++ ")"
+  show (Ternary e1 e2 e3 _) = show e1 ++ " " ++ show e2 ++ " " ++ show e3
 
 mShow Nothing = ""
 mShow (Just x) = show x
