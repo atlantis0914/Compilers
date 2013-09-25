@@ -14,15 +14,19 @@ import Compile.Types.IdentType
 data AST = Block [Stmt] SourcePos
 
 data Stmt = Asgn String AsgnOp Expr SourcePos
-          | Decl {declName :: String, 
-                  declType :: IdentType, 
-                  declPos :: SourcePos, 
+          | Decl {declName :: String,
+                  declType :: IdentType,
+                  declPos :: SourcePos,
                   extraAsgn :: Maybe Stmt}
           | Return Expr SourcePos
+          | If Expr Stmt Stmt SourcePos
+          | While Expr Stmt SourcePos
+          | Nop SourcePos
+          | Seq Stmt Stmt SourcePos
 
-isDecl :: Stmt -> Bool 
+isDecl :: Stmt -> Bool
 isDecl (Decl {}) = True
-isDecl _ = False 
+isDecl _ = False
 
 data Expr = ExpInt Integer SourcePos Base
           | Ident String SourcePos
