@@ -86,10 +86,27 @@ asgn :: C0Parser Stmt
 asgn = do
   pos  <- getPosition
   dest <- identifier
-  op   <- asnOp
-  e    <- expr
-  semi
-  return $ Asgn dest op e pos
+  (do op   <- asnOp
+      e    <- expr
+      semi
+      return $ Asgn dest op e pos)
+   <|>
+   (do op <- postOp
+       semi
+       return $ Asgn dest (Just op) (expForPostOp dest op pos) pos)
+   <?> "asgn"
+
+expForPostOp :: String -> Op -> SourcePos -> Expr 
+expForPostOp i Incr p = ExpBinOp Add (Ident i p) (ExpInt 1 p Dec) p
+expForPostOp i Decr p = ExpBinOp Sub (Ident i p) (ExpInt 1 p Dec) p
+
+postOp :: C0Parser Op
+postOp = do
+  (do reserved "++"
+      return $ Incr)
+   <|>
+   (do reserved "--"
+       return $ Decr)
 
 -- Parses a control flow structure
 ctrl :: C0Parser Stmt

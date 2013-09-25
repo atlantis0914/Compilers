@@ -40,6 +40,7 @@ instance Show Op where
   show Mod = "%"
   show Nop = "[nop]"
   show Decr = "Decr"
+  show Incr = "Incr"
   show LogicalNot = "!"
   show BitwiseNot = "~"
   show Lt = "<"
