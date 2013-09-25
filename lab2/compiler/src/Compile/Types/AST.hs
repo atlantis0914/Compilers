@@ -20,6 +20,7 @@ data Stmt = Asgn String AsgnOp Expr SourcePos
                   extraAsgn :: Maybe Stmt}
           | Ctrl Ctrl
           | Block [Stmt]
+          | Expr Expr
 
 data Ctrl = If Expr Stmt Stmt SourcePos
           | While Expr Stmt SourcePos
@@ -56,10 +57,11 @@ instance Show Stmt where
   show (Decl i t _ Nothing) = "\t" ++ (show t) ++  i ++ ";"
   show (Decl i t _ (Just st')) = "\t" ++ "decl " ++ (show t) ++ i ++ " as " ++ show st'
   show (Ctrl c) = show c
-  show (Block stmts) = "{\n" ++ (unlines (map show stmts)) ++ "\n" ++ ";" 
+  show (Block stmts) = "{\n" ++ (unlines (map show stmts)) ++ "\n" ++ "};" ++ "\n"
+  show (Expr expr) = show expr ++ "\n"
 
 instance Show Ctrl where 
-  show (If e1 s1 s2 _) = "if(" ++ show e1 ++ ")\n" ++ show s1 ++ "else" ++ show s2 ++ "\n"
+  show (If e1 s1 s2 _) = "if(" ++ show e1 ++ ") " ++ show s1 ++ "else" ++ show s2 ++ "\n"
   show (While e1 s1 _) = "while(" ++ show e1 ++ ")\n" ++ show s1
   show (Return e1 _) = "return " ++ show e1 ++ ";"
 

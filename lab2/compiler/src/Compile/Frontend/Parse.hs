@@ -91,6 +91,56 @@ asgn = do
   semi
   return $ Asgn dest op e pos
 
+ctrl :: C0Parser Stmt
+ctrl = 
+  ret 
+  <|>
+  ctrlIf
+  <|>
+  ctrlWhile
+
+ctrlIf :: C0Parser Stmt
+ctrlIf = do
+  pos <- getPosition
+  reserved "if" 
+  e <- ctrlCondition
+  s1 <- stmt
+  (do s2 <- ctrlElseOpt
+      return $ Ctrl (If e s1 s2 pos))
+   <|>
+   (do return $ Ctrl (If e s1 (Block []) pos))
+
+ctrlCondition :: C0Parser Expr
+ctrlCondition = parens expr
+
+ctrlElseOpt :: C0Parser Stmt
+ctrlElseOpt = do
+  pos <- getPosition
+  reserved "else"
+  s1 <- stmt
+  return s1
+
+ctrlWhile :: C0Parser Stmt
+ctrlWhile = do
+  pos <- getPosition
+  reserved "while"
+  e <- ctrlCondition
+  s1 <- stmt
+  return $ Ctrl (While e s1 pos)
+
+-- ctrlFor :: C0Parser Stmt
+-- ctrlFor = do 
+--   pos <- getPosition
+--   reserved "for"
+-- 
+-- forCond = parens (
+--   (do smp <- simp
+--       semi
+--       
+   
+  
+  
+
 ret :: C0Parser Stmt
 ret = do
   pos <- getPosition
@@ -99,14 +149,35 @@ ret = do
   semi
   return $ Ctrl (Return e pos)
 
-stmt :: C0Parser Stmt
-stmt =
+simp :: C0Parser Stmt
+simp = 
   decl
   <|>
   asgn
   <|>
-  ret
+  stExpr
+  <?> "simp"
+
+stExpr :: C0Parser Stmt
+stExpr = do 
+  e <- expr 
+  semi
+  return $ Expr e
+
+stmt :: C0Parser Stmt
+stmt =
+  simp
+  <|>
+  ctrl
+  <|>
+  block
   <?> "statement"
+
+block :: C0Parser Stmt
+block = braces (do
+   pos   <- getPosition
+   stmts <- many stmt
+   return $ Block stmts)
 
 -- Assignment Operators
 asnOp :: C0Parser (Maybe Op)
@@ -186,7 +257,9 @@ c0Def = LanguageDef
                        "return", "break", "continue", "NULL", "alloc",
                        "alloc_array", "typedef", "struct", "else", "assert",
                        "true", "false", "bool"],
-    reservedOpNames = ["+",  "*",  "-",  "/",  "%", "?", ":", "->", ".", "--", "=="],
+    reservedOpNames = ["+",  "*",  "-",  "/",  "%", "?", 
+                       ":", "->", ".", "--", "==", "!", 
+                       "~", "++"],
     caseSensitive   = True}
 
 c0Tokens :: Tok.GenTokenParser ByteString () Identity
@@ -250,7 +323,9 @@ brackets   :: C0Parser a -> C0Parser a
 brackets   = Tok.brackets c0Tokens
 
 opTable :: [[Operator ByteString () Identity Expr]]
-opTable = [[prefix "-"  (ExpUnOp  Neg)],
+opTable = [[prefix "-"  (ExpUnOp  Neg),
+            prefix "~"  (ExpUnOp  BitwiseNot),
+            prefix "!"  (ExpUnOp  LogicalNot)],
            [prefix "--" (ExpUnOp  Decr)],
            [binary "--" (ExpBinOp  Decr) AssocLeft],
            [binary "*"   (ExpBinOp Mul)  AssocLeft,
