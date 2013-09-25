@@ -34,8 +34,11 @@ data Expr = ExpInt Integer SourcePos Base
           | ExpBool Bool SourcePos
           | Ident String SourcePos
           | ExpBinOp Op Expr Expr SourcePos
+          | ExpRelOp Op Expr Expr SourcePos
+          | ExpLogOp Op Expr Expr SourcePos
+          | ExpPolyEq Op Expr Expr SourcePos
           | ExpUnOp Op Expr SourcePos
-          | Ternary Expr Expr Expr SourcePos
+          | ExpTernary Expr Expr Expr SourcePos
 
 type AsgnOp = Maybe Op
 
