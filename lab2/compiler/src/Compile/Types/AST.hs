@@ -57,8 +57,8 @@ instance Show AST where
 
 instance Show Stmt where
   show (Asgn s o e _) = "\t" ++ s ++ " " ++ mShow o ++ "=" ++ " " ++ show e ++ ";"
-  show (Decl i t _ Nothing) = "\t" ++ (show t) ++  i ++ ";"
-  show (Decl i t _ (Just st')) = "\t" ++ "decl " ++ (show t) ++ i ++ " as " ++ show st'
+  show (Decl i t _ Nothing) = "\t" ++ (show t) ++ " " ++ i ++ ";"
+  show (Decl i t _ (Just st')) = "\t" ++ "decl " ++ (show t) ++ " " ++  i ++ " as " ++ show st'
   show (Ctrl c) = show c
   show (Block stmts) = "{\n" ++ (unlines (map show stmts)) ++ "\n" ++ "};" ++ "\n"
   show (Expr expr) = show expr ++ "\n"

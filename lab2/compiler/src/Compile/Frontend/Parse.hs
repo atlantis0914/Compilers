@@ -91,6 +91,7 @@ asgn = do
   semi
   return $ Asgn dest op e pos
 
+-- Parses a control flow structure
 ctrl :: C0Parser Stmt
 ctrl = 
   ret 
@@ -98,7 +99,10 @@ ctrl =
   ctrlIf
   <|>
   ctrlWhile
+  <|>
+  ctrlFor
 
+-- Parses a control flow 'if'
 ctrlIf :: C0Parser Stmt
 ctrlIf = do
   pos <- getPosition
@@ -110,9 +114,12 @@ ctrlIf = do
    <|>
    (do return $ Ctrl (If e s1 (Block []) pos))
 
+-- Parses an expression surrounded by parens. 
+-- Used as a ctrl flow condition
 ctrlCondition :: C0Parser Expr
 ctrlCondition = parens expr
 
+-- Parses an optional else 
 ctrlElseOpt :: C0Parser Stmt
 ctrlElseOpt = do
   pos <- getPosition
@@ -120,6 +127,7 @@ ctrlElseOpt = do
   s1 <- stmt
   return s1
 
+-- Parses a while loop
 ctrlWhile :: C0Parser Stmt
 ctrlWhile = do
   pos <- getPosition
@@ -128,18 +136,48 @@ ctrlWhile = do
   s1 <- stmt
   return $ Ctrl (While e s1 pos)
 
--- ctrlFor :: C0Parser Stmt
--- ctrlFor = do 
---   pos <- getPosition
---   reserved "for"
--- 
--- forCond = parens (
---   (do smp <- simp
---       semi
---       
-   
-  
-  
+-- Parses an entire for loop and produces a while loop. 
+ctrlFor :: C0Parser Stmt
+ctrlFor = do 
+  pos <- getPosition
+  reserved "for"
+  conds <- forCond
+  forBody <- stmt
+  return $ forToWhile conds forBody 
+
+-- Parses the for-loop condition for (...) 
+forCond :: C0Parser (Maybe Stmt, Expr, Maybe Stmt, SourcePos)
+forCond = parens (do 
+      pos <- getPosition
+      c1 <- forSimpOpt
+      e <- forExpr
+      c2 <- forSimpOpt
+      return $ (c1,e,c2,pos))
+
+-- Parses the first, third parameters out of a for-loop condition
+forSimpOpt :: C0Parser (Maybe Stmt)
+forSimpOpt = (do
+  smp <- simp
+  return $ Just smp)
+  <|>
+  (do semi
+      return $ Nothing)
+
+-- Parses the expression (second parameter) out of a for-loop condition
+forExpr :: C0Parser Expr
+forExpr = do
+  e <- expr
+  semi
+  return $ e
+
+-- Elaborates a for into a while. 
+forToWhile :: (Maybe Stmt, Expr, Maybe Stmt, SourcePos) -> Stmt -> Stmt
+forToWhile (Nothing, e, Nothing, pos) s = Ctrl (While e s pos)
+forToWhile (Just s1, e, Nothing, pos) s = Block [s1, Ctrl (While e s pos)]
+forToWhile (Nothing, e, Just s2, pos) s = Ctrl (While e sApp pos)
+  where sApp = Block [s, s2]
+forToWhile (Just s1, e, Just s2, pos) s = Block [s1, Ctrl (While e sApp pos)]
+  where sApp = Block [s, s2]
 
 ret :: C0Parser Stmt
 ret = do
@@ -259,7 +297,8 @@ c0Def = LanguageDef
                        "true", "false", "bool"],
     reservedOpNames = ["+",  "*",  "-",  "/",  "%", "?", 
                        ":", "->", ".", "--", "==", "!", 
-                       "~", "++"],
+                       "~", "++", ">", "<", ">>", "<<", 
+                       "&&", "||"],
     caseSensitive   = True}
 
 c0Tokens :: Tok.GenTokenParser ByteString () Identity
@@ -332,7 +371,9 @@ opTable = [[prefix "-"  (ExpUnOp  Neg),
             binary "/"   (ExpBinOp Div)  AssocLeft,
             binary "%"   (ExpBinOp Mod)  AssocLeft],
            [binary "+"   (ExpBinOp Add)  AssocLeft,
-            binary "-"   (ExpBinOp Sub)  AssocLeft]]
+            binary "-"   (ExpBinOp Sub)  AssocLeft, 
+            binary ">"   (ExpBinOp Lt)   AssocLeft,
+            binary "<"   (ExpBinOp Gt)   AssocLeft]]
 {-
 We used a few helper functions which are in the Parsec documentation of Text.Parsec.Expr, located at \url{http://hackage.haskell.org/packages/archive/parsec/3.1.0/doc/html/Text-Parsec-Expr.html} The functions ``binary'', ``prefix'', and ``postfix'' were taken from there and are not my work, however they are used because rewriting them would look much the same, and they do not provide any core functionality, just make my code easier to read. Type signatures and location annotations were added by me.
 -}
