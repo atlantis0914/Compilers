@@ -11,7 +11,7 @@ import Text.ParserCombinators.Parsec.Pos (SourcePos)
 import Compile.Types.Ops
 import Compile.Types.IdentType
 
-data AST = Stmt SourcePos
+data AST = AST Stmt SourcePos
 
 data Stmt = Asgn String AsgnOp Expr SourcePos
           | Decl {declName :: String,
