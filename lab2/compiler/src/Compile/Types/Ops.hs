@@ -15,6 +15,19 @@ data Op = Mul
         | Decr
         | LogicalNot
         | BitwiseNot
+        | Lt
+        | Lte
+        | Gt
+        | Gte
+        | Equ
+        | Neq
+        | And
+        | Or
+        | BitwiseAnd
+        | BitwiseXOr
+        | BitwiseOr
+        | RShift
+        | LShift
         | Nop deriving Eq
 
 instance Show Op where
