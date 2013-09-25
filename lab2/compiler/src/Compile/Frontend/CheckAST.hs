@@ -32,7 +32,7 @@ assertMsgE s True  = Right ()
 assertMsgE s False = Left s
 
 checkAST :: AST -> Either String ()
-checkAST ast@(Block stmts _) = do
+checkAST ast@(Ast (Block stmts) _) = do
   let decls = filter isDecl stmts
   let variables = Set.fromList $ map declName decls
   assertMsgE (findDuplicate decls)
@@ -42,7 +42,7 @@ checkAST ast@(Block stmts _) = do
   -- The state monad has state = (variables, Set.empty, returnHit)
   assertMsgE "main does not return" rets
 
-checkStmt (Return e _) = do
+checkStmt (Ctrl (Return e _)) = do
   checkExpr e
   (vars, def, retHit) <- get
   put (vars, def, True)
