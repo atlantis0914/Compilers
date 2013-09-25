@@ -39,7 +39,7 @@ checkAST ast@(Block stmts _) = do
              $ length decls == Set.size variables
   rets <- fmap or $ runErrorState (mapM checkStmt stmts)
                                   (Set.empty, Set.empty, False)
-  -- The state monad has state = (variables, Set.empty, returnHit) 
+  -- The state monad has state = (variables, Set.empty, returnHit)
   assertMsgE "main does not return" rets
 
 checkStmt (Return e _) = do
@@ -57,14 +57,14 @@ checkStmt (Decl i t p Nothing) = do
 checkStmt (Decl i t p (Just (Asgn i' m e p'))) = do
   -- At this point we've already checked for duplicate decls
   (vars, defined, retHit) <- get
-  if (retHit) 
+  if (retHit)
     then do put (Set.insert i vars, defined, retHit)
             checkExpr e
             return True
     else do
       assertMsg "decl/assign error - idents not equal" (i == i')
       case m of
-        -- Makes sure this is just an assignment operand 
+        -- Makes sure this is just an assignment operand
         Just _ -> throwError (i ++ " used undefined 1 at " ++ show p)
         Nothing -> return ()
       checkExpr e
@@ -75,8 +75,8 @@ checkStmt (Asgn i m e p) = do
   (vars, defined, retHit) <- get
   -- Ensure that the ident is already declared
   assertMsg (i ++ " not declared at " ++ show p) (Set.member i vars)
-  if (retHit) 
-    then do 
+  if (retHit)
+    then do
        checkExpr e
        return True
     else do
@@ -101,16 +101,16 @@ checkExpr (ExpInt n p Hex) = do
 checkExpr (Ident s p) = do
   (vars, defined, retHit) <- get
   assertMsg (s ++ " used undeclared at " ++ show p) (Set.member s vars)
-  if (retHit) 
+  if (retHit)
     then return ()
-    else do 
+    else do
             assertMsg (s ++ " used undefined at " ++ show p) (Set.member s defined)
             return ()
 
-checkExpr (ExpBinOp op e1 e2 p) = do checkOp op p 
+checkExpr (ExpBinOp op e1 e2 p) = do checkOp op p
                                      mapM_ checkExpr [e1, e2]
 
-checkExpr (ExpUnOp op e p) = do checkOp op p 
+checkExpr (ExpUnOp op e p) = do checkOp op p
                                 checkExpr e
 
 checkOp op p = assertMsg ("Saw unqualified -- at " ++ show p) (not $ op == Decr)

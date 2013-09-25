@@ -11,27 +11,30 @@ import Text.ParserCombinators.Parsec.Pos (SourcePos)
 import Compile.Types.Ops
 import Compile.Types.IdentType
 
-data AST = Block [Stmt] SourcePos
+data AST = Stmt SourcePos
 
 data Stmt = Asgn String AsgnOp Expr SourcePos
           | Decl {declName :: String,
                   declType :: IdentType,
                   declPos :: SourcePos,
                   extraAsgn :: Maybe Stmt}
-          | Return Expr SourcePos
-          | If Expr Stmt Stmt SourcePos
+          | Ctrl Ctrl
+          | Block [Stmt]
+
+data Ctrl = If Expr Stmt Stmt SourcePos
           | While Expr Stmt SourcePos
-          | ANop SourcePos
-          | Seq Stmt Stmt SourcePos
+          | Return Expr SourcePos
 
 isDecl :: Stmt -> Bool
 isDecl (Decl {}) = True
 isDecl _ = False
 
 data Expr = ExpInt Integer SourcePos Base
+          | ExpBool Bool SourcePos
           | Ident String SourcePos
           | ExpBinOp Op Expr Expr SourcePos
           | ExpUnOp Op Expr SourcePos
+          | Ternary Expr Expr Expr SourcePos
 
 type AsgnOp = Maybe Op
 
