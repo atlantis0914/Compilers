@@ -12,6 +12,9 @@ module Compile.Frontend.Parse where
 import Control.Monad.Error
 import Data.ByteString as BS
 import Compile.Types
+
+import Compile.Util.IdentTypeUtil
+
 import Data.Int
 
 import LiftIOE
@@ -59,18 +62,26 @@ astParser = do
 
 decl :: C0Parser Stmt
 decl = do
-  pos  <- getPosition
-  dest <- reserved "int"
+   (typedecl "int")
+   <|>
+   (typedecl "bool")
+   <?> "decl"
+
+typedecl :: String -> C0Parser Stmt
+typedecl s = do 
+  pos <- getPosition
+  dest <- reserved s
   ident <- declidentifier
   (do semi
-      return $ Decl ident pos Nothing)
+      return $ Decl ident (toIdentType s) pos Nothing)
    <|>
    (do pos' <- getPosition
        op <- asnOp
        e <- expr
        semi
-       return $ Decl ident pos (Just (Asgn ident op e pos')))
-   <?> "decl"
+       return $ Decl ident (toIdentType s) pos (Just (Asgn ident op e pos')))
+  <?> "typedecl"
+  
 
 asgn :: C0Parser Stmt
 asgn = do

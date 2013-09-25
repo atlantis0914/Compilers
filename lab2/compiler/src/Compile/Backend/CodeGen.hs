@@ -105,8 +105,8 @@ dropAfterFirstReturn stmts =
 -- Generates AAsm from a statement
 genStmt :: Alloc -> Stmt -> [AAsm]
 genStmt alloc (Return expr _) = genExp alloc expr (AReg 0)
-genStmt alloc (Decl _ _ Nothing) = []
-genStmt (varMap, n) (Decl _ _ (Just (Asgn var oper expr srcPos))) = let
+genStmt alloc (Decl _ _ _ Nothing) = []
+genStmt (varMap, n) (Decl _ _ _ (Just (Asgn var oper expr srcPos))) = let
   l = ATemp $ varMap Map.! var
   expr' = case oper of
           Nothing -> expr

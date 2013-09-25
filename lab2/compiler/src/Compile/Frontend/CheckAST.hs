@@ -48,13 +48,13 @@ checkStmt (Return e _) = do
   put (vars, def, True)
   return True
 
-checkStmt (Decl i p Nothing) = do
+checkStmt (Decl i t p Nothing) = do
   (vars, defined, retHit) <- get
   -- we already check the lengths - just have to add i into vars here
   put (Set.insert i vars, defined, retHit)
   return False
 
-checkStmt (Decl i p (Just (Asgn i' m e p'))) = do
+checkStmt (Decl i t p (Just (Asgn i' m e p'))) = do
   -- At this point we've already checked for duplicate decls
   (vars, defined, retHit) <- get
   if (retHit) 
@@ -117,7 +117,7 @@ checkOp op p = assertMsg ("Saw unqualified -- at " ++ show p) (not $ op == Decr)
 
 findDuplicate xs = findDuplicate' xs Set.empty
   where findDuplicate' [] _ = error "no duplicate"
-        findDuplicate' (Decl x pos _ : xs) s =
+        findDuplicate' (Decl x t pos _ : xs) s =
           if Set.member x s
             then x ++ " re-declared at " ++ show pos
             else findDuplicate' xs (Set.insert x s)

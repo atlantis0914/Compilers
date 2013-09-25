@@ -9,3 +9,4 @@ import Compile.Types.Ops as X
 import Compile.Types.AST as X
 import Compile.Types.Graph as X
 import Compile.Types.Color as X
+import Compile.Types.IdentType as X

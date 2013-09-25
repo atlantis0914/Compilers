@@ -9,11 +9,15 @@ module Compile.Types.AST where
 import Text.ParserCombinators.Parsec.Pos (SourcePos)
 
 import Compile.Types.Ops
+import Compile.Types.IdentType
 
 data AST = Block [Stmt] SourcePos
 
 data Stmt = Asgn String AsgnOp Expr SourcePos
-          | Decl {declName :: String, declPos :: SourcePos, extraAsgn :: Maybe Stmt}
+          | Decl {declName :: String, 
+                  declType :: IdentType, 
+                  declPos :: SourcePos, 
+                  extraAsgn :: Maybe Stmt}
           | Return Expr SourcePos
 
 isDecl :: Stmt -> Bool 
@@ -42,8 +46,8 @@ instance Show AST where
 
 instance Show Stmt where
   show (Return e _) = "\treturn " ++ show e ++ ";"
-  show (Decl i _ Nothing) = "\t" ++ i ++ ";"
-  show (Decl i _ (Just st')) = "\t" ++ "decl " ++ i ++ " as " ++ show st'
+  show (Decl i t _ Nothing) = "\t" ++ (show t) ++  i ++ ";"
+  show (Decl i t _ (Just st')) = "\t" ++ "decl " ++ (show t) ++ i ++ " as " ++ show st'
   show (Asgn i op e _) = "\t" ++ i ++ " " ++ mShow op ++ "=" ++ " " ++ show e ++ ";"
 
 instance Show Expr where
