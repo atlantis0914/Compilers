@@ -13,6 +13,7 @@ data Op = Mul
         | Neg
         | Mod
         | Decr
+        | Incr
         | LogicalNot
         | BitwiseNot
         | Lt
@@ -53,6 +54,5 @@ instance Show Op where
   show BitwiseOr = "|"
   show RShift = ">>"
   show LShift = "<<"
-  show Nop = "Nop"
 
 data COp = Ret deriving (Show, Eq)

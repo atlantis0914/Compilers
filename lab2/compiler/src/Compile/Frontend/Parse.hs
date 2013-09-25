@@ -226,7 +226,12 @@ asnOp = (do
                "*="  -> Just Mul
                "-="  -> Just Sub
                "/="  -> Just Div
-               "%="  -> Just Mod
+               "%="  -> Just Mod  
+               "^="  -> Just BitwiseXOr
+               "&="  -> Just BitwiseAnd
+               "|="  -> Just BitwiseOr
+               ">>=" -> Just RShift
+               "<<=" -> Just LShift
                "="   -> Nothing
                x     -> fail $ "Nonexistent assignment operator: " ++ x)
    <?> "assignment operator"
@@ -298,7 +303,7 @@ c0Def = LanguageDef
     reservedOpNames = ["+",  "*",  "-",  "/",  "%", "?", 
                        ":", "->", ".", "--", "==", "!", 
                        "~", "++", ">", "<", ">>", "<<", 
-                       "&&", "||"],
+                       "&&", "||", "!="],
     caseSensitive   = True}
 
 c0Tokens :: Tok.GenTokenParser ByteString () Identity
@@ -364,16 +369,29 @@ brackets   = Tok.brackets c0Tokens
 opTable :: [[Operator ByteString () Identity Expr]]
 opTable = [[prefix "-"  (ExpUnOp  Neg),
             prefix "~"  (ExpUnOp  BitwiseNot),
-            prefix "!"  (ExpUnOp  LogicalNot)],
-           [prefix "--" (ExpUnOp  Decr)],
-           [binary "--" (ExpBinOp  Decr) AssocLeft],
+            prefix "!"  (ExpUnOp  LogicalNot),
+            prefix "--" (ExpUnOp  Decr),  -- Throw errors
+            prefix "++" (ExpUnOp  Incr)], -- in checkAST
+           [binary "--"  (ExpBinOp Decr) AssocLeft,
+            binary "++"  (ExpBinOp Incr) AssocLeft],
            [binary "*"   (ExpBinOp Mul)  AssocLeft,
             binary "/"   (ExpBinOp Div)  AssocLeft,
             binary "%"   (ExpBinOp Mod)  AssocLeft],
            [binary "+"   (ExpBinOp Add)  AssocLeft,
-            binary "-"   (ExpBinOp Sub)  AssocLeft, 
-            binary ">"   (ExpBinOp Lt)   AssocLeft,
-            binary "<"   (ExpBinOp Gt)   AssocLeft]]
+            binary "-"   (ExpBinOp Sub)  AssocLeft], 
+           [binary ">>"  (ExpBinOp RShift)  AssocLeft,
+            binary "<<"  (ExpBinOp LShift)  AssocLeft],
+           [binary ">"   (ExpBinOp Gt)   AssocLeft,
+            binary ">="  (ExpBinOp Gte)  AssocLeft,
+            binary "<"   (ExpBinOp Lt)   AssocLeft,
+            binary "<="  (ExpBinOp Lte)  AssocLeft],
+           [binary "=="  (ExpBinOp Equ)  AssocLeft,
+            binary "!="  (ExpBinOp Neq)   AssocLeft],
+           [binary "&"  (ExpBinOp BitwiseAnd)   AssocLeft],
+           [binary "|"  (ExpBinOp BitwiseOr)   AssocLeft],
+           [binary "^"  (ExpBinOp BitwiseXOr)   AssocLeft],
+           [binary "&&"  (ExpBinOp And)   AssocLeft],
+           [binary "||"  (ExpBinOp Or)   AssocLeft]]
 {-
 We used a few helper functions which are in the Parsec documentation of Text.Parsec.Expr, located at \url{http://hackage.haskell.org/packages/archive/parsec/3.1.0/doc/html/Text-Parsec-Expr.html} The functions ``binary'', ``prefix'', and ``postfix'' were taken from there and are not my work, however they are used because rewriting them would look much the same, and they do not provide any core functionality, just make my code easier to read. Type signatures and location annotations were added by me.
 -}
