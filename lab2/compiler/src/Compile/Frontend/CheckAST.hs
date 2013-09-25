@@ -32,7 +32,7 @@ assertMsgE s True  = Right ()
 assertMsgE s False = Left s
 
 checkAST :: AST -> Either String ()
-checkAST ast@(Ast (Block stmts) _) = do
+checkAST ast@(AST (Block stmts) _) = do
   let decls = filter isDecl stmts
   let variables = Set.fromList $ map declName decls
   assertMsgE (findDuplicate decls)

@@ -55,7 +55,7 @@ astParser = do
   ast <- braces (do
    pos   <- getPosition
    stmts <- many stmt
-   return $ Block stmts pos)
+   return $ AST (Block stmts) pos)
   eof
   return ast
   <?> "block"
@@ -81,7 +81,6 @@ typedecl s = do
        semi
        return $ Decl ident (toIdentType s) pos (Just (Asgn ident op e pos')))
   <?> "typedecl"
-  
 
 asgn :: C0Parser Stmt
 asgn = do
@@ -98,7 +97,7 @@ ret = do
   reserved "return"
   e <- expr
   semi
-  return $ Return e pos
+  return $ Ctrl (Return e pos)
 
 stmt :: C0Parser Stmt
 stmt =
@@ -135,6 +134,14 @@ term =
    (do p <- getPosition
        i <- identifier
        return $ Ident i p) -- an identifier
+   <|>
+   (do p <- getPosition
+       t <- reserved "true"
+       return $ ExpBool True p)
+   <|>
+   (do p <- getPosition
+       t <- reserved "false"
+       return $ ExpBool True p)
    <|>
    (do p <- getPosition
        n <- Text.Parsec.try hex
