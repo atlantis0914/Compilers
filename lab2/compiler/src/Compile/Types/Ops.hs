@@ -13,6 +13,8 @@ data Op = Mul
         | Neg
         | Mod
         | Decr
+        | LogicalNot
+        | BitwiseNot
         | Nop deriving Eq
 
 instance Show Op where
