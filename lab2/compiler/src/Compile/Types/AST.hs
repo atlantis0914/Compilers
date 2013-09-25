@@ -21,7 +21,7 @@ data Stmt = Asgn String AsgnOp Expr SourcePos
           | Return Expr SourcePos
           | If Expr Stmt Stmt SourcePos
           | While Expr Stmt SourcePos
-          | Nop SourcePos
+          | ANop SourcePos
           | Seq Stmt Stmt SourcePos
 
 isDecl :: Stmt -> Bool
