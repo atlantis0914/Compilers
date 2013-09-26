@@ -254,8 +254,27 @@ asnOp = (do
    <?> "assignment operator"
 
 -- Builds an expression using ops/precedence defined in opTable
+expr' :: C0Parser Expr
+expr' = buildExpressionParser opTable term <?> "expr"
+
 expr :: C0Parser Expr
-expr = buildExpressionParser opTable term <?> "expr"
+expr = do 
+  pos <- getPosition
+  e1 <- expr'
+  s <- parseCond
+  case s of 
+    Nothing -> return $ e1
+    Just (e2,e3) -> return $ ExpTernary e1 e2 e3 pos
+
+parseCond :: C0Parser (Maybe (Expr, Expr)) 
+parseCond = (do 
+  reserved "?"
+  e1 <- expr
+  reserved ":" 
+  e2 <- expr
+  return $ Just (e1,e2))
+  <|>
+  (do return $ Nothing)
 
 term :: C0Parser Expr
 term = 
