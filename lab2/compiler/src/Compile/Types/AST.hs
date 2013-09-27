@@ -74,7 +74,7 @@ instance Show Expr where
   show (ExpBinOp op e1 e2 _) = "(" ++ show e1 ++ ") " ++ show op ++ " (" ++ show e2 ++ ")"
   show (Ident i _) = i
   show (ExpUnOp op e _) = show op ++ "(" ++ show e ++ ")"
-  show (ExpTernary e1 e2 e3 _) = show e1 ++ " " ++ show e2 ++ " " ++ show e3
+  show (ExpTernary e1 e2 e3 _) = show e1 ++ " ? " ++ show e2 ++ " : " ++ show e3
 
 mShow Nothing = ""
 mShow (Just x) = show x
