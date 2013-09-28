@@ -13,11 +13,11 @@ import Compile.Types.IdentType
 
 data ParseAST = ParseAST ParseStmt SourcePos
 
-data ParseStmt = Asgn String AsgnOp Expr SourcePos
-               | Decl String IdentType SourcePos (Maybe ParseStmt)
-               | Ctrl Ctrl
-               | Block [ParseStmt]
-               | Expr Expr
+data ParseStmt = PAsgn String AsgnOp Expr SourcePos
+               | PDecl String IdentType SourcePos (Maybe ParseStmt)
+               | PCtrl Ctrl
+               | PBlock [ParseStmt]
+               | PExpr Expr
 
 data AST = AST Stmt SourcePos
 
@@ -59,17 +59,30 @@ data Base = Dec
 -- Once that is written, you may find it helpful for debugging to switch
 -- back to the deriving Show instances.
 
+instance Show ParseAST where
+  show (ParseAST stmt _) =
+    "int main () {\n" ++ show stmt ++ "}\n"
+
+instance Show ParseStmt where
+  show (PAsgn s o e _) = "\t" ++ s ++ " " ++ mShow o ++ "=" ++ " " ++ show e ++ ";"
+  show (PDecl i t _ Nothing) = "\t" ++ (show t) ++ " " ++ i ++ ";"
+  show (PDecl i t _ (Just st')) = "\t" ++ "decl " ++ (show t) ++ " " ++  i ++ " as " ++ show st'
+  show (PCtrl c) = show c
+  show (PBlock stmts) = "{\n" ++ (unlines (map show stmts)) ++ "\n" ++ "};" ++ "\n"
+  show (PExpr expr) = show expr ++ "\n"
+
 instance Show AST where
   show (AST stmt _) =
     "int main () {\n" ++ show stmt ++ "}\n"
 
 instance Show Stmt where
   show (Asgn s o e _) = "\t" ++ s ++ " " ++ mShow o ++ "=" ++ " " ++ show e ++ ";"
-  show (Decl i t _ Nothing) = "\t" ++ (show t) ++ " " ++ i ++ ";"
-  show (Decl i t _ (Just st')) = "\t" ++ "decl " ++ (show t) ++ " " ++  i ++ " as " ++ show st'
+  show (Decl i t _ innerS) = "\t" ++ (show t) ++ " " ++ i ++ ";" ++ show innerS
   show (Ctrl c) = show c
   show (Block stmts) = "{\n" ++ (unlines (map show stmts)) ++ "\n" ++ "};" ++ "\n"
   show (Expr expr) = show expr ++ "\n"
+
+
 
 instance Show Ctrl where 
   show (If e1 s1 s2 _) = "if(" ++ show e1 ++ ") " ++ show s1 ++ "else" ++ show s2 ++ "\n"
