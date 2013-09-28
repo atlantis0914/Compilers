@@ -11,9 +11,9 @@ import Compile.Frontend.CheckReturn
 sourcePos = P.initialPos "a"
 identA = Ident "a" sourcePos
 ret1 = Ctrl $ Return identA sourcePos
-decl1 = Decl "b" IInt sourcePos Nothing
-decl2 = Decl "d" IInt sourcePos Nothing
-decl3 = Decl "a" IBool sourcePos Nothing
+decl1 = Decl "b" IInt sourcePos decl2
+decl2 = Decl "d" IInt sourcePos decl3
+decl3 = Decl "a" IBool sourcePos ret1
 if1 = Ctrl $ If identA block2 block3 sourcePos
 if2 = Ctrl $ If identA block2 block4 sourcePos
 block1 = Block [decl3, decl1, decl2, if1]

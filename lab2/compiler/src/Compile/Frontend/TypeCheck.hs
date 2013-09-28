@@ -29,8 +29,7 @@ checkStmtValid (context@(map, valid)) (Decl declName declType _ asgn) =
   let
     exists = Maybe.isNothing (Map.lookup declName map)
     map' = Map.insert declName declType map
-    checkAsgn = case asgn of Nothing -> True
-                             Just asgn' -> Tuple.snd $ checkStmtValid context asgn'
+    checkAsgn = Tuple.snd $ checkStmtValid (map', valid) asgn
   in
     (map', valid && exists && checkAsgn)
 

@@ -29,6 +29,7 @@ data Stmt = Asgn String AsgnOp Expr SourcePos
           | Ctrl Ctrl
           | Block [Stmt]
           | Expr Expr
+          | SNop
 
 data PolyCtrl s = If Expr s s SourcePos
                 | While Expr s SourcePos
