@@ -6,3 +6,5 @@ import Test.HUnit hiding (Test)
 
 import Compile.Types
 import Compile.Frontend.TypeCheck
+
+typeCheckTest = []

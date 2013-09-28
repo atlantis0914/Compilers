@@ -10,7 +10,7 @@ import Tests.Compile.Backend.GenTwoOperandTest(genTwoOperandTest)
 import Tests.Compile.Backend.ColorTempTest(colorTempTest)
 import Tests.Compile.Backend.GenAsmTest(genAsmTest)
 import Tests.Compile.Backend.SpillTest(spillTest)
-import Tests.Compile.Frontend.SpillTest(spillTest)
+import Tests.Compile.Frontend.TypeCheckTest(typeCheckTest)
 
 import Test.Framework (defaultMain, testGroup)
 
