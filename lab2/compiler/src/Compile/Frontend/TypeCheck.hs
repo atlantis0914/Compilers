@@ -6,7 +6,11 @@ import qualified Data.Map as Map
 type Context = (Map.Map Ident IdentType, Bool)
 
 checkASTTypes :: AST -> Bool
-checkASTTypes
+checkASTTypes AST stmt _ =
+  let
+    (_, valid) = checkStmtValid (Map.empty, True) stmt
+  in
+    valid
 
 checkStmtValid :: Context -> Stmt -> Context
 checkStmtValid (context@(map, valid)) (Asgn name op expr _) =
@@ -18,6 +22,7 @@ checkStmtValid (context@(map, valid)) (Asgn name op expr _) =
                     (_, _) -> False
   in
     (map, valid && correctType)
+
 checkStmtValid (context@(map, valid)) (Decl declName declType _ asgn) =
   let
     exists = isNothing (Map.lookup declName map)
@@ -26,23 +31,27 @@ checkStmtValid (context@(map, valid)) (Decl declName declType _ asgn) =
                              Just asgn' -> checkStmtValid context asgn'
   in
     (map', valid && exists && checkAsgn)
+
 checkStmtValid (context@(map, valid)) (Ctrl (If exp stmt1 stmt2 _)) =
   let
     (_, valid1) = checkStmtValid context stmt1
     (_, valid2) = checkStmtValid context stmt2
   in
     (map, valid1 && valid2 && valid)
+
 checkStmtValid (context@(map, valid)) (Ctrl (While exp stmt _)) =
   let
     (_, valid1) = checkStmtValid context stmt
   in
     (map, valid1 && valid)
+
 checkStmtValid (context@(map, valid)) (Ctrl (Return exp _)) =
   let
     isInt = case checkExprType context expr of Nothing -> False
                                                Just t -> t == IInt
   in
     (map, valid && isInt)
+
 checkStmtValid (context@(map, valid)) (Block stmts) =
   fold checkStmtValid stmts
 
