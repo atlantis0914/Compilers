@@ -1,12 +1,14 @@
-module Compile.FrontEnd.TypeCheck where
+module Compile.Frontend.TypeCheck where
 
 import Compile.Types
 import qualified Data.Map as Map
+import qualified Data.Maybe as Maybe
+import qualified Data.Tuple as Tuple
 
-type Context = (Map.Map Ident IdentType, Bool)
+type Context = (Map.Map String IdentType, Bool)
 
 checkASTTypes :: AST -> Bool
-checkASTTypes AST stmt _ =
+checkASTTypes (AST stmt _) =
   let
     (_, valid) = checkStmtValid (Map.empty, True) stmt
   in
@@ -25,10 +27,10 @@ checkStmtValid (context@(map, valid)) (Asgn name op expr _) =
 
 checkStmtValid (context@(map, valid)) (Decl declName declType _ asgn) =
   let
-    exists = isNothing (Map.lookup declName map)
-    map' = insert declName declType map
+    exists = Maybe.isNothing (Map.lookup declName map)
+    map' = Map.insert declName declType map
     checkAsgn = case asgn of Nothing -> True
-                             Just asgn' -> checkStmtValid context asgn'
+                             Just asgn' -> Tuple.snd $ checkStmtValid context asgn'
   in
     (map', valid && exists && checkAsgn)
 
@@ -45,7 +47,7 @@ checkStmtValid (context@(map, valid)) (Ctrl (While exp stmt _)) =
   in
     (map, valid1 && valid)
 
-checkStmtValid (context@(map, valid)) (Ctrl (Return exp _)) =
+checkStmtValid (context@(map, valid)) (Ctrl (Return expr _)) =
   let
     isInt = case checkExprType context expr of Nothing -> False
                                                Just t -> t == IInt
@@ -53,18 +55,20 @@ checkStmtValid (context@(map, valid)) (Ctrl (Return exp _)) =
     (map, valid && isInt)
 
 checkStmtValid (context@(map, valid)) (Block stmts) =
-  fold checkStmtValid stmts
+  foldl checkStmtValid context stmts
 
 
 matchType :: Context -> Expr -> Expr -> [IdentType] -> IdentType -> (Maybe IdentType)
 matchType context expr1 expr2 expect result =
-  type1 = checkExprType context expr1
-  type2 = checkExprType context expr2
-  case (type1, type2) of
-    (Nothing, _) -> Nothing
-    (_, Nothing) -> Nothing
-    (Just t1, Just t2) -> if t1 == t2 && t1 `elem` expect then Just result
-                                                          else Nothing
+  let
+    type1 = checkExprType context expr1
+    type2 = checkExprType context expr2
+  in
+    case (type1, type2) of
+      (Nothing, _) -> Nothing
+      (_, Nothing) -> Nothing
+      (Just t1, Just t2) -> if t1 == t2 && t1 `elem` expect then Just result
+                                                            else Nothing
 
 checkExprType :: Context -> Expr -> Maybe IdentType
 checkExprType _ (ExpInt _ _ _) = Just IInt
@@ -78,9 +82,9 @@ checkExprType context (ExpLogOp _ expr1 expr2 _) =
   matchType context expr1 expr2 [IBool] IBool
 checkExprType context (ExpPolyEq _ expr1 expr2 _) =
   matchType context expr1 expr2 [IBool, IInt] IBool
-checkExprType context (ExpPolyEq _ expr _) =
+checkExprType context (ExpUnOp _ expr _) =
   case checkExprType context expr of Nothing -> Nothing
-                                    Just t -> if t == IInt then Just IInt
+                                     Just t -> if t == IInt then Just IInt
                                                            else Nothing
 checkExprType context (ExpTernary expr1 expr2 expr3 _) =
   case checkExprType context expr1 of
