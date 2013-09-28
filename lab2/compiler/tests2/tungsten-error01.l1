@@ -1,0 +1,16 @@
+//test error
+// Red test 01 - tests malformed comments, mismatched etc
+
+/* This is the start of a multiline 
+   /* Nested comment
+   with the wrong number of terminators
+   */
+
+/* Another unterminated multiline
+
+
+int main()
+{
+ int a = 1;
+ return a;
+}

@@ -1,0 +1,9 @@
+//test exception
+// shift out of range
+
+int main ()
+{  
+  int x = 33;
+  int y = 1 << 50;
+  return y;
+}

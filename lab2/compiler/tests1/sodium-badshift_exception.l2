@@ -1,0 +1,5 @@
+//test exception 8
+// Shift out of range.
+int main() {
+  return 1000 >> (17 << 1);
+}

@@ -1,0 +1,17 @@
+//test exception
+
+int main()
+{
+    int x;
+    int y;
+
+    x = 2;
+    y = 4;
+
+    while (y > 1)
+    {
+        y = y / x;
+        x = x - 1;
+    }
+    return y;
+}

@@ -1,0 +1,8 @@
+//test error
+int main() {
+	bool t = false;
+	if (!t) {
+		retdfsdfjlrjh
+	}
+	return 5;
+}

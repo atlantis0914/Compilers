@@ -1,0 +1,14 @@
+//test error
+
+int main()
+{
+  int result;
+  int n = 2;
+  int a = 1;
+
+  if (n == 2)
+    if (a == 1)
+      return n + a;
+    else 
+      return a;
+}

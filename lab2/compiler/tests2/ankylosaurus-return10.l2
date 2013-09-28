@@ -1,0 +1,13 @@
+//test return 3
+// test chaining
+int main(){
+    int x = 1;
+    int y = 2;
+    int z = 3;
+
+    if (x > y) return x;
+    else if (y > z) return y;
+    else return z;
+
+
+}

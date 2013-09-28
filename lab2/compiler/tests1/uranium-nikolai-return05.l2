@@ -1,0 +1,11 @@
+//test return 0
+// tricky short-circuits
+int main() {
+    int x = 0;
+    if (true && true && x == 1 && (1 / 0) == 1) {
+        x = 1 / 0;
+        return x;
+    } else {
+        return 0;
+    }
+}

@@ -1,0 +1,13 @@
+//test return 3
+
+/* a compiler with register coalescing will coalesce the temporary away. */
+int main() 
+{
+	int a = 7;
+	int b = 3;
+	int t;
+	t = b;
+	b = a;
+    a = t;
+	return a;
+}

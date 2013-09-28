@@ -1,0 +1,43 @@
+//test return 305510093
+
+int main ()
+{
+	int num;
+	int lo;
+	int hi;
+
+	num = 42 * 42 + 7;
+	lo = 0;
+	hi = num;
+
+	while(hi - lo > 1) {
+		int mid = (lo + hi) / 2; //since we know what num is, no need to worry about overflow
+		if(mid * mid > num) {
+			hi = mid;
+		} else {
+			lo = mid;
+		}
+	}
+
+	int ans1 = lo;
+
+	num = 41 * 41 + 5;
+	lo = 0;
+	hi = num;
+
+	while(hi - lo > 1) {
+		int mid = (lo + hi) / 2; //since we know what num is, no need to worry about overflow
+		if(mid * mid > num) {
+			hi = mid;
+		} else {
+			lo = mid;
+		}
+	}
+
+	int ans2 = lo;
+
+	if(ans1 == 42 && ans2 == 41) {
+		return 305510093; //i305!
+	}
+	return 0;
+}

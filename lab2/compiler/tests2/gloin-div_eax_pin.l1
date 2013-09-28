@@ -1,0 +1,24 @@
+//test return 193
+int main() {
+    int a;
+    int b;
+    int c;
+    int d;
+    int e;
+    int f;
+    int g;
+    a = 12;
+    b = 17;
+    c = 80;
+    d = 874;
+    e = 43;
+    f = -1937;
+    g = 193;
+    b /= a;
+    c /= b;
+    d /= c;
+    e /= d;
+    f /= e;
+
+    return g;
+}

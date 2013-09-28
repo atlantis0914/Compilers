@@ -1,0 +1,33 @@
+//test return 55
+// computes the sum of the first 10 natural numbers
+
+int main()
+{
+	int sum = 0;
+
+	int i;
+
+	for(i = 0; i<11;i++)
+	{
+		int x=1;
+		while(x<50)
+		{
+			int z;
+
+			x++;
+
+			for(z =1; z<100; z*=2)
+			{
+				if(z<8)
+				{
+					sum +=3;
+					x+=10;
+				}
+			}
+		}
+		sum -= 18 - i;
+	}
+
+	return sum;
+}
+

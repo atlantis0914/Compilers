@@ -1,0 +1,21 @@
+//test return -1
+// have all arithmetic operators
+
+int main() {
+  int x = 0;
+  int y = 1;
+  int z = 2;
+
+  int a = x - y + z;
+  int b = x * y / z;
+  int c = -z;
+  int d = y % z;
+  
+  int ret = 0;
+  ret += a;
+  ret -= b;
+  ret *= c;
+  ret /= z;
+
+  return ret;
+}

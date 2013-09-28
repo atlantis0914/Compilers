@@ -1,0 +1,9 @@
+//test error
+// must have parens around if condition
+int main() {
+  if 1 == 0 {
+    return 5;
+  }
+
+  return 4;
+}

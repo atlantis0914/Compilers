@@ -1,0 +1,6 @@
+//test exception 8
+// division error in long expression due to mod
+int main()
+{
+    return 234 + 543542 - 2234 / 2343 / 3423 /123 % 234 % 2 % 1 + 111 % (765 / 2 / 6 / 854 / 234234);
+}

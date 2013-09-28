@@ -1,0 +1,8 @@
+//test error
+//wrong return type
+
+int main() {
+  int a = 10;
+  bool b = true;
+  return b;
+}

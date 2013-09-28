@@ -1,0 +1,12 @@
+//test return 0
+// can omit statements in for loops
+
+int main ()
+{
+  int n = 0;
+  for (; n < 50;)
+  {
+    return n;
+  }
+  return -1;
+}

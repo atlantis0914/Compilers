@@ -1,0 +1,15 @@
+//test return -2
+//test asnops
+int main()
+{	
+    int a = 20;
+    int b = 5;
+    b += a;                 // 25 
+    b -= a/2;               // 15
+    b *= a - 5;             // 225
+    b /= a - (b - 25)/2;    // -2
+    b *= 5;                 // -10
+    b %= a/5;               // 2
+    
+    return b;
+}

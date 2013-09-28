@@ -1,0 +1,10 @@
+//test error
+// improper use of a reserved keyword
+
+int main()
+{
+    int struct;
+
+    struct = 3 + 7;
+    return struct;
+}

@@ -1,0 +1,27 @@
+//test error
+
+/* tests variable scoping. */
+int main() 
+{
+	int x;
+	int y;
+	int z;
+	for(x = 9; x >= 0; x--) {
+		int a = x * 100001;
+		for(y = 9; y >= 0; y--) {
+			int b = a + y * 10010;
+			for(z = 9; z >= 0; z--) {
+				int n = b + z * 1100;
+				int i;
+				for(i = 990; i >= 100; i--) {
+					if(n % i == 0) {
+						int t = n / i;
+						if(t < 1000) return n;
+					}
+				}
+			}
+		}
+	}
+	/* a not declared in this scope */
+	return a;
+}

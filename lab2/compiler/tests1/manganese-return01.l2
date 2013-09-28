@@ -1,0 +1,12 @@
+//test return 0
+// test basic conditional checking
+int main()
+{
+    int a = 0;
+    int b = 0xFFFFFFFF;
+    bool wut = a < b;
+    if (wut) {
+        return -1;
+    }
+    return 0;
+}

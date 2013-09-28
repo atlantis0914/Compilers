@@ -1,0 +1,10 @@
+//test return 2
+int
+main ()
+{
+  int v0 = 8;
+  v0 -= v0;
+  v0--;
+  return 2;
+  return ~8;
+}

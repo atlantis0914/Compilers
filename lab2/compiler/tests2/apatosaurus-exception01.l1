@@ -1,0 +1,13 @@
+//test exception
+// division by 0 with comments (sparse ones)
+int main()
+{
+  int a;
+  // sparse comments!
+  int b; 
+  a = 1;
+  b = 0;
+  // sparse comments!
+  return a/b;
+  // sparse comments!
+}

@@ -1,0 +1,6 @@
+//test exception
+// Shift overflow.
+
+int main() {
+    return 1 << 32;
+}

@@ -1,0 +1,18 @@
+//test error
+// returning a bool from main
+int main()
+{
+    bool f = false;
+    int n = 5;
+
+    for (int i = 0; i < n; i++)
+        if (i >= n)
+            n = 100;
+        else
+            n = 5;
+
+    {
+        return f;
+    }
+}
+

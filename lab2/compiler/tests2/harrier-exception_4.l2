@@ -1,0 +1,13 @@
+//test exception 8
+
+int main()
+{
+    int i = 0;
+    while (true)
+    {
+        i++;
+        if ((i % (10 / i)) == 4332423)
+            return 5;
+    }
+    return 3;
+}

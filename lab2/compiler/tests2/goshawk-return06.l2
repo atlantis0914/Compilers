@@ -1,0 +1,15 @@
+//test return -3
+// test that elses match correctly
+
+int main() {
+    bool x = true;
+    bool y = false;
+
+    if (x)
+        if (y)
+            return 15;
+        else
+            return -3;
+
+    return 22;
+}

@@ -1,0 +1,46 @@
+//test return -753494
+
+
+int main(){
+    int x;
+    int y;
+    int z;
+    int a;
+    int b;
+    int c;
+    int d;
+    int e;
+    int f;
+    int g;
+    int h;
+    int i;
+    int j;
+    x = 281;
+    y = 333;
+    z = 690;
+    a = 161;
+    b = 148;
+    c = 704;
+    d = 875;
+    e = 269;
+    f = 334;
+    g = 786;
+    h = 353;
+    i = 194;
+    j = 882;
+    x += a / x + b - d - y + i % f % b + z / b;
+    y -= y / x % z - h - e % c - f * a + e + x;
+    z *= c % j - h / x + b * g + a % b * h / z;
+    a *= g / e * g % z % j - f % g / a * y - b;
+    b += e + a * z % z + c - z - y % g - z / f;
+    c -= d % g % c - f / c * z + j + a * g / y;
+    d += f * c % j / a / j * i / f + i / d * a;
+    e -= f / d * i / e - g * z + j * y + b - y;
+    f += y % y * b / x - e + a + f + b - j * d;
+    g += j + c - i * g / i * i - h / a % y % e;
+    h += g + c + c + i % f * h - f * c / e % g;
+    i -= g % y + h % y - x % i + j + d * h + f;
+    j -= d / a / d / x - a * e * e % d - i / a;
+
+    return i/j;
+}

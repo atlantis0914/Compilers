@@ -1,0 +1,11 @@
+//test return 10
+// Test assignment to self
+
+int main() {
+    int x = 3;
+    int y = 7;
+
+    x = x + y;
+
+    return x;
+}

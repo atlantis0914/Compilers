@@ -1,0 +1,12 @@
+//test return 2
+/* Test parenthesized lvalues */
+int main()
+{
+    int a = 4;
+    (((a))) = 2;
+    return a;
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

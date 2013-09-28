@@ -1,0 +1,12 @@
+//test return 3
+// tests short-circuiting
+int main()
+{
+  int a = 4;
+  int b = 3;
+  int c = b / 4;
+  if (a < 5 || a / c > 0) {
+    return 3;
+  }
+  return 1;
+}

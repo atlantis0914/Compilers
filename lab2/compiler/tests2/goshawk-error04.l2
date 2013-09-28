@@ -1,0 +1,14 @@
+//test error
+// make sure types stay in proper scope
+int main() {
+    bool y = true;
+    {
+        int x = 1;
+        y = x > 0;
+    }
+    {
+        bool x = false;
+        y = (x == 0);
+    }
+    return y ? 1 : 0;
+}

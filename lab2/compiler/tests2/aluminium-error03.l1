@@ -1,0 +1,11 @@
+//test error
+// -- is reserved, so substraction from negative should be written as -(-1)
+int main()
+{
+  int a;
+  int b;
+
+  a = 1;
+  b = a--1;
+  return d;
+}

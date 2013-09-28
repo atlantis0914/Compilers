@@ -1,0 +1,7 @@
+//test error
+// Test typechecking on return value.
+int main() {
+
+	return true;
+}
+

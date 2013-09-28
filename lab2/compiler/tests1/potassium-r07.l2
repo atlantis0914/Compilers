@@ -1,0 +1,7 @@
+//test return 9
+
+int main() {
+
+  return true ? true ? true ? true ? 9 : 8 : 8 : 8 : 8;
+
+}

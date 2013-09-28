@@ -1,0 +1,7 @@
+//test error
+// Missing semicolon - parse error
+int main() {
+    int a
+    a = 22;
+    return a;
+}

@@ -1,0 +1,15 @@
+//test return 5
+int main() {
+  int x = 10;
+  if (x > 5) {
+    int y = 1;
+    while (true) {
+      if (y >= x*3) {
+        return 5;
+      }
+      y *= 2;
+    }
+  }
+
+  return 0;
+}

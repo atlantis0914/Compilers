@@ -1,0 +1,14 @@
+//test return 2
+// attempt at an interesting test
+int main()
+{
+    int b = 3;
+    if (b == 0) {
+        return 0;
+    } else if (b == 1) {
+        return 1;
+    } else {
+        return 2;
+    }
+    return 3;
+}

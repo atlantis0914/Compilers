@@ -1,0 +1,10 @@
+//test error
+// throw error on undeclared variable after return
+
+int main()
+{
+  int x;
+  x = 0;
+  return x;
+  y = 0;
+}

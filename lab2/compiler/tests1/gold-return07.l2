@@ -1,0 +1,8 @@
+//test return 123123
+
+int main ()
+{
+  int x = 123;
+  x = x * 1000 + x;
+  return x;
+}

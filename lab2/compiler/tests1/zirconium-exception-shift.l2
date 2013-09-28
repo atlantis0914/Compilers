@@ -1,0 +1,9 @@
+//test exception 8
+// raise SIGFPE if shifting by too much
+
+int main ()
+{
+  int a = 79 + 18;
+  int b = 1 << a;
+  return b;
+}

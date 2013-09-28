@@ -1,0 +1,10 @@
+//test return 10
+int main() {
+  int x = 5;
+  {
+    int y = x;
+    y *= 2;
+    x = y;
+  }
+  return x;
+}

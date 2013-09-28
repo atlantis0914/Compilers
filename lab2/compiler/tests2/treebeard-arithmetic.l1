@@ -1,0 +1,17 @@
+//test return 96542
+//Test all of the arithmetic operators
+
+int main(){
+  int a;
+  int b;
+  int c;
+  int d;
+  int e;
+
+  a = 8 / 3; // a = 2
+  b = 18 % 7; // b = 4
+  c = 2 + 3; // c = 5
+  d = 8 - 2; // d = 6
+  e = 3 * 3; // e = 9
+  return a + 10 * (b + 10 * (c + 10 * (d + 10 * e)));
+}

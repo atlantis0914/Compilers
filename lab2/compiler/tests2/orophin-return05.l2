@@ -1,0 +1,15 @@
+//test return 0
+// Test overloaded equality operator
+int main() {
+	bool a;
+	int zero = 0;
+	int one = zero + 1;
+	bool b;
+	a = zero == one;
+	b = one != zero;
+	if (a == b) {
+		return 1;
+	} else {
+		return 0;
+	}
+}

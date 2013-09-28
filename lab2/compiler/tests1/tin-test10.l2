@@ -1,0 +1,12 @@
+//test error
+
+int main() {
+  int struct = 1;
+  bool typedef = false;
+  int continue = 5;
+  bool break = true;
+  int assert = 8;
+  bool string = false;
+  int alloc_array = 3;
+  int NULL = 4;
+}

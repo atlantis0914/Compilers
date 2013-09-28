@@ -1,0 +1,11 @@
+//test error
+
+// *= to an uninitialized var
+
+int main() {
+    int x;
+    int y = 4;
+
+    x *= 7;
+    return x + y;
+}

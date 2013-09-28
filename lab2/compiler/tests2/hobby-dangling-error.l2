@@ -1,0 +1,13 @@
+//test error
+
+int main() {
+    int i = 2;
+    int j = 5;
+    int k = 8;
+
+    else {
+        k = 7;
+    }
+
+    return k;
+}

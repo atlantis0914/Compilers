@@ -1,0 +1,12 @@
+//test error
+// test scoping
+
+int main() {
+    bool la = false;
+    if (la) {
+        int q = 2;
+    } else {
+        int q = 5;
+    }
+    return q;
+}

@@ -1,0 +1,17 @@
+//test return 258226308
+// Counts the number of non-negative lattice points within a circle of radius x around the origin.
+
+int main () {
+
+  int x = 25642;
+  int i;
+  int j;
+  int result = 0;
+         
+  for (i = 0; i <= x; i++) {
+    for (j = i; (i*i + j*j) <= x*x; j++) {
+      result++;
+    }
+  }
+  return result;
+}

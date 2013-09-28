@@ -1,0 +1,15 @@
+//test return 12
+
+int main() {
+    int x = 40;
+    int y;
+
+    while (x > 0) {
+        x--;
+        if (x == 0) {
+            return 12;
+            x = y;
+        }
+    }
+    return 15;
+}

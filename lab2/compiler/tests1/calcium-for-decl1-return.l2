@@ -1,0 +1,5 @@
+//test return 0
+int main() {
+  for (int x = 0;true;)return x;
+  return -1;
+}

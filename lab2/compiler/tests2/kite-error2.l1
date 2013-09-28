@@ -1,0 +1,16 @@
+//test error
+int main()
+{
+  int 1a;
+  int b;
+  int c;
+  int d;
+  int e;
+
+  1a = 0;
+  b = 1a+1;
+  c = 2*b;
+  d = 3-c;
+  e = -d;
+  return d;
+}

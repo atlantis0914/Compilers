@@ -1,0 +1,7 @@
+//test error
+
+// this shouldn't be a thing...?
+int main()
+{
+  ;return 0;
+}

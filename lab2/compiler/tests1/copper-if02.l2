@@ -1,0 +1,13 @@
+//test return 5 
+
+int main()
+{
+    int x = 2;
+    int y = 5;
+    bool b1 = true;
+
+    if (!b1) x += 1; 
+    x += 3;
+   
+    return x;
+}

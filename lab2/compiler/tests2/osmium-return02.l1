@@ -1,0 +1,20 @@
+//test return 0
+// weird comments
+
+int main() {
+    int x = 3; //this is a thing
+    x += 5;
+
+    /* now we do some comment
+    thing that involves //random crap
+    int x; //redefine
+    if (x == 3)
+        return 1001;
+    /* and more openings
+    x += 45;
+    and closings */
+    */
+
+    return x-8;
+}
+

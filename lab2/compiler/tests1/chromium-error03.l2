@@ -1,0 +1,13 @@
+//test error
+
+int main ()
+{
+  if(0x1 = 0 == 123 || 0 || true || false)
+    return 1;
+  else
+    if (apple == 0) 
+      if (pie == true)
+        return 2;
+
+  return 4;
+}

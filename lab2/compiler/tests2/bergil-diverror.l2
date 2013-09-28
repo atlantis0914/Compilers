@@ -1,0 +1,10 @@
+//test exception 8
+
+// division error with ternary
+
+int main() {
+    int a = 4;
+
+    return (a / (true ? 0 : 3));
+}
+

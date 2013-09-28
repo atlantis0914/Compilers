@@ -1,0 +1,15 @@
+//test error
+// Tests that variables declared in inner scopes do not leak to outer scopes
+int main () {
+    int a;
+
+    int i = 0;
+    a = 0;
+    while (i < 10) {
+        int x = a + i;
+        i++;
+    }
+
+    a = x;
+    return a;
+}

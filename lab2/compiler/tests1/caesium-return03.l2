@@ -1,0 +1,8 @@
+//test return 0
+//tests support for bool and while loops.
+int main()
+{
+    bool b = false;
+    while (b) {}
+    return 0;
+}

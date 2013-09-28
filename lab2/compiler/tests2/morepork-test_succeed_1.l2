@@ -1,0 +1,25 @@
+//test return 7
+
+/* 
+ * This is my test program
+ * Nothing should go wrong
+ */
+int main () {
+  int x = 4;
+  int y;
+
+  if (x == 3)
+  {
+    y = 5;
+    return 2 + y;
+  }
+  else if (x == 2)
+  {
+    y = 6;
+    return 1 + y;
+  }
+  else
+  {
+    return 7;
+  }
+}

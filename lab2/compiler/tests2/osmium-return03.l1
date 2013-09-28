@@ -1,0 +1,16 @@
+//test return 12
+// test random grammar junk
+
+int main() {
+    int x = 4;
+    int y = x - 2;
+
+    x = y + 1;
+    y = x + 1;
+
+    int int_while_return;
+
+    ((((((((((int_while_return)))))))))) = x * y;
+
+    return int_while_return;
+}

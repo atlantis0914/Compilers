@@ -1,0 +1,41 @@
+//test return -2
+// Covers all special characters on page 2 of the lab writeup.
+int main() {
+  int x = 0xc0c0ffee;
+  int y = ~x;
+  x = x - y;
+  y = y + x;
+  x = x * y;
+  y = y / x + 4;
+  x = x % y;
+  y = y << 2;
+  x = x >> 2;
+  y = y & x;
+  x = x ^ y;
+  y = y | x;
+  x += y;
+  y -= x;
+  x *= y;
+  y /= x;
+  x %= (y + 4);
+  y <<= 3;
+  x >>= 3;
+  y &= x;
+  x |= y;
+  y ^= x;
+  x--;
+  y++;
+
+  bool a = true;
+  bool b = !a;
+  a = x > y;
+  b = y < x;
+  a = x >= y;
+  b = y <= x;
+  a = x == y;
+  b = y != x;
+  a = a && b;
+  b = b || a;
+
+  return (a || b) ? x + y : x - y;
+}

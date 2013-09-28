@@ -1,0 +1,21 @@
+//test return 42
+// test parsing of comments, with nesting.  Also some more arithmetic
+int main()
+{
+    int a;
+    /* int b; */
+    int b;
+    int c;
+    int d;
+
+    a = 7;
+    /* /* If handing of nested comments is wrong, this might execute */
+    a = 10;
+    // */
+    b = 420 / a;
+    c = b % 31;
+    d = c + a - (-a);
+
+    return (d / 41 + d / 44 + d % 41 + b + (-c) + a + -a) % 42 + 8;
+}
+

@@ -1,0 +1,9 @@
+//test exception
+// so this is apparently a thing?
+
+int main() {
+  int x = 0x80000000;
+  int y = -1;
+
+  return x / y;
+}

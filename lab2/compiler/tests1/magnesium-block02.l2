@@ -1,0 +1,8 @@
+//test error
+// declaration out of scope
+int main() {
+  {
+    int x = 0;
+  }
+  return x;
+}

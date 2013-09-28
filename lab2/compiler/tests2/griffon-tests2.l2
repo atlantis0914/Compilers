@@ -1,0 +1,18 @@
+//test error 
+
+int main(){
+
+   int x = 5;
+   int i;
+   for(i = 0; i< 10; i = i + 1){
+	if(i < 0)
+	   int y = 0;
+	if(i / 2 > 5)
+	   x++;
+	else
+	   x+=2;
+	if(i%3 == 0)
+	   x*=3;
+   }
+   return x+y;
+}

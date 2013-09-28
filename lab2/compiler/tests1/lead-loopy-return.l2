@@ -1,0 +1,11 @@
+//test return 100
+//Positive test for loops.
+
+int main ()
+{
+  int x = 0;
+  while (x < 100) {
+    x++;
+  }
+  return x;
+}

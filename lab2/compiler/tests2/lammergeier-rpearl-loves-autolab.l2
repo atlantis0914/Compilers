@@ -1,0 +1,5 @@
+//test exception
+int main() {
+	int autolab = 1 / 0;
+	return autolab;
+}

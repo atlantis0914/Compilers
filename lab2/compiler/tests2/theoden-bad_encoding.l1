@@ -1,0 +1,10 @@
+//test error
+
+// see what happens when unicode characters are used in a c0 file
+
+int main()
+{
+  int español = 237;
+
+  return 0;
+}

@@ -1,0 +1,12 @@
+//test return 1
+// Ensures control flow has to go through if-else
+
+int main()
+{
+  int x = 2;
+  if (x == 1)
+    return 0;
+  else
+    return 1;
+  return 2;
+}

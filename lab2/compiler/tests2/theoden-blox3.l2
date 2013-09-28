@@ -1,0 +1,13 @@
+//test error
+
+// make sure variables conflict into blocks
+int main()
+{
+  int x = 3;
+  {
+    int y;
+    int x;
+  }
+
+  return x;
+}

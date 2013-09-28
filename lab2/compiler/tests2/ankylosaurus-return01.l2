@@ -1,0 +1,31 @@
+//test return 3
+// register spilling
+
+int main(){
+    int a = 1;
+    int b = a + 1;
+    int c = b + 1;
+    int d1 = 2;
+    int d2 = 2;
+    int d3 = 2;
+    int d4 = 2;
+    int d5 = 2;
+    int d6 = 2;
+    int d7 = 2;
+    int d8 = 2;
+    int d9 = 2;
+    int d10 = 2;
+    int d11 = 2;
+    int d12 = 2;
+    int d13 = 2;
+    int d14 = 2;
+
+    if ( (d1 == d2) && (d3 == d4) && (d5 == d6) && (d7 == d8) && (d9 == d10) && (d11 == d12) && (d13 == d14) ){
+       return c;
+    }
+    else {
+       return a;
+    }      
+
+
+}

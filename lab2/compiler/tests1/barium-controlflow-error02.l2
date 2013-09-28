@@ -1,0 +1,15 @@
+//test error
+
+// All branches should have a return.
+int main()
+{
+  int x = 0;
+  if(x > 1)
+  {
+    return 1;
+  }
+  else
+  {
+    // No return here.
+  }
+}

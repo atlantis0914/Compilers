@@ -1,0 +1,9 @@
+//test return 0
+// exception should not be thrown
+int main() {
+    int x = 0;
+    int y = 1;
+    return x;
+    return y / x;
+}
+

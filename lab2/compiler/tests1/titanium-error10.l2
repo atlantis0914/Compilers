@@ -1,0 +1,8 @@
+//test error
+// return false
+
+int main ()
+{
+  int x = 0;
+  return false;
+}

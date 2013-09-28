@@ -1,0 +1,13 @@
+//test return 5
+//test nested ternary operators
+
+int main() {
+    bool x = false;
+    bool y = true;
+
+    int a = 2;
+    int b = 5;
+    int c = 7;
+    
+    return x ? a : y ? b : c;
+}

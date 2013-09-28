@@ -1,0 +1,4 @@
+//test return 15
+int main() {
+    return 0xf;
+}

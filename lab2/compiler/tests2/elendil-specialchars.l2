@@ -1,0 +1,14 @@
+//test return 3
+//  test handling of special delimiters
+int main () {
+
+int x = 5
+-4;
+int y=3+4; int z/*adsfkljadfhlaksdjfhlaskdjafldsjkfhalskdjfh*/
+
+ = 5; int a = x- -4; int b = x +
+			-
+3;
+
+return x + y + a * b + z;
+}

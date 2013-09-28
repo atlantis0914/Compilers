@@ -1,0 +1,12 @@
+//test return 8
+
+//Successful for loop containing only condition
+
+int main ()
+{
+  int i = 1;
+  for(; i < 8; ) {
+    i *= 2;
+  }
+  return i;
+}

@@ -1,0 +1,15 @@
+//test return 3
+int main() {
+  int x = 0xFfFfFfFf;
+  int y = 0X11111111;
+
+
+  y >>= 2;
+  x >>= 3;
+
+  y = x ^ 3;
+  
+  y =~ y;
+
+  return x & y;
+}

@@ -1,0 +1,21 @@
+//test return 1
+
+int main() {
+while (false) {}
+  {
+    }
+    {
+    {
+    }
+    { return 1;
+    }
+    }
+    return 3;
+    {
+    {
+    {
+    }
+    }
+    }
+    for (;true;) {}
+    }

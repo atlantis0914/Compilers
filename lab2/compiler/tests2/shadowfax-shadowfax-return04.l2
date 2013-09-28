@@ -1,0 +1,15 @@
+//test return 89
+// tests returning iterative fib_10
+int main()
+{
+  int n = 10;
+  int prev = 0;
+  int result = 1;
+  for (int x = 1; x <= n; x++) {
+    int tmp = prev + result;
+    prev = result;
+    result = tmp;
+  }
+
+  return result;
+}

@@ -1,0 +1,8 @@
+//test exception 8
+// division overflow
+
+int main()
+{
+  int x = 0x80000000;
+  return (x / (-1));
+}

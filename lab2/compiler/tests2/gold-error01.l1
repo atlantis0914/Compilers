@@ -1,0 +1,8 @@
+//test error
+// wrong <decnum>
+
+int main()
+{
+  int x = 00;
+  return x;
+}

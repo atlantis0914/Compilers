@@ -1,0 +1,18 @@
+//test error
+int main()
+{
+  bool a = false;
+  if (a) {
+    while (true) {
+      if (false) 
+	continue;
+      return 0;
+    }
+  } else {
+    return 1;
+  }
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

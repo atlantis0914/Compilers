@@ -1,0 +1,7 @@
+//test exception 8
+//tests division by zero-valued ident
+int main()
+{
+  int a = 0;
+  return (7 / a);
+}

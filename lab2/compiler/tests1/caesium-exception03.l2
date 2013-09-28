@@ -1,0 +1,18 @@
+//test exception
+int main()
+{
+    int i;
+    int a = 1;
+    int b = 1;
+    int c = 0;
+    int ret = 1;
+
+    for (i = 0; i < 20; i++)
+    {
+        c = a + b;
+        a = b;
+        b = c;
+    }
+
+    return ret<<c;
+}

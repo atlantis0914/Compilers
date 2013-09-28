@@ -1,0 +1,65 @@
+//test return -1408458270
+// test allocating a large number of registers
+int main()
+{
+    // Compute the first 50 Fibonacci numbers
+    int t0 = 0;
+    int t1 = 1;
+    int t2 = t0 + t1;
+    int t3 = t1 + t2;
+    int t4 = t2 + t3;
+    int t5 = t3 + t4;
+    int t6 = t4 + t5;
+    int t7 = t5 + t6;
+    int t8 = t6 + t7;
+    int t9 = t7 + t8;
+    int t10 = t8 + t9;
+    int t11 = t9 + t10;
+    int t12 = t10 + t11;
+    int t13 = t11 + t12;
+    int t14 = t12 + t13;
+    int t15 = t13 + t14;
+    int t16 = t14 + t15;
+    int t17 = t15 + t16;
+    int t18 = t16 + t17;
+    int t19 = t17 + t18;
+    int t20 = t18 + t19;
+    int t21 = t19 + t20;
+    int t22 = t20 + t21;
+    int t23 = t21 + t22;
+    int t24 = t22 + t23;
+    int t25 = t23 + t24;
+    int t26 = t24 + t25;
+    int t27 = t25 + t26;
+    int t28 = t26 + t27;
+    int t29 = t27 + t28;
+    int t30 = t28 + t29;
+    int t31 = t29 + t30;
+    int t32 = t30 + t31;
+    int t33 = t31 + t32;
+    int t34 = t32 + t33;
+    int t35 = t33 + t34;
+    int t36 = t34 + t35;
+    int t37 = t35 + t36;
+    int t38 = t36 + t37;
+    int t39 = t37 + t38;
+    int t40 = t38 + t39;
+    int t41 = t39 + t40;
+    int t42 = t40 + t41;
+    int t43 = t41 + t42;
+    int t44 = t42 + t43;
+    int t45 = t43 + t44;
+    int t46 = t44 + t45;
+    int t47 = t45 + t46;
+    int t48 = t46 + t47;
+    int t49 = t47 + t48;
+    int t50 = t48 + t49;
+
+    // Now foil liveness checks: use ALL the variables
+    return t0 + t1 + t2 + t3 + t4 + t5 + t6 + t7 + t8 + t9 + t10
+        + t11 + t12 + t13 + t14 + t15 + t16 + t17 + t18 + t19 + t20
+        + t21 + t22 + t23 + t24 + t25 + t26 + t27 + t28 + t29 + t30
+        + t31 + t32 + t33 + t34 + t35 + t36 + t37 + t38 + t39 + t40
+        + t41 + t42 + t43 + t44 + t45 + t46 + t47 + t48 + t49 + t50;
+}
+

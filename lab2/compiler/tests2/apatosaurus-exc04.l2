@@ -1,0 +1,10 @@
+//test exception
+// make sure while loops loop correctly then boom
+int main ()
+{
+    int x = 500000;
+    while(x!=0){
+        x/=2;
+    }
+    return 50/0;
+}

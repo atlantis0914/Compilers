@@ -1,0 +1,14 @@
+//test exception
+
+int main () {
+    int x = 0X1111111;
+    
+    int modified_x = (x>>24) & (x>>16) & (x>>8) & x;
+    
+    modified_x = (0x55 ^ (0x55 & modified_x));
+
+    if(modified_x != 0)
+        return modified_x/0;
+    else
+        return 1;
+}

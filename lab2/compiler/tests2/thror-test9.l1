@@ -1,0 +1,7 @@
+//test exception 8
+int main()
+{
+  int a = 6;
+  int b = 5 / (a - 6);
+  return 0;
+}

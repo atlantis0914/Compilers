@@ -1,0 +1,10 @@
+//test return 280579073
+int main() {
+  int i;
+  int j;
+  int x = 0;
+  for (i = 0; i < 65536; i+=255)
+    for (j = 0; j < 65536; j+=255)
+      x ^= i*j;
+  return x;
+}

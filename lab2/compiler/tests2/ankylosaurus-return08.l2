@@ -1,0 +1,12 @@
+//test return 10
+int main(){
+    int x = 0x00000001;	
+    int y = ~x + 1;
+    if (y < 0) {
+       int z = 10;
+       return z;
+    }
+    return x;
+
+
+}

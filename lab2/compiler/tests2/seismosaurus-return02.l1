@@ -1,0 +1,17 @@
+//test return 42
+// test multiple arithmetic operations
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+  int e;
+
+  a = 42;
+  b = 2*a;
+  c = b/a;
+  d = c-2;
+  e = d+a;
+  return e;
+}

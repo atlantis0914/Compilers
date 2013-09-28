@@ -1,0 +1,12 @@
+//test error
+// Red test 05 - tests using invalid assignment ops with undefined vars
+
+int main()
+{
+  int a *= 10;
+  int b /= 10;
+  int c += 10;
+  int d %= 10;
+  int e -= 10;
+  return e;
+}

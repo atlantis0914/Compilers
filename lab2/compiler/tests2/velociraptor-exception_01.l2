@@ -1,0 +1,10 @@
+//test exception
+//just a boring floating point exception
+
+int main() {
+  int x = 100;
+
+  while (x > 0) x--;
+
+  return 5/x;
+}

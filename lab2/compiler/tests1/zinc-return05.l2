@@ -1,0 +1,19 @@
+//test return 20000
+int main() {
+  int x = 0;
+  int y = x;
+  int i; int j;
+  for (i = 0; i < 100; i = i+1) {
+    for (j = 0; j < 100; j = j+1) {
+      x++;
+      y++;
+      if (x == y) {
+        for (;x == y;) {
+          x++;
+        }
+        x--;
+      }
+    }
+  }
+  return (x+y);
+}

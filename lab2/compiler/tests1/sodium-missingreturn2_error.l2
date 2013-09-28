@@ -1,0 +1,10 @@
+//test error
+// Missing return because there's no else branch.
+int main() {
+  int x = 4;
+  if (x >= 0) {
+    return x;
+  } else if (x < 0) {
+    return -x;
+  }
+}

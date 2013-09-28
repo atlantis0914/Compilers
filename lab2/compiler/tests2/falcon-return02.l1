@@ -1,0 +1,10 @@
+//test return -16
+// Test order of operations
+
+int main() {
+	int x = 5;
+	int y = -x*5+4;
+
+	return y + x;
+}
+

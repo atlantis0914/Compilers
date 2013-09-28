@@ -1,0 +1,49 @@
+//test return 120
+int main () {
+    int c1 = 1;
+    int c2 = 2;
+    int c3 = 3;
+    int c4 = 4;
+    int c5 = 5;
+    int c6 = 6;
+    int c7 = 7;
+    int c8 = 8;
+    int c9 = 9;
+    int c10 = 10;
+    int c11 = 11;
+    int c12 = 12;
+
+    int y = c1 + c2 + c3;
+    c1 += 1;
+    c2 += 1;
+    c3 += 1;
+    c4 += 1;
+    c5 += 1;
+    c6 += 1;
+    c7 += 1;
+    c8 += 1;
+    c9 += 1;
+    c10 += 1;
+    c11 += 1;
+    c12 += 1;
+    int x = c11 + c12;
+    c1 += 1;
+    c2 += 1;
+    c3 += 1;
+    c4 += 1;
+    c5 += 1;
+    c6 += 1;
+    c7 += 1;
+    c8 += 1;
+    c9 += 1;
+    c10 += 1;
+    c11 += 1;
+    c12 += 1 - - - -1;
+    int z = c4 + c5;
+
+    int a = c2 + c2 + c3 + c4 + c4 +
+           c5 + c6 + c7 + c8 + c8 +
+           c9 + c10 + c11 + c12;
+
+    return a;
+}

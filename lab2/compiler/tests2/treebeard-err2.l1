@@ -1,0 +1,14 @@
+//test error
+// undefined identifier
+
+int main(){
+    int x;
+    int y;
+    int z;
+    
+    z = 1;
+    x = 23;
+    y = y + 1;     //error here, y undefined
+    z = z+x;
+    return z;
+}

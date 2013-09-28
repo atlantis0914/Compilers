@@ -1,0 +1,225 @@
+//test error
+
+int main() {
+  
+  if (0 < 1)
+    {
+      if (1 < 2)
+	{
+	  if (2 < 3)
+	    {
+	      if (3 < 4)
+		{
+		  if (4 < 5)
+		    {
+		      return 5;
+		    }
+		  else
+		    {
+		      return 4;
+		    }
+		}
+	      else
+		{
+		  if (4 < 5)
+		    {
+		      return 5;
+		    }
+		  else
+		    {
+		      return 4;
+		    }
+		}
+	    }
+	  else
+	    {
+	      if (3 < 4)
+		{
+		  if (4 < 5)
+		    {
+		      return 5;
+		    }
+		  else
+		    {
+		      return 4;
+		    }
+		}
+	      else
+		{
+		  if (4 < 5)
+		    {
+		      return 5;
+		    }
+		  else
+		    {
+		      return 4;
+		    }
+		}
+	    }
+	}
+      else
+	{
+	  if (2 < 3)
+	    {
+	      if (3 < 4)
+		{
+		  if (4 < 5)
+		    {
+		      return 5;
+		    }
+		  else
+		    {
+		      return 4;
+		    }
+		}
+	      else
+		{
+		  if (4 < 5)
+		    {
+		      return 5;
+		    }
+		  else
+		    {
+		      return 4;
+		    }
+		}
+	    }
+	    else
+	      {
+		if (3 < 4)
+		  {
+		    if (4 < 5)
+		      {
+			return 5;
+		      }
+		    else
+		      {
+			return 4;
+		      }
+		  }
+		else
+		  {
+		    if (4 < 5)
+		      {
+			return 5;
+		      }
+		    else
+		      {
+			int x = 4;
+		      }
+		  }
+	      }
+	}
+    }
+  else
+    {
+      if (1 < 2)
+	{
+	  if (2 < 3)
+	    {
+	      if (3 < 4)
+		{
+		  if (4 < 5)
+		    {
+		      return 5;
+		    }
+		  else
+		    {
+		      return 4;
+		    }
+		}
+	      else
+		{
+		  if (4 < 5)
+		    {
+		      return 5;
+		    }
+		  else
+		    {
+		      return 4;
+		    }
+		}
+	    }
+	  else
+	    {
+	      if (3 < 4)
+		{
+		  if (4 < 5)
+		    {
+		      return 5;
+		    }
+		  else
+		    {
+		      return 4;
+		    }
+		}
+	      else
+		{
+		  if (4 < 5)
+		    {
+		      return 5;
+		    }
+		  else
+		    {
+		      return 4;
+		    }
+		}
+	    }
+	}
+      else
+	{
+	  if (2 < 3)
+	    {
+	      if (3 < 4)
+		{
+		  if (4 < 5)
+		    {
+		      return 5;
+		    }
+		  else
+		    {
+		      return 4;
+		    }
+		}
+	      else
+		{
+		  if (4 < 5)
+		    {
+		      return 5;
+		    }
+		  else
+		    {
+		      return 4;
+		    }
+		}
+	    }
+	  else
+	    {
+	      if (3 < 4)
+		{
+		  if (4 < 5)
+		    {
+		      return 5;
+		    }
+		  else
+		    {
+		      return 4;
+		    }
+		}
+	      else
+		{
+		  if (4 < 5)
+		    {
+		      return 5;
+		    }
+		  else
+		    {
+		      return 4;
+		    }
+		}
+	    }
+	}
+	    
+    }
+
+}

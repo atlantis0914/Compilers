@@ -1,0 +1,9 @@
+//test return -1
+/* Test for division rounding and modulus */
+int main() {
+  int i;
+  i = 0;
+  i -= 1;
+  int k = 2;
+  return (i/k)*k + (i%k);
+}

@@ -1,0 +1,14 @@
+//test error
+/* Test that loops don't define variables. */
+
+int main()
+{
+	int x;
+	int y;
+
+	for (x = 0; x < 42; y++) {
+		y = 0;
+	}
+
+	return y;
+}

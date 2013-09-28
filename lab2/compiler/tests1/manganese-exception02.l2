@@ -1,0 +1,14 @@
+//test exception 8
+int main()
+{
+    bool a = !true;
+    bool b = !a;
+    int c;
+    if (a || b) {
+        c = 0;
+    } else {
+        c = 1;
+    }
+
+    return 1 / c;
+}

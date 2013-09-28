@@ -1,0 +1,21 @@
+//test return 4
+// given two numbers, tells you which quadrant you're in
+// nested if statements galore!
+int main() {
+	int x = 4;
+	int y = -9;
+	if (x >= 0) {
+		if (y >= 0)
+			return 1;
+		else
+			return 4;
+	}
+	else {
+		if (y >= 0)
+			return 2;
+		else
+			return 3;
+	}
+	// What are you doing here?
+	return -5;
+}

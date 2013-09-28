@@ -1,0 +1,16 @@
+//test return 5
+// exception after 1st return statement
+
+int main()
+{
+  int x;
+  x = 1;
+  x *= 5;
+  return x;
+
+  // not reached
+  int y;
+  y = 0;
+  x = x / y;
+  return x;
+}

@@ -1,0 +1,7 @@
+//test error
+//tests unsigned syntax
+int main()
+{
+	unsigned x = 0;
+	return x;
+}

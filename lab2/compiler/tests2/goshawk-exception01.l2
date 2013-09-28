@@ -1,0 +1,17 @@
+//test exception 8
+// tests nested loops
+int main()
+{
+    int x = 15;
+    int y = 411;
+    for (;true;)
+        while (true)
+            for (int i = 1337;true;)
+                while (!false)
+                    for (;true;)
+                        while (true || false) {
+                            x /= (y-1);
+                            y--;
+                        }
+    return 0xBAD;
+}

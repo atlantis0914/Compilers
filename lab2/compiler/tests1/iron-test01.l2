@@ -1,0 +1,18 @@
+//test return 3
+//new operators
+
+int main ()
+{
+  int x = 0;
+  
+  x = ~x;
+  x = x << 2;
+  x = x >> 1;
+  x++;
+  x--;
+  x = x & 3;
+  x = x | 4;
+  x = x ^ 5;
+
+  return x;
+}

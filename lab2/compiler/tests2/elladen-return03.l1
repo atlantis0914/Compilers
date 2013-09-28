@@ -1,0 +1,15 @@
+//test return -1
+// test modular arithmetic
+int main()
+{
+  int TMIN;
+  int TMAX;
+  int TMIN2;
+  int result;
+
+  TMIN = -2147483648;		/* TMIN == 2^31 */
+  TMAX = TMIN-1;		/* TMAX == 2147483647 */
+  TMIN2 = -TMIN;		/* TMIN2 == TMIN */
+  result = TMIN2+TMAX;
+  return result;
+}

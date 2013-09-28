@@ -1,0 +1,9 @@
+//test error
+//test basic typechecking
+int main(){
+  int main = 1;
+  for(main=4; main<10;main++){
+      if(main = 3)
+          break;
+  }
+  return main;

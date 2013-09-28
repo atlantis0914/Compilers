@@ -1,0 +1,10 @@
+//test error
+// declaration after assignment
+int main ()
+{
+	x = 10;
+	int x = 5;
+	int y = 1;
+	y += 10;
+	return x - y;
+}

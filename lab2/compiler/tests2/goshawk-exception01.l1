@@ -1,0 +1,7 @@
+//test exception 8
+// division error in long expression
+int main()
+{
+    return 24 * 2 - 14 + 34234 / 5 * (423 - 6543 / (23434 - 111 / 3 / 2 / 4)) -
+    1 / (5234 - 4 / 6 + 234 - 366356 / 67);
+}

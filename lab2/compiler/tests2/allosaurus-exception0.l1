@@ -1,0 +1,11 @@
+//test exception 8
+
+int main(){
+int x;
+int y;
+int z;
+x = 0;
+y = 9;
+z = y % x; // expecting a SIGPIPE(8) here for divide by 0
+return x;
+}

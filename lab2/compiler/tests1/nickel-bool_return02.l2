@@ -1,0 +1,9 @@
+//test return 1
+// simple bool test
+int main()
+{
+  bool j = true;
+  bool k = j && j;
+  bool l = k || k;
+  return l ? 1 : 0;
+}

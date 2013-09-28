@@ -1,0 +1,11 @@
+//test error
+// missing semicolon
+
+int main()
+{
+    int x;
+   
+    x = 3
+    x += 3;
+    return x;
+}

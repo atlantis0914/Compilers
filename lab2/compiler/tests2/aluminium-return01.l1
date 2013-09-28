@@ -1,0 +1,14 @@
+//test return 1
+// test unique arithmetic operation
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+  int e;
+
+  d = 1;
+  e = -d;
+  return d;
+}

@@ -1,0 +1,8 @@
+//test error
+int main()
+{
+ int x;
+ x=10;
+ return (x+(10*(x*(x-(13-(7*(2+x))))))
+}
+

@@ -1,0 +1,20 @@
+//test return 12 
+
+int main() 
+{
+    int a = 4; 
+
+    {
+        int x = 2;
+        int y = 1;
+        a += y;
+        int e;
+        {
+            int c = 2 * x;
+            int d = y * 3;
+            e = c + d;
+        }
+        a += e;
+    }
+    return a;
+}

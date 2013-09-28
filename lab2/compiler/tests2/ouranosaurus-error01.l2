@@ -1,0 +1,11 @@
+//test error
+//cannot have a block in the construct of a for loop.
+
+int main() {
+    int x;
+    int a = true;
+    for (x = 0; x < 10; if (a) { x++; }) {
+        a = !a;
+    }
+    return x;
+}

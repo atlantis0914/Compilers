@@ -1,0 +1,4 @@
+//test exception
+int main() {
+  return 1 / (true ? 0 : 1);
+}

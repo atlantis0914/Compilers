@@ -1,0 +1,13 @@
+//test error
+// test that simple statements cannot be used as expressions
+
+int main()
+{
+    int x = 0;
+    int y = 3;
+    while (x < 10) {
+        y = y / (x++);
+    }
+
+    return y;
+}

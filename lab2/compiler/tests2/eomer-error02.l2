@@ -1,0 +1,12 @@
+//test error
+// returning from within a for loop update statement
+int main()
+{
+    int n = 0;
+
+    for (int i = 0; i < n; return i)
+        n += i;
+
+    return 0;
+}
+

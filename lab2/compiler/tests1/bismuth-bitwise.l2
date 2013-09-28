@@ -1,0 +1,6 @@
+//test return 255
+// operator precedence
+int main()
+{
+	return ~0 & 0x44 | 0x40 ^ 0xff;
+}

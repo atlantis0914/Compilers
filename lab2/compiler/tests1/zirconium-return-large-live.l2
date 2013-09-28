@@ -1,0 +1,247 @@
+//test return 536870912
+
+int main ()
+{
+  int a1;
+  int a2;
+  int a3;
+  int a4;
+  int a5;
+  int a6;
+  int a7;
+  int a8;
+  int a9;
+  int a10;
+  int a11;
+  int a12;
+  int a13;
+  int a14;
+  int a15;
+  int a16;
+  int a17;
+  int a18;
+  int a19;
+  int a20;
+  int b1;
+  int b2;
+  int b3;
+  int b4;
+  int b5;
+  int b6;
+  int b7;
+  int b8;
+  int b9;
+  int b10;
+  int b12;
+  int b13;
+  int b14;
+  int b15;
+  int b16;
+  int b17;
+  int b18;
+  int b19;
+  int b20;
+  int c1;
+  int c2;
+  int c3;
+  int c4;
+  int c5;
+  int c6;
+  int c7;
+  int c8;
+  int c9;
+  int c10;
+  int c11;
+  int c12;
+  int c13;
+  int c14;
+  int c15;
+  int c16;
+  int c17;
+  int c18;
+  int c19;
+  int c20;
+  int d1;
+  int d2;
+  int d3;
+  int d4;
+  int d5;
+  int d6;
+  int d7;
+  int d8;
+  int d9;
+  int d10;
+  int d11;
+  int d12;
+  int d13;
+  int d14;
+  int d15;
+  int d16;
+  int d17;
+  int d18;
+  int d19;
+  int d20;
+  int sum;
+  a1 = 1;
+  a2 = 2;
+  a3 = a1 + a2;
+  a4 = a3 << a1;
+  a5 = a4 >> a3;
+  a6 = a5 * a3;
+  a8 = a2;
+  a9 = a5;
+  for(a7 = a6; a7 < a4; a7 += a2)
+  {
+    if((a7 % a3) == a1)
+    {
+      for(a10 = a7; a8 < (a4 * a6); a8 += a1)
+      {
+        if((a10 + a7) == (a4 + a9))
+        {
+          a6 += a1;
+          a9 *= a10;
+        }
+      }
+    }
+  }
+  a12 = a4;
+  a13 = a9;
+  for(a11 = a8; a11 < a8; a11 += a2)
+  {
+    if((a11 % a2) == a1)
+    {
+      a12 += a8;
+    } else {
+      a13 /= a9;
+    }
+  }
+  a14 = a12 + a13;
+  a15 = a14 / a8;
+  a16 = a15 - a14;
+  a17 = a14 + a1;
+  a18 = a5 * a4 + a9 * a8;
+  a19 = a18 - a17;
+  a20 = a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 + a9 + a12 + a13 + a14 + a15 + a16 + a17 + a18 + a19;
+  b1 = 3;
+  b2 = 4;
+  b3 = b1 + b2;
+  b4 = b3 * b2;
+  b5 = b4 / b3;
+  b6 = b5 - b3;
+  b8 = b2;
+  b9 = b5;
+  for(b7 = b6; b7 < b4; b7 += b2)
+  {
+    if((b7 % b3) >= b1)
+    {
+      for(b10 = b7; b8 < (b4 * b6); b8 += b1)
+      {
+        if((b10 + b7) <= (b4 + b9))
+        {
+          b6 += b1;
+          b9 ^= b10;
+        }
+      }
+    }
+  }
+  b12 = b4;
+  b13 = b9;
+  for(int b11 = b8; b11 < b8; b11 += b2)
+  {
+    if((b11 % b2) != b1)
+    {
+      b12 %= b8;
+    } else {
+      b13 += b9;
+    }
+  }
+  b14 = b12 + b13;
+  b15 = b14 / b8;
+  b16 = b15 - b14;
+  b17 = b14 + b1;
+  b18 = b5 * b4 + b9 * b8;
+  b19 = b18 - b17;
+  b20 = b1 + b2 + b3 + b4 + b5 + b6 + b7 + b8 + b9 + b12 + b13 + b14 + b15 + b16 + b17 + b18 + b19;
+  c1 = 5;
+  c2 = 6;
+  c3 = c1 + c2;
+  c4 = c3 * c2;
+  c5 = c4 / c3;
+  c6 = c5 - c3;
+  c8 = c2;
+  c9 = c5;
+  for(c7 = c6; c7 < c4; c7 += c2)
+  {
+    if((c7 % c3) < c1)
+    {
+      for(c10 = c7; c8 < (c4 * c6); c8 += c1)
+      {
+        if((c10 + c7) == (c4 + c9))
+        {
+          c6 += c1;
+          c9 += c10;
+        }
+      }
+    }
+  }
+  c12 = c4;
+  c13 = c9;
+  for(c11 = c8; c11 < c8; c11 += c2)
+  {
+    if((c11 % c2) == c1)
+    {
+      c12 += c8;
+    } else {
+      c13 += c9;
+    }
+  }
+  c14 = c12 + c13;
+  c15 = c14 / c8;
+  c16 = c15 - c14;
+  c17 = c14 + c1;
+  c18 = c5 * c4 + c9 * c8;
+  c19 = c18 - c17;
+  c20 = c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9 + c12 + c13 + c14 + c15 + c16 + c17 + c18 + c19;
+  d1 = 7;
+  d2 = 8;
+  d3 = d1 + d2;
+  d4 = d3 * d2;
+  d5 = d4 / d3;
+  d6 = d5 - d3;
+  d8 = d2;
+  d9 = d5;
+  for(d7 = d6; d7 < d4; d7 += d2)
+  {
+    if((d7 % d3) == d1)
+    {
+      for(d10 = d7; d8 < (d4 * d6); d8 += d1)
+      {
+        if((d10 + d7) == (d4 + d9))
+        {
+          d6 += d1;
+          d9 += d10;
+        }
+      }
+    }
+  }
+  d12 = d4;
+  d13 = d9;
+  for(d11 = d8; d11 < d8; d11 += d2)
+  {
+    if((d11 % d2) == d1)
+    {
+      d12 += d8;
+    } else {
+      d13 += d9;
+    }
+  }
+  d14 = d12 + d13;
+  d15 = d14 / d8;
+  d16 = d15 - d14;
+  d17 = d14 + d1;
+  d18 = d5 * d4 + d9 * d8;
+  d19 = d18 - d17;
+  d20 = d1 + d2 + d3 + d4 + d5 + d6 + d7 + d8 + d9 + d12 + d13 + d14 + d15 + d16 + d17 + d18 + d19;
+  sum = c20 + b20 + c20 + d20;
+  return (d20 + d1 + d2 + d3 + d4 + d5 + d6 + d7 + d8 + d9 + d12 + d13 + d14 + d15 + d16 + d17 + d18 + d19) * (a20 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 + a9 + a12 + a13 + a14 + a15 + a16 + a17 + a18 + a19) * (b20 + b1 + b2 + b3 + b4 + b5 + b6 + b7 + b8 + b9 + b12 + b13 + b14 + b15 + b16 + b17 + b18 + b19) * (c20 + c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9 + c12 + c13 + c14 + c15 + c16 + c17 + c18 + c19) * sum;
+}

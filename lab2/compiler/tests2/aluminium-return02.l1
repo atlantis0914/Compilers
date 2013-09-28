@@ -1,0 +1,6 @@
+//test return -2147483648
+// test hex multiplication
+int main()
+{
+  return 1024 * 2 * 0x100000; 
+}

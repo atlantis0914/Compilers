@@ -1,0 +1,6 @@
+//test exception 8
+//tests division by literal zero
+int main()
+{
+  return (7 / 0);
+}

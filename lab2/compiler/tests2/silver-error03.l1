@@ -1,0 +1,12 @@
+//test error
+// Test assigning undelcared variable
+
+int main () {
+    int x = 3;
+    int y = 27;
+
+    z = x + y;
+
+    return z;
+
+}

@@ -1,0 +1,11 @@
+//test return 3
+
+int main()
+{
+  int x = 3;
+  bool boolean = true;
+
+  if (!boolean)
+    return 1/0;
+  else return x;
+}

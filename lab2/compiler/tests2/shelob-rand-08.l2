@@ -1,0 +1,53 @@
+//test exception 8
+int
+main ()
+{
+  int v0 = 0;
+  int v1 = 5;
+  int v2 = v0 + ((((4))));
+  int v3 = -v0;
+  v1--;
+  {
+    int v4 = 0;
+    {
+      int v5 = (-8);
+      v1++;
+      while (!(((v4) != (v0))))
+	{
+	  int v6 = 9;
+	  v6 %= v3;
+	  for (; ((((3))) < (6)); v5++)
+	    {
+	      int v7 = 7;
+	      int v8 = v5;
+	      v3;
+	      {
+		int v9 = ~(0) / (5);
+		int v10 = (v9);
+		int v11 = 5 | 2;
+		v5 = v7;
+		return v5;
+	      }
+	      (9);
+	    }
+	  {
+	    int v7 = 9;
+	    int v8 = v2;
+	    int v9 = v0;
+	    v0++;
+	    {
+	      int v10 = v9;
+	    } ((4));
+	    v9 %= v8;
+    }}} v1 /= ((v0 & v4));
+    {
+      int v5 = v2 + 1;
+      int v6 = v5;
+      int v7 = (-7);
+      int v8 = ((4 ^ v4));
+      v2 *= 0;
+      v2 = 5;
+      -(~v0);
+      v0++;
+  }} return v3;
+}

@@ -1,0 +1,16 @@
+//test return 5
+int main()
+{
+    int a = 2;
+    if (a > 4)
+    {
+        int b = 3;
+        a = b;
+    }
+    else
+    {
+        int b = 5;
+        a = b;
+    }
+    return a;
+}

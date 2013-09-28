@@ -1,0 +1,14 @@
+//test return -13
+//crazy precedence stuff
+
+int main() {
+    int i = 13;
+    int j = 3;
+    int k = 5;
+    int n = 48;
+    int m = 4;
+
+    int x = i * j + (k & ~0xFFFFFFFF >> 1);
+
+    return x == 0 && true ? 12 : 88 == n / m ? 5 % 3 : -i;
+}
