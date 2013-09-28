@@ -15,7 +15,7 @@ data ParseAST = ParseAST ParseStmt SourcePos
 
 data ParseStmt = PAsgn String AsgnOp Expr SourcePos
                | PDecl String IdentType SourcePos (Maybe ParseStmt)
-               | PCtrl Ctrl
+               | PCtrl ParseCtrl
                | PBlock [ParseStmt]
                | PExpr Expr
 
@@ -30,9 +30,12 @@ data Stmt = Asgn String AsgnOp Expr SourcePos
           | Block [Stmt]
           | Expr Expr
 
-data Ctrl = If Expr Stmt Stmt SourcePos
-          | While Expr Stmt SourcePos
-          | Return Expr SourcePos
+data PolyCtrl s = If Expr s s SourcePos
+                | While Expr s SourcePos
+                | Return Expr SourcePos
+
+type Ctrl = PolyCtrl Stmt
+type ParseCtrl = PolyCtrl ParseStmt
 
 isDecl :: Stmt -> Bool
 isDecl (Decl {}) = True
@@ -82,9 +85,12 @@ instance Show Stmt where
   show (Block stmts) = "{\n" ++ (unlines (map show stmts)) ++ "\n" ++ "};" ++ "\n"
   show (Expr expr) = show expr ++ "\n"
 
-
-
 instance Show Ctrl where 
+  show (If e1 s1 s2 _) = "if(" ++ show e1 ++ ") " ++ show s1 ++ "else" ++ show s2 ++ "\n"
+  show (While e1 s1 _) = "while(" ++ show e1 ++ ")\n" ++ show s1
+  show (Return e1 _) = "return " ++ show e1 ++ ";"
+
+instance Show ParseCtrl where 
   show (If e1 s1 s2 _) = "if(" ++ show e1 ++ ") " ++ show s1 ++ "else" ++ show s2 ++ "\n"
   show (While e1 s1 _) = "while(" ++ show e1 ++ ")\n" ++ show s1
   show (Return e1 _) = "return " ++ show e1 ++ ";"

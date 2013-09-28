@@ -26,7 +26,7 @@ import Text.Parsec.Expr                       -- Expression Parser Generator
 import Text.Parsec.Token (GenLanguageDef(..)) -- Language Definition Structure
 import qualified Text.Parsec.Token as Tok
 
-parseAST :: FilePath -> ErrorT String IO AST
+parseAST :: FilePath -> ErrorT String IO ParseAST
 parseAST file = do
   code <- liftIOE $ BS.readFile file
   case parse astParser file code of
@@ -46,7 +46,7 @@ parseAST file = do
 -- C0Parser AST is actually ParsecT ByteString () Identity AST
 type C0Parser = Parsec ByteString ()
 
-astParser :: C0Parser AST
+astParser :: C0Parser ParseAST
 astParser = do
   whiteSpace -- parse white-space before the program start
   reserved "int"
@@ -55,45 +55,45 @@ astParser = do
   ast <- braces (do
    pos   <- getPosition
    stmts <- many stmt
-   return $ AST (Block stmts) pos)
+   return $ ParseAST (PBlock stmts) pos)
   eof
   return ast
   <?> "block"
 
-decl :: C0Parser Stmt
+decl :: C0Parser ParseStmt
 decl = do
    (typedecl "int")
    <|>
    (typedecl "bool")
    <?> "decl"
 
-typedecl :: String -> C0Parser Stmt
+typedecl :: String -> C0Parser ParseStmt
 typedecl s = do 
   pos <- getPosition
   dest <- reserved s
   ident <- declidentifier
   (do semi
-      return $ Decl ident (toIdentType s) pos Nothing)
+      return $ PDecl ident (toIdentType s) pos Nothing)
    <|>
    (do pos' <- getPosition
        op <- asnOp
        e <- expr
        semi
-       return $ Decl ident (toIdentType s) pos (Just (Asgn ident op e pos')))
+       return $ PDecl ident (toIdentType s) pos (Just (PAsgn ident op e pos')))
   <?> "typedecl"
 
-asgn :: C0Parser Stmt
+asgn :: C0Parser ParseStmt
 asgn = do
   pos  <- getPosition
   dest <- identifier
   (do op   <- asnOp
       e    <- expr
       semi
-      return $ Asgn dest op e pos)
+      return $ PAsgn dest op e pos)
    <|>
    (do op <- postOp
        semi
-       return $ Asgn dest (Just op) (expForPostOp dest op pos) pos)
+       return $ PAsgn dest (Just op) (expForPostOp dest op pos) pos)
    <?> "asgn"
 
 expForPostOp :: String -> Op -> SourcePos -> Expr 
@@ -109,7 +109,7 @@ postOp = do
        return $ Decr)
 
 -- Parses a control flow structure
-ctrl :: C0Parser Stmt
+ctrl :: C0Parser ParseStmt
 ctrl = 
   ret 
   <|>
@@ -120,16 +120,16 @@ ctrl =
   ctrlFor
 
 -- Parses a control flow 'if'
-ctrlIf :: C0Parser Stmt
+ctrlIf :: C0Parser ParseStmt
 ctrlIf = do
   pos <- getPosition
   reserved "if" 
   e <- ctrlCondition
   s1 <- stmt
   (do s2 <- ctrlElseOpt
-      return $ Ctrl (If e s1 s2 pos))
+      return $ PCtrl (If e s1 s2 pos))
    <|>
-   (do return $ Ctrl (If e s1 (Block []) pos))
+   (do return $ PCtrl (If e s1 (PBlock []) pos))
 
 -- Parses an expression surrounded by parens. 
 -- Used as a ctrl flow condition
@@ -137,7 +137,7 @@ ctrlCondition :: C0Parser Expr
 ctrlCondition = parens expr
 
 -- Parses an optional else 
-ctrlElseOpt :: C0Parser Stmt
+ctrlElseOpt :: C0Parser ParseStmt
 ctrlElseOpt = do
   pos <- getPosition
   reserved "else"
@@ -145,16 +145,16 @@ ctrlElseOpt = do
   return s1
 
 -- Parses a while loop
-ctrlWhile :: C0Parser Stmt
+ctrlWhile :: C0Parser ParseStmt
 ctrlWhile = do
   pos <- getPosition
   reserved "while"
   e <- ctrlCondition
   s1 <- stmt
-  return $ Ctrl (While e s1 pos)
+  return $ PCtrl (While e s1 pos)
 
 -- Parses an entire for loop and produces a while loop. 
-ctrlFor :: C0Parser Stmt
+ctrlFor :: C0Parser ParseStmt
 ctrlFor = do 
   pos <- getPosition
   reserved "for"
@@ -163,7 +163,7 @@ ctrlFor = do
   return $ forToWhile conds forBody 
 
 -- Parses the for-loop condition for (...) 
-forCond :: C0Parser (Maybe Stmt, Expr, Maybe Stmt, SourcePos)
+forCond :: C0Parser (Maybe ParseStmt, Expr, Maybe ParseStmt, SourcePos)
 forCond = parens (do 
       pos <- getPosition
       c1 <- forSimpOpt
@@ -172,7 +172,7 @@ forCond = parens (do
       return $ (c1,e,c2,pos))
 
 -- Parses the first, third parameters out of a for-loop condition
-forSimpOpt :: C0Parser (Maybe Stmt)
+forSimpOpt :: C0Parser (Maybe ParseStmt)
 forSimpOpt = (do
   smp <- simp
   return $ Just smp)
@@ -188,23 +188,23 @@ forExpr = do
   return $ e
 
 -- Elaborates a for into a while. 
-forToWhile :: (Maybe Stmt, Expr, Maybe Stmt, SourcePos) -> Stmt -> Stmt
-forToWhile (Nothing, e, Nothing, pos) s = Ctrl (While e s pos)
-forToWhile (Just s1, e, Nothing, pos) s = Block [s1, Ctrl (While e s pos)]
-forToWhile (Nothing, e, Just s2, pos) s = Ctrl (While e sApp pos)
-  where sApp = Block [s, s2]
-forToWhile (Just s1, e, Just s2, pos) s = Block [s1, Ctrl (While e sApp pos)]
-  where sApp = Block [s, s2]
+forToWhile :: (Maybe ParseStmt, Expr, Maybe ParseStmt, SourcePos) -> ParseStmt -> ParseStmt
+forToWhile (Nothing, e, Nothing, pos) s = PCtrl (While e s pos)
+forToWhile (Just s1, e, Nothing, pos) s = PBlock [s1, PCtrl (While e s pos)]
+forToWhile (Nothing, e, Just s2, pos) s = PCtrl (While e sApp pos)
+  where sApp = PBlock [s, s2]
+forToWhile (Just s1, e, Just s2, pos) s = PBlock [s1, PCtrl (While e sApp pos)]
+  where sApp = PBlock [s, s2]
 
-ret :: C0Parser Stmt
+ret :: C0Parser ParseStmt
 ret = do
   pos <- getPosition
   reserved "return"
   e <- expr
   semi
-  return $ Ctrl (Return e pos)
+  return $ PCtrl (Return e pos)
 
-simp :: C0Parser Stmt
+simp :: C0Parser ParseStmt
 simp = 
   decl
   <|>
@@ -213,13 +213,13 @@ simp =
   stExpr
   <?> "simp"
 
-stExpr :: C0Parser Stmt
+stExpr :: C0Parser ParseStmt
 stExpr = do 
   e <- expr 
   semi
-  return $ Expr e
+  return $ PExpr e
 
-stmt :: C0Parser Stmt
+stmt :: C0Parser ParseStmt
 stmt =
   simp
   <|>
@@ -228,11 +228,11 @@ stmt =
   block
   <?> "statement"
 
-block :: C0Parser Stmt
+block :: C0Parser ParseStmt
 block = braces (do
    pos   <- getPosition
    stmts <- many stmt
-   return $ Block stmts)
+   return $ PBlock stmts)
 
 -- Assignment Operators
 asnOp :: C0Parser (Maybe Op)
