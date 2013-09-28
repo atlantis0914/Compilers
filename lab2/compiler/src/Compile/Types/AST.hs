@@ -11,13 +11,21 @@ import Text.ParserCombinators.Parsec.Pos (SourcePos)
 import Compile.Types.Ops
 import Compile.Types.IdentType
 
+data ParseAST = ParseAST ParseStmt SourcePos
+
+data ParseStmt = Asgn String AsgnOp Expr SourcePos
+               | Decl String IdentType SourcePos (Maybe ParseStmt)
+               | Ctrl Ctrl
+               | Block [ParseStmt]
+               | Expr Expr
+
 data AST = AST Stmt SourcePos
 
 data Stmt = Asgn String AsgnOp Expr SourcePos
           | Decl {declName :: String,
-                  declType :: IdentType,
+                  declTyp :: IdentType,
                   declPos :: SourcePos,
-                  extraAsgn :: Maybe Stmt}
+                  declScope :: Stmt}
           | Ctrl Ctrl
           | Block [Stmt]
           | Expr Expr
