@@ -28,7 +28,7 @@ debugFlag = True
 maxTempsBeforeSpilling = 600
 
 -- Generates the AAsm from an AST
-codeGen (Block stmts _) = let
+codeGen (AST (Block stmts) _) = let
   -- Creates a mapping from var to its index.
     decls = filter isDecl stmts
     temps = Map.fromList $ zip (map declName decls) [0..] -- ident -> int map
@@ -96,7 +96,7 @@ dropAfterFirstReturn stmts =
     f = \(acc, st) ->
         \stmt ->
           case (st,stmt) of
-            (Nothing, Return _ _) -> (acc ++ [stmt], Just ())
+            (Nothing, Ctrl (Return _ _)) -> (acc ++ [stmt], Just ())
             (Nothing, _) -> (acc ++ [stmt], Nothing)
             (Just _, _) -> (acc, st)
   in
@@ -104,7 +104,7 @@ dropAfterFirstReturn stmts =
 
 -- Generates AAsm from a statement
 genStmt :: Alloc -> Stmt -> [AAsm]
-genStmt alloc (Return expr _) = genExp alloc expr (AReg 0)
+genStmt alloc (Ctrl (Return expr _)) = genExp alloc expr (AReg 0)
 genStmt alloc (Decl _ _ _ Nothing) = []
 genStmt (varMap, n) (Decl _ _ _ (Just (Asgn var oper expr srcPos))) = let
   l = ATemp $ varMap Map.! var

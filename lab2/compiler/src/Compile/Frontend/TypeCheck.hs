@@ -34,12 +34,14 @@ checkStmtValid (context@(map, valid)) (Decl declName declType _ asgn) =
   in
     (map', valid && exists && checkAsgn)
 
-checkStmtValid (context@(map, valid)) (Ctrl (If exp stmt1 stmt2 _)) =
+checkStmtValid (context@(map, valid)) (Ctrl (If expr stmt1 stmt2 _)) =
   let
-    (_, valid1) = checkStmtValid context stmt1
-    (_, valid2) = checkStmtValid context stmt2
+    valid' = case checkExprType context expr of Nothing -> False
+                                                Just t -> t == IBool
+    (_, valid'') = checkStmtValid context stmt1
+    (_, valid''') = checkStmtValid context stmt2
   in
-    (map, valid1 && valid2 && valid)
+    (map, valid' && valid'' && valid''' && valid)
 
 checkStmtValid (context@(map, valid)) (Ctrl (While exp stmt _)) =
   let
@@ -55,7 +57,10 @@ checkStmtValid (context@(map, valid)) (Ctrl (Return expr _)) =
     (map, valid && isInt)
 
 checkStmtValid (context@(map, valid)) (Block stmts) =
-  foldl checkStmtValid context stmts
+  let
+    (_, valid') = foldl checkStmtValid context stmts
+  in
+    (map, valid && valid')
 
 
 matchType :: Context -> Expr -> Expr -> [IdentType] -> IdentType -> (Maybe IdentType)
@@ -85,7 +90,7 @@ checkExprType context (ExpPolyEq _ expr1 expr2 _) =
 checkExprType context (ExpUnOp _ expr _) =
   case checkExprType context expr of Nothing -> Nothing
                                      Just t -> if t == IInt then Just IInt
-                                                           else Nothing
+                                                            else Nothing
 checkExprType context (ExpTernary expr1 expr2 expr3 _) =
   case checkExprType context expr1 of
     Nothing -> Nothing
