@@ -21,44 +21,44 @@ assert :: Bool -> String -> a -> a
 assert False msg x = error msg
 assert _ _ x = x
 
-verifyDecl doErr liveSet x pos = 
+isInitDecl doErr liveSet x pos = 
   assert (not ((Set.member x liveSet) && doErr))
          ("Error : variable " ++ x ++ " used uninitialized at " ++ show pos)
 
-undeclExpr :: Expr -> (Set.Set String) -> (a -> a)
-undeclExpr e decl = 
+isDeclaredExpr :: Expr -> (Set.Set String) -> (a -> a)
+isDeclaredExpr e decl = 
   assert ((Set.size (Set.intersection (decl) (used e))) == (Set.size $ used e))
          ("Error : Variable used undeclared in expression : " ++ (show e))
 
-undeclDecl :: String -> Set.Set String -> (a -> a)
-undeclDecl i decls = assert (not (Set.member i decls)) 
+isDeclaredDecl :: String -> Set.Set String -> (a -> a)
+isDeclaredDecl i decls = assert (not (Set.member i decls)) 
                             ("Error : variable " ++ i ++ " declared twice")
 
-undeclAsgn :: String -> Set.Set String -> (a -> a)
-undeclAsgn i decls = assert (Set.member i decls) 
+isDeclaredAsgn :: String -> Set.Set String -> (a -> a)
+isDeclaredAsgn i decls = assert (Set.member i decls) 
                            ("Error : variable " ++ i ++ " assigned to undeclared")
 
 -- produces a (definedSet, liveSet, Bool). Takes a declaredSet 
 -- (the declared variables in scope) and also performs undeclared checking.
 checkStmt :: Stmt -> Bool -> Set.Set String -> (Set.Set String, Set.Set String, Bool)
 checkStmt(Ctrl (Return e pos)) _ decls = 
-  undeclExpr e decls (Set.empty, used e, True)
+  isDeclaredExpr e decls (Set.empty, used e, True)
 
 checkStmt(Block stmts) doErr decls = checkBlock stmts doErr decls
 checkStmt (Decl i t pos rest) doErr decls = 
   let
-    (_, liveRest, b1) = undeclDecl i decls $ checkStmt rest doErr (Set.insert i decls)
-    setI = verifyDecl doErr liveRest i pos $ Set.singleton(i)
+    (_, liveRest, b1) = isDeclaredDecl i decls $ checkStmt rest doErr (Set.insert i decls)
+    setI = isInitDecl doErr liveRest i pos $ Set.singleton(i)
   in
     setI `seq` (Set.empty, Set.difference liveRest setI, b1)
 
-checkStmt(Asgn i o e pos) doErr decls = undeclAsgn i decls (Set.singleton i, used e, True)
+checkStmt(Asgn i o e pos) doErr decls = isDeclaredAsgn i decls (Set.singleton i, used e, True)
 
-checkStmt(Expr e) doErr decls = undeclExpr e decls (Set.empty, used e, True)
+checkStmt(Expr e) doErr decls = isDeclaredExpr e decls (Set.empty, used e, True)
 
 checkStmt(Ctrl (If e s1 s2 pos)) doErr decls = 
   let
-    (decs1, lives1, b1) = undeclExpr e decls $ checkStmt s1 doErr decls
+    (decs1, lives1, b1) = isDeclaredExpr e decls $ checkStmt s1 doErr decls
     (decs2, lives2, b2) = checkStmt s2 doErr decls
   in
     decs1 `seq` lives1 `seq` decs2 `seq` lives2 `seq` 
@@ -66,7 +66,7 @@ checkStmt(Ctrl (If e s1 s2 pos)) doErr decls =
 
 checkStmt(Ctrl (While e s1 pos)) doErr decls = 
   let
-    (decs1, lives1, b1) = undeclExpr e decls $ checkStmt s1 doErr decls
+    (decs1, lives1, b1) = isDeclaredExpr e decls $ checkStmt s1 doErr decls
   in
     decs1 `seq` lives1 `seq` (Set.empty, Set.union lives1 (used e), b1)
 
@@ -87,10 +87,8 @@ checkBlock (stmt:stmts) doErr decls =
             Set.union liveStmt (Set.difference liveRest decStmt), b1 && b2)
    
    
-
 isReturn (Ctrl (Return _ _)) = True
 isReturn _ = False
-
 
 used :: Expr -> (Set.Set String)
 used (Ident id _) = Set.singleton(id)
