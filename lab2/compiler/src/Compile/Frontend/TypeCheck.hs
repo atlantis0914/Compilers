@@ -87,6 +87,18 @@ matchType context expr1 expr2 expect result =
       (Just t1, Just t2) -> if t1 == t2 && t1 `elem` expect then Just result
                                                             else Nothing
 
+typeEq :: Context -> Expr -> Expr -> [IdentType] -> (Maybe IdentType)
+typeEq context expr1 expr2 expect =
+  let
+    type1 = checkExprType context expr1
+    type2 = checkExprType context expr2
+  in
+    case (type1, type2) of
+      (Nothing, _) -> Nothing
+      (_, Nothing) -> Nothing
+      (Just t1, Just t2) -> if t1 == t2 && t1 `elem` expect then Just t1
+                                                            else Nothing
+
 checkExprType :: Context -> Expr -> Maybe IdentType
 checkExprType _ (ExpInt _ _ _) = Just IInt
 checkExprType _ (ExpBool _ _) = Just IBool
@@ -106,5 +118,5 @@ checkExprType context (ExpUnOp _ expr _) =
 checkExprType context (ExpTernary expr1 expr2 expr3 _) =
   case checkExprType context expr1 of
     Nothing -> Nothing
-    Just t -> if t == IBool then matchType context expr2 expr3 [IInt] IInt
+    Just t -> if t == IBool then typeEq context expr2 expr3 [IInt, IBool]
                             else Nothing

@@ -21,16 +21,16 @@ expandPStatements stmts = concatMap expandPStatement stmts
         expandPStatement s@(PBlock stmts) = [PBlock (expandPStatements stmts)]
         expandPStatement s@(PDecl id t p (Just asgn)) = [PDecl id t p Nothing, asgn]
         expandPStatement s@(PDecl id t p Nothing) = [s]
-        expandPStatement s@(PExpr e) = [s]
+        expandPStatement s@(PExpr e) = [PExpr (elabExpr e)]
 
         collapseStmts stmts 
           | (length stmts == 1) = head stmts
           | otherwise = PBlock stmts
 
-        expandCtrl (If e s1 s2 p) = If e (collapseStmts $ expandPStatement s1) 
-                                         (collapseStmts $ expandPStatement s2) p
-        expandCtrl (While e s1 p) = While e (collapseStmts $ expandPStatement s1) p
-        expandCtrl (Return e p) = Return e p
+        expandCtrl (If e s1 s2 p) = If (elabExpr e) (collapseStmts $ expandPStatement s1) 
+                                       (collapseStmts $ expandPStatement s2) p
+        expandCtrl (While e s1 p) = While (elabExpr e) (collapseStmts $ expandPStatement s1) p
+        expandCtrl (Return e p) = Return (elabExpr e) p
 
 
 elabParseBlock :: [ParseStmt] -> Stmt
@@ -60,7 +60,21 @@ elabParseBlock' (Block curStmts) ((PDecl s t pos Nothing):xs) =
                       ]
 elabParseBlock' (Block curStmts) (x:xs) = elabParseBlock' (Block (curStmts ++ [elabParseStmt x])) xs
 
-  
+elabExpr :: Expr -> Expr 
+elabExpr (ExpBinOp o e1 e2 p) = ExpBinOp o (elabExpr e1) (elabExpr e2) p
+elabExpr (ExpRelOp o e1 e2 p) = ExpRelOp o (elabExpr e1) (elabExpr e2) p
+elabExpr (ExpPolyEq o e1 e2 p) = ExpPolyEq o (elabExpr e1) (elabExpr e2) p
+elabExpr (ExpLogOp And e1 e2 p) = ExpTernary (elabExpr e1) 
+                                             (elabExpr e2) 
+                                             (ExpBool False p) p
+elabExpr (ExpLogOp Or e1 e2 p) = ExpTernary (elabExpr e1) 
+                                            (ExpBool True p)
+                                            (elabExpr e2) p
+elabExpr (ExpUnOp o e1 p) = ExpUnOp o (elabExpr e1) p 
+elabExpr (ExpTernary e1 e2 e3 p) = ExpTernary (elabExpr e1) 
+                                              (elabExpr e2) 
+                                              (elabExpr e3) p
+elabExpr e = e
 
 --elaborate' s@(Decl {extraAsgn = Just(asgn)}) =
 --  [s{extraAsgn = Nothing},
