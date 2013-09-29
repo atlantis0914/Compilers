@@ -47,10 +47,10 @@ checkStmt(Ctrl (Return e pos)) _ decls =
 checkStmt(Block stmts) doErr decls = checkBlock stmts doErr decls
 checkStmt (Decl i t pos rest) doErr decls = 
   let
-    (_, liveRest, b1) = isDeclaredDecl i decls $ checkStmt rest doErr (Set.insert i decls)
+    (decsRest, liveRest, b1) = isDeclaredDecl i decls $ checkStmt rest doErr (Set.insert i decls)
     setI = isInitDecl doErr liveRest i pos $ Set.singleton(i)
   in
-    setI `seq` (Set.empty, Set.difference liveRest setI, b1)
+    setI `seq` (Set.difference decsRest setI, Set.difference liveRest setI, b1)
 
 checkStmt(Asgn i o e pos) doErr decls = isDeclaredAsgn i decls (Set.singleton i, used e, True)
 
