@@ -17,10 +17,19 @@ expandPStatements :: [ParseStmt] -> [ParseStmt]
 expandPStatements stmts = concatMap expandPStatement stmts
   where expandPStatement s@(PAsgn _ Nothing _ _) = [s]
         expandPStatement s@(PAsgn id (Just op) e p) = [PAsgn id Nothing (ExpBinOp op (Ident id p) e p) p]
-        expandPStatement s@(PCtrl _) = [s]
+        expandPStatement s@(PCtrl c) = [PCtrl $ expandCtrl c]
         expandPStatement s@(PBlock stmts) = [PBlock (expandPStatements stmts)]
         expandPStatement s@(PDecl id t p (Just asgn)) = [PDecl id t p Nothing, asgn]
         expandPStatement s@(PDecl id t p Nothing) = [s]
+
+        collapseStmts stmts 
+          | (length stmts == 1) = head stmts
+          | otherwise = PBlock stmts
+
+        expandCtrl (If e s1 s2 p) = If e (collapseStmts $ expandPStatement s1) 
+                                         (collapseStmts $ expandPStatement s2) p
+        expandCtrl (While e s1 p) = While e (collapseStmts $ expandPStatement s1) p
+        expandCtrl (Return e p) = Return e p
 
 
 elabParseBlock :: [ParseStmt] -> Stmt
@@ -28,6 +37,9 @@ elabParseBlock stmts = elabParseBlock' (Block []) stmts
 
 elabParseStmt :: ParseStmt -> Stmt
 elabParseStmt (PAsgn s a e p) = Asgn s a e p
+elabParseStmt (PDecl s t p Nothing) = error "shouldnt get here"
+elabParseStmt (PDecl s t p (Just _)) = error "shouldnt get here just"
+            
 elabParseStmt (PCtrl c) = Ctrl (elabParseCtrl c)
 elabParseStmt (PExpr e) = Expr e
 elabParseStmt (PBlock stmts) = elabParseBlock' (Block []) stmts

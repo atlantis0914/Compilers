@@ -6,64 +6,73 @@ import Control.Monad
 
 import qualified Data.Set as Set
 
+import Debug.Trace
+
 import Compile.Types
 
-checkInitialization :: AST -> () 
+checkInitialization :: AST -> Bool
 checkInitialization (AST (Block stmts) p) = 
   let
-    (_,_) = checkBlock stmts True
+    (l1,r1,b) = checkBlock stmts True
   in
-    ()
+    b
 
 assert :: Bool -> String -> a -> a
 assert False msg x = error msg
 assert _ _ x = x
 
-verifyDecl doErr liveSet x = assert (doErr && (Set.member x liveSet)) 
-                             ("Error : variable" ++ x ++ " used uninitialized")
+verifyDecl doErr liveSet x pos = 
+  assert (not ((Set.member x liveSet) && doErr))
+         ("Error : variable " ++ x ++ " used uninitialized at " ++ show pos)
 
-checkStmt :: Stmt -> Bool -> (Set.Set String, Set.Set String)
+usedUndeclared :: Expr -> (Set.Set String) -> (a -> a)
+usedUndeclared e decl = 
+  assert ((Set.size (Set.intersection (decl) (used e))) == (Set.size decl))
+         ("Error : Variable used undeclared in expression : " ++ (show e))
+
+-- produces a (definedSet, liveSet, Bool). Takes a declaredSet 
+-- (the declared variables in scope) and also performs undeclared checking.
+checkStmt :: Stmt -> Bool -> (Set.Set String, Set.Set String, Bool)
+checkStmt(Ctrl (Return e pos)) _ = (Set.empty, used e, True)
+checkStmt(Block stmts) doErr = checkBlock stmts doErr
 checkStmt (Decl i t pos rest) doErr = 
   let
-    (_, liveRest) = checkStmt rest doErr
-    setI = verifyDecl doErr liveRest i $ Set.singleton(i)
+    (_, liveRest, b1) = checkStmt rest doErr
+    setI = verifyDecl doErr liveRest i pos $ Set.singleton(i)
   in
-    (Set.empty, Set.difference liveRest setI)
+    setI `seq` (Set.empty, Set.difference liveRest setI, b1)
 
-checkStmt(Asgn i o e pos) doErr = (Set.singleton i, used e)
-
-checkStmt(Expr e) doErr= (Set.empty, used e)
-
+checkStmt(Asgn i o e pos) doErr = (Set.singleton i, used e, True)
+checkStmt(Expr e) doErr= (Set.empty, used e, True)
 checkStmt(Ctrl (If e s1 s2 pos)) doErr = 
   let
-    (decs1, lives1) = checkStmt s1 doErr
-    (decs2, lives2) = checkStmt s2 doErr
+    (decs1, lives1, b1) = checkStmt s1 doErr
+    (decs2, lives2, b2) = checkStmt s2 doErr
   in
-    (Set.intersection decs1 decs2, Set.union lives1 lives2)
+    decs1 `seq` lives1 `seq` decs2 `seq` lives2 `seq` 
+    (Set.intersection decs1 decs2, Set.union lives1 lives2, b1 && b2)
 
 checkStmt(Ctrl (While e s1 pos)) doErr = 
   let
-    (decs1, lives1) = checkStmt s1 doErr
+    (decs1, lives1, b1) = checkStmt s1 doErr
   in
-    (Set.empty, Set.union lives1 (used e))
+    decs1 `seq` lives1 `seq` (Set.empty, Set.union lives1 (used e), b1)
 
-checkStmt(Ctrl (Return e pos)) _ = (Set.empty, used e)
-
-checkStmt(Block stmts) _ = checkBlock stmts True
     
-checkBlock :: [Stmt] -> Bool -> (Set.Set String, Set.Set String)
-checkBlock [] doErr = (Set.empty, Set.empty)
-checkBlock (stmt:stmts) doErr = 
+checkBlock :: [Stmt] -> Bool -> (Set.Set String, Set.Set String, Bool)
+checkBlock [] doErr = (Set.empty, Set.empty, True)
+checkBlock [stmt] doErr = checkStmt stmt doErr 
+checkBlock (stmt:stmts) doErr  = 
   let
-    (decStmt, liveStmt) = checkStmt stmt doErr
-    doErr' = isReturn stmt
-    (decRest, liveRest) = checkBlock stmts doErr'
+    (decStmt, liveStmt, b1) = checkStmt stmt doErr 
+    doErr' = not $ isReturn stmt
+    (decRest, liveRest, b2) = checkBlock stmts doErr'
   in
-    if doErr'
-      then (decStmt, liveStmt) 
-      else (Set.union decStmt decRest, 
-            Set.union liveStmt (Set.difference liveRest liveStmt))
- 
+    if (not doErr')
+      then decRest `seq` liveRest `seq` (decStmt, liveStmt, b1) 
+      else decStmt `seq` liveStmt `seq` decRest `seq` liveRest `seq` 
+           (Set.union decStmt decRest, 
+            Set.union liveStmt (Set.difference liveRest decStmt), b1 && b2)
    
    
 
@@ -81,41 +90,4 @@ used (ExpUnOp _ e1 _) = used e1
 used (ExpTernary e1 e2 e3 _) = Set.union (used e1) $
                                     Set.union (used e2) (used e3)
 used _ = Set.empty
-    
--- 
--- maybeToSet :: Maybe (Set.Set String) -> (Set.Set String)
--- maybeToSet Nothing = Set.empty
--- maybeToSet (Just s) = s
--- 
--- setToMaybe :: (Set.Set String) -> Maybe (Set.Set String)
--- setToMaybe s 
---   | Set.null s = Nothing
---   | otherwise = Just s
--- 
--- defines :: Stmt -> Maybe (Set.Set String)
--- defines (Decl _ _ _ _) = Nothing
--- defines (Expr _) = Nothing
--- defines (Ctrl (If e s1 s2 _)) = 
---   case (defines s1, defines s2) of
---     (Just set1, Just set2) -> Just $ Set.intersection set1 set2
---     _ -> Nothing
--- defines (Ctrl (While _ _ _)) = Nothing
--- -- Return is weird - for now we implicitly return "Nothing" to represent "ALL"
--- defines (Ctrl (Return _ _)) = Nothing
--- defines (Block stmts) = setToMaybe $ foldl (\a -> 
---                                \b -> (Set.union a (maybeToSet b))) (Set.empty) (map defines stmts)
--- 
--- 
--- live :: Stmt -> Maybe (Set.Set String)
 
-
--- used :: String -> Expr -> Bool
--- used s (ExpInt _ _ _) = False
--- used s (ExpBool _ _) = False
--- used s (Ident id _) = (s == id)
--- used s (ExpBinOp _ e1 e2 _) = (used s e1 || used s e2)
--- used s (ExpRelOp _ e1 e2 _) = (used s e1 || used s e2)
--- used s (ExpLogOp _ e1 e2 _) = (used s e1 || used s e2)
--- used s (ExpPolyEq _ e1 e2 _) = (used s e1 || used s e2)
--- used s (ExpUnOp _ e1 _) = used s e1 
--- used s (ExpTernary e1 e2 e3 _) = (used s e1 || used s e2 || used s e3)
