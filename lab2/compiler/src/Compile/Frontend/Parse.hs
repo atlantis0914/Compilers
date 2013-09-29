@@ -72,14 +72,13 @@ typedecl s = do
   pos <- getPosition
   dest <- reserved s
   ident <- declidentifier
-  (do semi
-      return $ PDecl ident (toIdentType s) pos Nothing)
+  (do pos' <- getPosition
+      op <- asnOp
+      e <- expr
+      return $ PDecl ident (toIdentType s) pos (Just (PAsgn ident op e pos')))
    <|>
-   (do pos' <- getPosition
-       op <- asnOp
-       e <- expr
-       semi
-       return $ PDecl ident (toIdentType s) pos (Just (PAsgn ident op e pos')))
+   (do return $ PDecl ident (toIdentType s) pos Nothing)
+
   <?> "typedecl"
 
 asgn :: C0Parser ParseStmt
@@ -88,11 +87,9 @@ asgn = do
   dest <- identifier
   (do op   <- asnOp
       e    <- expr
-      semi
       return $ PAsgn dest op e pos)
    <|>
    (do op <- postOp
-       semi
        return $ PAsgn dest (Just op) (expForPostOp dest op pos) pos)
    <?> "asgn"
 
@@ -167,6 +164,7 @@ forCond :: C0Parser (Maybe ParseStmt, Expr, Maybe ParseStmt, SourcePos)
 forCond = parens (do 
       pos <- getPosition
       c1 <- forSimpOpt
+      semi
       e <- forExpr
       c2 <- forSimpOpt
       return $ (c1,e,c2,pos))
@@ -206,22 +204,26 @@ ret = do
 
 simp :: C0Parser ParseStmt
 simp = 
-  Text.Parsec.try stExpr
+  (Text.Parsec.try (do d <- decl
+                       return d))
   <|>
-  decl
+  (Text.Parsec.try (do a <-asgn
+                       return a))
   <|>
-  asgn
+  (do s <-stExpr
+      return s)
   <?> "simp"
 
 stExpr :: C0Parser ParseStmt
 stExpr = do 
   e <- expr 
-  semi
   return $ PExpr e
 
 stmt :: C0Parser ParseStmt
 stmt =
-  simp
+  (do s <- simp
+      semi
+      return s)
   <|>
   ctrl
   <|>
