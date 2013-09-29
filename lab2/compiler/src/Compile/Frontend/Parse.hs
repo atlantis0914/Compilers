@@ -419,17 +419,17 @@ opTable = [[prefix "-"  (ExpUnOp  Neg),
             binary "-"   (ExpBinOp Sub)  AssocLeft], 
            [binary ">>"  (ExpBinOp RShift)  AssocLeft,
             binary "<<"  (ExpBinOp LShift)  AssocLeft],
-           [binary ">"   (ExpBinOp Gt)   AssocLeft,
-            binary ">="  (ExpBinOp Gte)  AssocLeft,
-            binary "<"   (ExpBinOp Lt)   AssocLeft,
-            binary "<="  (ExpBinOp Lte)  AssocLeft],
-           [binary "=="  (ExpBinOp Equ)  AssocLeft,
-            binary "!="  (ExpBinOp Neq)   AssocLeft],
+           [binary ">"   (ExpRelOp Gt)   AssocLeft,
+            binary ">="  (ExpRelOp Gte)  AssocLeft,
+            binary "<"   (ExpRelOp Lt)   AssocLeft,
+            binary "<="  (ExpRelOp Lte)  AssocLeft],
+           [binary "=="  (ExpPolyEq Equ)  AssocLeft,
+            binary "!="  (ExpPolyEq Neq)   AssocLeft],
            [binary "&"  (ExpBinOp BitwiseAnd)   AssocLeft],
            [binary "|"  (ExpBinOp BitwiseOr)   AssocLeft],
            [binary "^"  (ExpBinOp BitwiseXOr)   AssocLeft],
-           [binary "&&"  (ExpBinOp And)   AssocLeft],
-           [binary "||"  (ExpBinOp Or)   AssocLeft]]
+           [binary "&&"  (ExpLogOp And)   AssocLeft],
+           [binary "||"  (ExpLogOp Or)   AssocLeft]]
 {-
 We used a few helper functions which are in the Parsec documentation of Text.Parsec.Expr, located at \url{http://hackage.haskell.org/packages/archive/parsec/3.1.0/doc/html/Text-Parsec-Expr.html} The functions ``binary'', ``prefix'', and ``postfix'' were taken from there and are not my work, however they are used because rewriting them would look much the same, and they do not provide any core functionality, just make my code easier to read. Type signatures and location annotations were added by me.
 -}
