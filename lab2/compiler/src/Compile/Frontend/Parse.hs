@@ -175,8 +175,7 @@ forSimpOpt = (do
   smp <- simp
   return $ Just smp)
   <|>
-  (do semi
-      return $ Nothing)
+  (do return $ Nothing)
 
 -- Parses the expression (second parameter) out of a for-loop condition
 forExpr :: C0Parser Expr
