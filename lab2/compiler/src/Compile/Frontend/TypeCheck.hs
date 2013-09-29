@@ -5,6 +5,8 @@ import qualified Data.Map as Map
 import qualified Data.Maybe as Maybe
 import qualified Data.Tuple as Tuple
 
+import Debug.Trace
+
 type Context = (Map.Map String IdentType, Bool)
 
 checkASTTypes :: AST -> Bool
@@ -45,8 +47,10 @@ checkStmtValid (context@(map, valid)) (Ctrl (If expr stmt1 stmt2 _)) =
 checkStmtValid (context@(map, valid)) (Ctrl (While exp stmt _)) =
   let
     (_, valid1) = checkStmtValid context stmt
+    isBool = case checkExprType context exp of Nothing -> False
+                                               Just t -> t == IBool
   in
-    (map, valid1 && valid)
+    (map, valid1 && isBool && valid)
 
 checkStmtValid (context@(map, valid)) (Ctrl (Return expr _)) =
   let
@@ -60,6 +64,15 @@ checkStmtValid (context@(map, valid)) (Block stmts) =
     (_, valid') = foldl checkStmtValid context stmts
   in
     (map, valid && valid')
+
+checkStmtValid (context@(map, valid)) (Expr expr) = 
+  let 
+    checks = case checkExprType context expr of Nothing -> False
+                                                Just t -> True
+  in
+    (map, checks)
+
+-- checkStmtValid (context@(map, valid)) s = trace("S is = " ++ show s) $ (map, True)
 
 
 matchType :: Context -> Expr -> Expr -> [IdentType] -> IdentType -> (Maybe IdentType)
