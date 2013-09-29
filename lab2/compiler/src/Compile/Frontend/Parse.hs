@@ -206,11 +206,11 @@ ret = do
 
 simp :: C0Parser ParseStmt
 simp = 
+  Text.Parsec.try stExpr
+  <|>
   decl
   <|>
   asgn
-  <|>
-  stExpr
   <?> "simp"
 
 stExpr :: C0Parser ParseStmt

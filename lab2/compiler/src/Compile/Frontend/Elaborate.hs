@@ -21,6 +21,7 @@ expandPStatements stmts = concatMap expandPStatement stmts
         expandPStatement s@(PBlock stmts) = [PBlock (expandPStatements stmts)]
         expandPStatement s@(PDecl id t p (Just asgn)) = [PDecl id t p Nothing, asgn]
         expandPStatement s@(PDecl id t p Nothing) = [s]
+        expandPStatement s@(PExpr e) = [s]
 
         collapseStmts stmts 
           | (length stmts == 1) = head stmts
