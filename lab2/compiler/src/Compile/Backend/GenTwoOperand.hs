@@ -20,6 +20,7 @@ genForIns aasm@(AAsm {aAssign = [loc], aOp = Neg, aArgs = [fst]}) =
     then [aasm]
     else [AAsm {aAssign = [loc], aOp = Nop, aArgs = [fst]},
           AAsm {aAssign = [loc], aOp = Neg, aArgs = [ALoc loc]}]
+genForIns aasm@(ACtrl c) = [aasm]
 
 genForIns aasm@(AAsm {aAssign = [loc], aOp = op, aArgs = [fst,snd]}) = genForIns' aasm
 
