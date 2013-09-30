@@ -21,9 +21,12 @@ import Compile.Types
 import Compile.Frontend.Parse
 import Compile.Frontend.Elaborate
 import Compile.Frontend.CheckInitialization
+import Compile.Frontend.Minimize
 import Compile.Frontend.CheckAST
 import Compile.IR.GenIR
 import Compile.Backend.CodeGen
+
+import qualified Debug.Trace as Trace
 
 import LiftIOE
 
@@ -36,12 +39,13 @@ compile job = do
     ast <- parseAST $ jobSource job -- ParseAST
     elabAst <- liftEIO $ elaborate ast -- AST
     liftEIO $ checkAST elabAst
+    minimizedAst <- liftEIO $ minimize elabAst
     if jobOutFormat job == C0
-      then writer (jobOut job) elabAst
-      else let asm = codeGen elabAst in
+      then writer (jobOut job) minimizedAst
+      else let asm = codeGen minimizedAst in
               if jobOutFormat job == Asm
                  then stringWriter (jobOut job) asm
-                 else do writer asmFile ast
+                 else do writer asmFile minimizedAst
                          let o = if jobOutFormat job == Obj then "-c" else ""
                          gcc o asmFile (jobOut job)
   case res of
