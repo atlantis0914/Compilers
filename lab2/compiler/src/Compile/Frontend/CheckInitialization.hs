@@ -15,7 +15,7 @@ checkInitialization (AST (Block stmts) p) =
   let
     (l1,r1,b) = checkBlock stmts True (Set.empty)
   in
-    b
+    l1 `seq` r1 `seq` b `seq` True
 
 assert :: Bool -> String -> a -> a
 assert False msg x = error msg
@@ -52,9 +52,9 @@ checkStmt (Decl i t pos rest) doErr decls =
   in
     setI `seq` (Set.difference decsRest setI, Set.difference liveRest setI, b1)
 
-checkStmt(Asgn i o e pos) doErr decls = isDeclaredAsgn i decls (Set.singleton i, used e, True)
+checkStmt(Asgn i o e pos) doErr decls = isDeclaredAsgn i decls (Set.singleton i, used e, False)
 
-checkStmt(Expr e) doErr decls = isDeclaredExpr e decls (Set.empty, used e, True)
+checkStmt(Expr e) doErr decls = isDeclaredExpr e decls (Set.empty, used e, False)
 
 checkStmt(Ctrl (If e s1 s2 pos)) doErr decls = 
   let
@@ -77,7 +77,7 @@ checkBlock [stmt] doErr decls = checkStmt stmt doErr decls
 checkBlock (stmt:stmts) doErr decls = 
   let
     (decStmt, liveStmt, b1) = checkStmt stmt doErr decls
-    doErr' = not $ isReturn stmt
+    doErr' = not $ (isReturn stmt || b1)
     (decRest, liveRest, b2) = checkBlock stmts doErr' decls
   in
     if (not doErr')
@@ -85,7 +85,6 @@ checkBlock (stmt:stmts) doErr decls =
       else decStmt `seq` liveStmt `seq` decRest `seq` liveRest `seq` 
            (Set.union decStmt decRest, 
             Set.union liveStmt (Set.difference liveRest decStmt), b1 && b2)
-   
    
 isReturn (Ctrl (Return _ _)) = True
 isReturn _ = False
