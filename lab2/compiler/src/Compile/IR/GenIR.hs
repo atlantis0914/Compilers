@@ -72,7 +72,7 @@ genCtrl (m,i,l,aasm) (While e s1 _) = let
     s1Aasm' ++ 
     [ACtrl $ ALabel endLabel]
   in
-    Trace.trace ("Eaasm is: " ++ " for e : " ++ show e ++ (concatMap (\x -> (show x) ++ "\n") eAasm)) $ (m',i',l' + 3, aasm ++ outputAasm)
+    (m',i',l' + 3, aasm ++ outputAasm)
 
 -- GenExps the expression into AReg 0 and then returns on AReg0
 genCtrl (m,i,l,aasm) (Return expr _) = let
@@ -81,7 +81,6 @@ genCtrl (m,i,l,aasm) (Return expr _) = let
     (m,i,l',aasm ++ aasm' ++ [ACtrl $ ARet (ALoc (AReg 0))])
 
 genExp :: Alloc -> Expr -> ALoc -> Alloc
-genExp m e d | Trace.trace ("E is : " ++ show e) False = undefined
 genExp (varMap,n,l,aasm) (ExpInt num _ _) dest = 
   (varMap,n,l, aasm ++ [AAsm [dest] Nop [AImm $ fromIntegral num]])
 genExp (varMap,n,l,aasm) (ExpBool b _) dest = 
