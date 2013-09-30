@@ -77,7 +77,7 @@ genCtrl (m,i,l,aasm) (While e s1 _) = let
 genCtrl (m,i,l,aasm) (Return expr _) = let
   (_,_,l',aasm') = genExp (m,i,l,[]) expr (AReg 0)
   in 
-    (m,i,l',aasm ++ aasm' ++ [ACtrl $ ARet (AReg 0))
+    (m,i,l',aasm ++ aasm' ++ [ACtrl $ ARet (ALoc (AReg 0))])
 
 genExp :: Alloc -> Expr -> ALoc -> Alloc
 genExp (varMap,n,l,aasm) (ExpInt num _ _) dest = 
