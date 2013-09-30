@@ -12,8 +12,14 @@ liveness aasms =
   let
     initial = take (length aasms) (iterate (\x -> x + 1) 1)
     initial' = map (\n -> (n, [])) initial
-    initial'' = Map.fromList initial''
-
-    liveMap = foldrWithIndex runPredicate initial'' (Seq.fromList aasms)
+    initial'' = Map.fromList initial'
+    aasmsSeq = Seq.fromList aasms
+    labelMap = Seq.foldlWithIndex (addLabel) (Map.empty) aasmsSeq
+    liveMap = Seq.foldrWithIndex (runPredicate labelMap) initial'' aasmsSeq
   in
-    map (\i -> Map.! i liveMap) initial
+    map (\i -> liveMap Map.! i ) initial
+
+addLabel :: LabelMap -> Int -> AAsm -> LabelMap
+addLabel labelMap i (ACtrl (ALabel label)) =
+  Map.insert label i labelMap
+addLabel labelMap _ _ = labelMap

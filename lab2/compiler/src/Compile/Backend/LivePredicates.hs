@@ -4,8 +4,8 @@ import Compile.Types
 import Data.List
 import qualified Data.Map as Map
 
-type LiveMap = Data.Map Int [ALoc]
-type LabelMap = Data.Map Int Int
+type LiveMap = Map.Map Int [ALoc]
+type LabelMap = Map.Map Int Int
 
 extractLocs :: [AVal] -> [ALoc]
 extractLocs [] = []
@@ -14,42 +14,42 @@ extractLocs (val:vals) =
               _ -> extractLocs vals
 
 runPredicate :: LabelMap -> Int -> AAsm -> LiveMap -> LiveMap
-runPredicate labelMap i (AAsm {aAssign = [AReg 0], aArgs = args}) liveMap =
+runPredicate _ i (AAsm {aAssign = [AReg 0], aArgs = args}) liveMap =
   let
     locs = nub $ extractLocs args
     liveMap' = Map.insert i locs liveMap
   in
     liveMap'
 
-runPredicate labelMap i (AAsm {aAssign = assigns, aArgs = args}) liveMap =
+runPredicate _ i (AAsm {aAssign = assigns, aArgs = args}) liveMap =
   let
-    locs = Map.! (i+1) liveMap
-    oldLocs = Map.! i liveMap
+    locs = liveMap Map.! (i+1)
+    oldLocs = liveMap Map.! i
     locs' = (nub $ extractLocs args) `union` (locs \\ assigns)
     liveMap' = Map.insert i locs' liveMap
   in
     liveMap'
 
-runPredicate labelMap i (ACtrl (Label _)) liveMap =
+runPredicate _ i (ACtrl (ALabel _)) liveMap =
   let
-    locs = Map.! (i+1) liveMap
+    locs = liveMap Map.! (i+1)
     liveMap' = Map.insert i locs liveMap
   in
     liveMap'
 
-runPredicate labelMap i (ACtrl (If aval label)) liveMap =
+runPredicate labelMap i (ACtrl (AIf aval label)) liveMap =
   let
-    locs = Map.! (i+1) liveMap
-    labelIndex = Map.! label labelMap
-    locs' = locs `union` (Map.!) labelIndex liveMap
+    locs = liveMap Map.! (i+1)
+    labelIndex = labelMap Map.! label
+    locs' = locs `union` (liveMap Map.! labelIndex)
     liveMap' = Map.insert i locs' liveMap
   in
     liveMap'
 
-runPredicate labelMap i (ACtrl (Goto i)) liveMap =
+runPredicate labelMap i (ACtrl (AGoto label)) liveMap =
   let
-    labelIndex = Map.! label labelMap
-    locs = Map.! labelIndex liveMap
-    liveMap' = Map.insert i locs' liveMap
+    labelIndex = labelMap Map.! label
+    locs = liveMap Map.! labelIndex
+    liveMap' = Map.insert i locs liveMap
   in
     liveMap'
