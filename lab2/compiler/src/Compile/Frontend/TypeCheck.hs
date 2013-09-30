@@ -70,10 +70,10 @@ checkStmtValid (context@(map, valid)) (Expr expr) =
     checks = case checkExprType context expr of Nothing -> False
                                                 Just t -> True
   in
-    (map, checks)
+    (map, valid && checks)
 
--- checkStmtValid (context@(map, valid)) s = trace("S is = " ++ show s) $ (map, True)
-
+checkStmtValid context SNop =
+  context
 
 matchType :: Context -> Expr -> Expr -> [IdentType] -> IdentType -> (Maybe IdentType)
 matchType context expr1 expr2 expect result =

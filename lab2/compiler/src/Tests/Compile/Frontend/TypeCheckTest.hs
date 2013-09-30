@@ -45,14 +45,14 @@ expTernary2 = ExpTernary identB identB identB sourcePos
 expTernary3 = ExpTernary identA identA identB sourcePos
 expTernary4 = ExpTernary identA identB identA sourcePos
 
-decl1 = Decl "b" IInt sourcePos decl2
+decl1 = Decl "b" IInt sourcePos SNop
 decl2 = Decl "d" IInt sourcePos SNop
 decl3 = Decl "a" IBool sourcePos SNop
 if1 = Ctrl $ If identA block2 block3 sourcePos
 if2 = Ctrl $ If identA block2 block4 sourcePos
 if3 = Ctrl $ If identA block7 block8 sourcePos
 ret1 = Ctrl $ Return identB sourcePos
-block1 = Block [decl3, decl1, if1, ret1]
+block1 = Block [decl3, decl1, decl2, if1, ret1]
 asgn1 = Asgn "b" Nothing expInt sourcePos
 asgn2 = Asgn "d" Nothing expInt sourcePos
 asgn3 = Asgn "a" Nothing expInt sourcePos
