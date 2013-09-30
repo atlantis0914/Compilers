@@ -11,7 +11,7 @@ import qualified Data.Tuple as Tuple
 liveness :: [AAsm] -> [[ALoc]]
 liveness aasms =
   let
-    initial = take (length aasms) (iterate (\x -> x + 1) 1)
+    initial = take (length aasms) (iterate (\x -> x + 1) 0)
     initial' = map (\n -> (n, [])) initial
     initial'' = Map.fromList initial'
     aasmsSeq = Seq.fromList aasms
