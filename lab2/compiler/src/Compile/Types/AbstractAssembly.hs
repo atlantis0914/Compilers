@@ -22,10 +22,10 @@ data ALoc = AReg Int
           | ATemp Int
           | AMem Int deriving (Show, Eq)
 
-data ACtrl = Ret AVal
-           | Label Int
-           | If AVal Int
-           | Goto Int deriving (Show, Eq)
+data ACtrl = ARet AVal
+           | ALabel Int
+           | AIf AVal Int
+           | AGoto Int deriving (Show, Eq)
 
 instance Ord ALoc where
   (AReg _) `compare` (ATemp _) = GT

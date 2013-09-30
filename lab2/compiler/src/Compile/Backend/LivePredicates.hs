@@ -20,6 +20,7 @@ runPredicate labelMap i (AAsm {aAssign = [AReg 0], aArgs = args}) liveMap =
     liveMap' = Map.insert i locs liveMap
   in
     liveMap'
+
 runPredicate labelMap i (AAsm {aAssign = assigns, aArgs = args}) liveMap =
   let
     locs = Map.! (i+1) liveMap
@@ -28,12 +29,14 @@ runPredicate labelMap i (AAsm {aAssign = assigns, aArgs = args}) liveMap =
     liveMap' = Map.insert i locs' liveMap
   in
     liveMap'
+
 runPredicate labelMap i (ACtrl (Label _)) liveMap =
   let
     locs = Map.! (i+1) liveMap
     liveMap' = Map.insert i locs liveMap
   in
     liveMap'
+
 runPredicate labelMap i (ACtrl (If aval label)) liveMap =
   let
     locs = Map.! (i+1) liveMap
@@ -42,6 +45,7 @@ runPredicate labelMap i (ACtrl (If aval label)) liveMap =
     liveMap' = Map.insert i locs' liveMap
   in
     liveMap'
+
 runPredicate labelMap i (ACtrl (Goto i)) liveMap =
   let
     labelIndex = Map.! label labelMap
