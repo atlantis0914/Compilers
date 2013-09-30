@@ -54,8 +54,10 @@ runPredicate labelMap i (ACtrl (AIf aval label)) (liveMap, isNew) =
     locs = getLocs (i+1) liveMap
     labelIndex = labelMap Map.! label
     locs' = locs `union` (liveMap Map.! labelIndex)
+    locs'' = case aval of ALoc loc -> locs' `union` [loc]
+                          _ -> locs'
   in
-    addLocs i (liveMap, isNew) locs'
+    addLocs i (liveMap, isNew) locs''
 
 runPredicate labelMap i (ACtrl (AGoto label)) (liveMap, isNew) =
   let
