@@ -17,7 +17,7 @@ checkASTTypes (AST stmt _) =
     valid
 
 checkStmtValid :: Context -> Stmt -> Context
-checkStmtValid (context@(map, valid)) (Asgn name op expr _) =
+checkStmtValid (context@(map, valid)) (Asgn name op expr pos) =
   let
     maybeExprType = checkExprType context expr
     maybeType = Map.lookup name map
@@ -25,39 +25,44 @@ checkStmtValid (context@(map, valid)) (Asgn name op expr _) =
                     (Just t1, Just t2) -> t1 == t2
                     (_, _) -> False
   in
-    (map, valid && correctType)
+    if correctType then (map, valid && correctType)
+                   else error ("Error: Types do not match at " ++ show pos)
 
-checkStmtValid (context@(map, valid)) (Decl declName declType _ asgn) =
+checkStmtValid (context@(map, valid)) (Decl declName declType pos asgn) =
   let
     exists = Maybe.isNothing (Map.lookup declName map)
     map' = Map.insert declName declType map
     checkAsgn = Tuple.snd $ checkStmtValid (map', valid) asgn
   in
-    (map', valid && exists && checkAsgn)
+    if exists then (map', valid && exists && checkAsgn)
+              else error ("Error: " ++ declName ++ " doesn't exist at " ++ show pos)
 
-checkStmtValid (context@(map, valid)) (Ctrl (If expr stmt1 stmt2 _)) =
+checkStmtValid (context@(map, valid)) (Ctrl (If expr stmt1 stmt2 pos)) =
   let
     valid' = case checkExprType context expr of Nothing -> False
                                                 Just t -> t == IBool
     (_, valid'') = checkStmtValid context stmt1
     (_, valid''') = checkStmtValid context stmt2
   in
-    (map, valid' && valid'' && valid''' && valid)
+    if valid' then (map, valid' && valid'' && valid''' && valid)
+              else error ("Error: If Expression is not a bool at " ++ show pos ++ " AST:" ++ show expr)
 
-checkStmtValid (context@(map, valid)) (Ctrl (While exp stmt _)) =
+checkStmtValid (context@(map, valid)) (Ctrl (While expr stmt pos)) =
   let
     (_, valid1) = checkStmtValid context stmt
-    isBool = case checkExprType context exp of Nothing -> False
-                                               Just t -> t == IBool
+    isBool = case checkExprType context expr of Nothing -> False
+                                                Just t -> t == IBool
   in
-    (map, valid1 && isBool && valid)
+    if isBool then (map, valid1 && isBool && valid)
+              else error ("Error: While Expression is not a bool at " ++ show pos ++ " AST:" ++ show expr)
 
-checkStmtValid (context@(map, valid)) (Ctrl (Return expr _)) =
+checkStmtValid (context@(map, valid)) (Ctrl (Return expr pos)) =
   let
     isInt = case checkExprType context expr of Nothing -> False
                                                Just t -> t == IInt
   in
-    (map, valid && isInt)
+    if isInt then (map, valid && isInt)
+             else error ("Error: Expression is not an int at " ++ show pos ++ " AST" ++ show expr)
 
 checkStmtValid (context@(map, valid)) (Block stmts) =
   let
@@ -111,10 +116,14 @@ checkExprType context (ExpLogOp _ expr1 expr2 _) =
   matchType context expr1 expr2 [IBool] IBool
 checkExprType context (ExpPolyEq _ expr1 expr2 _) =
   matchType context expr1 expr2 [IBool, IInt] IBool
-checkExprType context (ExpUnOp _ expr _) =
+checkExprType context (ExpUnOp Neg expr _) =
   case checkExprType context expr of Nothing -> Nothing
                                      Just t -> if t == IInt then Just IInt
                                                             else Nothing
+checkExprType context (ExpUnOp LogicalNot expr _) =
+  case checkExprType context expr of Nothing -> Nothing
+                                     Just t -> if t == IBool then Just IBool
+                                                             else Nothing
 checkExprType context (ExpTernary expr1 expr2 expr3 _) =
   case checkExprType context expr1 of
     Nothing -> Nothing
