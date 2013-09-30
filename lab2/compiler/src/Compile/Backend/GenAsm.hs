@@ -61,3 +61,7 @@ opToString op =
              Nop -> "movl"
              RShift -> "sarl"
              LShift -> "sall"
+             BitwiseAnd -> "andl"
+             BitwiseOr -> "orl"
+             BitwiseNot -> "notl"
+             BitwiseXOr -> "xorl"

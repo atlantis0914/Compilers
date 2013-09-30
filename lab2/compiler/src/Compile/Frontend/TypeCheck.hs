@@ -26,7 +26,7 @@ checkStmtValid (context@(map, valid)) (Asgn name op expr pos) =
                     (_, _) -> False
   in
     if correctType then (map, valid && correctType)
-                   else error ("Error: Types do not match at " ++ show pos)
+                   else error ("Error: Wrong type in assignment to " ++ name ++ " at " ++ show pos ++ " Expr: " ++ show expr)
 
 checkStmtValid (context@(map, valid)) (Decl declName declType pos asgn) =
   let
@@ -104,6 +104,12 @@ typeEq context expr1 expr2 expect =
       (Just t1, Just t2) -> if t1 == t2 && t1 `elem` expect then Just t1
                                                             else Nothing
 
+checkExprIsType :: Maybe IdentType -> IdentType -> Maybe IdentType
+checkExprIsType maybeType t =
+  case maybeType of Nothing -> Nothing
+                    Just t' -> if t' == t then Just t
+                                          else Nothing
+
 checkExprType :: Context -> Expr -> Maybe IdentType
 checkExprType _ (ExpInt _ _ _) = Just IInt
 checkExprType _ (ExpBool _ _) = Just IBool
@@ -117,15 +123,14 @@ checkExprType context (ExpLogOp _ expr1 expr2 _) =
 checkExprType context (ExpPolyEq _ expr1 expr2 _) =
   matchType context expr1 expr2 [IBool, IInt] IBool
 checkExprType context (ExpUnOp Neg expr _) =
-  case checkExprType context expr of Nothing -> Nothing
-                                     Just t -> if t == IInt then Just IInt
-                                                            else Nothing
+  checkExprIsType (checkExprType context expr) IInt
+checkExprType context (ExpUnOp BitwiseNot expr _) =
+  checkExprIsType (checkExprType context expr) IInt
 checkExprType context (ExpUnOp LogicalNot expr _) =
-  case checkExprType context expr of Nothing -> Nothing
-                                     Just t -> if t == IBool then Just IBool
-                                                             else Nothing
+  checkExprIsType (checkExprType context expr) IBool
 checkExprType context (ExpTernary expr1 expr2 expr3 _) =
   case checkExprType context expr1 of
     Nothing -> Nothing
     Just t -> if t == IBool then typeEq context expr2 expr3 [IInt, IBool]
                             else Nothing
+
