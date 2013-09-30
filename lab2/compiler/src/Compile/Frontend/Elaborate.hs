@@ -3,6 +3,12 @@ module Compile.Frontend.Elaborate where
 import Compile.Types
 import qualified Data.Map as Map
 
+import qualified Debug.Trace as Trace
+
+assert :: Bool -> String -> a -> a
+assert False msg x = error msg
+assert _ _ x = x
+
 elaborate :: ParseAST -> Either String AST 
 elaborate (ParseAST (PBlock stmts) p) = 
   let
@@ -15,11 +21,11 @@ elaborate (ParseAST (PBlock stmts) p) =
 
 expandPStatements :: [ParseStmt] -> [ParseStmt]
 expandPStatements stmts = concatMap expandPStatement stmts
-  where expandPStatement s@(PAsgn _ Nothing _ _) = [s]
-        expandPStatement s@(PAsgn id (Just op) e p) = [PAsgn id Nothing (ExpBinOp op (Ident id p) e p) p]
+  where expandPStatement s@(PAsgn id Nothing e p) = [PAsgn id Nothing (elabExpr e) p]
+        expandPStatement s@(PAsgn id (Just op) e p) = [PAsgn id Nothing (ExpBinOp op (Ident id p) (elabExpr e) p) p]
         expandPStatement s@(PCtrl c) = [PCtrl $ expandCtrl c]
         expandPStatement s@(PBlock stmts) = [PBlock (expandPStatements stmts)]
-        expandPStatement s@(PDecl id t p (Just asgn)) = [PDecl id t p Nothing, asgn]
+        expandPStatement s@(PDecl id t p (Just asgn)) = [PDecl id t p Nothing] ++ (expandPStatement asgn)
         expandPStatement s@(PDecl id t p Nothing) = [s]
         expandPStatement s@(PExpr e) = [PExpr (elabExpr e)]
 
@@ -61,25 +67,32 @@ elabParseBlock' (Block curStmts) ((PDecl s t pos Nothing):xs) =
 elabParseBlock' (Block curStmts) (x:xs) = elabParseBlock' (Block (curStmts ++ [elabParseStmt x])) xs
 
 elabExpr :: Expr -> Expr 
-elabExpr (ExpBinOp o e1 e2 p) = ExpBinOp o (elabExpr e1) (elabExpr e2) p
-elabExpr (ExpRelOp o e1 e2 p) = ExpRelOp o (elabExpr e1) (elabExpr e2) p
-elabExpr (ExpPolyEq o e1 e2 p) = ExpPolyEq o (elabExpr e1) (elabExpr e2) p
-elabExpr (ExpLogOp And e1 e2 p) = ExpTernary (elabExpr e1) 
+elabExpr e@(ExpBinOp o e1 e2 p) = checkExpr e $ ExpBinOp (verifyExprOp o p) (elabExpr e1) (elabExpr e2) p
+elabExpr e@(ExpRelOp o e1 e2 p) = checkExpr e $ ExpRelOp (verifyExprOp o p) (elabExpr e1) (elabExpr e2) p
+elabExpr e@(ExpPolyEq o e1 e2 p) = checkExpr e $ ExpPolyEq (verifyExprOp o p) (elabExpr e1) (elabExpr e2) p
+elabExpr e@(ExpLogOp And e1 e2 p) = checkExpr e $ ExpTernary (elabExpr e1) 
                                              (elabExpr e2) 
                                              (ExpBool False p) p
-elabExpr (ExpLogOp Or e1 e2 p) = ExpTernary (elabExpr e1) 
+elabExpr e@(ExpLogOp Or e1 e2 p) = checkExpr e $ ExpTernary (elabExpr e1) 
                                             (ExpBool True p)
                                             (elabExpr e2) p
-elabExpr (ExpUnOp o e1 p) = ExpUnOp o (elabExpr e1) p 
-elabExpr (ExpTernary e1 e2 e3 p) = ExpTernary (elabExpr e1) 
+elabExpr e@(ExpUnOp o e1 p) = checkExpr e $ ExpUnOp (verifyExprOp o p) (elabExpr e1) p 
+elabExpr e@(ExpTernary e1 e2 e3 p) = checkExpr e $ ExpTernary (elabExpr e1) 
                                               (elabExpr e2) 
                                               (elabExpr e3) p
-elabExpr e = e
 
---elaborate' s@(Decl {extraAsgn = Just(asgn)}) =
---  [s{extraAsgn = Nothing},
---   asgn]
-elaborate' :: Stmt -> [Stmt]
-elaborate' s@(Asgn _ Nothing _ _) = [s]
-elaborate' s@(Asgn id (Just op) e p) = [Asgn id Nothing (ExpBinOp op (Ident id p) e p) p]
-elaborate' s = [s]
+elabExpr e = checkExpr e $ e
+
+checkExpr (ExpInt n p Dec) = 
+  assert  (n <= (2^31)) (show n ++ " too large at " ++ show p)
+
+checkExpr (ExpInt n p Hex) = 
+  assert (n <= (2^32)) (show n ++ " too large at " ++ show p)
+
+checkExpr e = (\x -> x)
+
+
+
+verifyExprOp Incr p = error ("Undefined use of increment operator in expression at " ++ show p)
+verifyExprOp Decr p = error ("Undefined use of increment operator in expression at " ++ show p)
+verifyExprOp o _ = o
