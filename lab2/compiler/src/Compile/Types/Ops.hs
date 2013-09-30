@@ -53,5 +53,6 @@ instance Show Op where
   show Or = "||"
   show BitwiseAnd = "&"
   show BitwiseOr = "|"
+  show BitwiseXOr = "^"
   show RShift = ">>"
   show LShift = "<<"

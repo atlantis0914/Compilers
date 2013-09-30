@@ -18,11 +18,17 @@ aasmToString :: AAsm -> String
 aasmToString AAsm {aAssign = [loc], aOp = Neg, aArgs = [arg]} =
   (aasmToString (AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]}) ++ "  " ++ (opToString Neg) ++ " " ++ (alocToString loc) ++ "\n")
 
-aasmToString AAsm {aAssign = [loc], aOp = Div, aArgs = [snd]}  = divModToString loc snd Div
-aasmToString AAsm {aAssign = [loc], aOp = Mod, aArgs = [snd]}  = divModToString loc snd Mod
+aasmToString AAsm {aAssign = [loc], aOp = Div, aArgs = [snd]} = divModToString loc snd Div
+aasmToString AAsm {aAssign = [loc], aOp = Mod, aArgs = [snd]} = divModToString loc snd Mod
 
 aasmToString AAsm {aAssign = [loc], aOp = op, aArgs = [arg]} =
   "  " ++ (opToString op) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
+aasmToString (ACtrl (ALabel i)) =
+  "  label" ++ show i ++ ":\n"
+aasmToString (ACtrl (AGoto i)) =
+  "  jmp label" ++ show i ++ "\n"
+aasmToString (ACtrl (ARet _)) =
+  "\n"
 
 avalToString :: AVal -> String
 avalToString aval =
@@ -65,3 +71,7 @@ opToString op =
              BitwiseOr -> "orl"
              BitwiseNot -> "notl"
              BitwiseXOr -> "xorl"
+             Incr -> "addl"
+             Decr -> "subl"
+             _ -> error ("error matching " ++ show op)
+
