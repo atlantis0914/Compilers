@@ -3,6 +3,8 @@ module Compile.IR.GenIR where
 import Compile.Types
 import qualified Data.Map as Map
 
+import qualified Debug.Trace as Trace
+
 type Alloc = (Map.Map String Int, Int, Int, [AAsm])
 -- (Map from idents -> tempNum, curTempNum)
 
@@ -33,7 +35,6 @@ genStmt (m,i,l,aasm) (Block stmts) = let
   -- Keep scope alive, start new AAsm list, concat when finished. 
   (m',i',l',aasm') = foldl genStmt (m,i,l,[]) stmts
   in (m',i',l',aasm ++ aasm')
-
 
 genCtrl :: Alloc -> Ctrl -> Alloc 
 genCtrl (m,i,l,aasm) (If e s1 s2 _) = let
@@ -71,7 +72,7 @@ genCtrl (m,i,l,aasm) (While e s1 _) = let
     s1Aasm' ++ 
     [ACtrl $ ALabel endLabel]
   in
-    (m',i',l' + 3, aasm ++ outputAasm)
+    Trace.trace ("Eaasm is: " ++ " for e : " ++ show e ++ (concatMap (\x -> (show x) ++ "\n") eAasm)) $ (m',i',l' + 3, aasm ++ outputAasm)
 
 -- GenExps the expression into AReg 0 and then returns on AReg0
 genCtrl (m,i,l,aasm) (Return expr _) = let
@@ -80,6 +81,7 @@ genCtrl (m,i,l,aasm) (Return expr _) = let
     (m,i,l',aasm ++ aasm' ++ [ACtrl $ ARet (ALoc (AReg 0))])
 
 genExp :: Alloc -> Expr -> ALoc -> Alloc
+genExp m e d | Trace.trace ("E is : " ++ show e) False = undefined
 genExp (varMap,n,l,aasm) (ExpInt num _ _) dest = 
   (varMap,n,l, aasm ++ [AAsm [dest] Nop [AImm $ fromIntegral num]])
 genExp (varMap,n,l,aasm) (ExpBool b _) dest = 
@@ -108,8 +110,8 @@ genExp (varMap,n,l,aasm) (ExpUnOp op e _) dest = let
 genBinOp (varMap,n,l,aasm) (op,e1,e2) dest = let
   -- AAsm for left and right operand
   -- TODO: Make this more SSL friendly
-  (_,_,l',aasm') = genExp (varMap, n + 1,l,aasm) e1 (ATemp n)
-  (_,_,l'',aasm'') = genExp (varMap, n + 2,l',aasm') e2 (ATemp $ n + 1)
+  (_,_,l',aasm') = genExp (varMap, n + 1,l, []) e1 (ATemp n)
+  (_,_,l'',aasm'') = genExp (varMap, n + 2,l', []) e2 (ATemp $ n + 1)
   -- AAsm for the operation
   c  = [AAsm [dest] op [ALoc $ ATemp n, ALoc $ ATemp $ n + 1]]
   -- Questionable variable indexing here
