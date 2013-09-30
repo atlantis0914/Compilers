@@ -55,5 +55,3 @@ instance Show Op where
   show BitwiseOr = "|"
   show RShift = ">>"
   show LShift = "<<"
-
-data COp = Ret deriving (Show, Eq)

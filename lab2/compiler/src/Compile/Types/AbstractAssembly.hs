@@ -12,7 +12,7 @@ data AAsm = AAsm {aAssign :: [ALoc]
                  ,aOp     :: Op
                  ,aArgs   :: [AVal]
                  }
-          | ACtrl COp AVal
+          | ACtrl ACtrl
           | AComment String deriving (Show, Eq)
 
 data AVal = ALoc ALoc
@@ -21,6 +21,11 @@ data AVal = ALoc ALoc
 data ALoc = AReg Int
           | ATemp Int
           | AMem Int deriving (Show, Eq)
+
+data ACtrl = Ret AVal
+           | Label Int
+           | If AVal Int
+           | Goto Int deriving (Show, Eq)
 
 instance Ord ALoc where
   (AReg _) `compare` (ATemp _) = GT
