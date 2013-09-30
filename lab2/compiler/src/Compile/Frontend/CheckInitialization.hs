@@ -77,7 +77,7 @@ checkBlock [stmt] doErr decls = checkStmt stmt doErr decls
 checkBlock (stmt:stmts) doErr decls = 
   let
     (decStmt, liveStmt, b1) = checkStmt stmt doErr decls
-    doErr' = not $ (isReturn stmt || b1)
+    doErr' = not $ (isReturn stmt || b1) -- Checks if all sub-branches have returns. 
     (decRest, liveRest, b2) = checkBlock stmts doErr' decls
   in
     if (not doErr')
