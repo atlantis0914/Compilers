@@ -26,6 +26,8 @@ import Text.Parsec.Expr                       -- Expression Parser Generator
 import Text.Parsec.Token (GenLanguageDef(..)) -- Language Definition Structure
 import qualified Text.Parsec.Token as Tok
 
+import qualified Debug.Trace as Trace 
+
 parseAST :: FilePath -> ErrorT String IO ParseAST
 parseAST file = do
   code <- liftIOE $ BS.readFile file
@@ -259,23 +261,26 @@ expr' :: C0Parser Expr
 expr' = buildExpressionParser opTable term <?> "expr"
 
 expr :: C0Parser Expr
-expr = do 
+expr = 
+  (parens expr) 
+  <|> (do 
   pos <- getPosition
   e1 <- expr'
   s <- parseCond
   case s of 
     Nothing -> return $ e1
-    Just (e2,e3) -> return $ ExpTernary e1 e2 e3 pos
+    Just (e2,e3) -> return $ ExpTernary e1 e2 e3 pos)
 
 parseCond :: C0Parser (Maybe (Expr, Expr)) 
 parseCond = (do 
-  reserved "?"
-  e1 <- expr
-  reserved ":" 
+  reservedOp "?"
+  e1 <- expr 
+  whiteSpace
+  reservedOp ":" 
   e2 <- expr
   return $ Just (e1,e2))
   <|>
-  (do return $ Nothing)
+  (do return Nothing)
 
 term :: C0Parser Expr
 term = 
@@ -292,7 +297,7 @@ term =
    <|>
    (do p <- getPosition
        t <- reserved "false"
-       return $ ExpBool True p)
+       return $ ExpBool False p)
    <|>
    (do p <- getPosition
        n <- Text.Parsec.try hex
