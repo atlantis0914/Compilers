@@ -43,6 +43,8 @@ runPredicate _ i (AAsm {aAssign = assigns, aArgs = args}) (liveMap, isNew) =
   in
     addLocs i (liveMap, isNew) locs'
 
+runPredicate _ i (ACtrl (ARet _)) liveCtx = liveCtx
+
 runPredicate _ i (ACtrl (ALabel _)) (liveMap, isNew) =
   let
     locs = getLocs (i+1) liveMap

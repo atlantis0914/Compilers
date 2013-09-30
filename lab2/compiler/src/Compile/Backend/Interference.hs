@@ -53,6 +53,7 @@ getLocs l = getLocs' (Map.empty) l
   where getLocs' locs [] = Map.keys locs
         getLocs' locs ((AAsm {aAssign = loc}):vs) = 
           getLocs' (Map.insert (head loc) () locs) vs
+        getLocs' locs ((ACtrl _):vs) = getLocs' locs vs
 
 getInterferenceEdges :: [AAsm] -> [[ALoc]] -> [Edge]
 getInterferenceEdges [] _ = []
@@ -73,12 +74,9 @@ getAAsmEdges (AAsm {aAssign = assign, aOp = Mod, aArgs = args}) l l' =
   (getConflict assign l') ++ (getDivConflict l') ++ (getDivConflict l)
 
 getAAsmEdges (AAsm {aAssign = assign, aOp = op, aArgs = args}) l l' = getConflict assign l'
---   case op of
---     Nop -> let 
---              [tmp] = args 
---              loc = maybeToList $ aLocFromAVal tmp
---              in getConflict (assign ++ loc) l' 
---     otherwise -> getConflict assign l'
+
+getAAsmEdges (ACtrl c) l l' = []
+
 
 getConflict assign [] =  []
 getConflict assign (loc:ls) = 

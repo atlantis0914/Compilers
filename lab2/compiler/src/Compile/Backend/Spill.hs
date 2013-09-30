@@ -26,3 +26,4 @@ spillAAsm aasm@(AAsm {aAssign = [AReg i], aOp = op, aArgs = [arg]}) =
                   aOp = Nop,
                   aArgs = [ALoc $ AReg spill_reg_num]}]
       else [AAsm {aAssign = [AReg i], aOp = op, aArgs = [arg']}]
+spillAAsm aasm@(ACtrl c) = [aasm]

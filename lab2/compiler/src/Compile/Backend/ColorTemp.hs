@@ -14,6 +14,8 @@ replaceAsm coloring aasm@(AAsm {aAssign = assigns, aOp = op, aArgs = args}) =
   in
     AAsm {aAssign = assigns', aOp = op, aArgs = args'}
 
+replaceAsm coloring aasm@(ACtrl c) = aasm
+
 replaceAssigns :: ColoringMap -> ALoc -> ALoc
 replaceAssigns coloring (ATemp i) =
   let
