@@ -59,3 +59,5 @@ opToString op =
              Neg -> "negl"
              Mod -> "idivl"
              Nop -> "movl"
+             RShift -> "sarl"
+             LShift -> "sall"
