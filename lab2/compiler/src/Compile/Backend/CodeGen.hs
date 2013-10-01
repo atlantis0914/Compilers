@@ -37,8 +37,8 @@ maxTempsBeforeSpilling = 600
 -- Generates the AAsm from an AST
 codeGen ast@(AST (Block stmts) _) = let
     aasmList = genIR ast
-    twoOpAasmList = Trace.trace ("genTwoOp") $ genTwoOperand aasmList
-    allLocs = Trace.trace ("getLocs") $ getLocs aasmList
+    twoOpAasmList =  genTwoOperand aasmList
+    allLocs = getLocs aasmList
   in
     if (length (aasmList) > maxTempsBeforeSpilling)
       then (let
