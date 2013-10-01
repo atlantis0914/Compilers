@@ -62,7 +62,7 @@ checkStmt(Ctrl (If e s1 s2 pos)) doErr decls =
     (decs2, lives2, b2) = checkStmt s2 doErr decls
   in
     decs1 `seq` lives1 `seq` decs2 `seq` lives2 `seq` 
-    (Set.intersection decs1 decs2, Set.union lives1 lives2, b1 && b2)
+    (Set.intersection decs1 decs2, Set.union (used e) (Set.union lives1 lives2), b1 && b2)
 
 checkStmt(Ctrl (While e s1 pos)) doErr decls = 
   let
