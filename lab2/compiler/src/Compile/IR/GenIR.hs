@@ -94,10 +94,23 @@ genExp map (ExpLogOp op e1 e2 _) dest = genBinOp map (op,e1,e2) dest
 genExp map (ExpPolyEq op e1 e2 _) dest = genBinOp map (op,e1,e2) dest
 
 genExp alloc@(varMap,n,l,aasm) (ExpTernary e1 e2 e3 p) dest = let
-  se2 = Expr e2
-  se3 = Expr e3
-  ctrl = If e1 se2 se3 p
-  in genCtrl alloc ctrl 
+  (_,_,e1l,e1Aasm) = genExp (varMap,n+1,l,[]) e1 (ATemp n)
+  (_,_,e2l,e2Aasm) = genExp (varMap,n+2,e1l,[]) e2 dest
+  (_,_,e3l,e3Aasm) = genExp (varMap,n+3,e2l,[]) e3 dest
+  e2Label = e3l
+  e3Label = e3l + 1
+  endLabel = e3l + 2
+  e2Aasm' = (ACtrl $ ALabel e2Label):e2Aasm ++ [ACtrl $ AGoto endLabel]
+  e3Aasm' = (ACtrl $ ALabel e3Label):e3Aasm ++ [ACtrl $ AGoto endLabel]
+  outputAasm = 
+    e1Aasm ++ 
+    [ACtrl $ AIf (ALoc $ ATemp n) e2Label,
+     ACtrl $ AGoto e3Label]
+    ++ e2Aasm'
+    ++ e3Aasm'
+    ++ [ACtrl $ ALabel endLabel]
+  in
+    (varMap,n,e3l+3,aasm ++ outputAasm)
     
 genExp (varMap,n,l,aasm) (ExpUnOp op e _) dest = let
   -- AAsm for operand
