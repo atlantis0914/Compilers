@@ -28,7 +28,8 @@ expandPStatements stmts = concatMap expandPStatement stmts
           innerExpanded = expandPStatements stmts
           in 
             case innerExpanded of
-              [stmt] -> [stmt] -- OSMIUMMMM
+              [stmt@(PBlock _)] -> [stmt]
+              [stmt] -> [PBlock innerExpanded] -- OSMIUMMMM
               [] -> [] 
               x -> [PBlock innerExpanded]
         expandPStatement s@(PDecl id t p (Just asgn)) = [PDecl id t p Nothing] ++ (expandPStatement asgn)
