@@ -15,6 +15,19 @@ spillVal arg =
     _ -> arg
 
 spillAAsm :: AAsm -> [AAsm]
+spillAAsm aasm@(AAsm {aAssign = [AReg i], aOp = BitwiseNot, aArgs = [arg]}) =
+  if i > max_color_num
+      then [AAsm {aAssign = [AReg spill_reg_num],
+                  aOp = Nop,
+                  aArgs = [ALoc $ AMem $ i - max_color_num]},
+            AAsm {aAssign = [AReg spill_reg_num],
+                  aOp = BitwiseNot,
+                  aArgs = [arg]},
+            AAsm {aAssign = [AMem $ i - max_color_num],
+                  aOp = Nop,
+                  aArgs = [ALoc $ AReg spill_reg_num]}]
+      else [aasm]
+
 spillAAsm aasm@(AAsm {aAssign = [AReg i], aOp = op, aArgs = [arg]}) =
   let
     arg' = spillVal arg
