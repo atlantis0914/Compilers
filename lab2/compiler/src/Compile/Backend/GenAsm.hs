@@ -58,7 +58,7 @@ aasmToString AAsm {aAssign = [loc], aOp = RShift, aArgs = [snd]} =
   "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString RShift) ++ " %cl, " ++ (alocToString loc) ++ "\n"
 
 aasmToString AAsm {aAssign = [loc], aOp = BitwiseNot, aArgs = [arg]} =
-  "  " ++ (opToString BitwiseNot) ++ " " ++ (avalToString arg) ++ "\n"
+  "  " ++ (opToString BitwiseNot) ++ " " ++ (alocToString loc) ++ "\n"
 
 aasmToString AAsm {aAssign = [loc], aOp = op, aArgs = [arg]} =
   "  " ++ (opToString op) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
