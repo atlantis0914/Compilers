@@ -91,7 +91,7 @@ asgn = do
       return $ PAsgn dest op e pos)
    <|>
    (do op <- postOp
-       return $ PAsgn dest (Just op) (expForPostOp dest op pos) pos)
+       return $ PAsgn dest (Nothing) (expForPostOp dest op pos) pos)
    <?> "asgn"
 
 expForPostOp :: String -> Op -> SourcePos -> Expr 
@@ -304,11 +304,11 @@ term =
        p <- getPosition
        n <- dec
        return $ ExpInt n p Dec) -- or an integer
-   <|>
-   (do char '-'
-       p <- getPosition
-       e <- expr
-       return $ ExpUnOp Neg (e) p)
+--   <|>
+--   (do char '-'
+--       p <- getPosition
+--       e <- expr
+--       return $ ExpUnOp Neg (e) p)
    <?> "term"
 
 dec :: C0Parser Integer
