@@ -419,11 +419,11 @@ brackets   = Tok.brackets c0Tokens
 opTable :: [[Operator ByteString () Identity Expr]]
 opTable = [[prefix "-"  (ExpUnOp  Neg),
             prefix "~"  (ExpUnOp  BitwiseNot),
-            prefix "!"  (ExpUnOp  LogicalNot),
-            prefix "--" (ExpUnOp  Decr),  -- Throw errors
+            prefix "!"  (ExpUnOp  LogicalNot)],
+           [prefix "--" (ExpUnOp  Decr),  -- Throw errors
             prefix "++" (ExpUnOp  Incr)], -- in checkAST
-           [binary "--"  (ExpBinOp Decr) AssocLeft,
-            binary "++"  (ExpBinOp Incr) AssocLeft],
+           [binary "--"  (ExpBinOp Decr) AssocLeft],
+           [binary "++"  (ExpBinOp Incr) AssocLeft],
            [binary "*"   (ExpBinOp Mul)  AssocLeft,
             binary "/"   (ExpBinOp Div)  AssocLeft,
             binary "%"   (ExpBinOp Mod)  AssocLeft],
