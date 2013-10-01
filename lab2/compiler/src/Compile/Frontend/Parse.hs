@@ -167,7 +167,7 @@ forCond = parens (do
       c1 <- forSimpOpt
       semi
       e <- forExpr
-      c2 <- forSimpOpt
+      c2 <- forThirdParam
       return $ (c1,e,c2,pos))
 
 -- Parses the first, third parameters out of a for-loop condition
@@ -177,6 +177,17 @@ forSimpOpt = (do
   return $ Just smp)
   <|>
   (do return $ Nothing)
+
+forThirdParam :: C0Parser (Maybe ParseStmt)
+forThirdParam = 
+  (Text.Parsec.try (do a <-asgn
+                       return $ Just a))
+  <|>
+  (do s <- stExpr
+      return $ Just s)
+  <|>
+  (do return $ Nothing)
+
 
 -- Parses the expression (second parameter) out of a for-loop condition
 forExpr :: C0Parser Expr
