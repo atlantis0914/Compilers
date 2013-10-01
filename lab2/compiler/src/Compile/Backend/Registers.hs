@@ -37,6 +37,9 @@ eax_color_num = 0
 edx_color_num :: Int
 edx_color_num = 3
 
+ecx_color_num :: Int
+ecx_color_num = 2
+
 spill_reg_num :: Int
 spill_reg_num = 11
 

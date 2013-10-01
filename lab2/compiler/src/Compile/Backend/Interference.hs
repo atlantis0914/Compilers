@@ -59,6 +59,8 @@ getInterferenceEdges :: [AAsm] -> [[ALoc]] -> [Edge]
 getInterferenceEdges [] _ = []
 getInterferenceEdges [AAsm {aOp = Div}] [l] = getDivConflict l
 getInterferenceEdges [AAsm {aOp = Mod}] [l] = getDivConflict l
+getInterferenceEdges [AAsm {aOp = RShift}] [l] = getShiftConflict l
+getInterferenceEdges [AAsm {aOp = LShift}] [l] = getShiftConflict l
 getInterferenceEdges [x] _ = []
 getInterferenceEdges (a:a':aasm) (l:l':aloc) = 
   let
@@ -90,3 +92,7 @@ getConflict assign (loc:ls) =
 getDivConflict :: [ALoc] -> [Edge]
 getDivConflict [] = []
 getDivConflict (x:xs) = [Edge (x, AReg eax_color_num), Edge (x, AReg edx_color_num)] ++ (getDivConflict xs)
+
+getShiftConflict :: [ALoc] -> [Edge]
+getShiftConflict [] = []
+getShiftConflict (x:xs) = [Edge (x, AReg ecx_color_num)] ++ (getShiftConflict xs)
