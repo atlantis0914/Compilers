@@ -208,11 +208,12 @@ simp =
   (Text.Parsec.try (do d <- decl
                        return d))
   <|>
-  (Text.Parsec.try (do a <-asgn
-                       return a))
-  <|>
-  (do s <-stExpr
-      return s)
+  asgn
+--  (Text.Parsec.try (do a <-asgn
+--                       return a))
+--  <|>
+--  (do s <-stExpr
+--      return s)
   <?> "simp"
 
 stExpr :: C0Parser ParseStmt
@@ -261,15 +262,13 @@ expr' :: C0Parser Expr
 expr' = buildExpressionParser opTable term <?> "expr"
 
 expr :: C0Parser Expr
-expr = 
-  (parens expr) 
-  <|> (do 
+expr = do 
   pos <- getPosition
   e1 <- expr'
   s <- parseCond
   case s of 
     Nothing -> return $ e1
-    Just (e2,e3) -> return $ ExpTernary e1 e2 e3 pos)
+    Just (e2,e3) -> return $ ExpTernary e1 e2 e3 pos
 
 parseCond :: C0Parser (Maybe (Expr, Expr)) 
 parseCond = (do 
