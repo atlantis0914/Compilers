@@ -50,11 +50,11 @@ aasmToString AAsm {aAssign = [loc], aOp = Div, aArgs = [snd]} = divModToString l
 aasmToString AAsm {aAssign = [loc], aOp = Mod, aArgs = [snd]} = divModToString loc snd Mod
 
 aasmToString AAsm {aAssign = [loc], aOp = LShift, aArgs = [snd]} =
-  (checkSize snd) ++
+  (checkLt32 snd) ++ (checkGte0 snd) ++
   "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString LShift) ++ " %cl, " ++ (alocToString loc) ++ "\n"
 
 aasmToString AAsm {aAssign = [loc], aOp = RShift, aArgs = [snd]} =
-  (checkSize snd) ++
+  (checkLt32 snd) ++ (checkGte0 snd) ++
   "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString RShift) ++ " %cl, " ++ (alocToString loc) ++ "\n"
 
 aasmToString AAsm {aAssign = [loc], aOp = BitwiseNot, aArgs = [arg]} =
@@ -73,7 +73,7 @@ aasmToString (ACtrl (AIf aval label)) =
   "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz label" ++ (show label) ++ "\n"
 
 aasmToString (ACtrl (ARet _)) =
-  "  ret" ++ "\n"
+  "\n"
 
 avalByteToString :: AVal -> String
 avalByteToString aval =
@@ -133,6 +133,10 @@ opToString op =
              Decr -> "subl"
              _ -> error ("error matching " ++ show op)
 
-checkSize :: AVal -> String
-checkSize aval =
+checkGte0 :: AVal -> String
+checkGte0 aval =
+  "  cmpl $0, " ++ (avalToString aval) ++ "\n  jl error\n"
+
+checkLt32 :: AVal -> String
+checkLt32 aval =
   "  cmpl $32, " ++ (avalToString aval) ++ "\n  jge error\n"
