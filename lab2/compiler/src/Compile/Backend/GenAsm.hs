@@ -19,6 +19,9 @@ cmpAsm loc val =
 
 aasmToString :: AAsm -> String
 
+aasmToString AAsm {aAssign = [loc], aOp = LogicalNot, aArgs = [arg]} =
+  "  movl " ++ (avalToString arg) ++ ", " ++ (alocToString loc) ++ "\n  not " ++ (alocToString loc) ++ "\n  and $1, " ++ (alocToString loc) ++ "\n"
+
 aasmToString AAsm {aAssign = [loc], aOp = Lt, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setl " ++ (alocByteToString loc) ++ "\n"
 
@@ -43,11 +46,20 @@ aasmToString AAsm {aAssign = [loc], aOp = Neg, aArgs = [arg]} =
 aasmToString AAsm {aAssign = [loc], aOp = Div, aArgs = [snd]} = divModToString loc snd Div
 aasmToString AAsm {aAssign = [loc], aOp = Mod, aArgs = [snd]} = divModToString loc snd Mod
 
+aasmToString AAsm {aAssign = [loc], aOp = LShift, aArgs = [snd]} =
+  "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString LShift) ++ " %cl, " ++ (alocToString loc) ++ "\n"
+
+aasmToString AAsm {aAssign = [loc], aOp = RShift, aArgs = [snd]} =
+  "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString RShift) ++ " %cl, " ++ (alocToString loc) ++ "\n"
+
+aasmToString AAsm {aAssign = [loc], aOp = BitwiseNot, aArgs = [arg]} =
+  "  " ++ (opToString BitwiseNot) ++ " " ++ (avalToString arg) ++ "\n"
+
 aasmToString AAsm {aAssign = [loc], aOp = op, aArgs = [arg]} =
   "  " ++ (opToString op) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
 
 aasmToString (ACtrl (ALabel i)) =
-  "  label" ++ show i ++ ":\n"
+  "\nlabel" ++ show i ++ ":\n"
 
 aasmToString (ACtrl (AGoto i)) =
   "  jmp label" ++ show i ++ "\n"
@@ -57,6 +69,11 @@ aasmToString (ACtrl (AIf aval label)) =
 
 aasmToString (ACtrl (ARet _)) =
   "\n"
+
+avalByteToString :: AVal -> String
+avalByteToString aval =
+  case aval of ALoc loc -> (alocByteToString loc)
+               _ -> (avalToString aval)
 
 avalToString :: AVal -> String
 avalToString aval =
