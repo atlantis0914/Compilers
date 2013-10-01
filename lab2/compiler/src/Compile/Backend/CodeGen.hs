@@ -37,28 +37,30 @@ maxTempsBeforeSpilling = 600
 -- Generates the AAsm from an AST
 codeGen ast@(AST (Block stmts) _) = let
     aasmList = genIR ast
-    twoOpAasmList =  genTwoOperand aasmList
+--    twoOpAasmList = genTwoOperand aasmList
     allLocs = getLocs aasmList
   in
     if (length (aasmList) > maxTempsBeforeSpilling)
       then (let
              coloring = naiveColor allLocs
-             coloredAasmList = colorTemps twoOpAasmList coloring
-             spilledAasmList = spill coloredAasmList
+             coloredAasmList = colorTemps aasmList coloring
+             twoOperandAasmList = (genTwoOperand coloredAasmList)
+             spilledAasmList = spill twoOperandAasmList
              asm = genAsm spilledAasmList
            in
              concat asm)
       else (let
-              liveVars = liveness twoOpAasmList
-              interference_graph@(Graph gmap) = buildInterferenceGraph twoOpAasmList liveVars
+              liveVars = liveness aasmList
+              interference_graph@(Graph gmap) = buildInterferenceGraph aasmList liveVars
               simp_ordering = maximumCardinalitySearch interference_graph -- now a [Vertex ALoc]
               coloring = greedyColor interference_graph simp_ordering
-              coloredAasmList = colorTemps twoOpAasmList coloring
-              spilledAasmList = spill coloredAasmList
+              coloredAasmList = colorTemps aasmList coloring
+              twoOperandAasmList = (genTwoOperand coloredAasmList)
+              spilledAasmList = spill twoOperandAasmList
               asm = genAsm spilledAasmList
             in
               if (debugFlag)
-                then genDebug stmts aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm
+                then genDebug stmts aasmList liveVars interference_graph simp_ordering coloring twoOperandAasmList coloredAasmList asm
                 else concat asm)
 
 genDebug stmts aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAasm asm =
