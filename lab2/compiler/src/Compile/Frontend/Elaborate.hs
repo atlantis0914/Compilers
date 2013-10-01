@@ -24,7 +24,13 @@ expandPStatements stmts = concatMap expandPStatement stmts
   where expandPStatement s@(PAsgn id Nothing e p) = [PAsgn id Nothing (elabExpr e) p]
         expandPStatement s@(PAsgn id (Just op) e p) = [PAsgn id Nothing (ExpBinOp op (Ident id p) (elabExpr e) p) p]
         expandPStatement s@(PCtrl c) = [PCtrl $ expandCtrl c]
-        expandPStatement s@(PBlock stmts) = [PBlock (expandPStatements stmts)]
+        expandPStatement s@(PBlock stmts) = let
+          innerExpanded = expandPStatements stmts
+          in 
+            case innerExpanded of
+              [stmt] -> [stmt] -- OSMIUMMMM
+              [] -> [] 
+              x -> [PBlock innerExpanded]
         expandPStatement s@(PDecl id t p (Just asgn)) = [PDecl id t p Nothing] ++ (expandPStatement asgn)
         expandPStatement s@(PDecl id t p Nothing) = [s]
         expandPStatement s@(PExpr e) = [PExpr (elabExpr e)]
