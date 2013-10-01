@@ -70,6 +70,8 @@ checkStmt(Ctrl (While e s1 pos)) doErr decls =
   in
     decs1 `seq` lives1 `seq` (Set.empty, Set.union lives1 (used e), b1)
 
+checkStmt SNop _ _ = (Set.empty, Set.empty, False)
+
     
 checkBlock :: [Stmt] -> Bool -> Set.Set String -> (Set.Set String, Set.Set String, Bool)
 checkBlock [] _ _ = (Set.empty, Set.empty, True)

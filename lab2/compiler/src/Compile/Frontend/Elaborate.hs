@@ -44,7 +44,7 @@ elabParseBlock stmts = elabParseBlock' (Block []) stmts
 
 elabParseStmt :: ParseStmt -> Stmt
 elabParseStmt (PAsgn s a e p) = Asgn s a e p
-elabParseStmt (PDecl s t p Nothing) = error "shouldnt get here"
+elabParseStmt (PDecl s t p Nothing) = Decl { declName = s, declTyp = t, declPos = p, declScope = SNop}
 elabParseStmt (PDecl s t p (Just _)) = error "shouldnt get here just"
             
 elabParseStmt (PCtrl c) = Ctrl (elabParseCtrl c)
