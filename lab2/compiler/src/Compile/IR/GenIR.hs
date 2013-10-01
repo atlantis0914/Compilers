@@ -59,7 +59,7 @@ genCtrl (m,i,l,aasm) (If e s1 s2 _) = let
 
 genCtrl (m,i,l,aasm) (While e s1 _) = let
   (_,_,el,eAasm) = genExp (m,i+1,l,[]) e (ATemp i)
-  (m',i',l',s1Aasm) = genStmt (m,i+1,l,[]) s1
+  (m',i',l',s1Aasm) = genStmt (m,i+1,el,[]) s1
   startLabel = l'
   loopLabel = l' + 1
   endLabel = l' + 2
