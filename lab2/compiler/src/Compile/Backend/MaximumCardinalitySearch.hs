@@ -31,7 +31,7 @@ chooseVertex g =
 
 chooseVertex' g@(Graph gMap) = 
   let 
-    v = elems gMap
+    v = reverse $ elems gMap
     Just (max) = 
           Data.List.foldr (\v@(Vertex {vertexIsLive = isLive}) -> 
                  \curMax -> 

@@ -232,13 +232,13 @@ stExpr = do
 
 stmt :: C0Parser ParseStmt
 stmt =
+  block
+  <|>
   (do s <- simp
       semi
       return s)
   <|>
   ctrl
-  <|>
-  block
   <?> "statement"
 
 block :: C0Parser ParseStmt
