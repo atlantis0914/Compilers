@@ -23,7 +23,9 @@ getLocs i liveMap =
 addLocs :: Int -> LiveContext -> [ALoc] -> LiveContext
 addLocs i (liveMap, isNew) locs =
   let
-    oldLocs = liveMap Map.! i
+    maybeOldLocs = Map.lookup i liveMap
+    oldLocs = case maybeOldLocs of Nothing -> error "OLD LOC NOT FOUND"
+                                   Just l -> l
     isNew' = (length oldLocs) /= (length locs)
     liveMap' = Map.insert i locs liveMap
   in
@@ -54,8 +56,7 @@ runPredicate _ i (ACtrl (ALabel _)) (liveMap, isNew) =
 runPredicate labelMap i (ACtrl (AIf aval label)) (liveMap, isNew) =
   let
     locs = getLocs (i+1) liveMap
-    labelIndex = labelMap Map.! label
-    locs' = locs `union` (liveMap Map.! labelIndex)
+    locs' = locs `union` (labelLocs labelMap liveMap label)
     locs'' = case aval of ALoc loc -> locs' `union` [loc]
                           _ -> locs'
   in
@@ -63,7 +64,17 @@ runPredicate labelMap i (ACtrl (AIf aval label)) (liveMap, isNew) =
 
 runPredicate labelMap i (ACtrl (AGoto label)) (liveMap, isNew) =
   let
-    labelIndex = labelMap Map.! label
-    locs = liveMap Map.! labelIndex
+    locs = labelLocs labelMap liveMap label
   in
     addLocs i (liveMap, isNew) locs
+
+labelLocs :: LabelMap -> LiveMap -> Int -> [ALoc]
+labelLocs labelMap liveMap label =
+  let
+    i = case Map.lookup label labelMap of Just i' -> i'
+                                          Nothing -> error ("NO LABEL " ++ show label)
+                    
+  in
+    case Map.lookup i liveMap of Nothing -> error ("NO LINE " ++ show i)
+                                 Just locs -> locs
+
