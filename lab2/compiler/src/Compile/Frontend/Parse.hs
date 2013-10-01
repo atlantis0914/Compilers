@@ -438,8 +438,8 @@ opTable = [[prefix "-"  (ExpUnOp  Neg),
            [binary "=="  (ExpPolyEq Equ)  AssocLeft,
             binary "!="  (ExpPolyEq Neq)   AssocLeft],
            [binary "&"  (ExpBinOp BitwiseAnd)   AssocLeft],
-           [binary "|"  (ExpBinOp BitwiseOr)   AssocLeft],
            [binary "^"  (ExpBinOp BitwiseXOr)   AssocLeft],
+           [binary "|"  (ExpBinOp BitwiseOr)   AssocLeft],
            [binary "&&"  (ExpLogOp And)   AssocLeft],
            [binary "||"  (ExpLogOp Or)   AssocLeft]]
 {-
