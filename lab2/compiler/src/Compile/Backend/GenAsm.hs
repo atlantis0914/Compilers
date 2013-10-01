@@ -65,7 +65,7 @@ aasmToString (ACtrl (AGoto i)) =
   "  jmp label" ++ show i ++ "\n"
 
 aasmToString (ACtrl (AIf aval label)) =
-  "  testl " ++ (avalToString aval) ++ ", " ++ (avalToString aval) ++ "\n  jnz label" ++ (show label) ++ "\n"
+  "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz label" ++ (show label) ++ "\n"
 
 aasmToString (ACtrl (ARet _)) =
   "\n"
