@@ -19,8 +19,8 @@ genStmt :: Alloc -> Stmt -> Alloc
 genStmt alloc SNop = alloc
 genStmt alloc (Ctrl c) = genCtrl alloc c 
 genStmt (m,i,l,aasm) (Expr e) = let
-  (_,_,l',aasm') = genExp (m,i+1,l,[]) e (ATemp i)
-  in (m,i,l',aasm ++ aasm')
+  (_,i',l',aasm') = genExp (m,i+1,l,[]) e (ATemp i)
+  in (m,i',l',aasm ++ aasm')
 
 genStmt (m,i,l,aasm) (Decl s t _ scope) = let
   m' = Map.insert s i m -- assign ident s, temp number i
@@ -28,8 +28,8 @@ genStmt (m,i,l,aasm) (Decl s t _ scope) = let
 
 genStmt (m,i,l,aasm) (Asgn var op e _) = let
   temp = ATemp $ m Map.! var
-  (_,_,l',aasm') = genExp (m,i,l,[]) e temp
-  in (m,i,l',aasm ++ aasm')
+  (_,i',l',aasm') = genExp (m,i,l,[]) e temp
+  in (m,i',l',aasm ++ aasm')
 
 genStmt (m,i,l,aasm) (Block stmts) = let
   -- Keep scope alive, start new AAsm list, concat when finished. 
@@ -39,9 +39,9 @@ genStmt (m,i,l,aasm) (Block stmts) = let
 genCtrl :: Alloc -> Ctrl -> Alloc 
 genCtrl (m,i,l,aasm) (If e s1 s2 _) = let
   -- store aasm for e in Temp(i)
-  (_,_,el,eAasm) = genExp (m,i+1,l,[]) e (ATemp i)
-  (m',i',l',s1Aasm) = genStmt (m,i,el,[]) s1
-  (m'',i'', l'',s2Aasm) = genStmt (m',i',l',[]) s2
+  (_,i',el,eAasm) = genExp (m,i+1,l,[]) e (ATemp i)
+  (m',i'',l',s1Aasm) = genStmt (m,i',el,[]) s1
+  (m'',i''', l'',s2Aasm) = genStmt (m',i'',l',[]) s2
   s1Label = l''
   s2Label = l''+1
   endLabel = l''+2
@@ -55,11 +55,11 @@ genCtrl (m,i,l,aasm) (If e s1 s2 _) = let
     ++ s2Aasm' -- Assembly for s2, including goto endLabel.
     ++ [ACtrl $ ALabel endLabel] -- Assembly for endLabel. 
   in
-    (m'',i'',l''+3, aasm ++ outputAasm)
+    (m'',i''',l''+3, aasm ++ outputAasm)
 
 genCtrl (m,i,l,aasm) (While e s1 _) = let
-  (_,_,el,eAasm) = genExp (m,i+1,l,[]) e (ATemp i)
-  (m',i',l',s1Aasm) = genStmt (m,i+1,el,[]) s1
+  (_,i',el,eAasm) = genExp (m,i+1,l,[]) e (ATemp i)
+  (m',i'',l',s1Aasm) = genStmt (m,i',el,[]) s1
   startLabel = l'
   loopLabel = l' + 1
   endLabel = l' + 2
@@ -72,13 +72,13 @@ genCtrl (m,i,l,aasm) (While e s1 _) = let
     s1Aasm' ++ 
     [ACtrl $ ALabel endLabel]
   in
-    (m',i',l' + 3, aasm ++ outputAasm)
+    (m',i'',l' + 3, aasm ++ outputAasm)
 
 -- GenExps the expression into AReg 0 and then returns on AReg0
 genCtrl (m,i,l,aasm) (Return expr _) = let
-  (_,_,l',aasm') = genExp (m,i,l,[]) expr (AReg 0)
+  (_,i',l',aasm') = genExp (m,i,l,[]) expr (AReg 0)
   in 
-    (m,i,l',aasm ++ aasm' ++ [ACtrl $ ARet (ALoc (AReg 0))])
+    (m,i',l',aasm ++ aasm' ++ [ACtrl $ ARet (ALoc (AReg 0))])
 
 genExp :: Alloc -> Expr -> ALoc -> Alloc
 genExp (varMap,n,l,aasm) (ExpInt num _ _) dest = 
@@ -94,9 +94,9 @@ genExp map (ExpLogOp op e1 e2 _) dest = genBinOp map (op,e1,e2) dest
 genExp map (ExpPolyEq op e1 e2 _) dest = genBinOp map (op,e1,e2) dest
 
 genExp alloc@(varMap,n,l,aasm) (ExpTernary e1 e2 e3 p) dest = let
-  (_,_,e1l,e1Aasm) = genExp (varMap,n+1,l,[]) e1 (ATemp n)
-  (_,_,e2l,e2Aasm) = genExp (varMap,n+2,e1l,[]) e2 dest
-  (_,_,e3l,e3Aasm) = genExp (varMap,n+3,e2l,[]) e3 dest
+  (_,n1,e1l,e1Aasm) = genExp (varMap,n+1,l,[]) e1 (ATemp n)
+  (_,n2,e2l,e2Aasm) = genExp (varMap,n1,e1l,[]) e2 dest
+  (_,n3,e3l,e3Aasm) = genExp (varMap,n2,e2l,[]) e3 dest
   e2Label = e3l
   e3Label = e3l + 1
   endLabel = e3l + 2
@@ -110,21 +110,21 @@ genExp alloc@(varMap,n,l,aasm) (ExpTernary e1 e2 e3 p) dest = let
     ++ e3Aasm'
     ++ [ACtrl $ ALabel endLabel]
   in
-    (varMap,n,e3l+3,aasm ++ outputAasm)
+    (varMap,n3,e3l+3,aasm ++ outputAasm)
     
 genExp (varMap,n,l,aasm) (ExpUnOp op e _) dest = let
   -- AAsm for operand
-  (_,_,l',aasm') = genExp (varMap, n + 1,l,aasm) e (ATemp n)
+  (_,n1,l',aasm') = genExp (varMap, n + 1,l,aasm) e (ATemp n)
   -- AAsm for the operation
   c  = [AAsm [dest] op [ALoc $ ATemp n]]
-  in (varMap, n, l', aasm' ++ c)
+  in (varMap, n1, l', aasm' ++ c)
 
 genBinOp (varMap,n,l,aasm) (op,e1,e2) dest = let
   -- AAsm for left and right operand
   -- TODO: Make this more SSL friendly
-  (_,_,l',aasm') = genExp (varMap, n + 1,l, []) e1 (ATemp n)
-  (_,_,l'',aasm'') = genExp (varMap, n + 2,l', []) e2 (ATemp $ n + 1)
+  (_,n1,l',aasm') = genExp (varMap, n + 1,l, []) e1 (ATemp n)
+  (_,n2,l'',aasm'') = genExp (varMap, n1 + 1,l', []) e2 (ATemp $ n1)
   -- AAsm for the operation
-  c  = [AAsm [dest] op [ALoc $ ATemp n, ALoc $ ATemp $ n + 1]]
+  c  = [AAsm [dest] op [ALoc $ ATemp n, ALoc $ ATemp $ n1]]
   -- Questionable variable indexing here
-  in (varMap, n, l'', aasm ++ aasm' ++ aasm'' ++ c)
+  in (varMap, n2, l'', aasm ++ aasm' ++ aasm'' ++ c)
