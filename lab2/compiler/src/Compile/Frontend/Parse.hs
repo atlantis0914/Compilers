@@ -80,7 +80,6 @@ typedecl s = do
       return $ PDecl ident (toIdentType s) pos (Just (PAsgn ident op e pos')))
    <|>
    (do return $ PDecl ident (toIdentType s) pos Nothing)
-
   <?> "typedecl"
 
 asgn :: C0Parser ParseStmt
@@ -206,14 +205,13 @@ ret = do
 simp :: C0Parser ParseStmt
 simp = 
   (Text.Parsec.try (do d <- decl
-                       return d))
+                       return $ Trace.trace ("returned decl" ++ show d) $ d))
   <|>
-  asgn
---  (Text.Parsec.try (do a <-asgn
---                       return a))
---  <|>
---  (do s <-stExpr
---      return s)
+  (Text.Parsec.try (do a <-asgn
+                       return a))
+  <|>
+  (do s <- stExpr
+      return s)
   <?> "simp"
 
 stExpr :: C0Parser ParseStmt
@@ -242,7 +240,7 @@ block = braces (do
 asnOp :: C0Parser (Maybe Op)
 asnOp = (do
    op <- operator
-   return $ case op of
+   return $ Trace.trace ("op = " ++ op) $ case op of
                "+="  -> Just Add
                "*="  -> Just Mul
                "-="  -> Just Sub
@@ -344,7 +342,7 @@ c0Def = LanguageDef
     reservedOpNames = ["+",  "*",  "-",  "/",  "%", "?", 
                        ":", "->", ".", "--", "==", "!", 
                        "~", "++", ">", "<", ">>", "<<", 
-                       "&&", "||", "!="],
+                       "&&", "||", "!=", ">=", "<="],
     caseSensitive   = True}
 
 c0Tokens :: Tok.GenTokenParser ByteString () Identity
