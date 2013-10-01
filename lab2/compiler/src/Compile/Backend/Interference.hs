@@ -73,13 +73,14 @@ getAAsmEdges (AAsm {aAssign = assign, aOp = Div, aArgs = args}) l l' =
   (getConflict assign l') ++ (getDivConflict l') ++ (getDivConflict l)
 
 getAAsmEdges (AAsm {aAssign = assign, aOp = Mod, aArgs = args}) l l' = 
-  (getConflict assign l') ++ (getDivConflict l') ++ (getDivConflict l)
+  (getConflict assign l') ++ (getDivConflict l') ++ (getDivConflict l) 
+-- TODO : why does this work (no getDivConflict assign)
 
 getAAsmEdges (AAsm {aAssign = assign, aOp = RShift, aArgs = args}) l l' = 
-  (getConflict assign l') ++ (getShiftConflict l') ++ (getShiftConflict l)
+  (getConflict assign l') ++ (getShiftConflict l') ++ (getShiftConflict l) ++ (getShiftConflict assign)
 
 getAAsmEdges (AAsm {aAssign = assign, aOp = LShift, aArgs = args}) l l' = 
-  (getConflict assign l') ++ (getShiftConflict l') ++ (getShiftConflict l)
+  (getConflict assign l') ++ (getShiftConflict l') ++ (getShiftConflict l) ++ (getShiftConflict assign)
 
 getAAsmEdges (AAsm {aAssign = assign, aOp = op, aArgs = args}) l l' = getConflict assign l'
 
