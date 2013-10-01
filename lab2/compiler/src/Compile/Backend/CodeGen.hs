@@ -30,13 +30,15 @@ type Alloc = (Map.Map String Int, Int)
 --   in
 --     concatMap (\a -> (show a) ++ "\n") ir
 
+debugFlag = False
+
 maxTempsBeforeSpilling = 600
 
 -- Generates the AAsm from an AST
 codeGen ast@(AST (Block stmts) _) = let
     aasmList = genIR ast
-    twoOpAasmList = genTwoOperand aasmList
-    allLocs = getLocs aasmList
+    twoOpAasmList = Trace.trace ("genTwoOp") $ genTwoOperand aasmList
+    allLocs = Trace.trace ("getLocs") $ getLocs aasmList
   in
     if (length (aasmList) > maxTempsBeforeSpilling)
       then (let
@@ -55,37 +57,33 @@ codeGen ast@(AST (Block stmts) _) = let
               spilledAasmList = spill coloredAasmList
               asm = genAsm spilledAasmList
             in
-              concat asm)
+              if (debugFlag)
+                then genDebug stmts aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm
+                else concat asm)
 
+genDebug stmts aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAasm asm =
+  let
+    stmts' = listShow stmts
+    aasm' = listShow aasm
+    liveVars' = listShow liveVars
+    gmap' = listShow $ Map.toList gmap
+    coloring' = listShow $ Map.toList coloring
+    simp_ord' = listShow simp_ord
+    twoOpAasm' = listShow twoOpAasm
+    coloredAasm' = listShow coloredAasm
+    asm' = listShow asm
+  in
+    "Statements\n" ++ stmts' ++ "\n\n" ++
+    "Aasm\n" ++ aasm' ++ "\n\n" ++
+    "LiveVars\n" ++ liveVars' ++ "\n\n" ++
+    "InterferenceGraph\n" ++ gmap' ++ "\n\n" ++
+    "Simp Ordering\n" ++ simp_ord' ++ "\n\n" ++
+    "Coloring\n" ++ coloring' ++ "\n\n" ++
+    "TwoOpAAsm\n" ++ twoOpAasm' ++ "\n\n" ++
+    "ColoredAAsm\n" ++ coloredAasm' ++ "\n\n" ++
+    "Asm\n" ++ asm' ++ "\n\n"
 
-
---    if (debugFlag)
---      then genDebug stmts aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm
---      else concat asm
-
--- genDebug stmts aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAasm asm =
---   let
---     stmts' = listShow stmts
---     aasm' = listShow aasm
---     liveVars' = listShow liveVars
---     gmap' = listShow $ Map.toList gmap
---     coloring' = listShow $ Map.toList coloring
---     simp_ord' = listShow simp_ord
---     twoOpAasm' = listShow twoOpAasm
---     coloredAasm' = listShow coloredAasm
---     asm' = listShow asm
---   in
---     "Statements\n" ++ stmts' ++ "\n\n" ++
---     "Aasm\n" ++ aasm' ++ "\n\n" ++
---     "LiveVars\n" ++ liveVars' ++ "\n\n" ++
---     "InterferenceGraph\n" ++ gmap' ++ "\n\n" ++
---     "Simp Ordering\n" ++ simp_ord' ++ "\n\n" ++
---     "Coloring\n" ++ coloring' ++ "\n\n" ++
---     "TwoOpAAsm\n" ++ twoOpAasm' ++ "\n\n" ++
---     "ColoredAAsm\n" ++ coloredAasm' ++ "\n\n" ++
---     "Asm\n" ++ asm' ++ "\n\n"
--- 
--- listShow l = concat (map (\a -> (show a) ++ "\n") l)
+listShow l = concat (map (\a -> (show a) ++ "\n") l)
 -- 
 -- -- Modify to just find the index of the first return, and
 -- -- take that many statments.
