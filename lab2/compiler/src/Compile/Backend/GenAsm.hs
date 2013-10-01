@@ -87,15 +87,23 @@ avalToString aval =
                                else "$0"
                AImm i -> "$" ++ (show i)
 
+safeLookup :: Int -> Map.Map Int String -> String -> String
+safeLookup i map s =
+  case Map.lookup i map of Nothing -> error ("NOT FOUND " ++ (show i) ++ " wtf " ++ s)
+                           Just r -> r
 alocByteToString :: ALoc -> String
 alocByteToString (AReg i) =
-  regByteMap Map.! i
+  if i > max_color_num + 1
+    then alocToString (AMem $ i - max_color_num)
+    else safeLookup i regByteMap "FUCK"
+alocByteToString (AMem i) =
+  alocToString (AMem i)
 
 alocToString :: ALoc -> String
 alocToString (AReg i) =
   if i > max_color_num + 1
     then alocToString (AMem $ i - max_color_num)
-    else regMap Map.! i
+    else safeLookup i regMap "SHIT"
 alocToString (AMem i) =  "-" ++ (show (i * 4)) ++ "(%rsp)"
 alocToString (ATemp i) =
   error "There's still an temp!"
