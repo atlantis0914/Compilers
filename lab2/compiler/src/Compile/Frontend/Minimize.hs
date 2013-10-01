@@ -15,6 +15,7 @@ minimize (AST (Block stmts) p) =
     Right $ AST (Block minimized) p
 
 dropDeadStmts :: [Stmt] -> [Stmt]
+dropDeadStmts [] = []
 dropDeadStmts (x:xs) = 
   if (checkReturnStmt x) -- If it returns, everything after is unecessary
     then [dropDeadCode x] -- Drop code that might be dead within x
