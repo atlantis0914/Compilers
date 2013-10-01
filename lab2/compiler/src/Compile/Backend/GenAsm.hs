@@ -73,7 +73,7 @@ aasmToString (ACtrl (AIf aval label)) =
   "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz label" ++ (show label) ++ "\n"
 
 aasmToString (ACtrl (ARet _)) =
-  "\n"
+  "  ret" ++ "\n"
 
 avalByteToString :: AVal -> String
 avalByteToString aval =
