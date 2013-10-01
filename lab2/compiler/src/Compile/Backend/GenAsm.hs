@@ -2,6 +2,7 @@ module Compile.Backend.GenAsm where
 
 import Compile.Types
 import qualified Data.Map as Map
+import qualified Debug.Trace as Trace
 
 import Compile.Backend.Registers
 
@@ -9,7 +10,7 @@ genAsm :: [AAsm] -> [String]
 genAsm aasms =
   let
     prelude = [".globl __c0_main\n", "__c0_main:\n"]
-    epilogue = ["  ret\n"]
+    epilogue = ["  ret\n", "error:\n", "movw $1, %ax\n", "movw $0, %bx\n", "divw %bx\n"]
   in
     prelude ++ (map aasmToString aasms) ++ epilogue
 
@@ -18,6 +19,8 @@ cmpAsm loc val =
   "cmpl " ++ (avalToString val) ++ ", " ++ (alocToString loc)
 
 aasmToString :: AAsm -> String
+
+{-aasmToString aasm | Trace.trace (show aasm) False = undefined-}
 
 aasmToString AAsm {aAssign = [loc], aOp = LogicalNot, aArgs = [arg]} =
   "  movl " ++ (avalToString arg) ++ ", " ++ (alocToString loc) ++ "\n  not " ++ (alocToString loc) ++ "\n  and $1, " ++ (alocToString loc) ++ "\n"
@@ -47,9 +50,11 @@ aasmToString AAsm {aAssign = [loc], aOp = Div, aArgs = [snd]} = divModToString l
 aasmToString AAsm {aAssign = [loc], aOp = Mod, aArgs = [snd]} = divModToString loc snd Mod
 
 aasmToString AAsm {aAssign = [loc], aOp = LShift, aArgs = [snd]} =
+  (checkSize snd) ++
   "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString LShift) ++ " %cl, " ++ (alocToString loc) ++ "\n"
 
 aasmToString AAsm {aAssign = [loc], aOp = RShift, aArgs = [snd]} =
+  (checkSize snd) ++
   "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString RShift) ++ " %cl, " ++ (alocToString loc) ++ "\n"
 
 aasmToString AAsm {aAssign = [loc], aOp = BitwiseNot, aArgs = [arg]} =
@@ -127,3 +132,7 @@ opToString op =
              Incr -> "addl"
              Decr -> "subl"
              _ -> error ("error matching " ++ show op)
+
+checkSize :: AVal -> String
+checkSize aval =
+  "  cmpl $32, " ++ (avalToString aval) ++ "\n  jge error\n"
