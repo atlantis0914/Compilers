@@ -205,7 +205,7 @@ ret = do
 simp :: C0Parser ParseStmt
 simp = 
   (Text.Parsec.try (do d <- decl
-                       return $ Trace.trace ("returned decl" ++ show d) $ d))
+                       return d))
   <|>
   (Text.Parsec.try (do a <-asgn
                        return a))
@@ -240,7 +240,7 @@ block = braces (do
 asnOp :: C0Parser (Maybe Op)
 asnOp = (do
    op <- operator
-   return $ Trace.trace ("op = " ++ op) $ case op of
+   return $ case op of
                "+="  -> Just Add
                "*="  -> Just Mul
                "-="  -> Just Sub
