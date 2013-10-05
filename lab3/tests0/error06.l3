@@ -1,0 +1,9 @@
+//test error
+// namespace
+
+typedef bool x;
+
+int main () {
+    int x = 0;
+    return 0;
+}

@@ -1,0 +1,10 @@
+//test error
+// call with too few argument
+
+int multiply(int x, int y, int z) {
+  return x * y * z;
+}
+
+int main () {
+  return multiply(4,5);
+}
