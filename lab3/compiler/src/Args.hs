@@ -35,7 +35,8 @@ argTable = [
   Option ['S'] ["asm"] (NoArg (setOF Asm)) "Sets the output target to be assembly type.",
   Option ['c'] ["obj"] (NoArg (setOF Obj)) "Sets the output target to be an elf intermediate object.",
   Option ['E'] ["pretty"] (NoArg (setOF C0)) "Sets the output type to be C0 (act as a pretty printer).",
-  Option ['e'] ["elf"] (NoArg (setOF ELF)) "Produces a full fledged ELF executable, ready to run."]
+  Option ['e'] ["elf"] (NoArg (setOF ELF)) "Produces a full fledged ELF executable, ready to run.",
+  Option ['l'] ["header"] (ReqArg setHeader "FILE") "Compiles against the header file specified"]
 
 setOF :: OF -> Job -> Job
 setOF outFormat j = j {jobOutFormat = outFormat}
@@ -52,6 +53,9 @@ setOut out j = let
   in case lookup (takeExtension out) extTable of
        Just f  -> setOF f base
        Nothing -> base
+
+setHeader :: FilePath -> Job -> Job
+setHeader header j = j {jobHeader = Just (header)}
 
 ensureOut :: Job -> Job
 ensureOut j = case jobOut j of

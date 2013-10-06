@@ -10,14 +10,17 @@ data Job = Job
   { jobOut       :: FilePath
   , jobSource    :: FilePath
   , jobOutFormat :: OF
+  , jobHeader    :: Maybe FilePath
   }
 
 data OF = C0
         | Asm
         | Obj
-        | ELF deriving Eq
+        | ELF
+        | Header String deriving Eq
 
 defaultJob :: Job
 defaultJob = Job {jobOut       = "",
                   jobSource    = "",
-                  jobOutFormat = ELF}
+                  jobOutFormat = ELF,
+                  jobHeader    = Nothing}
