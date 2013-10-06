@@ -48,6 +48,62 @@ parseAST file = do
 -- C0Parser AST is actually ParsecT ByteString () Identity AST
 type C0Parser = Parsec ByteString ()
 
+-- topLevelParser :: C0Parser ParseFnList
+-- topLevelParser = do
+
+functionParser :: C0Parser ParseFn
+functionParser = do
+  whiteSpace
+  retType <- getType
+  name <- identifier
+  (paramTypes, params) <- getParamList
+  -- Now we either have a declaration, or a definition. 
+  (do semi
+      return $ ParseFn {fnName = name,
+                        fnArgs = params,
+                        fnArgTypes = paramTypes,
+                        fnReturnType = retType,
+                        fnBody = Nothing})
+   <|>
+   (do ast <- getAST
+       return $ ParseFn {fnName = name,
+                         fnArgs = params,
+                         fnArgTypes = paramTypes,
+                         fnReturnType = retType,
+                         fnBody = Just ast})
+
+getParamList :: C0Parser ([String],[String])
+getParamList = parens (do
+  types <- many getParam
+  return $ (Prelude.map fst types, Prelude.map snd types))
+
+getParam :: C0Parser (String,String)
+getParam = do
+  t <- getType
+  i <- identifier
+  return $ (t,i)
+
+getType :: C0Parser String
+getType =
+  (do reserved "int"
+      return $ "int")
+   <|>
+   (do reserved "bool"
+       return $ "bool")
+   <|>
+   (do reserved "void"
+       return $ "void")
+   <|>
+   (do typ <- identifier
+       return typ)
+   <?> "getType"
+
+getAST :: C0Parser ParseAST
+getAST = braces (do
+  pos   <- getPosition
+  stmts <- many stmt
+  return $ ParseAST (PBlock stmts) pos)
+
 astParser :: C0Parser ParseAST
 astParser = do
   whiteSpace -- parse white-space before the program start
