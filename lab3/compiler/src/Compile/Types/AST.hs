@@ -11,6 +11,14 @@ import Text.ParserCombinators.Parsec.Pos (SourcePos)
 import Compile.Types.Ops
 import Compile.Types.IdentType
 
+data ParseFnList = ParseFnList [ParseFn]
+
+data ParseFn = ParseFn {fnName :: String,
+                        fnArgs :: [String],
+                        fnArgTypes :: [String],
+                        fnReturnType :: String,
+                        fnBody :: Maybe ParseAST}
+
 data ParseAST = ParseAST ParseStmt SourcePos
 
 data ParseStmt = PAsgn String AsgnOp Expr SourcePos
