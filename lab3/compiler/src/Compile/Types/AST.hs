@@ -11,15 +11,22 @@ import Text.ParserCombinators.Parsec.Pos (SourcePos)
 import Compile.Types.Ops
 import Compile.Types.IdentType
 
-data ParseFnList = ParseFnList [ParseFn]
+data ParseFnList = ParseFnList [GDecl]
 
-data ParseFn = ParseFn {fnName :: String,
-                        fnArgs :: [String],
-                        fnArgTypes :: [String],
-                        fnReturnType :: String,
-                        fnBody :: Maybe ParseAST}
+data GDecl = FDecl ParseFDecl
+           | FDefn ParseFDefn
+           | TypeDef String String deriving Show
 
-data ParseAST = ParseAST ParseStmt SourcePos
+data ParseFDefn = ParseFDefn {fnName :: String,
+                              fnArgs :: [String],
+                              fnArgTypes :: [String],
+                              fnReturnType :: String,
+                              fnBody :: ParseAST} deriving Show
+
+-- fnName, fnArgs, fnArgTypes, fnReturnType
+data ParseFDecl = ParseFDecl String [String] [String] String deriving Show
+
+data ParseAST = ParseAST ParseStmt SourcePos 
 
 data ParseStmt = PAsgn String AsgnOp Expr SourcePos
                | PDecl String IdentType SourcePos (Maybe ParseStmt)

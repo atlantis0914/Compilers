@@ -48,29 +48,44 @@ parseAST file = do
 -- C0Parser AST is actually ParsecT ByteString () Identity AST
 type C0Parser = Parsec ByteString ()
 
--- topLevelParser :: C0Parser ParseFnList
--- topLevelParser = do
+-- Produces a list of ParseFns. These are either decls or definitions
+topLevelParser :: C0Parser ParseFnList
+topLevelParser = do 
+  globalDecls <- many gdecl
+  eof
+  return $ ParseFnList globalDecls
+  <?> "topLevel"
 
-functionParser :: C0Parser ParseFn
-functionParser = do
+
+gdecl :: C0Parser GDecl
+gdecl = 
+  typedefParser
+  <|>
+  declDefnParser 
+
+typedefParser :: C0Parser GDecl
+typedefParser = do
+  reserved "typedef"
+  t1 <- getType
+  t2 <- getType
+  return $ TypeDef t1 t2 
+  
+declDefnParser :: C0Parser GDecl
+declDefnParser = do
   whiteSpace
   retType <- getType
   name <- identifier
   (paramTypes, params) <- getParamList
   -- Now we either have a declaration, or a definition. 
   (do semi
-      return $ ParseFn {fnName = name,
-                        fnArgs = params,
-                        fnArgTypes = paramTypes,
-                        fnReturnType = retType,
-                        fnBody = Nothing})
+      return $ FDecl (ParseFDecl name params paramTypes retType))
    <|>
    (do ast <- getAST
-       return $ ParseFn {fnName = name,
-                         fnArgs = params,
-                         fnArgTypes = paramTypes,
-                         fnReturnType = retType,
-                         fnBody = Just ast})
+       return $ FDefn (ParseFDefn {fnName = name,
+                                   fnArgs = params,
+                                   fnArgTypes = paramTypes,
+                                   fnReturnType = retType,
+                                   fnBody = ast}))
 
 getParamList :: C0Parser ([String],[String])
 getParamList = parens (do
