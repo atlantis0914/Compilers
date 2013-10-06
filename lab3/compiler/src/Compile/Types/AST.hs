@@ -57,12 +57,6 @@ type AsgnOp = Maybe Op
 data Base = Dec
           | Hex
 
--- Note to the student: You will probably want to write a new pretty printer
--- using the module Text.PrettyPrint.HughesPJ from the pretty package
--- This is a quick and dirty pretty printer.
--- Once that is written, you may find it helpful for debugging to switch
--- back to the deriving Show instances.
-
 instance Show ParseAST where
   show (ParseAST stmt _) =
     "int main () {\n" ++ show stmt ++ "}\n"
