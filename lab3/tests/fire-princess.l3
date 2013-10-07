@@ -1,0 +1,10 @@
+//test error
+
+typedef int fire;
+typedef int princess;
+typedef fire princess;
+
+// wait fuuuuu it was definitely flame princess. Next test, next test. 
+int main () {
+  return 1;
+}
