@@ -11,7 +11,7 @@ import Text.ParserCombinators.Parsec.Pos (SourcePos)
 import Compile.Types.Ops
 import Compile.Types.IdentType
 
-data ParseFnList = ParseFnList [GDecl]
+data ParseFnList = ParseFnList [GDecl] deriving Show
 
 data GDecl = FDecl ParseFDecl
            | FDefn ParseFDefn
@@ -48,6 +48,7 @@ data Stmt = Asgn String AsgnOp Expr SourcePos
 
 data PolyCtrl s = If Expr s s SourcePos
                 | While Expr s SourcePos
+                | Assert Expr SourcePos
                 | Return Expr SourcePos
 
 type Ctrl = PolyCtrl Stmt
@@ -66,6 +67,7 @@ data Expr = ExpInt Integer SourcePos Base
           | ExpPolyEq Op Expr Expr SourcePos
           | ExpUnOp Op Expr SourcePos
           | ExpTernary Expr Expr Expr SourcePos
+          | ExpFnCall String [Expr] SourcePos
 
 type AsgnOp = Maybe Op
 
