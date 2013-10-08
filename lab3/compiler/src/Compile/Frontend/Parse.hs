@@ -28,10 +28,10 @@ import qualified Text.Parsec.Token as Tok
 
 import qualified Debug.Trace as Trace 
 
-parseAST :: FilePath -> ErrorT String IO ParseAST
+parseAST :: FilePath -> ErrorT String IO ParseFnList
 parseAST file = do
   code <- liftIOE $ BS.readFile file
-  case parse astParser file code of
+  case parse topLevelParser file code of
     Left e  -> throwError (show e)
     Right a -> return a
 
@@ -55,7 +55,6 @@ topLevelParser = do
   eof
   return $ ParseFnList globalDecls
   <?> "topLevel"
-
 
 gdecl :: C0Parser GDecl
 gdecl = 
@@ -87,16 +86,24 @@ declDefnParser = do
                                    fnReturnType = retType,
                                    fnBody = ast}))
 
-getParamList :: C0Parser ([String],[String])
-getParamList = parens (do
-  types <- many getParam
-  return $ (Prelude.map fst types, Prelude.map snd types))
+getParamList = parens getParamList'
 
-getParam :: C0Parser (String,String)
-getParam = do
+getParamList' :: C0Parser([String], [String]) 
+getParamList' = (do
+  (t,i) <- getParam
+  (do comma
+      (rT,rI) <- getParamList'
+      return $ (t ++ rT,i ++ rI))
+   <|>
+   (do return $ (t,i)))
+
+getParam :: C0Parser ([String],[String])
+getParam = (do
   t <- getType
   i <- identifier
-  return $ (t,i)
+  return $ ([t],[i]))
+  <|>
+  (do return $ ([],[]))
 
 getType :: C0Parser String
 getType =
@@ -187,6 +194,15 @@ ctrl =
   ctrlWhile
   <|>
   ctrlFor
+  <|>
+  ctrlAssert
+
+ctrlAssert :: C0Parser ParseStmt
+ctrlAssert = do
+  pos <- getPosition
+  reserved "assert"
+  e <- parens expr 
+  return $ PCtrl (Assert e pos)
 
 -- Parses a control flow 'if'
 ctrlIf :: C0Parser ParseStmt
@@ -368,7 +384,10 @@ term =
    <|>
    (do p <- getPosition
        i <- identifier
-       return $ Ident i p) -- an identifier
+       (do es <- parens $ commaSep expr
+           return $ ExpFnCall i es p)
+        <|>
+        (do return $ Ident i p)) -- an identifier
    <|>
    (do p <- getPosition
        t <- reserved "true"
