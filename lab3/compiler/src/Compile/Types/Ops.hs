@@ -6,6 +6,8 @@
 -}
 module Compile.Types.Ops where
 
+type AsgnOp = Maybe Op
+
 data Op = Mul
         | Add
         | Sub
