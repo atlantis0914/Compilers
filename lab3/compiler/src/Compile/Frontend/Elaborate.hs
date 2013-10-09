@@ -61,9 +61,10 @@ elabParseStmt (PBlock stmts) = elabParseBlock' (Block []) stmts
 -- Converts a Parse level control flow statement into a post-elab
 -- control flow statement, elaborating inner statements using elabParseStmt. 
 elabParseCtrl :: ParseCtrl -> Ctrl
-elabParseCtrl (If e ps1 ps2 pos) = (If e (elabParseStmt ps1) (elabParseStmt ps2) pos)
-elabParseCtrl (While e ps1 pos) = (While e (elabParseStmt ps1) pos)
-elabParseCtrl (Return e pos) = (Return e pos)
+elabParseCtrl (If e ps1 ps2 pos) = If e (elabParseStmt ps1) (elabParseStmt ps2) pos
+elabParseCtrl (While e ps1 pos) = While e (elabParseStmt ps1) pos
+elabParseCtrl (Assert e pos) = Assert e pos
+elabParseCtrl (Return e pos) = Return e pos
 
 -- Converts a list of parse level statements into a single statement. We
 -- recursively convert statements and append them to the post-elab block's 

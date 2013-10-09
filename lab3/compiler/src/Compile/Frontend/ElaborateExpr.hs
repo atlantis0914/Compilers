@@ -16,9 +16,9 @@ elabExpr' e@(ExpBinOp o e1 e2 p) = checkExpr e $ ExpBinOp (verifyExprOp o p)
 elabExpr' e@(ExpRelOp o e1 e2 p) = checkExpr e $ ExpRelOp (verifyExprOp o p)
                                                           (elabExpr e1) 
                                                           (elabExpr e2) p
-elabExpr' e@(ExpPolyEq o e1 e2 p) = checkExpr e $ ExpPolyEq (verifyExprOp o p) 
-                                                            (elabExpr e1) 
-                                                            (elabExpr e2) p
+elabExpr' e@(ExpPolyEq o e1 e2 p) = checkExpr e $ExpPolyEq (verifyExprOp o p) 
+                                                           (elabExpr e1) 
+                                                           (elabExpr e2) p
 elabExpr' e@(ExpLogOp And e1 e2 p) = checkExpr e $ ExpTernary (elabExpr e1) 
                                                               (elabExpr e2) 
                                                               (ExpBool False p) p
@@ -30,6 +30,8 @@ elabExpr' e@(ExpUnOp o e1 p) = checkExpr e $ ExpUnOp (verifyExprOp o p)
 elabExpr' e@(ExpTernary e1 e2 e3 p) = checkExpr e $ ExpTernary (elabExpr e1) 
                                                                (elabExpr e2) 
                                                                (elabExpr e3) p
+elabExpr' e@(ExpFnCall fnName expList p) = checkExpr e $ ExpFnCall fnName
+                                                       (map elabExpr' expList) p
 elabExpr' e = checkExpr e $ e
 
 checkExpr (ExpInt n p Dec) = 
@@ -54,4 +56,5 @@ foldExpr e@(ExpPolyEq op e1 e2 p) = (ExpPolyEq op (foldExpr e1) (foldExpr e2) p)
 foldExpr e@(ExpLogOp op e1 e2 p) = (ExpLogOp op (foldExpr e1) (foldExpr e2) p)
 foldExpr e@(ExpTernary e1 e2 e3 p) = (ExpTernary (foldExpr e1) (foldExpr e2) (foldExpr e3) p)
 foldExpr e@(ExpUnOp op e1 p) = (ExpUnOp op (foldExpr e1) p)
+foldExpr e@(ExpFnCall n eList p) = (ExpFnCall n (map foldExpr eList) p)
 foldExpr e = e
