@@ -1,5 +1,7 @@
 module Compile.Types.IdentType where
 
 data IdentType = IInt
-               | IBool deriving (Eq, Show)
+               | IBool 
+               | IVoid 
+               | ITypeDef String deriving (Eq, Show)
 

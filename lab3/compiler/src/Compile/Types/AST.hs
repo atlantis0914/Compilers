@@ -49,7 +49,7 @@ data Stmt = Asgn String AsgnOp Expr SourcePos
 data PolyCtrl s = If Expr s s SourcePos
                 | While Expr s SourcePos
                 | Assert Expr SourcePos
-                | Return Expr SourcePos
+                | Return (Maybe Expr) SourcePos
 
 type Ctrl = PolyCtrl Stmt
 type ParseCtrl = PolyCtrl ParseStmt

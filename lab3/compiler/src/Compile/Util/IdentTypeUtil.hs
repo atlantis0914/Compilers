@@ -5,4 +5,5 @@ import Compile.Types
 toIdentType :: String -> IdentType
 toIdentType "int" = IInt
 toIdentType "bool" = IBool
-toIdentType _ = error "Invalid type"
+toIdentType "void" = IVoid
+toIdentType s = ITypeDef s
