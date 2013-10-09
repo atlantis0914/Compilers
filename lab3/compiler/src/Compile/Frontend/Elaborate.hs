@@ -43,7 +43,8 @@ expandPStatements stmts = concatMap expandPStatement stmts
         expandCtrl (If e s1 s2 p) = If (elabExpr e) (collapseStmts $ expandPStatement s1) 
                                        (collapseStmts $ expandPStatement s2) p
         expandCtrl (While e s1 p) = While (elabExpr e) (collapseStmts $ expandPStatement s1) p
-        expandCtrl (Return e p) = Return (elabExpr e) p
+        expandCtrl (Return (Just e) p) = Return (Just (elabExpr e)) p
+        expandCtrl (Return Nothing p) = Return Nothing p
 
 
 elabParseBlock :: [ParseStmt] -> Stmt

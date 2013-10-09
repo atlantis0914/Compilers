@@ -41,8 +41,9 @@ isDeclaredAsgn i decls = assert (Set.member i decls)
 -- produces a (definedSet, liveSet, Bool). Takes a declaredSet 
 -- (the declared variables in scope) and also performs undeclared checking.
 checkStmt :: Stmt -> Bool -> Set.Set String -> (Set.Set String, Set.Set String, Bool)
-checkStmt(Ctrl (Return e pos)) _ decls = 
+checkStmt(Ctrl (Return (Just e) pos)) _ decls = 
   isDeclaredExpr e decls (Set.empty, used e, True)
+checkStmt(Ctrl (Return Nothing pos)) _ decls = (Set.empty, Set.empty, True)
 
 checkStmt(Block stmts) doErr decls = checkBlock stmts doErr decls
 checkStmt (Decl i t pos rest) doErr decls = 
