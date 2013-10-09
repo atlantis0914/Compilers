@@ -35,16 +35,6 @@ parseAST file = do
     Left e  -> throwError (show e)
     Right a -> return a
 
--- ParsecT s u m a is a monad transformer with
---   stream type s
---   user state type u,
---   underlying monad m
---   return type a
-
--- Note that : type Parsec s u = ParsecT s u Identity
--- All "Identity" does is to derive a Monad from a monad transformer,
--- as parsec is by default a monad transformer.
-
 -- C0Parser AST is actually ParsecT ByteString () Identity AST
 type C0Parser = Parsec ByteString ()
 
@@ -141,23 +131,20 @@ astParser = do
   <?> "block"
 
 decl :: C0Parser ParseStmt
-decl = do
-   (typedecl "int")
-   <|>
-   (typedecl "bool")
-   <?> "decl"
+decl = typedecl
+  <?> "decl"
 
-typedecl :: String -> C0Parser ParseStmt
-typedecl s = do 
+typedecl :: C0Parser ParseStmt
+typedecl = do 
   pos <- getPosition
-  dest <- reserved s
+  idType <- getType
   ident <- declidentifier
   (do pos' <- getPosition
       op <- asnOp
       e <- expr
-      return $ PDecl ident (toIdentType s) pos (Just (PAsgn ident op e pos')))
+      return $ PDecl ident (toIdentType idType) pos (Just (PAsgn ident op e pos')))
    <|>
-   (do return $ PDecl ident (toIdentType s) pos Nothing)
+   (do return $ PDecl ident (toIdentType idType) pos Nothing)
   <?> "typedecl"
 
 asgn :: C0Parser ParseStmt
@@ -202,6 +189,7 @@ ctrlAssert = do
   pos <- getPosition
   reserved "assert"
   e <- parens expr 
+  semi
   return $ PCtrl (Assert e pos)
 
 -- Parses a control flow 'if'
@@ -275,7 +263,6 @@ forThirdParam =
   <|>
   (do return $ Nothing)
 
-
 -- Parses the expression (second parameter) out of a for-loop condition
 forExpr :: C0Parser Expr
 forExpr = do
@@ -296,9 +283,12 @@ ret :: C0Parser ParseStmt
 ret = do
   pos <- getPosition
   reserved "return"
-  e <- expr
-  semi
-  return $ PCtrl (Return e pos)
+  (do e <- expr
+      semi
+      return $ PCtrl (Return (Just e) pos))
+   <|>
+   (do semi
+       return $ PCtrl (Return Nothing pos))
 
 simp :: C0Parser ParseStmt
 simp = 
