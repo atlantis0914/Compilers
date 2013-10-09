@@ -9,6 +9,7 @@
    not advise replacing this modified version with a stock one.
 -}
 module Compile.Frontend.Parse where
+
 import Control.Monad.Error
 import Data.ByteString as BS
 import Compile.Types
@@ -41,40 +42,44 @@ type C0Parser = Parsec ByteString ()
 -- Produces a list of ParseFns. These are either decls or definitions
 topLevelParser :: C0Parser ParseFnList
 topLevelParser = do 
+  pos <- getPosition
   globalDecls <- many gdecl
   eof
-  return $ ParseFnList globalDecls
+  return $ ParseFnList globalDecls pos
   <?> "topLevel"
 
-gdecl :: C0Parser GDecl
+gdecl :: C0Parser PGDecl
 gdecl = 
   typedefParser
   <|>
   declDefnParser 
 
-typedefParser :: C0Parser GDecl
+typedefParser :: C0Parser PGDecl
 typedefParser = do
+  pos <- getPosition
   reserved "typedef"
   t1 <- getType
   t2 <- getType
-  return $ TypeDef t1 t2 
+  return $ PTypeDef t1 t2 pos
   
-declDefnParser :: C0Parser GDecl
+declDefnParser :: C0Parser PGDecl
 declDefnParser = do
+  pos <- getPosition
   whiteSpace
   retType <- getType
   name <- identifier
   (paramTypes, params) <- getParamList
   -- Now we either have a declaration, or a definition. 
   (do semi
-      return $ FDecl (ParseFDecl name params paramTypes retType))
+      return $ PFDecl (ParseFDecl name params paramTypes retType pos) pos)
    <|>
    (do ast <- getAST
-       return $ FDefn (ParseFDefn {fnName = name,
-                                   fnArgs = params,
-                                   fnArgTypes = paramTypes,
-                                   fnReturnType = retType,
-                                   fnBody = ast}))
+       return $ PFDefn (ParseFDefn {pfnName = name,
+                                    pfnArgs = params,
+                                    pfnArgTypes = paramTypes,
+                                    pfnReturnType = retType,
+                                    pfnBody = ast,
+                                    pfnPos = pos}) pos)
 
 getParamList = parens getParamList'
 
