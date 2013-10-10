@@ -20,11 +20,11 @@ import Control.Monad.Error
 import Compile.Types
 import Compile.Frontend.Parse
 import Compile.Frontend.Elaborate
-import Compile.Frontend.CheckInitialization
-import Compile.Frontend.Minimize
-import Compile.Frontend.CheckAST
-import Compile.IR.GenIR
-import Compile.Backend.CodeGen
+-- import Compile.Frontend.CheckInitialization
+-- import Compile.Frontend.Minimize
+-- import Compile.Frontend.CheckAST
+-- import Compile.IR.GenIR
+-- import Compile.Backend.CodeGen
 
 import qualified Debug.Trace as Trace
 
@@ -33,21 +33,34 @@ import LiftIOE
 writer file obj = liftIOE $ writeFile file $ show obj
 stringWriter file obj = liftIOE $ writeFile file $ obj
 
+getLibraryCode (Job {jobHeader = Nothing}) = do return []
+getLibraryCode (Job {jobHeader = Just fName}) = do 
+  (ParseFnList gdecls pos) <- parseFnList fName
+  let gdecls' = map setLibraryFn gdecls
+  return gdecls'
+
+-- Marks all imported decls as library declarations. 
+setLibraryFn (PFDecl parseFDecl pos) = 
+  PFDecl (parseFDecl {pdeclIsLibrary = True}) pos
+setLibraryFn s = s
+
 compile :: Job -> IO ()
 compile job = do
   res <- runErrorT $ do -- Constructor for the error monad transformer
-    ast <- parseAST $ jobSource job -- ParseAST
-    elabAst <- liftEIO $ elaborate ast -- AST
-    liftEIO $ checkAST elabAst
-    minimizedAst <- liftEIO $ minimize elabAst
-    if jobOutFormat job == C0
-      then writer (jobOut job) minimizedAst
-      else let asm = codeGen minimizedAst in
-              if jobOutFormat job == Asm
-                 then stringWriter (jobOut job) asm
-                 else do writer asmFile minimizedAst
-                         let o = if jobOutFormat job == Obj then "-c" else ""
-                         gcc o asmFile (jobOut job)
+    header <- getLibraryCode job
+    ast <- parseFnList $ jobSource job -- ParseFnList
+    elabAst <- liftEIO $ elaborate ast -- FnList
+    writer (jobOut job) elabAst
+--    liftEIO $ checkAST elabAst
+--    minimizedAst <- liftEIO $ minimize elabAst
+--     if jobOutFormat job == C0
+--       then writer (jobOut job) minimizedAst
+--       else let asm = codeGen minimizedAst in
+--               if jobOutFormat job == Asm
+--                  then stringWriter (jobOut job) asm
+--                  else do writer asmFile minimizedAst
+--                          let o = if jobOutFormat job == Obj then "-c" else ""
+--                          gcc o asmFile (jobOut job)
   case res of
     Left msg -> error msg
     Right () -> return ()
