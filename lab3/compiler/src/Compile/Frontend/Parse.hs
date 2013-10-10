@@ -60,6 +60,7 @@ typedefParser = do
   reserved "typedef"
   t1 <- getType
   t2 <- getType
+  semi
   return $ PTypeDef t1 t2 pos
   
 declDefnParser :: C0Parser PGDecl
