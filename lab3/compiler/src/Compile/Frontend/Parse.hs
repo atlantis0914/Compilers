@@ -29,8 +29,8 @@ import qualified Text.Parsec.Token as Tok
 
 import qualified Debug.Trace as Trace 
 
-parseAST :: FilePath -> ErrorT String IO ParseFnList
-parseAST file = do
+parseFnList :: FilePath -> ErrorT String IO ParseFnList
+parseFnList file = do
   code <- liftIOE $ BS.readFile file
   case parse topLevelParser file code of
     Left e  -> throwError (show e)
@@ -43,6 +43,7 @@ type C0Parser = Parsec ByteString ()
 topLevelParser :: C0Parser ParseFnList
 topLevelParser = do 
   pos <- getPosition
+  whiteSpace
   globalDecls <- many gdecl
   eof
   return $ ParseFnList globalDecls pos
@@ -72,7 +73,8 @@ declDefnParser = do
   (paramTypes, params) <- getParamList
   -- Now we either have a declaration, or a definition. 
   (do semi
-      return $ PFDecl (ParseFDecl name params paramTypes retType pos) pos)
+      -- We place False into the Decl as a place-holder. 
+      return $ PFDecl (ParseFDecl name params paramTypes retType False pos) pos)
    <|>
    (do ast <- getAST
        return $ PFDefn (ParseFDefn {pfnName = name,
@@ -114,7 +116,6 @@ getType =
    <|>
    (do typ <- identifier
        return typ)
-   <?> "getType"
 
 getAST :: C0Parser ParseAST
 getAST = braces (do

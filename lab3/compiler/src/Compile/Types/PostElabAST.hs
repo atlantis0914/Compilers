@@ -23,7 +23,12 @@ data FDefn = FDefn {fnName :: String,
                     fnPos :: SourcePos} deriving Show
 
 -- fnName, fnArgs, fnArgTypes, fnReturnType
-data FDecl = FDecl String [String] [String] String SourcePos deriving Show
+data FDecl = FDecl {gdeclName :: String,
+                    gdeclArgs :: [String],
+                    gdeclArgTypes :: [String],
+                    gdeclReturnType :: String,
+                    gdeclIsLibrary :: Bool,
+                    gdeclPos :: SourcePos} deriving Show
 
 data AST = AST Stmt SourcePos
 

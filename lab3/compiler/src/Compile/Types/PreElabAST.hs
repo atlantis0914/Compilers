@@ -23,7 +23,12 @@ data ParseFDefn = ParseFDefn {pfnName :: String,
                               pfnPos :: SourcePos} deriving Show
 
 -- fnName, fnArgs, fnArgTypes, fnReturnType
-data ParseFDecl = ParseFDecl String [String] [String] String SourcePos deriving Show
+data ParseFDecl = ParseFDecl {pdeclName :: String,
+                              pdeclArgs :: [String],
+                              pdeclArgTypes :: [String],
+                              pdeclReturnType :: String,
+                              pdeclIsLibrary :: Bool,
+                              pdeclPos :: SourcePos} deriving Show
 
 data ParseAST = ParseAST ParseStmt SourcePos 
 
