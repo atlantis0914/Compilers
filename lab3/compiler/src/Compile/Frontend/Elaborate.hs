@@ -4,22 +4,55 @@ import Compile.Types
 import qualified Data.Map as Map
 import qualified Debug.Trace as Trace
 
+import Compile.Util.IdentTypeUtil
+
 import Compile.Frontend.Expand
+
+type TypeDefs = Map.Map String IdentType
 
 -- Takes a parse function list and elaborates it into a post-elab 
 -- function list. 
 elaborate :: ParseFnList -> Either String FnList
-elaborate (ParseFnList decls pos) = Right $ FnList (map elaboratePGDecl decls) pos
+-- elaborate (ParseFnList decls pos) = Right $ FnList (map elaboratePGDecl decls) pos
+elaborate (ParseFnList decls pos) = 
+  let
+    (elab, map) = foldl elaboratePGDecls ([], Map.empty) decls
+  in
+    Right $ FnList elab pos
 
--- Takes a Parse Global Decl and converts it into a post-elab 
+-- We currently do not do anything with the additional typedef information
+-- we pass around. Currently, the additional parameter is passed only to ensure
+-- no namespace conflicts within typedefs. 
+elaboratePGDecls :: ([GDecl], Map.Map String IdentType) -> PGDecl -> 
+                        ([GDecl], Map.Map String IdentType)
+elaboratePGDecls (convDecls, typeMap) pgdecl@(PFDefn _ _) = 
+  (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap)
+
+elaboratePGDecls (convDecls, typeMap) pgdecl@(PFDecl _ _) = 
+  (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap)
+
+elaboratePGDecls (convDecls, typeMap) pgdecl@(PTypeDef _ _ _) =
+  let
+    typeMap' = checkTypeDef pgdecl typeMap
+  in
+    (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap')
+
+-- Either errors if we have multiple typedefs of s2, or inserts 
+-- s2 into the typeMap using s1 as 
+checkTypeDef :: PGDecl -> TypeDefs -> TypeDefs
+checkTypeDef (PTypeDef s1 s2 pos) typeMap = 
+  case (Map.lookup s2 typeMap) of
+    Just _ -> error ("Multiple typedef of " ++ s1 ++ " at " ++ (show pos))
+    Nothing -> (Map.insert s2 (typeMap Map.! s1) typeMap)
+ 
 -- Global Decl. 
-elaboratePGDecl :: PGDecl -> GDecl
+elaboratePGDecl :: PGDecl -> Map.Map String IdentType -> GDecl
 elaboratePGDecl (PFDefn (ParseFDefn {pfnName = name,
                                      pfnArgs = args,
                                      pfnArgTypes = argTypes,
                                      pfnReturnType = return,
                                      pfnBody = body,
-                                     pfnPos = pos}) defnPos) = 
+                                     pfnPos = pos}) defnPos) typeDefs = 
   GFDefn (FDefn {fnName = name,
                  fnArgs = args,
                  fnArgTypes = argTypes,
@@ -27,10 +60,10 @@ elaboratePGDecl (PFDefn (ParseFDefn {pfnName = name,
                  fnBody = elaborateParseAST body,
                  fnPos = pos}) defnPos
 
-elaboratePGDecl (PFDecl (ParseFDecl name args argTypes return pos) dPos) = 
-  GFDecl (FDecl name args argTypes return pos) dPos
+elaboratePGDecl (PFDecl (ParseFDecl name args argTypes return isL pos) dPos) typeDefs = 
+  GFDecl (FDecl name args argTypes return isL pos) dPos
 
-elaboratePGDecl (PTypeDef s1 s2 pos) = GTypeDef s1 s2 pos
+elaboratePGDecl (PTypeDef s1 s2 pos) typeDefs = GTypeDef s1 s2 pos
 
 -- Converts a parse level AST into a post-elaboration AST. Expects the encapsulated
 -- ParseStatement to be a PBlock. 
