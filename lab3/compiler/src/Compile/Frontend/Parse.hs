@@ -86,7 +86,7 @@ declDefnParser = do
 
 getParamList = parens getParamList'
 
-getParamList' :: C0Parser([String], [String]) 
+getParamList' :: C0Parser([IdentType], [String]) 
 getParamList' = (do
   (t,i) <- getParam
   (do comma
@@ -95,7 +95,7 @@ getParamList' = (do
    <|>
    (do return $ (t,i)))
 
-getParam :: C0Parser ([String],[String])
+getParam :: C0Parser ([IdentType],[String])
 getParam = (do
   t <- getType
   i <- identifier
@@ -103,19 +103,19 @@ getParam = (do
   <|>
   (do return $ ([],[]))
 
-getType :: C0Parser String
+getType :: C0Parser IdentType 
 getType =
   (do reserved "int"
-      return $ "int")
+      return $ IInt)
    <|>
    (do reserved "bool"
-       return $ "bool")
+       return $ IBool)
    <|>
    (do reserved "void"
-       return $ "void")
+       return $ IVoid)
    <|>
    (do typ <- identifier
-       return typ)
+       return $ ITypeDef typ)
 
 getAST :: C0Parser ParseAST
 getAST = braces (do
@@ -149,9 +149,9 @@ typedecl = do
   (do pos' <- getPosition
       op <- asnOp
       e <- expr
-      return $ PDecl ident (toIdentType idType) pos (Just (PAsgn ident op e pos')))
+      return $ PDecl ident idType pos (Just (PAsgn ident op e pos')))
    <|>
-   (do return $ PDecl ident (toIdentType idType) pos Nothing)
+   (do return $ PDecl ident idType pos Nothing)
   <?> "typedecl"
 
 asgn :: C0Parser ParseStmt
