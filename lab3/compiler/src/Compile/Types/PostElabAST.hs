@@ -1,4 +1,4 @@
-module Compile.Types.PostElabAST where 
+module Compile.Types.PostElabAST where
 
 import Text.ParserCombinators.Parsec.Pos (SourcePos)
 
@@ -56,7 +56,7 @@ instance Show Stmt where
   show (Block stmts) = "{\n" ++ (unlines (map show stmts)) ++ "\n" ++ "};" ++ "\n"
   show (Expr expr) = show expr ++ "\n"
 
-instance Show Ctrl where 
+instance Show Ctrl where
   show (If e1 s1 s2 _) = "if(" ++ show e1 ++ ") " ++ show s1 ++ "else" ++ show s2 ++ "\n"
   show (While e1 s1 _) = "while(" ++ show e1 ++ ")\n" ++ show s1
   show (Return e1 _) = "return " ++ show e1 ++ ";"
