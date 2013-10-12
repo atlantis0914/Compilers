@@ -23,7 +23,7 @@ checkInitializationGDecl (GFDefn (FDefn {fnArgs = args,
   let
     body' = prependAsDecls args argTypes body
   in
-    checkInitialization body
+    body' `seq` checkInitialization args body' 
 
 prependAsDecls :: [String] -> [IdentType] -> AST -> AST
 prependAsDecls args argTypes (AST (Block stmts) p) = 
@@ -32,14 +32,16 @@ prependAsDecls args argTypes (AST (Block stmts) p) =
                                   declTyp = at,
                                   declPos = p,
                                   declScope = SNop}) $ zip args argTypes
-    decls' = foldl (\inner -> \decl -> decl {declScope = inner}) (Block stmts) decls
+    decls' = foldr (\decl -> \inner -> decl {declScope = inner}) (Block stmts) decls
+    ast' = (AST (Block [decls']) p)
+    Decl {declScope = inner} =  decls'
   in
-    (AST (Block [decls']) p)
+    trace ("Ast " ++ show ast') $ ast'
 
-checkInitialization :: AST -> Bool
-checkInitialization (AST (Block stmts) p) = 
+checkInitialization :: [String] -> AST -> Bool
+checkInitialization args (AST (Block stmts) p) = 
   let
-    (l1,r1,b) = checkBlock stmts True (Set.empty)
+    (l1,r1,b) = checkBlock args stmts True (Set.empty)
   in
     l1 `seq` r1 `seq` b `seq` True
 
@@ -47,14 +49,20 @@ assert :: Bool -> String -> a -> a
 assert False msg x = error msg
 assert _ _ x = x
 
-isInitDecl doErr liveSet x pos = 
-  assert (not ((Set.member x liveSet) && doErr))
+isInitDecl args doErr liveSet x pos = 
+  assert (not ((Set.member x liveSet) && doErr && (not (x `elem` args))))
          ("Error : variable " ++ x ++ " used uninitialized at " ++ show pos)
 
-isDeclaredExpr :: Expr -> (Set.Set String) -> (a -> a)
-isDeclaredExpr e decl = 
+-- isDeclaredExpr :: Expr -> (Set.Set String) -> SourcePos -> (a -> a)
+isDeclaredExpr e decl pos = 
   assert ((Set.size (Set.intersection (decl) (used e))) == (Set.size $ used e))
-         ("Error : Variable used undeclared in expression : " ++ (show e))
+         ("Error : Variable used undeclared in expression : " ++ (show e) ++ " at " ++ show pos ++ " setSize = " ++ 
+          (show $ Set.size (used e)) ++ " other size = " ++ (show $ Set.size (Set.intersection (decl) (used e))) ++ " decl is " ++ (show decl))
+
+isDeclaredExpr' :: Expr -> (Set.Set String) -> (a -> a)
+isDeclaredExpr' e decl = 
+  assert ((Set.size (Set.intersection (decl) (used e))) == (Set.size $ used e))
+         ("Error : Variable used undeclared in expression : " ++ (show e) ++ " at ")
 
 isDeclaredDecl :: String -> Set.Set String -> (a -> a)
 isDeclaredDecl i decls = assert (not (Set.member i decls)) 
@@ -66,48 +74,48 @@ isDeclaredAsgn i decls = assert (Set.member i decls)
 
 -- produces a (definedSet, liveSet, Bool). Takes a declaredSet 
 -- (the declared variables in scope) and also performs undeclared checking.
-checkStmt :: Stmt -> Bool -> Set.Set String -> (Set.Set String, Set.Set String, Bool)
-checkStmt(Ctrl (Return (Just e) pos)) _ decls = 
-  isDeclaredExpr e decls (Set.empty, used e, True)
-checkStmt(Ctrl (Return Nothing pos)) _ decls = (Set.empty, Set.empty, True)
+checkStmt :: [String] -> Stmt -> Bool -> Set.Set String -> (Set.Set String, Set.Set String, Bool)
+checkStmt args (Ctrl (Return (Just e) pos)) _ decls = 
+  isDeclaredExpr e decls pos (Set.empty, used e, True)
+checkStmt args (Ctrl (Return Nothing pos)) _ decls = (Set.empty, Set.empty, True)
 
-checkStmt(Block stmts) doErr decls = checkBlock stmts doErr decls
-checkStmt (Decl i t pos rest) doErr decls = 
+checkStmt args (Block stmts) doErr decls = checkBlock args stmts doErr decls
+checkStmt args (Decl i t pos rest) doErr decls = 
   let
-    (decsRest, liveRest, b1) = isDeclaredDecl i decls $ checkStmt rest doErr (Set.insert i decls)
-    setI = isInitDecl doErr liveRest i pos $ Set.singleton(i)
+    (decsRest, liveRest, b1) = isDeclaredDecl i decls $ checkStmt args rest doErr (trace ("decls = " ++ show decls) $ Set.insert i decls)
+    setI = isInitDecl args doErr liveRest i pos $ Set.singleton(i)
   in
     setI `seq` (Set.difference decsRest setI, Set.difference liveRest setI, b1)
 
-checkStmt(Asgn i o e pos) doErr decls = isDeclaredAsgn i decls (Set.singleton i, used e, False)
+checkStmt args (Asgn i o e pos) doErr decls = isDeclaredAsgn i decls (Set.singleton i, used e, False)
 
-checkStmt(Expr e) doErr decls = isDeclaredExpr e decls (Set.empty, used e, False)
+checkStmt args (Expr e) doErr decls = isDeclaredExpr' e decls (Set.empty, used e, False)
 
-checkStmt(Ctrl (If e s1 s2 pos)) doErr decls = 
+checkStmt args (Ctrl (If e s1 s2 pos)) doErr decls = 
   let
-    (decs1, lives1, b1) = isDeclaredExpr e decls $ checkStmt s1 doErr decls
-    (decs2, lives2, b2) = checkStmt s2 doErr decls
+    (decs1, lives1, b1) = isDeclaredExpr e decls pos $ checkStmt args s1 doErr decls
+    (decs2, lives2, b2) = checkStmt args s2 doErr decls
   in
     decs1 `seq` lives1 `seq` decs2 `seq` lives2 `seq` 
     (Set.intersection decs1 decs2, Set.union (used e) (Set.union lives1 lives2), b1 && b2)
 
-checkStmt(Ctrl (While e s1 pos)) doErr decls = 
+checkStmt args (Ctrl (While e s1 pos)) doErr decls = 
   let
-    (decs1, lives1, b1) = isDeclaredExpr e decls $ checkStmt s1 doErr decls
+    (decs1, lives1, b1) = isDeclaredExpr e decls pos $ checkStmt args s1 doErr decls
   in
     decs1 `seq` lives1 `seq` (Set.empty, Set.union lives1 (used e), b1)
 
-checkStmt SNop _ _ = (Set.empty, Set.empty, False)
+checkStmt args SNop _ _ = (Set.empty, Set.empty, False)
 
     
-checkBlock :: [Stmt] -> Bool -> Set.Set String -> (Set.Set String, Set.Set String, Bool)
-checkBlock [] _ _ = (Set.empty, Set.empty, True)
-checkBlock [stmt] doErr decls = checkStmt stmt doErr decls
-checkBlock (stmt:stmts) doErr decls = 
+checkBlock :: [String] -> [Stmt] -> Bool -> Set.Set String -> (Set.Set String, Set.Set String, Bool)
+checkBlock _ [] _ _ = (Set.empty, Set.empty, True)
+checkBlock args [stmt] doErr decls = checkStmt args stmt doErr decls
+checkBlock args (stmt:stmts) doErr decls = 
   let
-    (decStmt, liveStmt, b1) = checkStmt stmt doErr decls
+    (decStmt, liveStmt, b1) = checkStmt args stmt doErr decls
     dropLiveAfter = (isReturn stmt || b1) -- b1 Checks if all sub-branches have returns. 
-    (decRest, liveRest, b2) = checkBlock stmts doErr decls
+    (decRest, liveRest, b2) = checkBlock args stmts doErr decls
   in
     if (dropLiveAfter)
       then decRest `seq` liveRest `seq` (decStmt, liveStmt, b1) 
