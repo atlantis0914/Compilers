@@ -7,8 +7,7 @@ import qualified Debug.Trace as Trace
 import Compile.Util.IdentTypeUtil
 
 import Compile.Frontend.Expand
-
-type TypeDefs = Map.Map String IdentType
+import Compile.Frontend.ElaborateType
 
 -- Takes a parse function list and elaborates it into a post-elab 
 -- function list. 
@@ -20,11 +19,8 @@ elaborate (ParseFnList decls pos) =
   in
     Right $ FnList elab pos
 
--- We currently do not do anything with the additional typedef information
--- we pass around. Currently, the additional parameter is passed only to ensure
--- no namespace conflicts within typedefs. 
-elaboratePGDecls :: ([GDecl], Map.Map String IdentType) -> PGDecl -> 
-                        ([GDecl], Map.Map String IdentType)
+elaboratePGDecls :: ([GDecl], TypeDefs) -> PGDecl -> 
+                        ([GDecl], TypeDefs)
 elaboratePGDecls (convDecls, typeMap) pgdecl@(PFDefn _ _) = 
   (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap)
 
@@ -42,11 +38,11 @@ elaboratePGDecls (convDecls, typeMap) pgdecl@(PTypeDef _ _ _) =
 checkTypeDef :: PGDecl -> TypeDefs -> TypeDefs
 checkTypeDef (PTypeDef s1 s2 pos) typeMap = 
   case (Map.lookup s2 typeMap) of
-    Just _ -> error ("Multiple typedef of " ++ s1 ++ " at " ++ (show pos))
+    Just _ -> error ("Multiple typedef of " ++ (show s1) ++ " at " ++ (show pos))
     Nothing -> (Map.insert s2 (typeMap Map.! s1) typeMap)
  
 -- Global Decl. 
-elaboratePGDecl :: PGDecl -> Map.Map String IdentType -> GDecl
+elaboratePGDecl :: PGDecl -> TypeDefs -> GDecl
 elaboratePGDecl (PFDefn (ParseFDefn {pfnName = name,
                                      pfnArgs = args,
                                      pfnArgTypes = argTypes,
