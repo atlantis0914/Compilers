@@ -37,13 +37,12 @@ assertMsgE :: String -> Bool -> Either String ()
 assertMsgE s True  = Right ()
 assertMsgE s False = Left s
 
-checkAST :: AST -> Either String ()
-checkAST ast@(AST (Block stmts) _) = do
-  let tCheck = checkASTTypes ast
-  let checkReturn = checkReturnAST ast
-  let cRes = Trace.trace ("tCheck = " ++ show tCheck ++ 
-                          " checkReturn = " ++ show checkReturn) $ checkInitialization ast
-  assertMsgE "Error in checking initialization" (cRes && tCheck && checkReturn)
+checkFnList :: FnList -> Either String () 
+checkFnList fnList@(FnList gdecls pos) = do
+  let tCheck = checkTypeFnList fnList
+  let checkReturn = checkReturnFnList fnList
+  let checkInitialization = checkInitializationFnList fnList
+  assertMsgE "Error in static check" (tCheck && checkReturn && checkInitialization)
 
 
 -- checkAST :: AST -> Either String ()
