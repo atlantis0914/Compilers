@@ -46,8 +46,11 @@ instance Show AST where
   show (AST stmt _) =
     "int main () {\n" ++ show stmt ++ "}\n"
 
+maybeShow Nothing = ""
+maybeShow (Just o) = show o
+
 instance Show Stmt where
-  show (Asgn s o e _) = "\t" ++ s ++ " " ++ (show o) ++ "=" ++ " " ++ show e ++ ";"
+  show (Asgn s o e _) = "\t" ++ s ++ " " ++ (maybeShow o) ++ "=" ++ " " ++ show e ++ ";"
   show (Decl i t _ innerS) = "\t" ++ (show t) ++ " " ++ i ++ ";" ++ show innerS
   show (Ctrl c) = show c
   show (Block stmts) = "{\n" ++ (unlines (map show stmts)) ++ "\n" ++ "};" ++ "\n"
