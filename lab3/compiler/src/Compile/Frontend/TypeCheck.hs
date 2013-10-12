@@ -23,7 +23,7 @@ checkTypeFnList (FnList gdecls pos) =
     (_,endMap,valid) = foldl checkGDecl (Map.empty, Map.empty, True) gdecls
   in  
     case (Map.lookup "main" endMap) of
-      Nothing -> error ("Error : int main() must be declared bro")
+      Nothing -> error ("Error : int main() must be declared. ")
       Just (argTypes, retType, lDecl, defn) -> (
         if ((length argTypes == 0) && (retType == IInt)) 
           then valid
@@ -31,9 +31,15 @@ checkTypeFnList (FnList gdecls pos) =
 
 checkGDecl :: Context -> GDecl -> Context
 
--- As we don't do namespace checking here, and elaborate typedefs away
--- typedefs don't need to be very complicated. 
-checkGDecl (ctx@(map, fnMap, valid)) (GTypeDef t1 t2 pos) = ctx
+-- It's our responsibility here to ensure that the name being type-def'd
+-- isn't already used as a function name. 
+checkGDecl (ctx@(map, fnMap, valid)) (GTypeDef t1 t2 pos) = 
+  case t2 of 
+    (ITypeDef s2) -> if (Map.lookup s2 fnMap == Nothing)
+                       then ctx
+                       else error ("Error : type name " ++ s2 ++ 
+                                    " already used as fn name")
+    _ -> error ("Typedef to concrete type at " ++ show pos)
 
 checkGDecl (ctx@(map, fnMap, valid)) 
            (GFDecl (FDecl {gdeclName = name,
@@ -212,20 +218,20 @@ checkExprType ctx@(map, fnMap, valid) (ExpFnCall fnName subExps pos) =
     Nothing -> error ("Error : Function : " ++ fnName ++ " used undeclared at " ++ show pos)
     Just (argTypes, retType, libDecl, isDecl) -> 
       if (isDecl || libDecl) -- Then we're good, just make sure non-void ret
-        then if (validateFnCall ctx argTypes subExps retType) 
+        then if (validateFnCall ctx fnName argTypes subExps retType) 
                then Just retType
-               else error ("Error : " ++ fnName ++ " has problems at " ++ show pos)
+               else error ("Error : " ++ fnName ++ " invocation has problems at " ++ show pos)
         else error ("Error : " ++ fnName ++ " has not been declared yet at " ++ show pos)
 
 consumeType :: Maybe IdentType -> IdentType
 consumeType Nothing = error "No type"
 consumeType (Just t) = t
 
-validateFnCall :: Context -> [IdentType] -> [Expr] -> IdentType -> Bool
-validateFnCall ctx argTypes argExprs retType = 
+validateFnCall :: Context -> String -> [IdentType] -> [Expr] -> IdentType -> Bool
+validateFnCall (ctx@(idMap, _, _)) fnName argTypes argExprs retType = 
   let
     recTypes = map (consumeType . (checkExprType ctx)) argExprs
     match = all (\(t1,t2) -> t1 == t2) $ zip argTypes recTypes
+    isShadowed = (Map.lookup fnName idMap == Nothing) 
   in
-    (match && (not $ retType == IVoid))
-
+    ((match && (not $ retType == IVoid)) && (length argTypes == length recTypes) && isShadowed)
