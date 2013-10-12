@@ -2,6 +2,19 @@ module Compile.Frontend.CheckReturn where
 
 import Compile.Types
 
+checkReturnFnList :: FnList -> Bool 
+checkReturnFnList (FnList gdecls pos) = 
+  all checkGDecl gdecls 
+
+checkGDecl :: GDecl -> Bool 
+checkGDecl (GFDecl _ _) = True
+checkGDecl (GTypeDef _ _ _) = True
+checkGDecl (GFDefn (FDefn {fnReturnType = retType,
+                           fnBody = body}) pos) = 
+  if (retType == IVoid) 
+    then True
+    else checkReturnAST body
+
 checkReturnAST :: AST -> Bool
 checkReturnAST (AST stmt _) =
   checkReturnStmt stmt
