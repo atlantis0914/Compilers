@@ -8,6 +8,10 @@ module Compile.Types.AbstractAssembly where
 
 import Compile.Types.Ops
 
+
+data FnAAsm = AAFDefn [AAsm] String
+            | AAFDecl String
+
 data AAsm = AAsm {aAssign :: [ALoc]
                  ,aOp     :: Op
                  ,aArgs   :: [AVal]

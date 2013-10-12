@@ -8,6 +8,20 @@ import qualified Debug.Trace as Trace
 type Alloc = (Map.Map String Int, Int, Int, [AAsm])
 -- (Map from idents -> tempNum, curTempNum)
 
+genFIR :: FnList -> [FnAAsm]
+genFIR (FnList gdecls) =
+  mapMaybe genFnAAsm gdecls
+
+genFnAAsm :: GDecl -> Maybe FnAAsm
+genFnAAsm (GFDecl (FDefn name _ _ _ ast _)) =
+  Just $ AAFDefn (genIR ast) name
+
+genFnAAsm (GFDefn (FDecl name _ _ _ isLib _)) =
+  if isLib then Just $ AAFDecl name
+           else Nothing
+
+genFnAAsm _ = Nothing
+
 genIR :: AST -> [AAsm]
 genIR (AST (Block stmts) _) =
   let
