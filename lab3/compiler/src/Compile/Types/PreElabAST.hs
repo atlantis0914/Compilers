@@ -13,20 +13,20 @@ data ParseFnList = ParseFnList [PGDecl] SourcePos deriving Show
 
 data PGDecl = PFDecl ParseFDecl SourcePos
             | PFDefn ParseFDefn SourcePos 
-            | PTypeDef String String SourcePos deriving Show
+            | PTypeDef IdentType IdentType SourcePos deriving Show
 
 data ParseFDefn = ParseFDefn {pfnName :: String,
                               pfnArgs :: [String],
-                              pfnArgTypes :: [String],
-                              pfnReturnType :: String,
+                              pfnArgTypes :: [IdentType],
+                              pfnReturnType :: IdentType,
                               pfnBody :: ParseAST,
                               pfnPos :: SourcePos} deriving Show
 
 -- fnName, fnArgs, fnArgTypes, fnReturnType
 data ParseFDecl = ParseFDecl {pdeclName :: String,
                               pdeclArgs :: [String],
-                              pdeclArgTypes :: [String],
-                              pdeclReturnType :: String,
+                              pdeclArgTypes :: [IdentType],
+                              pdeclReturnType :: IdentType,
                               pdeclIsLibrary :: Bool,
                               pdeclPos :: SourcePos} deriving Show
 

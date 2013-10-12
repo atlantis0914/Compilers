@@ -13,20 +13,20 @@ data FnList = FnList [GDecl] SourcePos deriving Show
 
 data GDecl = GFDecl FDecl SourcePos
            | GFDefn FDefn SourcePos
-           | GTypeDef String String SourcePos deriving Show
+           | GTypeDef IdentType IdentType SourcePos deriving Show
 
 data FDefn = FDefn {fnName :: String,
                     fnArgs :: [String],
-                    fnArgTypes :: [String],
-                    fnReturnType :: String,
+                    fnArgTypes :: [IdentType],
+                    fnReturnType :: IdentType,
                     fnBody :: AST,
                     fnPos :: SourcePos} deriving Show
 
 -- fnName, fnArgs, fnArgTypes, fnReturnType
 data FDecl = FDecl {gdeclName :: String,
                     gdeclArgs :: [String],
-                    gdeclArgTypes :: [String],
-                    gdeclReturnType :: String,
+                    gdeclArgTypes :: [IdentType],
+                    gdeclReturnType :: IdentType,
                     gdeclIsLibrary :: Bool,
                     gdeclPos :: SourcePos} deriving Show
 
