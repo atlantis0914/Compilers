@@ -20,9 +20,14 @@ type Context = (Map.Map String IdentType, FnMap, Bool)
 checkTypeFnList :: FnList -> Bool
 checkTypeFnList (FnList gdecls pos) = 
   let
-    (_,_,valid) = foldl checkGDecl (Map.empty, Map.empty, True) gdecls
-  in
-    valid
+    (_,endMap,valid) = foldl checkGDecl (Map.empty, Map.empty, True) gdecls
+  in  
+    case (Map.lookup "main" endMap) of
+      Nothing -> error ("Error : int main() must be declared bro")
+      Just (argTypes, retType, lDecl, defn) -> (
+        if ((length argTypes == 0) && (retType == IInt)) 
+          then valid
+          else error ("Error : int main() must be the right type"))
 
 checkGDecl :: Context -> GDecl -> Context
 
@@ -69,7 +74,7 @@ checkGFDefn (ctx@(map, fnMap, valid))
         -- One error message, two birds
         then error ("Error : function " ++ name ++ " redefined or library at " ++ show pos)
         else if ((lTypesEqual argTypes oldArgs) && (oldRet == retType)) 
-               then checkASTTypes ctx body
+               then checkASTTypes (map, Map.insert name (argTypes, retType, oldLib, True) fnMap, valid) body
                else error ("Error : function " ++ name ++ " typed incorrectly at " ++ show pos)
 
     Nothing -> checkASTTypes (map, 
