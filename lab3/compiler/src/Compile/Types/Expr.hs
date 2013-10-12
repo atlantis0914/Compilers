@@ -1,4 +1,4 @@
-module Compile.Types.Expr where 
+module Compile.Types.Expr where
 
 import Text.ParserCombinators.Parsec.Pos (SourcePos)
 

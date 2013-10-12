@@ -135,6 +135,24 @@ genExp (varMap,n,l,aasm) (ExpUnOp op e _) dest = let
   c  = [AAsm [dest] op [ALoc $ ATemp n]]
   in (varMap, n1, l', aasm' ++ c)
 
+genExp alloc@(varMap,n,l,aasm) (ExpFnCall fnName exprs _) dest =
+  let
+    allocs = scanl genExpAcc alloc exprs
+    lenMinusOne = (length allocs) - 1
+    locs = map toLoc (take lenMinusOne allocs)
+    last@(varMap',n',l',aasm') = allocs !! lenMinusOne
+    newAasm = AFnCall fnName locs
+  in
+    (varMap', n', l', aasm' ++ [newAasm])
+
+toLoc :: Alloc -> ALoc
+toLoc (_, n, _, _) =
+  ATemp n
+
+genExpAcc :: Alloc -> Expr -> Alloc
+genExpAcc (varMap,n,l,aasm) exp =
+  genExp (varMap,n+1,l,aasm) exp (ATemp n)
+
 genBinOp (varMap,n,l,aasm) (op,e1,e2) dest = let
   -- AAsm for left and right operand
   -- TODO: Make this more SSL friendly
