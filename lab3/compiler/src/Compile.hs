@@ -23,7 +23,7 @@ import Compile.Frontend.Elaborate
 -- import Compile.Frontend.CheckInitialization
 -- import Compile.Frontend.Minimize
 -- import Compile.Frontend.CheckAST
--- import Compile.IR.GenIR
+import Compile.IR.GenIR
 -- import Compile.Backend.CodeGen
 
 import qualified Debug.Trace as Trace

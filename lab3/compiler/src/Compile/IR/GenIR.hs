@@ -2,6 +2,7 @@ module Compile.IR.GenIR where
 
 import Compile.Types
 import qualified Data.Map as Map
+import qualified Data.Maybe as Maybe
 
 import qualified Debug.Trace as Trace
 
@@ -9,14 +10,14 @@ type Alloc = (Map.Map String Int, Int, Int, [AAsm])
 -- (Map from idents -> tempNum, curTempNum)
 
 genFIR :: FnList -> [FnAAsm]
-genFIR (FnList gdecls) =
-  mapMaybe genFnAAsm gdecls
+genFIR (FnList gdecls _) =
+  Maybe.mapMaybe genFnAAsm gdecls
 
 genFnAAsm :: GDecl -> Maybe FnAAsm
-genFnAAsm (GFDecl (FDefn name _ _ _ ast _)) =
+genFnAAsm (GFDefn (FDefn name _ _ _ ast _) _) =
   Just $ AAFDefn (genIR ast) name
 
-genFnAAsm (GFDefn (FDecl name _ _ _ isLib _)) =
+genFnAAsm (GFDecl (FDecl name _ _ _ isLib _) _) =
   if isLib then Just $ AAFDecl name
            else Nothing
 
@@ -89,8 +90,9 @@ genCtrl (m,i,l,aasm) (While e s1 _) = let
     (m',i'',l' + 3, aasm ++ outputAasm)
 
 -- GenExps the expression into AReg 0 and then returns on AReg0
-genCtrl (m,i,l,aasm) (Return expr _) = let
-  (_,i',l',aasm') = genExp (m,i,l,[]) expr (AReg 0)
+genCtrl (m,i,l,aasm) (Return (Just expr) _) =
+  let
+    (_,i',l',aasm') = genExp (m,i,l,[]) expr (AReg 0)
   in
     (m,i',l',aasm ++ aasm' ++ [ACtrl $ ARet (ALoc (AReg 0))])
 
