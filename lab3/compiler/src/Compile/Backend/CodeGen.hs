@@ -25,11 +25,6 @@ import qualified Debug.Trace as Trace
 
 type Alloc = (Map.Map String Int, Int)
 
--- codeGen ast@(AST (Block stmts) _) = let
---   ir = genIR ast
---   in
---     concatMap (\a -> (show a) ++ "\n") ir
-
 debugFlag = False
 
 maxTempsBeforeSpilling = 600
