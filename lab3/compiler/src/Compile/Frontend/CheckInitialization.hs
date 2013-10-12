@@ -10,6 +10,32 @@ import Debug.Trace
 
 import Compile.Types
 
+checkInitializationFnList :: FnList -> Bool 
+checkInitializationFnList (FnList gdecls pos) =
+  all checkInitializationGDecl gdecls 
+
+checkInitializationGDecl :: GDecl -> Bool 
+checkInitializationGDecl (GFDecl _ _) = True 
+checkInitializationGDecl (GTypeDef _ _ _) = True
+checkInitializationGDecl (GFDefn (FDefn {fnArgs = args,
+                                         fnArgTypes = argTypes,
+                                         fnBody = body}) pos) = 
+  let
+    body' = prependAsDecls args argTypes body
+  in
+    checkInitialization body
+
+prependAsDecls :: [String] -> [IdentType] -> AST -> AST
+prependAsDecls args argTypes (AST (Block stmts) p) = 
+  let
+    decls = map (\(a,at) -> Decl {declName = a,
+                                  declTyp = at,
+                                  declPos = p,
+                                  declScope = SNop}) $ zip args argTypes
+    decls' = foldl (\inner -> \decl -> decl {declScope = inner}) (Block stmts) decls
+  in
+    (AST (Block [decls']) p)
+
 checkInitialization :: AST -> Bool
 checkInitialization (AST (Block stmts) p) = 
   let
