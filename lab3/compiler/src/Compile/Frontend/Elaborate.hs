@@ -119,7 +119,7 @@ elabParseCtrl td (Return e pos) = Return e pos
 elabParseBlock' :: TypeDefs -> Stmt -> [ParseStmt] -> Stmt 
 elabParseBlock' _ curblock [] = curblock
 elabParseBlock' td (Block curStmts) ((PDecl s t pos Nothing):xs) = 
-  Block $ curStmts ++ [Decl {declName = s,
+  Block $ curStmts ++ [Decl {declName = checkTDIdent td s,
                              declTyp = elaborateTDIdentType td t,
                              declPos = pos,
                              declScope = elabParseBlock' td (Block []) xs}
