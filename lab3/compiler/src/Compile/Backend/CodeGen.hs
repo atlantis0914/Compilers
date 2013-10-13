@@ -9,7 +9,6 @@ module Compile.Backend.CodeGen where
 import Compile.Types
 import qualified Data.Map as Map
 
-
 import Compile.IR.GenIR
 import Compile.Backend.Liveness
 import Compile.Backend.Interference
@@ -20,6 +19,8 @@ import Compile.Backend.MaximumCardinalitySearch
 import Compile.Backend.ColorTemp
 import Compile.Backend.GenAsm
 import Compile.Backend.Spill
+import Compile.Backend.BackendUtils
+import Compile.Backend.Registers
 
 import qualified Debug.Trace as Trace
 
@@ -38,13 +39,15 @@ fnListCodeGen fnList =
   in
     asm ++ epilogue
 
+genFnProlugues :: String
+genFnProlugues = concatMap genPrologueIns callees
+
 fnAAsmCodeGen :: FnAAsm -> String
 fnAAsmCodeGen (AAFDefn aasms fnName) =
   let
-    prelude = [".globl __c0_" ++ fnName ++ "\n", "__c0_" ++ fnName ++ ":\n"]
-    epilogue = ["  ret\n"]
+    prologue = [".globl __c0_" ++ fnName ++ "\n", "__c0_" ++ fnName ++ ":\n", "  pushq %rbp\n", "  movq %rsp, %rbp\n", genFnProlugues]
   in
-    concat (prelude ++ [codeGen aasms] ++ epilogue)
+    concat (prologue ++ [codeGen aasms])
 
 fnAAsmCodeGen (AAFDecl fnName) =
   ""

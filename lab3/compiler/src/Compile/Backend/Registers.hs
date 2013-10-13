@@ -17,6 +17,9 @@ regMap = Map.fromList [(0, "%eax"),
                       (10, "%r14d"),
                       (11, "%r15d")]
 
+callers = ["%edi", "%esi", "%edx", "%ecx", "%r8d", "%r9d", "%r10d", "%r11d"]
+callees = ["%ebx", "%r12d", "%r13d", "%r14d", "%r15d"]
+
 regByteMap :: Map.Map Int String
 regByteMap = Map.fromList [(0, "%al"),
                            (1, "%bl"),

@@ -5,6 +5,7 @@ import qualified Data.Map as Map
 import qualified Debug.Trace as Trace
 
 import Compile.Backend.Registers
+import Compile.Backend.BackendUtils
 
 genAsm :: [AAsm] -> [String]
 genAsm aasms =
@@ -69,10 +70,29 @@ aasmToString (ACtrl (AIf aval label)) =
   "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz label" ++ (show label) ++ "\n"
 
 aasmToString (ACtrl (ARet _)) =
-  "  ret" ++ "\n"
+  concat [genFnEpilogues, "  popq %rbp\n", "  ret\n"]
 
 aasmToString (AFnCall fnName loc locs) =
-  "  call __c0_" ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n"
+  (genProlugues loc) ++ "  call __c0_" ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n" ++ (genEpilogues loc)
+
+genFnEpilogues :: String
+genFnEpilogues = concatMap genEpilogueIns callees
+
+genProlugues :: ALoc -> String
+genProlugues loc =
+  let
+    reg = alocToString loc
+    callers' = filter (\r -> reg /= r) callers
+  in
+    concatMap genPrologueIns callers'
+
+genEpilogues :: ALoc -> String
+genEpilogues loc =
+  let
+    reg = alocToString loc
+    callers' = filter (\r -> reg /= r) callers
+  in
+    concatMap genEpilogueIns callers'
 
 avalByteToString :: AVal -> String
 avalByteToString aval =
