@@ -22,6 +22,7 @@ regMap = Map.fromList [(0, "%eax"),
 callers = ["%edi", "%esi", "%edx", "%ecx", "%r8d", "%r9d", "%r10d", "%r11d"]
 callees = ["%ebx", "%r12d", "%r13d", "%r14d", "%r15d"]
 
+argArr :: [Int]
 argArr = [12, 13, 3, 2, 4, 5]
 
 regByteMap :: Map.Map Int String

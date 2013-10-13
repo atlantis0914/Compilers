@@ -3,6 +3,7 @@ module Compile.IR.GenIR where
 import Compile.Types
 import qualified Data.Map as Map
 import qualified Data.Maybe as Maybe
+import Compile.Backend.Registers
 
 import qualified Debug.Trace as Trace
 
@@ -13,21 +14,23 @@ genFIR :: FnList -> [FnAAsm]
 genFIR (FnList gdecls _) =
   Maybe.mapMaybe genFnAAsm gdecls
 
---addArg :: Alloc -> String -> Alloc
---addArg alloc@(varMap, n, l, aasms) arg =
---  let
---    aasms' = if n <= 6 then callers !! n
---                       else aasms
---
---  in
---    (varMap', n+1, l, aasms')
+addArg :: Alloc -> String -> Alloc
+addArg alloc@(varMap, n, l, aasms) arg =
+  let
+    aasm = if n <= 6 then [AAsm {aAssign = [ATemp n], aOp = Nop, aArgs = [ALoc $ AReg $ argArr !! n]}]
+                     else []
+    aasms' = aasms ++ aasm
+    varMap' = Map.insert arg n varMap
+  in
+    (varMap', n+1, l, aasms')
 
 genFnAAsm :: GDecl -> Maybe FnAAsm
 genFnAAsm (GFDefn (FDefn name args _ _ ast _) _) =
   let
     alloc = (Map.empty, 0, 0, [])
+    alloc' = foldl addArg alloc args
   in
-    Just $ AAFDefn (genIR ast alloc) name
+    Just $ AAFDefn (genIR ast alloc') name
 
 genFnAAsm (GFDecl (FDecl name _ _ _ isLib _) _) =
   if isLib then Just $ AAFDecl name
@@ -70,16 +73,15 @@ genCtrl (m,i,l,aasm) (Assert e _) = let
   abortLabel = el
   endLabel = el + 1
   abortAasm = [ACtrl $ ALabel abortLabel] ++ [AFnCall "abort" (ATemp i) []]
-  outputAasm = 
+  outputAasm =
     eAasm
     ++ [ACtrl $ AIf (ALoc $ ATemp i) abortLabel,
         ACtrl $ AGoto endLabel]
     ++ abortAasm
     ++ [ACtrl $ ALabel endLabel]
   in
-    (m, i', el + 2, aasm ++ outputAasm) 
-  
-  
+    (m, i', el + 2, aasm ++ outputAasm)
+
 genCtrl (m,i,l,aasm) (If e s1 s2 _) = let
   -- store aasm for e in Temp(i)
   (_,i',el,eAasm) = genExp (m,i+1,l,[]) e (ATemp i)
