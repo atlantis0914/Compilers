@@ -72,7 +72,7 @@ aasmToString (ACtrl (ARet _)) =
   "  ret" ++ "\n"
 
 aasmToString (AFnCall fnName loc locs) =
-  "  call _c0_" ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n"
+  "  call __c0_" ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n"
 
 avalByteToString :: AVal -> String
 avalByteToString aval =

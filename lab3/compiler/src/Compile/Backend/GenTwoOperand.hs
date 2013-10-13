@@ -26,6 +26,8 @@ genForIns aasm@(AAsm {aAssign = [loc], aOp = op, aArgs = [fst]}) =
 
 genForIns aasm@(ACtrl c) = [aasm]
 
+genForIns aasm = [aasm]
+
 genForIns' aasm@(AAsm {aAssign = loc:locs, aOp = op, aArgs = [fst, snd]}) =
   [AAsm {aAssign = loc:locs, aOp = Nop, aArgs = [fst]},
    AAsm {aAssign = loc:locs, aOp = op, aArgs = [snd]}]
@@ -33,3 +35,5 @@ genForIns' aasm@(AAsm {aAssign = loc:locs, aOp = op, aArgs = [fst, snd]}) =
 genForDiv aasm@(AAsm {aAssign = loc:locs, aOp = op, aArgs = [fst, snd]}) =
   [AAsm {aAssign = loc:locs, aOp = Nop, aArgs = [fst]},
    AAsm {aAssign = loc:locs, aOp = op, aArgs = [ALoc loc, snd]}]
+
+

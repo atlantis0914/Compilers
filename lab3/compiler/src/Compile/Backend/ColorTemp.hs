@@ -22,6 +22,13 @@ replaceAsm coloring aasm@(ACtrl (AIf aval label)) =
 
 replaceAsm coloring aasm@(ACtrl a) = aasm
 
+replaceAsm coloring aasm@(AFnCall fnName loc locs) =
+  let
+    loc' = replaceAssigns coloring loc
+    locs' = map (replaceAssigns coloring) locs
+  in
+    AFnCall fnName loc' locs'
+
 replaceAssigns :: ColoringMap -> ALoc -> ALoc
 replaceAssigns coloring (ATemp i) =
   let

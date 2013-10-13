@@ -53,3 +53,4 @@ spillAAsm aasm@(ACtrl (AIf (ALoc (AReg i)) label)) =
           ACtrl (AIf (ALoc (AReg spill_reg_num)) label)]
     else [aasm]
 spillAAsm aasm@(ACtrl c) = [aasm]
+spillAAsm aasm = [aasm]
