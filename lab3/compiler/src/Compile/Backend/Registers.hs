@@ -19,8 +19,8 @@ regMap = Map.fromList [(0, "%eax"),
                       (12, "%edi"),
                       (13, "%esi")]
 
-callers = ["%edi", "%esi", "%edx", "%ecx", "%r8d", "%r9d", "%r10d", "%r11d"]
-callees = ["%ebx", "%r12d", "%r13d", "%r14d", "%r15d"]
+callers = ["%rdi", "%rsi", "%rdx", "%rcx", "%r8", "%r9", "%r10", "%r11"]
+callees = ["%rbx", "%r12", "%r13", "%r14", "%r15"]
 
 argArr :: [Int]
 argArr = [12, 13, 3, 2, 4, 5]

@@ -171,6 +171,7 @@ genExp alloc@(varMap,n,l,aasm) (ExpFnCall fnName exprs _) dest =
     lenMinusOne = (length allocs) - 1
     locs = map toLoc (take lenMinusOne allocs)
     last@(varMap',n',l',aasm') = allocs !! lenMinusOne
+
     newAasm = AFnCall fnName dest locs
   in
     (varMap', n', l', aasm' ++ [newAasm])

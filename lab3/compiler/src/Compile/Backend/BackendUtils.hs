@@ -5,8 +5,8 @@ import qualified Data.Map as Map
 import Compile.Backend.Registers
 
 genPrologueIns reg =
-  "  pushl " ++ reg ++ "\n"
+  "  pushq " ++ reg ++ "\n"
 
 genEpilogueIns reg =
-  "  popl " ++ reg ++ "\n"
+  "  popq " ++ reg ++ "\n"
 
