@@ -46,7 +46,7 @@ fnAAsmCodeGen :: FnAAsm -> String
 fnAAsmCodeGen (AAFDefn aasms fnName) =
   let
     (asms, size) = codeGen aasms fnName
-    prologue = [".globl __c0_" ++ fnName ++ "\n", "__c0_" ++ fnName ++ ":\n", "  pushq %rbp\n", "  movq %rsp, %rbp\n", genFnProlugues, "  subq $" ++ show size ++ ", %rsp\n"]
+    prologue = [".globl " ++ fnName ++ "\n", fnName ++ ":\n", "  pushq %rbp\n", "  movq %rsp, %rbp\n", genFnProlugues, "  subq $" ++ show size ++ ", %rsp\n"]
   in
     concat (prologue ++ [asms])
 

@@ -76,7 +76,7 @@ aasmToString _ (AFnCall fnName loc locs) =
   let
     size = 8 * (max 0 (length locs - 6))
   in
-    (genProlugues loc) ++ (genArgPrologue locs) ++ "  call __c0_" ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n" ++ "  addq $" ++ show size ++ ", %rsp\n" ++ (genEpilogues loc)
+    (genProlugues loc) ++ (genArgPrologue locs) ++ "  call " ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n" ++ "  addq $" ++ show size ++ ", %rsp\n" ++ (genEpilogues loc)
 
 genArgPrologue :: [ALoc] -> String
 genArgPrologue locs =
