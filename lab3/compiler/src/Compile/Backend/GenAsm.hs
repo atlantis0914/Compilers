@@ -81,7 +81,7 @@ genFnEpilogues = concatMap genEpilogueIns callees
 genProlugues :: ALoc -> String
 genProlugues loc =
   let
-    reg = alocToString loc
+    reg = alocToQString loc
     callers' = filter (\r -> reg /= r) callers
   in
     concatMap genPrologueIns callers'
@@ -89,7 +89,7 @@ genProlugues loc =
 genEpilogues :: ALoc -> String
 genEpilogues loc =
   let
-    reg = alocToString loc
+    reg = alocToQString loc
     callers' = filter (\r -> reg /= r) callers
   in
     concatMap genEpilogueIns callers'
@@ -115,6 +115,10 @@ alocByteToString (AReg i) =
   safeLookup i regByteMap "FUCK"
 alocByteToString (AMem i) =
   alocToString (AMem i)
+
+alocToQString :: ALoc -> String
+alocToQString (AReg i) =
+  safeLookup i regQMap "SHIT"
 
 alocToString :: ALoc -> String
 alocToString ASpill =

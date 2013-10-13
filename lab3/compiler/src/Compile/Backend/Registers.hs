@@ -19,7 +19,23 @@ regMap = Map.fromList [(0, "%eax"),
                       (12, "%edi"),
                       (13, "%esi")]
 
-callers = ["%rdi", "%rsi", "%rdx", "%rcx", "%r8", "%r9", "%r10", "%r11"]
+regQMap :: Map.Map Int String
+regQMap = Map.fromList [(0, "%rax"),
+                       (1, "%rbx"),
+                       (2, "%rcx"),
+                       (3, "%rdx"),
+                       (4, "%r8"),
+                       (5, "%r9"),
+                       (6, "%r10"),
+                       (7, "%r11"),
+                       (8, "%r12"),
+                       (9, "%r13"),
+                       (10, "%r14"),
+                       (11, "%r15"),
+                       (12, "%rdi"),
+                       (13, "%rsi")]
+
+callers = ["%rax", "%rdi", "%rsi", "%rdx", "%rcx", "%r8", "%r9", "%r10", "%r11"]
 callees = ["%rbx", "%r12", "%r13", "%r14", "%r15"]
 
 argArr :: [Int]

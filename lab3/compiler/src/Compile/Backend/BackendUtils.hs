@@ -9,4 +9,3 @@ genPrologueIns reg =
 
 genEpilogueIns reg =
   "  popq " ++ reg ++ "\n"
-

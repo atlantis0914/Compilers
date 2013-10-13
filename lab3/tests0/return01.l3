@@ -16,5 +16,5 @@ int main () {
   n = 100;
   x = sum(1,100);
   y = n*(n+1)/2;
-  return x-y;
+  return y;
 }
