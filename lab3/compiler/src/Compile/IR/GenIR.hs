@@ -17,8 +17,8 @@ genFIR (FnList gdecls _) =
 addArg :: Alloc -> String -> Alloc
 addArg alloc@(varMap, n, l, aasms) arg =
   let
-    aasm = if n <= 6 then [AAsm {aAssign = [ATemp n], aOp = Nop, aArgs = [ALoc $ AReg $ argArr !! n]}]
-                     else []
+    aasm = if n < 6 then [AAsm {aAssign = [ATemp n], aOp = Nop, aArgs = [ALoc $ AReg $ argArr !! n]}]
+                    else [AAsm {aAssign = [ATemp n], aOp = Nop, aArgs = [ALoc $ AArg $ n - 6]}]
     aasms' = aasms ++ aasm
     varMap' = Map.insert arg n varMap
   in
@@ -185,8 +185,8 @@ genExp alloc@(varMap,n,l,aasm) (ExpFnCall fnName exprs _) dest =
 moveArgs :: ([AAsm], Int) -> ALoc -> ([AAsm], Int)
 moveArgs (aasms, n) arg =
   let
-    aasm = if n <= 6 then [AAsm {aAssign = [AReg $ argArr !! n], aOp = Nop, aArgs = [ALoc arg]}]
-                     else []
+    aasm = if n < 6 then [AAsm {aAssign = [AReg $ argArr !! n], aOp = Nop, aArgs = [ALoc arg]}]
+                    else []
   in
     (aasms ++ aasm, n + 1)
 

@@ -27,6 +27,7 @@ data AVal = ALoc ALoc
 data ALoc = AReg Int
           | ATemp Int
           | ASpill
+          | AArg Int
           | AMem Int deriving (Show, Eq)
 
 data ACtrl = ARet AVal

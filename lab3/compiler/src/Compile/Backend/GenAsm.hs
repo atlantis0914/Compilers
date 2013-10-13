@@ -70,10 +70,28 @@ aasmToString (fnName, _) (ACtrl (AIf aval label)) =
   "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz " ++ fnName ++ "label" ++ (show label) ++ "\n"
 
 aasmToString (_, size) (ACtrl (ARet _)) =
-  concat [genFnEpilogues, "  popq %rbp\n", "  addq $" ++ show size ++ ", %rsp\n", "  ret\n"]
+  concat ["  addq $" ++ show size ++ ", %rsp\n", genFnEpilogues, "  popq %rbp\n", "  ret\n"]
 
 aasmToString _ (AFnCall fnName loc locs) =
-  (genProlugues loc) ++ "  call __c0_" ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n" ++ (genEpilogues loc)
+  let
+    size = 8 * (max 0 (length locs - 6))
+  in
+    (genProlugues loc) ++ (genArgPrologue locs) ++ "  call __c0_" ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n" ++ "  addq $" ++ show size ++ ", %rsp\n" ++ (genEpilogues loc)
+
+genArgPrologue :: [ALoc] -> String
+genArgPrologue locs =
+  let
+    (prolog, _) = foldr genArgPrologue' ("", length locs) locs
+  in
+    prolog
+
+genArgPrologue' :: ALoc -> (String, Int) -> (String, Int)
+genArgPrologue' loc (prolog, i) =
+  let
+    newPro = if i > 6 then "  pushq " ++ (alocToQString loc) ++ "\n"
+                      else ""
+  in
+    (prolog ++ newPro, i-1)
 
 genFnEpilogues :: String
 genFnEpilogues = concatMap genEpilogueIns (reverse callees)
@@ -82,7 +100,7 @@ genProlugues :: ALoc -> String
 genProlugues loc =
   let
     reg = alocToQString loc
-    callers' = filter (\r -> reg /= r) (reverse callers)
+    callers' = filter (\r -> reg /= r) callers
   in
     concatMap genPrologueIns callers'
 
@@ -90,7 +108,7 @@ genEpilogues :: ALoc -> String
 genEpilogues loc =
   let
     reg = alocToQString loc
-    callers' = filter (\r -> reg /= r) callers
+    callers' = filter (\r -> reg /= r) (reverse callers)
   in
     concatMap genEpilogueIns callers'
 
@@ -125,11 +143,13 @@ alocToQString (AMem i) =
   alocToString (AMem i)
 
 alocToString :: ALoc -> String
+alocToString (AArg i) =
+  (show ((i + 2) * 8)) ++ "(%rbp)"
 alocToString ASpill =
   safeLookup spill_reg_num regMap "SPILL"
 alocToString (AReg i) =
   safeLookup i regMap "SHIT"
-alocToString (AMem i) =  "-" ++ (show (i * 4)) ++ "(%rbp)"
+alocToString (AMem i) =  (show ((i - 1) * 8)) ++ "(%rsp)"
 alocToString (ATemp i) =
   error "There's still an temp!"
 

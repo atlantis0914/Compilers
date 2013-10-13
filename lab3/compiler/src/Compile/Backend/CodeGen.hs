@@ -46,7 +46,7 @@ fnAAsmCodeGen :: FnAAsm -> String
 fnAAsmCodeGen (AAFDefn aasms fnName) =
   let
     (asms, size) = codeGen aasms fnName
-    prologue = [".globl __c0_" ++ fnName ++ "\n", "__c0_" ++ fnName ++ ":\n", "  subq $" ++ show size ++ ", %rsp\n", "  pushq %rbp\n", "  movq %rsp, %rbp\n", genFnProlugues]
+    prologue = [".globl __c0_" ++ fnName ++ "\n", "__c0_" ++ fnName ++ ":\n", "  pushq %rbp\n", "  movq %rsp, %rbp\n", genFnProlugues, "  subq $" ++ show size ++ ", %rsp\n"]
   in
     concat (prologue ++ [asms])
 
@@ -68,7 +68,7 @@ codeGen aasmList fnName = let
       then (let
              coloring = naiveColor allLocs
              m = maxColor coloring
-             m' = (max 0 (m - max_color_num)) * 4
+             m' = (max 0 (m - max_color_num)) * 8
              coloredAasmList = colorTemps twoOpAasmList coloring
              asm = genAsm coloredAasmList (fnName, m')
            in
@@ -79,7 +79,7 @@ codeGen aasmList fnName = let
               simp_ordering = maximumCardinalitySearch interference_graph -- now a [Vertex ALoc]
               coloring = greedyColor interference_graph simp_ordering
               m = maxColor coloring
-              m' = (max 0 (m - max_color_num)) * 4
+              m' = (max 0 (m - max_color_num)) * 8
               coloredAasmList = colorTemps twoOpAasmList coloring
               asm = genAsm coloredAasmList (fnName, m')
             in
