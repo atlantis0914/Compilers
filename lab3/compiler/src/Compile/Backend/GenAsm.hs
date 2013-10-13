@@ -12,7 +12,7 @@ genAsm aasms =
     prelude = [".globl __c0_main\n", "__c0_main:\n"]
     epilogue = ["  ret\n", "error:\n", "movw $1, %ax\n", "movw $0, %bx\n", "divw %bx\n"]
   in
-    prelude ++ (map aasmToString aasms) ++ epilogue
+    map aasmToString aasms
 
 cmpAsm :: ALoc -> AVal -> String
 cmpAsm loc val =

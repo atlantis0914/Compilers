@@ -29,9 +29,26 @@ debugFlag = False
 
 maxTempsBeforeSpilling = 600
 
+fnListCodeGen :: FnList -> String
+fnListCodeGen fnList =
+  let
+    fnAasms = genFIR fnList
+  in
+    concatMap fnAAsmCodeGen fnAasms
+
+fnAAsmCodeGen :: FnAAsm -> String
+fnAAsmCodeGen (AAFDefn aasms fnName) =
+  let
+    prelude = ["_c0_" ++ fnName ++ ":"]
+    epilogue = ["  ret\n"]
+  in
+    concat (prelude ++ [codeGen aasms] ++ epilogue)
+
+fnAAsmCodeGen (AAFDecl fnName) =
+  ".globl _c0_" ++ fnName
+
 -- Generates the AAsm from an AST
-codeGen ast@(AST (Block stmts) _) = let
-    aasmList = genIR ast
+codeGen aasmList = let
     twoOpAasmList =  genTwoOperand aasmList
     allLocs = getLocs aasmList
   in
@@ -52,9 +69,9 @@ codeGen ast@(AST (Block stmts) _) = let
               spilledAasmList = spill coloredAasmList
               asm = genAsm spilledAasmList
             in
-              if (debugFlag)
-                then genDebug stmts aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm
-                else concat asm)
+--              if (debugFlag)
+--                then genDebug stmts aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm
+              concat asm)
 
 genDebug stmts aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAasm asm =
   let
