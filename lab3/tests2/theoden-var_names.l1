@@ -1,0 +1,10 @@
+//test error
+
+// make sure that variable names can't start with a number
+
+int main()
+{
+  int 1a2a3a4a5a = 33;
+
+  return 1a2a3a4a5a;
+}

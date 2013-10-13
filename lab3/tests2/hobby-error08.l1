@@ -1,0 +1,14 @@
+//test error
+
+// can't redeclare a var
+
+int main() {
+    int x;
+    int y;
+    int x;
+
+    x = 3;
+    y = 6;
+
+    return y - x;
+}

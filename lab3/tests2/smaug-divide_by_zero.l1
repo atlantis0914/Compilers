@@ -1,0 +1,8 @@
+//test exception
+// Attempts to divide a number by 0
+
+int main()
+{
+  return 1 / 0;
+}
+

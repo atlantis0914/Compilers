@@ -1,0 +1,15 @@
+//test error
+//multiple declarations of the same identifier may be present in the body of
+//main iff no two of them are visible within the same block. 
+int main()
+{
+    int a = 411;
+    {
+        int a = 0;
+    }
+
+    {
+        int a = 1;
+    }
+    return a;
+}

@@ -1,0 +1,63 @@
+//test return 3
+
+// binary search for integer square root
+int isqrt(int i)
+{
+  int lo = 0;
+  int hi = i+1;
+  int mid;
+
+  while(hi - lo > 1)
+    {
+      mid = lo + (hi-lo)/2;
+
+      if(mid*mid <= i)
+	lo = mid;
+      else
+	hi = mid;
+    }
+  
+  return lo;
+}
+
+bool prime(int p);
+int fcert(int p);
+
+// primality test
+bool prime(int p)
+{
+  return fcert(p) <= 0;
+}
+
+// searches for a witness factor in O(sqrt(n * W(div)))
+int fcert(int p)
+{
+  int r = isqrt(p);
+
+  for(int f = 2; f <= r; f++)
+    {
+      int k = p / f;
+      if(k*f == p)
+	return f;
+    }
+
+  return -1;
+}
+
+int main()
+{
+  if(prime(0)  &&
+     prime(1)  &&
+     prime(2)  &&
+     prime(3)  &&
+     !prime(4) &&
+     prime(5)  &&
+     !prime(6) &&
+     prime(7)  &&
+     !prime(8) &&
+     !prime(9))
+    return fcert(7831749);
+  else
+    // note, this works poorly, so don't hit it
+    return fcert(901234673);
+}

@@ -1,0 +1,18 @@
+//test return -41
+
+int main()
+{
+    int x;
+    int y;
+
+    x = 4;
+    y = 9;
+
+    while(y >= 0)
+    {
+        x = x - y;
+        y--;
+    }
+
+    return -41;
+}

@@ -1,0 +1,17 @@
+//test return 0
+
+/*
+ * My test program
+ * Nothing should go wrong
+ */
+int main () {
+  int x = 3 + 7;
+  int y;
+  int z;
+  y = 3;
+  y += 3;
+  x -= y / 2;
+  y = 8 + (2 % 3 + (4 / 1));
+  // comment for fun
+  return 0;
+}

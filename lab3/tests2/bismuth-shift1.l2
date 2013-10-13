@@ -1,0 +1,14 @@
+//test exception 8
+//tests bitwise shifting exceptions
+int main()
+{
+	int x = 0;
+    int y = 0;
+    for (; x < 400; x++)
+	{
+		y = 40 << x;
+		y |= 40 >> x;
+	}
+
+	return y;
+}

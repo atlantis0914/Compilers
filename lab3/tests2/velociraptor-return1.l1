@@ -1,0 +1,21 @@
+//test return 7
+// testing the assignment operators
+
+int main() {
+  int x;
+  int y;
+  int z;
+
+  x = 2;
+  x *= 2;
+  x += 3 + x + 5;
+  x /= 2;
+
+  y = x;
+  y -= 1;
+
+  z = 0;
+  z -= y;
+
+  return -z;
+}

@@ -1,0 +1,12 @@
+//test return -559039283
+//crazy precedence stuff
+
+int main() {
+    int i = 13;
+    int j = 3;
+    int k = 5;
+    int n = 48;
+    int m = 4;
+
+    return i * j + k & ~0xFFFFFFFF >> 1 << 3 | 7 % n / 2 * 6 - 44 * -(12) ^ 0xDEADBEEF;
+}

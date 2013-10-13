@@ -1,0 +1,9 @@
+//test exception
+// division by 0 in variable
+int main()
+{
+  int x;
+  x = 0;
+
+  return 1/x;
+}

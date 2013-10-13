@@ -1,0 +1,23 @@
+//test error
+int main( )
+{
+    int string = 14;
+    int struct = string;
+    int typedef = struct + string;
+    int if = struct * struct * struct;
+    int else = 9;
+    int while = 14;
+    int for = if + string;
+    int continue = 99;
+    int break = -2;
+    int assert = 4 / break;
+    int true = 18;
+    int false = true;
+    int NULL = 18;
+    int alloc = NULL;
+    int alloc_array = 14 * 8;
+    int bool = string;
+    int void = 19;
+    int char = continue;
+    return char;
+}

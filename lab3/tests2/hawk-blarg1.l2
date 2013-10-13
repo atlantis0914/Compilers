@@ -1,0 +1,19 @@
+//test return 1
+int main ()
+{
+	int x = 0;
+	int i = 1;
+	int j = 100;
+	for (; i < j; i++)
+	{
+		x += i;
+	}
+	while (true)
+	{
+		if (x == (j*j-j)/2)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}

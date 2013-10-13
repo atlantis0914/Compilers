@@ -1,0 +1,10 @@
+//test return 2
+// basic operational sanity
+
+int main() {
+    int i = 0;
+    int j = 2;
+    int k = j & i | j ^ i << 2 >> 5;
+    bool l = !(false == (j + i == 3 % 4));
+    return k;
+}

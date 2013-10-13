@@ -1,0 +1,14 @@
+//test return 6
+// complicated math
+
+int main() {
+    int x;
+    int y; 
+    int z;
+
+    x = 1 * (6 / 2 - 4); // should be -1
+    y = 1 * 2 * 3 * 4 * 5 * 6; // should be 720
+    z = 2 * 2 * 2; // should be 8
+    
+    return (y % (x + z)); // 720 % 7 = 6
+}

@@ -1,0 +1,11 @@
+//test exception
+//divide by zero
+
+int main()
+{
+    int x = 5;
+    int y = 7;
+    x -= x;
+
+    return y/x;
+}

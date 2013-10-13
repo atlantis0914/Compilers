@@ -1,0 +1,10 @@
+//test return -1 
+int main()
+{
+    int x = 1;
+    x = x<<31; // 
+    x = x>>31; // 4
+    
+    return x;
+}
+

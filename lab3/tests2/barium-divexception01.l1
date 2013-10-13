@@ -1,0 +1,7 @@
+//test exception
+// Numerical constant edge cases
+
+int main()
+{
+  return 2147483648 % (3/-2);
+}

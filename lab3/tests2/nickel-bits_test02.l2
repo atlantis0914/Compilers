@@ -1,0 +1,16 @@
+//test return 2048
+// bitwise test. power of two check.
+int main()
+{
+  int count = 1;
+  int i = 0;
+  while (i <= 1024)
+  {
+	if ((~((i == 0) ? 0 : 1)+1&(~(i>>31))&(i & (i+~0))) == 0)
+	{
+	   count += i;
+	}
+	i++;
+  }
+  return count;
+}

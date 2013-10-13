@@ -1,0 +1,5 @@
+//test return 1
+// This program tests returning a constant instead of a variable
+int main() {
+    return 1;
+}

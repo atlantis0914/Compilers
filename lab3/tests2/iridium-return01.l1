@@ -1,0 +1,7 @@
+//test return 0
+// return constant
+
+int main()
+{
+  return 0;
+}

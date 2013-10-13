@@ -1,0 +1,15 @@
+//test error
+/*
+ * Redefinition of a variable.
+ */
+int main() 
+{
+	int a;
+	a = 1;
+	while (true)
+	{
+		int a;
+		a = 3;
+	}
+	return a;
+}

@@ -1,0 +1,14 @@
+//test error
+// error by use of variable before declaration
+int main()
+{
+  int a;
+  int b;
+
+  a = 0;
+  b = a+1;
+  c = 2*b;
+  
+  int c;
+  return c+1;
+}

@@ -1,0 +1,19 @@
+//test exception 8
+// division error due to overflow
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+  int e;
+  int tommy;
+  
+  a = 4;
+  b = 3;
+  c = a - b;
+  d = b - a;
+  e = d / c;
+  tommy = -2147483648;
+  return tommy%e;
+}

@@ -1,0 +1,8 @@
+//test exception 8
+int main()
+{
+    
+    int y = 1;
+    y = y<<32;
+    return y;
+}

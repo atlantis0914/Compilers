@@ -1,0 +1,8 @@
+//test return 42
+// tests empty loops
+int main()
+{
+    for (int i = 0; i < 10; i++) {}
+    while (0 == 1) {}
+    return 42;
+}

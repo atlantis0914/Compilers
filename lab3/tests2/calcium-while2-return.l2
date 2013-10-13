@@ -1,0 +1,6 @@
+//test return 0
+int main() {
+  bool x = true;
+  while(x)return 0;
+  return -1;
+}

@@ -1,0 +1,19 @@
+//test return 32
+
+int main() {
+    int x = 15;
+    bool y = true;
+
+    y = !!!!!!y;
+
+    while (y) {
+        if (y) {
+            x = 32;
+        } else {
+            y != !!!!!y;
+        }
+        y = !y;
+    }
+
+    return x;
+}

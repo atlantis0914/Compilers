@@ -1,0 +1,33 @@
+//test exception 14
+/* Order of evaluation */
+
+bool a(bool c, int b)
+{
+    if (c)
+        return b < 0;
+    return b > 0;
+}
+
+int d(int x)
+{
+    return 3 / x;
+}
+
+int e(int y)
+{
+    while (y == 0) {
+    }
+    int x = (y ^ ((y == 0) ? 0 : e(y >> 1)));
+    if (y > 14)
+        return e(15);
+    return x;
+}
+
+int main()
+{
+    return a(e(15) == 0, d(0)) ? 1 : 0;
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

@@ -1,0 +1,26 @@
+//test return 1
+
+int main() {
+  int n = 4;
+  while (n < 0xfff) {
+    if (n % 2 == 0) {
+      bool x = false;
+      int l = 2;
+      for (; !x && l < n; l++) {
+        int r = n - l;
+        bool y = true;
+        for (int i = 2; i < l; i++) {
+          if ((l/i)*i == l) y = false;
+        }
+        bool z = true;
+        for (int i = 2; i < n-l; i++) {
+          if (((n-l)/i)*i == n-l) z = false;
+        }
+        if (y && z) x = true;
+      }
+      if (l == n) return 0;
+    }
+    n++;
+  }
+  return 1;
+}

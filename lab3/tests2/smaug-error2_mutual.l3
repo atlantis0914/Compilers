@@ -1,0 +1,19 @@
+//test error
+
+int foo(int x)
+{
+  if (x == 0)
+    return 0;
+  else
+    return bar(x);
+}
+
+int bar(int y)
+{
+  return foo(y - 1);
+}
+
+int main()
+{
+  return foo(100);
+}

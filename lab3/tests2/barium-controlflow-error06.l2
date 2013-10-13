@@ -1,0 +1,13 @@
+//test error
+
+int main()
+{
+  if(false)
+  {
+    // Nothing here!
+  }
+  else
+  {
+    return 1;
+  }
+}

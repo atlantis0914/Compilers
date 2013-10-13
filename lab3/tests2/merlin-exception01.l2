@@ -1,0 +1,13 @@
+//test exception
+//div by 0 also tests  
+int main()
+{
+  int a = 0;
+  for(a; true ; a += 2)
+    for(int b = 0; b < 0xbabecaf; b++)
+      for(int c = 0; c < 0xbeefee; c++)
+          int x = ~-~-~-~- 0xdeadbeef ^ (~b ^ -1 | c)  / a << 31 >> 31;
+    
+
+  return a;
+}

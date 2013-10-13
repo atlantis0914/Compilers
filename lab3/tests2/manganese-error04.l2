@@ -1,0 +1,10 @@
+//test error
+// uninitialized variables in declarations
+
+int main()
+{
+    int a = 4;
+    int b = b + a*5;
+
+    return b;
+}

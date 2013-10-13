@@ -1,0 +1,10 @@
+//test return 0
+int main()
+{
+    int i =0;
+    i++;
+    i= i<<2; //4
+    i ^=i; // 0
+    return i;
+}
+

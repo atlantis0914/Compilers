@@ -1,0 +1,9 @@
+//test error
+// Test compiler error for reserved keywords
+// keyword: if
+int main() {
+    int if;
+
+    if=1;
+    return if;
+}

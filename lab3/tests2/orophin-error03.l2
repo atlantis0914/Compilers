@@ -1,0 +1,14 @@
+//test error
+// int and bool cannot be cast to each other
+int main() {
+	int zero = 0;
+	int one = 1;
+	int two = one + 1;
+	int retval;
+	if (zero) {
+		retval = one;
+	} else {
+		retval = two;
+	}
+	return retval;
+}

@@ -1,0 +1,17 @@
+//test return 1
+// dangling else check
+
+int main ()
+{
+  int x = 0;
+  int y = 0;
+  int z = 0;
+
+  if(x == 0) 
+    if(y <= 5)
+      z = 1; 
+    else
+      z = 2; 
+
+  return z;
+}

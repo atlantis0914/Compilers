@@ -1,0 +1,12 @@
+//test exception 8
+//test function 
+
+bool boole ();
+
+int main () {
+  return boole() ? boole() ? boole() ? 5/5 : 5/2 : 5/3 : 5/0;
+}
+
+bool boole () {
+  return 5 != 5 && 5/0 == 0;
+}

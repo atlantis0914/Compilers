@@ -1,0 +1,14 @@
+//test exception
+
+int main() {
+    int x;
+    int y = 0;
+
+    for (x = 0; x < 20; x ++)
+    {
+        int c = 10 - x;
+        y += x/c;
+    }
+
+    return y;
+}

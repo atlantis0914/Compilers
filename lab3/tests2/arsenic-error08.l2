@@ -1,0 +1,7 @@
+//test error
+int main()
+{
+    int i = 0xffffffff1;
+    int y = 0x4;
+    return (i + y);
+}

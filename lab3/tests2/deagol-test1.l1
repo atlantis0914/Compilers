@@ -1,0 +1,8 @@
+//test error
+// integer constant too large
+int main() {
+  int i;
+  i = 10000000000000000000000;
+  return i;
+}
+

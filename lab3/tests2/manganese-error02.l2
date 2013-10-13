@@ -1,0 +1,10 @@
+//test error
+// conditional should be bool type
+int main()
+{
+    int x = 0;
+    if (x) {
+        return 0;
+    }
+    return 1;
+}

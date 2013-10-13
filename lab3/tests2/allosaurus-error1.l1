@@ -1,0 +1,8 @@
+//test error
+
+int main(){
+int 0abc; // this isn't a valid identifier name since it doesnt start with 0
+int x;
+0abc = 3; // invalid
+x = 0abc; // invalid
+}

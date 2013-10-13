@@ -1,0 +1,8 @@
+//test exception
+//Tests division by zero in "dead" code
+
+int main() {
+	int x = 42;
+	int y = 1 / 0;
+	return x;
+}

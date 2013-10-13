@@ -1,0 +1,11 @@
+//test exception 8
+// simple shifting error.
+int main()
+{
+  int i = 1;
+  int j = 0;
+  j <<= 12;
+  j >>= 12;
+  j <<= 32;
+  return 1;
+}

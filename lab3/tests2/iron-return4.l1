@@ -1,0 +1,10 @@
+//test return 255
+
+int main()
+{
+    int x = 0xffff;
+    int z = 0xff00;
+    int y = x - z;
+
+    return y;
+}

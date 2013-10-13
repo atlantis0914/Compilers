@@ -1,0 +1,30 @@
+//test exception 8
+
+/**
+ * /* /*@ Divide 127 by various values; should end in a SIGFPE */ */
+ */
+int main()
+{
+    int a;
+    a = 128;
+
+    int b = 64;
+
+    int c;
+    int d;
+    c = 5;
+    d = 2;
+
+    int x = (a * b) - (c + d);
+    int y;
+    y = (a * (b - c + d));
+
+    x += c + d;
+    x = x / b;
+    x -= a;
+
+    y = y / (b - c + d);
+    int z = y / x;   // I think we SIGFPE here. maybe.
+
+    return z;
+}

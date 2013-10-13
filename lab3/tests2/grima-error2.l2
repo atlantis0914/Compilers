@@ -1,0 +1,26 @@
+//test error
+// uninitialized variable
+
+int main()
+{
+   int x;
+   
+   for( int b = 3; b < 10; int y = 0)
+   {
+       if( b > 3 )
+       {
+           x = 0;
+       }
+
+       b += 2;
+
+       int a = 0;
+       while( a < 10)
+       {
+           x++;
+           a++;
+       }
+   }
+
+   return x;
+}

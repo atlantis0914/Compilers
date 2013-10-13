@@ -1,0 +1,33 @@
+//test return 230
+int f(int n)
+{
+  return n * 6 + 1;
+}
+
+int b();
+int c();
+
+int a()
+{
+  b();
+  b();
+  return c();
+}
+
+int b()
+{
+  int x = c();
+  int y = c();
+  return x + y;
+}
+
+int c()
+{
+  return f(f(3));
+}
+
+int main()
+{
+  a();
+  return b();
+}

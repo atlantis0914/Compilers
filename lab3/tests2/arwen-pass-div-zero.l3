@@ -1,0 +1,18 @@
+//test exception 8
+//Tests that when a function is called, it evaluates all of its parameters
+// before running its body
+
+int use_second(int x, int y);
+
+int use_second(int x, int y) {
+    return y;
+}
+
+int recurse_forever(int x);
+int recurse_forever(int x) {
+    return recurse_forever(x+1);
+}
+
+int main() {
+    return (use_second(5/0, recurse_forever(0)));
+}

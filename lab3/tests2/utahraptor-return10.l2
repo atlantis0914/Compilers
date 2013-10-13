@@ -1,0 +1,52 @@
+//test return 1123123
+int main()
+{
+    int x0 = 0;
+    int x1 = x0 + 1;
+    int x2 = x0 + x1 + 1;
+    int x3 = x0 + x1 + x2 + 1;
+    int x4 = x0 + x1 + x2 + x3 + 1;
+    int x5 = x0 + x1 + x2 + x3 + x4 + 1;
+    int x6 = x0 + x1 + x2 + x3 + x4 + x5 + 1;
+    int x7 = x0 + x1 + x2 + x3 + x4 + x5 + x6 + 1;
+    int x8 = x0 + x1 + x2 + x3 + x4 + x5 + x6 + x7 + 1;
+    int x9 = x0 + x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + 1;
+    int i = 0; 
+
+    for (; i < ((i < 5) ? (i + 5) : (i < 10 ? (i + 10) : (i < 15 ? (i + 15) : (i < 20 ? (i + 20) : (i < 25 ? (i + 25) : (i < 30 ? (i + 30) : (i < 35 ? (i + 35) : (i < 40 ? (i + 40) : (i < 45 ? (i + 45) : 50))))))))); i++)
+    {
+        int y1;
+        int y2;
+        int y3;
+        int y4;
+        int y5;
+        int y6;
+        int y7;
+        int y8;
+        int y9;
+        int j = (1 << 31) - 1;
+        int k = 0x7fffffff - 1;
+        if (j == k)
+            return -1;
+
+        while (j < 10)
+        {
+            int z0;
+            int z1;
+            int z2;
+            int z3;
+            int z4;
+            int z5;
+            int z6;
+            int z7;
+            int z8;
+            int z9;
+
+            j++;
+        }
+        if (j < 10)
+            return -(-(-1231));
+    }
+
+    return 1123123;
+}

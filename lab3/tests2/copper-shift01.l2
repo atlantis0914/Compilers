@@ -1,0 +1,9 @@
+//test exception
+
+int main() 
+{
+    int a = 31;
+    int b = 9798374;
+
+    return b << (31 + 1); 
+}

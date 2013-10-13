@@ -1,0 +1,5 @@
+//test error
+// Loops never return! 
+int main() {
+  while (true) return 0;
+}

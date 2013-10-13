@@ -1,0 +1,11 @@
+//test error
+// line 9 : ++ should not be parsed 
+int main()
+{
+  int a;
+  int b;
+
+  a = 1;
+  b = a++1;
+  return b;
+}

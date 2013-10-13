@@ -1,0 +1,10 @@
+//test error
+
+/* use reserved words as valid token in place not explicitly 
+   mentioned as a terminal in the grammar  */
+int main()
+{
+  int int;
+  int = 3;
+  return int;
+}

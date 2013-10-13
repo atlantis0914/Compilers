@@ -1,0 +1,10 @@
+//test return 42
+// test modulo and division in temporary registers only
+int main(){
+    // all in temporary registers
+    // 42%43 => 42
+    // - 43 / 43 => - 1
+    // - -42 % 41 => - -1 => + 1
+    // 42 - 1 + 1 => 42
+    return 42 % 43 - 43 / 43 - -42 % 41;
+}

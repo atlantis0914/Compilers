@@ -1,0 +1,19 @@
+//test return 330
+
+int main ()
+{
+	int n = 11;
+	int r = 4;
+
+	//n choose r
+
+	int result = 1;
+	for(int i = n; i > n - r; i--) {
+		result *= i;
+	}
+	for(int i = 1; i <= r; i++) {
+		result /= i;
+	}
+
+	return result;
+}

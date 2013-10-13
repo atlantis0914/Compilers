@@ -1,0 +1,13 @@
+//test exception 8
+
+int chow(int a, int b, int c, int d){
+  return (c - b) / (d - a - 1);
+}
+
+int main(){
+  int m = 109;
+  int a = 97;
+  int i = 105;
+  int n = 110;
+  return chow(m,a,i,n);
+}

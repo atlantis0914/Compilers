@@ -1,0 +1,28 @@
+//test return 8
+// Yo dawg, I heard you like ASTs, so I put an
+// AST in your AST you can evaluate while you evaluate.
+
+int add(int x, int y) {
+	return x + y;
+}
+
+int mul(int x, int y) {
+	return x * y;
+}
+
+int sub(int x, int y) {
+	return x - y;
+}
+
+int div(int x, int y) {
+	return x / y;
+}
+
+int id(int x) {
+	return x;
+}
+
+int main() {
+	return add(sub(id(3), id(1)), mul(add(div(id(4), id(4)), id(2)), div(id(4), add(id(1), id(1)))));
+					 
+}

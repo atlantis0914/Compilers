@@ -1,0 +1,15 @@
+//test return 0
+// Tests that functions and params are in different namespaces
+
+typedef int foo;
+
+foo bar(foo bar);
+
+foo main() {
+    return bar(0);
+}
+
+foo bar(foo bar) {
+    return bar;
+}
+

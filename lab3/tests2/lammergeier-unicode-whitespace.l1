@@ -1,0 +1,5 @@
+//test error
+int main() {
+    int x = 0; // Hm, why doesn't this compile?
+    return x;
+}

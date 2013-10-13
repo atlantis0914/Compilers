@@ -1,0 +1,13 @@
+//test return 1
+/*
+ * Test proper "else" clause selection.
+ */
+int main() {
+	int a = 1;
+
+	if (a == 1)
+	if (a == 2){}
+	else
+		return 1;
+	return 2;
+}

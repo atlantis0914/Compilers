@@ -1,0 +1,8 @@
+//test error
+// reserved keyword: NULL
+
+int main()
+{
+    int NULL;
+    return NULL;
+}

@@ -1,0 +1,20 @@
+//test error
+
+int main()
+{
+  int x;
+  int y;
+  int i;
+  int j;
+
+  x = 3;
+  y = 4;
+  i = 0;
+  
+  for(; i < (1 << 31); i++)
+  {
+    j = 411;
+  }
+
+  return j;
+}

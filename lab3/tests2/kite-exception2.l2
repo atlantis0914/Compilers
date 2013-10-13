@@ -1,0 +1,9 @@
+//test exception
+
+int main()
+{
+  bool t = true;
+  if(t)
+    return 0/0;
+  return 1;
+}

@@ -1,0 +1,9 @@
+//test exception 
+
+int main() {
+  return 3 / (true ? 0 : 3);
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

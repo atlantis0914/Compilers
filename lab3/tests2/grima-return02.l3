@@ -1,0 +1,8 @@
+//test return 3
+/* Function shadowing variables */
+
+int main () {
+  int main;
+  main = 3;
+  return main;
+}

@@ -1,0 +1,7 @@
+//test error
+// syntax error due to invalid '?' character used
+int main() {
+    int a = 6; ?
+    int b = 7;
+    return b;
+}

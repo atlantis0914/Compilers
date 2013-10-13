@@ -1,0 +1,26 @@
+//test return 51
+// operator precedence
+
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+  int e;
+  int f;
+  int g;
+  int h;
+  a = 8;
+  b = 7;
+  c = 6;
+  d = 5;
+  e = 4;
+  f = 3;
+  g = 2;
+  h = 1;
+  //     8 + 7 * 6 + 5 / 4 - 3 % 2 - -1
+  //     8 +   42  +   1   -   1   - -1
+  //       50      +   1   -   1   +  1
+  return a + b * c + d / e - f % g - -h;
+}

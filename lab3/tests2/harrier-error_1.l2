@@ -1,0 +1,9 @@
+//test error
+
+int main()
+{
+    bool meowmixBool = false;
+    if (meowmixBool = 3)
+        return false;
+    return meowmixBool;
+}

@@ -1,0 +1,10 @@
+//test error
+//while loop without bool
+
+int main() {
+  int a = 10;
+  while (5){
+    a--;
+  }
+  return a;
+}

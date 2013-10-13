@@ -1,0 +1,14 @@
+//test exception
+// /= overflow
+
+int main()
+{
+  int TMIN;
+  int x;
+
+  TMIN = -2147483648;
+  x = TMIN;
+  x /= -1;
+
+  return x;
+}

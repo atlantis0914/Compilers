@@ -1,0 +1,36 @@
+//test return 20
+int main() {
+  int x = 10;
+
+  if(x < 11) {
+	  if(x < 11) {
+		  if(x < 11) {
+			  if(x < 11) {
+				  if(x < 11) {
+					  if(x < 11) {
+						  if(x < 11) {
+							  if(x < 11) {
+								  if(x < 11) {
+									  if(x < 11) {
+										  if(x < 11) {
+											  if(x < 11) {
+												  if(x < 11) {
+													  if(x < 10) {
+														  return 5;
+													  }
+												  }
+											  }
+										  }
+									  }
+								  }
+							  }
+						  }
+					  }
+				  }
+			  }
+		  }
+	  }
+  }
+
+  return 20;
+}

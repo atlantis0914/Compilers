@@ -1,0 +1,9 @@
+//test return 160
+// test lvalue
+int main()
+{
+  int a;
+
+  (a) = 0x0a0;
+  return a;
+}

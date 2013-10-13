@@ -1,0 +1,15 @@
+//test return 45
+int
+main()
+{
+    int x = 1;
+    int y = 2;
+    int z = 3;
+    int a = 4;
+    int b = 5;
+    int c = 6;
+    int d = a + b + c + x + y + z;
+    d += 7 + 8;
+    d += 1 - -8;
+    return - - - - - -d;
+}

@@ -1,0 +1,7 @@
+//test exception 8
+// Division result overflow
+int main() {
+	int TMIN = -2147483648;
+	int minus_one = -1;
+	return TMIN / minus_one;
+}

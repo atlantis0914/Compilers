@@ -1,0 +1,20 @@
+//test error
+
+// need to check all return branches
+
+int main() {
+
+    int a = 4;
+
+    if (a == 4) {
+       return 3;
+    } else {
+       if (a == 3) {
+          return 2;
+       } else {
+          // no return holmes
+          a = 3;
+       }
+    }
+
+}

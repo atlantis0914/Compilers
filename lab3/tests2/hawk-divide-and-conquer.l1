@@ -1,0 +1,9 @@
+//test exception 8
+// make sure that side-effectful divisions aren't ignored
+int main()
+{
+    int x = 0;
+    int y = 5;
+    x = y / x;
+	return y;
+}

@@ -1,0 +1,28 @@
+//test return 114229536
+// Computes the sum of values in the sequence a(n) = 2^(a(n-1)) mod n
+
+int main () {
+  int x = 22000;
+  int i;
+  int j;
+  int k;
+  int l;
+  int last = 0;
+  int sum = 0;
+         
+  for (i = 1; i <= x; i++) {
+    if (last == 0) {
+      k = 1;
+    } else {
+      l = 1;
+      for (j = 0; j < last; j++) {
+        l = (l*2)%i;
+      }
+      k = l;
+    }
+    k %= i;
+    last = k;
+    sum += k;
+  }
+  return sum;
+}

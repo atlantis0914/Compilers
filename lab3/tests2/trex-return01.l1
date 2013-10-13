@@ -1,0 +1,19 @@
+//test return 36
+
+int main()
+{
+   int a;
+   int b;
+   int c;
+   int d;
+
+   a = 1;
+   b = 2;
+   c = 3;
+   
+   d = (a + b) * c;
+   c += a;
+   c *= d;
+   a += c;
+   return (a - (b / 2));
+}

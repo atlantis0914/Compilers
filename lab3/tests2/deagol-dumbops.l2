@@ -1,0 +1,4 @@
+//test return 12
+int main() {
+  return (563 << 2) & 0xF;
+}

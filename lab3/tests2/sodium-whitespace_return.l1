@@ -1,0 +1,9 @@
+//test return 42
+
+int main() {
+	int a =-10;
+  int b =-2;
+  
+  int c = 2 * a * b;
+  return c - b;
+}

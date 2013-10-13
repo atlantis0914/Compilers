@@ -1,0 +1,16 @@
+//test error
+
+int main ()
+{
+	int i;
+	i = 0;
+
+	
+	while( i < 100) { 
+		i++;
+	}
+
+	if ( i == 100 ) return (if ());
+	
+	return 0;
+}

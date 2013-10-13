@@ -1,0 +1,6 @@
+//test error
+// tests not having a main fn
+int 1main()
+{
+  return 0;
+}

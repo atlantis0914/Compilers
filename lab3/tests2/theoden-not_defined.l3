@@ -1,0 +1,12 @@
+//test error
+
+int f(int x, int y);
+
+int main(){
+  int x = 36;
+  int y = 7;
+  int z = f(x,y);
+  return 2*z + x;
+}
+
+int f(int x, int y);

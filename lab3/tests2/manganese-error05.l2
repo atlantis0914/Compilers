@@ -1,0 +1,17 @@
+//test error
+// tests shadowing of variables
+
+int main()
+{
+    int light = 1;
+    int dark = 2;
+    int good = 3;
+    int evil = 4;
+    if(evil > good) {
+	for(int evil = 0; evil < good; evil++) {
+	    good -= dark;
+	    evil += light;
+	}
+    }
+    return evil;
+}

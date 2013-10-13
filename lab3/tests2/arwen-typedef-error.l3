@@ -1,0 +1,23 @@
+//test error
+// Tests that we do not define a typedef name more than once for transparent
+// typedef declarations
+
+typedef int integer;
+typedef bool integer;
+
+integer add(integer n1, integer n2) {
+    return n1 + n2;
+}
+
+int main() {
+    int x = 10;
+    int y = 25;
+
+    integer z = add(x,y);
+
+    if (z == 35) {
+        return 1;
+    } else {
+        return 0;
+    }
+}

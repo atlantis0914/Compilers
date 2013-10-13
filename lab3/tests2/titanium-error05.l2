@@ -1,0 +1,10 @@
+//test error
+// uninitialized in while loop
+
+int main ()
+{
+  while (false) {
+    x += 2;
+  }
+  return 0;
+}

@@ -1,0 +1,10 @@
+//test error
+
+// make sure keywords can't be used as variable names
+
+int main()
+{
+  int continue = 0;
+
+  return continue;
+}

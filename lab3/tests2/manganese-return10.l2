@@ -1,0 +1,12 @@
+//test return -69
+// check operators 
+int main()
+{
+    int a = 1;
+    int b = 5;
+    int c = 7;
+    int d = 14;
+    int e = 36;
+
+    return (a + b * a >> b) - 1 / c - d ^ e * a - ~e & 0xFF;
+}

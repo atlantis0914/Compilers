@@ -1,0 +1,11 @@
+//test return 47
+int main() {
+  int start = 0;
+  start++;
+  start++;
+  start--;
+  start++;
+  for (int a = 0; a < 10; a++) start+=a;
+  return start;
+}
+

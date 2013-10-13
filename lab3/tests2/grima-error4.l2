@@ -1,0 +1,16 @@
+//test error
+// Equallity is only between variables of the same type
+
+int main()
+{
+    int x = 0;
+    bool b = false;
+
+    if( x == b )
+    {
+        x = 5;
+    }
+    
+
+    return x;
+}

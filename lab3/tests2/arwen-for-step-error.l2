@@ -1,0 +1,12 @@
+//test error
+// Tests that the step statement in a for loop is not a declaration
+int main () {
+    int x;
+
+    for (int i = 0; i < 10; int j = 9) {
+        x = 42;
+        i = j + 1;
+    }
+
+    return x;
+}

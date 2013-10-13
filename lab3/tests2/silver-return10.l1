@@ -1,0 +1,15 @@
+//test return -1
+// Test simple parsing.
+
+int main() {
+    // This is a comment
+    int x = 1;
+    //@This is an annotation
+    x = 2;
+        x = 3;
+x=4;x=5;
+    (x)=6;
+    x=(7);
+    x-=-(-8);
+	return x;
+}

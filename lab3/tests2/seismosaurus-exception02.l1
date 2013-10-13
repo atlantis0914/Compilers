@@ -1,0 +1,18 @@
+//test exception
+//division overflow
+int main()
+{
+  int TMIN;
+  int TMAX;
+  int x;
+
+  TMIN = -2147483648;
+  TMAX = 2147483647;
+
+  x = TMAX / TMIN;
+  x = TMIN / TMAX;
+  x = 0 / TMIN;
+  x = TMAX / -1;
+  x = TMIN / -1;
+  return x;
+}

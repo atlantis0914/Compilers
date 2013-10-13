@@ -1,0 +1,6 @@
+//test return 104
+
+int main ()
+{
+	return 2 * 3 << 4 | 1 + 7 & 4 % 12 / 4 + 10;
+}

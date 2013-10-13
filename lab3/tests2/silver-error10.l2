@@ -1,0 +1,7 @@
+//test error
+// Missing else in ? operator.
+
+int main() {
+    true ? true : false ? false : true ? true ? true : false;
+    return 0;
+}

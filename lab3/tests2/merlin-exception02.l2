@@ -1,0 +1,11 @@
+//test exception
+// integer overflow (div by -1)
+
+int main()
+{
+  int a = 0x001;
+  (a) <<= 31;
+  int b = ~0 & (0x1 << 31);
+  a >>= 31;
+  return b/a;
+}

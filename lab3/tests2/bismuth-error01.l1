@@ -1,0 +1,11 @@
+//test error
+// bad token
+
+int main()
+{
+  int x = 0;
+
+  struct;
+
+  return x;
+}

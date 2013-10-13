@@ -1,0 +1,6 @@
+//test error
+// returns uninitialized variable
+int main() {
+  int x;
+  return x;
+}

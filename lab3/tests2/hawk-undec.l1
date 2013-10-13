@@ -1,0 +1,10 @@
+//test error
+// test undeclared
+int main()
+{
+  int a;
+  int b = 5;
+  int c = b + a;
+
+  return c;
+}

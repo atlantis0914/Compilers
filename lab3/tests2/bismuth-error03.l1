@@ -1,0 +1,6 @@
+//test error
+// malformed "int main(){ ... }"
+
+if __name__ == "__main__":
+  int x;
+  return x;

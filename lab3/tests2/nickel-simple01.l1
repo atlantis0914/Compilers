@@ -1,0 +1,6 @@
+//test return 1
+// test subtraction
+int main()
+{
+  return 42 - 41;
+}

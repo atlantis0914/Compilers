@@ -1,0 +1,11 @@
+//test error
+/* Non-zero decimal integers can not have leading zeros */
+int main()
+{
+    int a = 4 + 03;
+    return a;
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

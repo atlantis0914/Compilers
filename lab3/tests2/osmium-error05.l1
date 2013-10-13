@@ -1,0 +1,7 @@
+//test error
+// stuff needs return values
+
+int main() {
+  int x;
+  x = x + 5;
+}

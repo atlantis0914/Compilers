@@ -1,0 +1,19 @@
+//test error
+
+typedef int a;
+typedef a b;
+typedef b c;
+typedef a d;
+
+typedef bool z;
+typedef z y;
+typedef y x;
+typedef x w;
+
+d main() {
+  y mybool = true;
+  z yourbool = mybool && false;
+  
+  b x = 4; // oops! x is a type name!!
+  return 4 + 39 + x;
+}

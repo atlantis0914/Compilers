@@ -1,0 +1,12 @@
+//test exception 8
+//test bad recursion
+
+int foo(int f) {
+  if (f != 0)
+    return f/foo(f-1);
+  return f;
+} 
+
+int main () {
+  return foo(5);
+}

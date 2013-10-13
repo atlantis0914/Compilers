@@ -1,0 +1,6 @@
+//test return 3
+int main() {
+    int x=0;
+    (((((x))))) = - ~-(-(2));
+    return x;
+}

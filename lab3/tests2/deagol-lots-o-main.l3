@@ -1,0 +1,7 @@
+//test exception
+
+int main() {
+  main();
+  return 0;
+}
+

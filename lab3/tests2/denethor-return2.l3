@@ -1,0 +1,9 @@
+//test return 24
+
+int weird() {
+   return ~(~(0xcafebabe&(3<<(1|2))));
+}
+
+int main() {
+   return weird();
+}

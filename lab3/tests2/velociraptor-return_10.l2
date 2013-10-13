@@ -1,0 +1,25 @@
+//test return 10
+// returns the third 'happy number'- look it up on wikipedia!
+// it's a good test of nested loops
+int main() {
+
+	int num = 0;
+	int sum = 0;
+	int digits;
+	int count = 0;
+	while ( count < 3 ) {
+		num++;
+		digits = num;		
+		while ( digits != 1 && digits != 4 ) {
+			sum = 0;
+			while ( digits > 0 ) {
+				sum += (digits % 10)*(digits % 10);
+				digits /= 10;
+			}
+			digits = sum;
+		}
+		if (digits == 1)
+			count++;
+	}
+	return num;
+}

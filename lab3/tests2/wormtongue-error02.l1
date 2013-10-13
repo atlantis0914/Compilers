@@ -1,0 +1,7 @@
+//test error
+// Bad lvalue.
+
+int main() {
+	int 5 = 9;
+	return 5;
+}

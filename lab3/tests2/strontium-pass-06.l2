@@ -1,0 +1,10 @@
+//test error
+//things that are valid in C...
+
+int main()
+{
+    int a = 0;
+    a = a++;
+
+    return a++;
+}

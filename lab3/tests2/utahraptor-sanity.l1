@@ -1,0 +1,8 @@
+//test return 0
+/* Basic sanity test. This is useful as a watchdog for breaking the runtime
+ * interface or violating syntax in the code generator, etc.
+ */
+int main()
+{
+  return 0;
+}

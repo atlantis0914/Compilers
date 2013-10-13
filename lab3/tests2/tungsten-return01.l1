@@ -1,0 +1,19 @@
+//test return 1
+// Green test 01 - Test proper parsing of comments, multilines, and nested multilines
+
+/* This is line 1 of a multiline
+   It shouldn't matter how many lines we take up
+*/
+
+/* Another multiline
+   /* Nested this time */
+*/
+
+int main()
+{
+ int a = 1; //This is a variable
+ /* Do multilines
+    still work? */
+ /* Nested /* fake multiline */ */
+ return a;
+}

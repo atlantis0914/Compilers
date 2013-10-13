@@ -1,0 +1,23 @@
+//test return 1
+// test div and mod
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+  int e;
+  int f;
+
+  a = 1;
+  b = 2;
+  c = 5;
+  d = 4;
+  e = 20;
+
+  a += a;
+  d *= c;
+  e /= d; 
+
+  return e;
+}

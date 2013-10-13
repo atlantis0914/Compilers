@@ -1,0 +1,16 @@
+//test error
+//control flow
+
+int main()
+{
+    int x = 10;
+
+    if(x > 5)
+    {
+        return x;
+    }
+    else if(x > 10)
+    {
+        return x/2;
+    }
+}

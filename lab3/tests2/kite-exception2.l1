@@ -1,0 +1,16 @@
+//test exception 8
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+  int e;
+
+  a = 2147483648;
+  b = a/-1;
+  c = 2*b;
+  d = 3-c;
+  e = -d;
+  return b;
+}

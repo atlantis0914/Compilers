@@ -1,0 +1,13 @@
+//test error
+//tests a program that returns in a loop
+
+int main() {
+    int x = 0;
+    int y = 1;
+
+    while (x > 0) {
+        x--;
+        y >>= 2;
+        return y;
+    }
+}

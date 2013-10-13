@@ -1,0 +1,18 @@
+//test return -13
+// Testing assignment operators.
+
+int main() {
+	int x = 1;
+	int y = 0;
+	y += x;
+	x += y;
+	y += x;
+	x += y;
+	y += x;
+	x += y;
+	y *= x;
+	y /= 4;
+	y %= x;
+	y -= 1;
+	return x*y;
+}

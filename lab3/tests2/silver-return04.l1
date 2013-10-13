@@ -1,0 +1,11 @@
+//test return 2
+// Test 2s comp. overflow
+
+int main() {
+    int x = 0xFFFFFFFF;
+    int y = 0x3;
+
+    int z = x + y;
+
+    return z;
+}

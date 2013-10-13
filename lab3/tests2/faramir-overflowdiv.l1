@@ -1,0 +1,6 @@
+//test exception
+// divide by 0 after overflow
+int main() {
+    int TMAX = 2147483647;
+    return 5 / (2 * TMAX + 2);
+}

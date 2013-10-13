@@ -1,0 +1,22 @@
+//test return 1337
+
+int main()
+{
+   int a;
+   int b;
+   int c;
+   int d;
+   int t;
+
+   t = 1337;
+  
+   a = t / 1000;
+   t %= 1000;
+   b = t / 100;
+   t %= 100;
+   c = t / 10;
+   t %= 10;
+   d = t;
+
+   return (a * 1000) + (b * 100) + (c * 10) + d;
+}

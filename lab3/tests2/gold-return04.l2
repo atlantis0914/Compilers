@@ -1,0 +1,12 @@
+//test return 512
+
+int main ()
+{
+  int i;
+  int x = 1;
+
+  for (i = 0; i < 9; i++)
+    x <<= 1;
+
+  return x;
+}

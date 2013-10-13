@@ -1,0 +1,22 @@
+//test error
+
+int main() {
+    int i = 0;
+    int x = 5;
+
+    for(i = 0; i > 0; i++) {
+        if(i % 2 == 0)
+            x <<= 32;
+        else
+            if(i % 3 == 0)
+                while(x > 0);
+            else
+                if(x > 100)
+                    return 1/0;
+                else
+                    continue;
+    }
+
+    while(true);
+    return -1;
+}

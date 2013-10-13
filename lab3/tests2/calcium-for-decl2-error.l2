@@ -1,0 +1,8 @@
+//test error
+int main() {
+  int x = 0;
+  for (; true; int y) {
+    return x;
+  }
+  return -1;
+}

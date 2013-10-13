@@ -1,0 +1,13 @@
+//test return 13
+// simple conditional check
+
+int main() {
+    int var = 3 > 5 ? 1 : 4;
+    int x;
+    if (2 <= var) {
+        x = 9;
+    } else {
+        x = -3;
+    }
+    return var + x;
+}

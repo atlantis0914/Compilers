@@ -1,0 +1,10 @@
+//test exception 8
+
+int main() {
+   int x=128;
+   
+   while(x>0)
+      x--;
+   
+   return 45%x;
+}

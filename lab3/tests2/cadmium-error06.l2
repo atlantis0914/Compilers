@@ -1,0 +1,9 @@
+//test error
+// not allowed to leave cond of for blank
+int main() {
+  int x = 0;
+  for (;;) {
+    x++;
+  }
+  return x;
+}

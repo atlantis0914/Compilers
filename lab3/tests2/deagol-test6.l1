@@ -1,0 +1,7 @@
+//test exception
+// mod %0
+
+int main() {
+  return 9%0;
+}
+

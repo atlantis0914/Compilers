@@ -1,0 +1,12 @@
+//test error
+
+// Sole else is not allowed.
+int main()
+{
+  int x = 0;
+  else
+  {
+    x = 1;
+  }
+  return x;
+}

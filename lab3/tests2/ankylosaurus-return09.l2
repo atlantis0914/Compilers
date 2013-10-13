@@ -1,0 +1,13 @@
+//test return 1
+int main(){
+    bool x = true;
+    bool y = false;
+
+    bool z = (x || y) && y || x && !y && y && x || y; 
+
+    if (z) return 0;
+    else return 1;
+    
+
+
+}

@@ -1,0 +1,16 @@
+//test return 0
+
+int main(){
+  int x = 1;
+  int y = 0;
+
+  if ( x == 0 ) /* false */
+    if ( y == 0 )
+      return 2;
+    else
+      return 1; /* control should not reach here because this else binds
+      with the closest if */
+
+  /* control should reach here */
+  return 0;
+}

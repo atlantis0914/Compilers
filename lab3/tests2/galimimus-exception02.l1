@@ -1,0 +1,6 @@
+//test exception
+// mod by 0
+int main()
+{
+  return 9 % (0 / 1);
+}

@@ -1,0 +1,15 @@
+//test error
+int main() {
+	int x = 0;
+	if (x == 0) {
+		if (x + 1 == 1) {
+			return 6;
+		} else {
+			while (x != 0) {
+				return 7;
+			}
+		}
+	} else {
+		return 3;
+	}
+}

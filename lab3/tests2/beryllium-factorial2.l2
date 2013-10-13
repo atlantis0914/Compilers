@@ -1,0 +1,14 @@
+//test return 120
+
+int main() {
+  int y = 1;
+  int x = 5;
+
+  while (x > 1)
+    {
+      y *= x;
+      x--;
+    }
+
+  return y;
+}

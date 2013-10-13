@@ -1,0 +1,9 @@
+//test return 8888
+
+int main ()
+{
+  int if_else = 88;
+  int int_bool = 100;
+
+  return (if_else * int_bool) + if_else;
+}

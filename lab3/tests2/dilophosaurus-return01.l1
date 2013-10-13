@@ -1,0 +1,18 @@
+//test return 42
+// test operations and their precedence
+int main(){
+    int x;
+    int y;
+    
+    x = -3; // x=-3
+    x -= 5; // x=-8
+		x *= -1; // x=8
+    x -= 1 + 1; // x=6
+    x *= 2 * 2 - 1; // x=18
+    // here, precedence matters
+    x = 2 + x * (3 - 2); // x=20
+    y = x * (1  + x); // y=420
+    y /= -(-x + 1) -(-1); // y=21
+    y = -1 + -1 * -1 + (1 -(-1)) * y; // y=42
+    return y % 43;
+}

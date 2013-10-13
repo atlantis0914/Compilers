@@ -1,0 +1,19 @@
+//test return 9
+int main() {
+    bool b = 4 < 5;
+    bool c = 4 == 5;
+    bool d = b == c;
+    bool f = b != c;
+    int e = 1;
+    if (b) e |= 1;
+    e <<= 1;
+    if (c) e |= 1;
+    e <<= 1;
+    if (d) e |= 1;
+    e <<=1;
+    if (f) e |= 1;
+    return e;
+}
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

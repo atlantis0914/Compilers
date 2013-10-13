@@ -1,0 +1,15 @@
+//test error
+
+/* 
+ * This is my test program
+ * Missing return statement
+ */
+int main () {
+  int x;
+  int y = 15;
+  ( x ) = 0;
+  x = 2 + 7;
+  y = y - ( x );
+  y = -y;
+  x += 1;
+}

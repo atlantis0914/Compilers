@@ -1,0 +1,17 @@
+//test error
+// lots of errors
+
+int main()
+{
+    int x;
+    int y; 
+    int z;
+
+    x = 4;
+    y += x;
+
+    int z = 9;
+    a = z + 12;
+
+    return; 
+}
