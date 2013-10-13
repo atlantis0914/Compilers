@@ -40,3 +40,4 @@ instance Ord ALoc where
   (ATemp _) `compare` (AReg _) = LT
   (AReg i) `compare` (AReg i') = i `compare` i'
   (ATemp i) `compare` (ATemp i') = i `compare` i'
+

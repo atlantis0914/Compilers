@@ -78,6 +78,7 @@ runPredicate labelMap i (AFnCall _ loc locs) (liveMap, isNew) =
 
 isTemp :: ALoc -> Bool
 isTemp aloc = case aloc of ATemp _ -> True
+                           AReg _ -> True
                            _ -> False
 
 filterLocs :: [ALoc] -> [ALoc]
