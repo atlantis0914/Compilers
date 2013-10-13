@@ -148,6 +148,15 @@ checkStmtValid (context@(map, fnMap, dMap, tdMap, valid)) (Decl declName declTyp
     if exists then (map', fnMap, dMap, tdMap, valid && exists && checkAsgn)
               else error ("Error: " ++ declName ++ " doesn't exist at " ++ show pos)
 
+checkStmtValid (context@(map, fnMap, dMap, tdMap, valid)) (Ctrl (Assert expr pos)) = 
+  let
+    typeT = checkExprType context expr
+    valid' = case checkExprType context expr of Nothing -> False
+                                                Just t -> t == IBool
+  in
+    if valid' then (map, fnMap, dMap, tdMap, valid && valid')
+              else error ("Error : Assert expression is not a bool at " ++ show pos)
+
 checkStmtValid (context@(map, fnMap, dMap, tdMap, valid)) (Ctrl (If expr stmt1 stmt2 pos)) =
   let
     typeT = checkExprType context expr
