@@ -20,10 +20,10 @@ import Control.Monad.Error
 import Compile.Types
 import Compile.Frontend.Parse
 import Compile.Frontend.Elaborate
--- import Compile.Frontend.CheckInitialization
--- import Compile.Frontend.Minimize
--- import Compile.Frontend.CheckAST
+import Compile.Frontend.TypeCheck
+import Compile.Frontend.CheckAST
 import Compile.IR.GenIR
+-- import Compile.Frontend.Minimize
 -- import Compile.Backend.CodeGen
 
 import qualified Debug.Trace as Trace
@@ -48,10 +48,10 @@ compile :: Job -> IO ()
 compile job = do
   res <- runErrorT $ do -- Constructor for the error monad transformer
     header <- getLibraryCode job
-    ast <- parseFnList $ jobSource job -- ParseFnList
-    elabAst <- liftEIO $ elaborate ast -- FnList
-    writer (jobOut job) elabAst
---    liftEIO $ checkAST elabAst
+    fnList <- parseFnList $ jobSource job -- ParseFnList
+    elabFnList <- liftEIO $ elaborate fnList -- FnList
+--     writer (jobOut job) elabFnList
+    liftEIO $ checkFnList elabFnList
 --    minimizedAst <- liftEIO $ minimize elabAst
 --     if jobOutFormat job == C0
 --       then writer (jobOut job) minimizedAst
