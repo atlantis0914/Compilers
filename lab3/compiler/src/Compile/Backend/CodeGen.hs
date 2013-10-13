@@ -47,13 +47,13 @@ fnAAsmCodeGen (AAFDefn aasms fnName) =
   let
     prologue = [".globl __c0_" ++ fnName ++ "\n", "__c0_" ++ fnName ++ ":\n", "  pushq %rbp\n", "  movq %rsp, %rbp\n", genFnProlugues]
   in
-    concat (prologue ++ [codeGen aasms])
+    concat (prologue ++ [codeGen aasms fnName])
 
 fnAAsmCodeGen (AAFDecl fnName) =
   ""
 
 -- Generates the AAsm from an AST
-codeGen aasmList = let
+codeGen aasmList fnName = let
     twoOpAasmList =  genTwoOperand aasmList
     allLocs = getLocs aasmList
   in
@@ -62,7 +62,7 @@ codeGen aasmList = let
              coloring = naiveColor allLocs
              coloredAasmList = colorTemps twoOpAasmList coloring
              spilledAasmList = spill coloredAasmList
-             asm = genAsm spilledAasmList
+             asm = genAsm spilledAasmList fnName
            in
              concat asm)
       else (let
@@ -72,7 +72,7 @@ codeGen aasmList = let
               coloring = greedyColor interference_graph simp_ordering
               coloredAasmList = colorTemps twoOpAasmList coloring
               spilledAasmList = spill coloredAasmList
-              asm = genAsm spilledAasmList
+              asm = genAsm spilledAasmList fnName
             in
 --              if (debugFlag)
 --                then genDebug stmts aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm

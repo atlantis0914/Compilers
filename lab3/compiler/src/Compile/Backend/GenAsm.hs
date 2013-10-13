@@ -7,72 +7,72 @@ import qualified Debug.Trace as Trace
 import Compile.Backend.Registers
 import Compile.Backend.BackendUtils
 
-genAsm :: [AAsm] -> [String]
-genAsm aasms =
-  map aasmToString aasms
+genAsm :: [AAsm] -> String -> [String]
+genAsm aasms fnName =
+  map (aasmToString fnName) aasms
 
 cmpAsm :: ALoc -> AVal -> String
 cmpAsm loc val =
   "cmpl " ++ (avalToString val) ++ ", " ++ (alocToString loc)
 
-aasmToString :: AAsm -> String
+aasmToString :: String -> AAsm -> String
 
 {-aasmToString aasm | Trace.trace (show aasm) False = undefined-}
 
-aasmToString AAsm {aAssign = [loc], aOp = LogicalNot, aArgs = [arg]} =
+aasmToString _ AAsm {aAssign = [loc], aOp = LogicalNot, aArgs = [arg]} =
   "  movl " ++ (avalToString arg) ++ ", " ++ (alocToString loc) ++ "\n  not " ++ (alocToString loc) ++ "\n  and $1, " ++ (alocToString loc) ++ "\n"
 
-aasmToString AAsm {aAssign = [loc], aOp = Lt, aArgs = [arg]} =
+aasmToString _ AAsm {aAssign = [loc], aOp = Lt, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setl " ++ (alocByteToString loc) ++ "\n"
 
-aasmToString AAsm {aAssign = [loc], aOp = Lte, aArgs = [arg]} =
+aasmToString _ AAsm {aAssign = [loc], aOp = Lte, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setle " ++ (alocByteToString loc) ++ "\n"
 
-aasmToString AAsm {aAssign = [loc], aOp = Gt, aArgs = [arg]} =
+aasmToString _ AAsm {aAssign = [loc], aOp = Gt, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setg " ++ (alocByteToString loc) ++ "\n"
 
-aasmToString AAsm {aAssign = [loc], aOp = Gte, aArgs = [arg]} =
+aasmToString _ AAsm {aAssign = [loc], aOp = Gte, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setge " ++ (alocByteToString loc) ++ "\n"
 
-aasmToString AAsm {aAssign = [loc], aOp = Equ, aArgs = [arg]} =
+aasmToString _ AAsm {aAssign = [loc], aOp = Equ, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  sete " ++ (alocByteToString loc) ++ "\n"
 
-aasmToString AAsm {aAssign = [loc], aOp = Neq, aArgs = [arg]} =
+aasmToString _ AAsm {aAssign = [loc], aOp = Neq, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setne " ++ (alocByteToString loc) ++ "\n"
 
-aasmToString AAsm {aAssign = [loc], aOp = Neg, aArgs = [arg]} =
-  (aasmToString (AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]}) ++ "  " ++ (opToString Neg) ++ " " ++ (alocToString loc) ++ "\n")
+aasmToString _ AAsm {aAssign = [loc], aOp = Neg, aArgs = [arg]} =
+  (aasmToString _ (AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]}) ++ "  " ++ (opToString Neg) ++ " " ++ (alocToString loc) ++ "\n")
 
-aasmToString AAsm {aAssign = [loc], aOp = Div, aArgs = [snd]} = divModToString loc snd Div
-aasmToString AAsm {aAssign = [loc], aOp = Mod, aArgs = [snd]} = divModToString loc snd Mod
+aasmToString _ AAsm {aAssign = [loc], aOp = Div, aArgs = [snd]} = divModToString loc snd Div
+aasmToString _ AAsm {aAssign = [loc], aOp = Mod, aArgs = [snd]} = divModToString loc snd Mod
 
-aasmToString AAsm {aAssign = [loc], aOp = LShift, aArgs = [snd]} =
+aasmToString _ AAsm {aAssign = [loc], aOp = LShift, aArgs = [snd]} =
   (checkLt32 snd) ++ (checkGte0 snd) ++
   "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString LShift) ++ " %cl, " ++ (alocToString loc) ++ "\n"
 
-aasmToString AAsm {aAssign = [loc], aOp = RShift, aArgs = [snd]} =
+aasmToString _ AAsm {aAssign = [loc], aOp = RShift, aArgs = [snd]} =
   (checkLt32 snd) ++ (checkGte0 snd) ++
   "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString RShift) ++ " %cl, " ++ (alocToString loc) ++ "\n"
 
-aasmToString AAsm {aAssign = [loc], aOp = BitwiseNot, aArgs = [arg]} =
+aasmToString _ AAsm {aAssign = [loc], aOp = BitwiseNot, aArgs = [arg]} =
   "  " ++ (opToString BitwiseNot) ++ " " ++ (alocToString loc) ++ "\n"
 
-aasmToString AAsm {aAssign = [loc], aOp = op, aArgs = [arg]} =
+aasmToString _ AAsm {aAssign = [loc], aOp = op, aArgs = [arg]} =
   "  " ++ (opToString op) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
 
-aasmToString (ACtrl (ALabel i)) =
-  "\nlabel" ++ show i ++ ":\n"
+aasmToString fnName (ACtrl (ALabel i)) =
+  "\n" ++ fnName ++ "label" ++ show i ++ ":\n"
 
-aasmToString (ACtrl (AGoto i)) =
+aasmToString _ (ACtrl (AGoto i)) =
   "  jmp label" ++ show i ++ "\n"
 
-aasmToString (ACtrl (AIf aval label)) =
+aasmToString _ (ACtrl (AIf aval label)) =
   "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz label" ++ (show label) ++ "\n"
 
-aasmToString (ACtrl (ARet _)) =
+aasmToString _ (ACtrl (ARet _)) =
   concat [genFnEpilogues, "  popq %rbp\n", "  ret\n"]
 
-aasmToString (AFnCall fnName loc locs) =
+aasmToString _ (AFnCall fnName loc locs) =
   (genProlugues loc) ++ "  call __c0_" ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n" ++ (genEpilogues loc)
 
 genFnEpilogues :: String
