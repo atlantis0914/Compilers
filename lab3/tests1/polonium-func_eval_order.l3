@@ -1,0 +1,13 @@
+//test exception 8
+
+int sigseg(int a){
+    return a + sigseg(a);
+}
+
+int f(int a, int b){
+    return 0;
+}
+
+int main(){
+    return f(1/0, sigseg(1));
+}

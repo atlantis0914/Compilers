@@ -1,0 +1,9 @@
+//test return 0
+//things to parse after main
+
+int main() {
+  assert(true);
+  return 0;
+}
+
+typedef int sometype;

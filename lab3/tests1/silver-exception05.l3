@@ -1,0 +1,11 @@
+//test exception
+// Compute hanoi?
+
+int hanoi(int n) {
+    if (n == 1) return n;
+    return 2*hanoi(n-1) + 1;
+}
+
+int main() {
+    return hanoi(0);
+}

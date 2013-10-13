@@ -1,0 +1,19 @@
+//test return 10
+// test basic calling functionality
+
+bool isTrue (int i);
+
+int main() {
+ int i = 0;
+ if (isTrue(i)) {
+   return 100;
+ }
+ return 10;
+}
+
+bool isTrue(int i){
+  if (i == 10){
+    return true;
+  }
+  return false;
+}

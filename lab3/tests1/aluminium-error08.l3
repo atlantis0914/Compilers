@@ -1,0 +1,13 @@
+//test error
+
+typedef int aaa;
+
+int plus (aaa x, aaa y) {
+  x = x + y;
+}
+
+aaa main () {
+  aaa x = 1;
+  ( plus(1, 1) );
+  return 2;
+}

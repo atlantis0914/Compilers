@@ -1,0 +1,14 @@
+//test return 13
+// tests simple recursive function
+int foo(int m, int n)
+{
+	if (m==0) return n + 1;
+	else if (m > 0 && n == 0) return foo(m-1, 1);
+	else if (m > 0 && n > 0) return foo(m-1, foo(m, n-1));
+	else return 1/0;
+}
+
+int main()
+{
+	return foo(3, 1);
+}

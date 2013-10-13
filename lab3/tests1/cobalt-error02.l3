@@ -1,0 +1,13 @@
+//test error
+
+
+int main()
+{
+  compare(2, 3);
+}
+
+bool compare(int x, int y)
+{
+  return x > y;
+}
+

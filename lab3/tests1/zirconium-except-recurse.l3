@@ -1,0 +1,9 @@
+//test exception
+
+int re(int x){
+  return re(x-1);
+}
+
+int main(){
+  return re(0);
+}

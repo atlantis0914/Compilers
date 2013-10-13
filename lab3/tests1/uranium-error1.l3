@@ -1,0 +1,9 @@
+//test error
+// can't redeclare functions
+
+void f(int x);
+void f(bool x);
+
+int main () {
+    return 0;
+}

@@ -1,0 +1,21 @@
+//test return 7
+//main should still run first when other functions exist
+//also tests funny static semantics of post-return code
+
+// either non-main function will cause an exception if run first
+void failTime(int a) {
+  a /= 0;
+  return;
+}
+
+int threeDO() {
+  return 3/0;
+}
+
+int main ()
+{
+  int x;
+  return 7;
+  failTime(x);
+  return threeDO();
+}

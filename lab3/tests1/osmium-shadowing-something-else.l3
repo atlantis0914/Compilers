@@ -1,0 +1,10 @@
+//test error
+
+int thingo(int arg1) {
+    int arg1 = 1;
+    return arg1;
+}
+
+int main() {
+    return thingo(2);
+}

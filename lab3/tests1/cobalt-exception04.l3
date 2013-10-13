@@ -1,0 +1,17 @@
+//test error
+//not implemented yet 
+
+int main() {
+  int x = 2013;
+  
+  int a( int b) {
+    x = x << 32;
+    return b;
+  }
+
+  for(int i = 0; i < x; i++){
+    a(x);
+  }
+
+  return x;
+}

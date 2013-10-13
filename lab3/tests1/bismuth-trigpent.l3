@@ -1,0 +1,29 @@
+//test return 20
+/* Recusive triangular and pentagonal numbers
+ *
+ *  1   2     3       4         5
+ *  *   *     *       *         *
+ *     * *   * *     * *       * *
+ *          * * *   * * *     * * *
+ *                 * * * *   * * * *
+ *                          * * * * *
+ *
+ *  Nope, not drawing the pentagons...
+ */
+
+int pent(int i)
+{
+  if (i == 1) return 1;
+  return pent(i-1) + (3*i - 2);
+}
+
+int trig(int i)
+{
+  if (i == 1) return 1;
+  return i + trig(i-1);
+}
+
+int main ()
+{
+  return pent(5) - trig(5);
+}

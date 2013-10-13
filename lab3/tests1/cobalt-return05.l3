@@ -1,0 +1,11 @@
+//test return 29520
+
+typedef int idkwhatiamdoing;
+typedef idkwhatiamdoing thisisint;
+typedef thisisint wtf;
+typedef wtf helloworld;
+typedef helloworld binarydecisiontree;
+
+binarydecisiontree main (){
+  return 29520;
+}

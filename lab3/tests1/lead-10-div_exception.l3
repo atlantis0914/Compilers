@@ -1,0 +1,9 @@
+//test exception 8
+//SIGFPE exception due to divide by zero.
+
+int main ()
+{
+  int x = 3;
+  assert( (x/0) == 3 );
+  return 0;
+}

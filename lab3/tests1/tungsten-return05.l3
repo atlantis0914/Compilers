@@ -1,0 +1,16 @@
+//test return 9
+//test passing in same var as a variable
+
+int a(int b, int c, int d);
+
+int main(){
+    int n = 1;
+    return a(n, n, n);
+}
+
+int a(int b, int c, int d){
+    b += 1;
+    c += 2;
+    d += 3;
+    return b+c+d;
+}

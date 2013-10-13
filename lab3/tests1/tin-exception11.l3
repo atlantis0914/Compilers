@@ -1,0 +1,20 @@
+//test exception
+// basic mutual recursion
+
+void left();
+void right();
+
+void left() {
+  right();
+  return;
+}
+
+void right() {
+  left();
+  return;
+}
+
+int main() {
+  left();
+  return 0;
+}

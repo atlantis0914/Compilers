@@ -1,0 +1,13 @@
+//test error
+bool foo(int j) {
+	return j == 0;
+}
+bool bar() {
+	return false;
+}
+
+int main() {
+	return (foo(bar()))? 1 : 0;
+}
+
+

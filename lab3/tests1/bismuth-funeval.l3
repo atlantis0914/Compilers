@@ -1,0 +1,13 @@
+//test exception 8
+// Evaluate arguments from left to right
+
+int foo(int i, int j)
+{
+  while (true) {}
+  return 0;
+}
+
+int main()
+{
+  return foo(0/0, foo(1,1));
+}

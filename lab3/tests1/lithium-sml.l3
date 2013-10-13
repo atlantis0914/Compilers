@@ -1,0 +1,3 @@
+//test error
+
+fn main() = 2

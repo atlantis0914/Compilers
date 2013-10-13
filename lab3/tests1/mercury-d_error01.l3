@@ -1,0 +1,6 @@
+//test error
+typedef int a--;
+
+int main() {
+  return 1;
+}

@@ -1,0 +1,16 @@
+//test exception
+// You only saw the previous test didn't you? Too bad
+
+int dont_optimize_me_because_pf_didnt(int x)
+{
+  if (x == 0)
+    return 0;
+  else
+    return dont_optimize_me_because_pf_didnt(x-1);
+}
+
+
+int main()
+{
+  return dont_optimize_me_because_pf_didnt(20*1000*1000);
+}

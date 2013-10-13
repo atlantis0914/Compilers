@@ -1,0 +1,9 @@
+//test return 3
+// it's okay to poop here
+
+int main () {
+  int poop = 3;
+  return 3;
+}
+
+typedef int poop;

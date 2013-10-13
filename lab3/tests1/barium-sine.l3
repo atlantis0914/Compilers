@@ -1,0 +1,111 @@
+//test return 0
+
+int fact(int b);
+fpt fastpowf(fpt b, int e);
+int fastpowi(int b, int e);
+// Sine
+fpt sine(fpt x, int i, int depth)
+{
+  if(depth <= i)
+    return itof(0);
+  int b = fact(i*2+1);
+  fpt xp = fastpowf(x, i*2+1);
+  fpt r = fdiv(xp, itof(b));
+
+  i++;
+  int b2 = fact(i*2+1);
+  fpt xp2 = fastpowf(x, i*2+1);
+  fpt r2 = fdiv(xp2, itof(b2));
+
+  fpt r3 = fsub(r, r2);
+
+  return fadd(r3, sine(x, i+1, depth));
+}
+
+
+int fact(int b)
+{
+  if(b == 0)
+    return 1;
+  return b * fact(b-1);
+}
+
+
+// Steal from lecture note
+fpt fastpowf(fpt b, int e)
+{
+  fpt r = itof(1);
+  while(e > 0)
+  {
+    if (e % 2 != 0)
+      r =fmul(r,  b);
+    b = fmul(b,  b);
+    e = e / 2;
+  }
+  return r;
+}
+
+int fastpowi(int b, int e)
+{
+  int r = 1;
+  while(e > 0)
+  {
+    if (e % 2 != 0)
+      r = r*b;
+    b = b*b;
+    e = e / 2;
+  }
+  return r;
+}
+
+void print_sine_18deg(int i)
+{
+  fpt t1 = fdiv(itof(1), itof(10)); //0.1
+  fpt t2 = fdiv(itof(18), itof(100)); //0.18
+  fpt t3 = fdiv(itof(35), itof(100)); //0.35
+  fpt t4 = fdiv(itof(51), itof(100)); //0.51
+  fpt t5 = fdiv(itof(65), itof(100)); //0.65
+  fpt t6 = fdiv(itof(77), itof(100)); //0.77
+  fpt t7 = fdiv(itof(87), itof(100)); //0.87
+  fpt t8 = fdiv(itof(95), itof(100)); //0.95
+  fpt t9 = fdiv(itof(99), itof(100)); //0.99
+  fpt t10 = itof(1); //1.0
+
+  fpt p = fadd(fdiv(itof(175), itof(1000)), itof(0)); //pi/18 = 0.175
+  fpt d = fmul(p, itof(i));
+  fpt sd = sine(d, 0, 5);
+  if(fless(sd, t1))
+    print_int(1);
+  else if(fless(sd, t2))
+    print_int(11);
+  else if(fless(sd, t3))
+    print_int(111);
+  else if(fless(sd, t4))
+    print_int(1111);
+  else if(fless(sd, t5))
+    print_int(11111);
+  else if(fless(sd, t6))
+    print_int(111111);
+  else if(fless(sd, t7))
+    print_int(1111111);
+  else if(fless(sd, t8))
+    print_int(11111111);
+  else if(fless(sd, t9))
+    print_int(111111111);
+  else
+    print_int(1111111111);
+}
+
+int main()
+{
+  int round = 200;
+  while(round > 0)
+  {
+  for(int i = 0; i < 20; i++)
+  {
+    print_sine_18deg(i);
+  }
+  round--;
+  }
+  return 0;
+}

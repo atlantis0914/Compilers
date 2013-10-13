@@ -1,0 +1,10 @@
+//test error
+//use function without prototype
+
+int main() {
+  return isTrue();
+}
+
+int isTrue(){
+  return 1;
+}

@@ -1,0 +1,12 @@
+//test exception 8
+
+void shit() {
+  assert(true);
+  1 << 32;
+}
+
+int main() {
+  assert(true);
+  shit();
+  return 0;
+}

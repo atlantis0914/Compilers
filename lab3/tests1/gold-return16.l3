@@ -1,0 +1,19 @@
+//test return 1
+
+bool is_prime(int n) {
+	for (int i = 2; i <= n / 2; i++) {
+		if (n % i == 0) {
+			return false;
+		}
+	}
+	return true;
+}
+
+int main() {
+	if (is_prime(97)) {
+		return 1;
+	}
+	else {
+		return -1;
+	}
+}

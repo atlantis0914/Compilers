@@ -1,0 +1,8 @@
+//test error
+
+bool cum() {
+  return 1;
+}
+int main() {
+  return cum();
+}

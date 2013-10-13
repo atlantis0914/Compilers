@@ -1,0 +1,12 @@
+//test error
+// invalid else statements
+int main() {
+  int i = 1;
+  int j = 2;
+  if(i ==1) {
+     return i;
+  } else 
+      return j;
+   else 
+      return i+j;
+}

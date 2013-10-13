@@ -1,0 +1,12 @@
+//test return 1336
+
+void nothing(int n) {
+  int what = 0;
+  int k;
+  return;
+}
+
+int main() {
+  nothing(238742980);
+  return 1336;
+}

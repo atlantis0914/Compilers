@@ -1,0 +1,8 @@
+//test exception 8
+//div by 0 in assert
+
+int main() {
+  int a = 0;
+  assert (10 / a == 5);
+  return a;
+}

@@ -1,0 +1,6 @@
+//test error
+// assert takes only bool arguments
+int main() {
+    assert(5);
+    return 0;
+}

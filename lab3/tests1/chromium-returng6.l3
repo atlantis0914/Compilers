@@ -1,0 +1,24 @@
+//test return 50
+
+int f(int x) {
+    return x*(x - 50);
+}
+
+int bin(int high, int low) {
+    assert(low <= high);
+    int mid = (high + low)/ 2;
+    int val = f(mid);
+    if(val == 0) {
+        return mid;
+    }
+    else if(val < 0) {
+        return bin(high, mid+1);
+    }
+    else 
+        return bin(mid-1, low);
+}
+
+
+int main() {
+    return bin(65, 41);
+}

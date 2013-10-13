@@ -1,0 +1,25 @@
+//test return 957
+// Transitivity of typedefs.
+
+typedef int aa;
+typedef aa bb;
+typedef bb cc;
+typedef cc dd;
+typedef dd ee;
+typedef ee ff;
+typedef ff gg;
+typedef gg hh;
+typedef hh ii;
+
+int main() {
+  aa a = 342;
+  bb b = a + 243;
+  cc c = a + b - 523;
+  dd d = a + b - c * 12;
+  ee e = a + b - c * d / 14;
+  ff f = a + b - c * d / e % 432;
+  gg g = a + b - c * d / e % f | 5732;
+  hh h = a + b - c * d / e % f | g & 74329;
+  ii i = a + b - c * d / e % f | g & h ^ 121;
+  return i;
+}

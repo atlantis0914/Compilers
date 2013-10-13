@@ -1,0 +1,21 @@
+//test return 20
+/* Function to sum up the first 5 even numbers */
+/* 0 is the first even number */
+
+int evensum(int i) {
+  int sum = 0;
+  int j = 0;
+  int k = 0;
+  while (i > 0){
+    sum += j;
+    j = 2 * (k + 1);
+    k++;
+    i--;
+  }
+  return sum;
+}
+
+int main(){
+  int answer = evensum(5);
+  return answer;
+}

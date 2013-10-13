@@ -1,0 +1,51 @@
+//test return 1114112
+// pow(2,20) = 1114112
+
+int pow(int b, int e);
+
+int bit(int n, int i){
+   return (n>>i)&1;
+}
+
+bool uleq(int x, int y){
+   for(int i = 31; i>=0; i--){
+      if(bit(y, i) > bit(x, i))
+         return true;
+      if(bit(x, i) > bit(y, i))
+         return false;
+   }
+   if (x == y)
+      return true;
+   return false;
+}
+
+int main(){
+    int a = 1234;
+    int b = 1235;
+    int c = 12344;
+    int d = 12345;
+    int e = bit(a,bit(b,bit(c,bit(d,4))));
+    bool x = uleq(bit(b,0), bit(a,0));
+    bool y = x ? uleq(a, b) : uleq (b,a);
+    bool z = y ? uleq(c, d) : uleq(d,c);
+    if(x)
+	if(y)
+	    if(z)
+	        return e;
+    int i;
+    int j;
+    int n = 0;
+    for(i = 0; i < pow(2,17); i++){
+        for(j = 0; j < 32; j++){
+	    n += bit(i,j);
+        }
+    }
+    return n;
+}
+
+int pow(int b, int e){
+    if(e == 0)
+    	 return 1;
+    else
+	return b * pow(b,e-1);
+}

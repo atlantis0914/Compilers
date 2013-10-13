@@ -1,0 +1,22 @@
+//test return 8388616
+/* Simple function call to sum up numbers */
+
+int zoo(int donkey, bool giraffe) {
+  donkey += 2;
+  giraffe = giraffe && (! giraffe); 
+  !giraffe; 
+  giraffe; 
+  !giraffe;
+  int mushroom = donkey << 22;
+  if (giraffe) {
+    return zoo(mushroom, !giraffe);
+  }
+  if (!giraffe) {
+    return donkey + donkey + donkey + donkey + mushroom;
+  }
+  return 0;
+}
+  
+int main () {
+  return zoo(1 << 31, true);
+}

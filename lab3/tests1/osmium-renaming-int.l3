@@ -1,0 +1,7 @@
+//test return 5
+
+typedef int derp;
+
+derp main() {
+  return 5;
+}

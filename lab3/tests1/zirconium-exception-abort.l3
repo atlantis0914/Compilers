@@ -1,0 +1,9 @@
+//test exception 8
+
+int abort(){
+  return 0;
+}
+
+int main(){
+  return (1/abort());
+}

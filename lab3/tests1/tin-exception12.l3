@@ -1,0 +1,11 @@
+//test exception 8
+// tests order of evaluation
+
+int loop(int x, int y) {
+  loop(x, y);
+  return 1;
+}
+
+int main() {
+  return loop(1/0, loop(0, 0));
+}

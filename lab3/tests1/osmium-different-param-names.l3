@@ -1,0 +1,15 @@
+//test return 1
+
+int x(int y);
+
+int main() {
+    return x(1);
+}
+
+int x(int z);
+
+int x(int a) {
+    return a;
+}
+
+int x(int abcdefg);

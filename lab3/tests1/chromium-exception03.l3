@@ -1,0 +1,6 @@
+//test exception
+// Calling main(?)
+
+int main () {
+    return main();
+}

@@ -1,0 +1,18 @@
+//test exception
+//never-ending mutual recursion
+
+int main();
+int main1();
+int main2();
+
+int main() {
+  return main1();
+}
+
+int main1() {
+  return main2();
+}
+
+int main2() {
+  return main1();
+}

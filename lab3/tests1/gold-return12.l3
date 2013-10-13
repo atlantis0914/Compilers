@@ -1,0 +1,9 @@
+//test return 111
+
+int minus(int x, int y) {
+	return x - y;
+}
+
+int main () {
+    return minus(222, 111);
+}

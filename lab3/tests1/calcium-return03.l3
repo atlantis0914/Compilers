@@ -1,0 +1,29 @@
+//test return 0
+// count them bits both ways
+
+int countbits1(int x);
+int countbits2(int x);
+
+int countbits1(int x) {
+  x = (x & 0x55555555) + ((x >> 1) & 0x55555555);
+  x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
+  x = (x & 0x0F0F0F0F) + ((x >> 4) & 0x0F0F0F0F);
+  x = (x & 0x00FF00FF) + ((x >> 8) & 0x00FF00FF);
+  x = (x & 0x0000FFFF) + ((x >> 16) & 0x0000FFFF);
+  return x;
+}
+
+int countbits2(int x) {
+  if (x == 0) {
+    return 0;
+  }
+  return countbits2(x >> 1) + (x & 1);
+}
+
+int main () {
+  int x = 69696969;
+  assert(countbits1(x) == countbits2(x));
+  assert(countbits1(x) == 15);
+  return 0;
+}
+

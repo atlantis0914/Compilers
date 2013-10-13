@@ -1,0 +1,11 @@
+//test return 60
+
+int bigger(int x);
+
+int main() {
+    return bigger(15);
+}
+
+int bigger(int n) {
+    return (n << 2);
+}

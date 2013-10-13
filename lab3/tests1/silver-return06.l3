@@ -1,0 +1,22 @@
+//test return 78
+// Make sure arguments are passed correctly.
+
+int f(int a, int b, int c, int d, int e, int f, int g, int h, int i, int j, int k, int l) {
+    return a+b+c+d+e+f+g+h+i+j+k+l;
+}
+
+int main() {
+    int t0 = 0;
+    int t1 = 1;
+    int t2 = 2;
+    int t3 = 3;
+    int t4 = 4;
+    int t5 = 5;
+    int t6 = 6;
+    int t7 = 7;
+    int t8 = 8;
+    int t9 = 9;
+    int t10 = 10;
+    int t11 = 11;
+    return f(t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11)+t2+t4+t6;
+}

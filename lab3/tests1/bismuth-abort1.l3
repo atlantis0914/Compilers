@@ -1,0 +1,12 @@
+//test error
+
+int foo(int i, int j)
+{
+  while (true) {}
+  return 0;
+}
+
+int main()
+{
+  return foo(assert(false), 0/0);
+}

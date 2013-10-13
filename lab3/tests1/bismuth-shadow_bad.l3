@@ -1,0 +1,14 @@
+//test error
+// Test bad shadowing
+
+int foo(int i)
+{
+  int foo = 0;
+  return bar;
+}
+
+int main ()
+{
+  int foo = 3;
+  return foo(0);
+}

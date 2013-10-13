@@ -1,0 +1,7 @@
+//test return 0
+//tests having assert in code
+
+int main () {
+  assert(true);
+  return 0;
+}

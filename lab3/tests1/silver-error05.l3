@@ -1,0 +1,10 @@
+//test error
+//bad param list
+
+int main() {
+    return 0;
+}
+
+int fun(int 1, int y) {
+    return 0;
+}

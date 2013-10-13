@@ -1,0 +1,14 @@
+//test exception 6
+//assert in function call
+
+int a(int n);
+
+int main(){
+    int b = 10;
+    return a(b);
+}
+
+int a(int z){
+    assert(z == 1);
+    return z;
+}

@@ -1,0 +1,38 @@
+//test exception
+void stack_overflow() {
+    // These are to make the program throw an exception faster
+    // although I suppose it might optimize them away.
+    int a; int a1; int a2; int a3; int a4;
+    int b; int b1; int b2; int b3; int b4;
+    int c; int c1; int c2; int c3; int c4;
+    int d; int d1; int d2; int d3; int d4;
+    int e; int e1; int e2; int e3; int e4;
+    int f; int f1; int f2; int f3; int f4;
+    int g; int g1; int g2; int g3; int g4;
+    int h; int h1; int h2; int h3; int h4;
+    int i; int i1; int i2; int i3; int i4;
+    int j; int j1; int j2; int j3; int j4;
+    int k; int k1; int k2; int k3; int k4;
+    int l; int l1; int l2; int l3; int l4;
+    int m; int m1; int m2; int m3; int m4;
+    int n; int n1; int n2; int n3; int n4;
+    int o; int o1; int o2; int o3; int o4;
+    int p; int p1; int p2; int p3; int p4;
+    int q; int q1; int q2; int q3; int q4;
+    int r; int r1; int r2; int r3; int r4;
+    int s; int s1; int s2; int s3; int s4;
+    int t; int t1; int t2; int t3; int t4;
+    int u; int u1; int u2; int u3; int u4;
+    int v; int v1; int v2; int v3; int v4;
+    int w; int w1; int w2; int w3; int w4;
+    int x; int x1; int x2; int x3; int x4;
+    int y; int y1; int y2; int y3; int y4;
+    int z; int z1; int z2; int z3; int z4;
+    
+    stack_overflow();
+}
+
+int main() {
+    stack_overflow();
+    return 0;
+}

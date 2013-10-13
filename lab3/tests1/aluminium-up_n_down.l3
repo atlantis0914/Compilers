@@ -1,0 +1,23 @@
+//test return 1997
+// Some guy climbs up 2 meters per day, and slips down 1 meter per night.
+
+int climb_up(int a);
+
+int slip_down(int height)
+{
+	if (height == 0)
+		return 0;
+	return climb_up(height + 1) + 1;
+}
+
+int climb_up(int height)
+{
+	if (height == 0)
+		return 0;
+	return slip_down(height - 2) + 1;
+}
+
+int main()
+{
+	return climb_up(1000);
+}

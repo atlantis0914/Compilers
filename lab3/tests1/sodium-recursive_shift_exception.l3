@@ -1,0 +1,8 @@
+//test exception 8
+int shifting(int j, int q) {
+	if (q == 33) return j << q;
+	return shifting(j, q+1);
+}
+int main() {
+	return shifting(1,1);
+}

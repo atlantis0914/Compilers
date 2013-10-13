@@ -1,0 +1,19 @@
+//test return 61
+
+//If you implement tail recursion, make sure it handles stack stuff correctly
+
+int f(int x01, int x02, int x03, int x04, int x05, int x06, int x07,
+      int x08, int x09, int x10, int x11, int x12, int x13, int x14,
+      int x15, int x16, int x17, int x18, int x19, int x20) {
+
+    if(x20 == 0)
+        return x03 * x17 + x10;
+    else
+        return f(x01,x02,x03,x04,x05,x06,x07,x08,x09,x10,
+                 x11,x12,x13,x14,x15,x16,x17,x18,x19,x20 - 1);
+
+}
+
+int main() {
+    return f(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20);
+}

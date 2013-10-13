@@ -1,0 +1,304 @@
+//test return 2
+//tic tac toe
+
+typedef int board;
+typedef int coord;
+typedef int player;
+typedef int value;
+typedef int move;
+
+void verify_coord(coord c);
+void verify_board(board b);
+void verify_value(value v);
+
+bool is_empty(board b, coord r, coord c);
+bool is_player_1(board b, coord r, coord c);
+bool is_player_2(board b, coord r, coord c);
+bool is_player_p(board b, coord r, coord c, player p);
+
+int get_winner(board b);
+move dumb_minimax(board b, player p);
+value get_cell(board b, coord r, coord c);
+board set_cell(board b, coord r, coord c, value v);
+player other_player(player p);
+board make_move(board b, move m, player p);
+
+int main() {
+  board grid = 0;
+  grid = set_cell(grid, 0, 0, 2);
+  grid = set_cell(grid, 1, 1, 2);
+  grid = set_cell(grid, 1, 2, 2);
+  player current = 1;
+  int winner = -1;
+  bool done = false;
+  while(!done) {
+    move next = dumb_minimax(grid, current);
+    if(next == -1) assert(false);
+    grid = make_move(grid, next, current);
+    winner = get_winner(grid);
+    if(winner > -1) done = true;
+    current = other_player(current);
+  }
+  return winner;
+}
+
+int get_winner(board b) {
+  // player 1
+  if(is_player_1(b, 0, 0) && is_player_1(b, 0, 1) && is_player_1(b, 0, 2)) return 1;
+  if(is_player_1(b, 1, 0) && is_player_1(b, 1, 1) && is_player_1(b, 1, 2)) return 1;
+  if(is_player_1(b, 2, 0) && is_player_1(b, 2, 1) && is_player_1(b, 2, 2)) return 1;
+  if(is_player_1(b, 0, 0) && is_player_1(b, 1, 0) && is_player_1(b, 2, 0)) return 1;
+  if(is_player_1(b, 0, 1) && is_player_1(b, 1, 1) && is_player_1(b, 2, 1)) return 1;
+  if(is_player_1(b, 0, 2) && is_player_1(b, 1, 2) && is_player_1(b, 2, 2)) return 1;
+  if(is_player_1(b, 0, 0) && is_player_1(b, 1, 1) && is_player_1(b, 2, 2)) return 1;
+  if(is_player_1(b, 0, 2) && is_player_1(b, 1, 1) && is_player_1(b, 2, 0)) return 1;
+  // player 2
+  if(is_player_2(b, 0, 0) && is_player_2(b, 0, 1) && is_player_2(b, 0, 2)) return 2;
+  if(is_player_2(b, 1, 0) && is_player_2(b, 1, 1) && is_player_2(b, 1, 2)) return 2;
+  if(is_player_2(b, 2, 0) && is_player_2(b, 2, 1) && is_player_2(b, 2, 2)) return 2;
+  if(is_player_2(b, 0, 0) && is_player_2(b, 1, 0) && is_player_2(b, 2, 0)) return 2;
+  if(is_player_2(b, 0, 1) && is_player_2(b, 1, 1) && is_player_2(b, 2, 1)) return 2;
+  if(is_player_2(b, 0, 2) && is_player_2(b, 1, 2) && is_player_2(b, 2, 2)) return 2;
+  if(is_player_2(b, 0, 0) && is_player_2(b, 1, 1) && is_player_2(b, 2, 2)) return 2;
+  if(is_player_2(b, 0, 2) && is_player_2(b, 1, 1) && is_player_2(b, 2, 0)) return 2;
+  // no winner yet
+  for(coord r = 0; r < 3; r++) {
+    for(coord c = 0; c < 3; c++) {
+      if(is_empty(b, r, c)) return -1;
+    }
+  }
+  // tie
+  return 0;
+}
+
+move dumb_minimax(board b, player p) {
+  verify_board(b);
+  // offensive moves
+  // case 1: 2 out of three in a row, with third cell empty
+  for(coord r = 0; r < 3; r++) {
+    int count = 0;
+    coord empty_col = -1;
+    for(coord c = 0; c < 3; c++) {
+      if(is_player_p(b, r, c, p)) count++;
+      if(is_empty(b, r, c)) empty_col = c;
+    }
+    if((empty_col != -1) && (count == 2)) {
+      move m = 0;
+      m |= r;
+      m |= (empty_col << 2);
+      return m;
+    }
+  }
+  // case 2: 2 out of three in a col, with third cell empty
+  for(coord c = 0; c < 3; c++) {
+    int count = 0;
+    coord empty_row = -1;
+    for(coord r = 0; r < 3; r++) {
+      if(is_player_p(b, r, c, p)) count++;
+      if(is_empty(b, r, c)) empty_row = r;
+    }
+    if((empty_row != -1) && (count == 2)) {
+      move m = 0;
+      m |= empty_row;
+      m |= (c << 2);
+      return m;
+    }
+  }
+  // case 3: 2 out of three in back diagonal, with third cell empty
+  int count = 0;
+  coord empty_rc = -1;
+  for(coord rc = 0; rc < 3; rc++) {
+    if(is_player_p(b, rc, rc, p)) count++;
+    if(is_empty(b, rc, rc)) empty_rc = rc;
+  }
+  if((empty_rc != -1) && (count == 2)) {
+    move m = 0;
+    m |= empty_rc;
+    m |= (empty_rc << 2);
+    return m;
+  }
+  // case 4: 2 out of three in front diagonal, with third cell empty
+  count = 0;
+  empty_rc = -1;
+  for(coord rc = 0; rc < 3; rc++) {
+    if(is_player_p(b, rc, 2 - rc, p)) count++;
+    if(is_empty(b, rc, 2 - rc)) empty_rc = rc;
+  }
+  if((empty_rc != -1) && (count == 2)) {
+    move m = 0;
+    m |= empty_rc;
+    m |= ((empty_rc - 2) << 2);
+    return m;
+  }
+  // defensive moves
+  player o = other_player(p);
+  // case 5: 2 out of three in a row, with third cell empty
+  for(coord r = 0; r < 3; r++) {
+    count = 0;
+    coord empty_col = -1;
+    for(coord c = 0; c < 3; c++) {
+      if(is_player_p(b, r, c, o)) count++;
+      if(is_empty(b, r, c)) empty_col = c;
+    }
+    if((empty_col != -1) && (count == 2)) {
+      move m = 0;
+      m |= r;
+      m |= (empty_col << 2);
+      return m;
+    }
+  }
+  // case 6: 2 out of three in a col, with third cell empty
+  for(coord c = 0; c < 3; c++) {
+    count = 0;
+    coord empty_row = -1;
+    for(coord r = 0; r < 3; r++) {
+      if(is_player_p(b, r, c, o)) count++;
+      if(is_empty(b, r, c)) empty_row = r;
+    }
+    if((empty_row != -1) && (count == 2)) {
+      move m = 0;
+      m |= empty_row;
+      m |= (c << 2);
+      return m;
+    }
+  }
+  // case 7: 2 out of three in back diagonal, with third cell empty
+  count = 0;
+  empty_rc = -1;
+  for(coord rc = 0; rc < 3; rc++) {
+    if(is_player_p(b, rc, rc, o)) count++;
+    if(is_empty(b, rc, rc)) empty_rc = rc;
+  }
+  if((empty_rc != -1) && (count == 2)) {
+    move m = 0;
+    m |= empty_rc;
+    m |= (empty_rc << 2);
+    return m;
+  }
+  // case 8: 2 out of three in front diagonal, with third cell empty
+  count = 0;
+  empty_rc = -1;
+  for(coord rc = 0; rc < 3; rc++) {
+    if(is_player_p(b, rc, 2 - rc, o)) count++;
+    if(is_empty(b, rc, 2 - rc)) empty_rc = rc;
+  }
+  if((empty_rc != -1) && (count == 2)) {
+    move m = 0;
+    m |= empty_rc;
+    m |= ((empty_rc - 2) << 2);
+    return m;
+  }
+  // case 9: whatever empty spot we can find
+  for(coord r = 0; r < 3; r++) {
+    for(coord c = 0; c < 3; c++) {
+      if(is_empty(b, r, c)) {
+        move m = 0;
+        m |= r;
+        m |= (c << 2);
+        return m;
+      }
+    }
+  }
+  // we should never get to this point, so return a bad move
+  return -1;
+}
+
+void verify_board(board b) {
+  for(coord r = 0; r < 3; r++) {
+    for(coord c = 0; c < 3; c++) {
+      verify_value(get_cell(b, r, c));
+    }
+  }
+}
+
+void verify_coord(coord c) {
+  assert(0 <= c);
+  assert(c < 3);
+}
+
+void verify_player(player p) {
+  assert(p == 1 || p == 2);
+}
+
+void verify_move(move m) {
+  coord r = m & 0x3;
+  coord c = (m >> 2) & 0x3;
+  verify_coord(r);
+  verify_coord(c);
+}
+
+void verify_value(value v) {
+  assert(v == 0 || v == 1 || v == 2);
+}
+
+bool is_empty(board b, coord r, coord c) {
+  verify_board(b);
+  verify_coord(r);
+  verify_coord(c);
+  value v = get_cell(b, r, c);
+  verify_value(v);
+  return(v == 0);
+}
+
+bool is_player_1(board b, coord r, coord c) {
+  verify_board(b);
+  verify_coord(r);
+  verify_coord(c);
+  value v = get_cell(b, r, c);
+  verify_value(v);
+  return(v == 1);
+}
+
+bool is_player_2(board b, coord r, coord c) {
+  verify_board(b);
+  verify_coord(r);
+  verify_coord(c);
+  value v = get_cell(b, r, c);
+  verify_value(v);
+  return(v == 2);
+}
+
+bool is_player_p(board b, coord r, coord c, player p) {
+  verify_board(b);
+  verify_coord(r);
+  verify_coord(c);
+  value v = get_cell(b, r, c);
+  verify_value(v);
+  return(v == p);
+}
+
+value get_cell(board b, coord r, coord c) {
+  verify_coord(r);
+  verify_coord(c);
+  int offset = r + (3 * c);
+  return (b >> (offset * 2)) & 0x3;
+}
+
+board set_cell(board b, coord r, coord c, player p) {
+  verify_board(b);
+  verify_coord(r);
+  verify_coord(c);
+  verify_player(p);
+  assert(is_empty(b, r, c));
+  int offset = r + (3 * c);
+  int mask = p << (offset * 2);
+  board new_b = b | mask;
+  return new_b;
+}
+
+player other_player(player p) {
+  verify_player(p);
+  if(p == 1) return 2;
+  else return 1;
+}
+
+board make_move(board b, move m, player p) {
+  verify_board(b);
+  verify_move(m);
+  verify_player(p);
+  coord r = m & 3;
+  coord c = (m & 12) >> 2;
+  assert(is_empty(b, r, c));
+  value v = p;
+  return set_cell(b, r, c, v);
+}

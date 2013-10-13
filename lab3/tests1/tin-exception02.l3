@@ -1,0 +1,11 @@
+//test exception 6
+//assertion statement failure
+
+int bad_recursion(int n) {
+  assert(n >= 0);
+  return n - bad_recursion(n-2);
+}
+
+int main() {
+  return bad_recursion(3);
+}

@@ -1,0 +1,12 @@
+//test exception 8
+int foo();
+int may(){
+ 
+ return foo();
+}
+int main(){
+	return 3/may();
+}
+int foo(){
+	return itof(0);
+}

@@ -1,0 +1,12 @@
+//test error
+//function overload
+int foo(int a,int b){
+	return a;
+}
+int foo(bool c){
+	if(c) return 3;
+	else return 2;
+}
+int main(){
+	return foo(3,2);
+}

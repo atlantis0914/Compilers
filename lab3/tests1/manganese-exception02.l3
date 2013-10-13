@@ -1,0 +1,19 @@
+//test exception 6
+
+int reverse(int x) {
+    int bit_index = 1;
+    int reverse = 0;
+    for (int i = 0; i < 32; i++) {
+        reverse <<= 1;
+        reverse = x & bit_index;
+        bit_index <<= 1;
+    }
+    return reverse;
+}
+
+int main() {
+    int x = 1;
+    x = reverse(x);
+    assert(x > 0);
+    return 0;
+}

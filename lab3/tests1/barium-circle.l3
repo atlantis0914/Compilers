@@ -1,0 +1,64 @@
+//test return 0
+//    a  -  b
+//   /       \
+//  h         c
+//  |         |
+//  g         d
+//   \       /
+//    f  -  e
+int a(int a1);
+int b(int b1);
+int c(int c1);
+int d(int d1);
+int e(int e1);
+int f(int f1);
+int g(int g1);
+int h(int h1);
+
+int a(int a1)
+{
+  return b(a1+1);
+}
+
+int b(int b1)
+{
+  return c(b1+1);
+}
+
+int c(int c1)
+{
+  return d(c1+1);
+}
+
+int d(int d1)
+{
+  return e(d1+1);
+}
+
+int e(int e1)
+{
+  return f(e1+1);
+}
+
+int f(int f1)
+{
+  return g(f1+1);
+}
+
+int g(int g1)
+{
+  return h(g1+1);
+}
+
+int h(int h1)
+{
+  if (h1 == 0)
+    return 0;
+  return a(h1 - 8);
+}
+
+
+int main()
+{
+  return a(86) + b(39) + c(31) + d(22) + e(92) + f(21) + g(91) + h(76);
+}

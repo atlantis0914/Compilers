@@ -1,0 +1,7 @@
+//test error
+typedef int integer;
+typedef int integer;
+int main(){
+	integer a=3;
+	return a;
+}

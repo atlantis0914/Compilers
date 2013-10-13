@@ -1,0 +1,15 @@
+//test return 2
+
+int gcd(int m, int n) {
+   if ((m % n) == 0)
+      return n;
+   else
+      return gcd(n, m % n);
+}
+
+int main()
+{
+   return gcd(2,6);
+}
+
+int gcd(int m, int n);

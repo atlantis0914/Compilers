@@ -1,0 +1,13 @@
+//test return 16
+
+int deep(int n) {
+	if (n == 0) {
+		return 8;
+	} else {
+		return deep(n-1);
+	}
+}
+
+int main() {
+	return 8+deep(20000);
+}

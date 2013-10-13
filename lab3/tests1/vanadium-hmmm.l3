@@ -1,0 +1,8 @@
+//test error
+
+typedef int main;
+
+main main() {
+	main main = 4;
+	return main;
+}
