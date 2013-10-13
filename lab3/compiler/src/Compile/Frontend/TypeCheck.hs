@@ -40,6 +40,12 @@ checkTypeFnList (FnList gdecls pos) =
 lTypesEqual :: [IdentType] -> [IdentType] -> Bool 
 lTypesEqual l1 l2 = all (\(t1,t2) -> t1 == t2) $ zip l1 l2
 
+validateFnArgs :: [IdentType] -> String -> Bool
+validateFnArgs typL fnName = 
+  if (all (\t -> (not $ t == IVoid)) typL)
+    then True
+    else error ("Error : cannot have void argument in function declaration of " ++ fnName)
+
 -- Used to create an initial function map. Also checks basic declaration
 -- and redeclaration properties over the top-level program. 
 genFnMap :: FnMap -> GDecl -> FnMap
@@ -70,7 +76,6 @@ genFnMap fnMap (GFDefn (FDefn {fnName = name,
                else error ("Error : function " ++ name ++ " typed incorrectly at " ++ show pos)
     Nothing -> (Map.insert name (argTypes, retType, False, True) fnMap)
 
-
 checkGDecl :: Context -> GDecl -> Context
 -- It's our responsibility here to ensure that the name being type-def'd
 -- isn't already used as a function name. 
@@ -87,13 +92,11 @@ checkGDecl (ctx@(map, fnMap, dMap, tdMap, valid))
                            gdeclArgTypes = argTypes, 
                            gdeclReturnType = returnType, 
                            gdeclIsLibrary = isLibrary}) pos) = 
-  (map, fnMap, Map.insert name True dMap, tdMap, valid)
---   case (Map.lookup name fnMap) of 
---     Just (oldArgs, oldRet, oldLib, isDeclared) -> 
---       if ((lTypesEqual argTypes oldArgs) && (oldRet == returnType)) 
---         then (map, Map.insert name (oldArgs, oldRet, oldLib || isLibrary, isDeclared) fnMap, valid)
---         else error ("Error : function " ++ name ++ " redeclared incorrectly at " ++ (show pos))
---     Nothing -> (map, Map.insert name (argTypes, returnType, isLibrary, False) fnMap, valid)
+  let
+    argValid = validateFnArgs argTypes name
+  in
+    (map, fnMap, Map.insert name True dMap, tdMap, valid && argValid)
+
 
 -- We must set the map to EMPTY here - each function should start type
 -- checking with just its arguments as the environment. 
@@ -104,8 +107,9 @@ checkGDecl (ctx@(_, fnMap, dMap, tdMap, valid))
                            fnBody = body}) pos) = 
   let
     idMap = generateIdentContext args argTypes 
+    argValid = validateFnArgs argTypes name
   in 
-    checkASTTypes (idMap, fnMap, Map.insert name True dMap, tdMap, valid) body 
+    checkASTTypes (idMap, fnMap, Map.insert name True dMap, tdMap, valid && argValid) body 
 --    checkGFDefn (map, fnMap, valid) gdef
 
 generateIdentContext :: [String] -> [IdentType] -> Map.Map String IdentType
