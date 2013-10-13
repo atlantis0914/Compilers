@@ -36,7 +36,7 @@ prependAsDecls args argTypes (AST (Block stmts) p) =
     ast' = (AST (Block [decls']) p)
     Decl {declScope = inner} =  decls'
   in
-    trace ("Ast " ++ show ast') $ ast'
+    ast'
 
 checkInitialization :: [String] -> AST -> Bool
 checkInitialization args (AST (Block stmts) p) = 
@@ -82,7 +82,7 @@ checkStmt args (Ctrl (Return Nothing pos)) _ decls = (Set.empty, Set.empty, True
 checkStmt args (Block stmts) doErr decls = checkBlock args stmts doErr decls
 checkStmt args (Decl i t pos rest) doErr decls = 
   let
-    (decsRest, liveRest, b1) = isDeclaredDecl i decls $ checkStmt args rest doErr (trace ("decls = " ++ show decls) $ Set.insert i decls)
+    (decsRest, liveRest, b1) = isDeclaredDecl i decls $ checkStmt args rest doErr (Set.insert i decls)
     setI = isInitDecl args doErr liveRest i pos $ Set.singleton(i)
   in
     setI `seq` (Set.difference decsRest setI, Set.difference liveRest setI, b1)
