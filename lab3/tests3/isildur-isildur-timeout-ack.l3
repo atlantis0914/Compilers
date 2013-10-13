@@ -1,0 +1,19 @@
+//test exception
+// this really should timeout. Ackermann of (5,5) takes
+// an ungodly amount of time to compute.
+int a(int m, int n) {
+        if (m == 0) return n + 1;
+        if (m > 0 && n == 0) {
+                return a(m - 1, 1);
+        }
+        return a(m - 1, a(m, n - 1));
+}
+
+int main() {
+        int sum = 0;
+        for (int i = 0; true; i++) {
+                sum += a(i,i);
+                if (i == 10) break;
+        }
+        return sum / 0;
+}
