@@ -7,15 +7,15 @@ import qualified Debug.Trace as Trace
 import Compile.Backend.Registers
 import Compile.Backend.BackendUtils
 
-genAsm :: [AAsm] -> String -> [String]
-genAsm aasms fnName =
-  map (aasmToString fnName) aasms
+genAsm :: [AAsm] -> (String, Int) -> [String]
+genAsm aasms fnContext =
+  map (aasmToString fnContext) aasms
 
 cmpAsm :: ALoc -> AVal -> String
 cmpAsm loc val =
   "cmpl " ++ (avalToString val) ++ ", " ++ (alocToString loc)
 
-aasmToString :: String -> AAsm -> String
+aasmToString :: (String, Int) -> AAsm -> String
 
 {-aasmToString aasm | Trace.trace (show aasm) False = undefined-}
 
@@ -41,7 +41,7 @@ aasmToString _ AAsm {aAssign = [loc], aOp = Neq, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setne " ++ (alocByteToString loc) ++ "\n"
 
 aasmToString _ AAsm {aAssign = [loc], aOp = Neg, aArgs = [arg]} =
-  (aasmToString "" (AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]}) ++ "  " ++ (opToString Neg) ++ " " ++ (alocToString loc) ++ "\n")
+  (aasmToString ("", 0) (AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]}) ++ "  " ++ (opToString Neg) ++ " " ++ (alocToString loc) ++ "\n")
 
 aasmToString _ AAsm {aAssign = [loc], aOp = Div, aArgs = [snd]} = divModToString loc snd Div
 aasmToString _ AAsm {aAssign = [loc], aOp = Mod, aArgs = [snd]} = divModToString loc snd Mod
@@ -60,17 +60,17 @@ aasmToString _ AAsm {aAssign = [loc], aOp = BitwiseNot, aArgs = [arg]} =
 aasmToString _ AAsm {aAssign = [loc], aOp = op, aArgs = [arg]} =
   "  " ++ (opToString op) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
 
-aasmToString fnName (ACtrl (ALabel i)) =
+aasmToString (fnName, _) (ACtrl (ALabel i)) =
   "\n" ++ fnName ++ "label" ++ show i ++ ":\n"
 
-aasmToString fnName (ACtrl (AGoto i)) =
+aasmToString (fnName, _) (ACtrl (AGoto i)) =
   "  jmp " ++ fnName ++ "label" ++ show i ++ "\n"
 
-aasmToString fnName (ACtrl (AIf aval label)) =
+aasmToString (fnName, _) (ACtrl (AIf aval label)) =
   "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz " ++ fnName ++ "label" ++ (show label) ++ "\n"
 
-aasmToString _ (ACtrl (ARet _)) =
-  concat [genFnEpilogues, "  popq %rbp\n", "  ret\n"]
+aasmToString (_, size) (ACtrl (ARet _)) =
+  concat [genFnEpilogues, "  popq %rbp\n", "  addq $" ++ show size ++ ", %rsp\n", "  ret\n"]
 
 aasmToString _ (AFnCall fnName loc locs) =
   (genProlugues loc) ++ "  call __c0_" ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n" ++ (genEpilogues loc)
@@ -121,6 +121,8 @@ alocByteToString (AMem i) =
 alocToQString :: ALoc -> String
 alocToQString (AReg i) =
   safeLookup i regQMap "SHIT"
+alocToQString (AMem i) =
+  alocToString (AMem i)
 
 alocToString :: ALoc -> String
 alocToString ASpill =

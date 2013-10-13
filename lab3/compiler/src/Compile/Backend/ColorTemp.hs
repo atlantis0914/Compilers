@@ -21,7 +21,7 @@ replaceAsm coloring aasm@(AAsm {aAssign = assigns, aOp = op, aArgs = args@[ALoc 
     assigns' = map (replaceAssigns coloring) assigns
     args' = map (replaceArgs coloring) args
   in
-    [AAsm {aAssign = assigns', aOp = op, aArgs = args'}]
+    spillAAsm False $ AAsm {aAssign = assigns', aOp = op, aArgs = args'}
 
 replaceAsm coloring aasm@(AAsm {aAssign = assigns@[ATemp i], aOp = op, aArgs = args}) =
   let
@@ -29,22 +29,22 @@ replaceAsm coloring aasm@(AAsm {aAssign = assigns@[ATemp i], aOp = op, aArgs = a
     args' = map (replaceArgs coloring) args
     aasm = AAsm {aAssign = assigns', aOp = op, aArgs = args'}
   in
-    spillAAsm aasm
+    spillAAsm True aasm
 
 replaceAsm coloring aasm@(ACtrl (AIf aval label)) =
   let
     aval' = replaceArgs coloring aval
   in
-    spillAAsm $ ACtrl (AIf aval' label)
+    spillAAsm True $ ACtrl (AIf aval' label)
 
-replaceAsm coloring aasm@(ACtrl a) = spillAAsm aasm
+replaceAsm coloring aasm@(ACtrl a) = spillAAsm True aasm
 
 replaceAsm coloring aasm@(AFnCall fnName loc locs) =
   let
     loc' = replaceAssigns coloring loc
     locs' = map (replaceAssigns coloring) locs
   in
-    spillAAsm $ AFnCall fnName loc' locs'
+    spillAAsm True $ AFnCall fnName loc' locs'
 
 replaceAssigns :: ColoringMap -> ALoc -> ALoc
 replaceAssigns coloring (ATemp i) =
