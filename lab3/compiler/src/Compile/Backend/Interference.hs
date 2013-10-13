@@ -87,7 +87,7 @@ getAAsmEdges (AAsm {aAssign = assign, aOp = op, aArgs = args}) l l' = getConflic
 
 getAAsmEdges (ACtrl c) l l' = []
 
-getAAsmEdges (AFnCall _ _ _) l l' = []
+getAAsmEdges (AFnCall _ loc _) l l' = getConflict [loc] l'
 
 getConflict assign [] =  []
 getConflict assign (loc:ls) = 

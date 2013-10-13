@@ -72,13 +72,12 @@ codeGen aasmList fnName = let
               coloredAasmList = colorTemps twoOpAasmList coloring
               asm = genAsm coloredAasmList fnName
             in
---              if (debugFlag)
---                then genDebug stmts aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm
-              concat asm)
+              if (debugFlag)
+                then genDebug aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm
+                else concat asm)
 
-genDebug stmts aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAasm asm =
+genDebug aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAasm asm =
   let
-    stmts' = listShow stmts
     aasm' = listShow aasm
     liveVars' = listShow liveVars
     gmap' = listShow $ Map.toList gmap
@@ -88,7 +87,6 @@ genDebug stmts aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAas
     coloredAasm' = listShow coloredAasm
     asm' = listShow asm
   in
-    "Statements\n" ++ stmts' ++ "\n\n" ++
     "Aasm\n" ++ aasm' ++ "\n\n" ++
     "LiveVars\n" ++ liveVars' ++ "\n\n" ++
     "InterferenceGraph\n" ++ gmap' ++ "\n\n" ++

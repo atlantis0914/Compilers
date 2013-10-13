@@ -76,13 +76,13 @@ aasmToString _ (AFnCall fnName loc locs) =
   (genProlugues loc) ++ "  call __c0_" ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n" ++ (genEpilogues loc)
 
 genFnEpilogues :: String
-genFnEpilogues = concatMap genEpilogueIns callees
+genFnEpilogues = concatMap genEpilogueIns (reverse callees)
 
 genProlugues :: ALoc -> String
 genProlugues loc =
   let
     reg = alocToQString loc
-    callers' = filter (\r -> reg /= r) callers
+    callers' = filter (\r -> reg /= r) (reverse callers)
   in
     concatMap genPrologueIns callers'
 
