@@ -61,8 +61,7 @@ codeGen aasmList fnName = let
       then (let
              coloring = naiveColor allLocs
              coloredAasmList = colorTemps twoOpAasmList coloring
-             spilledAasmList = spill coloredAasmList
-             asm = genAsm spilledAasmList fnName
+             asm = genAsm coloredAasmList fnName
            in
              concat asm)
       else (let
@@ -71,8 +70,7 @@ codeGen aasmList fnName = let
               simp_ordering = maximumCardinalitySearch interference_graph -- now a [Vertex ALoc]
               coloring = greedyColor interference_graph simp_ordering
               coloredAasmList = colorTemps twoOpAasmList coloring
-              spilledAasmList = spill coloredAasmList
-              asm = genAsm spilledAasmList fnName
+              asm = genAsm coloredAasmList fnName
             in
 --              if (debugFlag)
 --                then genDebug stmts aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm

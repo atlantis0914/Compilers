@@ -171,10 +171,18 @@ genExp alloc@(varMap,n,l,aasm) (ExpFnCall fnName exprs _) dest =
     lenMinusOne = (length allocs) - 1
     locs = map toLoc (take lenMinusOne allocs)
     last@(varMap',n',l',aasm') = allocs !! lenMinusOne
-
+    (aasm'', _) = foldl moveArgs (aasm', 0) locs
     newAasm = AFnCall fnName dest locs
   in
-    (varMap', n', l', aasm' ++ [newAasm])
+    (varMap', n', l', aasm'' ++ [newAasm])
+
+moveArgs :: ([AAsm], Int) -> ALoc -> ([AAsm], Int)
+moveArgs (aasms, n) arg =
+  let
+    aasm = if n <= 6 then [AAsm {aAssign = [AReg $ argArr !! n], aOp = Nop, aArgs = [ALoc arg]}]
+                     else []
+  in
+    (aasms ++ aasm, n + 1)
 
 toLoc :: Alloc -> ALoc
 toLoc (_, n, _, _) =

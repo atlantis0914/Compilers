@@ -112,9 +112,7 @@ safeLookup i map s =
                            Just r -> r
 alocByteToString :: ALoc -> String
 alocByteToString (AReg i) =
-  if i > max_color_num + 1
-    then alocToString (AMem $ i - max_color_num)
-    else safeLookup i regByteMap "FUCK"
+  safeLookup i regByteMap "FUCK"
 alocByteToString (AMem i) =
   alocToString (AMem i)
 

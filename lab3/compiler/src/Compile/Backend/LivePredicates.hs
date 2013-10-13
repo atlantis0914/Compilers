@@ -23,11 +23,12 @@ getLocs i liveMap =
 addLocs :: Int -> LiveContext -> [ALoc] -> LiveContext
 addLocs i (liveMap, isNew) locs =
   let
+    locs' = filterLocs locs
     maybeOldLocs = Map.lookup i liveMap
     oldLocs = case maybeOldLocs of Nothing -> error "OLD LOC NOT FOUND"
                                    Just l -> l
-    isNew' = (length oldLocs) /= (length locs)
-    liveMap' = Map.insert i locs liveMap
+    isNew' = (length oldLocs) /= (length locs')
+    liveMap' = Map.insert i locs' liveMap
   in
     (liveMap', isNew || isNew')
 
@@ -74,6 +75,13 @@ runPredicate labelMap i (AFnCall _ loc locs) (liveMap, isNew) =
     locs'' = locs' `union` locs
   in
     addLocs i (liveMap, isNew) locs''
+
+isTemp :: ALoc -> Bool
+isTemp aloc = case aloc of ATemp _ -> True
+                           _ -> False
+
+filterLocs :: [ALoc] -> [ALoc]
+filterLocs locs = filter isTemp locs
 
 labelLocs :: LabelMap -> LiveMap -> Int -> [ALoc]
 labelLocs labelMap liveMap label =
