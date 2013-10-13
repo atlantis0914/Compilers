@@ -29,3 +29,4 @@ instance Show Expr where
   show (Ident i _) = i
   show (ExpUnOp op e _) = show op ++ "(" ++ show e ++ ")"
   show (ExpTernary e1 e2 e3 _) = show e1 ++ " ? " ++ show e2 ++ " : " ++ show e3
+  show (ExpFnCall n _ _) = "call " ++ n

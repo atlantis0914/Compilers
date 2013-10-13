@@ -33,19 +33,21 @@ fnListCodeGen :: FnList -> String
 fnListCodeGen fnList =
   let
     fnAasms = genFIR fnList
+    asm = concatMap fnAAsmCodeGen fnAasms 
+    epilogue = concat ["error:\n", "movw $1, %ax\n", "movw $0, %bx\n", "divw %bx\n"]
   in
-    concatMap fnAAsmCodeGen fnAasms
+    asm ++ epilogue
 
 fnAAsmCodeGen :: FnAAsm -> String
 fnAAsmCodeGen (AAFDefn aasms fnName) =
   let
-    prelude = ["_c0_" ++ fnName ++ ":"]
+    prelude = [".globl __c0_" ++ fnName ++ "\n", "__c0_" ++ fnName ++ ":\n"]
     epilogue = ["  ret\n"]
   in
     concat (prelude ++ [codeGen aasms] ++ epilogue)
 
 fnAAsmCodeGen (AAFDecl fnName) =
-  ".globl _c0_" ++ fnName
+  ""
 
 -- Generates the AAsm from an AST
 codeGen aasmList = let

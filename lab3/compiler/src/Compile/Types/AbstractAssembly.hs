@@ -17,7 +17,7 @@ data AAsm = AAsm {aAssign :: [ALoc]
                  ,aArgs   :: [AVal]
                  }
           | ACtrl ACtrl
-          | AFnCall String [ALoc]
+          | AFnCall String ALoc [ALoc]
           | AComment String deriving (Show, Eq)
 
 data AVal = ALoc ALoc

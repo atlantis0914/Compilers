@@ -8,11 +8,7 @@ import Compile.Backend.Registers
 
 genAsm :: [AAsm] -> [String]
 genAsm aasms =
-  let
-    prelude = [".globl __c0_main\n", "__c0_main:\n"]
-    epilogue = ["  ret\n", "error:\n", "movw $1, %ax\n", "movw $0, %bx\n", "divw %bx\n"]
-  in
-    map aasmToString aasms
+  map aasmToString aasms
 
 cmpAsm :: ALoc -> AVal -> String
 cmpAsm loc val =
@@ -74,6 +70,9 @@ aasmToString (ACtrl (AIf aval label)) =
 
 aasmToString (ACtrl (ARet _)) =
   "  ret" ++ "\n"
+
+aasmToString (AFnCall fnName loc locs) =
+  "  call _c0_" ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n"
 
 avalByteToString :: AVal -> String
 avalByteToString aval =

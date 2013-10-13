@@ -24,7 +24,7 @@ import Compile.Frontend.TypeCheck
 import Compile.Frontend.CheckAST
 import Compile.IR.GenIR
 -- import Compile.Frontend.Minimize
--- import Compile.Backend.CodeGen
+import Compile.Backend.CodeGen
 
 import qualified Debug.Trace as Trace
 
@@ -53,14 +53,14 @@ compile job = do
 --     writer (jobOut job) elabFnList
     liftEIO $ checkFnList elabFnList
 --    minimizedAst <- liftEIO $ minimize elabAst
---     if jobOutFormat job == C0
---       then writer (jobOut job) minimizedAst
---       else let asm = codeGen minimizedAst in
---               if jobOutFormat job == Asm
---                  then stringWriter (jobOut job) asm
---                  else do writer asmFile minimizedAst
---                          let o = if jobOutFormat job == Obj then "-c" else ""
---                          gcc o asmFile (jobOut job)
+    if jobOutFormat job == C0
+      then writer (jobOut job) elabFnList
+      else let asm = fnListCodeGen elabFnList in
+              if jobOutFormat job == Asm
+                 then stringWriter (jobOut job) asm
+                 else do writer asmFile elabFnList
+                         let o = if jobOutFormat job == Obj then "-c" else ""
+                         gcc o asmFile (jobOut job)
   case res of
     Left msg -> error msg
     Right () -> return ()
