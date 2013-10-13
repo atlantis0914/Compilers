@@ -48,8 +48,8 @@ compile :: Job -> IO ()
 compile job = do
   res <- runErrorT $ do -- Constructor for the error monad transformer
     header <- getLibraryCode job
-    fnList <- parseFnList $ jobSource job -- ParseFnList
-    elabFnList <- liftEIO $ elaborate fnList -- FnList
+    (ParseFnList fnList pos) <- parseFnList $ jobSource job -- ParseFnList
+    elabFnList <- liftEIO $ elaborate (ParseFnList (header ++ fnList) pos) -- FnList
 --     writer (jobOut job) elabFnList
     liftEIO $ checkFnList elabFnList
 --    minimizedAst <- liftEIO $ minimize elabAst
