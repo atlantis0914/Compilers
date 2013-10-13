@@ -41,7 +41,7 @@ aasmToString _ AAsm {aAssign = [loc], aOp = Neq, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setne " ++ (alocByteToString loc) ++ "\n"
 
 aasmToString _ AAsm {aAssign = [loc], aOp = Neg, aArgs = [arg]} =
-  (aasmToString _ (AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]}) ++ "  " ++ (opToString Neg) ++ " " ++ (alocToString loc) ++ "\n")
+  (aasmToString "" (AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]}) ++ "  " ++ (opToString Neg) ++ " " ++ (alocToString loc) ++ "\n")
 
 aasmToString _ AAsm {aAssign = [loc], aOp = Div, aArgs = [snd]} = divModToString loc snd Div
 aasmToString _ AAsm {aAssign = [loc], aOp = Mod, aArgs = [snd]} = divModToString loc snd Mod
@@ -63,11 +63,11 @@ aasmToString _ AAsm {aAssign = [loc], aOp = op, aArgs = [arg]} =
 aasmToString fnName (ACtrl (ALabel i)) =
   "\n" ++ fnName ++ "label" ++ show i ++ ":\n"
 
-aasmToString _ (ACtrl (AGoto i)) =
-  "  jmp label" ++ show i ++ "\n"
+aasmToString fnName (ACtrl (AGoto i)) =
+  "  jmp " ++ fnName ++ "label" ++ show i ++ "\n"
 
-aasmToString _ (ACtrl (AIf aval label)) =
-  "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz label" ++ (show label) ++ "\n"
+aasmToString fnName (ACtrl (AIf aval label)) =
+  "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz " ++ fnName ++ "label" ++ (show label) ++ "\n"
 
 aasmToString _ (ACtrl (ARet _)) =
   concat [genFnEpilogues, "  popq %rbp\n", "  ret\n"]
