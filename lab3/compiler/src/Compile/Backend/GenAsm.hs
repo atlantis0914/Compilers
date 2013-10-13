@@ -111,6 +111,8 @@ safeLookup i map s =
   case Map.lookup i map of Nothing -> error ("NOT FOUND " ++ (show i) ++ " wtf " ++ s)
                            Just r -> r
 alocByteToString :: ALoc -> String
+alocByteToString ASpill =
+  safeLookup spill_reg_num regByteMap "SPILL"
 alocByteToString (AReg i) =
   safeLookup i regByteMap "FUCK"
 alocByteToString (AMem i) =
@@ -125,7 +127,7 @@ alocToString ASpill =
   safeLookup spill_reg_num regMap "SPILL"
 alocToString (AReg i) =
   safeLookup i regMap "SHIT"
-alocToString (AMem i) =  "-" ++ (show (i * 4)) ++ "(%rsp)"
+alocToString (AMem i) =  "-" ++ (show (i * 4)) ++ "(%rbp)"
 alocToString (ATemp i) =
   error "There's still an temp!"
 

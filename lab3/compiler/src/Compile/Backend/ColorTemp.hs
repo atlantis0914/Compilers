@@ -12,8 +12,9 @@ replaceAsm coloring aasm@(AAsm {aAssign = assigns@[AReg i], aOp = op, aArgs = ar
   let
     assigns' = map (replaceAssigns coloring) assigns
     args' = map (replaceArgs coloring) args
+    args'' = map spillVal args'
   in
-    [AAsm {aAssign = assigns', aOp = op, aArgs = args'}]
+    [AAsm {aAssign = assigns', aOp = op, aArgs = args''}]
 
 replaceAsm coloring aasm@(AAsm {aAssign = assigns, aOp = op, aArgs = args@[ALoc (AReg i)]}) =
   let
