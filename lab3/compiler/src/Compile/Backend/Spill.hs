@@ -16,17 +16,20 @@ spillVal arg =
 
 spillAAsm :: AAsm -> [AAsm]
 spillAAsm aasm@(AAsm {aAssign = [AReg i], aOp = BitwiseNot, aArgs = [arg]}) =
-  if i > max_color_num
-      then [AAsm {aAssign = [AReg spill_reg_num],
-                  aOp = Nop,
-                  aArgs = [ALoc $ AMem $ i - max_color_num]},
-            AAsm {aAssign = [AReg spill_reg_num],
-                  aOp = BitwiseNot,
-                  aArgs = [arg]},
-            AAsm {aAssign = [AMem $ i - max_color_num],
-                  aOp = Nop,
-                  aArgs = [ALoc $ AReg spill_reg_num]}]
-      else [aasm]
+  let
+    arg' = spillVal arg
+  in
+    if i > max_color_num
+        then [AAsm {aAssign = [ASpill],
+                    aOp = Nop,
+                    aArgs = [ALoc $ AMem $ i - max_color_num]},
+              AAsm {aAssign = [ASpill],
+                    aOp = BitwiseNot,
+                    aArgs = [arg']},
+              AAsm {aAssign = [AMem $ i - max_color_num],
+                    aOp = Nop,
+                    aArgs = [ALoc $ ASpill]}]
+        else [aasm]
 
 spillAAsm aasm@(AAsm {aAssign = [AReg i], aOp = op, aArgs = [arg]}) =
   let
@@ -34,23 +37,23 @@ spillAAsm aasm@(AAsm {aAssign = [AReg i], aOp = op, aArgs = [arg]}) =
     aasm' = AAsm {aAssign = [AReg i], aOp = op, aArgs = [arg']}
   in
     if i > max_color_num
-      then [AAsm {aAssign = [AReg spill_reg_num],
+      then [AAsm {aAssign = [ASpill],
                   aOp = Nop,
                   aArgs = [ALoc $ AMem $ i - max_color_num]},
-            AAsm {aAssign = [AReg spill_reg_num],
+            AAsm {aAssign = [ASpill],
                   aOp = op,
                   aArgs = [arg']},
             AAsm {aAssign = [AMem $ i - max_color_num],
                   aOp = Nop,
-                  aArgs = [ALoc $ AReg spill_reg_num]}]
+                  aArgs = [ALoc $ ASpill]}]
       else [aasm']
 
 spillAAsm aasm@(ACtrl (AIf (ALoc (AReg i)) label)) =
   if i > max_color_num
-    then [AAsm {aAssign = [AReg spill_reg_num],
+    then [AAsm {aAssign = [ASpill],
                 aOp = Nop,
                 aArgs = [ALoc $ AMem $ i - max_color_num]},
-          ACtrl (AIf (ALoc (AReg spill_reg_num)) label)]
+          ACtrl (AIf (ALoc (ASpill)) label)]
     else [aasm]
 spillAAsm aasm@(ACtrl c) = [aasm]
 spillAAsm aasm = [aasm]

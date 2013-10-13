@@ -13,9 +13,21 @@ genFIR :: FnList -> [FnAAsm]
 genFIR (FnList gdecls _) =
   Maybe.mapMaybe genFnAAsm gdecls
 
+--addArg :: Alloc -> String -> Alloc
+--addArg alloc@(varMap, n, l, aasms) arg =
+--  let
+--    aasms' = if n <= 6 then callers !! n
+--                       else aasms
+--
+--  in
+--    (varMap', n+1, l, aasms')
+
 genFnAAsm :: GDecl -> Maybe FnAAsm
-genFnAAsm (GFDefn (FDefn name _ _ _ ast _) _) =
-  Just $ AAFDefn (genIR ast) name
+genFnAAsm (GFDefn (FDefn name args _ _ ast _) _) =
+  let
+    alloc = (Map.empty, 0, 0, [])
+  in
+    Just $ AAFDefn (genIR ast alloc) name
 
 genFnAAsm (GFDecl (FDecl name _ _ _ isLib _) _) =
   if isLib then Just $ AAFDecl name
@@ -23,10 +35,10 @@ genFnAAsm (GFDecl (FDecl name _ _ _ isLib _) _) =
 
 genFnAAsm _ = Nothing
 
-genIR :: AST -> [AAsm]
-genIR (AST (Block stmts) _) =
+genIR :: AST -> Alloc -> [AAsm]
+genIR (AST (Block stmts) _) alloc =
   let
-    (_,_,_,aasm) = foldl genStmt (Map.empty, 0, 0, []) stmts
+    (_,_,_,aasm) = foldl genStmt alloc stmts
   in
     aasm
 

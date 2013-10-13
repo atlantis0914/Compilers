@@ -15,10 +15,14 @@ regMap = Map.fromList [(0, "%eax"),
                       (8, "%r12d"),
                       (9, "%r13d"),
                       (10, "%r14d"),
-                      (11, "%r15d")]
+                      (11, "%r15d"),
+                      (12, "%edi"),
+                      (13, "%esi")]
 
 callers = ["%edi", "%esi", "%edx", "%ecx", "%r8d", "%r9d", "%r10d", "%r11d"]
 callees = ["%ebx", "%r12d", "%r13d", "%r14d", "%r15d"]
+
+argArr = [12, 13, 3, 2, 4, 5]
 
 regByteMap :: Map.Map Int String
 regByteMap = Map.fromList [(0, "%al"),

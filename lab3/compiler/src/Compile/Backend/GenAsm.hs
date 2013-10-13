@@ -119,10 +119,10 @@ alocByteToString (AMem i) =
   alocToString (AMem i)
 
 alocToString :: ALoc -> String
+alocToString ASpill =
+  safeLookup spill_reg_num regMap "SPILL"
 alocToString (AReg i) =
-  if i > max_color_num + 1
-    then alocToString (AMem $ i - max_color_num)
-    else safeLookup i regMap "SHIT"
+  safeLookup i regMap "SHIT"
 alocToString (AMem i) =  "-" ++ (show (i * 4)) ++ "(%rsp)"
 alocToString (ATemp i) =
   error "There's still an temp!"
