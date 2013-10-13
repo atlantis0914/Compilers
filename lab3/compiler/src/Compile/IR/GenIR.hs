@@ -52,6 +52,22 @@ genStmt (m,i,l,aasm) (Block stmts) = let
   in (m',i',l',aasm ++ aasm')
 
 genCtrl :: Alloc -> Ctrl -> Alloc
+genCtrl (m,i,l,aasm) (Assert e _) = let
+  -- Can't generate SourcePos so we can't exactly use the If code
+  (_,i',el,eAasm) = genExp (m,i+1,l,[]) e (ATemp i)
+  abortLabel = el
+  endLabel = el + 1
+  abortAasm = [ACtrl $ ALabel abortLabel] ++ [AFnCall "abort" (ATemp i) []]
+  outputAasm = 
+    eAasm
+    ++ [ACtrl $ AIf (ALoc $ ATemp i) abortLabel,
+        ACtrl $ AGoto endLabel]
+    ++ abortAasm
+    ++ [ACtrl $ ALabel endLabel]
+  in
+    (m, i', el + 2, aasm ++ outputAasm) 
+  
+  
 genCtrl (m,i,l,aasm) (If e s1 s2 _) = let
   -- store aasm for e in Temp(i)
   (_,i',el,eAasm) = genExp (m,i+1,l,[]) e (ATemp i)
