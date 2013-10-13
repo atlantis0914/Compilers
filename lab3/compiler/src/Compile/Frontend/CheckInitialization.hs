@@ -99,6 +99,10 @@ checkStmt args (Ctrl (If e s1 s2 pos)) doErr decls =
     decs1 `seq` lives1 `seq` decs2 `seq` lives2 `seq` 
     (Set.intersection decs1 decs2, Set.union (used e) (Set.union lives1 lives2), b1 && b2)
 
+
+checkStmt args (Ctrl (Assert e pos)) doErr decls =  
+  isDeclaredExpr e decls pos $ (Set.empty, used e, False)
+
 checkStmt args (Ctrl (While e s1 pos)) doErr decls = 
   let
     (decs1, lives1, b1) = isDeclaredExpr e decls pos $ checkStmt args s1 doErr decls

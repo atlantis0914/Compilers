@@ -67,6 +67,7 @@ genStmt (m,i,l,aasm) (Block stmts) = let
   in (m',i',l',aasm ++ aasm')
 
 genCtrl :: Alloc -> Ctrl -> Alloc
+
 genCtrl (m,i,l,aasm) (Assert e _) = let
   -- Can't generate SourcePos so we can't exactly use the If code
   (_,i',el,eAasm) = genExp (m,i+1,l,[]) e (ATemp i)
@@ -125,6 +126,11 @@ genCtrl (m,i,l,aasm) (Return (Just expr) _) =
     (_,i',l',aasm') = genExp (m,i,l,[]) expr (AReg 0)
   in
     (m,i',l',aasm ++ aasm' ++ [ACtrl $ ARet (ALoc (AReg 0))])
+
+genCtrl (m,i,l,aasm) (Return Nothing _) =
+  -- dummy value
+  (m,i,l,aasm ++ [ACtrl $ ARet (AImm 1)])
+    
 
 genExp :: Alloc -> Expr -> ALoc -> Alloc
 genExp (varMap,n,l,aasm) (ExpInt num _ _) dest =
