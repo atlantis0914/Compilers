@@ -37,7 +37,8 @@ checkTypeFnList (FnList gdecls pos) =
           else error ("Error : int main() must be the right type"))
 
 lTypesEqual :: [IdentType] -> [IdentType] -> Bool 
-lTypesEqual l1 l2 = all (\(t1,t2) -> t1 == t2) $ zip l1 l2
+lTypesEqual l1 l2 = (all (\(t1,t2) -> t1 == t2) $ zip l1 l2) && 
+                    (length l1 == length l2)
 
 validateFnArgs :: [IdentType] -> String -> Bool
 validateFnArgs typL fnName = 
