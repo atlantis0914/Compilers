@@ -9,7 +9,6 @@ import qualified Data.Tuple as Tuple
 
 import Debug.Trace
 
-
 --  The quad in FnMap represents the 
 --  1. Argument Types
 --  2. Return Type
@@ -116,13 +115,6 @@ generateIdentContext :: [String] -> [IdentType] -> Map.Map String IdentType
 generateIdentContext args argTypes = 
   foldl (\m -> \(a,at) -> Map.insert a at m) (Map.empty) $ zip args argTypes
 
-checkGFDefn (ctx@(map, fnMap, dMap, tdMap, valid)) 
-            (GFDefn (FDefn {fnName = name,
-                            fnArgs = args,
-                            fnArgTypes = argTypes,
-                            fnReturnType = retType,
-                            fnBody = body}) pos) = 
-  checkASTTypes (map, fnMap, Map.insert name True dMap, tdMap, valid) body
 
 checkASTTypes :: Context -> AST -> Context
 checkASTTypes ctx (AST stmt _) = checkStmtValid ctx stmt
