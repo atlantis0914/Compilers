@@ -7,7 +7,7 @@ import qualified Debug.Trace as Trace
 import Compile.Backend.Registers
 import Compile.Backend.BackendUtils
 
-genAsm :: [AAsm] -> (String, Int) -> [String]
+genAsm :: [AAsm] -> (String, Int, Int, Int) -> [String]
 genAsm aasms fnContext =
   map (aasmToString fnContext) aasms
 
@@ -15,7 +15,7 @@ cmpAsm :: ALoc -> AVal -> String
 cmpAsm loc val =
   "cmpl " ++ (avalToString val) ++ ", " ++ (alocToString loc)
 
-aasmToString :: (String, Int) -> AAsm -> String
+aasmToString :: (String, Int, Int, Int) -> AAsm -> String
 
 {-aasmToString aasm | Trace.trace (show aasm) False = undefined-}
 
@@ -41,7 +41,7 @@ aasmToString _ AAsm {aAssign = [loc], aOp = Neq, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setne " ++ (alocByteToString loc) ++ "\n"
 
 aasmToString _ AAsm {aAssign = [loc], aOp = Neg, aArgs = [arg]} =
-  (aasmToString ("", 0) (AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]}) ++ "  " ++ (opToString Neg) ++ " " ++ (alocToString loc) ++ "\n")
+  (aasmToString ("", 0, 0, 0) (AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]}) ++ "  " ++ (opToString Neg) ++ " " ++ (alocToString loc) ++ "\n")
 
 aasmToString _ AAsm {aAssign = [loc], aOp = Div, aArgs = [snd]} = divModToString loc snd Div
 aasmToString _ AAsm {aAssign = [loc], aOp = Mod, aArgs = [snd]} = divModToString loc snd Mod
@@ -60,23 +60,23 @@ aasmToString _ AAsm {aAssign = [loc], aOp = BitwiseNot, aArgs = [arg]} =
 aasmToString _ AAsm {aAssign = [loc], aOp = op, aArgs = [arg]} =
   "  " ++ (opToString op) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
 
-aasmToString (fnName, _) (ACtrl (ALabel i)) =
+aasmToString (fnName, _, _ ,_) (ACtrl (ALabel i)) =
   "\n" ++ fnName ++ "label" ++ show i ++ ":\n"
 
-aasmToString (fnName, _) (ACtrl (AGoto i)) =
+aasmToString (fnName, _, _, _) (ACtrl (AGoto i)) =
   "  jmp " ++ fnName ++ "label" ++ show i ++ "\n"
 
-aasmToString (fnName, _) (ACtrl (AIf aval label)) =
+aasmToString (fnName, _, _, _) (ACtrl (AIf aval label)) =
   "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz " ++ fnName ++ "label" ++ (show label) ++ "\n"
 
-aasmToString (_, size) (ACtrl (ARet _)) =
-  concat ["  addq $" ++ show size ++ ", %rsp\n", genFnEpilogues, "  popq %rbp\n", "  ret\n"]
+aasmToString (_, size, numArgs, _) (ACtrl (ARet _)) =
+  concat ["  addq $" ++ show size ++ ", %rsp\n", genFnEpilogues numArgs, "  ret\n"]
 
 aasmToString _ (AFnCall fnName loc locs) =
   let
     (prologue, size) = genProlugues loc locs
   in
-    prologue ++ "  call " ++ fnName ++ "\n  movl %eax, %r15d\n" ++ "  addq $" ++ show (size * 8) ++ ", %rsp\n" ++ (genEpilogues loc) ++ "  movl %r15d, " ++ (alocToString loc) ++ "\n" 
+    prologue ++ "  call " ++ fnName ++ "\n  movl %eax, %r15d\n" ++ "  addq $" ++ show (size * 8) ++ ", %rsp\n" ++ (genEpilogues loc) ++ "  movl %r15d, " ++ (alocToString loc) ++ "\n"
 
 genArgPrologue' :: Int -> ALoc -> (String, Int, Int) -> (String, Int, Int)
 genArgPrologue' shift loc (prolog, i, j) =
@@ -88,8 +88,18 @@ genArgPrologue' shift loc (prolog, i, j) =
   in
     (prolog ++ newPro, i-1, j')
 
-genFnEpilogues :: String
-genFnEpilogues = concatMap genEpilogueIns (reverse callees)
+genFnEpilogues :: Int -> String
+genFnEpilogues numArgs =
+  let
+    rest = concatMap genEpilogueIns (reverse callees)
+    popBP = if numArgs > 6 then "  popq %rbp\n"
+                           else ""
+    n = if numArgs > 6 then (length callees) + 1
+                       else length callees
+    buffer = if n `mod` 2 == 0 then incrStack8
+                               else ""
+  in
+    buffer ++ rest ++ popBP
 
 genProlugues :: ALoc -> [ALoc] -> (String, Int)
 genProlugues loc locs =

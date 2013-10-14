@@ -9,7 +9,7 @@ module Compile.Types.AbstractAssembly where
 import Compile.Types.Ops
 
 
-data FnAAsm = AAFDefn [AAsm] String
+data FnAAsm = AAFDefn [AAsm] String Int
             | AAFDecl String
 
 data AAsm = AAsm {aAssign :: [ALoc]

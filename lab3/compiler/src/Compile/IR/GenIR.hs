@@ -30,7 +30,7 @@ genFnAAsm (GFDefn (FDefn name args _ _ ast _) _) =
     alloc = (Map.empty, 0, 0, [])
     alloc' = foldl addArg alloc args
   in
-    Just $ AAFDefn (genIR ast alloc') name
+    Just $ AAFDefn (genIR ast alloc') name (length args)
 
 -- genFnAasm (GFDecl (FDecl {
 

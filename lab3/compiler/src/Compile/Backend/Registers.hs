@@ -5,13 +5,13 @@ import qualified Data.Map as Map
 
 regMap :: Map.Map Int String
 regMap = Map.fromList [(0, "%eax"),
-                      (1, "%ebx"),
-                      (2, "%ecx"),
-                      (3, "%edx"),
-                      (4, "%r8d"),
-                      (5, "%r9d"),
-                      (6, "%r10d"),
-                      (7, "%r11d"),
+                      (1, "%ecx"),
+                      (2, "%edx"),
+                      (3, "%r8d"),
+                      (4, "%r9d"),
+                      (5, "%r10d"),
+                      (6, "%r11d"),
+                      (7, "%ebx"),
                       (8, "%r12d"),
                       (9, "%r13d"),
                       (10, "%r14d"),
@@ -21,13 +21,13 @@ regMap = Map.fromList [(0, "%eax"),
 
 regQMap :: Map.Map Int String
 regQMap = Map.fromList [(0, "%rax"),
-                       (1, "%rbx"),
-                       (2, "%rcx"),
-                       (3, "%rdx"),
-                       (4, "%r8"),
-                       (5, "%r9"),
-                       (6, "%r10"),
-                       (7, "%r11"),
+                       (1, "%rcx"),
+                       (2, "%rdx"),
+                       (3, "%r8"),
+                       (4, "%r9"),
+                       (5, "%r10"),
+                       (6, "%r11"),
+                       (7, "%rbx"),
                        (8, "%r12"),
                        (9, "%r13"),
                        (10, "%r14"),
@@ -39,17 +39,17 @@ callers = ["%rax", "%rdx", "%rcx", "%r8", "%r9", "%r10", "%r11"]
 callees = ["%rbx", "%r12", "%r13", "%r14"]
 
 argArr :: [Int]
-argArr = [12, 13, 3, 2, 4, 5]
+argArr = [12, 13, 2, 1, 3, 4]
 
 regByteMap :: Map.Map Int String
 regByteMap = Map.fromList [(0, "%al"),
-                           (1, "%bl"),
-                           (2, "%cl"),
-                           (3, "%dl"),
-                           (4, "%r8b"),
-                           (5, "%r9b"),
-                           (6, "%r10b"),
-                           (7, "%r11b"),
+                           (1, "%cl"),
+                           (2, "%dl"),
+                           (3, "%r8b"),
+                           (4, "%r9b"),
+                           (5, "%r10b"),
+                           (6, "%r11b"),
+                           (7, "%bl"),
                            (8, "%r12b"),
                            (9, "%r13b"),
                            (10, "%r14b"),
@@ -59,10 +59,10 @@ eax_color_num :: Int
 eax_color_num = 0
 
 edx_color_num :: Int
-edx_color_num = 3
+edx_color_num = 2
 
 ecx_color_num :: Int
-ecx_color_num = 2
+ecx_color_num = 1
 
 spill_reg_num :: Int
 spill_reg_num = 11

@@ -39,14 +39,24 @@ fnListCodeGen fnList =
   in
     asm ++ epilogue
 
-genFnProlugues :: String
-genFnProlugues = concatMap genPrologueIns callees
+genFnProlugues :: Int -> String
+genFnProlugues numArgs =
+  let
+    pushBP = if numArgs > 6 then "  pushq %rbp\n  movq %rsp, %rbp\n"
+                            else ""
+    rest = concatMap genPrologueIns callees
+    n = if numArgs > 6 then (length callees) + 1
+                       else length callees
+    buffer = if n `mod` 2 == 0 then decrStack8
+                               else ""
+  in
+    pushBP ++ rest ++ buffer
 
 fnAAsmCodeGen :: FnAAsm -> String
-fnAAsmCodeGen (AAFDefn aasms fnName) =
+fnAAsmCodeGen (AAFDefn aasms fnName numArgs) =
   let
-    (asms, size) = codeGen aasms fnName
-    prologue = [".globl " ++ fnName ++ "\n", fnName ++ ":\n", "  pushq %rbp\n", "  movq %rsp, %rbp\n", genFnProlugues, "  subq $" ++ show size ++ ", %rsp\n"]
+    (asms, size, m) = codeGen aasms fnName numArgs
+    prologue = [".globl " ++ fnName ++ "\n", fnName ++ ":\n", genFnProlugues numArgs, "  subq $" ++ show size ++ ", %rsp\n"]
   in
     concat (prologue ++ [asms])
 
@@ -60,7 +70,7 @@ maxColor' :: Int -> Color -> Int
 maxColor' m (Color c) = max m c
 
 -- Generates the AAsm from an AST
-codeGen aasmList fnName = let
+codeGen aasmList fnName numArgs = let
     twoOpAasmList =  genTwoOperand aasmList
     allLocs = getLocs aasmList
   in
@@ -71,9 +81,9 @@ codeGen aasmList fnName = let
              m' = (max 0 (m - max_color_num)) * 8
              m'' = roundUp m'
              coloredAasmList = colorTemps twoOpAasmList coloring
-             asm = genAsm coloredAasmList (fnName, m'')
+             asm = genAsm coloredAasmList (fnName, m'', numArgs, m)
            in
-             (concat asm, m''))
+             (concat asm, m'', m))
       else (let
               liveVars = liveness twoOpAasmList
               interference_graph@(Graph gmap) = buildInterferenceGraph twoOpAasmList liveVars
@@ -83,11 +93,11 @@ codeGen aasmList fnName = let
               m' = (max 0 (m - max_color_num)) * 8
               m'' = roundUp m'
               coloredAasmList = colorTemps twoOpAasmList coloring
-              asm = genAsm coloredAasmList (fnName, m'')
+              asm = genAsm coloredAasmList (fnName, m'', numArgs, m)
             in
               if (debugFlag)
-                then (genDebug aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm, m'')
-                else (concat asm, m''))
+                then (genDebug aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm, m'', m)
+                else (concat asm, m'', m))
 
 genDebug aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAasm asm =
   let
