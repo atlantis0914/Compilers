@@ -139,5 +139,6 @@ used (ExpPolyEq _ e1 e2 _) = Set.union (used e1) (used e2)
 used (ExpUnOp _ e1 _) = used e1 
 used (ExpTernary e1 e2 e3 _) = Set.union (used e1) $
                                     Set.union (used e2) (used e3)
+used (ExpFnCall _ el _) = foldl Set.union Set.empty (map used el)
 used _ = Set.empty
 

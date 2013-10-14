@@ -37,7 +37,8 @@ checkTypeFnList (FnList gdecls pos) =
           else error ("Error : int main() must be the right type"))
 
 lTypesEqual :: [IdentType] -> [IdentType] -> Bool 
-lTypesEqual l1 l2 = all (\(t1,t2) -> t1 == t2) $ zip l1 l2
+lTypesEqual l1 l2 = (all (\(t1,t2) -> t1 == t2) $ zip l1 l2) && 
+                    (length l1 == length l2)
 
 validateFnArgs :: [IdentType] -> String -> Bool
 validateFnArgs typL fnName = 
@@ -133,11 +134,12 @@ checkStmtValid fName (context@(map, fnMap, dMap, tdMap, valid)) (Asgn name op ex
 
 checkStmtValid fName (context@(map, fnMap, dMap, tdMap, valid)) (Decl declName declType pos asgn) =
   let
+    validType = (not $ declType == IVoid)
     exists = Maybe.isNothing (Map.lookup declName map)
     map' = Map.insert declName declType map
     (_,_,_,_,checkAsgn) = checkStmtValid fName (map', fnMap, dMap, tdMap, valid) asgn
   in
-    if exists then (map', fnMap, dMap, tdMap, valid && exists && checkAsgn)
+    if exists then (map', fnMap, dMap, tdMap, validType && valid && exists && checkAsgn)
               else error ("Error: " ++ declName ++ " doesn't exist at " ++ show pos)
 
 checkStmtValid fName (context@(map, fnMap, dMap, tdMap, valid)) (Ctrl (Assert expr pos)) = 

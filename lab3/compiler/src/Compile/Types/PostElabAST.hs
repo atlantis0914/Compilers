@@ -9,37 +9,37 @@ import Compile.Types.Ctrl
 
 type Ctrl = PolyCtrl Stmt
 
-data FnList = FnList [GDecl] SourcePos deriving Show
+data FnList = FnList ![GDecl] SourcePos deriving Show
 
-data GDecl = GFDecl FDecl SourcePos
-           | GFDefn FDefn SourcePos
-           | GTypeDef IdentType IdentType SourcePos deriving Show
+data GDecl = GFDecl !FDecl SourcePos
+           | GFDefn !FDefn SourcePos
+           | GTypeDef !IdentType !IdentType SourcePos deriving Show
 
-data FDefn = FDefn {fnName :: String,
-                    fnArgs :: [String],
-                    fnArgTypes :: [IdentType],
-                    fnReturnType :: IdentType,
-                    fnBody :: AST,
+data FDefn = FDefn {fnName :: !String,
+                    fnArgs :: ![String],
+                    fnArgTypes :: ![IdentType],
+                    fnReturnType :: !IdentType,
+                    fnBody :: !AST,
                     fnPos :: SourcePos} deriving Show
 
 -- fnName, fnArgs, fnArgTypes, fnReturnType
-data FDecl = FDecl {gdeclName :: String,
-                    gdeclArgs :: [String],
-                    gdeclArgTypes :: [IdentType],
-                    gdeclReturnType :: IdentType,
-                    gdeclIsLibrary :: Bool,
+data FDecl = FDecl {gdeclName :: !String,
+                    gdeclArgs :: ![String],
+                    gdeclArgTypes :: ![IdentType],
+                    gdeclReturnType :: !IdentType,
+                    gdeclIsLibrary :: !Bool,
                     gdeclPos :: SourcePos} deriving Show
 
-data AST = AST Stmt SourcePos
+data AST = AST !Stmt SourcePos
 
-data Stmt = Asgn String AsgnOp Expr SourcePos
-          | Decl {declName :: String,
-                  declTyp :: IdentType,
+data Stmt = Asgn !String !AsgnOp !Expr SourcePos
+          | Decl {declName :: !String,
+                  declTyp :: !IdentType,
                   declPos :: SourcePos,
-                  declScope :: Stmt}
-          | Ctrl Ctrl
-          | Block [Stmt]
-          | Expr Expr
+                  declScope :: !Stmt}
+          | Ctrl !Ctrl
+          | Block ![Stmt]
+          | Expr !Expr
           | SNop
 
 instance Show AST where

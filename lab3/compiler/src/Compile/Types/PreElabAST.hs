@@ -9,34 +9,34 @@ import Compile.Types.Ctrl
 
 type ParseCtrl = PolyCtrl ParseStmt
 
-data ParseFnList = ParseFnList [PGDecl] SourcePos deriving Show
+data ParseFnList = ParseFnList ![PGDecl] SourcePos deriving Show
 
-data PGDecl = PFDecl ParseFDecl SourcePos
-            | PFDefn ParseFDefn SourcePos 
-            | PTypeDef IdentType IdentType SourcePos deriving Show
+data PGDecl = PFDecl !ParseFDecl SourcePos
+            | PFDefn !ParseFDefn SourcePos 
+            | PTypeDef !IdentType !IdentType !SourcePos deriving Show
 
-data ParseFDefn = ParseFDefn {pfnName :: String,
-                              pfnArgs :: [String],
-                              pfnArgTypes :: [IdentType],
-                              pfnReturnType :: IdentType,
-                              pfnBody :: ParseAST,
+data ParseFDefn = ParseFDefn {pfnName :: !String,
+                              pfnArgs :: ![String],
+                              pfnArgTypes :: ![IdentType],
+                              pfnReturnType :: !IdentType,
+                              pfnBody :: !ParseAST,
                               pfnPos :: SourcePos} deriving Show
 
 -- fnName, fnArgs, fnArgTypes, fnReturnType
-data ParseFDecl = ParseFDecl {pdeclName :: String,
-                              pdeclArgs :: [String],
-                              pdeclArgTypes :: [IdentType],
-                              pdeclReturnType :: IdentType,
-                              pdeclIsLibrary :: Bool,
+data ParseFDecl = ParseFDecl {pdeclName :: !String,
+                              pdeclArgs :: ![String],
+                              pdeclArgTypes :: ![IdentType],
+                              pdeclReturnType :: !IdentType,
+                              pdeclIsLibrary :: !Bool,
                               pdeclPos :: SourcePos} deriving Show
 
-data ParseAST = ParseAST ParseStmt SourcePos 
+data ParseAST = ParseAST !ParseStmt SourcePos 
 
-data ParseStmt = PAsgn String AsgnOp Expr SourcePos
-               | PDecl String IdentType SourcePos (Maybe ParseStmt)
-               | PCtrl ParseCtrl
-               | PBlock [ParseStmt]
-               | PExpr Expr
+data ParseStmt = PAsgn !String !AsgnOp !Expr SourcePos
+               | PDecl !String !IdentType SourcePos !(Maybe ParseStmt)
+               | PCtrl !ParseCtrl
+               | PBlock ![ParseStmt]
+               | PExpr !Expr
 
 instance Show ParseAST where
   show (ParseAST stmt _) =
