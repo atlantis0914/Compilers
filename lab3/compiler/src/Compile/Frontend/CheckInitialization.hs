@@ -87,7 +87,7 @@ checkStmt args (Decl i t pos rest) doErr decls =
   in
     setI `seq` (Set.difference decsRest setI, Set.difference liveRest setI, b1)
 
-checkStmt args (Asgn i o e pos) doErr decls = isDeclaredAsgn i decls (Set.singleton i, used e, False)
+checkStmt args (Asgn i o e _ pos) doErr decls = isDeclaredAsgn i decls (Set.singleton i, used e, False)
 
 checkStmt args (Expr e) doErr decls = isDeclaredExpr' e decls (Set.empty, used e, False)
 

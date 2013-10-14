@@ -32,7 +32,11 @@ data ParseFDecl = ParseFDecl {pdeclName :: !String,
 
 data ParseAST = ParseAST !ParseStmt SourcePos 
 
-data ParseStmt = PAsgn !String !AsgnOp !Expr SourcePos
+data ParseStmt = PAsgn {pasgnName :: !String,
+                        pasgnOp :: !AsgnOp,
+                        pasgnExpr :: !Expr,
+                        pasgnShadow :: !Bool,
+                        pasgnPos :: SourcePos}
                | PDecl !String !IdentType SourcePos !(Maybe ParseStmt)
                | PCtrl !ParseCtrl
                | PBlock ![ParseStmt]
@@ -43,7 +47,7 @@ instance Show ParseAST where
     "int main () {\n" ++ show stmt ++ "}\n"
 
 instance Show ParseStmt where
-  show (PAsgn s o e _) = "\t" ++ s ++ " " ++ (show o) ++ "=" ++ " " ++ show e ++ ";"
+  show (PAsgn s o e b _) = "\t" ++ s ++ " " ++ (show o) ++ "=" ++ " " ++ show e ++ ";"
   show (PDecl i t _ Nothing) = "\t" ++ (show t) ++ " " ++ i ++ ";"
   show (PDecl i t _ (Just st')) = "\t" ++ "decl " ++ (show t) ++ " " ++  i ++ " as " ++ show st'
   show (PCtrl c) = show c

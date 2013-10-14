@@ -32,7 +32,7 @@ data FDecl = FDecl {gdeclName :: !String,
 
 data AST = AST !Stmt SourcePos
 
-data Stmt = Asgn !String !AsgnOp !Expr SourcePos
+data Stmt = Asgn !String !AsgnOp !Expr !Bool SourcePos
           | Decl {declName :: !String,
                   declTyp :: !IdentType,
                   declPos :: SourcePos,
@@ -50,7 +50,7 @@ maybeShow Nothing = ""
 maybeShow (Just o) = show o
 
 instance Show Stmt where
-  show (Asgn s o e _) = "\t" ++ s ++ " " ++ (maybeShow o) ++ "=" ++ " " ++ show e ++ ";"
+  show (Asgn s o e b _) = "\t" ++ s ++ " " ++ (maybeShow o) ++ "=" ++ " " ++ show e ++ ";"
   show (Decl i t _ innerS) = "\t" ++ (show t) ++ " " ++ i ++ ";" ++ show innerS
   show (Ctrl c) = show c
   show (Block stmts) = "{\n" ++ (unlines (map show stmts)) ++ "\n" ++ "};" ++ "\n"

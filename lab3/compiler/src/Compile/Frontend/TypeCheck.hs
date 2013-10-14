@@ -121,9 +121,12 @@ checkASTTypes :: String -> Context -> AST -> Context
 checkASTTypes fName ctx (AST stmt _) = checkStmtValid fName ctx stmt
 
 checkStmtValid :: String -> Context -> Stmt -> Context
-checkStmtValid fName (context@(map, fnMap, dMap, tdMap, valid)) (Asgn name op expr pos) =
+checkStmtValid fName (context@(map, fnMap, dMap, tdMap, valid)) (Asgn name op expr b pos) =
   let
-    maybeExprType = checkExprType fName context expr
+    tempCtx = if b 
+                then (Map.delete name map, fnMap, dMap, tdMap, valid) 
+                else context
+    maybeExprType = checkExprType fName tempCtx expr
     maybeType = Map.lookup name map
     correctType = case (maybeType, maybeExprType) of
                     (Just t1, Just t2) -> t1 == t2

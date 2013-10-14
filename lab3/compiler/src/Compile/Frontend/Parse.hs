@@ -140,7 +140,7 @@ typedecl = do
   (do pos' <- getPosition
       op <- asnOp
       e <- expr
-      return $ PDecl ident idType pos (Just (PAsgn ident op e pos')))
+      return $ PDecl ident idType pos (Just (PAsgn ident op e False pos')))
    <|>
    (do return $ PDecl ident idType pos Nothing)
   <?> "typedecl"
@@ -151,10 +151,10 @@ asgn = do
   dest <- identifier
   (do op   <- asnOp
       e    <- expr
-      return $ PAsgn dest op e pos)
+      return $ PAsgn dest op e False pos)
    <|>
    (do op <- postOp
-       return $ PAsgn dest (Nothing) (expForPostOp dest op pos) pos)
+       return $ PAsgn dest (Nothing) (expForPostOp dest op pos) False pos)
    <?> "asgn"
 
 expForPostOp :: String -> Op -> SourcePos -> Expr 

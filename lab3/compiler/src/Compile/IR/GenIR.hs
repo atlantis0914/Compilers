@@ -58,7 +58,7 @@ genStmt (m,i,l,aasm) (Decl s t _ scope) = let
   m' = Map.insert s i m -- assign ident s, temp number i
   in genStmt (m',i+1,l,aasm) scope
 
-genStmt (m,i,l,aasm) (Asgn var op e _) = let
+genStmt (m,i,l,aasm) (Asgn var op e _ _) = let
   temp = ATemp $ m Map.! var
   (_,i',l',aasm') = genExp (m,i,l,[]) e temp
   in (m,i',l',aasm ++ aasm')

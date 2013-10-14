@@ -99,7 +99,7 @@ elabParseBlock typedefs stmts = elabParseBlock' typedefs (Block []) stmts
 -- Converts a single parseStmt into a stmt, mutually calling elabParseBlock'
 -- if we observe a nested block, and elabParseCtrl if we observe a nested ctrl
 elabParseStmt :: TypeDefs -> ParseStmt -> Stmt
-elabParseStmt td (PAsgn s a e p) = Asgn s a e p
+elabParseStmt td (PAsgn s a e b p) = Asgn s a e b p
 elabParseStmt td (PDecl s t p Nothing) = 
   Decl {declName = checkTDIdent td s, 
         declTyp = elaborateTDIdentType td t, 
