@@ -44,7 +44,7 @@ renameBody (AST (Block stmts) pos) rnMap = AST (Block stmts') pos
     stmts' = map (renameStmt rnMap) stmts
 
 renameStmt :: RenameMap -> Stmt -> Stmt 
-renameStmt rnMap (Asgn s op e pos) = Asgn s op (renameExpr rnMap e) pos
+renameStmt rnMap (Asgn s op e b pos) = Asgn s op (renameExpr rnMap e) b pos
 renameStmt rnMap (Ctrl c) = Ctrl $ renameCtrl rnMap c
 renameStmt rnMap (Block stmts) = Block stmts' 
   where
