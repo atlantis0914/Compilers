@@ -80,5 +80,9 @@ renameExpr rm e@(ExpPolyEq o e1 e2 p) = ExpPolyEq o (renameExpr rm e1) (renameEx
 renameExpr rm e@(ExpLogOp o e1 e2 p) = ExpLogOp o (renameExpr rm e1) (renameExpr rm e2) p
 renameExpr rm e@(ExpUnOp o e1 p) = ExpUnOp o (renameExpr rm e1) p
 renameExpr rm e@(ExpTernary e1 e2 e3 p) = ExpTernary (renameExpr rm e1) (renameExpr rm e2) (renameExpr rm e3) p
-renameExpr rm e@(ExpFnCall fnName expList p) = ExpFnCall (rm Map.! fnName) (map (renameExpr rm) expList) p
+renameExpr rm e@(ExpFnCall fnName expList p) = ExpFnCall (renameFnName rm fnName) (map (renameExpr rm) expList) p
 renameExpr rm e = e
+
+-- Special cases for globally declared fns 
+renameFnName rm ("main") = nameIfLibrary False ("main") -- main is never library
+renameFnName rm f = rm Map.! f

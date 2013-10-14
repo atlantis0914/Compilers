@@ -7,7 +7,7 @@ import qualified Data.Map as Map
 import qualified Data.Maybe as Maybe
 import qualified Data.Tuple as Tuple
 
-import Debug.Trace
+import qualified Debug.Trace as Trace
 
 --  The quad in FnMap represents the 
 --  1. Argument Types
@@ -27,7 +27,7 @@ checkTypeFnList :: FnList -> Bool
 checkTypeFnList (FnList gdecls pos) = 
   let
     initFnMap = foldl genFnMap (Map.empty) gdecls
-    (_, endMap, _, _, valid) = foldl checkGDecl (Map.empty, initFnMap, Map.empty, baseIdentTypeMap, True) gdecls
+    (_, endMap, _, _, valid) = foldl checkGDecl (Map.empty, initFnMap, Map.singleton "main" True, baseIdentTypeMap, True) gdecls
   in  
     case (Map.lookup "main" endMap) of
       Nothing -> error ("Error : int main() must be declared.")
@@ -288,7 +288,7 @@ consumeType (Just t) = t
 -- validateFnCall :: Context -> String -> [IdentType] -> [Expr] -> IdentType -> Bool
 validateFnCall (ctx@(idMap, _, _, tdMap, _)) fnName argTypes argExprs retType canBeVoid pos = 
   let
-    recTypes = map (consumeType . (checkExprType fnName ctx)) argExprs
+    recTypes = Trace.trace ("here, fn = " ++ fnName) $ map (consumeType . (checkExprType fnName ctx)) argExprs
     match = all (\(t1,t2) -> ((tdMap Map.! t1) == (tdMap Map.! t2))) $ zip argTypes recTypes
     isShadowed = (Map.lookup fnName idMap == Nothing) 
   in
