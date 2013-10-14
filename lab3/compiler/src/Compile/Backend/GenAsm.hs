@@ -76,7 +76,7 @@ aasmToString _ (AFnCall fnName loc locs) =
   let
     (prologue, size) = genProlugues loc locs
   in
-    prologue ++ "  call " ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n" ++ "  addq $" ++ show (size * 8) ++ ", %rsp\n" ++ (genEpilogues loc)
+    prologue ++ "  call " ++ fnName ++ "\n  movl %eax, %r15d\n" ++ "  addq $" ++ show (size * 8) ++ ", %rsp\n" ++ (genEpilogues loc) ++ "  movl %r15d, " ++ (alocToString loc) ++ "\n" 
 
 genArgPrologue' :: Int -> ALoc -> (String, Int, Int) -> (String, Int, Int)
 genArgPrologue' shift loc (prolog, i, j) =
