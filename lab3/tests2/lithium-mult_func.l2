@@ -1,8 +1,0 @@
-//test error
-int main() {
-	return 1;
-}
-
-int f2() {
-	return 3;
-}
