@@ -69,8 +69,8 @@ aasmToString (fnName, _, _, _) (ACtrl (AGoto i)) =
 aasmToString (fnName, _, _, _) (ACtrl (AIf aval label)) =
   "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz " ++ fnName ++ "label" ++ (show label) ++ "\n"
 
-aasmToString (_, size, numArgs, _) (ACtrl (ARet _)) =
-  concat ["  addq $" ++ show size ++ ", %rsp\n", genFnEpilogues numArgs, "  ret\n"]
+aasmToString (_, size, numArgs, m) (ACtrl (ARet _)) =
+  concat ["  addq $" ++ show size ++ ", %rsp\n", genFnEpilogues numArgs m, "  ret\n"]
 
 aasmToString _ (AFnCall fnName loc locs) =
   let
@@ -88,14 +88,15 @@ genArgPrologue' shift loc (prolog, i, j) =
   in
     (prolog ++ newPro, i-1, j')
 
-genFnEpilogues :: Int -> String
-genFnEpilogues numArgs =
+genFnEpilogues :: Int -> Int -> String
+genFnEpilogues numArgs m =
   let
-    rest = concatMap genEpilogueIns (reverse callees)
+    callees' = take (max 0 (m - 6)) callees
+    rest = concatMap genEpilogueIns (reverse callees')
     popBP = if numArgs > 6 then "  popq %rbp\n"
                            else ""
-    n = if numArgs > 6 then (length callees) + 1
-                       else length callees
+    n = if numArgs > 6 then (length callees') + 1
+                       else length callees'
     buffer = if n `mod` 2 == 0 then incrStack8
                                else ""
   in
