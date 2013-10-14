@@ -43,6 +43,11 @@ checkTypeDef (PTypeDef s1 s2 pos) typeMap =
   case (Map.lookup s2 typeMap) of
     Just _ -> error ("Multiple typedef of " ++ (show s1) ++ " at " ++ (show pos))
     Nothing -> (Map.insert s2 (typeMap Map.! s1) typeMap)
+
+maybeAddReturn :: IdentType -> AST -> AST
+maybeAddReturn IVoid (AST (Block stmts) pos) = 
+  (AST (Block (stmts ++ [Ctrl (Return Nothing pos)])) pos)
+maybeAddReturn _ ast = ast
  
 -- Global Decl. 
 elaboratePGDecl :: PGDecl -> TypeDefs -> GDecl
@@ -58,12 +63,13 @@ elaboratePGDecl (PFDefn (ParseFDefn {pfnName = name,
     nArgTypes = elaborateTDIdentTypes typeDefs argTypes 
     nReturn = elaborateTDIdentType typeDefs return
     nBody = elaborateParseAST typeDefs body
+    nBody' = maybeAddReturn return nBody 
   in
     GFDefn (FDefn {fnName = nName,
                    fnArgs = nArgs,
                    fnArgTypes = nArgTypes,
                    fnReturnType = nReturn,
-                   fnBody = nBody,
+                   fnBody = nBody',
                    fnPos = pos}) defnPos
 
 elaboratePGDecl (PFDecl (ParseFDecl name args argTypes return isL pos) dPos) typeDefs = 
