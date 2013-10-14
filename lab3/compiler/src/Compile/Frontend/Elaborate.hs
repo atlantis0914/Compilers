@@ -20,27 +20,24 @@ elaborate (ParseFnList decls pos) =
   let
     (elab, map) = foldl elaboratePGDecls ([], baseIdentTypeMap) decls
   in
-    Right $ FnList elab pos
+    elab `seq` map `seq` Right $ FnList elab pos
 
 elaboratePGDecls :: ([GDecl], TypeDefs) -> PGDecl -> 
                         ([GDecl], TypeDefs)
-elaboratePGDecls (convDecls, typeMap) pgdecl@(PFDefn _ _) = 
-  (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap)
-
-elaboratePGDecls (convDecls, typeMap) pgdecl@(PFDecl _ _) = 
-  (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap)
-
 elaboratePGDecls (convDecls, typeMap) pgdecl@(PTypeDef _ _ _) =
   let
     typeMap' = checkTypeDef pgdecl typeMap
   in
     (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap')
 
+elaboratePGDecls (convDecls, typeMap) pgdecl = 
+  (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap)
+
 -- Either errors if we have multiple typedefs of s2, or inserts 
 -- s2 into the typeMap using s1 as 
 checkTypeDef :: PGDecl -> TypeDefs -> TypeDefs
 checkTypeDef (PTypeDef s1 s2 pos) typeMap = 
-  case (Map.lookup s2 typeMap) of
+  typeMap `seq` case (Map.lookup s2 typeMap) of
     Just _ -> error ("Multiple typedef of " ++ (show s1) ++ " at " ++ (show pos))
     Nothing -> (Map.insert s2 (typeMap Map.! s1) typeMap)
 
@@ -102,7 +99,7 @@ elabParseBlock typedefs stmts = elabParseBlock' typedefs (Block []) stmts
 elabParseStmt :: TypeDefs -> ParseStmt -> Stmt
 elabParseStmt td (PAsgn s a e p) = Asgn s a e p
 elabParseStmt td (PDecl s t p Nothing) = 
-  Decl {declName = s, 
+  Decl {declName = checkTDIdent td s, 
         declTyp = elaborateTDIdentType td t, 
         declPos = p, 
         declScope = SNop}
