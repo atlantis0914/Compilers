@@ -108,7 +108,7 @@ checkGDecl (ctx@(_, fnMap, dMap, tdMap, valid))
     idMap = generateIdentContext args argTypes 
     argValid = validateFnArgs argTypes name
   in 
-    checkASTTypes (idMap, fnMap, Map.insert name True dMap, tdMap, valid && argValid) body 
+    checkASTTypes name (idMap, fnMap, Map.insert name True dMap, tdMap, valid && argValid) body 
 --    checkGFDefn (map, fnMap, valid) gdef
 
 generateIdentContext :: [String] -> [IdentType] -> Map.Map String IdentType
@@ -116,13 +116,13 @@ generateIdentContext args argTypes =
   foldl (\m -> \(a,at) -> Map.insert a at m) (Map.empty) $ zip args argTypes
 
 
-checkASTTypes :: Context -> AST -> Context
-checkASTTypes ctx (AST stmt _) = checkStmtValid ctx stmt
+checkASTTypes :: String -> Context -> AST -> Context
+checkASTTypes fName ctx (AST stmt _) = checkStmtValid fName ctx stmt
 
-checkStmtValid :: Context -> Stmt -> Context
-checkStmtValid (context@(map, fnMap, dMap, tdMap, valid)) (Asgn name op expr pos) =
+checkStmtValid :: String -> Context -> Stmt -> Context
+checkStmtValid fName (context@(map, fnMap, dMap, tdMap, valid)) (Asgn name op expr pos) =
   let
-    maybeExprType = checkExprType context expr
+    maybeExprType = checkExprType fName context expr
     maybeType = Map.lookup name map
     correctType = case (maybeType, maybeExprType) of
                     (Just t1, Just t2) -> t1 == t2
@@ -131,82 +131,90 @@ checkStmtValid (context@(map, fnMap, dMap, tdMap, valid)) (Asgn name op expr pos
     if correctType then (map, fnMap, dMap, tdMap, valid && correctType)
                    else error ("Error: Wrong type in assignment to " ++ name ++ " at " ++ show pos ++ " Expr: " ++ show expr)
 
-checkStmtValid (context@(map, fnMap, dMap, tdMap, valid)) (Decl declName declType pos asgn) =
+checkStmtValid fName (context@(map, fnMap, dMap, tdMap, valid)) (Decl declName declType pos asgn) =
   let
     exists = Maybe.isNothing (Map.lookup declName map)
     map' = Map.insert declName declType map
-    (_,_,_,_,checkAsgn) = checkStmtValid (map', fnMap, dMap, tdMap, valid) asgn
+    (_,_,_,_,checkAsgn) = checkStmtValid fName (map', fnMap, dMap, tdMap, valid) asgn
   in
     if exists then (map', fnMap, dMap, tdMap, valid && exists && checkAsgn)
               else error ("Error: " ++ declName ++ " doesn't exist at " ++ show pos)
 
-checkStmtValid (context@(map, fnMap, dMap, tdMap, valid)) (Ctrl (Assert expr pos)) = 
+checkStmtValid fName (context@(map, fnMap, dMap, tdMap, valid)) (Ctrl (Assert expr pos)) = 
   let
-    typeT = checkExprType context expr
-    valid' = case checkExprType context expr of Nothing -> False
-                                                Just t -> t == IBool
+    typeT = checkExprType fName context expr
+    valid' = case checkExprType fName context expr of Nothing -> False
+                                                      Just t -> t == IBool
   in
     if valid' then (map, fnMap, dMap, tdMap, valid && valid')
               else error ("Error : Assert expression is not a bool at " ++ show pos)
 
-checkStmtValid (context@(map, fnMap, dMap, tdMap, valid)) (Ctrl (If expr stmt1 stmt2 pos)) =
+checkStmtValid fName (context@(map, fnMap, dMap, tdMap, valid)) (Ctrl (If expr stmt1 stmt2 pos)) =
   let
-    typeT = checkExprType context expr
-    valid' = case checkExprType context expr of Nothing -> False
-                                                Just t -> t == IBool
-    (_, _, _, _, valid'') = checkStmtValid context stmt1
-    (_, _, _, _, valid''') = checkStmtValid context stmt2
+    typeT = checkExprType fName context expr
+    valid' = case checkExprType fName context expr of Nothing -> False
+                                                      Just t -> t == IBool
+    (_, _, _, _, valid'') = checkStmtValid fName context stmt1
+    (_, _, _, _, valid''') = checkStmtValid fName context stmt2
   in
     if valid' then (map, fnMap, dMap, tdMap, valid' && valid'' && valid''' && valid)
               else error ("Error: If Expression is not a bool at " ++ show pos ++ " AST:" ++ show expr ++ " type is : " ++ show typeT)
 
-checkStmtValid (context@(map, fnMap, dMap, tdMap, valid)) (Ctrl (While expr stmt pos)) =
+checkStmtValid fName (context@(map, fnMap, dMap, tdMap, valid)) (Ctrl (While expr stmt pos)) =
   let
-    (_, _, _, _, valid1) = checkStmtValid context stmt
-    isBool = case checkExprType context expr of Nothing -> False
-                                                Just t -> t == IBool
+    (_, _, _, _, valid1) = checkStmtValid fName context stmt
+    isBool = case checkExprType fName context expr of Nothing -> False
+                                                      Just t -> t == IBool
   in
     if isBool then (map, fnMap, dMap, tdMap, valid1 && isBool && valid)
               else error ("Error: While Expression is not a bool at " ++ show pos ++ " AST:" ++ show expr)
 
-checkStmtValid (context@(map, fnMap, dMap, tdMap, valid)) (Ctrl (Return mexpr pos)) =
+checkStmtValid fName (context@(map, fnMap, dMap, tdMap, valid)) (Ctrl (Return mexpr pos)) =
   case (mexpr) of 
-    Nothing -> context
+    Nothing -> checkReturnType fName context IVoid $ context
     Just expr -> (
       let
-        isInt = case checkExprType context expr of Nothing -> False
-                                                   Just t -> t == IInt
+        isInt = case checkExprType fName context expr of Nothing -> False
+                                                         Just t -> checkReturnType fName context t $ True
       in
         if isInt then (map, fnMap, dMap, tdMap, valid && isInt)
                  else error ("Error: Expression is not an int at " ++ show pos ++ " AST" ++ show expr))
 
-checkStmtValid (context@(map, fnMap, dMap, tdMap, valid)) (Block stmts) =
+checkStmtValid fName (context@(map, fnMap, dMap, tdMap, valid)) (Block stmts) =
   let
-    (_, _, _, _, valid') = foldl checkStmtValid context stmts
+    (_, _, _, _, valid') = foldl (checkStmtValid fName) context stmts
   in
     (map, fnMap, dMap, tdMap, valid && valid')
 
-checkStmtValid (context@(map, fnMap, dMap, tdMap, valid)) (Expr fn@(ExpFnCall fnName subExps pos)) = 
+checkStmtValid fName (context@(map, fnMap, dMap, tdMap, valid)) (Expr fn@(ExpFnCall fnName subExps pos)) = 
   let
     checks = case checkFnCall context fn True of Nothing -> False 
                                                  Just t -> True
   in
     (map, fnMap, dMap, tdMap, valid && checks)
 
-checkStmtValid (context@(map, fnMap, dMap, tdMap, valid)) (Expr expr) = 
+checkStmtValid fName (context@(map, fnMap, dMap, tdMap, valid)) (Expr expr) = 
   let 
-    checks = case checkExprType context expr of Nothing -> False
-                                                Just t -> True
+    checks = case checkExprType fName context expr of Nothing -> False
+                                                      Just t -> True
   in
     (map, fnMap, dMap, tdMap, valid && checks)
 
-checkStmtValid context SNop = context
+checkStmtValid _ context SNop = context
 
-matchType :: Context -> Expr -> Expr -> [IdentType] -> IdentType -> (Maybe IdentType)
-matchType context expr1 expr2 expect result =
+checkReturnType :: String -> Context -> IdentType -> a -> a
+checkReturnType fnName (context@(map, fnMap, dMap, tdMap, valid)) t = 
+  if (retType == t) 
+    then (\x -> x)
+    else error ("Error : Bad type for function with name : " ++ fnName)
+  where 
+    (_, retType, _, _) = fnMap Map.! fnName 
+
+matchType :: String -> Context -> Expr -> Expr -> [IdentType] -> IdentType -> (Maybe IdentType)
+matchType f context expr1 expr2 expect result =
   let
-    type1 = checkExprType context expr1
-    type2 = checkExprType context expr2
+    type1 = checkExprType f context expr1
+    type2 = checkExprType f context expr2
   in
     case (type1, type2) of
       (Nothing, _) -> Nothing
@@ -214,11 +222,11 @@ matchType context expr1 expr2 expect result =
       (Just t1, Just t2) -> if t1 == t2 && t1 `elem` expect then Just result
                                                             else Nothing
 
-typeEq :: Context -> Expr -> Expr -> [IdentType] -> (Maybe IdentType)
-typeEq context expr1 expr2 expect =
+typeEq :: String -> Context -> Expr -> Expr -> [IdentType] -> (Maybe IdentType)
+typeEq fName context expr1 expr2 expect =
   let
-    type1 = checkExprType context expr1
-    type2 = checkExprType context expr2
+    type1 = checkExprType fName context expr1
+    type2 = checkExprType fName context expr2
   in
     case (type1, type2) of
       (Nothing, _) -> Nothing
@@ -232,30 +240,30 @@ checkExprIsType maybeType t =
                     Just t' -> if t' == t then Just t
                                           else Nothing
 
-checkExprType :: Context -> Expr -> Maybe IdentType
-checkExprType _ (ExpInt _ _ _) = Just IInt
-checkExprType _ (ExpBool _ _) = Just IBool
-checkExprType (context@(map, _, _, _, _)) (Ident name _) = Map.lookup name map
-checkExprType context (ExpBinOp _ expr1 expr2 _) =
-  matchType context expr1 expr2 [IInt] IInt
-checkExprType context (ExpRelOp _ expr1 expr2 _) =
-  matchType context expr1 expr2 [IInt] IBool
-checkExprType context (ExpLogOp _ expr1 expr2 _) =
-  matchType context expr1 expr2 [IBool] IBool
-checkExprType context (ExpPolyEq _ expr1 expr2 _) =
-  matchType context expr1 expr2 [IBool, IInt] IBool
-checkExprType context (ExpUnOp Neg expr _) =
-  checkExprIsType (checkExprType context expr) IInt
-checkExprType context (ExpUnOp BitwiseNot expr _) =
-  checkExprIsType (checkExprType context expr) IInt
-checkExprType context (ExpUnOp LogicalNot expr _) =
-  checkExprIsType (checkExprType context expr) IBool
-checkExprType context (ExpTernary expr1 expr2 expr3 _) =
-  case checkExprType context expr1 of
+checkExprType :: String -> Context -> Expr -> Maybe IdentType
+checkExprType _ _ (ExpInt _ _ _) = Just IInt
+checkExprType _ _ (ExpBool _ _) = Just IBool
+checkExprType _ (context@(map, _, _, _, _)) (Ident name _) = Map.lookup name map
+checkExprType f context (ExpBinOp _ expr1 expr2 _) =
+  matchType f context expr1 expr2 [IInt] IInt
+checkExprType f context (ExpRelOp _ expr1 expr2 _) =
+  matchType f context expr1 expr2 [IInt] IBool
+checkExprType f context (ExpLogOp _ expr1 expr2 _) =
+  matchType f context expr1 expr2 [IBool] IBool
+checkExprType f context (ExpPolyEq _ expr1 expr2 _) =
+  matchType f context expr1 expr2 [IBool, IInt] IBool
+checkExprType f context (ExpUnOp Neg expr _) =
+  checkExprIsType (checkExprType f context expr) IInt
+checkExprType f context (ExpUnOp BitwiseNot expr _) =
+  checkExprIsType (checkExprType f context expr) IInt
+checkExprType f context (ExpUnOp LogicalNot expr _) =
+  checkExprIsType (checkExprType f context expr) IBool
+checkExprType f context (ExpTernary expr1 expr2 expr3 _) =
+  case checkExprType f context expr1 of
     Nothing -> Nothing
-    Just t -> if t == IBool then typeEq context expr2 expr3 [IInt, IBool]
+    Just t -> if t == IBool then typeEq f context expr2 expr3 [IInt, IBool]
                             else Nothing
-checkExprType ctx@(map, fnMap, dMap, tdMap, valid) call@(ExpFnCall fnName subExps pos) = 
+checkExprType _ ctx@(map, fnMap, dMap, tdMap, valid) call@(ExpFnCall fnName subExps pos) = 
   checkFnCall ctx call False
 
 checkFnCall ctx@(map, fnMap, dMap, tdMap, valid) (ExpFnCall fnName subExps pos) canBeVoid = 
@@ -275,7 +283,7 @@ consumeType (Just t) = t
 -- validateFnCall :: Context -> String -> [IdentType] -> [Expr] -> IdentType -> Bool
 validateFnCall (ctx@(idMap, _, _, tdMap, _)) fnName argTypes argExprs retType canBeVoid pos = 
   let
-    recTypes = map (consumeType . (checkExprType ctx)) argExprs
+    recTypes = map (consumeType . (checkExprType fnName ctx)) argExprs
     match = all (\(t1,t2) -> ((tdMap Map.! t1) == (tdMap Map.! t2))) $ zip argTypes recTypes
     isShadowed = (Map.lookup fnName idMap == Nothing) 
   in
