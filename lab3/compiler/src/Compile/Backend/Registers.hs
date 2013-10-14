@@ -35,7 +35,7 @@ regQMap = Map.fromList [(0, "%rax"),
                        (12, "%rdi"),
                        (13, "%rsi")]
 
-callers = ["%rax", "%rdi", "%rsi", "%rdx", "%rcx", "%r8", "%r9", "%r10", "%r11"]
+callers = ["%rax", "%rdx", "%rcx", "%r8", "%r9", "%r10", "%r11"]
 callees = ["%rbx", "%r12", "%r13", "%r14", "%r15"]
 
 argArr :: [Int]

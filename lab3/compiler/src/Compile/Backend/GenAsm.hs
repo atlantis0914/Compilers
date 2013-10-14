@@ -70,13 +70,16 @@ aasmToString (fnName, _) (ACtrl (AIf aval label)) =
   "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz " ++ fnName ++ "label" ++ (show label) ++ "\n"
 
 aasmToString (_, size) (ACtrl (ARet _)) =
-  concat ["  addq $" ++ show size ++ ", %rsp\n", genFnEpilogues, "  popq %rbp\n", "  ret\n"]
+  concat ["  addq $" ++ show (size + 8) ++ ", %rsp\n", genFnEpilogues, "  popq %rbp\n", "  ret\n"]
 
 aasmToString _ (AFnCall fnName loc locs) =
   let
     size = 8 * (max 0 (length locs - 6))
+    size' = roundUp size
+    buffer = if size' == size then ""
+                              else decrStack8
   in
-    (genProlugues loc) ++ (genArgPrologue locs) ++ "  call " ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n" ++ "  addq $" ++ show size ++ ", %rsp\n" ++ (genEpilogues loc)
+    (genProlugues loc) ++ buffer ++ (genArgPrologue locs) ++ "  call " ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n" ++ "  addq $" ++ show size' ++ ", %rsp\n" ++ (genEpilogues loc)
 
 genArgPrologue :: [ALoc] -> String
 genArgPrologue locs =
@@ -101,16 +104,20 @@ genProlugues loc =
   let
     reg = alocToQString loc
     callers' = filter (\r -> reg /= r) callers
+    prologues = concatMap genPrologueIns callers'
   in
-    concatMap genPrologueIns callers'
+    if (length callers') `mod` 2 == 0 then prologues
+                                      else decrStack8 ++ prologues
 
 genEpilogues :: ALoc -> String
 genEpilogues loc =
   let
     reg = alocToQString loc
     callers' = filter (\r -> reg /= r) (reverse callers)
+    epilogues = concatMap genEpilogueIns callers'
   in
-    concatMap genEpilogueIns callers'
+    if (length callers') `mod` 2 == 0 then epilogues
+                                      else epilogues ++ incrStack8
 
 avalByteToString :: AVal -> String
 avalByteToString aval =
