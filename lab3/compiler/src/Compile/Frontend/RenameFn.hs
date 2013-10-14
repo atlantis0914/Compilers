@@ -9,7 +9,7 @@ import Compile.Util.IdentTypeUtil
 type RenameMap = Map.Map String String 
 
 nameIfLibrary :: Bool -> String -> String 
-nameIfLibrary True s = s
+nameIfLibrary True s = "_" ++ s
 nameIfLibrary False s = "__c0_" ++ s
 
 renameFn :: FnList -> FnList
@@ -80,5 +80,5 @@ renameExpr rm e@(ExpPolyEq o e1 e2 p) = ExpPolyEq o (renameExpr rm e1) (renameEx
 renameExpr rm e@(ExpLogOp o e1 e2 p) = ExpLogOp o (renameExpr rm e1) (renameExpr rm e2) p
 renameExpr rm e@(ExpUnOp o e1 p) = ExpUnOp o (renameExpr rm e1) p
 renameExpr rm e@(ExpTernary e1 e2 e3 p) = ExpTernary (renameExpr rm e1) (renameExpr rm e2) (renameExpr rm e3) p
-renameExpr rm e@(ExpFnCall fnName expList p) = ExpFnCall (rm Map.! fnName) expList p
+renameExpr rm e@(ExpFnCall fnName expList p) = ExpFnCall (rm Map.! fnName) (map (renameExpr rm) expList) p
 renameExpr rm e = e
