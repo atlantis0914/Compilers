@@ -7,10 +7,10 @@ import Compile.Backend.Registers
 genPrologueIns reg =
   "  pushq " ++ reg ++ "\n"
 
-moveStack :: (String, Int) -> String -> (String, Int)
-moveStack (asms, i) reg =
+moveStack :: Int -> (String, Int) -> String -> (String, Int)
+moveStack shift (asms, i) reg =
   let
-    next = "  movq " ++ reg ++ ", -" ++ show ((i + 1) * 8) ++ "(%rsp)\n"
+    next = "  movq " ++ reg ++ ", -" ++ show ((i + 1 + shift) * 8) ++ "(%rsp)\n"
   in
     (asms ++ next, i + 1)
 

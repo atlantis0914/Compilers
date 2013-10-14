@@ -78,10 +78,10 @@ aasmToString _ (AFnCall fnName loc locs) =
   in
     prologue ++ "  call " ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n" ++ "  addq $" ++ show (size * 8) ++ ", %rsp\n" ++ (genEpilogues loc)
 
-genArgPrologue' :: ALoc -> (String, Int, Int) -> (String, Int, Int)
-genArgPrologue' loc (prolog, i, j) =
+genArgPrologue' :: Int -> ALoc -> (String, Int, Int) -> (String, Int, Int)
+genArgPrologue' shift loc (prolog, i, j) =
   let
-    newPro = if i > 6 then "  movq " ++ (alocToQString loc) ++ ", %r15\n  movq %r15, -" ++ show ((j + 1) * 8) ++ "(%rsp)\n"
+    newPro = if i > 6 then "  movq " ++ (alocToQString loc) ++ ", %r15\n  movq %r15, -" ++ show ((j + shift + 1) * 8) ++ "(%rsp)\n"
                       else ""
     j' = if i > 6 then j + 1
                   else j
@@ -95,13 +95,14 @@ genProlugues :: ALoc -> [ALoc] -> (String, Int)
 genProlugues loc locs =
   let
     reg = alocToQString loc
+    pushedArgs = max 0 ((length locs) - 6)
     callers' = filter (\r -> reg /= r) callers
-    (asms, i) = foldl moveStack ("", 0) callers'
-    (asms', _, s) = foldr genArgPrologue' (asms, length locs, i) locs
-    s' = s
---    s' = if (s - 1) `mod` 2 == 0 then s
---                                 else s + 1
-    asms'' = asms' ++ "  subq $" ++ show (s' * 8) ++ ", %rsp\n"
+    t = pushedArgs + (length callers')
+    shift = t `mod` 2
+    (asms, i) = foldl (moveStack 0) ("", 0) callers'
+    (asms', _, s) = foldr (genArgPrologue' shift) (asms, length locs, i) locs
+    s' = s + shift
+    asms'' = asms' ++ "  subq $" ++ show ((s') * 8) ++ ", %rsp\n"
   in
     (asms'', s' - i)
 
