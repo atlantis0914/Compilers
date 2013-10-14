@@ -36,6 +36,8 @@ elaboratePGDecls (convDecls, typeMap) pgdecl =
 -- Either errors if we have multiple typedefs of s2, or inserts 
 -- s2 into the typeMap using s1 as 
 checkTypeDef :: PGDecl -> TypeDefs -> TypeDefs
+checkTypeDef (PTypeDef IVoid s2 pos) _ = 
+  error ("Cannot alias IVoid - can only be used as return val")
 checkTypeDef (PTypeDef s1 s2 pos) typeMap = 
   typeMap `seq` case (Map.lookup s2 typeMap) of
     Just _ -> error ("Multiple typedef of " ++ (show s1) ++ " at " ++ (show pos))
