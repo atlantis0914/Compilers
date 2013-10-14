@@ -24,7 +24,7 @@ import Compile.Frontend.TypeCheck
 import Compile.Frontend.CheckAST
 import Compile.Frontend.RenameFn
 import Compile.IR.GenIR
--- import Compile.Frontend.Minimize
+import Compile.Frontend.Minimize
 import Compile.Backend.CodeGen
 
 import qualified Debug.Trace as Trace
@@ -55,13 +55,13 @@ compile job = do
     liftEIO $ checkFnList elabFnList
 --     elabFnList' <- liftEIO $ renameFn elabFnList
     let elabFnList' = renameFn elabFnList 
---    minimizedAst <- liftEIO $ minimize elabAst
+    minFnList <- liftEIO $ minimize elabFnList'
     if jobOutFormat job == C0
-      then writer (jobOut job) elabFnList'
-      else let asm = fnListCodeGen elabFnList' in
+      then writer (jobOut job) minFnList
+      else let asm = fnListCodeGen minFnList in
               if jobOutFormat job == Asm
                  then stringWriter (jobOut job) asm
-                 else do writer asmFile elabFnList'
+                 else do writer asmFile minFnList 
                          let o = if jobOutFormat job == Obj then "-c" else ""
                          gcc o asmFile (jobOut job)
   case res of
