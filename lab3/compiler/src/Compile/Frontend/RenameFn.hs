@@ -34,7 +34,7 @@ renameGDecl (rnMap, prev)
   where
     rnMap' = Map.insert name newName rnMap 
     newName = nameIfLibrary False name -- defns are never library
-    newBody = Trace.trace ("newMap = " ++ show rnMap') $ renameBody body rnMap'
+    newBody = renameBody body rnMap'
 
 renameGDecl (rnMap, prev) g = (rnMap, prev ++ [g])
 
