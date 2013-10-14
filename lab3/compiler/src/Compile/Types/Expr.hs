@@ -8,16 +8,16 @@ import Compile.Types.IdentType
 data Base = Dec
           | Hex
 
-data Expr = ExpInt Integer SourcePos Base
-          | ExpBool Bool SourcePos
-          | Ident String SourcePos
-          | ExpBinOp Op Expr Expr SourcePos
-          | ExpRelOp Op Expr Expr SourcePos
-          | ExpLogOp Op Expr Expr SourcePos
-          | ExpPolyEq Op Expr Expr SourcePos
-          | ExpUnOp Op Expr SourcePos
-          | ExpTernary Expr Expr Expr SourcePos
-          | ExpFnCall String [Expr] SourcePos
+data Expr = ExpInt !Integer SourcePos !Base
+          | ExpBool !Bool SourcePos
+          | Ident !String SourcePos
+          | ExpBinOp !Op !Expr !Expr SourcePos
+          | ExpRelOp !Op !Expr !Expr SourcePos
+          | ExpLogOp !Op !Expr !Expr SourcePos
+          | ExpPolyEq !Op !Expr !Expr SourcePos
+          | ExpUnOp !Op !Expr SourcePos
+          | ExpTernary !Expr !Expr !Expr SourcePos
+          | ExpFnCall !String ![Expr] SourcePos
 
 instance Show Expr where
   show (ExpInt n _ _) = show n

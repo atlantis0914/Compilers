@@ -7,7 +7,7 @@ import Compile.Types.IdentType
 
 import Compile.Types.Expr
 
-data PolyCtrl s = If Expr s s SourcePos
-                | While Expr s SourcePos
-                | Assert Expr SourcePos
-                | Return (Maybe Expr) SourcePos
+data PolyCtrl s = If !Expr !s !s SourcePos
+                | While !Expr !s SourcePos
+                | Assert !Expr SourcePos
+                | Return !(Maybe Expr) SourcePos
