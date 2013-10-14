@@ -70,7 +70,7 @@ aasmToString (fnName, _) (ACtrl (AIf aval label)) =
   "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz " ++ fnName ++ "label" ++ (show label) ++ "\n"
 
 aasmToString (_, size) (ACtrl (ARet _)) =
-  concat ["  addq $" ++ show (size + 8) ++ ", %rsp\n", genFnEpilogues, "  popq %rbp\n", "  ret\n"]
+  concat ["  addq $" ++ show size ++ ", %rsp\n", genFnEpilogues, "  popq %rbp\n", "  ret\n"]
 
 aasmToString _ (AFnCall fnName loc locs) =
   let
