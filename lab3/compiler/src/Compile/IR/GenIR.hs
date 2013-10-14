@@ -32,6 +32,8 @@ genFnAAsm (GFDefn (FDefn name args _ _ ast _) _) =
   in
     Just $ AAFDefn (genIR ast alloc') name
 
+-- genFnAasm (GFDecl (FDecl {
+
 genFnAAsm (GFDecl (FDecl name _ _ _ isLib _) _) =
   if isLib then Just $ AAFDecl name
            else Nothing
@@ -73,11 +75,11 @@ genCtrl (m,i,l,aasm) (Assert e _) = let
   (_,i',el,eAasm) = genExp (m,i+1,l,[]) e (ATemp i)
   abortLabel = el
   endLabel = el + 1
-  abortAasm = [ACtrl $ ALabel abortLabel] ++ [AFnCall "abort" (ATemp i) []]
+  abortAasm = [ACtrl $ ALabel abortLabel] ++ [AFnCall "_abort" (ATemp i) []]
   outputAasm =
     eAasm
-    ++ [ACtrl $ AIf (ALoc $ ATemp i) abortLabel,
-        ACtrl $ AGoto endLabel]
+    ++ [ACtrl $ AIf (ALoc $ ATemp i) endLabel,
+        ACtrl $ AGoto abortLabel]
     ++ abortAasm
     ++ [ACtrl $ ALabel endLabel]
   in
