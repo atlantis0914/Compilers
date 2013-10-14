@@ -84,24 +84,15 @@ declDefnParser = do
                                     pfnBody = ast,
                                     pfnPos = pos}) pos)
 
-getParamList = parens getParamList'
+getParamList = do 
+  params <- parens $ commaSep getParam
+  let (pt,pi) = Prelude.unzip params
+  return (pt,pi) 
 
-getParamList' :: C0Parser([IdentType], [String]) 
-getParamList' = (do
-  (t,i) <- getParam
-  (do comma
-      (rT,rI) <- getParamList'
-      return $ (t ++ rT,i ++ rI))
-   <|>
-   (do return $ (t,i)))
-
-getParam :: C0Parser ([IdentType],[String])
 getParam = (do
   t <- getType
   i <- identifier
-  return $ ([t],[i]))
-  <|>
-  (do return $ ([],[]))
+  return $ (t,i))
 
 getType :: C0Parser IdentType 
 getType =
