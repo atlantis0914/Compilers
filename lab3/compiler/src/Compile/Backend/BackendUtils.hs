@@ -7,6 +7,13 @@ import Compile.Backend.Registers
 genPrologueIns reg =
   "  pushq " ++ reg ++ "\n"
 
+moveStack :: (String, Int) -> String -> (String, Int)
+moveStack (asms, i) reg =
+  let
+    next = "  movq " ++ reg ++ ", -" ++ show ((i + 1) * 8) ++ "(%rsp)\n"
+  in
+    (asms ++ next, i + 1)
+
 genEpilogueIns reg =
   "  popq " ++ reg ++ "\n"
 

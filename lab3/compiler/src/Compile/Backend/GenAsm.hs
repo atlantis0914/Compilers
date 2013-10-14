@@ -74,40 +74,36 @@ aasmToString (_, size) (ACtrl (ARet _)) =
 
 aasmToString _ (AFnCall fnName loc locs) =
   let
-    size = 8 * (max 0 (length locs - 6))
-    size' = roundUp size
-    buffer = if size' == size then ""
-                              else decrStack8
+    (prologue, size) = genProlugues loc locs
   in
-    (genProlugues loc) ++ buffer ++ (genArgPrologue locs) ++ "  call " ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n" ++ "  addq $" ++ show size' ++ ", %rsp\n" ++ (genEpilogues loc)
+    prologue ++ "  call " ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n" ++ "  addq $" ++ show (size * 8) ++ ", %rsp\n" ++ (genEpilogues loc)
 
-genArgPrologue :: [ALoc] -> String
-genArgPrologue locs =
+genArgPrologue' :: ALoc -> (String, Int, Int) -> (String, Int, Int)
+genArgPrologue' loc (prolog, i, j) =
   let
-    (prolog, _) = foldr genArgPrologue' ("", length locs) locs
-  in
-    prolog
-
-genArgPrologue' :: ALoc -> (String, Int) -> (String, Int)
-genArgPrologue' loc (prolog, i) =
-  let
-    newPro = if i > 6 then "  pushq " ++ (alocToQString loc) ++ "\n"
+    newPro = if i > 6 then "  movq " ++ (alocToQString loc) ++ ", %r15\n  movq %r15, -" ++ show ((j + 1) * 8) ++ "(%rsp)\n"
                       else ""
+    j' = if i > 6 then j + 1
+                  else j
   in
-    (prolog ++ newPro, i-1)
+    (prolog ++ newPro, i-1, j')
 
 genFnEpilogues :: String
 genFnEpilogues = concatMap genEpilogueIns (reverse callees)
 
-genProlugues :: ALoc -> String
-genProlugues loc =
+genProlugues :: ALoc -> [ALoc] -> (String, Int)
+genProlugues loc locs =
   let
     reg = alocToQString loc
     callers' = filter (\r -> reg /= r) callers
-    prologues = concatMap genPrologueIns callers'
+    (asms, i) = foldl moveStack ("", 0) callers'
+    (asms', _, s) = foldr genArgPrologue' (asms, length locs, i) locs
+    s' = s
+--    s' = if (s - 1) `mod` 2 == 0 then s
+--                                 else s + 1
+    asms'' = asms' ++ "  subq $" ++ show (s' * 8) ++ ", %rsp\n"
   in
-    if (length callers') `mod` 2 == 0 then prologues
-                                      else decrStack8 ++ prologues
+    (asms'', s' - i)
 
 genEpilogues :: ALoc -> String
 genEpilogues loc =
@@ -117,7 +113,7 @@ genEpilogues loc =
     epilogues = concatMap genEpilogueIns callers'
   in
     if (length callers') `mod` 2 == 0 then epilogues
-                                      else epilogues ++ incrStack8
+                                      else epilogues
 
 avalByteToString :: AVal -> String
 avalByteToString aval =
