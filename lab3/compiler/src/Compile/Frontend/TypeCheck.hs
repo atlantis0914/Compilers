@@ -288,7 +288,7 @@ consumeType (Just t) = t
 -- validateFnCall :: Context -> String -> [IdentType] -> [Expr] -> IdentType -> Bool
 validateFnCall (ctx@(idMap, _, _, tdMap, _)) fnName argTypes argExprs retType canBeVoid pos = 
   let
-    recTypes = Trace.trace ("here, fn = " ++ fnName) $ map (consumeType . (checkExprType fnName ctx)) argExprs
+    recTypes = map (consumeType . (checkExprType fnName ctx)) argExprs
     match = all (\(t1,t2) -> ((tdMap Map.! t1) == (tdMap Map.! t2))) $ zip argTypes recTypes
     isShadowed = (Map.lookup fnName idMap == Nothing) 
   in
