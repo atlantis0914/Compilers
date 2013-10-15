@@ -23,17 +23,18 @@ type Context = (IdentMap, FnMap, DeclMap, TDMap, Bool)
 
 -- Each function should be type checked independently 
 -- foldl : (a -> b -> a) -> a -> [b] -> a
-checkTypeFnList :: FnList -> Bool
+checkTypeFnList :: FnList -> (Bool, [GDecl])
 checkTypeFnList (FnList gdecls pos) = 
   let
     initFnMap = foldl genFnMap (Map.empty) gdecls
-    (_, endMap, _, _, valid) = foldl checkGDecl (Map.empty, initFnMap, Map.singleton "main" True, baseIdentTypeMap, True) gdecls
+    gdecls' = foldl (squash initFnMap) [] gdecls
+    (_, endMap, _, _, valid) = foldl checkGDecl (Map.empty, initFnMap, Map.singleton "main" True, baseIdentTypeMap, True) gdecls'
   in  
     case (Map.lookup "main" endMap) of
       Nothing -> error ("Error : int main() must be declared.")
       Just (argTypes, retType, lDecl, defn) -> (
         if ((length argTypes == 0) && (retType == IInt)) 
-          then valid
+          then (valid, gdecls')
           else error ("Error : int main() must be the right type"))
 
 lTypesEqual :: [IdentType] -> [IdentType] -> Bool 
@@ -45,6 +46,15 @@ validateFnArgs typL fnName =
   if (all (\t -> (not $ t == IVoid)) typL)
     then True
     else error ("Error : cannot have void argument in function declaration of " ++ fnName)
+
+squash :: FnMap -> [GDecl] -> GDecl -> [GDecl]
+squash m prev (g@(GFDecl (FDecl {gdeclName = name, 
+                                 gdeclIsLibrary = lib}) pos)) = 
+  case (m Map.! name, lib) of
+    (_,True) -> prev ++ [g]
+    ((_,_,_,True), _) -> prev ++ [g]
+    _ -> prev 
+squash m prev g = prev ++ [g]
 
 -- Used to create an initial function map. Also checks basic declaration
 -- and redeclaration properties over the top-level program. 

@@ -39,9 +39,9 @@ assertMsgE s False = Left s
 
 checkFnList :: FnList -> Either String () 
 checkFnList fnList@(FnList gdecls pos) = do
-  let tCheck = checkTypeFnList fnList
-  let checkReturn = checkReturnFnList fnList
-  let checkInitialization = checkInitializationFnList fnList
+  let (tCheck, gdecls') = checkTypeFnList fnList
+  let checkReturn = checkReturnFnList (FnList gdecls' pos)
+  let checkInitialization = checkInitializationFnList (FnList gdecls' pos)
   assertMsgE "Error in static check" (tCheck && checkReturn && checkInitialization)
 
 
