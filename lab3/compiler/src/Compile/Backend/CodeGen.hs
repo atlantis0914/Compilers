@@ -55,11 +55,13 @@ genFnProlugues numArgs m =
 
 fnAAsmCodeGen :: FnAAsm -> String
 fnAAsmCodeGen (AAFDefn aasms fnName numArgs) =
-  let
-    (asms, size, m) = codeGen aasms fnName numArgs
-    prologue = [".globl " ++ fnName ++ "\n", fnName ++ ":\n", genFnProlugues numArgs m, "  subq $" ++ show size ++ ", %rsp\n"]
-  in
     concat (prologue ++ [asms])
+  where 
+    (asms, size, m) = codeGen aasms fnName numArgs
+    prologue = [".globl " ++ fnName ++ "\n", fnName ++ ":\n", genFnProlugues numArgs m, substr]
+    substr = if (size > 0) 
+               then "  subq $" ++ show size ++ ", %rsp\n" 
+               else ""
 
 fnAAsmCodeGen (AAFDecl fnName) =
   ""
