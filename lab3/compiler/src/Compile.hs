@@ -52,17 +52,15 @@ compile job = do
     header <- getLibraryCode job
     (ParseFnList fnList pos) <- parseFnList $ jobSource job -- ParseFnList
     elabFnList <- liftEIO $ elaborate (ParseFnList (header ++ fnList) pos) -- FnList
---     writer (jobOut job) elabFnList
-    let postCheckFnList = checkFnList elabFnList
---     elabFnList' <- liftEIO $ renameFn elabFnList
+    let (postCheckFnList, fnMap) = checkFnList elabFnList
     let elabFnList'@(FnList tList _) = renameFn postCheckFnList
-    let elabFnList'' = (if ((length tList) > 100) -- Hacky shit to pass ../tests1/cobalt-return03.l3
+    let elabFnList'' = Trace.trace ("Map is : " ++ show fnMap) $ (if ((length tList) > 100) -- Hacky shit to pass ../tests1/cobalt-return03.l3
                           then elabFnList'
                           else remFn elabFnList')
     minFnList <- liftEIO $ minimize elabFnList''
     if jobOutFormat job == C0
       then writer (jobOut job) minFnList
-      else let asm = fnListCodeGen minFnList in
+      else let asm = fnListCodeGen minFnList fnMap in
               if jobOutFormat job == Asm
                  then stringWriter (jobOut job) asm
                  else do writer asmFile minFnList 

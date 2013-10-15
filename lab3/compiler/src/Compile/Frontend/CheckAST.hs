@@ -37,15 +37,15 @@ assertMsgE :: String -> Bool -> Either String ()
 assertMsgE s True  = Right ()
 assertMsgE s False = Left s
 
-checkFnList :: FnList -> FnList 
+checkFnList :: FnList -> (FnList, FnMap)
 checkFnList fnList@(FnList gdecls pos) = 
   let 
-    (tCheck, gdecls') = checkTypeFnList fnList
+    (tCheck, gdecls', fnMap) = checkTypeFnList fnList
     checkReturn = checkReturnFnList (FnList gdecls' pos)
     checkInitialization = checkInitializationFnList (FnList gdecls' pos)
   in
     if (tCheck && checkReturn && checkInitialization)
-      then (FnList gdecls' pos)
+      then (FnList gdecls' pos, fnMap)
       else error ("Error in static check")
 
 --  assertMsgE "Error in static check" (tCheck && checkReturn && checkInitialization)

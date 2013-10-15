@@ -30,10 +30,10 @@ debugFlag = False
 
 maxTempsBeforeSpilling = 600
 
-fnListCodeGen :: FnList -> String
-fnListCodeGen fnList =
+-- fnListCodeGen :: FnList -> FnMap -> String
+fnListCodeGen fnList fnMap =
   let
-    fnAasms = genFIR fnList
+    fnAasms = genFIR fnList fnMap 
     asm = concatMap fnAAsmCodeGen fnAasms
     epilogue = concat ["error:\n", "movw $1, %ax\n", "movw $0, %bx\n", "divw %bx\n"]
   in

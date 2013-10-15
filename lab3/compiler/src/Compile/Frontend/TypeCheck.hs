@@ -14,7 +14,8 @@ import qualified Debug.Trace as Trace
 --  2. Return Type
 --  3. Whether this is a library decl or not. (We | these together for multiple decls)
 --  4. Whether this function has already been defined
-type FnMap = Map.Map String ([IdentType], IdentType, Bool, Bool) -- Map of global fn defines 
+--  5. Whether this is a good candidate for inlining. This is straight up spaghetti. 
+type FnMap = Map.Map String ([IdentType], IdentType, Bool, Bool, Maybe Integer) -- Map of global fn defines 
 type DeclMap = Map.Map String Bool  -- Map of what decls are currently in scope
 type IdentMap = Map.Map String IdentType -- Map from idents -> types
 type TDMap = Map.Map IdentType IdentType -- Typedef Map
@@ -23,7 +24,7 @@ type Context = (IdentMap, FnMap, DeclMap, TDMap, Bool)
 
 -- Each function should be type checked independently 
 -- foldl : (a -> b -> a) -> a -> [b] -> a
-checkTypeFnList :: FnList -> (Bool, [GDecl])
+checkTypeFnList :: FnList -> (Bool, [GDecl], FnMap)
 checkTypeFnList (FnList gdecls pos) = 
   let
     initFnMap = foldl genFnMap (Map.empty) gdecls
@@ -32,10 +33,12 @@ checkTypeFnList (FnList gdecls pos) =
   in  
     case (Map.lookup "main" endMap) of
       Nothing -> error ("Error : int main() must be declared.")
-      Just (argTypes, retType, lDecl, defn) -> (
+      Just (argTypes, retType, lDecl, defn, _) -> (
         if ((length argTypes == 0) && (retType == IInt)) 
-          then (valid, gdecls')
+          then (valid, gdecls', (removeDecls endMap))
           else error ("Error : int main() must be the right type"))
+
+removeDecls m = Map.filter (\(_,_,_,defn,_) -> defn) m
 
 lTypesEqual :: [IdentType] -> [IdentType] -> Bool 
 lTypesEqual l1 l2 = (all (\(t1,t2) -> t1 == t2) $ zip l1 l2) && 
@@ -52,7 +55,7 @@ squash m prev (g@(GFDecl (FDecl {gdeclName = name,
                                  gdeclIsLibrary = lib}) pos)) = 
   case (m Map.! name, lib) of
     (_,True) -> prev ++ [g]
-    ((_,_,_,True), _) -> prev ++ [g]
+    ((_,_,_,True, _), _) -> prev ++ [g]
     _ -> prev 
 squash m prev g = prev ++ [g]
 
@@ -65,11 +68,11 @@ genFnMap fnMap (GFDecl (FDecl {gdeclName = name,
                gdeclReturnType = returnType, 
                gdeclIsLibrary = isLibrary}) pos) = 
   case (Map.lookup name fnMap) of 
-    Just (oldArgs, oldRet, oldLib, isDeclared) -> 
+    Just (oldArgs, oldRet, oldLib, isDeclared, _) -> 
       if ((lTypesEqual argTypes oldArgs) && (oldRet == returnType)) 
-        then Map.insert name (oldArgs, oldRet, oldLib || isLibrary, isDeclared) fnMap
+        then Map.insert name (oldArgs, oldRet, oldLib || isLibrary, isDeclared, Nothing) fnMap
         else error ("Error : function " ++ name ++ " redeclared incorrectly at " ++ (show pos))
-    Nothing -> Map.insert name (argTypes, returnType, isLibrary, False) fnMap
+    Nothing -> Map.insert name (argTypes, returnType, isLibrary, False, Nothing) fnMap
 
 genFnMap fnMap (GFDefn (FDefn {fnName = name,
                                fnArgs = args,
@@ -77,14 +80,24 @@ genFnMap fnMap (GFDefn (FDefn {fnName = name,
                                fnReturnType = retType,
                                fnBody = body}) pos) = 
   case (Map.lookup name fnMap) of 
-    Just (oldArgs, oldRet, oldLib, isDeclared) -> 
+    Just (oldArgs, oldRet, oldLib, isDeclared, _) -> 
       if (isDeclared || oldLib) 
         -- One error message, two birds
         then error ("Error : function " ++ name ++ " redefined or library at " ++ show pos)
         else if ((lTypesEqual argTypes oldArgs) && (oldRet == retType)) 
-               then (Map.insert name (argTypes, retType, oldLib, True) fnMap)
+               then (Map.insert name (argTypes, retType, oldLib, True, shouldInline body) fnMap)
                else error ("Error : function " ++ name ++ " typed incorrectly at " ++ show pos)
-    Nothing -> (Map.insert name (argTypes, retType, False, True) fnMap)
+    Nothing -> (Map.insert name (argTypes, retType, False, True, shouldInline body) fnMap)
+
+shouldInline :: AST -> Maybe Integer
+shouldInline (AST stmt pos) = isGoodToInline stmt 
+
+isGoodToInline :: Stmt -> Maybe Integer
+isGoodToInline (Ctrl (Return (Just (ExpInt i _ _)) _)) = Just i
+isGoodToInline (Decl _ _ _ sc) = isGoodToInline sc
+isGoodToInline (Block [Decl _ _ _ sc]) = isGoodToInline sc
+isGoodToInline (Block [s]) = isGoodToInline s
+isGoodToInline _ = Nothing
 
 checkGDecl :: Context -> GDecl -> Context
 -- It's our responsibility here to ensure that the name being type-def'd
@@ -223,7 +236,7 @@ checkReturnType fnName (context@(map, fnMap, dMap, tdMap, valid)) t =
     then (\x -> x)
     else error ("Error : Bad type for function with name : " ++ fnName)
   where 
-    (_, retType, _, _) = fnMap Map.! fnName 
+    (_, retType, _, _, _) = fnMap Map.! fnName 
 
 matchType :: String -> Context -> Expr -> Expr -> [IdentType] -> IdentType -> (Maybe IdentType)
 matchType f context expr1 expr2 expect result =
@@ -284,7 +297,7 @@ checkExprType _ ctx@(map, fnMap, dMap, tdMap, valid) call@(ExpFnCall fnName subE
 checkFnCall ctx@(map, fnMap, dMap, tdMap, valid) (ExpFnCall fnName subExps pos) canBeVoid = 
   case (Map.lookup fnName dMap, Map.lookup fnName fnMap) of 
     (Nothing, _) -> error ("Error : Function : " ++ fnName ++ " used undeclared at " ++ show pos)
-    (_, Just (argTypes, retType, libDecl, isDecl)) -> 
+    (_, Just (argTypes, retType, libDecl, isDecl, _)) -> 
       if (isDecl || libDecl) -- Then we're good, just make sure non-void ret
         then if (validateFnCall ctx fnName argTypes subExps retType canBeVoid pos) 
                then Just retType
