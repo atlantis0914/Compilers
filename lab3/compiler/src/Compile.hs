@@ -23,6 +23,7 @@ import Compile.Frontend.Elaborate
 import Compile.Frontend.TypeCheck
 import Compile.Frontend.CheckAST
 import Compile.Frontend.RenameFn
+import Compile.Frontend.RemVoid
 import Compile.IR.GenIR
 import Compile.Frontend.Minimize
 import Compile.Backend.CodeGen
@@ -55,7 +56,8 @@ compile job = do
     liftEIO $ checkFnList elabFnList
 --     elabFnList' <- liftEIO $ renameFn elabFnList
     let elabFnList' = renameFn elabFnList 
-    minFnList <- liftEIO $ minimize elabFnList'
+    let elabFnList'' = remFn elabFnList'
+    minFnList <- liftEIO $ minimize elabFnList''
     if jobOutFormat job == C0
       then writer (jobOut job) minFnList
       else let asm = fnListCodeGen minFnList in
