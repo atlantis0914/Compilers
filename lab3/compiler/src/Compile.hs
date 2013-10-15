@@ -54,7 +54,7 @@ compile job = do
     elabFnList <- liftEIO $ elaborate (ParseFnList (header ++ fnList) pos) -- FnList
     let (postCheckFnList, fnMap) = checkFnList elabFnList
     let elabFnList'@(FnList tList _) = renameFn postCheckFnList
-    let elabFnList'' = Trace.trace ("Map is : " ++ show fnMap) $ (if ((length tList) > 100) -- Hacky shit to pass ../tests1/cobalt-return03.l3
+    let elabFnList'' = (if ((length tList) > 100) -- Hacky shit to pass ../tests1/cobalt-return03.l3
                           then elabFnList'
                           else remFn elabFnList')
     minFnList <- liftEIO $ minimize elabFnList''
