@@ -38,7 +38,7 @@ checkTypeFnList (FnList gdecls pos) =
           then (valid, gdecls', (removeDecls endMap))
           else error ("Error : int main() must be the right type"))
 
-removeDecls m = Map.filter (\(_,_,_,defn,_) -> defn) m
+removeDecls m = Map.filter (\(_,_,isLib,defn,_) -> (isLib || defn)) m
 
 lTypesEqual :: [IdentType] -> [IdentType] -> Bool 
 lTypesEqual l1 l2 = (all (\(t1,t2) -> t1 == t2) $ zip l1 l2) && 
