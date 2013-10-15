@@ -9,12 +9,23 @@ import qualified Data.Map as Map
 
 import qualified Debug.Trace as Trace
 
+-- Fix this shit. It's BAD haha
+badMap = Map.fromList [(3,True), 
+                       (0, True), 
+                       (12, True),
+                       (13, True),
+                       (2, True),
+                       (1, True),
+                       (4, True),
+                       (5, True),
+                       (6, True)]
+
 naiveColor :: [ALoc] -> ColoringMap
 naiveColor locList = naiveColor' locList (Map.empty) 0
   where
     naiveColor' [] m _ = m
     naiveColor' (aloc:alocs) m c 
-      | ((c == 3) || (c == 0)) = naiveColor' (aloc:alocs) m (c+1)
+      | (Map.member c badMap) = naiveColor' (aloc:alocs) m (c+1)
       | otherwise = naiveColor' (alocs) (Map.insert aloc (Color c) m) (c+1)
     
 
