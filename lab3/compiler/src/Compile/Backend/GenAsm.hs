@@ -120,7 +120,7 @@ genProlugues loc locs maxColor =
     reg = alocToQString loc
     pushedArgs = max 0 ((length locs) - 6)
     callers' = filter (\r -> reg /= r) callers
-    regsUsed = take maxColor (map snd regQList)
+    regsUsed = take (maxColor + 1) (map snd regQList)
     callers'' = filter (\r -> r `elem` regsUsed) callers'
     t = pushedArgs + (length callers'')
     shift = t `mod` 2
@@ -138,7 +138,7 @@ genEpilogues loc maxColor =
   let
     reg = alocToQString loc
     callers' = filter (\r -> reg /= r) (reverse callers)
-    regsUsed = take maxColor (map snd regQList)
+    regsUsed = take (maxColor + 1) (map snd regQList)
     callers'' = filter (\r -> r `elem` regsUsed) callers'
     epilogues = concatMap genEpilogueIns callers''
   in
