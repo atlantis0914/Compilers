@@ -37,12 +37,18 @@ assertMsgE :: String -> Bool -> Either String ()
 assertMsgE s True  = Right ()
 assertMsgE s False = Left s
 
-checkFnList :: FnList -> Either String () 
-checkFnList fnList@(FnList gdecls pos) = do
-  let (tCheck, gdecls') = checkTypeFnList fnList
-  let checkReturn = checkReturnFnList (FnList gdecls' pos)
-  let checkInitialization = checkInitializationFnList (FnList gdecls' pos)
-  assertMsgE "Error in static check" (tCheck && checkReturn && checkInitialization)
+checkFnList :: FnList -> FnList 
+checkFnList fnList@(FnList gdecls pos) = 
+  let 
+    (tCheck, gdecls') = checkTypeFnList fnList
+    checkReturn = checkReturnFnList (FnList gdecls' pos)
+    checkInitialization = checkInitializationFnList (FnList gdecls' pos)
+  in
+    if (tCheck && checkReturn && checkInitialization)
+      then (FnList gdecls' pos)
+      else error ("Error in static check")
+
+--  assertMsgE "Error in static check" (tCheck && checkReturn && checkInitialization)
 
 
 -- checkAST :: AST -> Either String ()
