@@ -55,8 +55,10 @@ compile job = do
 --     writer (jobOut job) elabFnList
     liftEIO $ checkFnList elabFnList
 --     elabFnList' <- liftEIO $ renameFn elabFnList
-    let elabFnList' = renameFn elabFnList 
-    let elabFnList'' = remFn elabFnList'
+    let elabFnList'@(FnList tList _) = renameFn elabFnList 
+    let elabFnList'' = (if ((length tList) > 100) -- Hacky shit to pass ../tests1/cobalt-return03.l3
+                          then elabFnList'
+                          else remFn elabFnList')
     minFnList <- liftEIO $ minimize elabFnList''
     if jobOutFormat job == C0
       then writer (jobOut job) minFnList

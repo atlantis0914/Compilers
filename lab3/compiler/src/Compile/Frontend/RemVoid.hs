@@ -28,9 +28,11 @@ remGDecl (rnMap, prev) g = (rnMap, prev ++ [g])
 --    newBody = remBody body rnMap'
 
 getNewBody :: RemMap -> String -> AST -> GDecl -> (RemMap, [GDecl])
-getNewBody rnMap name (AST (Block ([Ctrl (Return Nothing _)])) pos) decl = (Map.insert name True rnMap, [])
+getNewBody rnMap name (AST (Block ([Ctrl (Return Nothing _)])) pos) decl = (Map.insert name True rnMap, [decl])
 getNewBody rnMap name (AST (Block stmts) pos) decl = 
-  Trace.trace ("len = " ++ (show $ length stmts)) $ (rnMap, [decl']) -- can't get rid of it
+  if (Map.size rnMap == 0) 
+    then (rnMap, [decl])
+    else (rnMap, [decl']) -- can't get rid of it
   where 
     decl' = removeMissingFns rnMap decl
 
@@ -51,8 +53,8 @@ remStmt rnMap (Block stmts) = Block stmts'
 
 remStmt rnMap (e@(Expr (ExpFnCall fnName expList p))) = 
   if (Map.member fnName rnMap) 
-    then Trace.trace ("removing") $ SNop
-    else e
+    then SNop
+    else Trace.trace ("ret e " ++ fnName) $ e
 remStmt rnMap (decl@ (Decl {declScope = scope})) = 
   decl {declScope = remStmt rnMap scope}
 remStmt _ s = s
