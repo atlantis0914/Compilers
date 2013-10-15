@@ -19,6 +19,22 @@ regMap = Map.fromList [(0, "%eax"),
                       (12, "%edi"),
                       (13, "%esi")]
 
+regQList = [(0, "%rax"),
+            (1, "%rcx"),
+            (2, "%rdx"),
+            (3, "%r8"),
+            (4, "%r9"),
+            (5, "%r10"),
+            (6, "%r11"),
+            (7, "%rbx"),
+            (8, "%r12"),
+            (9, "%r13"),
+            (10, "%r14"),
+            (11, "%r15"),
+            (12, "%rdi"),
+            (13, "%rsi")]
+
+
 regQMap :: Map.Map Int String
 regQMap = Map.fromList [(0, "%rax"),
                        (1, "%rcx"),
