@@ -29,7 +29,7 @@ type Alloc = (Map.Map String Int, Int)
 
 debugFlag = False
 
-maxTempsBeforeSpilling = 100
+maxTempsBeforeSpilling = 400
 
 -- fnListCodeGen :: FnList -> FnMap -> String
 fnListCodeGen fnList fnMap =
@@ -38,7 +38,7 @@ fnListCodeGen fnList fnMap =
     asm = concatMap fnAAsmCodeGen fnAasms
     epilogue = concat ["error:\n", "  movw $1, %ax\n", "  movw $0, %bx\n", "  divw %bx\n"]
     asm' = asm ++ epilogue
-    asm'' = if ((length asm') < 800)
+    asm'' = if ((length asm') < 10000)
               then squash (asm')
               else asm'
   in
