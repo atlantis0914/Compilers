@@ -10,7 +10,7 @@ import Compile.Types.Ops
 
 
 data FnAAsm = AAFDefn [AAsm] String Int
-            | AAFDecl String
+            | AAFDecl String deriving Show
 
 data AAsm = AAsm {aAssign :: [ALoc]
                  ,aOp     :: Op
