@@ -6,6 +6,8 @@ import qualified Data.Maybe as Maybe
 import qualified Data.List.Split as Split
 import Compile.Backend.Registers
 
+import Compile.IR.CoalesceLabel
+
 import qualified Debug.Trace as Trace
 
 type Alloc = (Map.Map String Int, Int, Int, [AAsm])
@@ -15,7 +17,11 @@ type FnMap = Map.Map String ([IdentType], IdentType, Bool, Bool, Maybe Integer) 
 
 genFIR :: FnList -> FnMap -> [FnAAsm]
 genFIR (FnList gdecls _) fnMap =
-   Maybe.mapMaybe (genFnAAsm fnMap) gdecls
+  let
+    initIR = Maybe.mapMaybe (genFnAAsm fnMap) gdecls
+    coalIR = coalesceLabel initIR
+  in
+    coalIR
 
 addArg :: Alloc -> String -> Alloc
 addArg alloc@(varMap, n, l, aasms) arg =

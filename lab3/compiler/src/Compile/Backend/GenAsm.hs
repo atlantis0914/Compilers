@@ -57,6 +57,14 @@ aasmToString _ AAsm {aAssign = [loc], aOp = RShift, aArgs = [snd]} =
 aasmToString _ AAsm {aAssign = [loc], aOp = BitwiseNot, aArgs = [arg]} =
   "  " ++ (opToString BitwiseNot) ++ " " ++ (alocToString loc) ++ "\n"
 
+aasmToString _ AAsm {aAssign = [loc], aOp = Add, aArgs = [arg]} = 
+  if (isZero arg) 
+    then ""
+    else "  " ++ (opToString Add) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
+  where 
+    isZero (AImm 0) = True
+    isZero _ = False
+
 aasmToString _ AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]} =
   if (argEq loc arg)
     then ""
@@ -85,12 +93,12 @@ aasmToString (_, size, numArgs, m) (ACtrl (ARet _)) =
                else ""
 
 aasmToString (_, size, numArgs, m) (AFnCall fnName loc locs lives) =
-  let
-    (prologue, size) = genProlugues loc locs m lives
-    addSize = if size > 0 then "  addq $" ++ show (size * 8) ++ ", %rsp\n"
-                          else ""
-  in
     prologue ++ "  call " ++ fnName ++ "\n  movl %eax, %r15d\n" ++ addSize ++ (genEpilogues loc m lives) ++ "  movl %r15d, " ++ (alocToString loc) ++ "\n"
+  where 
+    (prologue, size) = genProlugues loc locs m lives
+    incrRsp = if (size > 0) 
+                then "  addq $" ++ show (size * 8) ++ ", %rsp\n" 
+                else ""
 
 genArgPrologue' :: Int -> ALoc -> (String, Int, Int) -> (String, Int, Int)
 genArgPrologue' shift loc (prolog, i, j) =
