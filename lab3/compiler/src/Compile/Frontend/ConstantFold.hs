@@ -17,8 +17,7 @@ constantFold :: FnList -> FnList
 constantFold (FnList l p) = FnList (map cfDefn l) p
 
 cfDefn (GFDefn (fdefn@(FDefn {fnName = name,
-                              fnBody = body})) pos) = 
-  Trace.trace ("res is : " ++ show ret) $ ret 
+                              fnBody = body})) pos) = ret 
   where 
     um = genMapAST body
     ret = GFDefn (fdefn {fnBody = cfAST um body}) pos
@@ -31,10 +30,10 @@ cfAST um (AST (stmt@(Block stmts)) pos) =
 cfStmt :: DeclMap -> UseMap -> Stmt -> Stmt
 cfStmt dm um (Block stmts) = Block (cfBlock dm um stmts) 
 cfStmt dm um (a@(Asgn _ _ _ _ _)) = a
-cfStmt dm um (a@(Decl s _ _ scp)) = 
-  if ((um Map.! s) == 1) 
-    then cfStmt dm um scp
-    else a {declScope = cfStmt dm um scp}
+cfStmt dm um (a@(Decl s _ _ scp)) = a {declScope = cfStmt dm um scp}
+--  if ((um Map.! s) == 1) 
+--    then cfStmt dm um scp
+--    else a {declScope = cfStmt dm um scp}
 cfStmt dm um (a@(Ctrl c)) = Ctrl $ cfCtrl dm um c
 cfStmt dm um (a@(Expr e)) = Expr $ cfExpr dm um e
 
