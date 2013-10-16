@@ -65,9 +65,9 @@ spillAAsm _ aasm@(ACtrl (AIf (ALoc (AReg i)) label)) =
           ACtrl (AIf (ALoc (ASpill)) label)]
     else [aasm]
 spillAAsm _ aasm@(ACtrl c) = [aasm]
-spillAAsm _ aasm@(AFnCall n loc locs) =
+spillAAsm _ aasm@(AFnCall n loc locs lives) =
   let
     loc' = spillLoc loc
     locs' = map spillLoc locs
   in
-    [AFnCall n loc' locs']
+    [AFnCall n loc' locs' lives]

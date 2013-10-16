@@ -57,11 +57,11 @@ aasmToString _ AAsm {aAssign = [loc], aOp = RShift, aArgs = [snd]} =
 aasmToString _ AAsm {aAssign = [loc], aOp = BitwiseNot, aArgs = [arg]} =
   "  " ++ (opToString BitwiseNot) ++ " " ++ (alocToString loc) ++ "\n"
 
-aasmToString _ AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]} = 
-  if (argEq loc arg) 
+aasmToString _ AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]} =
+  if (argEq loc arg)
     then ""
     else "  " ++ (opToString Nop) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
-  where 
+  where
     argEq loc (ALoc loc') = loc == loc'
     argEq _ _ = False
 
@@ -79,16 +79,18 @@ aasmToString (fnName, _, _, _) (ACtrl (AIf aval label)) =
 
 aasmToString (_, size, numArgs, m) (ACtrl (ARet _)) =
   concat [addStr, genFnEpilogues numArgs m, "  ret\n"]
-  where   
-    addStr = if (size > 0) 
+  where
+    addStr = if (size > 0)
                then "  addq $" ++ show size ++ ", %rsp\n"
                else ""
 
-aasmToString (_, size, numArgs, m) (AFnCall fnName loc locs) =
+aasmToString (_, size, numArgs, m) (AFnCall fnName loc locs lives) =
   let
-    (prologue, size) = genProlugues loc locs m
+    (prologue, size) = genProlugues loc locs m lives
+    addSize = if size > 0 then "  addq $" ++ show (size * 8) ++ ", %rsp\n"
+                          else ""
   in
-    prologue ++ "  call " ++ fnName ++ "\n  movl %eax, %r15d\n" ++ "  addq $" ++ show (size * 8) ++ ", %rsp\n" ++ (genEpilogues loc m) ++ "  movl %r15d, " ++ (alocToString loc) ++ "\n"
+    prologue ++ "  call " ++ fnName ++ "\n  movl %eax, %r15d\n" ++ addSize ++ (genEpilogues loc m lives) ++ "  movl %r15d, " ++ (alocToString loc) ++ "\n"
 
 genArgPrologue' :: Int -> ALoc -> (String, Int, Int) -> (String, Int, Int)
 genArgPrologue' shift loc (prolog, i, j) =
@@ -114,32 +116,40 @@ genFnEpilogues numArgs m =
   in
     buffer ++ rest ++ popBP
 
-genProlugues :: ALoc -> [ALoc] -> Int -> (String, Int)
-genProlugues loc locs maxColor =
+notSpilled :: ALoc -> Bool
+notSpilled (AReg i) = i < spill_reg_num
+notSpilled _ = False
+
+genProlugues :: ALoc -> [ALoc] -> Int -> [ALoc] -> (String, Int)
+genProlugues loc locs maxColor lives =
   let
     reg = alocToQString loc
     pushedArgs = max 0 ((length locs) - 6)
     callers' = filter (\r -> reg /= r) callers
+    lives' = filter notSpilled lives
+    liveRegs = map alocToQString lives'
     regsUsed = take (maxColor + 1) (map snd regQList)
-    callers'' = filter (\r -> r `elem` regsUsed) callers'
+    callers'' = filter (\r -> r `elem` liveRegs) callers'
     t = pushedArgs + (length callers'')
     shift = t `mod` 2
     (asms, i) = foldl (moveStack 0) ("", 0) callers''
     (asms', _, s) = foldr (genArgPrologue' shift) (asms, length locs, i) locs
     s' = s + shift
-    asms'' = if (s' > 0)   
+    asms'' = if (s' > 0)
                then asms' ++ "  subq $" ++ show ((s') * 8) ++ ", %rsp\n"
                else asms'
   in
     (asms'', s' - i)
 
-genEpilogues :: ALoc -> Int -> String
-genEpilogues loc maxColor =
+genEpilogues :: ALoc -> Int -> [ALoc] -> String
+genEpilogues loc maxColor lives =
   let
     reg = alocToQString loc
     callers' = filter (\r -> reg /= r) (reverse callers)
     regsUsed = take (maxColor + 1) (map snd regQList)
-    callers'' = filter (\r -> r `elem` regsUsed) callers'
+    lives' = filter notSpilled lives
+    liveRegs = map alocToQString lives'
+    callers'' = filter (\r -> r `elem` liveRegs) callers'
     epilogues = concatMap genEpilogueIns callers''
   in
     if (length callers'') `mod` 2 == 0 then epilogues

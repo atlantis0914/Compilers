@@ -69,7 +69,7 @@ runPredicate labelMap i (ACtrl (AGoto label)) (liveMap, isNew) =
   in
     addLocs i (liveMap, isNew) locs
 
-runPredicate labelMap i (AFnCall _ loc locs) (liveMap, isNew) =
+runPredicate labelMap i (AFnCall _ loc locs _) (liveMap, isNew) =
   let
     locs' = (getLocs (i+1) liveMap) \\ [loc]
     locs'' = locs' `union` locs

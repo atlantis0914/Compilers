@@ -3,7 +3,7 @@ module Compile.IR.GenIR where
 import Compile.Types
 import qualified Data.Map as Map
 import qualified Data.Maybe as Maybe
-import qualified Data.List.Split as Split 
+import qualified Data.List.Split as Split
 import Compile.Backend.Registers
 
 import qualified Debug.Trace as Trace
@@ -11,7 +11,7 @@ import qualified Debug.Trace as Trace
 type Alloc = (Map.Map String Int, Int, Int, [AAsm])
 -- (Map from idents -> tempNum, curTempNum)
 
-type FnMap = Map.Map String ([IdentType], IdentType, Bool, Bool, Maybe Integer) -- Map of global fn defines 
+type FnMap = Map.Map String ([IdentType], IdentType, Bool, Bool, Maybe Integer) -- Map of global fn defines
 
 genFIR :: FnList -> FnMap -> [FnAAsm]
 genFIR (FnList gdecls _) fnMap =
@@ -28,7 +28,7 @@ addArg alloc@(varMap, n, l, aasms) arg =
     (varMap', n+1, l, aasms')
 
 addArgInline :: Alloc -> String -> Alloc
-addArgInline alloc@(varMap, n, l, aasms) arg = 
+addArgInline alloc@(varMap, n, l, aasms) arg =
   let
     aasm = [AAsm {aAssign = [ATemp n], aOp = Nop, aArgs = [ALoc $ AArg $ n]}]
     aasms' = aasms ++ aasm
@@ -42,7 +42,7 @@ genFnAAsm fnMap (GFDefn (FDefn name args _ _ ast _) _) =
   where
     alloc = (Map.empty, 0, 0, [])
     alloc' = foldl addArg alloc args
---     alloc' = case (Map.lookup (name) fnMap) of 
+--     alloc' = case (Map.lookup (name) fnMap) of
 --                Nothing -> error ("fuck" ++ name)
 --                Just (_,_,_,_,True) -> foldl addArgInline alloc args
 --                _ -> foldl addArg alloc args
@@ -90,7 +90,7 @@ genCtrl fm (m,i,l,aasm) (Assert e _) = let
   (_,i',el,eAasm) = genExp fm (m,i+1,l,[]) e (ATemp i)
   abortLabel = el
   endLabel = el + 1
-  abortAasm = [ACtrl $ ALabel abortLabel] ++ [AFnCall "_abort" (ATemp i) []]
+  abortAasm = [ACtrl $ ALabel abortLabel] ++ [AFnCall "_abort" (ATemp i) [] []]
   outputAasm =
     eAasm
     ++ [ACtrl $ AIf (ALoc $ ATemp i) endLabel,
@@ -147,7 +147,7 @@ genCtrl fm (m,i,l,aasm) (Return (Just expr) _) =
 genCtrl fm (m,i,l,aasm) (Return Nothing _) =
   -- dummy value
   (m,i,l,aasm ++ [ACtrl $ ARet (AImm 1)])
-    
+
 
 genExp :: FnMap -> Alloc -> Expr -> ALoc -> Alloc
 genExp _ (varMap,n,l,aasm) (ExpInt num _ _) dest =
@@ -194,12 +194,12 @@ genExp f alloc@(varMap,n,l,aasm) e@(ExpFnCall fnName exprs _) dest =
     Just (_,_,_,_,Nothing) -> genRealFn f alloc e dest
     Just (_,_,_,_,Just i) -> genInlineFn f alloc e dest i
 
-getName :: String -> String 
+getName :: String -> String
 getName (('_'):xs) = getName xs
 getName (('c'):('0'):('_'):xs) = getName xs
 getName s = s
 
-genInlineFn f alloc@(varMap, n, l, aasm) (ExpFnCall fnName expr _) dest ret = 
+genInlineFn f alloc@(varMap, n, l, aasm) (ExpFnCall fnName expr _) dest ret =
   let
     allocs = scanl (genExpAcc f) alloc expr
     lenMinusOne = (length allocs) - 1
@@ -211,16 +211,14 @@ genInlineFn f alloc@(varMap, n, l, aasm) (ExpFnCall fnName expr _) dest ret =
   in
     (varMap', n', l', aasm'' ++ [newAasm])
 
-
-
-genRealFn f alloc@(varMap, n, l, aasm) (ExpFnCall fnName expr _) dest = 
+genRealFn f alloc@(varMap, n, l, aasm) (ExpFnCall fnName expr _) dest =
   let
     allocs = scanl (genExpAcc f) alloc expr
     lenMinusOne = (length allocs) - 1
     locs = map toLoc (take lenMinusOne allocs)
     last@(varMap',n',l',aasm') = allocs !! lenMinusOne
     (aasm'', _) = foldl moveArgs (aasm', 0) locs
-    newAasm = AFnCall fnName dest locs
+    newAasm = AFnCall fnName dest locs []
   in
     (varMap', n', l', aasm'' ++ [newAasm])
 

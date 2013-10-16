@@ -39,12 +39,12 @@ replaceAsm coloring aasm@(ACtrl (AIf aval label)) =
 
 replaceAsm coloring aasm@(ACtrl a) = spillAAsm True aasm
 
-replaceAsm coloring aasm@(AFnCall fnName loc locs) =
+replaceAsm coloring aasm@(AFnCall fnName loc locs lives) =
   let
     loc' = replaceAssigns coloring loc
     locs' = map (replaceAssigns coloring) locs
   in
-    spillAAsm True $ AFnCall fnName loc' locs'
+    spillAAsm True $ AFnCall fnName loc' locs' lives
 
 replaceAssigns :: ColoringMap -> ALoc -> ALoc
 replaceAssigns coloring (ATemp i) =

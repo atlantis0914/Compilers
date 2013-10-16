@@ -33,9 +33,9 @@ maxTempsBeforeSpilling = 600
 -- fnListCodeGen :: FnList -> FnMap -> String
 fnListCodeGen fnList fnMap =
   let
-    fnAasms = genFIR fnList fnMap 
+    fnAasms = genFIR fnList fnMap
     asm = concatMap fnAAsmCodeGen fnAasms
-    epilogue = concat ["error:\n", "movw $1, %ax\n", "movw $0, %bx\n", "divw %bx\n"]
+    epilogue = concat ["error:\n", "  movw $1, %ax\n", "  movw $0, %bx\n", "  divw %bx\n"]
   in
     asm ++ epilogue
 
@@ -56,11 +56,11 @@ genFnProlugues numArgs m =
 fnAAsmCodeGen :: FnAAsm -> String
 fnAAsmCodeGen (AAFDefn aasms fnName numArgs) =
     concat (prologue ++ [asms])
-  where 
+  where
     (asms, size, m) = codeGen aasms fnName numArgs
     prologue = [".globl " ++ fnName ++ "\n", fnName ++ ":\n", genFnProlugues numArgs m, substr]
-    substr = if (size > 0) 
-               then "  subq $" ++ show size ++ ", %rsp\n" 
+    substr = if (size > 0)
+               then "  subq $" ++ show size ++ ", %rsp\n"
                else ""
 
 fnAAsmCodeGen (AAFDecl fnName) =
@@ -71,6 +71,10 @@ maxColor coloring = Map.foldl maxColor' 0 coloring
 
 maxColor' :: Int -> Color -> Int
 maxColor' m (Color c) = max m c
+
+mergeAAsm :: (AAsm, [ALoc]) -> AAsm
+mergeAAsm (AFnCall fnName loc locs _, lives) = AFnCall fnName loc locs lives
+mergeAAsm (aasm, _) = aasm
 
 -- Generates the AAsm from an AST
 codeGen aasmList fnName numArgs = let
@@ -92,10 +96,12 @@ codeGen aasmList fnName numArgs = let
               interference_graph@(Graph gmap) = buildInterferenceGraph twoOpAasmList liveVars
               simp_ordering = maximumCardinalitySearch interference_graph -- now a [Vertex ALoc]
               coloring = greedyColor interference_graph simp_ordering
+              liveVars' = map (\l -> map (replaceAssigns coloring) l) liveVars
+              twoOpAasmList' = map mergeAAsm (zip twoOpAasmList liveVars')
               m = maxColor coloring
               m' = (max 0 (m - max_color_num)) * 8
               m'' = roundUp m'
-              coloredAasmList = colorTemps twoOpAasmList coloring
+              coloredAasmList = colorTemps twoOpAasmList' coloring
               asm = genAsm coloredAasmList (fnName, m'', numArgs, m)
             in
               if (debugFlag)
