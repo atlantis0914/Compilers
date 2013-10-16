@@ -96,7 +96,7 @@ aasmToString (_, size, numArgs, m) (AFnCall fnName loc locs lives) =
     prologue ++ "  call " ++ fnName ++ "\n  movl %eax, %r15d\n" ++ addSize ++ (genEpilogues loc m lives) ++ "  movl %r15d, " ++ (alocToString loc) ++ "\n"
   where 
     (prologue, size) = genProlugues loc locs m lives
-    incrRsp = if (size > 0) 
+    addSize = if (size > 0) 
                 then "  addq $" ++ show (size * 8) ++ ", %rsp\n" 
                 else ""
 
