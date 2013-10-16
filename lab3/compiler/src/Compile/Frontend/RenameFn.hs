@@ -52,6 +52,7 @@ renameStmt rnMap (Block stmts) = Block stmts'
 renameStmt rnMap (Expr e) = Expr (renameExpr rnMap e)
 renameStmt rnMap (decl@ (Decl {declScope = scope})) = 
   decl {declScope = renameStmt rnMap scope}
+renameStmt _ SNop = SNop
 -- renameStmt _ s = s
 
 -- renameCtrl :: RenameMap -> PolyCtrl s -> PolyCtrl s
