@@ -54,7 +54,7 @@ remStmt rnMap (Block stmts) = Block stmts'
 remStmt rnMap (e@(Expr (ExpFnCall fnName expList p))) = 
   if (Map.member fnName rnMap) 
     then SNop
-    else Trace.trace ("ret e " ++ fnName) $ e
+    else e
 remStmt rnMap (decl@ (Decl {declScope = scope})) = 
   decl {declScope = remStmt rnMap scope}
 remStmt _ s = s

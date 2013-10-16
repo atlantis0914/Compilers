@@ -21,6 +21,7 @@ import Compile.Backend.GenAsm
 import Compile.Backend.Spill
 import Compile.Backend.BackendUtils
 import Compile.Backend.Registers
+import Compile.Backend.Squash
 
 import qualified Debug.Trace as Trace
 
@@ -28,7 +29,7 @@ type Alloc = (Map.Map String Int, Int)
 
 debugFlag = False
 
-maxTempsBeforeSpilling = 600
+maxTempsBeforeSpilling = 100
 
 -- fnListCodeGen :: FnList -> FnMap -> String
 fnListCodeGen fnList fnMap =
@@ -36,8 +37,12 @@ fnListCodeGen fnList fnMap =
     fnAasms = genFIR fnList fnMap
     asm = concatMap fnAAsmCodeGen fnAasms
     epilogue = concat ["error:\n", "  movw $1, %ax\n", "  movw $0, %bx\n", "  divw %bx\n"]
+    asm' = asm ++ epilogue
+    asm'' = if ((length asm') < 800)
+              then squash (asm')
+              else asm'
   in
-    asm ++ epilogue
+    asm''
 
 genFnProlugues :: Int -> Int -> String
 genFnProlugues numArgs m =
