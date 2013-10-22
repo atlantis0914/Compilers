@@ -1,0 +1,5 @@
+#!/bin/bash
+root="$(dirname $0)/.."
+cmplr=$(basename $0)
+
+env COMPILER=$cmplr $root/dist/build/c0c/c0c "$@"
