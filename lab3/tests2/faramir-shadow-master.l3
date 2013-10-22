@@ -1,0 +1,31 @@
+//test return 100
+
+int shadowing();
+int has(int shadowing);
+bool left(bool has);
+int me(bool left);
+bool in(int me);
+int despair(int shadowing, bool in);
+
+int main() {
+    int i = shadowing();
+    
+    i = has(i);
+    bool b = left(i > 0);
+    int me = me(b);
+    b = in(me);
+    return despair(shadowing(), b);
+}
+
+int shadowing() { return -1; }
+int has(int shadowing) { return shadowing + 1; }
+bool left(bool has) { return ! has; }
+int me(bool left) { return left ? 1 : 2; }
+bool in(int me) { return me >= shadowing(); }
+int despair(int shadowing, bool in) {
+    int i = shadowing;
+    for(; i > 0; i--) {
+        in = !in;
+    }
+    return in ? 100 : 42;
+}

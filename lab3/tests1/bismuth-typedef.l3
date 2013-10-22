@@ -1,0 +1,14 @@
+//test error
+// Random typedef stuff
+
+typedef int bool;
+typedef void null;
+
+typedef int type;
+typedef bool type;
+
+int main()
+{
+  typedef int x;
+  return 0;
+}

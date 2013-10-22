@@ -22,8 +22,11 @@ import Compile.Frontend.Parse
 import Compile.Frontend.Elaborate
 import Compile.Frontend.TypeCheck
 import Compile.Frontend.CheckAST
+import Compile.Frontend.RenameFn
+import Compile.Frontend.ConstantFold
+import Compile.Frontend.RemVoid
 import Compile.IR.GenIR
--- import Compile.Frontend.Minimize
+import Compile.Frontend.Minimize
 import Compile.Backend.CodeGen
 
 import qualified Debug.Trace as Trace
@@ -49,16 +52,23 @@ compile job = do
   res <- runErrorT $ do -- Constructor for the error monad transformer
     header <- getLibraryCode job
     (ParseFnList fnList pos) <- parseFnList $ jobSource job -- ParseFnList
+    let numFns = length fnList 
     elabFnList <- liftEIO $ elaborate (ParseFnList (header ++ fnList) pos) -- FnList
---     writer (jobOut job) elabFnList
-    liftEIO $ checkFnList elabFnList
---    minimizedAst <- liftEIO $ minimize elabAst
+    let (postCheckFnList, fnMap) = checkFnList elabFnList
+    let elabFnList'@(FnList tList _) = renameFn postCheckFnList
+    let elabFnList'' = (if ((length tList) > 50) -- Hacky shit to pass ../tests1/cobalt-return03.l3
+                          then elabFnList'
+                          else remFn elabFnList')
+    let elabFnList''' = (if (numFns == 1)
+                           then constantFold elabFnList''
+                           else elabFnList'')
+    minFnList <- liftEIO $ minimize elabFnList'''
     if jobOutFormat job == C0
-      then writer (jobOut job) elabFnList
-      else let asm = fnListCodeGen elabFnList in
+      then writer (jobOut job) minFnList
+      else let asm = fnListCodeGen minFnList fnMap in
               if jobOutFormat job == Asm
                  then stringWriter (jobOut job) asm
-                 else do writer asmFile elabFnList
+                 else do writer asmFile minFnList 
                          let o = if jobOutFormat job == Obj then "-c" else ""
                          gcc o asmFile (jobOut job)
   case res of

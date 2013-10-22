@@ -1,0 +1,10 @@
+//test return -1431633921
+
+int main () {
+  int Finn;
+  int Jake = 0xAAAAFFFF;
+  if (Jake == 0xAAAAFFFF) {
+    Finn = 1;
+  }
+  return Jake;
+}

@@ -1,0 +1,5 @@
+//test return 21
+// More complicated operator precedence test
+int main() {
+  return 3 + 2 + (8 >> 1 << 2) & -1 >> 31;
+}

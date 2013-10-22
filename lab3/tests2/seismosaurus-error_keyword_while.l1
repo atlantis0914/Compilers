@@ -1,0 +1,9 @@
+//test error
+// Test compiler error for reserved keywords
+// keyword: while
+int main() {
+    int while;
+
+    while=1;
+    return while;
+}

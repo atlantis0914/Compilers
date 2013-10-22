@@ -1,0 +1,9 @@
+//test error
+// extra curly bracket
+int main()
+{
+  int x;
+  x = 1337;
+  return x;
+}
+}

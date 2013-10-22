@@ -1,0 +1,19 @@
+//test return 3
+// evaluation order of function args
+int one() {
+    print_int(1);
+    return 1;
+}
+
+int two() {
+    print_int(2);
+    return 2;
+}
+
+int add(int x, int y) {
+    return x + y;
+}
+
+int main() {
+    return add(one(), two());
+}

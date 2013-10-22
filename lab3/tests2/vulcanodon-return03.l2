@@ -1,0 +1,37 @@
+//test return 42
+
+int main()
+{
+	/* This program computes sums of the first 10 natural numbers raised to 
+	* the fourth power and compares them with a formula intended to
+	* calculate that value /* so it computes sum_{i=1}^n i^4  and compares 
+	* it to n(n+1)(2n+1)(3n^2+3n-1)/30 to verify that they are equal 
+	* for each n from 1 to 10 /* this is just an extra comment to check 
+	* comment nesting */ */ */
+
+	bool correct = true;
+	int i = 1;
+	int x = 0; //holds the current sum
+
+	for(;i<=10;i++)
+	{
+		int y = 1; //used to calculate what the current sum should be
+		x+= i*i*i*i;
+		y=i;
+		y*=(i+1);
+		y*=((2*i)+1);
+		y*=((3*i*i)+(3*i)-1);
+		y/=30;
+		
+		correct = correct && (y==x);
+	}
+
+	correct = (correct && true)||false;
+
+	if(correct)
+	{
+		return 42;
+	}
+
+	return -1;
+}

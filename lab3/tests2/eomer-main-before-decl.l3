@@ -1,0 +1,10 @@
+//test return 42
+
+int foo() {
+    return main();
+}
+
+int main() {
+    return 42;
+}
+

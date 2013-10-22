@@ -3,6 +3,8 @@ module Compile.Frontend.ElaborateType where
 import Compile.Types
 import qualified Data.Map as Map
 
+import qualified Debug.Trace as Trace
+
 type TypeDefs = Map.Map IdentType IdentType
 
 checkTDIdent :: TypeDefs -> String -> String
@@ -13,7 +15,12 @@ checkTDIdent typeDefs s =
     Nothing -> s
 
 checkTDIdentList :: TypeDefs -> [String] -> [String]
-checkTDIdentList typeDefs l = map (checkTDIdent typeDefs) l
+checkTDIdentList typeDefs l = 
+  if (ok)
+    then l
+    else error ("Conflicting type def")
+  where 
+    ok = all (\s -> (not $ Map.member (ITypeDef s) typeDefs)) l
 
 elaborateTDIdentType :: TypeDefs -> IdentType -> IdentType
 elaborateTDIdentType typeDefs t = 

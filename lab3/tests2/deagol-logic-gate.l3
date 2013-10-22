@@ -1,0 +1,12 @@
+//test error
+
+typedef bool boool;
+
+boool and(bool a, bool b) {
+  return inttobool(a&&b);
+}
+
+int main() {
+  return booltoint(true, true);
+}
+

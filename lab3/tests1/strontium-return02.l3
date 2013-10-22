@@ -1,0 +1,9 @@
+//test return 1
+// testing function headers
+
+int stuff(int thing1);
+
+int main()
+{
+    return 1;
+}

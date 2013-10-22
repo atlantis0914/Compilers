@@ -1,0 +1,9 @@
+//test error
+int main() {
+  int sum = 0;
+  int if;
+  for (if = 0; if < 10; if+=1) {
+    sum += if;
+  }
+  return sum;
+}

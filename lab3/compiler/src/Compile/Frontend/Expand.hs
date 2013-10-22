@@ -8,8 +8,8 @@ import Compile.Frontend.ElaborateExpr
 -- Also COALESCES blocks (for Osmium, yo)
 expandPStatements :: [ParseStmt] -> [ParseStmt]
 expandPStatements stmts = concatMap expandPStatement stmts
-  where expandPStatement s@(PAsgn id Nothing e p) = [PAsgn id Nothing (elabExpr e) p]
-        expandPStatement s@(PAsgn id (Just op) e p) = [PAsgn id Nothing (ExpBinOp op (Ident id p) (elabExpr e) p) p]
+  where expandPStatement s@(PAsgn id Nothing e b p) = [PAsgn id Nothing (elabExpr e) b p]
+        expandPStatement s@(PAsgn id (Just op) e b p) = [PAsgn id Nothing (ExpBinOp op (Ident id p) (elabExpr e) p) b p]
         expandPStatement s@(PCtrl c) = [PCtrl $ expandCtrl c]
         expandPStatement s@(PBlock stmts) = let
           innerExpanded = expandPStatements stmts
@@ -19,7 +19,9 @@ expandPStatements stmts = concatMap expandPStatement stmts
               [stmt] -> [PBlock innerExpanded] -- OSMIUMMMM
               [] -> [] 
               x -> [PBlock innerExpanded]
-        expandPStatement s@(PDecl id t p (Just asgn)) = [PDecl id t p Nothing] ++ (expandPStatement asgn)
+        expandPStatement s@(PDecl id t p (Just asgn)) = [PDecl id t p Nothing] ++ (asgn'')
+          where [asgn'@(PAsgn {})] = expandPStatement asgn
+                asgn'' = [asgn' {pasgnShadow = True}]
         expandPStatement s@(PDecl id t p Nothing) = [s]
         expandPStatement s@(PExpr e) = [PExpr (elabExpr e)]
 

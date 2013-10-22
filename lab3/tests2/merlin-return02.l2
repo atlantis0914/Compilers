@@ -1,0 +1,13 @@
+//test return 219
+// Basic test of bitwise operators, explicit parens
+int main() {
+  int a = 0x1;
+  int b = 0x8;
+  int c = a | b;
+  int d = c + (a ^ a);
+  int e = d << 2;
+  int f = (((~0) << 1) >> 1);
+  int g = e + a + f;
+  int h = (~g) & 0xff;
+  return h;
+}

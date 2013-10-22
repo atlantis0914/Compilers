@@ -1,0 +1,12 @@
+//test return 0
+
+int main ()
+{
+  int x = 5;
+  int res = 0;
+  int sum = 2;
+  for (int z = 0; z < x; z++){
+    res = res * sum;    
+  }
+  return res;
+}

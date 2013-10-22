@@ -1,0 +1,18 @@
+//test return 14286
+// System call
+
+bool f(int i) {
+     return i % 7 == 0;
+}
+
+int main() {
+    int total = 0;
+    for (int i = 0; i < 100000; i++) {
+        if (f(i)) {
+            total++;
+        } else {
+            print_int(i);
+        }
+    }
+    return total;
+}

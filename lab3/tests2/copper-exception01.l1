@@ -1,0 +1,17 @@
+//test exception
+// division by 0 hidden in code (line 14)
+int main()
+{
+  int x;
+  int y;
+  int z;
+  x = 2;
+  y = 3;
+  z = -1;
+  x += z;
+  y = x * 3 - y;
+  x = 2 - (-z) * 2;
+  y = z / x;
+  z = 99 + y;
+  return (x + y) + z;
+}

@@ -1,0 +1,36 @@
+//test return 0
+
+bool equal(int a, int b, int c, int d, int e, int f, int g, int h, int i, int j, int k, int l, int m, int n, int o, int p, int q, int r, int s, int t, int u, int v, int w, int x, int y, int z) {
+  bool ab = a == b;
+  bool cd = c == d;
+  bool ef = e == f;
+  bool gh = g == h;
+  bool ij = i == j;
+  bool kl = k == l;
+  bool mn = m == n;
+  bool op = o == p;
+  bool qr = q == r;
+  bool st = s == t;
+  bool uv = u == v;
+  bool wx = w == x;
+  bool yz = y == z;
+  bool abcd = b == c && ab && cd;
+  bool efgh = f == g && ef && gh;
+  bool ijkl = j == k && ij && kl;
+  bool mnop = n == o && mn && op;
+  bool qrst = r == s && qr && st;
+  bool uvwx = v == w && uv && wx;
+  bool abcdefgh = d == e && abcd && efgh;
+  bool ijklmnop = l == m && ijkl && mnop;
+  bool qrstuvwx = t == u && qrst && uvwx;
+  bool abcdefghijklmnop = h == i && abcdefgh && ijklmnop;
+  bool qrstuvwxyz = x == y && qrstuvwx && yz;
+  return abcdefghijklmnop && qrstuvwxyz;
+}
+
+int main() {
+  if (equal(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1) && !equal(1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6))
+    return 0;
+  else
+    return -1;
+}

@@ -1,0 +1,18 @@
+//test exception
+// But you optimized too much
+// Hope you didn't optimize tail recursion because a test told you to do so
+// If you are reading this then you probably wasted 2 hours optimizing too much
+
+int dont_optimize_me_because_reference_didnt(int x)
+{
+  if (x == 0)
+    return 0;
+  else
+    return dont_optimize_me_because_reference_didnt(x-1);
+}
+
+
+int main()
+{
+  return dont_optimize_me_because_reference_didnt(20*1000*1000);
+}

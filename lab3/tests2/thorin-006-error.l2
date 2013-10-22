@@ -1,0 +1,11 @@
+//test error
+
+int main ()
+{
+  for ({}; false; ) {}
+  return 1;
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

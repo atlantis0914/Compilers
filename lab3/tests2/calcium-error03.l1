@@ -1,0 +1,6 @@
+//test error
+// numbers starting with 0 shouldn't work
+int main()
+{
+  return 03;
+}

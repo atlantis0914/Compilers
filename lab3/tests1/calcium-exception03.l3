@@ -1,0 +1,7 @@
+//test exception 11
+// stack overflow probs
+
+int main () {
+  return main();
+}
+

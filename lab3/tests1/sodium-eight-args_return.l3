@@ -1,0 +1,10 @@
+//test return 1029367
+// Last 2 args go on stack.
+
+int foo(int a, int b, int c, int d, int e, int f, int g, int h) {
+  return a ^ b ^ c ^ d ^ e ^ f ^ g ^ h;
+}
+
+int main() {
+  return foo(472398, 213, 580943, 23423, 0xabc, 0xdef, 999, 1000);
+}

@@ -1,0 +1,23 @@
+//test return 62
+// a little bit of cardio.
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+  int e;
+
+  a = 2;
+  b = 22;
+  c = 0;
+  d = 1;
+  e = 17;
+  
+  a += 3*5+4/2; // 19
+  b /= a-8; // 2
+  c -= 2/b; // -1
+  d *= c+7; // 6
+  e %= a-b-d+c; // 7
+  return a+b+c+d*e;
+}

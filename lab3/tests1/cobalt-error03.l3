@@ -1,0 +1,15 @@
+//test error
+
+typedef int merong;
+
+merong hello(bool y, merong z);
+
+int main()
+{
+  return hello(15, 451);
+}
+
+int hello(int y, int z)
+{
+  return y + z;
+}

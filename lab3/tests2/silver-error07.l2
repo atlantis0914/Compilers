@@ -1,0 +1,4 @@
+//test error
+// Missing main() block.
+
+int main() return 0;

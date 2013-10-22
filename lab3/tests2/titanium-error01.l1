@@ -1,0 +1,12 @@
+//test error
+// Improperly named identifier
+
+int main()
+{
+  int x;
+  int 9y;
+
+  x = 5;
+  9y = 10;
+  return x;
+}

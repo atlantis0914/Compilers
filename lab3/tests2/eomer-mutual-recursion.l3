@@ -1,0 +1,25 @@
+//test return 0
+
+bool bar(int n);
+
+bool foo(int n) {
+    if(n == 0)
+        return true;
+    else
+        return bar(n-1);
+}
+
+bool bar(int n) {
+    if (n == 0)
+        return false;
+    else
+        return foo(n-1);
+}
+
+
+int main() {
+    if(foo(17))
+        return 1;
+    else
+        return 0;
+}

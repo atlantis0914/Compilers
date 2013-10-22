@@ -1,0 +1,13 @@
+//test error
+
+int foo() {
+
+  return 100;
+
+}
+
+int moin() {
+
+  return foo();
+
+}

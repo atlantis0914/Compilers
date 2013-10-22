@@ -1,0 +1,11 @@
+//test return 5
+ int foo(){
+	int a=3;
+	{  int b=2;
+	}
+	int b=5;
+	return b;
+ }
+int main(){
+	return foo();
+}

@@ -1,0 +1,11 @@
+//test error
+//out of order function decl
+
+int main() {
+    int x = sum(1, 2);
+    return x;
+}
+
+int sum(int x, int y) {
+    return x + y;
+}

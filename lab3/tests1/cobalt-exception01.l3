@@ -1,0 +1,16 @@
+//test exception
+// tests abort
+
+int f(int a) {
+
+  return a + 1;
+
+}
+
+
+int main() {
+  int x = 0;
+
+  assert(f(x) == 0);
+  return x;
+}

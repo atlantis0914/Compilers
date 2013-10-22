@@ -1,0 +1,11 @@
+//test error
+
+int foo(){
+    return 0;
+}
+
+int main(){
+    if(foo == foo)
+        return 0;
+    return 0;
+}

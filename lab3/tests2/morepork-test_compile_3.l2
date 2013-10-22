@@ -1,0 +1,17 @@
+//test error
+
+/* 
+ * This is my test program
+ * Wrong type to for
+ */
+int main () {
+  int x;
+  int y = 15;
+  for (x = 0; x; x++)
+  {
+    y = x + 3;
+  }
+  x += 1;
+  //should return 4
+  return ( x + y);
+}

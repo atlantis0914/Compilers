@@ -1,0 +1,7 @@
+//test error
+// Test invalid keyword use
+
+int main() {
+    int true = 1;
+    return true;
+}

@@ -1,0 +1,6 @@
+//test exception
+// divide by zero
+
+int main() {
+    return 15%0;
+}

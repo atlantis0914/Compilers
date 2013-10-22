@@ -1,0 +1,39 @@
+//test return 12
+
+int main ()
+{
+	//BIT COUNT FROM 213 OH YEAH!!!
+	int x = 0x12432f81;
+
+	int halfMask1 = (0x55 << 8) | 0x55;
+	int oddBitMask1 = (halfMask1 << 16) | halfMask1;
+	int oddBits1 = x & oddBitMask1;
+	int evenBits1 = (x >> 1) & oddBitMask1;
+	int add1 = oddBits1 + evenBits1;
+
+	int halfMask2 = (0x33 << 8) | 0x33;
+	int oddBitMask2 = (halfMask2 << 16) | halfMask2;
+	int oddBits2 = add1 & oddBitMask2;
+	int evenBits2 = (add1 >> 2) & oddBitMask2;
+	int add2 = oddBits2 + evenBits2;
+
+	int halfMask4 = (0x0f << 8) | 0x0f;
+	int oddBitMask4 = (halfMask4 << 16) | halfMask4;
+	int oddBits4 = add2 & oddBitMask4;
+	int evenBits4 = (add2 >> 4) & oddBitMask4;
+	int add4 = oddBits4 + evenBits4;
+
+	int halfMask8 = 0xff;
+	int oddBitMask8 = (halfMask8 << 16) | halfMask8;
+	int oddBits8 = add4 & oddBitMask8;
+	int evenBits8 = (add4 >> 8) & oddBitMask8;
+	int add8 = oddBits8 + evenBits8;
+
+	int halfMask16 = (0xff << 8) | 0xff;
+	int oddBitMask16 = halfMask16;
+	int oddBits16 = add8 & oddBitMask16;
+	int evenBits16 = (add8 >> 16) & oddBitMask16;
+	int add16 = oddBits16 + evenBits16;
+
+	return add16;
+}

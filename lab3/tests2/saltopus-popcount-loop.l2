@@ -1,0 +1,10 @@
+//test return 17
+int main() {
+	int x = 0x1274a6df;
+	int n = 0;
+	while(x != 0) {
+		n++; 
+		x &= (x-1);
+	}
+	return n;
+}

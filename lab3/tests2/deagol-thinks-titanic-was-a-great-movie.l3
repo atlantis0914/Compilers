@@ -1,0 +1,6 @@
+//test exception 8
+// SPOILER ALERT: the boat sinks
+
+int main() {
+  return itof(5)/itof(0);
+}

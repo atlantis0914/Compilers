@@ -1,0 +1,10 @@
+//test error
+// -- shouldn't work.
+
+int main() {
+  int x = 5;
+  int y = 34;
+
+  x = --y;
+  return x
+}

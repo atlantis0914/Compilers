@@ -1,0 +1,5 @@
+//test exception
+int main() {
+  int min = -2147483648;
+  return min % -1;
+}

@@ -1,0 +1,48 @@
+//test error
+
+// Don't you love counters? I sure do.
+typedef int counter;
+
+counter increment();
+
+int
+main()
+{
+    counter mycount = 0;
+    increment(mycount);
+    return mycount;
+}
+
+typedef poop counter3;
+
+counter
+increment(counter x) {
+    x++;
+    return x;
+}
+
+typedef counter counter2;
+counter2 increment2(counter x)
+{
+    int counter2 = 3;
+    x--;
+    increment(x);
+    increment(x);
+    return x;
+}
+
+typedef int mycount;
+counter2 increment3(int mycount) {
+    return mycount;
+}
+
+typedef counter19 counter2;
+
+typedef int main;
+
+int
+count(int y) {
+    int mycount = 4;
+    int count = 3;
+    return counter2;
+}

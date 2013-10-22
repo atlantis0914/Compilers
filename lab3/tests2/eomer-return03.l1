@@ -1,0 +1,9 @@
+//test return 0
+// tests binop vs unop -'s
+
+int main() {
+    int a;
+    a = 5 - - - 5;
+
+    return a;
+}

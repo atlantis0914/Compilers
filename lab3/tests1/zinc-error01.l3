@@ -1,0 +1,7 @@
+//test error
+//main is not type int
+typedef bool foo;
+
+foo main() {
+  return true;
+}

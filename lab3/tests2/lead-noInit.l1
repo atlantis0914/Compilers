@@ -1,0 +1,11 @@
+//test error
+// tests unitialized variable usage
+
+int main()
+{
+  int x;
+  x = x + 1;
+  int y;
+  y = y + x;
+  return y;
+}

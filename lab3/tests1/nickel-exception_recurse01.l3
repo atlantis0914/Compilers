@@ -1,0 +1,19 @@
+//test exception 8
+// div by zero but no infinite recursion.
+
+int foo(int a);
+
+int foob(int a)
+{
+	return foo(1/0);
+}
+
+int foo(int a)
+{
+	return 1 + foo(a-1);
+}
+
+int main()
+{
+	return foob(452);
+}

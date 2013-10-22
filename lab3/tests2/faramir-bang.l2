@@ -1,0 +1,14 @@
+//test error
+//cannot compare ints and bools
+
+int main() {
+    int x = 5;
+    int not_x = (((~x + 1) | x) >> 31) + 1;
+
+    if(not_x == !x) {
+        return 1;
+    } else {
+        //return an exception
+        return 1/0;
+    }
+}

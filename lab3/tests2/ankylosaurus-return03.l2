@@ -1,0 +1,13 @@
+//test return 122222
+int main(){
+    int x = 2;
+    int y = 1;
+    int counter;
+    for(counter = 0; counter < 5; counter++){
+    		y = 10*y + x;
+
+
+    }
+    return y;
+
+}

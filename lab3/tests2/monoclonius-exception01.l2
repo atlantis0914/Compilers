@@ -1,0 +1,10 @@
+//test exception
+
+int main()
+{
+    int x;
+    x = 5;
+    if (1 / 0 == 5 && false)
+        x = 3;
+    return x;
+}

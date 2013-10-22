@@ -1,0 +1,14 @@
+//test error
+// using variable before it's initialized inside a loop 
+int main()
+{
+  int a;
+  int b;
+  a = 1;
+  while(a<2)
+  {
+    a = 1;
+    b = b + 1;
+  }
+  return a;
+}

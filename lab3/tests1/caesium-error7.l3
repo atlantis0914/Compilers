@@ -1,0 +1,8 @@
+//test error
+// tests typechecking
+
+int main() {
+  int n = 0;
+  if (!n) return 2;
+  return 42;
+}

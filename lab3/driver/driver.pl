@@ -215,7 +215,8 @@ sub grade_compiler {
         # full test suites
         if (!@Opt_Suite) {
             @Opt_Suite = sort keys %$CMPL_GRADE;
-            push @Opt_Suite, "tests";
+            # don't want to grade "tests"
+            # push @Opt_Suite, "tests";
         }
 
         foreach my $suite (@Opt_Suite) {
@@ -274,7 +275,7 @@ sub grade_compiler {
 
         if ($results{tests0} && $results{tests1} && $results{tests2}) {
             my $result = join(':', @{$results{tests0}}, @{$results{tests1}},
-                                   @{$results{tests2}});
+                                   @{$results{tests2}}, @{$results{tests3}});
             report_result($result, $Opt_Autograding);
         }
     }

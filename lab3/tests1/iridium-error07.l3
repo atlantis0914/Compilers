@@ -1,0 +1,9 @@
+//test error
+
+bool f (int a = 1) {
+  return false;
+}
+
+int main () {
+  return 0;
+}

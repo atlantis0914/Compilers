@@ -1,0 +1,12 @@
+//test error
+
+// Should not read the variable defined in the loop from outside.
+int main()
+{
+  int z = 0;
+  for(int i = 0; i < 100; i++)
+  {
+    z += 1;
+  }
+  return i;
+}

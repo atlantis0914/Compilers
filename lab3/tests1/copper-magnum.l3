@@ -1,0 +1,43 @@
+//test return 1989
+
+int screw_you(int depth) {
+    if(depth <= 0) {return 0;}
+    int a01 = 1;
+    int a02 = 2;
+    int a03 = 3;
+    int a04 = 4;
+    int a05 = 5;
+    int a06 = 6;
+    int a07 = 7;
+    int a08 = 8;
+    int a09 = 9;
+    int a10 = 10;
+    int a11 = 11;
+    int a12 = 12;
+    int a13 = 13;
+    int a14 = 14;
+    int a15 = 15;
+    int aOther = screw_you(depth - 1);
+    int aResult = (a01 + a02 + a03 + a04 + a05 + a06 + a07 + a08 + a09 + a10 + a11 + a12 + a13 + a14 + a15) * 2 + aOther;
+    aResult -= a01;
+    aResult -= a02;
+    aResult -= a03;
+    aResult -= a04;
+    aResult -= a05;
+    aResult -= a06;
+    aResult -= a07;
+    aResult -= a08;
+    aResult -= a09;
+    aResult -= a10;
+    aResult -= a11;
+    aResult -= a12;
+    aResult -= a13;
+    aResult -= a14;
+    aResult -= a15;
+    int whoCares = screw_you(depth - 2);
+    return aResult;
+}
+
+int main() {
+    return (screw_you(5) == ((15 * 16) / 2) * 5 ? 1989 : 205);
+}

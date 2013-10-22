@@ -1,0 +1,29 @@
+//test return 25
+
+typedef int mytype;
+typedef bool mytype2;
+
+mytype func2(mytype2 y);
+
+mytype func1(int x) {
+   if (x>4)
+      return x+func2(true);
+   else
+      return x+func2(false);
+}
+
+mytype func2(mytype2 y) {
+   return y?1:2;
+}
+
+int main() {
+   int a;
+   int b;
+   
+   a=1;
+   a<<=0;
+   b=13%(a<<1);
+   b+=func1(1)+func1(2)+func1(3)+func1(4)+func1(5);
+   
+   return b;
+}

@@ -1,0 +1,14 @@
+//test exception
+//divide by 0 exception
+
+int main()
+{
+int a;
+int b;
+a =2;
+b =4;
+b = b/ (b-2*a);
+
+return b;
+}
+

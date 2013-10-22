@@ -1,0 +1,11 @@
+//test error
+
+int main () {
+  int Finn;
+  int Jake = 0xAAAAFFFF;
+  if (Jake == 0xAAAAFFFF) {
+    // Do you even control flow?
+    Finn = 1;
+  }
+  return Finn;
+}

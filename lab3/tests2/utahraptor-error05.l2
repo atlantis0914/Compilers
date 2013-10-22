@@ -1,0 +1,12 @@
+//test error
+/* Another type check fail
+ */
+int main()
+{
+    int x;
+    bool y = x > 0;
+    bool z = y || y;
+    bool w = x; /* type inconsistency */
+
+    return x;
+}

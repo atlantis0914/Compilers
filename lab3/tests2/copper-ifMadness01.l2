@@ -1,0 +1,8 @@
+//test return 1
+
+int main ()
+{
+	int a = 1;
+	if(2 == 2) if(3 == 4) if(5 == 5) a = 2; else a = 3;
+	return a;
+}

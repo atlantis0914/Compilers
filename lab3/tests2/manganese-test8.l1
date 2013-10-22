@@ -1,0 +1,9 @@
+//test error
+
+// this is a very bad random number generator. it uses an unintialized variable
+int main() {
+    int x; // hmm, random!
+    int y;
+    y = x * 624 * 397 % 7;
+    return y;
+}

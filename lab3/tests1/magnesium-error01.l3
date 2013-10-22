@@ -1,0 +1,12 @@
+//test error
+
+int local(int x)
+{
+  return x;
+}
+
+int main()
+{
+  int local;
+  return local(1);
+}

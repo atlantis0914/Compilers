@@ -1,0 +1,18 @@
+//test return 8
+// Test if statements and conditional operator
+
+int main()
+{
+   int x = 7;
+   bool b;
+
+   if( x < 10 )
+   {
+       b = true;
+       x++;
+   }
+   else
+       b = false;
+
+   return b ? x : 100;
+}

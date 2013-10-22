@@ -1,0 +1,14 @@
+//test error
+// different function decl and defn.
+
+int foo(int a, bool b);
+
+int foo(int a, int b)
+{
+	return a + b;
+}
+
+int main()
+{
+	return foo(52, 1);
+}

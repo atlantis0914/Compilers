@@ -1,0 +1,9 @@
+//test return 2
+//Tests nested ternary ops
+int main() {
+  int i;
+  bool a = true;
+  bool b = false;
+  i = a && 1 == 1 ? b ? 1 : 2 : 3;
+  return i;
+}

@@ -1,0 +1,15 @@
+//test return 2
+// test binary assignment
+int main()
+{
+  int a;
+
+  a = 1;
+  a -= 2; //a=-1;
+  a *= 4; //a=-4;
+  a += 8; //a=4;
+  a /= 2; //a=2;
+  a %= 3; //a=2
+  
+  return a;
+}

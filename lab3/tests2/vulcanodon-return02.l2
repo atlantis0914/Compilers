@@ -1,0 +1,22 @@
+//test return 75
+//tests white space and returns
+
+int main()
+{
+
+
+int before;		
+		before=0;before+=37;	
+		
+	
+
+
+   
+ 	before        -=   		12   	;
+return before*3;
+
+  before = 100/0;
+
+  return before;
+
+}

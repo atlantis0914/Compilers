@@ -1,0 +1,13 @@
+//test error
+
+int myfunc(int x) {
+      return x;
+}
+
+int main() {
+   bool y;
+   
+   y = myfunc(0);
+   
+   return 0;
+}

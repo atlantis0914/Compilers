@@ -1,0 +1,10 @@
+//test exception 8
+
+int main() {
+   int x=128;
+   int y=256;
+   
+   y<<=(31+32);
+   
+   return x/y;
+}

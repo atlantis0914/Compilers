@@ -1,0 +1,8 @@
+//test return 32
+
+typedef int t;
+
+int main () {
+	t z = 32;
+	return z;
+}

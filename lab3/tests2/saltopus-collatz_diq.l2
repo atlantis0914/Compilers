@@ -1,0 +1,36 @@
+//test return 108
+/* Computes the average Collatz stopping time for 
+ * [1, 113382] (113383 overflows and infinitely loops), but repeats
+ * this until the ref compiler is about to time out. 
+ */
+
+int main()
+{
+    /* configuration */
+	int iters = 8;
+	int start = 1;
+	int stop = 113382;
+
+	int i;
+	int	j;
+	int total = 0;
+
+	for (j = 0; j < iters; j++) {
+		total = 0;
+		for (i = start; i <= stop; i++) {
+			int steps = 0;
+			int n = i;
+			while (n != 1) {
+				if ((n & 1) == 0) {
+					n /= 2;
+				} else {
+					n = 3*n + 1;
+				}
+				steps++;
+			}
+			total += steps;
+		}
+	}
+
+	return total / (stop-start+1);
+}

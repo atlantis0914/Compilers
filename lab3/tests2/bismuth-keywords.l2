@@ -1,0 +1,16 @@
+//test error
+//keywords should be reserved
+int main()
+{	
+    int struct = 0;
+    int typedef = 0;
+    int assert = 0;
+    int NULL = 0;
+    int alloc = 0;
+    int alloc_array = 0;
+    int void = 0;
+    int char = 0;
+    int string = 0;
+
+    return 0;
+}

@@ -1,0 +1,10 @@
+//test return 0
+
+typedef int newtype;
+int f(int x, int y, int z, newtype a, newtype b, newtype c, newtype d) {
+    return 0;
+}
+
+int main() {
+    return f(0, 0, 0, 0, 0, 0, 0);
+}

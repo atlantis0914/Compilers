@@ -1,0 +1,9 @@
+//test error
+// Test compiler error for reserved keywords
+// keyword: alloc
+int main() {
+    int alloc;
+
+    alloc=1;
+    return alloc;
+}

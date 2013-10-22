@@ -36,7 +36,7 @@ prependAsDecls args argTypes (AST (Block stmts) p) =
     ast' = (AST (Block [decls']) p)
     Decl {declScope = inner} =  decls'
   in
-    trace ("Ast " ++ show ast') $ ast'
+    ast'
 
 checkInitialization :: [String] -> AST -> Bool
 checkInitialization args (AST (Block stmts) p) = 
@@ -82,12 +82,12 @@ checkStmt args (Ctrl (Return Nothing pos)) _ decls = (Set.empty, Set.empty, True
 checkStmt args (Block stmts) doErr decls = checkBlock args stmts doErr decls
 checkStmt args (Decl i t pos rest) doErr decls = 
   let
-    (decsRest, liveRest, b1) = isDeclaredDecl i decls $ checkStmt args rest doErr (trace ("decls = " ++ show decls) $ Set.insert i decls)
+    (decsRest, liveRest, b1) = isDeclaredDecl i decls $ checkStmt args rest doErr (Set.insert i decls)
     setI = isInitDecl args doErr liveRest i pos $ Set.singleton(i)
   in
     setI `seq` (Set.difference decsRest setI, Set.difference liveRest setI, b1)
 
-checkStmt args (Asgn i o e pos) doErr decls = isDeclaredAsgn i decls (Set.singleton i, used e, False)
+checkStmt args (Asgn i o e _ pos) doErr decls = isDeclaredAsgn i decls (Set.singleton i, used e, False)
 
 checkStmt args (Expr e) doErr decls = isDeclaredExpr' e decls (Set.empty, used e, False)
 
@@ -98,6 +98,10 @@ checkStmt args (Ctrl (If e s1 s2 pos)) doErr decls =
   in
     decs1 `seq` lives1 `seq` decs2 `seq` lives2 `seq` 
     (Set.intersection decs1 decs2, Set.union (used e) (Set.union lives1 lives2), b1 && b2)
+
+
+checkStmt args (Ctrl (Assert e pos)) doErr decls =  
+  isDeclaredExpr e decls pos $ (Set.empty, used e, False)
 
 checkStmt args (Ctrl (While e s1 pos)) doErr decls = 
   let
@@ -135,5 +139,6 @@ used (ExpPolyEq _ e1 e2 _) = Set.union (used e1) (used e2)
 used (ExpUnOp _ e1 _) = used e1 
 used (ExpTernary e1 e2 e3 _) = Set.union (used e1) $
                                     Set.union (used e2) (used e3)
+used (ExpFnCall _ el _) = foldl Set.union Set.empty (map used el)
 used _ = Set.empty
 

@@ -1,0 +1,8 @@
+//test return 1
+
+// Make sure the compiler isn't smarter than it thinks
+
+int main() {
+	return 1;
+	int x = 1/0;
+}

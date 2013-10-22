@@ -1,0 +1,10 @@
+//test error
+//should error because return is a reserved word
+
+int main()
+{
+  int return;
+
+  return = 0;
+  return return;
+}

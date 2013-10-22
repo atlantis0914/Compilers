@@ -1,0 +1,11 @@
+//test return 158
+int main(){
+    bool x = true;
+    int y;
+    y=67;
+    int z = 91;
+    bool a = false;
+    if(z+y > 200 ? a : x)
+        y +=z;
+    return y;
+}

@@ -1,0 +1,6 @@
+//test error
+// invalid mixing of types
+int main() {
+    int a = 3.10;
+    return a + 10;
+}

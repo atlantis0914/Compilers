@@ -1,0 +1,13 @@
+//test return 36
+int main()
+{
+    
+    int sum = 0;
+    int t = 0;
+
+    for(t=1; t<=8; t++) {
+        sum = sum + t;
+    }
+    // sum of first n natural numbers
+    return sum;
+}

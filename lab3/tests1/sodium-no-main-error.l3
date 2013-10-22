@@ -1,0 +1,5 @@
+//test error
+
+int mainainthere(){
+        return 6;
+}

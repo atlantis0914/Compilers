@@ -1,0 +1,14 @@
+//test error
+//funciton argment type mismatch
+int foo(int a,bool b,int c){
+	if (b)
+		return a;
+	else return c;
+}
+int main(){
+	int a=3;
+	int b=1;
+	int c=6;
+	foo(a,b,c);
+	return 0;
+}

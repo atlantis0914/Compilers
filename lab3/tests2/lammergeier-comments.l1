@@ -1,0 +1,13 @@
+//test return 0
+int main()
+{
+    /* This is a valid comment */
+    // This is a valid comment
+    /* This is a valid comment // This is a valid comment */
+    // This is a valid comment /* This is a valid comment */
+    /* This is a valid comment /* This is a valid comment */ */
+    //* This is a valid comment
+    /* This is a valid comment */
+    // This is a valid comment */ This is a valid comment
+    return 0;
+}

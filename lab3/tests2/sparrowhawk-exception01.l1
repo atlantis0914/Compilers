@@ -1,0 +1,9 @@
+//test exception
+// divide by
+int main() {
+  int a = 4;
+  int b = 6;
+  int c = a / b;
+  int d = a / c;
+  return d;
+}

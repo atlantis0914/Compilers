@@ -1,0 +1,20 @@
+//test return 10000
+
+typedef int balance;
+typedef int cust_id;
+
+balance get_cur_balance(cust_id id) {
+    cust_id boss = 0;
+    cust_id employee = 1;
+    if (id == boss) {
+        return 10000;
+    } else if (id == employee) {
+        return 20;
+    } else {
+        return 0;
+    }
+}
+
+int main() {
+    return get_cur_balance(0);
+}

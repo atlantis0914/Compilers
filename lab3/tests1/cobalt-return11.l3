@@ -1,0 +1,16 @@
+//test return 1024
+
+int pow(int c, int k) {
+  if (c <= 1) {
+    return k;
+  }
+  else {
+    return k * pow(c - 1, k);
+  } 
+}
+
+int main() { 
+  int x = 2;
+
+  return pow(10, 2);
+}

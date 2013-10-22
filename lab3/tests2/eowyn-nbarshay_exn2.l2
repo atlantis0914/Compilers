@@ -1,0 +1,8 @@
+//test exception
+
+int main() {
+	int i = 10;
+	while(false || 10 / i > 0)
+		i--;
+	return i;
+}

@@ -1,0 +1,12 @@
+//test error
+//Conditional where left expression does not typecheck
+
+int main() {
+    int j = 7;
+    int k = 12;
+    int l;
+    int m;
+    m = (l = j + k) ? 9 : 10;
+
+    return m;
+}

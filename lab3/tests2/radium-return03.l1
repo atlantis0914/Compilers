@@ -1,0 +1,19 @@
+//test return 12
+
+int main ()
+{
+  int n;
+  int i;
+  int k;
+  n = 0;
+  i = 1;
+  k = 2;
+  int a;
+  a = 10 + k;
+  int s;
+  k = 5;
+  s = 10;
+  int y = -31 + a;
+  int h = -30 + s;
+  return n + i + k + k + i + a + k + s + h + a + y;
+}

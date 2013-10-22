@@ -1,0 +1,12 @@
+//test exception 8
+int main() {
+    int k = 0xFFFFFFFF;
+    k++;
+    // there's gotta be better.
+    if (k > 0) {
+        return k;
+    }
+    else {
+        return 1 / k;
+    }
+}

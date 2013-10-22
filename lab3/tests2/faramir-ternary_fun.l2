@@ -1,0 +1,14 @@
+//test return 10240
+
+int main() {
+    int main = (0 > 1) ? 5 : 10;
+    int i;
+
+    for(i = (1<<31); i <= 0; i--) {
+        main <<= main;
+    }
+
+    return main;
+}
+
+    

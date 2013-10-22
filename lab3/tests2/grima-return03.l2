@@ -1,0 +1,7 @@
+//test return 1000
+// Test shifting
+
+int main()
+{
+   return ( 1000 >> 0 );
+}

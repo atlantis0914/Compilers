@@ -1,0 +1,7 @@
+//test error
+
+bool f1() { return true; }
+
+int main () {
+	return f1(); //return type not right
+}

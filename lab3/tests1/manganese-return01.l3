@@ -1,0 +1,34 @@
+//test return 0
+
+int foo(int x);
+int bar(int x);
+int baz(int x);
+
+int main() {
+    int x = 10;
+    x = foo(x); // x = 100
+    x = bar(x); // x = 1
+    x = baz(x); // x = 0;
+    return x;
+}
+
+int foo(int x) {
+    x--;
+    return 100;
+}
+
+int bar(int x) {
+    foo(x);
+    int r = 0;
+    while (x != 0) {
+        r = r + (x % 10);
+        x /= 10;
+    }
+    return r;
+}
+
+int baz(int x) {
+    int y = 123456789;
+    y = bar(y); // y = 45
+    return bar(y) - 9;
+}

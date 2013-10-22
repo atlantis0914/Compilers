@@ -9,37 +9,37 @@ import Compile.Types.Ctrl
 
 type Ctrl = PolyCtrl Stmt
 
-data FnList = FnList [GDecl] SourcePos deriving Show
+data FnList = FnList ![GDecl] SourcePos deriving Show
 
-data GDecl = GFDecl FDecl SourcePos
-           | GFDefn FDefn SourcePos
-           | GTypeDef IdentType IdentType SourcePos deriving Show
+data GDecl = GFDecl !FDecl SourcePos
+           | GFDefn !FDefn SourcePos
+           | GTypeDef !IdentType !IdentType SourcePos deriving Show
 
-data FDefn = FDefn {fnName :: String,
-                    fnArgs :: [String],
-                    fnArgTypes :: [IdentType],
-                    fnReturnType :: IdentType,
-                    fnBody :: AST,
+data FDefn = FDefn {fnName :: !String,
+                    fnArgs :: ![String],
+                    fnArgTypes :: ![IdentType],
+                    fnReturnType :: !IdentType,
+                    fnBody :: !AST,
                     fnPos :: SourcePos} deriving Show
 
 -- fnName, fnArgs, fnArgTypes, fnReturnType
-data FDecl = FDecl {gdeclName :: String,
-                    gdeclArgs :: [String],
-                    gdeclArgTypes :: [IdentType],
-                    gdeclReturnType :: IdentType,
-                    gdeclIsLibrary :: Bool,
+data FDecl = FDecl {gdeclName :: !String,
+                    gdeclArgs :: ![String],
+                    gdeclArgTypes :: ![IdentType],
+                    gdeclReturnType :: !IdentType,
+                    gdeclIsLibrary :: !Bool,
                     gdeclPos :: SourcePos} deriving Show
 
-data AST = AST Stmt SourcePos
+data AST = AST !Stmt SourcePos
 
-data Stmt = Asgn String AsgnOp Expr SourcePos
-          | Decl {declName :: String,
-                  declTyp :: IdentType,
+data Stmt = Asgn !String !AsgnOp !Expr !Bool SourcePos
+          | Decl {declName :: !String,
+                  declTyp :: !IdentType,
                   declPos :: SourcePos,
-                  declScope :: Stmt}
-          | Ctrl Ctrl
-          | Block [Stmt]
-          | Expr Expr
+                  declScope :: !Stmt}
+          | Ctrl !Ctrl
+          | Block ![Stmt]
+          | Expr !Expr
           | SNop
 
 instance Show AST where
@@ -50,7 +50,7 @@ maybeShow Nothing = ""
 maybeShow (Just o) = show o
 
 instance Show Stmt where
-  show (Asgn s o e _) = "\t" ++ s ++ " " ++ (maybeShow o) ++ "=" ++ " " ++ show e ++ ";"
+  show (Asgn s o e b _) = "\t" ++ s ++ " " ++ (maybeShow o) ++ "=" ++ " " ++ show e ++ ";"
   show (Decl i t _ innerS) = "\t" ++ (show t) ++ " " ++ i ++ ";" ++ show innerS
   show (Ctrl c) = show c
   show (Block stmts) = "{\n" ++ (unlines (map show stmts)) ++ "\n" ++ "};" ++ "\n"

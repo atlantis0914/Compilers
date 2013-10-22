@@ -1,0 +1,9 @@
+//test error
+// Tests loop counter scope
+int main()
+{
+  for (int i = 0; i < 5; i++) {
+    int i = 1;
+  }
+  return 0;
+}

@@ -1,0 +1,6 @@
+//test return 42
+int main()
+{
+  for(int x = 0; false;) {}
+  return 42;
+}

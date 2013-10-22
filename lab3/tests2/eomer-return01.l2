@@ -1,0 +1,51 @@
+//test return 42
+// dangling else plus some bitops, operator precedence, and loops
+int main()
+{
+    int n1 = 4;
+    bool f1 = false;
+    int n2 = 0;
+
+    for (int i = 0; i > n1; i++) // never enter this loop
+    {
+        { bool foobar = true; }
+
+        n2 += i;
+        n2 <<= 1;
+
+        { int foobar = 0; }
+    }
+
+    for (int i = 0; i > -n1; i--)
+    {
+        n2 += i >> (32%32); // n2 += i
+        n2 += i << (32%32); // n2 += i
+        n2 ^= ~~~~~~~~~~1; // n2 ^= 1
+        n2 <<= 2;
+    }
+
+    bool f2 = !(~(f1 ? n2 > 0 ? 3 : - - -1 : n2 < 0 ? -10 : 0) >= 0);
+
+    int n3;
+
+    // f1 = false, f2 = true
+    if (f2)
+        if (f1)
+            if (f2)
+                if (f1)
+                    if (f2)
+                        n3 = 0;
+                    else
+                        n3 = 0;
+                else
+                    n3 = 0;
+            else
+                n3 = 0;
+        else
+            n3 = 42;
+    else
+        n3 = 0;
+
+    return n3;
+}
+

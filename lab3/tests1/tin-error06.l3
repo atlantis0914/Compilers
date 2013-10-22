@@ -1,0 +1,9 @@
+//test error
+//expression with just a type
+
+typedef int type;
+
+int main() {
+  type;
+  return 0;
+}

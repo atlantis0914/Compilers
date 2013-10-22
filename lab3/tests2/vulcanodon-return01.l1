@@ -1,0 +1,18 @@
+//test return 42
+//testing parentheses/multiple operations on one line
+
+int main()
+{
+  int x;
+
+  x = 42;
+  x += 5;
+  x *= 2;
+  x -= 10;
+  x /= 2;
+  x = (13+29+x)-x;
+  x = (x-10)+10;
+  x = (x*5)/5;
+  x *= ((((5*4)-10)+22)/32);
+  return x;
+}

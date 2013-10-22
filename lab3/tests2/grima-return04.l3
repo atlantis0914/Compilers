@@ -1,0 +1,31 @@
+//test return 0
+/* Read a punch of numbers and calculate their catalan numbers */
+
+
+int catalan( int n )
+{
+    int sum = 0;
+
+    if( n == 0)
+    {
+        return 1;
+    }
+
+    for(int i = 0; i < n ; i++)
+        sum += catalan(i) * catalan(n - 1 - i);
+
+    return sum;
+}
+int main () {
+
+  int i = 7;
+
+  while( i > 0)
+  {
+      print_int( catalan(i) );
+
+      i--;
+  }
+
+  return 0;
+}

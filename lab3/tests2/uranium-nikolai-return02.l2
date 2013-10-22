@@ -1,0 +1,10 @@
+//test return 0
+// short-circuits
+int main() {
+    int x = 0;
+    int y = 1;
+    int z = 2;
+    bool w = (x < 1 || y / 0 == 0);
+    bool w2 = (y == 0 && z / 0 == 0);
+    return 0;
+}

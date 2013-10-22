@@ -1,0 +1,9 @@
+//test return 0
+// empty for loop is OK
+
+int main ()
+{  
+  for(int x = 0; false; x++) { }
+  return 0;
+
+}

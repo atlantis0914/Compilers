@@ -1,0 +1,2006 @@
+//test return 1
+typedef int t0;
+typedef t0 t1;
+typedef t1 t2;
+typedef t2 t3;
+typedef t3 t4;
+typedef t4 t5;
+typedef t5 t6;
+typedef t6 t7;
+typedef t7 t8;
+typedef t8 t9;
+typedef t9 t10;
+typedef t10 t11;
+typedef t11 t12;
+typedef t12 t13;
+typedef t13 t14;
+typedef t14 t15;
+typedef t15 t16;
+typedef t16 t17;
+typedef t17 t18;
+typedef t18 t19;
+typedef t19 t20;
+typedef t20 t21;
+typedef t21 t22;
+typedef t22 t23;
+typedef t23 t24;
+typedef t24 t25;
+typedef t25 t26;
+typedef t26 t27;
+typedef t27 t28;
+typedef t28 t29;
+typedef t29 t30;
+typedef t30 t31;
+typedef t31 t32;
+typedef t32 t33;
+typedef t33 t34;
+typedef t34 t35;
+typedef t35 t36;
+typedef t36 t37;
+typedef t37 t38;
+typedef t38 t39;
+typedef t39 t40;
+typedef t40 t41;
+typedef t41 t42;
+typedef t42 t43;
+typedef t43 t44;
+typedef t44 t45;
+typedef t45 t46;
+typedef t46 t47;
+typedef t47 t48;
+typedef t48 t49;
+typedef t49 t50;
+typedef t50 t51;
+typedef t51 t52;
+typedef t52 t53;
+typedef t53 t54;
+typedef t54 t55;
+typedef t55 t56;
+typedef t56 t57;
+typedef t57 t58;
+typedef t58 t59;
+typedef t59 t60;
+typedef t60 t61;
+typedef t61 t62;
+typedef t62 t63;
+typedef t63 t64;
+typedef t64 t65;
+typedef t65 t66;
+typedef t66 t67;
+typedef t67 t68;
+typedef t68 t69;
+typedef t69 t70;
+typedef t70 t71;
+typedef t71 t72;
+typedef t72 t73;
+typedef t73 t74;
+typedef t74 t75;
+typedef t75 t76;
+typedef t76 t77;
+typedef t77 t78;
+typedef t78 t79;
+typedef t79 t80;
+typedef t80 t81;
+typedef t81 t82;
+typedef t82 t83;
+typedef t83 t84;
+typedef t84 t85;
+typedef t85 t86;
+typedef t86 t87;
+typedef t87 t88;
+typedef t88 t89;
+typedef t89 t90;
+typedef t90 t91;
+typedef t91 t92;
+typedef t92 t93;
+typedef t93 t94;
+typedef t94 t95;
+typedef t95 t96;
+typedef t96 t97;
+typedef t97 t98;
+typedef t98 t99;
+typedef t99 t100;
+typedef t100 t101;
+typedef t101 t102;
+typedef t102 t103;
+typedef t103 t104;
+typedef t104 t105;
+typedef t105 t106;
+typedef t106 t107;
+typedef t107 t108;
+typedef t108 t109;
+typedef t109 t110;
+typedef t110 t111;
+typedef t111 t112;
+typedef t112 t113;
+typedef t113 t114;
+typedef t114 t115;
+typedef t115 t116;
+typedef t116 t117;
+typedef t117 t118;
+typedef t118 t119;
+typedef t119 t120;
+typedef t120 t121;
+typedef t121 t122;
+typedef t122 t123;
+typedef t123 t124;
+typedef t124 t125;
+typedef t125 t126;
+typedef t126 t127;
+typedef t127 t128;
+typedef t128 t129;
+typedef t129 t130;
+typedef t130 t131;
+typedef t131 t132;
+typedef t132 t133;
+typedef t133 t134;
+typedef t134 t135;
+typedef t135 t136;
+typedef t136 t137;
+typedef t137 t138;
+typedef t138 t139;
+typedef t139 t140;
+typedef t140 t141;
+typedef t141 t142;
+typedef t142 t143;
+typedef t143 t144;
+typedef t144 t145;
+typedef t145 t146;
+typedef t146 t147;
+typedef t147 t148;
+typedef t148 t149;
+typedef t149 t150;
+typedef t150 t151;
+typedef t151 t152;
+typedef t152 t153;
+typedef t153 t154;
+typedef t154 t155;
+typedef t155 t156;
+typedef t156 t157;
+typedef t157 t158;
+typedef t158 t159;
+typedef t159 t160;
+typedef t160 t161;
+typedef t161 t162;
+typedef t162 t163;
+typedef t163 t164;
+typedef t164 t165;
+typedef t165 t166;
+typedef t166 t167;
+typedef t167 t168;
+typedef t168 t169;
+typedef t169 t170;
+typedef t170 t171;
+typedef t171 t172;
+typedef t172 t173;
+typedef t173 t174;
+typedef t174 t175;
+typedef t175 t176;
+typedef t176 t177;
+typedef t177 t178;
+typedef t178 t179;
+typedef t179 t180;
+typedef t180 t181;
+typedef t181 t182;
+typedef t182 t183;
+typedef t183 t184;
+typedef t184 t185;
+typedef t185 t186;
+typedef t186 t187;
+typedef t187 t188;
+typedef t188 t189;
+typedef t189 t190;
+typedef t190 t191;
+typedef t191 t192;
+typedef t192 t193;
+typedef t193 t194;
+typedef t194 t195;
+typedef t195 t196;
+typedef t196 t197;
+typedef t197 t198;
+typedef t198 t199;
+typedef t199 t200;
+typedef t200 t201;
+typedef t201 t202;
+typedef t202 t203;
+typedef t203 t204;
+typedef t204 t205;
+typedef t205 t206;
+typedef t206 t207;
+typedef t207 t208;
+typedef t208 t209;
+typedef t209 t210;
+typedef t210 t211;
+typedef t211 t212;
+typedef t212 t213;
+typedef t213 t214;
+typedef t214 t215;
+typedef t215 t216;
+typedef t216 t217;
+typedef t217 t218;
+typedef t218 t219;
+typedef t219 t220;
+typedef t220 t221;
+typedef t221 t222;
+typedef t222 t223;
+typedef t223 t224;
+typedef t224 t225;
+typedef t225 t226;
+typedef t226 t227;
+typedef t227 t228;
+typedef t228 t229;
+typedef t229 t230;
+typedef t230 t231;
+typedef t231 t232;
+typedef t232 t233;
+typedef t233 t234;
+typedef t234 t235;
+typedef t235 t236;
+typedef t236 t237;
+typedef t237 t238;
+typedef t238 t239;
+typedef t239 t240;
+typedef t240 t241;
+typedef t241 t242;
+typedef t242 t243;
+typedef t243 t244;
+typedef t244 t245;
+typedef t245 t246;
+typedef t246 t247;
+typedef t247 t248;
+typedef t248 t249;
+typedef t249 t250;
+typedef t250 t251;
+typedef t251 t252;
+typedef t252 t253;
+typedef t253 t254;
+typedef t254 t255;
+typedef t255 t256;
+typedef t256 t257;
+typedef t257 t258;
+typedef t258 t259;
+typedef t259 t260;
+typedef t260 t261;
+typedef t261 t262;
+typedef t262 t263;
+typedef t263 t264;
+typedef t264 t265;
+typedef t265 t266;
+typedef t266 t267;
+typedef t267 t268;
+typedef t268 t269;
+typedef t269 t270;
+typedef t270 t271;
+typedef t271 t272;
+typedef t272 t273;
+typedef t273 t274;
+typedef t274 t275;
+typedef t275 t276;
+typedef t276 t277;
+typedef t277 t278;
+typedef t278 t279;
+typedef t279 t280;
+typedef t280 t281;
+typedef t281 t282;
+typedef t282 t283;
+typedef t283 t284;
+typedef t284 t285;
+typedef t285 t286;
+typedef t286 t287;
+typedef t287 t288;
+typedef t288 t289;
+typedef t289 t290;
+typedef t290 t291;
+typedef t291 t292;
+typedef t292 t293;
+typedef t293 t294;
+typedef t294 t295;
+typedef t295 t296;
+typedef t296 t297;
+typedef t297 t298;
+typedef t298 t299;
+typedef t299 t300;
+typedef t300 t301;
+typedef t301 t302;
+typedef t302 t303;
+typedef t303 t304;
+typedef t304 t305;
+typedef t305 t306;
+typedef t306 t307;
+typedef t307 t308;
+typedef t308 t309;
+typedef t309 t310;
+typedef t310 t311;
+typedef t311 t312;
+typedef t312 t313;
+typedef t313 t314;
+typedef t314 t315;
+typedef t315 t316;
+typedef t316 t317;
+typedef t317 t318;
+typedef t318 t319;
+typedef t319 t320;
+typedef t320 t321;
+typedef t321 t322;
+typedef t322 t323;
+typedef t323 t324;
+typedef t324 t325;
+typedef t325 t326;
+typedef t326 t327;
+typedef t327 t328;
+typedef t328 t329;
+typedef t329 t330;
+typedef t330 t331;
+typedef t331 t332;
+typedef t332 t333;
+typedef t333 t334;
+typedef t334 t335;
+typedef t335 t336;
+typedef t336 t337;
+typedef t337 t338;
+typedef t338 t339;
+typedef t339 t340;
+typedef t340 t341;
+typedef t341 t342;
+typedef t342 t343;
+typedef t343 t344;
+typedef t344 t345;
+typedef t345 t346;
+typedef t346 t347;
+typedef t347 t348;
+typedef t348 t349;
+typedef t349 t350;
+typedef t350 t351;
+typedef t351 t352;
+typedef t352 t353;
+typedef t353 t354;
+typedef t354 t355;
+typedef t355 t356;
+typedef t356 t357;
+typedef t357 t358;
+typedef t358 t359;
+typedef t359 t360;
+typedef t360 t361;
+typedef t361 t362;
+typedef t362 t363;
+typedef t363 t364;
+typedef t364 t365;
+typedef t365 t366;
+typedef t366 t367;
+typedef t367 t368;
+typedef t368 t369;
+typedef t369 t370;
+typedef t370 t371;
+typedef t371 t372;
+typedef t372 t373;
+typedef t373 t374;
+typedef t374 t375;
+typedef t375 t376;
+typedef t376 t377;
+typedef t377 t378;
+typedef t378 t379;
+typedef t379 t380;
+typedef t380 t381;
+typedef t381 t382;
+typedef t382 t383;
+typedef t383 t384;
+typedef t384 t385;
+typedef t385 t386;
+typedef t386 t387;
+typedef t387 t388;
+typedef t388 t389;
+typedef t389 t390;
+typedef t390 t391;
+typedef t391 t392;
+typedef t392 t393;
+typedef t393 t394;
+typedef t394 t395;
+typedef t395 t396;
+typedef t396 t397;
+typedef t397 t398;
+typedef t398 t399;
+typedef t399 t400;
+typedef t400 t401;
+typedef t401 t402;
+typedef t402 t403;
+typedef t403 t404;
+typedef t404 t405;
+typedef t405 t406;
+typedef t406 t407;
+typedef t407 t408;
+typedef t408 t409;
+typedef t409 t410;
+typedef t410 t411;
+typedef t411 t412;
+typedef t412 t413;
+typedef t413 t414;
+typedef t414 t415;
+typedef t415 t416;
+typedef t416 t417;
+typedef t417 t418;
+typedef t418 t419;
+typedef t419 t420;
+typedef t420 t421;
+typedef t421 t422;
+typedef t422 t423;
+typedef t423 t424;
+typedef t424 t425;
+typedef t425 t426;
+typedef t426 t427;
+typedef t427 t428;
+typedef t428 t429;
+typedef t429 t430;
+typedef t430 t431;
+typedef t431 t432;
+typedef t432 t433;
+typedef t433 t434;
+typedef t434 t435;
+typedef t435 t436;
+typedef t436 t437;
+typedef t437 t438;
+typedef t438 t439;
+typedef t439 t440;
+typedef t440 t441;
+typedef t441 t442;
+typedef t442 t443;
+typedef t443 t444;
+typedef t444 t445;
+typedef t445 t446;
+typedef t446 t447;
+typedef t447 t448;
+typedef t448 t449;
+typedef t449 t450;
+typedef t450 t451;
+typedef t451 t452;
+typedef t452 t453;
+typedef t453 t454;
+typedef t454 t455;
+typedef t455 t456;
+typedef t456 t457;
+typedef t457 t458;
+typedef t458 t459;
+typedef t459 t460;
+typedef t460 t461;
+typedef t461 t462;
+typedef t462 t463;
+typedef t463 t464;
+typedef t464 t465;
+typedef t465 t466;
+typedef t466 t467;
+typedef t467 t468;
+typedef t468 t469;
+typedef t469 t470;
+typedef t470 t471;
+typedef t471 t472;
+typedef t472 t473;
+typedef t473 t474;
+typedef t474 t475;
+typedef t475 t476;
+typedef t476 t477;
+typedef t477 t478;
+typedef t478 t479;
+typedef t479 t480;
+typedef t480 t481;
+typedef t481 t482;
+typedef t482 t483;
+typedef t483 t484;
+typedef t484 t485;
+typedef t485 t486;
+typedef t486 t487;
+typedef t487 t488;
+typedef t488 t489;
+typedef t489 t490;
+typedef t490 t491;
+typedef t491 t492;
+typedef t492 t493;
+typedef t493 t494;
+typedef t494 t495;
+typedef t495 t496;
+typedef t496 t497;
+typedef t497 t498;
+typedef t498 t499;
+typedef t499 t500;
+typedef t500 t501;
+typedef t501 t502;
+typedef t502 t503;
+typedef t503 t504;
+typedef t504 t505;
+typedef t505 t506;
+typedef t506 t507;
+typedef t507 t508;
+typedef t508 t509;
+typedef t509 t510;
+typedef t510 t511;
+typedef t511 t512;
+typedef t512 t513;
+typedef t513 t514;
+typedef t514 t515;
+typedef t515 t516;
+typedef t516 t517;
+typedef t517 t518;
+typedef t518 t519;
+typedef t519 t520;
+typedef t520 t521;
+typedef t521 t522;
+typedef t522 t523;
+typedef t523 t524;
+typedef t524 t525;
+typedef t525 t526;
+typedef t526 t527;
+typedef t527 t528;
+typedef t528 t529;
+typedef t529 t530;
+typedef t530 t531;
+typedef t531 t532;
+typedef t532 t533;
+typedef t533 t534;
+typedef t534 t535;
+typedef t535 t536;
+typedef t536 t537;
+typedef t537 t538;
+typedef t538 t539;
+typedef t539 t540;
+typedef t540 t541;
+typedef t541 t542;
+typedef t542 t543;
+typedef t543 t544;
+typedef t544 t545;
+typedef t545 t546;
+typedef t546 t547;
+typedef t547 t548;
+typedef t548 t549;
+typedef t549 t550;
+typedef t550 t551;
+typedef t551 t552;
+typedef t552 t553;
+typedef t553 t554;
+typedef t554 t555;
+typedef t555 t556;
+typedef t556 t557;
+typedef t557 t558;
+typedef t558 t559;
+typedef t559 t560;
+typedef t560 t561;
+typedef t561 t562;
+typedef t562 t563;
+typedef t563 t564;
+typedef t564 t565;
+typedef t565 t566;
+typedef t566 t567;
+typedef t567 t568;
+typedef t568 t569;
+typedef t569 t570;
+typedef t570 t571;
+typedef t571 t572;
+typedef t572 t573;
+typedef t573 t574;
+typedef t574 t575;
+typedef t575 t576;
+typedef t576 t577;
+typedef t577 t578;
+typedef t578 t579;
+typedef t579 t580;
+typedef t580 t581;
+typedef t581 t582;
+typedef t582 t583;
+typedef t583 t584;
+typedef t584 t585;
+typedef t585 t586;
+typedef t586 t587;
+typedef t587 t588;
+typedef t588 t589;
+typedef t589 t590;
+typedef t590 t591;
+typedef t591 t592;
+typedef t592 t593;
+typedef t593 t594;
+typedef t594 t595;
+typedef t595 t596;
+typedef t596 t597;
+typedef t597 t598;
+typedef t598 t599;
+typedef t599 t600;
+typedef t600 t601;
+typedef t601 t602;
+typedef t602 t603;
+typedef t603 t604;
+typedef t604 t605;
+typedef t605 t606;
+typedef t606 t607;
+typedef t607 t608;
+typedef t608 t609;
+typedef t609 t610;
+typedef t610 t611;
+typedef t611 t612;
+typedef t612 t613;
+typedef t613 t614;
+typedef t614 t615;
+typedef t615 t616;
+typedef t616 t617;
+typedef t617 t618;
+typedef t618 t619;
+typedef t619 t620;
+typedef t620 t621;
+typedef t621 t622;
+typedef t622 t623;
+typedef t623 t624;
+typedef t624 t625;
+typedef t625 t626;
+typedef t626 t627;
+typedef t627 t628;
+typedef t628 t629;
+typedef t629 t630;
+typedef t630 t631;
+typedef t631 t632;
+typedef t632 t633;
+typedef t633 t634;
+typedef t634 t635;
+typedef t635 t636;
+typedef t636 t637;
+typedef t637 t638;
+typedef t638 t639;
+typedef t639 t640;
+typedef t640 t641;
+typedef t641 t642;
+typedef t642 t643;
+typedef t643 t644;
+typedef t644 t645;
+typedef t645 t646;
+typedef t646 t647;
+typedef t647 t648;
+typedef t648 t649;
+typedef t649 t650;
+typedef t650 t651;
+typedef t651 t652;
+typedef t652 t653;
+typedef t653 t654;
+typedef t654 t655;
+typedef t655 t656;
+typedef t656 t657;
+typedef t657 t658;
+typedef t658 t659;
+typedef t659 t660;
+typedef t660 t661;
+typedef t661 t662;
+typedef t662 t663;
+typedef t663 t664;
+typedef t664 t665;
+typedef t665 t666;
+typedef t666 t667;
+typedef t667 t668;
+typedef t668 t669;
+typedef t669 t670;
+typedef t670 t671;
+typedef t671 t672;
+typedef t672 t673;
+typedef t673 t674;
+typedef t674 t675;
+typedef t675 t676;
+typedef t676 t677;
+typedef t677 t678;
+typedef t678 t679;
+typedef t679 t680;
+typedef t680 t681;
+typedef t681 t682;
+typedef t682 t683;
+typedef t683 t684;
+typedef t684 t685;
+typedef t685 t686;
+typedef t686 t687;
+typedef t687 t688;
+typedef t688 t689;
+typedef t689 t690;
+typedef t690 t691;
+typedef t691 t692;
+typedef t692 t693;
+typedef t693 t694;
+typedef t694 t695;
+typedef t695 t696;
+typedef t696 t697;
+typedef t697 t698;
+typedef t698 t699;
+typedef t699 t700;
+typedef t700 t701;
+typedef t701 t702;
+typedef t702 t703;
+typedef t703 t704;
+typedef t704 t705;
+typedef t705 t706;
+typedef t706 t707;
+typedef t707 t708;
+typedef t708 t709;
+typedef t709 t710;
+typedef t710 t711;
+typedef t711 t712;
+typedef t712 t713;
+typedef t713 t714;
+typedef t714 t715;
+typedef t715 t716;
+typedef t716 t717;
+typedef t717 t718;
+typedef t718 t719;
+typedef t719 t720;
+typedef t720 t721;
+typedef t721 t722;
+typedef t722 t723;
+typedef t723 t724;
+typedef t724 t725;
+typedef t725 t726;
+typedef t726 t727;
+typedef t727 t728;
+typedef t728 t729;
+typedef t729 t730;
+typedef t730 t731;
+typedef t731 t732;
+typedef t732 t733;
+typedef t733 t734;
+typedef t734 t735;
+typedef t735 t736;
+typedef t736 t737;
+typedef t737 t738;
+typedef t738 t739;
+typedef t739 t740;
+typedef t740 t741;
+typedef t741 t742;
+typedef t742 t743;
+typedef t743 t744;
+typedef t744 t745;
+typedef t745 t746;
+typedef t746 t747;
+typedef t747 t748;
+typedef t748 t749;
+typedef t749 t750;
+typedef t750 t751;
+typedef t751 t752;
+typedef t752 t753;
+typedef t753 t754;
+typedef t754 t755;
+typedef t755 t756;
+typedef t756 t757;
+typedef t757 t758;
+typedef t758 t759;
+typedef t759 t760;
+typedef t760 t761;
+typedef t761 t762;
+typedef t762 t763;
+typedef t763 t764;
+typedef t764 t765;
+typedef t765 t766;
+typedef t766 t767;
+typedef t767 t768;
+typedef t768 t769;
+typedef t769 t770;
+typedef t770 t771;
+typedef t771 t772;
+typedef t772 t773;
+typedef t773 t774;
+typedef t774 t775;
+typedef t775 t776;
+typedef t776 t777;
+typedef t777 t778;
+typedef t778 t779;
+typedef t779 t780;
+typedef t780 t781;
+typedef t781 t782;
+typedef t782 t783;
+typedef t783 t784;
+typedef t784 t785;
+typedef t785 t786;
+typedef t786 t787;
+typedef t787 t788;
+typedef t788 t789;
+typedef t789 t790;
+typedef t790 t791;
+typedef t791 t792;
+typedef t792 t793;
+typedef t793 t794;
+typedef t794 t795;
+typedef t795 t796;
+typedef t796 t797;
+typedef t797 t798;
+typedef t798 t799;
+typedef t799 t800;
+typedef t800 t801;
+typedef t801 t802;
+typedef t802 t803;
+typedef t803 t804;
+typedef t804 t805;
+typedef t805 t806;
+typedef t806 t807;
+typedef t807 t808;
+typedef t808 t809;
+typedef t809 t810;
+typedef t810 t811;
+typedef t811 t812;
+typedef t812 t813;
+typedef t813 t814;
+typedef t814 t815;
+typedef t815 t816;
+typedef t816 t817;
+typedef t817 t818;
+typedef t818 t819;
+typedef t819 t820;
+typedef t820 t821;
+typedef t821 t822;
+typedef t822 t823;
+typedef t823 t824;
+typedef t824 t825;
+typedef t825 t826;
+typedef t826 t827;
+typedef t827 t828;
+typedef t828 t829;
+typedef t829 t830;
+typedef t830 t831;
+typedef t831 t832;
+typedef t832 t833;
+typedef t833 t834;
+typedef t834 t835;
+typedef t835 t836;
+typedef t836 t837;
+typedef t837 t838;
+typedef t838 t839;
+typedef t839 t840;
+typedef t840 t841;
+typedef t841 t842;
+typedef t842 t843;
+typedef t843 t844;
+typedef t844 t845;
+typedef t845 t846;
+typedef t846 t847;
+typedef t847 t848;
+typedef t848 t849;
+typedef t849 t850;
+typedef t850 t851;
+typedef t851 t852;
+typedef t852 t853;
+typedef t853 t854;
+typedef t854 t855;
+typedef t855 t856;
+typedef t856 t857;
+typedef t857 t858;
+typedef t858 t859;
+typedef t859 t860;
+typedef t860 t861;
+typedef t861 t862;
+typedef t862 t863;
+typedef t863 t864;
+typedef t864 t865;
+typedef t865 t866;
+typedef t866 t867;
+typedef t867 t868;
+typedef t868 t869;
+typedef t869 t870;
+typedef t870 t871;
+typedef t871 t872;
+typedef t872 t873;
+typedef t873 t874;
+typedef t874 t875;
+typedef t875 t876;
+typedef t876 t877;
+typedef t877 t878;
+typedef t878 t879;
+typedef t879 t880;
+typedef t880 t881;
+typedef t881 t882;
+typedef t882 t883;
+typedef t883 t884;
+typedef t884 t885;
+typedef t885 t886;
+typedef t886 t887;
+typedef t887 t888;
+typedef t888 t889;
+typedef t889 t890;
+typedef t890 t891;
+typedef t891 t892;
+typedef t892 t893;
+typedef t893 t894;
+typedef t894 t895;
+typedef t895 t896;
+typedef t896 t897;
+typedef t897 t898;
+typedef t898 t899;
+typedef t899 t900;
+typedef t900 t901;
+typedef t901 t902;
+typedef t902 t903;
+typedef t903 t904;
+typedef t904 t905;
+typedef t905 t906;
+typedef t906 t907;
+typedef t907 t908;
+typedef t908 t909;
+typedef t909 t910;
+typedef t910 t911;
+typedef t911 t912;
+typedef t912 t913;
+typedef t913 t914;
+typedef t914 t915;
+typedef t915 t916;
+typedef t916 t917;
+typedef t917 t918;
+typedef t918 t919;
+typedef t919 t920;
+typedef t920 t921;
+typedef t921 t922;
+typedef t922 t923;
+typedef t923 t924;
+typedef t924 t925;
+typedef t925 t926;
+typedef t926 t927;
+typedef t927 t928;
+typedef t928 t929;
+typedef t929 t930;
+typedef t930 t931;
+typedef t931 t932;
+typedef t932 t933;
+typedef t933 t934;
+typedef t934 t935;
+typedef t935 t936;
+typedef t936 t937;
+typedef t937 t938;
+typedef t938 t939;
+typedef t939 t940;
+typedef t940 t941;
+typedef t941 t942;
+typedef t942 t943;
+typedef t943 t944;
+typedef t944 t945;
+typedef t945 t946;
+typedef t946 t947;
+typedef t947 t948;
+typedef t948 t949;
+typedef t949 t950;
+typedef t950 t951;
+typedef t951 t952;
+typedef t952 t953;
+typedef t953 t954;
+typedef t954 t955;
+typedef t955 t956;
+typedef t956 t957;
+typedef t957 t958;
+typedef t958 t959;
+typedef t959 t960;
+typedef t960 t961;
+typedef t961 t962;
+typedef t962 t963;
+typedef t963 t964;
+typedef t964 t965;
+typedef t965 t966;
+typedef t966 t967;
+typedef t967 t968;
+typedef t968 t969;
+typedef t969 t970;
+typedef t970 t971;
+typedef t971 t972;
+typedef t972 t973;
+typedef t973 t974;
+typedef t974 t975;
+typedef t975 t976;
+typedef t976 t977;
+typedef t977 t978;
+typedef t978 t979;
+typedef t979 t980;
+typedef t980 t981;
+typedef t981 t982;
+typedef t982 t983;
+typedef t983 t984;
+typedef t984 t985;
+typedef t985 t986;
+typedef t986 t987;
+typedef t987 t988;
+typedef t988 t989;
+typedef t989 t990;
+typedef t990 t991;
+typedef t991 t992;
+typedef t992 t993;
+typedef t993 t994;
+typedef t994 t995;
+typedef t995 t996;
+typedef t996 t997;
+typedef t997 t998;
+typedef t998 t999;
+typedef t999 t1000;
+t0 f0() { return 0; } 
+t1 f1() { return 0; } 
+t2 f2() { return 0; } 
+t3 f3() { return 0; } 
+t4 f4() { return 0; } 
+t5 f5() { return 0; } 
+t6 f6() { return 0; } 
+t7 f7() { return 0; } 
+t8 f8() { return 0; } 
+t9 f9() { return 0; } 
+t10 f10() { return 0; } 
+t11 f11() { return 0; } 
+t12 f12() { return 0; } 
+t13 f13() { return 0; } 
+t14 f14() { return 0; } 
+t15 f15() { return 0; } 
+t16 f16() { return 0; } 
+t17 f17() { return 0; } 
+t18 f18() { return 0; } 
+t19 f19() { return 0; } 
+t20 f20() { return 0; } 
+t21 f21() { return 0; } 
+t22 f22() { return 0; } 
+t23 f23() { return 0; } 
+t24 f24() { return 0; } 
+t25 f25() { return 0; } 
+t26 f26() { return 0; } 
+t27 f27() { return 0; } 
+t28 f28() { return 0; } 
+t29 f29() { return 0; } 
+t30 f30() { return 0; } 
+t31 f31() { return 0; } 
+t32 f32() { return 0; } 
+t33 f33() { return 0; } 
+t34 f34() { return 0; } 
+t35 f35() { return 0; } 
+t36 f36() { return 0; } 
+t37 f37() { return 0; } 
+t38 f38() { return 0; } 
+t39 f39() { return 0; } 
+t40 f40() { return 0; } 
+t41 f41() { return 0; } 
+t42 f42() { return 0; } 
+t43 f43() { return 0; } 
+t44 f44() { return 0; } 
+t45 f45() { return 0; } 
+t46 f46() { return 0; } 
+t47 f47() { return 0; } 
+t48 f48() { return 0; } 
+t49 f49() { return 0; } 
+t50 f50() { return 0; } 
+t51 f51() { return 0; } 
+t52 f52() { return 0; } 
+t53 f53() { return 0; } 
+t54 f54() { return 0; } 
+t55 f55() { return 0; } 
+t56 f56() { return 0; } 
+t57 f57() { return 0; } 
+t58 f58() { return 0; } 
+t59 f59() { return 0; } 
+t60 f60() { return 0; } 
+t61 f61() { return 0; } 
+t62 f62() { return 0; } 
+t63 f63() { return 0; } 
+t64 f64() { return 0; } 
+t65 f65() { return 0; } 
+t66 f66() { return 0; } 
+t67 f67() { return 0; } 
+t68 f68() { return 0; } 
+t69 f69() { return 0; } 
+t70 f70() { return 0; } 
+t71 f71() { return 0; } 
+t72 f72() { return 0; } 
+t73 f73() { return 0; } 
+t74 f74() { return 0; } 
+t75 f75() { return 0; } 
+t76 f76() { return 0; } 
+t77 f77() { return 0; } 
+t78 f78() { return 0; } 
+t79 f79() { return 0; } 
+t80 f80() { return 0; } 
+t81 f81() { return 0; } 
+t82 f82() { return 0; } 
+t83 f83() { return 0; } 
+t84 f84() { return 0; } 
+t85 f85() { return 0; } 
+t86 f86() { return 0; } 
+t87 f87() { return 0; } 
+t88 f88() { return 0; } 
+t89 f89() { return 0; } 
+t90 f90() { return 0; } 
+t91 f91() { return 0; } 
+t92 f92() { return 0; } 
+t93 f93() { return 0; } 
+t94 f94() { return 0; } 
+t95 f95() { return 0; } 
+t96 f96() { return 0; } 
+t97 f97() { return 0; } 
+t98 f98() { return 0; } 
+t99 f99() { return 0; } 
+t100 f100() { return 0; } 
+t101 f101() { return 0; } 
+t102 f102() { return 0; } 
+t103 f103() { return 0; } 
+t104 f104() { return 0; } 
+t105 f105() { return 0; } 
+t106 f106() { return 0; } 
+t107 f107() { return 0; } 
+t108 f108() { return 0; } 
+t109 f109() { return 0; } 
+t110 f110() { return 0; } 
+t111 f111() { return 0; } 
+t112 f112() { return 0; } 
+t113 f113() { return 0; } 
+t114 f114() { return 0; } 
+t115 f115() { return 0; } 
+t116 f116() { return 0; } 
+t117 f117() { return 0; } 
+t118 f118() { return 0; } 
+t119 f119() { return 0; } 
+t120 f120() { return 0; } 
+t121 f121() { return 0; } 
+t122 f122() { return 0; } 
+t123 f123() { return 0; } 
+t124 f124() { return 0; } 
+t125 f125() { return 0; } 
+t126 f126() { return 0; } 
+t127 f127() { return 0; } 
+t128 f128() { return 0; } 
+t129 f129() { return 0; } 
+t130 f130() { return 0; } 
+t131 f131() { return 0; } 
+t132 f132() { return 0; } 
+t133 f133() { return 0; } 
+t134 f134() { return 0; } 
+t135 f135() { return 0; } 
+t136 f136() { return 0; } 
+t137 f137() { return 0; } 
+t138 f138() { return 0; } 
+t139 f139() { return 0; } 
+t140 f140() { return 0; } 
+t141 f141() { return 0; } 
+t142 f142() { return 0; } 
+t143 f143() { return 0; } 
+t144 f144() { return 0; } 
+t145 f145() { return 0; } 
+t146 f146() { return 0; } 
+t147 f147() { return 0; } 
+t148 f148() { return 0; } 
+t149 f149() { return 0; } 
+t150 f150() { return 0; } 
+t151 f151() { return 0; } 
+t152 f152() { return 0; } 
+t153 f153() { return 0; } 
+t154 f154() { return 0; } 
+t155 f155() { return 0; } 
+t156 f156() { return 0; } 
+t157 f157() { return 0; } 
+t158 f158() { return 0; } 
+t159 f159() { return 0; } 
+t160 f160() { return 0; } 
+t161 f161() { return 0; } 
+t162 f162() { return 0; } 
+t163 f163() { return 0; } 
+t164 f164() { return 0; } 
+t165 f165() { return 0; } 
+t166 f166() { return 0; } 
+t167 f167() { return 0; } 
+t168 f168() { return 0; } 
+t169 f169() { return 0; } 
+t170 f170() { return 0; } 
+t171 f171() { return 0; } 
+t172 f172() { return 0; } 
+t173 f173() { return 0; } 
+t174 f174() { return 0; } 
+t175 f175() { return 0; } 
+t176 f176() { return 0; } 
+t177 f177() { return 0; } 
+t178 f178() { return 0; } 
+t179 f179() { return 0; } 
+t180 f180() { return 0; } 
+t181 f181() { return 0; } 
+t182 f182() { return 0; } 
+t183 f183() { return 0; } 
+t184 f184() { return 0; } 
+t185 f185() { return 0; } 
+t186 f186() { return 0; } 
+t187 f187() { return 0; } 
+t188 f188() { return 0; } 
+t189 f189() { return 0; } 
+t190 f190() { return 0; } 
+t191 f191() { return 0; } 
+t192 f192() { return 0; } 
+t193 f193() { return 0; } 
+t194 f194() { return 0; } 
+t195 f195() { return 0; } 
+t196 f196() { return 0; } 
+t197 f197() { return 0; } 
+t198 f198() { return 0; } 
+t199 f199() { return 0; } 
+t200 f200() { return 0; } 
+t201 f201() { return 0; } 
+t202 f202() { return 0; } 
+t203 f203() { return 0; } 
+t204 f204() { return 0; } 
+t205 f205() { return 0; } 
+t206 f206() { return 0; } 
+t207 f207() { return 0; } 
+t208 f208() { return 0; } 
+t209 f209() { return 0; } 
+t210 f210() { return 0; } 
+t211 f211() { return 0; } 
+t212 f212() { return 0; } 
+t213 f213() { return 0; } 
+t214 f214() { return 0; } 
+t215 f215() { return 0; } 
+t216 f216() { return 0; } 
+t217 f217() { return 0; } 
+t218 f218() { return 0; } 
+t219 f219() { return 0; } 
+t220 f220() { return 0; } 
+t221 f221() { return 0; } 
+t222 f222() { return 0; } 
+t223 f223() { return 0; } 
+t224 f224() { return 0; } 
+t225 f225() { return 0; } 
+t226 f226() { return 0; } 
+t227 f227() { return 0; } 
+t228 f228() { return 0; } 
+t229 f229() { return 0; } 
+t230 f230() { return 0; } 
+t231 f231() { return 0; } 
+t232 f232() { return 0; } 
+t233 f233() { return 0; } 
+t234 f234() { return 0; } 
+t235 f235() { return 0; } 
+t236 f236() { return 0; } 
+t237 f237() { return 0; } 
+t238 f238() { return 0; } 
+t239 f239() { return 0; } 
+t240 f240() { return 0; } 
+t241 f241() { return 0; } 
+t242 f242() { return 0; } 
+t243 f243() { return 0; } 
+t244 f244() { return 0; } 
+t245 f245() { return 0; } 
+t246 f246() { return 0; } 
+t247 f247() { return 0; } 
+t248 f248() { return 0; } 
+t249 f249() { return 0; } 
+t250 f250() { return 0; } 
+t251 f251() { return 0; } 
+t252 f252() { return 0; } 
+t253 f253() { return 0; } 
+t254 f254() { return 0; } 
+t255 f255() { return 0; } 
+t256 f256() { return 0; } 
+t257 f257() { return 0; } 
+t258 f258() { return 0; } 
+t259 f259() { return 0; } 
+t260 f260() { return 0; } 
+t261 f261() { return 0; } 
+t262 f262() { return 0; } 
+t263 f263() { return 0; } 
+t264 f264() { return 0; } 
+t265 f265() { return 0; } 
+t266 f266() { return 0; } 
+t267 f267() { return 0; } 
+t268 f268() { return 0; } 
+t269 f269() { return 0; } 
+t270 f270() { return 0; } 
+t271 f271() { return 0; } 
+t272 f272() { return 0; } 
+t273 f273() { return 0; } 
+t274 f274() { return 0; } 
+t275 f275() { return 0; } 
+t276 f276() { return 0; } 
+t277 f277() { return 0; } 
+t278 f278() { return 0; } 
+t279 f279() { return 0; } 
+t280 f280() { return 0; } 
+t281 f281() { return 0; } 
+t282 f282() { return 0; } 
+t283 f283() { return 0; } 
+t284 f284() { return 0; } 
+t285 f285() { return 0; } 
+t286 f286() { return 0; } 
+t287 f287() { return 0; } 
+t288 f288() { return 0; } 
+t289 f289() { return 0; } 
+t290 f290() { return 0; } 
+t291 f291() { return 0; } 
+t292 f292() { return 0; } 
+t293 f293() { return 0; } 
+t294 f294() { return 0; } 
+t295 f295() { return 0; } 
+t296 f296() { return 0; } 
+t297 f297() { return 0; } 
+t298 f298() { return 0; } 
+t299 f299() { return 0; } 
+t300 f300() { return 0; } 
+t301 f301() { return 0; } 
+t302 f302() { return 0; } 
+t303 f303() { return 0; } 
+t304 f304() { return 0; } 
+t305 f305() { return 0; } 
+t306 f306() { return 0; } 
+t307 f307() { return 0; } 
+t308 f308() { return 0; } 
+t309 f309() { return 0; } 
+t310 f310() { return 0; } 
+t311 f311() { return 0; } 
+t312 f312() { return 0; } 
+t313 f313() { return 0; } 
+t314 f314() { return 0; } 
+t315 f315() { return 0; } 
+t316 f316() { return 0; } 
+t317 f317() { return 0; } 
+t318 f318() { return 0; } 
+t319 f319() { return 0; } 
+t320 f320() { return 0; } 
+t321 f321() { return 0; } 
+t322 f322() { return 0; } 
+t323 f323() { return 0; } 
+t324 f324() { return 0; } 
+t325 f325() { return 0; } 
+t326 f326() { return 0; } 
+t327 f327() { return 0; } 
+t328 f328() { return 0; } 
+t329 f329() { return 0; } 
+t330 f330() { return 0; } 
+t331 f331() { return 0; } 
+t332 f332() { return 0; } 
+t333 f333() { return 0; } 
+t334 f334() { return 0; } 
+t335 f335() { return 0; } 
+t336 f336() { return 0; } 
+t337 f337() { return 0; } 
+t338 f338() { return 0; } 
+t339 f339() { return 0; } 
+t340 f340() { return 0; } 
+t341 f341() { return 0; } 
+t342 f342() { return 0; } 
+t343 f343() { return 0; } 
+t344 f344() { return 0; } 
+t345 f345() { return 0; } 
+t346 f346() { return 0; } 
+t347 f347() { return 0; } 
+t348 f348() { return 0; } 
+t349 f349() { return 0; } 
+t350 f350() { return 0; } 
+t351 f351() { return 0; } 
+t352 f352() { return 0; } 
+t353 f353() { return 0; } 
+t354 f354() { return 0; } 
+t355 f355() { return 0; } 
+t356 f356() { return 0; } 
+t357 f357() { return 0; } 
+t358 f358() { return 0; } 
+t359 f359() { return 0; } 
+t360 f360() { return 0; } 
+t361 f361() { return 0; } 
+t362 f362() { return 0; } 
+t363 f363() { return 0; } 
+t364 f364() { return 0; } 
+t365 f365() { return 0; } 
+t366 f366() { return 0; } 
+t367 f367() { return 0; } 
+t368 f368() { return 0; } 
+t369 f369() { return 0; } 
+t370 f370() { return 0; } 
+t371 f371() { return 0; } 
+t372 f372() { return 0; } 
+t373 f373() { return 0; } 
+t374 f374() { return 0; } 
+t375 f375() { return 0; } 
+t376 f376() { return 0; } 
+t377 f377() { return 0; } 
+t378 f378() { return 0; } 
+t379 f379() { return 0; } 
+t380 f380() { return 0; } 
+t381 f381() { return 0; } 
+t382 f382() { return 0; } 
+t383 f383() { return 0; } 
+t384 f384() { return 0; } 
+t385 f385() { return 0; } 
+t386 f386() { return 0; } 
+t387 f387() { return 0; } 
+t388 f388() { return 0; } 
+t389 f389() { return 0; } 
+t390 f390() { return 0; } 
+t391 f391() { return 0; } 
+t392 f392() { return 0; } 
+t393 f393() { return 0; } 
+t394 f394() { return 0; } 
+t395 f395() { return 0; } 
+t396 f396() { return 0; } 
+t397 f397() { return 0; } 
+t398 f398() { return 0; } 
+t399 f399() { return 0; } 
+t400 f400() { return 0; } 
+t401 f401() { return 0; } 
+t402 f402() { return 0; } 
+t403 f403() { return 0; } 
+t404 f404() { return 0; } 
+t405 f405() { return 0; } 
+t406 f406() { return 0; } 
+t407 f407() { return 0; } 
+t408 f408() { return 0; } 
+t409 f409() { return 0; } 
+t410 f410() { return 0; } 
+t411 f411() { return 0; } 
+t412 f412() { return 0; } 
+t413 f413() { return 0; } 
+t414 f414() { return 0; } 
+t415 f415() { return 0; } 
+t416 f416() { return 0; } 
+t417 f417() { return 0; } 
+t418 f418() { return 0; } 
+t419 f419() { return 0; } 
+t420 f420() { return 0; } 
+t421 f421() { return 0; } 
+t422 f422() { return 0; } 
+t423 f423() { return 0; } 
+t424 f424() { return 0; } 
+t425 f425() { return 0; } 
+t426 f426() { return 0; } 
+t427 f427() { return 0; } 
+t428 f428() { return 0; } 
+t429 f429() { return 0; } 
+t430 f430() { return 0; } 
+t431 f431() { return 0; } 
+t432 f432() { return 0; } 
+t433 f433() { return 0; } 
+t434 f434() { return 0; } 
+t435 f435() { return 0; } 
+t436 f436() { return 0; } 
+t437 f437() { return 0; } 
+t438 f438() { return 0; } 
+t439 f439() { return 0; } 
+t440 f440() { return 0; } 
+t441 f441() { return 0; } 
+t442 f442() { return 0; } 
+t443 f443() { return 0; } 
+t444 f444() { return 0; } 
+t445 f445() { return 0; } 
+t446 f446() { return 0; } 
+t447 f447() { return 0; } 
+t448 f448() { return 0; } 
+t449 f449() { return 0; } 
+t450 f450() { return 0; } 
+t451 f451() { return 0; } 
+t452 f452() { return 0; } 
+t453 f453() { return 0; } 
+t454 f454() { return 0; } 
+t455 f455() { return 0; } 
+t456 f456() { return 0; } 
+t457 f457() { return 0; } 
+t458 f458() { return 0; } 
+t459 f459() { return 0; } 
+t460 f460() { return 0; } 
+t461 f461() { return 0; } 
+t462 f462() { return 0; } 
+t463 f463() { return 0; } 
+t464 f464() { return 0; } 
+t465 f465() { return 0; } 
+t466 f466() { return 0; } 
+t467 f467() { return 0; } 
+t468 f468() { return 0; } 
+t469 f469() { return 0; } 
+t470 f470() { return 0; } 
+t471 f471() { return 0; } 
+t472 f472() { return 0; } 
+t473 f473() { return 0; } 
+t474 f474() { return 0; } 
+t475 f475() { return 0; } 
+t476 f476() { return 0; } 
+t477 f477() { return 0; } 
+t478 f478() { return 0; } 
+t479 f479() { return 0; } 
+t480 f480() { return 0; } 
+t481 f481() { return 0; } 
+t482 f482() { return 0; } 
+t483 f483() { return 0; } 
+t484 f484() { return 0; } 
+t485 f485() { return 0; } 
+t486 f486() { return 0; } 
+t487 f487() { return 0; } 
+t488 f488() { return 0; } 
+t489 f489() { return 0; } 
+t490 f490() { return 0; } 
+t491 f491() { return 0; } 
+t492 f492() { return 0; } 
+t493 f493() { return 0; } 
+t494 f494() { return 0; } 
+t495 f495() { return 0; } 
+t496 f496() { return 0; } 
+t497 f497() { return 0; } 
+t498 f498() { return 0; } 
+t499 f499() { return 0; } 
+t500 f500() { return 0; } 
+t501 f501() { return 0; } 
+t502 f502() { return 0; } 
+t503 f503() { return 0; } 
+t504 f504() { return 0; } 
+t505 f505() { return 0; } 
+t506 f506() { return 0; } 
+t507 f507() { return 0; } 
+t508 f508() { return 0; } 
+t509 f509() { return 0; } 
+t510 f510() { return 0; } 
+t511 f511() { return 0; } 
+t512 f512() { return 0; } 
+t513 f513() { return 0; } 
+t514 f514() { return 0; } 
+t515 f515() { return 0; } 
+t516 f516() { return 0; } 
+t517 f517() { return 0; } 
+t518 f518() { return 0; } 
+t519 f519() { return 0; } 
+t520 f520() { return 0; } 
+t521 f521() { return 0; } 
+t522 f522() { return 0; } 
+t523 f523() { return 0; } 
+t524 f524() { return 0; } 
+t525 f525() { return 0; } 
+t526 f526() { return 0; } 
+t527 f527() { return 0; } 
+t528 f528() { return 0; } 
+t529 f529() { return 0; } 
+t530 f530() { return 0; } 
+t531 f531() { return 0; } 
+t532 f532() { return 0; } 
+t533 f533() { return 0; } 
+t534 f534() { return 0; } 
+t535 f535() { return 0; } 
+t536 f536() { return 0; } 
+t537 f537() { return 0; } 
+t538 f538() { return 0; } 
+t539 f539() { return 0; } 
+t540 f540() { return 0; } 
+t541 f541() { return 0; } 
+t542 f542() { return 0; } 
+t543 f543() { return 0; } 
+t544 f544() { return 0; } 
+t545 f545() { return 0; } 
+t546 f546() { return 0; } 
+t547 f547() { return 0; } 
+t548 f548() { return 0; } 
+t549 f549() { return 0; } 
+t550 f550() { return 0; } 
+t551 f551() { return 0; } 
+t552 f552() { return 0; } 
+t553 f553() { return 0; } 
+t554 f554() { return 0; } 
+t555 f555() { return 0; } 
+t556 f556() { return 0; } 
+t557 f557() { return 0; } 
+t558 f558() { return 0; } 
+t559 f559() { return 0; } 
+t560 f560() { return 0; } 
+t561 f561() { return 0; } 
+t562 f562() { return 0; } 
+t563 f563() { return 0; } 
+t564 f564() { return 0; } 
+t565 f565() { return 0; } 
+t566 f566() { return 0; } 
+t567 f567() { return 0; } 
+t568 f568() { return 0; } 
+t569 f569() { return 0; } 
+t570 f570() { return 0; } 
+t571 f571() { return 0; } 
+t572 f572() { return 0; } 
+t573 f573() { return 0; } 
+t574 f574() { return 0; } 
+t575 f575() { return 0; } 
+t576 f576() { return 0; } 
+t577 f577() { return 0; } 
+t578 f578() { return 0; } 
+t579 f579() { return 0; } 
+t580 f580() { return 0; } 
+t581 f581() { return 0; } 
+t582 f582() { return 0; } 
+t583 f583() { return 0; } 
+t584 f584() { return 0; } 
+t585 f585() { return 0; } 
+t586 f586() { return 0; } 
+t587 f587() { return 0; } 
+t588 f588() { return 0; } 
+t589 f589() { return 0; } 
+t590 f590() { return 0; } 
+t591 f591() { return 0; } 
+t592 f592() { return 0; } 
+t593 f593() { return 0; } 
+t594 f594() { return 0; } 
+t595 f595() { return 0; } 
+t596 f596() { return 0; } 
+t597 f597() { return 0; } 
+t598 f598() { return 0; } 
+t599 f599() { return 0; } 
+t600 f600() { return 0; } 
+t601 f601() { return 0; } 
+t602 f602() { return 0; } 
+t603 f603() { return 0; } 
+t604 f604() { return 0; } 
+t605 f605() { return 0; } 
+t606 f606() { return 0; } 
+t607 f607() { return 0; } 
+t608 f608() { return 0; } 
+t609 f609() { return 0; } 
+t610 f610() { return 0; } 
+t611 f611() { return 0; } 
+t612 f612() { return 0; } 
+t613 f613() { return 0; } 
+t614 f614() { return 0; } 
+t615 f615() { return 0; } 
+t616 f616() { return 0; } 
+t617 f617() { return 0; } 
+t618 f618() { return 0; } 
+t619 f619() { return 0; } 
+t620 f620() { return 0; } 
+t621 f621() { return 0; } 
+t622 f622() { return 0; } 
+t623 f623() { return 0; } 
+t624 f624() { return 0; } 
+t625 f625() { return 0; } 
+t626 f626() { return 0; } 
+t627 f627() { return 0; } 
+t628 f628() { return 0; } 
+t629 f629() { return 0; } 
+t630 f630() { return 0; } 
+t631 f631() { return 0; } 
+t632 f632() { return 0; } 
+t633 f633() { return 0; } 
+t634 f634() { return 0; } 
+t635 f635() { return 0; } 
+t636 f636() { return 0; } 
+t637 f637() { return 0; } 
+t638 f638() { return 0; } 
+t639 f639() { return 0; } 
+t640 f640() { return 0; } 
+t641 f641() { return 0; } 
+t642 f642() { return 0; } 
+t643 f643() { return 0; } 
+t644 f644() { return 0; } 
+t645 f645() { return 0; } 
+t646 f646() { return 0; } 
+t647 f647() { return 0; } 
+t648 f648() { return 0; } 
+t649 f649() { return 0; } 
+t650 f650() { return 0; } 
+t651 f651() { return 0; } 
+t652 f652() { return 0; } 
+t653 f653() { return 0; } 
+t654 f654() { return 0; } 
+t655 f655() { return 0; } 
+t656 f656() { return 0; } 
+t657 f657() { return 0; } 
+t658 f658() { return 0; } 
+t659 f659() { return 0; } 
+t660 f660() { return 0; } 
+t661 f661() { return 0; } 
+t662 f662() { return 0; } 
+t663 f663() { return 0; } 
+t664 f664() { return 0; } 
+t665 f665() { return 0; } 
+t666 f666() { return 0; } 
+t667 f667() { return 0; } 
+t668 f668() { return 0; } 
+t669 f669() { return 0; } 
+t670 f670() { return 0; } 
+t671 f671() { return 0; } 
+t672 f672() { return 0; } 
+t673 f673() { return 0; } 
+t674 f674() { return 0; } 
+t675 f675() { return 0; } 
+t676 f676() { return 0; } 
+t677 f677() { return 0; } 
+t678 f678() { return 0; } 
+t679 f679() { return 0; } 
+t680 f680() { return 0; } 
+t681 f681() { return 0; } 
+t682 f682() { return 0; } 
+t683 f683() { return 0; } 
+t684 f684() { return 0; } 
+t685 f685() { return 0; } 
+t686 f686() { return 0; } 
+t687 f687() { return 0; } 
+t688 f688() { return 0; } 
+t689 f689() { return 0; } 
+t690 f690() { return 0; } 
+t691 f691() { return 0; } 
+t692 f692() { return 0; } 
+t693 f693() { return 0; } 
+t694 f694() { return 0; } 
+t695 f695() { return 0; } 
+t696 f696() { return 0; } 
+t697 f697() { return 0; } 
+t698 f698() { return 0; } 
+t699 f699() { return 0; } 
+t700 f700() { return 0; } 
+t701 f701() { return 0; } 
+t702 f702() { return 0; } 
+t703 f703() { return 0; } 
+t704 f704() { return 0; } 
+t705 f705() { return 0; } 
+t706 f706() { return 0; } 
+t707 f707() { return 0; } 
+t708 f708() { return 0; } 
+t709 f709() { return 0; } 
+t710 f710() { return 0; } 
+t711 f711() { return 0; } 
+t712 f712() { return 0; } 
+t713 f713() { return 0; } 
+t714 f714() { return 0; } 
+t715 f715() { return 0; } 
+t716 f716() { return 0; } 
+t717 f717() { return 0; } 
+t718 f718() { return 0; } 
+t719 f719() { return 0; } 
+t720 f720() { return 0; } 
+t721 f721() { return 0; } 
+t722 f722() { return 0; } 
+t723 f723() { return 0; } 
+t724 f724() { return 0; } 
+t725 f725() { return 0; } 
+t726 f726() { return 0; } 
+t727 f727() { return 0; } 
+t728 f728() { return 0; } 
+t729 f729() { return 0; } 
+t730 f730() { return 0; } 
+t731 f731() { return 0; } 
+t732 f732() { return 0; } 
+t733 f733() { return 0; } 
+t734 f734() { return 0; } 
+t735 f735() { return 0; } 
+t736 f736() { return 0; } 
+t737 f737() { return 0; } 
+t738 f738() { return 0; } 
+t739 f739() { return 0; } 
+t740 f740() { return 0; } 
+t741 f741() { return 0; } 
+t742 f742() { return 0; } 
+t743 f743() { return 0; } 
+t744 f744() { return 0; } 
+t745 f745() { return 0; } 
+t746 f746() { return 0; } 
+t747 f747() { return 0; } 
+t748 f748() { return 0; } 
+t749 f749() { return 0; } 
+t750 f750() { return 0; } 
+t751 f751() { return 0; } 
+t752 f752() { return 0; } 
+t753 f753() { return 0; } 
+t754 f754() { return 0; } 
+t755 f755() { return 0; } 
+t756 f756() { return 0; } 
+t757 f757() { return 0; } 
+t758 f758() { return 0; } 
+t759 f759() { return 0; } 
+t760 f760() { return 0; } 
+t761 f761() { return 0; } 
+t762 f762() { return 0; } 
+t763 f763() { return 0; } 
+t764 f764() { return 0; } 
+t765 f765() { return 0; } 
+t766 f766() { return 0; } 
+t767 f767() { return 0; } 
+t768 f768() { return 0; } 
+t769 f769() { return 0; } 
+t770 f770() { return 0; } 
+t771 f771() { return 0; } 
+t772 f772() { return 0; } 
+t773 f773() { return 0; } 
+t774 f774() { return 0; } 
+t775 f775() { return 0; } 
+t776 f776() { return 0; } 
+t777 f777() { return 0; } 
+t778 f778() { return 0; } 
+t779 f779() { return 0; } 
+t780 f780() { return 0; } 
+t781 f781() { return 0; } 
+t782 f782() { return 0; } 
+t783 f783() { return 0; } 
+t784 f784() { return 0; } 
+t785 f785() { return 0; } 
+t786 f786() { return 0; } 
+t787 f787() { return 0; } 
+t788 f788() { return 0; } 
+t789 f789() { return 0; } 
+t790 f790() { return 0; } 
+t791 f791() { return 0; } 
+t792 f792() { return 0; } 
+t793 f793() { return 0; } 
+t794 f794() { return 0; } 
+t795 f795() { return 0; } 
+t796 f796() { return 0; } 
+t797 f797() { return 0; } 
+t798 f798() { return 0; } 
+t799 f799() { return 0; } 
+t800 f800() { return 0; } 
+t801 f801() { return 0; } 
+t802 f802() { return 0; } 
+t803 f803() { return 0; } 
+t804 f804() { return 0; } 
+t805 f805() { return 0; } 
+t806 f806() { return 0; } 
+t807 f807() { return 0; } 
+t808 f808() { return 0; } 
+t809 f809() { return 0; } 
+t810 f810() { return 0; } 
+t811 f811() { return 0; } 
+t812 f812() { return 0; } 
+t813 f813() { return 0; } 
+t814 f814() { return 0; } 
+t815 f815() { return 0; } 
+t816 f816() { return 0; } 
+t817 f817() { return 0; } 
+t818 f818() { return 0; } 
+t819 f819() { return 0; } 
+t820 f820() { return 0; } 
+t821 f821() { return 0; } 
+t822 f822() { return 0; } 
+t823 f823() { return 0; } 
+t824 f824() { return 0; } 
+t825 f825() { return 0; } 
+t826 f826() { return 0; } 
+t827 f827() { return 0; } 
+t828 f828() { return 0; } 
+t829 f829() { return 0; } 
+t830 f830() { return 0; } 
+t831 f831() { return 0; } 
+t832 f832() { return 0; } 
+t833 f833() { return 0; } 
+t834 f834() { return 0; } 
+t835 f835() { return 0; } 
+t836 f836() { return 0; } 
+t837 f837() { return 0; } 
+t838 f838() { return 0; } 
+t839 f839() { return 0; } 
+t840 f840() { return 0; } 
+t841 f841() { return 0; } 
+t842 f842() { return 0; } 
+t843 f843() { return 0; } 
+t844 f844() { return 0; } 
+t845 f845() { return 0; } 
+t846 f846() { return 0; } 
+t847 f847() { return 0; } 
+t848 f848() { return 0; } 
+t849 f849() { return 0; } 
+t850 f850() { return 0; } 
+t851 f851() { return 0; } 
+t852 f852() { return 0; } 
+t853 f853() { return 0; } 
+t854 f854() { return 0; } 
+t855 f855() { return 0; } 
+t856 f856() { return 0; } 
+t857 f857() { return 0; } 
+t858 f858() { return 0; } 
+t859 f859() { return 0; } 
+t860 f860() { return 0; } 
+t861 f861() { return 0; } 
+t862 f862() { return 0; } 
+t863 f863() { return 0; } 
+t864 f864() { return 0; } 
+t865 f865() { return 0; } 
+t866 f866() { return 0; } 
+t867 f867() { return 0; } 
+t868 f868() { return 0; } 
+t869 f869() { return 0; } 
+t870 f870() { return 0; } 
+t871 f871() { return 0; } 
+t872 f872() { return 0; } 
+t873 f873() { return 0; } 
+t874 f874() { return 0; } 
+t875 f875() { return 0; } 
+t876 f876() { return 0; } 
+t877 f877() { return 0; } 
+t878 f878() { return 0; } 
+t879 f879() { return 0; } 
+t880 f880() { return 0; } 
+t881 f881() { return 0; } 
+t882 f882() { return 0; } 
+t883 f883() { return 0; } 
+t884 f884() { return 0; } 
+t885 f885() { return 0; } 
+t886 f886() { return 0; } 
+t887 f887() { return 0; } 
+t888 f888() { return 0; } 
+t889 f889() { return 0; } 
+t890 f890() { return 0; } 
+t891 f891() { return 0; } 
+t892 f892() { return 0; } 
+t893 f893() { return 0; } 
+t894 f894() { return 0; } 
+t895 f895() { return 0; } 
+t896 f896() { return 0; } 
+t897 f897() { return 0; } 
+t898 f898() { return 0; } 
+t899 f899() { return 0; } 
+t900 f900() { return 0; } 
+t901 f901() { return 0; } 
+t902 f902() { return 0; } 
+t903 f903() { return 0; } 
+t904 f904() { return 0; } 
+t905 f905() { return 0; } 
+t906 f906() { return 0; } 
+t907 f907() { return 0; } 
+t908 f908() { return 0; } 
+t909 f909() { return 0; } 
+t910 f910() { return 0; } 
+t911 f911() { return 0; } 
+t912 f912() { return 0; } 
+t913 f913() { return 0; } 
+t914 f914() { return 0; } 
+t915 f915() { return 0; } 
+t916 f916() { return 0; } 
+t917 f917() { return 0; } 
+t918 f918() { return 0; } 
+t919 f919() { return 0; } 
+t920 f920() { return 0; } 
+t921 f921() { return 0; } 
+t922 f922() { return 0; } 
+t923 f923() { return 0; } 
+t924 f924() { return 0; } 
+t925 f925() { return 0; } 
+t926 f926() { return 0; } 
+t927 f927() { return 0; } 
+t928 f928() { return 0; } 
+t929 f929() { return 0; } 
+t930 f930() { return 0; } 
+t931 f931() { return 0; } 
+t932 f932() { return 0; } 
+t933 f933() { return 0; } 
+t934 f934() { return 0; } 
+t935 f935() { return 0; } 
+t936 f936() { return 0; } 
+t937 f937() { return 0; } 
+t938 f938() { return 0; } 
+t939 f939() { return 0; } 
+t940 f940() { return 0; } 
+t941 f941() { return 0; } 
+t942 f942() { return 0; } 
+t943 f943() { return 0; } 
+t944 f944() { return 0; } 
+t945 f945() { return 0; } 
+t946 f946() { return 0; } 
+t947 f947() { return 0; } 
+t948 f948() { return 0; } 
+t949 f949() { return 0; } 
+t950 f950() { return 0; } 
+t951 f951() { return 0; } 
+t952 f952() { return 0; } 
+t953 f953() { return 0; } 
+t954 f954() { return 0; } 
+t955 f955() { return 0; } 
+t956 f956() { return 0; } 
+t957 f957() { return 0; } 
+t958 f958() { return 0; } 
+t959 f959() { return 0; } 
+t960 f960() { return 0; } 
+t961 f961() { return 0; } 
+t962 f962() { return 0; } 
+t963 f963() { return 0; } 
+t964 f964() { return 0; } 
+t965 f965() { return 0; } 
+t966 f966() { return 0; } 
+t967 f967() { return 0; } 
+t968 f968() { return 0; } 
+t969 f969() { return 0; } 
+t970 f970() { return 0; } 
+t971 f971() { return 0; } 
+t972 f972() { return 0; } 
+t973 f973() { return 0; } 
+t974 f974() { return 0; } 
+t975 f975() { return 0; } 
+t976 f976() { return 0; } 
+t977 f977() { return 0; } 
+t978 f978() { return 0; } 
+t979 f979() { return 0; } 
+t980 f980() { return 0; } 
+t981 f981() { return 0; } 
+t982 f982() { return 0; } 
+t983 f983() { return 0; } 
+t984 f984() { return 0; } 
+t985 f985() { return 0; } 
+t986 f986() { return 0; } 
+t987 f987() { return 0; } 
+t988 f988() { return 0; } 
+t989 f989() { return 0; } 
+t990 f990() { return 0; } 
+t991 f991() { return 0; } 
+t992 f992() { return 0; } 
+t993 f993() { return 0; } 
+t994 f994() { return 0; } 
+t995 f995() { return 0; } 
+t996 f996() { return 0; } 
+t997 f997() { return 0; } 
+t998 f998() { return 0; } 
+t999 f999() { return 0; } 
+int main() {
+int x0 = 1;
+return x0;
+}

@@ -1,0 +1,10 @@
+//test error
+// it's not okay to poop here
+
+typedef int poop;
+
+int poop();
+
+int main () {
+  return 3;
+}

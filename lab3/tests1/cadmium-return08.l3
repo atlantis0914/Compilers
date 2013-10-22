@@ -1,0 +1,15 @@
+//test return 10
+
+// fun with typedefs
+
+typedef int banana;
+typedef banana foo;
+
+banana blarg(banana x) {
+  foo bar = 2;
+  return x + bar;
+}
+
+foo main() {
+  return blarg(8);
+}

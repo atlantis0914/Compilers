@@ -1,0 +1,7 @@
+//test exception 14
+// Test timeout
+
+int main() {
+    while(true){}
+    return 0;
+}

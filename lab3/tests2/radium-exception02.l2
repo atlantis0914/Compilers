@@ -1,0 +1,32 @@
+//test exception
+int main ()
+{
+  int x = 1;
+  int y = 1;
+  int z = 1;
+  int z1 = 1;
+  int z2 = 1;
+  int z3 = 1;
+  int z4 = 1;
+  int z5 = 1;
+  int z6 = 1;
+  int z7 = 1;
+  int z81213 = 1;
+  int z9 = 1;
+  int z0 = 1;
+  int z11 = 1;
+  int z111 = 1;
+  int z11111 = 1;
+  int z1111111 = 1;
+  1/0;
+  int z111111111 = 1;
+  int z22222 = 1;
+  int z23 = 1;
+  int z344 = 1;
+  int z44 = 1;
+  int z55 = 1;
+  int z66 = 1;
+  int z777 = 1;
+  int z8 = 1;
+  return x + y + z + 345 + 3245 + 345 + 345 + 345 + 345 + 345;
+}

@@ -1,0 +1,7 @@
+//test exception
+
+/* signed int overflow in division */
+int main(){
+  int tmin = -2147483648;
+  return tmin/-1;
+}

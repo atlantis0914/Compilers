@@ -1,0 +1,10 @@
+//test return 5
+//tests conditionals with int constants
+
+int main() {
+    if (3 < 5) {
+        return 5;
+    } else {
+        return 2;
+    }
+}

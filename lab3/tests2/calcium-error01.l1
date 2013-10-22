@@ -1,0 +1,6 @@
+//test error
+// integer constant too large
+int main()
+{
+  return 4294967296;		/* 2^32 */
+}

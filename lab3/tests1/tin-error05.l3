@@ -1,0 +1,12 @@
+//test error
+//type identifier conflicts with function argument identifier
+
+typedef int arg;
+
+int func(int arg) {
+  return arg + 1;
+}
+
+int main() {
+  return func(0);
+}

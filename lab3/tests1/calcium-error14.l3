@@ -1,0 +1,10 @@
+//test error
+// it's not okay to poop twice ever
+
+typedef int poop;
+typedef int poop;
+
+int main () {
+  int foo = 3;
+  return 3;
+}

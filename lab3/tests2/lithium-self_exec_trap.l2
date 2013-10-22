@@ -1,0 +1,31 @@
+//test exception 14
+int main() {
+	int x = 0;
+	int y = 10000000;
+	int c = 224543;
+	int d = 4353487;
+	int e = 0xFFFFF;
+	int f = 32849237;
+	int h = 32849237;
+	int i = 32849237;
+	int j = 32849237;
+	int k = 32849237;
+	int l = 32849237;
+	int m = 32849237;
+	int n = 32849237;
+	int o = 32849237;
+	int p = 32849237;
+	int q = 32849237;
+	int r = 32849237;
+	while (x < 2147483645) {
+		x++;
+		y = y/10;
+		c = d + d + d + d + d;
+		d = e*f + f*e + f*d - c + y;
+		r = f + r * c * j;
+		e = 5 * m + h;
+		i = 100000*o + 500000*m + r + d + c;
+		d = 5 * f + e * m * o * p * r * q * q * j;
+	}
+	return x+y+c+d+e+f+h+i+j+k+l+m+n+o+p+q+r;
+}

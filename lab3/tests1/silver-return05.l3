@@ -1,0 +1,19 @@
+//test return 0
+// Test shadowing edge cases
+
+void crash() {
+     int j = 1/0;
+}
+
+int j(int i) {
+    assert(i >= 0);
+    return i;
+}
+
+int main() {
+    for (int i = 0; i < 100; i++) {
+        j(i);
+    }
+    if (false) crash();
+    return 0;
+}

@@ -1,0 +1,13 @@
+//test error
+
+int main() {
+    int i;
+
+    bool flag = true;
+    while(flag) {
+        i = 1;
+        flag = false;
+    }
+
+    return i;
+}

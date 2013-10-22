@@ -1,0 +1,6 @@
+//test error
+// using a reserved keyword
+int main() {
+    int typedef = 10;
+    return typedef + 5;
+}

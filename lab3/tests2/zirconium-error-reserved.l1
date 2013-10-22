@@ -1,0 +1,7 @@
+//test error
+// error by use of reserved keyword
+int main()
+{
+  break;
+  return 4;
+}

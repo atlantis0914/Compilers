@@ -1,0 +1,12 @@
+//test exception 11
+//exception SEGFAULT, stack build all the way
+
+int foo()
+{
+  return foo();
+}
+
+int main () {
+  int res = foo();			/* should be unreachable */
+  return res;
+}

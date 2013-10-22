@@ -1,0 +1,7 @@
+//test error
+// Test invalid reserverd word use.
+
+int main() {
+    int NULL = 1;
+    return NULL;
+}

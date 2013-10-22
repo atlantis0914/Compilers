@@ -1,0 +1,10 @@
+//test return 1
+
+typedef int bunny;
+typedef bunny kitty;
+typedef kitty john;
+
+john main () {
+  kitty x = 1;
+  return x;
+}

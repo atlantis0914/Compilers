@@ -1,0 +1,11 @@
+//test return 6
+//basic if conditional test
+
+int main() {
+ int a = 5;
+ int b = 6;
+ int c;
+
+ if (a >= b) return a;
+ else return b;
+}

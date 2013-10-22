@@ -1,0 +1,12 @@
+//test error
+
+int myfunc_decl();
+
+int myfunc_decl(int x) {
+      x = 128;
+      return x;
+}
+
+int main() {
+      return myfunc_decl(0);
+}

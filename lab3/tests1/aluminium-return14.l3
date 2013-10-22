@@ -1,0 +1,11 @@
+//test return 2
+
+int plus (int x, int y) {
+  int plus = x + y;
+  return plus;
+}
+
+int main () {
+  int plus = plus(1, 1);
+  return plus;
+}

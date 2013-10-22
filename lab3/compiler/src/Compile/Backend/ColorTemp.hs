@@ -2,32 +2,49 @@ module Compile.Backend.ColorTemp where
 
 import qualified Data.Map as Map
 import Compile.Types
+import Compile.Backend.Spill
 
 colorTemps :: [AAsm] -> ColoringMap -> [AAsm]
-colorTemps aasms coloring = map (replaceAsm coloring) aasms
+colorTemps aasms coloring = concatMap (replaceAsm coloring) aasms
 
-replaceAsm :: ColoringMap -> AAsm -> AAsm
-replaceAsm coloring aasm@(AAsm {aAssign = assigns, aOp = op, aArgs = args}) =
+replaceAsm :: ColoringMap -> AAsm -> [AAsm]
+replaceAsm coloring aasm@(AAsm {aAssign = assigns@[AReg i], aOp = op, aArgs = args}) =
+  let
+    assigns' = map (replaceAssigns coloring) assigns
+    args' = map (replaceArgs coloring) args
+    args'' = map spillVal args'
+  in
+    [AAsm {aAssign = assigns', aOp = op, aArgs = args''}]
+
+replaceAsm coloring aasm@(AAsm {aAssign = assigns, aOp = op, aArgs = args@[ALoc (AReg i)]}) =
   let
     assigns' = map (replaceAssigns coloring) assigns
     args' = map (replaceArgs coloring) args
   in
-    AAsm {aAssign = assigns', aOp = op, aArgs = args'}
+    spillAAsm False $ AAsm {aAssign = assigns', aOp = op, aArgs = args'}
+
+replaceAsm coloring aasm@(AAsm {aAssign = assigns@[ATemp i], aOp = op, aArgs = args}) =
+  let
+    assigns' = map (replaceAssigns coloring) assigns
+    args' = map (replaceArgs coloring) args
+    aasm = AAsm {aAssign = assigns', aOp = op, aArgs = args'}
+  in
+    spillAAsm True aasm
 
 replaceAsm coloring aasm@(ACtrl (AIf aval label)) =
   let
     aval' = replaceArgs coloring aval
   in
-    ACtrl (AIf aval' label)
+    spillAAsm True $ ACtrl (AIf aval' label)
 
-replaceAsm coloring aasm@(ACtrl a) = aasm
+replaceAsm coloring aasm@(ACtrl a) = spillAAsm True aasm
 
-replaceAsm coloring aasm@(AFnCall fnName loc locs) =
+replaceAsm coloring aasm@(AFnCall fnName loc locs lives) =
   let
     loc' = replaceAssigns coloring loc
     locs' = map (replaceAssigns coloring) locs
   in
-    AFnCall fnName loc' locs'
+    spillAAsm True $ AFnCall fnName loc' locs' lives
 
 replaceAssigns :: ColoringMap -> ALoc -> ALoc
 replaceAssigns coloring (ATemp i) =

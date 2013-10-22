@@ -1,0 +1,8 @@
+//test error
+
+// Compare between differen types.
+int main()
+{
+  bool r = true == 1 == 1;
+  return 1;
+}

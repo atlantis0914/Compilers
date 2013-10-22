@@ -1,0 +1,13 @@
+//test error
+// Undeclared variable
+int main()
+{
+  int a;
+  int b;
+  int c;
+  a = 1*1*1*1*1;
+  b = a+a+a+a+a;
+  c = b-b-b-b-b;
+  d = c/a/a/a/a;
+  return d;
+}

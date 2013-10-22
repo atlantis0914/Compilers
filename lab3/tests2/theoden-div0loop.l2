@@ -1,0 +1,15 @@
+//test exception
+
+// divide by zero in the step of a for loop
+int main()
+{
+  while(false)
+    return 3;
+
+  for(int i = 0; i < 3; i/0){
+    i++;
+  }
+
+  return 0;
+
+}

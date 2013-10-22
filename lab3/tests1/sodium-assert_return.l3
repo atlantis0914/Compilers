@@ -1,0 +1,19 @@
+//test return 0
+// Simple assertions. All pass.
+
+bool oracle(int x, int y) {
+  return x > y && y > 0;
+}
+
+int main() {
+  assert(oracle(432, 423));
+  assert(oracle(432780, 213));
+  assert(oracle(35458, 2344));
+  assert(oracle(42354, 4324));
+  assert(oracle(2, 1));
+  assert(oracle(37, 13));
+  assert(oracle(5738, 1212));
+  assert(oracle(122, 15));
+
+  return 0;
+}

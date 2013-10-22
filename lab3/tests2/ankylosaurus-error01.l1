@@ -1,0 +1,14 @@
+//test error
+// Fail to compile because of undeclared variable
+int main()
+{
+    int x;
+    int y;
+    
+    x = 9;
+    y = 10;
+
+    a += y;
+
+    return x;
+}

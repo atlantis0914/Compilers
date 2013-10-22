@@ -1,0 +1,14 @@
+//test error
+/* Testing nested scope. */
+
+int main () {
+  int a;
+  if (true) {
+    while (true) {
+      a = 9;
+    }
+  } else {
+    a = 5;
+  }
+  return a;
+}

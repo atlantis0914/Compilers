@@ -7,15 +7,15 @@ import qualified Debug.Trace as Trace
 import Compile.Backend.Registers
 import Compile.Backend.BackendUtils
 
-genAsm :: [AAsm] -> String -> [String]
-genAsm aasms fnName =
-  map (aasmToString fnName) aasms
+genAsm :: [AAsm] -> (String, Int, Int, Int) -> [String]
+genAsm aasms fnContext =
+  map (aasmToString fnContext) aasms
 
 cmpAsm :: ALoc -> AVal -> String
 cmpAsm loc val =
   "cmpl " ++ (avalToString val) ++ ", " ++ (alocToString loc)
 
-aasmToString :: String -> AAsm -> String
+aasmToString :: (String, Int, Int, Int) -> AAsm -> String
 
 {-aasmToString aasm | Trace.trace (show aasm) False = undefined-}
 
@@ -41,7 +41,7 @@ aasmToString _ AAsm {aAssign = [loc], aOp = Neq, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setne " ++ (alocByteToString loc) ++ "\n"
 
 aasmToString _ AAsm {aAssign = [loc], aOp = Neg, aArgs = [arg]} =
-  (aasmToString "" (AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]}) ++ "  " ++ (opToString Neg) ++ " " ++ (alocToString loc) ++ "\n")
+  (aasmToString ("", 0, 0, 0) (AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]}) ++ "  " ++ (opToString Neg) ++ " " ++ (alocToString loc) ++ "\n")
 
 aasmToString _ AAsm {aAssign = [loc], aOp = Div, aArgs = [snd]} = divModToString loc snd Div
 aasmToString _ AAsm {aAssign = [loc], aOp = Mod, aArgs = [snd]} = divModToString loc snd Mod
@@ -57,42 +57,111 @@ aasmToString _ AAsm {aAssign = [loc], aOp = RShift, aArgs = [snd]} =
 aasmToString _ AAsm {aAssign = [loc], aOp = BitwiseNot, aArgs = [arg]} =
   "  " ++ (opToString BitwiseNot) ++ " " ++ (alocToString loc) ++ "\n"
 
+aasmToString _ AAsm {aAssign = [loc], aOp = Add, aArgs = [arg]} = 
+  if (isZero arg) 
+    then ""
+    else "  " ++ (opToString Add) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
+  where 
+    isZero (AImm 0) = True
+    isZero _ = False
+
+aasmToString _ AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]} =
+  if (argEq loc arg)
+    then ""
+    else "  " ++ (opToString Nop) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
+  where
+    argEq loc (ALoc loc') = loc == loc'
+    argEq _ _ = False
+
 aasmToString _ AAsm {aAssign = [loc], aOp = op, aArgs = [arg]} =
   "  " ++ (opToString op) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
 
-aasmToString fnName (ACtrl (ALabel i)) =
+aasmToString (fnName, _, _ ,_) (ACtrl (ALabel i)) =
   "\n" ++ fnName ++ "label" ++ show i ++ ":\n"
 
-aasmToString fnName (ACtrl (AGoto i)) =
+aasmToString (fnName, _, _, _) (ACtrl (AGoto i)) =
   "  jmp " ++ fnName ++ "label" ++ show i ++ "\n"
 
-aasmToString fnName (ACtrl (AIf aval label)) =
+aasmToString (fnName, _, _, _) (ACtrl (AIf aval label)) =
   "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz " ++ fnName ++ "label" ++ (show label) ++ "\n"
 
-aasmToString _ (ACtrl (ARet _)) =
-  concat [genFnEpilogues, "  popq %rbp\n", "  ret\n"]
+aasmToString (_, size, numArgs, m) (ACtrl (ARet _)) =
+  concat [addStr, genFnEpilogues numArgs m, "  ret\n"]
+  where
+    addStr = if (size > 0)
+               then "  addq $" ++ show size ++ ", %rsp\n"
+               else ""
 
-aasmToString _ (AFnCall fnName loc locs) =
-  (genProlugues loc) ++ "  call __c0_" ++ fnName ++ "\n  movl %eax, " ++ (alocToString loc) ++ "\n" ++ (genEpilogues loc)
+aasmToString (_, size, numArgs, m) (AFnCall fnName loc locs lives) =
+    prologue ++ "  call " ++ fnName ++ "\n  movl %eax, %r15d\n" ++ addSize ++ (genEpilogues loc m lives) ++ "  movl %r15d, " ++ (alocToString loc) ++ "\n"
+  where 
+    (prologue, size) = genProlugues loc locs m lives
+    addSize = if (size > 0) 
+                then "  addq $" ++ show (size * 8) ++ ", %rsp\n" 
+                else ""
 
-genFnEpilogues :: String
-genFnEpilogues = concatMap genEpilogueIns callees
-
-genProlugues :: ALoc -> String
-genProlugues loc =
+genArgPrologue' :: Int -> ALoc -> (String, Int, Int) -> (String, Int, Int)
+genArgPrologue' shift loc (prolog, i, j) =
   let
-    reg = alocToString loc
-    callers' = filter (\r -> reg /= r) callers
+    newPro = if i > 6 then "  movq " ++ (alocToQString loc) ++ ", %r15\n  movq %r15, -" ++ show ((j + shift + 1) * 8) ++ "(%rsp)\n"
+                      else ""
+    j' = if i > 6 then j + 1
+                  else j
   in
-    concatMap genPrologueIns callers'
+    (prolog ++ newPro, i-1, j')
 
-genEpilogues :: ALoc -> String
-genEpilogues loc =
+genFnEpilogues :: Int -> Int -> String
+genFnEpilogues numArgs m =
   let
-    reg = alocToString loc
-    callers' = filter (\r -> reg /= r) callers
+    callees' = take (max 0 (m - 6)) callees
+    rest = concatMap genEpilogueIns (reverse callees')
+    popBP = if numArgs > 6 then "  popq %rbp\n"
+                           else ""
+    n = if numArgs > 6 then (length callees') + 1
+                       else length callees'
+    buffer = if n `mod` 2 == 0 then incrStack8
+                               else ""
   in
-    concatMap genEpilogueIns callers'
+    buffer ++ rest ++ popBP
+
+notSpilled :: ALoc -> Bool
+notSpilled (AReg i) = i < spill_reg_num
+notSpilled _ = False
+
+genProlugues :: ALoc -> [ALoc] -> Int -> [ALoc] -> (String, Int)
+genProlugues loc locs maxColor lives =
+  let
+    reg = alocToQString loc
+    pushedArgs = max 0 ((length locs) - 6)
+    callers' = filter (\r -> reg /= r) callers
+    lives' = filter notSpilled lives
+    liveRegs = map alocToQString lives'
+    regsUsed = take (maxColor + 1) (map snd regQList)
+    callers'' = filter (\r -> r `elem` liveRegs) callers'
+    t = pushedArgs + (length callers'')
+    shift = t `mod` 2
+    (asms, i) = foldl (moveStack 0) ("", 0) callers''
+    (asms', _, s) = foldr (genArgPrologue' shift) (asms, length locs, i) locs
+    s' = s + shift
+    asms'' = if (s' > 0)
+               then asms' ++ "  subq $" ++ show ((s') * 8) ++ ", %rsp\n"
+               else asms'
+  in
+    (asms'', s' - i)
+
+genEpilogues :: ALoc -> Int -> [ALoc] -> String
+genEpilogues loc maxColor lives =
+  let
+    reg = alocToQString loc
+    callers' = filter (\r -> reg /= r) (reverse callers)
+    regsUsed = take (maxColor + 1) (map snd regQList)
+    lives' = filter notSpilled lives
+    liveRegs = map alocToQString lives'
+    callers'' = filter (\r -> r `elem` liveRegs) callers'
+    epilogues = concatMap genEpilogueIns callers''
+  in
+    if (length callers'') `mod` 2 == 0 then epilogues
+                                       else epilogues
 
 avalByteToString :: AVal -> String
 avalByteToString aval =
@@ -111,19 +180,27 @@ safeLookup i map s =
   case Map.lookup i map of Nothing -> error ("NOT FOUND " ++ (show i) ++ " wtf " ++ s)
                            Just r -> r
 alocByteToString :: ALoc -> String
+alocByteToString ASpill =
+  safeLookup spill_reg_num regByteMap "SPILL"
 alocByteToString (AReg i) =
-  if i > max_color_num + 1
-    then alocToString (AMem $ i - max_color_num)
-    else safeLookup i regByteMap "FUCK"
+  safeLookup i regByteMap "FUCK"
 alocByteToString (AMem i) =
   alocToString (AMem i)
 
+alocToQString :: ALoc -> String
+alocToQString (AReg i) =
+  safeLookup i regQMap "SHIT"
+alocToQString (AMem i) =
+  alocToString (AMem i)
+
 alocToString :: ALoc -> String
+alocToString (AArg i) =
+  (show ((i + 2) * 8)) ++ "(%rbp)"
 alocToString ASpill =
   safeLookup spill_reg_num regMap "SPILL"
 alocToString (AReg i) =
   safeLookup i regMap "SHIT"
-alocToString (AMem i) =  "-" ++ (show (i * 4)) ++ "(%rsp)"
+alocToString (AMem i) =  (show ((i - 1) * 8)) ++ "(%rsp)"
 alocToString (ATemp i) =
   error "There's still an temp!"
 

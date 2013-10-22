@@ -1,0 +1,35 @@
+//test return 2048
+// Tests add instruction with stack spilling.
+
+int main()
+{
+	int a;
+	int b;
+	int c;
+	int d;
+	int e;
+	int f;
+	int g;
+	int h;
+	int i;
+	int j;
+	int k;
+	int l;
+	int m;
+	int n;
+	a = 0;
+	b = 1;
+	c = a+b;
+	d = a+b+c;
+	e = a+b+c+d;
+	f = a+b+c+d+e;
+	g = a+b+c+d+e+f;
+	h = a+b+c+d+e+f+g;
+	i = a+b+c+d+e+f+g+h;
+	j = a+b+c+d+e+f+g+h+i;
+	k = a+b+c+d+e+f+g+h+i+j;
+	l = a+b+c+d+e+f+g+h+i+j+k;
+	m = a+b+c+d+e+f+g+h+i+j+k+l;
+	n = a+b+c+d+e+f+g+h+i+j+k+l+m;
+	return n;
+}

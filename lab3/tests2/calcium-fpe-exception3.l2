@@ -1,0 +1,9 @@
+//test exception
+// division by 0
+int main()
+{
+  for (int i=9; i>=0; i--) {
+    1/0;
+  }
+  return 3;
+}

@@ -1,0 +1,9 @@
+//test error
+int main()
+{
+  int x;
+  int y;
+  x = 4;
+  int z = x + y; // uninitialized y;
+  return 1;
+}

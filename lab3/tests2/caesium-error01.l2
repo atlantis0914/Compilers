@@ -1,0 +1,14 @@
+//test error
+//tests scoping of for-loop statements
+int main()
+{
+    int i;
+    int n = 0;
+    for (i = 0; i < 10; i+=a)
+    {
+        int a = 1;
+        n++;
+    }
+
+    return n;
+}

@@ -1,0 +1,9 @@
+//test exception
+// division by 0 in unneeded variable
+int main()
+{
+  int i = 1;
+  for (;true;i++)
+    i/i;
+  return i;
+}

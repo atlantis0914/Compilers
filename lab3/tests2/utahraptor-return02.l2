@@ -1,0 +1,12 @@
+//test return 0
+// simple boolean binop
+int main()
+{
+	bool y = true;
+	bool x = y || y;
+	bool z = y ? false : true;
+
+	if ((y && x || ((false || true) && false)) && z)
+		return 1;
+	return 0;
+}

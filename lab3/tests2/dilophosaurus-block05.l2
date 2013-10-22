@@ -1,0 +1,21 @@
+//test return 42
+// block liveness
+int main()
+{
+    int res = 0;
+    int x = 0xFF42FF | 0x42 << 24;
+	{
+	    { 
+	        { 
+	            { 
+	                { 
+	                    { 
+	                        x = 0; x++; x += 0x4; res += x; }
+	                    x = 1; res += x; }
+	                x = 1; res += x; }
+	            x = 1; res += x; }
+	        x = 1; res += x; }
+	    x = 1; res += x; }
+	x = 1 << 5; 
+	return res | x;
+}

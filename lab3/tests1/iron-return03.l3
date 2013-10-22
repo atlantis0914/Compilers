@@ -1,0 +1,22 @@
+//test return 4
+// This is a prime-counting function: # of primes below n
+
+bool isprime(int x) {
+     for(int i = 2; i < x; i++) {
+     	 if(x%i == 0) return false;
+     }
+     return true;
+}
+
+int primecount(int n) {
+    int num = 0;
+    for(int i = 2; i < n; i++) {
+        if(isprime(i)) num++;
+    }
+    return num;
+}
+
+int main() {
+    return primecount(10);
+}
+

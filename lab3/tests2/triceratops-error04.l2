@@ -1,0 +1,20 @@
+//test error
+
+int main ()
+{
+    int a;
+    int b;
+
+    bool res;
+
+    while (true) {
+        while (true) {
+            for (;;) {
+                for (while(true);;) {
+                    a = 0;
+                }
+            }
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,30 @@
+//test return 15
+
+/*
+  tests:
+	expression/operators : *, +, *=, +=, -
+	declarations
+	return
+	main
+	syntax (whitespace, comments)
+*/
+
+int main(){
+int x;
+int a;
+int b;
+
+x = 0;
+a = 3;
+b = 5;
+
+x = a;
+x += b;
+x -= a;
+x *= 7;
+x /= 6;
+x %= 2;
+x += 2+3*4;
+return x; //should return 15
+
+}

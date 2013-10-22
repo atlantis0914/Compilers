@@ -1,0 +1,6 @@
+//test error
+// This program should fail to compile because main does not have a return statement
+int main() {
+    int x = 1;
+    int y = x + x;
+}

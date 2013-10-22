@@ -1,0 +1,11 @@
+//test return 10
+
+// test that lvalues can be surrounded by ()
+
+int main() {
+    int x = 6;
+
+    (x) += 4;
+
+    return x;
+}

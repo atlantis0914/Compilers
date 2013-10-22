@@ -1,0 +1,12 @@
+//test return 1
+//tests if typedef works
+typedef int iint;
+
+int main() {
+  iint x = 0;
+  iint y = 1;
+  int z = 0;
+
+  return x + y + z;
+
+}

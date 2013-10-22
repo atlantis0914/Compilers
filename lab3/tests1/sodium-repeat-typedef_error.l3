@@ -1,0 +1,10 @@
+//test error
+// apple typedef'd twice.
+
+typedef int apple;
+typedef apple bananna;
+typedef bananna apple;
+
+apple main() {
+  return -2;
+}

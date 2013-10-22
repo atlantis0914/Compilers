@@ -1,0 +1,18 @@
+//test return 5
+
+int sqrt(int x){
+  int i = 0;
+  while(i * i < x) i++;
+  return i;
+}
+
+int biggest_quality_factor(int x, int y){
+  int sqrt1 = sqrt(x);
+  int i;
+  for (i = y; i <= sqrt1; i++)
+    if (x % i == 0) return biggest_quality_factor(x / i, i);
+  return y;
+}
+int main () {
+  return biggest_quality_factor(100, 2);
+}

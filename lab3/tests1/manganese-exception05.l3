@@ -1,0 +1,19 @@
+//test exception 6
+//ensure left-to-right evaluation of functions
+
+int addf(int a, int b) {
+    return a + b;
+}
+
+int sad_assert(int a) {
+    assert(false);
+    return a + 1;
+}
+
+int sad_division(int a) {
+    return a / 0;
+}
+
+int main() {
+    return addf(sad_assert(2), sad_division(4));
+}

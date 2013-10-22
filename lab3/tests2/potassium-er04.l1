@@ -1,0 +1,7 @@
+//test error
+// reserved keyword variable name
+
+int main () {
+  int struct = 5;
+  return struct;
+}

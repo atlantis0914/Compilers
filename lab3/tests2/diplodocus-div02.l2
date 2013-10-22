@@ -1,0 +1,9 @@
+//test exception 8
+int main()
+{
+    int a = 0;
+    int b = a / 5;
+    b = 0x126 + 5;
+    b %= b;
+    return a%(5-5);
+}

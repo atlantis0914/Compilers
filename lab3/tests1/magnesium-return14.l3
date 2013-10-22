@@ -1,0 +1,11 @@
+//test return 1
+//test scope
+
+int foo () {
+  return 4;
+}
+
+int main () { 
+  int foo = 1; 
+  return foo; 
+}

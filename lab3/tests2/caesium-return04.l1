@@ -1,0 +1,6 @@
+//test return 0
+//basic sanity test
+int main()
+{
+  return 0;
+}

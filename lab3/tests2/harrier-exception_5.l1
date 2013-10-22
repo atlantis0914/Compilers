@@ -1,0 +1,12 @@
+//test exception 8
+
+int main()
+{
+    int meowmix1;
+    int meowmix2;
+    int meowmix3;
+    meowmix1 = 42;
+    meowmix2 = 2;
+    meowmix3 = meowmix2 % (meowmix1 % 2);
+    return meowmix3;
+}

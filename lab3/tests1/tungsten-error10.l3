@@ -1,0 +1,12 @@
+//test error
+//lets define a function prototype inside main
+
+int main(){
+  int a();
+  int b = a();
+  return b;
+}
+
+int a(){
+  return 10;
+}

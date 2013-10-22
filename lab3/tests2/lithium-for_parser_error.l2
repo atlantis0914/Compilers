@@ -1,0 +1,11 @@
+//test error
+int main()
+{
+	int y = 2;
+	int x;
+	for (x = 0; x < 10; while)
+	{
+		y = y * 2;
+	}
+	return y;
+}

@@ -1,0 +1,10 @@
+//test error
+
+int main()
+{
+  while((int i = 5) > 0)
+  {
+    i--;  
+  }
+  return 0;
+}

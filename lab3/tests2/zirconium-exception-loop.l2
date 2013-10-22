@@ -1,0 +1,13 @@
+//test exception 8
+
+int main ()
+{
+  int a = 1 << 31;
+  int b = 0;
+  for(int c = 100; c > -1; c--)
+  {
+    a /= c;
+    b += c;
+  }
+  return b;
+}

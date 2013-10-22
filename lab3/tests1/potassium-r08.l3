@@ -1,0 +1,17 @@
+//test return 1
+
+bool mod0(int x, int y) {
+
+  return x % y == 0;
+
+}
+
+
+int main() {
+
+  for(int i = 1; i < 7; i++) {
+    assert(!mod0(i,7));
+  }
+  return 1;
+
+}

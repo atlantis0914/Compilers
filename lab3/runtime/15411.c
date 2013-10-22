@@ -1,6 +1,6 @@
-#include <c0runtime.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef int c0_float;
 

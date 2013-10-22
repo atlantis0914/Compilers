@@ -1,0 +1,25 @@
+//test error
+
+typedef int x;
+
+x y();
+
+int main() {
+    return y();
+}
+
+x y();
+
+x y();
+
+int y();
+
+x y() {
+    return 1;
+}
+
+x y(int x);
+
+x y();
+
+x y();

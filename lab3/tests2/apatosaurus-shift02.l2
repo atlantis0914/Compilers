@@ -1,0 +1,22 @@
+//test return 131
+
+int main ()
+{
+  int x;
+  int y;
+  int a;
+  int b;
+
+  x = 1;            // 1
+  x <<= 4;          // 16
+  x = x << 2;       // 64
+  a = 1;
+  x = x << a;       //128
+
+  y = 1024;         // 1024
+  y = y >> 7;       // 8
+  y >>= 1;          // 4
+  y = 48 >> y;      // 3
+  
+  return x + y;
+}

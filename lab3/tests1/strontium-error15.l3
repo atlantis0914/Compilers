@@ -1,0 +1,14 @@
+//test error
+// type problems
+
+typedef int void;
+
+void f(int x)
+{
+    return x;
+}
+
+int main()
+{
+    return f(5);
+}

@@ -1,0 +1,22 @@
+//test return 0
+
+bool gt(int x, int y);
+bool lt(int x, int y);
+
+int main() {
+  int x = 10;
+  while(true) {
+    if (!gt(x,0) && !lt(x,0))
+      return x;
+    x--;
+  }
+  return 1;
+}
+
+bool gt(int a, int b) {
+  return a > b;
+}
+
+bool lt(int a, int b) {
+  return a < b;
+}

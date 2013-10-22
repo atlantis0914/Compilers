@@ -1,0 +1,8 @@
+//test error
+
+int main ()
+{
+  int i;
+  while(0) {}
+  return 0;
+}

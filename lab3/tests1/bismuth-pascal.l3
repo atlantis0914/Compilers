@@ -1,0 +1,13 @@
+//test return 75025
+// Recusively calculate some number in pascal's triangle
+
+int pascal(int r, int c)
+{
+  if (c == 0 || r == 0 || c == r) return 1;
+  return pascal(r-1, c-1) + pascal(c-1, r);
+}
+
+int main ()
+{
+  return pascal(58, 12);
+}

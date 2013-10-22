@@ -1,0 +1,12 @@
+//test error
+
+int main() {
+    int j;
+    bool k = true;
+    
+    for (j = 0 ; j < 7 ; j++) {
+        k = !k;
+    }
+
+    return k;
+}

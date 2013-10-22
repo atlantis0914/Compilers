@@ -1,0 +1,14 @@
+//test return 3
+int foo(int a, int b);
+
+int foo(int c, int d);
+
+int foo(int e, int f)
+{
+    return e+f;
+}
+
+int main()
+{
+    return foo(1,2);
+}

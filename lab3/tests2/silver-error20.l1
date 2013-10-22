@@ -1,0 +1,7 @@
+//test error
+// Test reserved keyword use.
+
+int main() {
+    int alloc = 1;
+    return alloc;
+}

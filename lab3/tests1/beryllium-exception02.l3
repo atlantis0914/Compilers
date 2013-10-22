@@ -1,0 +1,8 @@
+//test exception 6
+bool foo(int a){
+	return (a>3);
+}
+int main(){
+	assert(foo(2));
+	return 0;
+}	

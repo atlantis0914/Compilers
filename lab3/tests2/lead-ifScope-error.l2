@@ -1,0 +1,11 @@
+//test error
+
+//If statement variable out of scope
+
+int main ()
+{
+  int n = 100;
+  if (n < 50)
+    int i = 3;
+  return i;
+}

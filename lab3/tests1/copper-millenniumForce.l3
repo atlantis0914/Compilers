@@ -1,0 +1,38 @@
+//test return 318
+//sieve of erastothenes for number of primes between 0 and 32
+
+typedef int boolArray;
+
+bool isBitSet(boolArray array, int i) {
+    return ((array >> i) & 1) == 1;
+}
+
+int setBit(boolArray array, int i, bool setBit /* as opposed to unset */) {
+    return (array & ~(1 << i)) | ((setBit ? 1 : 0) << i);
+}
+
+int bitCount(boolArray array) {
+    int count = 0;
+    for(int i = 0; i < 32; i++) {
+        count += (isBitSet(array, i) ? 1 : 0);
+    }
+    return count;
+}
+
+int sieve() {
+    boolArray array = -1;
+    array = setBit(array, 0, false);
+    array = setBit(array, 1, false);
+    for(int i = 0; i < 32; i++) {
+        if(isBitSet(array, i)) {
+            for(int multiple = i * 2; multiple < 32; multiple += i) {
+                array = setBit(array, multiple, false);
+            }
+        }
+    }
+    return bitCount(array);
+}
+
+int main() {
+    return (sieve() == 11 ? 318 : 93);
+}

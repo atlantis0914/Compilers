@@ -1,0 +1,15 @@
+//test error
+// i uninitialized
+int main()
+{
+   int i;
+   while (true)
+   {
+      if (false)
+      {
+         i = 0;
+         break;
+      } 
+   }
+   return i;
+}

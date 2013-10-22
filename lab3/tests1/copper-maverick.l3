@@ -1,0 +1,17 @@
+//test return 4450
+
+int rec1(int acc, int n);
+int rec2(int acc, int n);
+
+int rec1(int acc, int n) {
+    return (n < 0 ? acc : rec2(acc + (n * 2 + 1), n));
+}
+
+int rec2(int acc, int n) {
+    return rec1(acc, n - 1);
+}
+
+int main() {
+    int n = 6;
+    return (rec1(0, n) == (n + 1) * (n + 1) ? 4450 : 70);
+}

@@ -1,0 +1,23 @@
+//test return -1
+// It's a buggy race. with some interesting for loops
+int main()
+{
+    int sdc = 0;
+    int aepi = 0;
+    int finish;
+    bool spin = false;
+    for( finish = 100;
+	 sdc < finish && aepi < finish && !spin;
+	 spin = (sdc % aepi == 8 ) ) {
+	 sdc += 7;
+	 aepi += 6;
+    }
+
+    for ( ; spin ; )
+	return -1;
+
+    for ( ; sdc > aepi ; )
+	return 1;
+
+    return 2;
+}

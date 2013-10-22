@@ -1,0 +1,20 @@
+//test return 1
+
+int main ()
+{
+    int a;
+    int b;
+
+    int i;
+
+    for (i = 0; i < 10; i += 1) {
+        for (a = 0; true; a += 0) {
+            a += 1;
+            for (b = 0; true; b += a) {
+                b += 1;
+                return b;
+            }
+        }
+    }
+    return 0;
+}

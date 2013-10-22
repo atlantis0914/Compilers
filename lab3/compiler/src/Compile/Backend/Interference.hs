@@ -54,7 +54,7 @@ getLocs l = getLocs' (Map.empty) l
         getLocs' locs ((AAsm {aAssign = loc}):vs) = 
           getLocs' (Map.insert (head loc) () locs) vs
         getLocs' locs ((ACtrl _):vs) = getLocs' locs vs
-        getLocs' locs ((AFnCall _ _ _):vs) = getLocs' locs vs
+        getLocs' locs ((AFnCall _ loc _ _):vs) = getLocs' (Map.insert loc () locs) vs
 
 getInterferenceEdges :: [AAsm] -> [[ALoc]] -> [Edge]
 getInterferenceEdges [] _ = []
@@ -87,7 +87,7 @@ getAAsmEdges (AAsm {aAssign = assign, aOp = op, aArgs = args}) l l' = getConflic
 
 getAAsmEdges (ACtrl c) l l' = []
 
-getAAsmEdges (AFnCall _ _ _) l l' = []
+getAAsmEdges (AFnCall _ loc _ _) l l' = getConflict [loc] l'
 
 getConflict assign [] =  []
 getConflict assign (loc:ls) = 

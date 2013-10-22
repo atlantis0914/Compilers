@@ -27,6 +27,10 @@ debugFlag = True
 
 maxTempsBeforeSpilling = 600
 
+mergeAAsm :: (AAsm, [ALoc]) -> AAsm
+mergeAAsm (AFnCall fnName loc locs _, lives) = AFnCall fnName loc locs lives
+mergeAAsm (aasm, _) = aasm
+
 -- Generates the AAsm from an AST
 codeGen (Block stmts _) = let
   -- Creates a mapping from var to its index.
@@ -38,8 +42,8 @@ codeGen (Block stmts _) = let
     twoOpAasmList = genTwoOperand aasmList
     allLocs = getLocs aasmList
   in
-    if (length (aasmList) > maxTempsBeforeSpilling) 
-      then (let 
+    if (length (aasmList) > maxTempsBeforeSpilling)
+      then (let
              coloring = naiveColor allLocs
              coloredAasmList = colorTemps twoOpAasmList coloring
              spilledAasmList = spill coloredAasmList
@@ -51,13 +55,13 @@ codeGen (Block stmts _) = let
               interference_graph@(Graph gmap) = buildInterferenceGraph twoOpAasmList liveVars
               simp_ordering = maximumCardinalitySearch interference_graph -- now a [Vertex ALoc]
               coloring = greedyColor interference_graph simp_ordering
-              coloredAasmList = colorTemps twoOpAasmList coloring
+              liveVars' = map (replaceAssigns coloring) liveVars
+              twoOpAasmList' = zip liveVars' twoOpAasmList
+              coloredAasmList = colorTemps twoOpAasmList' coloring
               spilledAasmList = spill coloredAasmList
               asm = genAsm spilledAasmList
             in
               concat asm)
-              
-
 
 --    if (debugFlag)
 --      then genDebug stmts aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm
@@ -80,7 +84,7 @@ genDebug stmts aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAas
     "LiveVars\n" ++ liveVars' ++ "\n\n" ++
     "InterferenceGraph\n" ++ gmap' ++ "\n\n" ++
     "Simp Ordering\n" ++ simp_ord' ++ "\n\n" ++
-    "Coloring\n" ++ coloring' ++ "\n\n" ++ 
+    "Coloring\n" ++ coloring' ++ "\n\n" ++
     "TwoOpAAsm\n" ++ twoOpAasm' ++ "\n\n" ++
     "ColoredAAsm\n" ++ coloredAasm' ++ "\n\n" ++
     "Asm\n" ++ asm' ++ "\n\n"

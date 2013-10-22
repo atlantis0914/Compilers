@@ -1,0 +1,11 @@
+//test exception 8
+int main() {
+    int x = 2000000;
+    bool y = true;
+
+    while(y) {
+        x--;
+        1/x;
+    }
+    return 8;
+}

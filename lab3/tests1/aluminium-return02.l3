@@ -1,0 +1,14 @@
+//test return 2
+
+int plus (int x, int y) {
+  return x + y;
+}
+
+int main () {
+  int x = 1;
+  return plus(x, x);
+}
+
+int plus (int c, int d);
+int plus (int x, int y);
+int plus (int a, int b);

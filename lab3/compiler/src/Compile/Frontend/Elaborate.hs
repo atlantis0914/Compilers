@@ -20,29 +20,33 @@ elaborate (ParseFnList decls pos) =
   let
     (elab, map) = foldl elaboratePGDecls ([], baseIdentTypeMap) decls
   in
-    Right $ FnList elab pos
+    elab `seq` map `seq` Right $ FnList elab pos
 
 elaboratePGDecls :: ([GDecl], TypeDefs) -> PGDecl -> 
                         ([GDecl], TypeDefs)
-elaboratePGDecls (convDecls, typeMap) pgdecl@(PFDefn _ _) = 
-  (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap)
-
-elaboratePGDecls (convDecls, typeMap) pgdecl@(PFDecl _ _) = 
-  (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap)
-
 elaboratePGDecls (convDecls, typeMap) pgdecl@(PTypeDef _ _ _) =
   let
     typeMap' = checkTypeDef pgdecl typeMap
   in
     (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap')
 
+elaboratePGDecls (convDecls, typeMap) pgdecl = 
+  (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap)
+
 -- Either errors if we have multiple typedefs of s2, or inserts 
 -- s2 into the typeMap using s1 as 
 checkTypeDef :: PGDecl -> TypeDefs -> TypeDefs
+checkTypeDef (PTypeDef IVoid s2 pos) _ = 
+  error ("Cannot alias IVoid - can only be used as return val")
 checkTypeDef (PTypeDef s1 s2 pos) typeMap = 
-  case (Map.lookup s2 typeMap) of
+  typeMap `seq` case (Map.lookup s2 typeMap) of
     Just _ -> error ("Multiple typedef of " ++ (show s1) ++ " at " ++ (show pos))
     Nothing -> (Map.insert s2 (typeMap Map.! s1) typeMap)
+
+maybeAddReturn :: IdentType -> AST -> AST
+maybeAddReturn IVoid (AST (Block stmts) pos) = 
+  (AST (Block (stmts ++ [Ctrl (Return Nothing pos)])) pos)
+maybeAddReturn _ ast = ast
  
 -- Global Decl. 
 elaboratePGDecl :: PGDecl -> TypeDefs -> GDecl
@@ -58,12 +62,13 @@ elaboratePGDecl (PFDefn (ParseFDefn {pfnName = name,
     nArgTypes = elaborateTDIdentTypes typeDefs argTypes 
     nReturn = elaborateTDIdentType typeDefs return
     nBody = elaborateParseAST typeDefs body
+    nBody' = maybeAddReturn return nBody 
   in
     GFDefn (FDefn {fnName = nName,
                    fnArgs = nArgs,
                    fnArgTypes = nArgTypes,
                    fnReturnType = nReturn,
-                   fnBody = nBody,
+                   fnBody = nBody',
                    fnPos = pos}) defnPos
 
 elaboratePGDecl (PFDecl (ParseFDecl name args argTypes return isL pos) dPos) typeDefs = 
@@ -94,9 +99,9 @@ elabParseBlock typedefs stmts = elabParseBlock' typedefs (Block []) stmts
 -- Converts a single parseStmt into a stmt, mutually calling elabParseBlock'
 -- if we observe a nested block, and elabParseCtrl if we observe a nested ctrl
 elabParseStmt :: TypeDefs -> ParseStmt -> Stmt
-elabParseStmt td (PAsgn s a e p) = Asgn s a e p
+elabParseStmt td (PAsgn s a e b p) = Asgn s a e b p
 elabParseStmt td (PDecl s t p Nothing) = 
-  Decl {declName = s, 
+  Decl {declName = checkTDIdent td s, 
         declTyp = elaborateTDIdentType td t, 
         declPos = p, 
         declScope = SNop}

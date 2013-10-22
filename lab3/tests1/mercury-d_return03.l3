@@ -1,0 +1,9 @@
+//test return 0
+
+int main();
+typedef int __;
+
+int main() {
+  __ a = 0;
+  return a;
+}

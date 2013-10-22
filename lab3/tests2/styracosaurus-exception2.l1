@@ -1,0 +1,9 @@
+//test exception 8
+
+int main()
+{
+	int intmin;
+	intmin = -2147483648;
+
+	return intmin / -1;
+}

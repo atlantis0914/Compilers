@@ -1,0 +1,7 @@
+//test error
+//tests invalid syntax
+int main()
+{
+  = = = =x= =df;eqer
+  dflkjqrk[;]
+}

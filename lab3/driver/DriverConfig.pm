@@ -24,7 +24,7 @@ our $COMPILER_EXEC  = "bin/$COMPILER";                  # compiler executable
 our $COMPILER_ARGS  = "-l 15411.h0";
 our @LEXTS          = reverse map {"l$_"} (1 .. $LAB);  # source filename extensions
 our $GCC            = "gcc -m64";     # gcc executable and default flags
-our $RUNTIME        = "$rt_stem.c";   # runtime system for linking against asm file
+our $RUNTIME        = "15411.c $rt_stem.c";   # runtime system for linking against asm file
 
 my $c0_level = 6 - $LAB;
 our $REF_COMPILER = "/afs/cs.cmu.edu/academic/class/15411-f13/bin/cc0";
@@ -40,7 +40,7 @@ our $RUN_TIMEOUT        = 5;    # timeout for running compiled executable
 our $TEST_SUITES_PATH = "..";
 
 our $MAX_VALIDATE_SCORE = 20;    # maximal score for test case validation
-our $MIN_TESTS          = 10;    # minimum number of tests to submit
+our $MIN_TESTS          = 20;    # minimum number of tests to submit
 
 my $MAX_SCORE0 = 20;        # maximal score for compiler, test suite 0
 my $MAX_SCORE1 = 50;        # maximal score for compiler, test suite 1
@@ -48,8 +48,8 @@ my $MAX_SCORE2 = 10;        # maximal score for compiler, test suite 2
 my $TESTS1_N = 10;      # first n failing suite 1 tests...
 my $TESTS1_PTS = 2;     # ...are worth this many points each
 my $TESTS0_MIN = 9;     # number of error cases in tests0
-my $TESTS1_MIN = 0;   # number of error cases in tests1
-my $TESTS2_MIN = 0;   # number of error cases in tests2
+my $TESTS1_MIN = 268;   # number of error cases in tests1
+my $TESTS2_MIN = 966;   # number of error cases in tests2
 
 sub tests_grade {
     my $tried = shift;
@@ -105,6 +105,13 @@ our $CMPL_GRADE = {
             $grade = 0;
         }
         return ($grade, $MAX_SCORE2);
+    },
+    # no score for bonus problems in tests3
+    "tests3" => sub {
+      my $tried = shift;
+      my $succeeded = shift;
+      my $grade = 0;
+      return ($grade, 0);
     },
 };
 

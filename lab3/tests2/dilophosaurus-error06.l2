@@ -1,0 +1,10 @@
+//test error
+// we don't want to predict
+int main ()
+{
+  int x = 1 << 5;
+  while(true){
+   x |= 0xa;
+   return x;
+  }
+}

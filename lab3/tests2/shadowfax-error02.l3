@@ -1,0 +1,14 @@
+//test error
+// redeclaring functions
+
+int foo (int x) {
+    return x<<4;
+}
+
+int foo(int x) {
+    return x>>1;
+}
+
+int main () {
+    return foo(-1, 54);
+}

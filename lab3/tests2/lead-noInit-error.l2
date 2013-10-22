@@ -1,0 +1,15 @@
+//test error
+
+//Reference to unitialized variable possible for a control path
+
+int main ()
+{
+  int i;
+  bool flag = true;
+  if (flag) {
+    i = 3;
+  } else {
+    flag = true;
+  }
+  return i;
+}

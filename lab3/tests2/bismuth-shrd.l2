@@ -1,0 +1,11 @@
+//test return 2
+// shift reduce conflict stuff
+int main()
+{	
+  if (false)
+    return 1;
+  if (true)
+    return 2;
+  else 
+    return 3;
+}

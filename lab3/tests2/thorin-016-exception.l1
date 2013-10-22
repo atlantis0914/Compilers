@@ -1,0 +1,13 @@
+//test exception
+/* Divide by zero test */
+int main()
+{
+    int a = 15;
+    a %= 5;
+    a %= a;
+    return a;
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

@@ -1,0 +1,14 @@
+//test error
+
+int main()
+{
+    int you = 0;
+    int should = 4;
+    int fix = 3;
+    int your = 9;
+    int compiler = 11;
+    int if = 100;
+    int this = 80;
+    int compiles = 123;
+    return compiler;
+}

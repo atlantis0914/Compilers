@@ -1,0 +1,9 @@
+//test error
+
+// Assign should follow the type.
+int main()
+{
+  bool x;
+  x = 1;
+  return 1;
+}

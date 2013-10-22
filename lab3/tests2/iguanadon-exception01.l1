@@ -1,0 +1,12 @@
+//test exception
+// division by variable 0
+
+int main()
+{
+	int x;
+	int y;
+
+	x = 0;
+	y = 5/x;
+	return y;
+}

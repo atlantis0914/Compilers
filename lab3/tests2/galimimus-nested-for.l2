@@ -1,0 +1,15 @@
+//test return 330
+
+// Tests nested for loops
+int main() {
+  int i;
+  int j;
+  int acc = 0;
+
+  for (i=0; i<10; i++)
+    for (j=i; j<10; j++) {
+      acc += j;
+    }
+
+  return acc;
+}

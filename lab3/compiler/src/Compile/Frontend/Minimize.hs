@@ -7,12 +7,24 @@ import Compile.Frontend.CheckReturn
 
 import qualified Debug.Trace as Trace
 
-minimize :: AST -> Either String AST
-minimize (AST (Block stmts) p) = 
+minimize :: FnList -> Either String FnList 
+minimize (FnList gdecls pos) = 
+  let
+    minDecls = map dropDeadGDecls gdecls
+  in
+    Right $ FnList minDecls pos
+ 
+dropDeadGDecls (GFDefn (f@(FDefn {fnBody = body})) pos) = 
+  GFDefn (f {fnBody = minimizeAST body}) pos
+dropDeadGDecls x = x
+
+
+minimizeAST :: AST -> AST
+minimizeAST (AST (Block stmts) p) = 
   let 
     minimized = dropDeadStmts stmts
   in
-    Right $ AST (Block minimized) p
+    AST (Block minimized) p
 
 dropDeadStmts :: [Stmt] -> [Stmt]
 dropDeadStmts [] = []

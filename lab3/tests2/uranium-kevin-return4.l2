@@ -1,0 +1,12 @@
+//test return 0
+//make sure loops are working correctly
+
+int main() {
+    int i = 1;
+    while (false) return -1;
+    while (true) {
+      i--;
+      return i;
+    }
+    return i;
+}

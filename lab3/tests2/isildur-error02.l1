@@ -1,0 +1,2 @@
+//test error
+int main() {int a; return a + b;}

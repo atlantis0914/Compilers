@@ -1,0 +1,7 @@
+//test error
+// cannot have full statement in init/step part of for loop
+int main() {
+  int x = 0;
+  for (while (x < 5) { x++; }; x < 10; x++) { }
+  return x;
+}

@@ -1,0 +1,9 @@
+//test return 123
+
+int main ()
+{
+  int x = 100 / 1;
+  int y = 24 - 1;
+
+  return x + y;
+}

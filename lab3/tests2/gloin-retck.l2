@@ -1,0 +1,18 @@
+//test error
+
+int main() {
+	int x = 15;
+	if (false) {
+		// do a bunch of inane calculations
+		x <<= 3;
+		x += 17;
+		x /= 53;
+		int y = x + 47;
+		while (y > 0) {
+			y--;
+			return y;
+		}
+	} else {
+		return x;
+	}
+}

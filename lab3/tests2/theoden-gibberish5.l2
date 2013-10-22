@@ -1,0 +1,74 @@
+//test return 0
+
+// randomly generated
+int main()
+{
+  bool vGkPZgwp = ( false || false ) ;
+  {
+    while ( vGkPZgwp )
+      {
+	int zUAHUpty = ( ( vGkPZgwp || false ) ? 14 : 14 ) ;
+	for ( vGkPZgwp = vGkPZgwp ; vGkPZgwp ; vGkPZgwp = vGkPZgwp )
+	  {
+	    zUAHUpty -- ;
+	    zUAHUpty ++ ;
+	  }
+	vGkPZgwp = vGkPZgwp ;
+	vGkPZgwp = ( ( vGkPZgwp || vGkPZgwp && vGkPZgwp ) && vGkPZgwp ? vGkPZgwp : ( vGkPZgwp ? !vGkPZgwp : vGkPZgwp ) ) ;
+	( vGkPZgwp && vGkPZgwp ) ;
+	vGkPZgwp = vGkPZgwp ;
+	if ( vGkPZgwp )
+	  {
+	    zUAHUpty %= 14 ;
+	    ( vGkPZgwp ? ( vGkPZgwp ? vGkPZgwp : vGkPZgwp ) : !vGkPZgwp ) ;
+	  }
+	else
+	  {
+	    zUAHUpty = ( zUAHUpty + zUAHUpty * zUAHUpty + 14 ) ;
+	    vGkPZgwp = vGkPZgwp ;
+	  }
+	zUAHUpty <<= -70 ;
+	{
+	  bool VWToSCsL = vGkPZgwp ;
+	}
+	vGkPZgwp = vGkPZgwp ;
+	{
+	  vGkPZgwp ;
+	}
+	{
+	  zUAHUpty /= zUAHUpty - 70 / 14 >> zUAHUpty + 70 << zUAHUpty ;
+	  while ( vGkPZgwp )
+	    {
+	      for ( vGkPZgwp = vGkPZgwp ; vGkPZgwp ; true )
+		vGkPZgwp = vGkPZgwp ;
+	      vGkPZgwp = ( vGkPZgwp && vGkPZgwp ) ;
+	    }
+	}
+	zUAHUpty = 14 ;
+	vGkPZgwp = vGkPZgwp ;
+	( vGkPZgwp ? vGkPZgwp : vGkPZgwp ) && vGkPZgwp ;
+	zUAHUpty = -70 ;
+	zUAHUpty ^= zUAHUpty ;
+	while ( vGkPZgwp )
+	  {
+	    ( vGkPZgwp || vGkPZgwp ? !vGkPZgwp : vGkPZgwp ) ;
+	    return 14 ;
+	    zUAHUpty -- ;
+	  }
+      }
+    vGkPZgwp = vGkPZgwp || vGkPZgwp ;
+    while ( ( vGkPZgwp ? vGkPZgwp : vGkPZgwp ) )
+      {
+	bool TqHUFggP = ( vGkPZgwp ? vGkPZgwp : vGkPZgwp ) ;
+	( vGkPZgwp && ( ( TqHUFggP ? TqHUFggP : TqHUFggP ) && TqHUFggP ) ) && vGkPZgwp ;
+	return -70 ;
+	vGkPZgwp ;
+	( ( 14 + ~87 ) - ~70 ) & 70 ;
+      }
+  }
+  vGkPZgwp = !vGkPZgwp ;
+  vGkPZgwp ;
+  vGkPZgwp ;
+  70 ;
+  return ( 14 + -14 ) ;
+}

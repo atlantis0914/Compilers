@@ -1,0 +1,12 @@
+//test return 42
+// test plus equals etc.
+int main()
+{
+  int a = 0x4;
+  a += 38;
+  int b = 5678;
+  b += b;
+  b -= b;
+  b *= 1;
+  return a + 8 - 8 + b;
+}

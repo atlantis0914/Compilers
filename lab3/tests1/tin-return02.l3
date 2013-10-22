@@ -1,0 +1,14 @@
+//test return 0
+//different aliases for the same type signature
+
+bool return_true();
+typedef bool truthiness;
+
+int main() {
+  assert(return_true());
+  return 0;
+}
+
+truthiness return_true() {
+  return true;
+}

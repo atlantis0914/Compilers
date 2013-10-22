@@ -1,0 +1,21 @@
+//test return 0
+
+int main()
+{
+
+ int z;
+ int a;
+ int b;
+ int c;
+ int e;
+ int f; 
+
+ z=2;
+ a=z*z;
+ b=a*a;
+ c=b*b*-1;
+ e=c%b;
+ f=c/b;
+ return e;
+
+}

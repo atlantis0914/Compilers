@@ -1,0 +1,11 @@
+//test return 1
+// simple postop test
+int main()
+{
+  int x = 1;
+
+  x++;
+  x--;
+
+  return x;
+}

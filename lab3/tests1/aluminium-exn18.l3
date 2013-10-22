@@ -1,0 +1,14 @@
+//test exception 8
+
+void aaa () {
+  int a = 0;
+  while(a > 0){
+    a = 1;
+  }
+  int b = 2 / a;
+}
+
+int main () {
+  aaa ();
+  return 1; 
+}

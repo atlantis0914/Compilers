@@ -1,0 +1,10 @@
+//test return 0
+bool fuck() {
+  bool orphan = true;
+  return orphan;
+} 
+
+int main() {
+  if (fuck()) return 0;
+  return 1;
+} 

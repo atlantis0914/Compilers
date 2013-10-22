@@ -1,0 +1,18 @@
+//test return 2
+// if else association
+
+int main()
+{
+  int i = 1;
+  int j = 2;
+  
+  if (i == 1) {
+     if (j==i) {
+        return j+i;
+      }
+      else
+        return j;
+   } else 
+      return i;
+}
+   

@@ -1,0 +1,17 @@
+//test return 666
+
+// the divide by zero is guarded by a return
+int main()
+{
+  return 666;
+
+  1;
+
+  true;
+
+  1 == 3;
+
+  4-5;
+
+  86 + 1/(1-3/2) + 1;
+}

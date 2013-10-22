@@ -1,0 +1,6 @@
+//test exception 8
+int main() { 
+  bool cond = (true && (false || true)) && (true || false) || false;
+  int x = cond && !cond ? 1 : (4>>3);
+  return x/x;
+}

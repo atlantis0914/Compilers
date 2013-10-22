@@ -1,0 +1,9 @@
+//test exception
+//overflow thing
+int main()
+{
+    int x = 0x80000000;
+    int y = 0x80000000;
+    x = x>>31;
+    return y/x; 
+}

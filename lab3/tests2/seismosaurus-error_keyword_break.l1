@@ -1,0 +1,9 @@
+//test error
+// Test compiler error for reserved keywords
+// keyword: break
+int main() {
+    int break;
+
+    break=1;
+    return break;
+}

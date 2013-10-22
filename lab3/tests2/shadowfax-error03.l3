@@ -1,0 +1,14 @@
+//test error
+// declaring functions inside functions
+
+
+int f (int x, int n, int y) {
+    int inner (int y) {
+       return 231234;
+    }
+}
+
+
+int main () {
+    return f(3+5, 1/0, 200);
+}

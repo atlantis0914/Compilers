@@ -1,0 +1,13 @@
+//test return 10
+
+int main()
+{
+    {
+        int x = 2;
+        {
+            int y = 5;
+            x *= y; 
+        }
+        return x; 
+    }
+}

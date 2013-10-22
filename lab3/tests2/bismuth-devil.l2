@@ -1,0 +1,37 @@
+//test return 666
+//nested loops
+int main()
+{	
+    int y = 20;
+    int x;
+
+  for (x = 0; x < 2000; x++)
+  {
+  for (x = 0; x < 2000; x++)
+  {
+  for (x = 0; x < 2000; x++)
+  {
+  for (x = 0; x < 2000; x++)
+  {
+  for (x = 0; x < 2000; x++)
+  {
+  for (x = 0; x < 2000; x++)
+  {
+  for (x = 0; x < 2000; x++)
+  {
+  for (x = 0; x < 2000; x++)
+  {
+    y = x + 2;
+    x = y + 1;
+    y = x/3;
+  }
+  }
+  }
+  }
+  }
+  }
+  }
+  }
+
+    return y;
+}

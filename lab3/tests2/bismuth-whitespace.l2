@@ -1,0 +1,6 @@
+//test return 10
+//tests characters that should be treated as whitespace
+int main()
+{
+    return10;
+}

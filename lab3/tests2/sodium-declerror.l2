@@ -1,0 +1,7 @@
+//test error
+int main() {
+    while(true) {
+        int x = 0;
+    }
+    return x;
+}

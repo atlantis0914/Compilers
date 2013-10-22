@@ -1,0 +1,12 @@
+//test error
+// if-else bodies must return
+int main()
+{	
+  int x = 0;
+
+  if (true)
+    x += 2;
+
+  else 
+    return 0;
+}

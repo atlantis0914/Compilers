@@ -1,0 +1,20 @@
+//test return 55
+
+int main()
+{
+	int x;
+	int y;
+
+	//unused
+	int a;
+	int b;
+	int c;
+	int d;
+	
+	x = 5;
+	y = 10;
+	y = y + 1;
+	x = x * y;
+
+	return x;
+}

@@ -1,0 +1,24 @@
+//test return 102400000
+//bunch of nested for loops...
+
+int main() {
+    int CC = 40;
+    int x = 0;
+    int a;
+    for(a = 0; a < CC ; a++) {
+        int b;
+        for(b = 0; b < CC ; b++) {
+            int c;
+            for(c = 0; c < CC ; c++) {
+                int d;
+                for(d = 0; d < CC ; d++) {
+                    int e;
+                    for(e = 0; e < CC ; e++) {
+                        x++;
+                    }
+                }
+            }
+        }
+    }
+    return x;
+}

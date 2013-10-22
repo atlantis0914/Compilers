@@ -1,0 +1,11 @@
+//test error
+// types?
+
+typedef int abcd;
+
+int main()
+{
+    int abcd = 5;
+    return abcd;
+}
+

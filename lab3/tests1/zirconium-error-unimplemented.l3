@@ -1,0 +1,8 @@
+//test error
+// unimplemented function
+
+int t(int s);
+
+int main(){
+  return t(10);
+}

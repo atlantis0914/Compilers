@@ -1,0 +1,8 @@
+//test error
+
+// Return wrong type is not allowed.
+int main()
+{
+  bool x = true;
+  return x;
+}
