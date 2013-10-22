@@ -13,6 +13,8 @@ data ParseFnList = ParseFnList ![PGDecl] SourcePos deriving Show
 
 data PGDecl = PFDecl !ParseFDecl SourcePos
             | PFDefn !ParseFDefn SourcePos 
+            | PSDecl !ParseSDecl SourcePos
+            | PSDefn !ParseSDefn SourcePos
             | PTypeDef !IdentType !IdentType !SourcePos deriving Show
 
 data ParseFDefn = ParseFDefn {pfnName :: !String,
@@ -29,6 +31,12 @@ data ParseFDecl = ParseFDecl {pdeclName :: !String,
                               pdeclReturnType :: !IdentType,
                               pdeclIsLibrary :: !Bool,
                               pdeclPos :: SourcePos} deriving Show
+
+data ParseSDecl = ParseSDecl String SourcePos deriving Show
+
+data ParseSDefn = ParseSDefn {pdefnName :: !String,
+                              pdefnFields :: [(IdentType, String)]} deriving Show
+    
 
 data ParseAST = ParseAST !ParseStmt SourcePos 
 
