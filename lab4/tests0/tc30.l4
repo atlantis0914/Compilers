@@ -1,0 +1,19 @@
+//test error
+/* using an int as a boolean */
+
+bool xor (bool b, bool c) {
+  return (b && c) || (!b && !c);
+}
+
+int main () {
+  bool b;
+  bool c;
+  int x;
+  b = true;
+  c = false;
+  x = 1;
+  if (xor(x,c))
+    return 1;
+  else
+    return 0;
+}

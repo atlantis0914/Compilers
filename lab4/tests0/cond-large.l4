@@ -1,0 +1,15 @@
+//test error
+
+struct b {
+  int f2;
+};
+
+struct a {
+  struct b f1;
+};
+
+int main() {
+  struct a * test;
+  test = alloc(struct a);
+  return (true ? test->f1 : test->f1).f2;
+}

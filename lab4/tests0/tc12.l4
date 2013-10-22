@@ -1,0 +1,9 @@
+//test error
+/* not a pointer */
+
+int main () {
+  int[] A;
+  A = alloc_array(int, 12);
+  *A = 1;
+  return A[11];
+}

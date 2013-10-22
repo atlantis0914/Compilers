@@ -1,0 +1,12 @@
+//test error
+/* non-convertible type */
+
+int main () {
+  int** x;
+  int* y;
+  y = alloc(int);
+  x = alloc(int*);
+  *x = y;			/* should be ok */
+  x = y;			/* should fail */
+  return 0;
+}

@@ -1,0 +1,47 @@
+//test return 431
+/* erstwhile of brie's gratuitous obscenities */
+/* how dost thou alias? */
+/* also, do you do your name resolution properly? */
+
+struct s02 {int pad;};
+struct s01 {int pad; struct s02* lol;};
+struct s00 {int pad; struct s01* lol;};
+
+int alias(struct s00* s00)
+{
+	s00->lol->pad += s00->lol->lol->pad;
+	return s00->pad;
+}
+
+int your(struct s01* s01)
+{
+	s01->lol->pad += s01->pad;
+	return s01->pad;
+}
+
+int pointer(struct s02* s02)
+{
+	return s02->pad;
+}
+
+int lolias(struct s00* s00, struct s01* s01, struct s02* s02)
+{
+	return s00->lol->pad // return  10
+		+ s01->lol->pad  // return 100
+		+ alias(s00)     // return   1, mutate s01->pad to 110
+		+ your(s01)      // return 110, mutate s02->pad to 210
+		+ pointer(s02);  // return 210
+	// return 431
+}
+
+int main()
+{
+	struct s00 * s00;
+	s00 = alloc(struct s00);
+	s00->lol = alloc(struct s01);
+	s00->lol->lol = alloc(struct s02);
+	s00->pad = 1;
+	s00->lol->pad = 10;
+	s00->lol->lol->pad = 100;
+	return lolias (s00, s00->lol, s00->lol->lol);
+}
