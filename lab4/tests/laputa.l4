@@ -1,0 +1,19 @@
+//test return 5
+// nested structs
+
+struct a {int v;};
+struct b {struct a *a;};
+struct c {struct b *b;};
+struct d {struct c *c;};
+
+int main() {
+  struct a *a = alloc(struct a);
+  a->v = 5;
+  struct b *b = alloc(struct b);
+  b->a = a;
+  struct c *c = alloc(struct c);
+  c->b = b;
+  struct d *d = alloc(struct d);
+  d->c = c;
+  return d->c->b->a->v;
+}

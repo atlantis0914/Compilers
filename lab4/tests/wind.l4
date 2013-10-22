@@ -1,0 +1,9 @@
+//test error
+// assigning arr to int error
+
+int main() {
+  int[] arr = alloc_array(int, 0);
+  arr = 4;
+  return 9;
+}
+
