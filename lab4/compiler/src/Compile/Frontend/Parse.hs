@@ -53,6 +53,8 @@ gdecl :: C0Parser PGDecl
 gdecl = 
   typedefParser
   <|>
+  structParser
+  <|>
   declDefnParser 
 
 typedefParser :: C0Parser PGDecl
@@ -63,6 +65,17 @@ typedefParser = do
   t2 <- getType
   semi
   return $ PTypeDef t1 t2 pos
+
+structParser :: C0Parser PGDecl 
+structParser = do
+  pos <- getPosition
+  reserved "struct"
+  name <- identifier
+  (do fields <- braces $ many getField
+      return $ PSDefn (ParseSDefn name fields pos) pos)
+   <|>
+   (do return $ PSDecl (ParseSDecl name pos) pos)
+
   
 declDefnParser :: C0Parser PGDecl
 declDefnParser = do
@@ -92,6 +105,11 @@ getParamList = do
 getParam = (do
   t <- getType
   i <- identifier
+  return $ (t,i))
+
+getField = (do
+  (t,i) <- getParam
+  semi
   return $ (t,i))
 
 getType :: C0Parser IdentType 
@@ -140,7 +158,7 @@ typedecl = do
   (do pos' <- getPosition
       op <- asnOp
       e <- expr
-      return $ PDecl ident idType pos (Just (PAsgn ident op e False pos')))
+      return $ PDecl ident idType pos (Just (PAsgn (PLId ident) op e False pos')))
    <|>
    (do return $ PDecl ident idType pos Nothing)
   <?> "typedecl"
@@ -151,10 +169,10 @@ asgn = do
   dest <- identifier
   (do op   <- asnOp
       e    <- expr
-      return $ PAsgn dest op e False pos)
+      return $ PAsgn (PLId dest) op e False pos)
    <|>
    (do op <- postOp
-       return $ PAsgn dest (Nothing) (expForPostOp dest op pos) False pos)
+       return $ PAsgn (PLId dest) (Nothing) (expForPostOp dest op pos) False pos)
    <?> "asgn"
 
 expForPostOp :: String -> Op -> SourcePos -> Expr 
