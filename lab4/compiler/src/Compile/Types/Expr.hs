@@ -28,6 +28,8 @@ data Expr = ExpInt !Integer SourcePos !Base
           | ExpNull SourcePos
           | ExpAlloc !IdentType SourcePos
           | ExpAllocArray !IdentType !Expr SourcePos
+          | ExpBinMem !Op !Expr !Expr SourcePos
+          | ExpUnMem !Op !Expr SourcePos
           | ExpMem !ExprMem SourcePos
 
 instance Show Expr where
