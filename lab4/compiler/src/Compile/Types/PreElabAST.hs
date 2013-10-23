@@ -32,10 +32,11 @@ data ParseFDecl = ParseFDecl {pdeclName :: !String,
                               pdeclIsLibrary :: !Bool,
                               pdeclPos :: SourcePos} deriving Show
 
-data ParseSDecl = ParseSDecl String SourcePos deriving Show
+data ParseSDecl = ParseSDecl !String SourcePos deriving Show
 
 data ParseSDefn = ParseSDefn {pdefnName :: !String,
-                              pdefnFields :: [(IdentType, String)]} deriving Show
+                              pdefnFields :: ![(IdentType, String)],
+                              pdefnPos :: SourcePos} deriving Show
     
 
 data ParseAST = ParseAST !ParseStmt SourcePos 
@@ -61,7 +62,7 @@ instance Show ParseAST where
     "int main () {\n" ++ show stmt ++ "}\n"
 
 instance Show ParseStmt where
-  show (PAsgn s o e b _) = "\t" ++ s ++ " " ++ (show o) ++ "=" ++ " " ++ show e ++ ";"
+  show (PAsgn s o e b _) = "\t" ++ " " ++ (show o) ++ "=" ++ " " ++ show e ++ ";"
   show (PDecl i t _ Nothing) = "\t" ++ (show t) ++ " " ++ i ++ ";"
   show (PDecl i t _ (Just st')) = "\t" ++ "decl " ++ (show t) ++ " " ++  i ++ " as " ++ show st'
   show (PCtrl c) = show c
