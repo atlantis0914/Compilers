@@ -8,6 +8,11 @@ import Compile.Types.IdentType
 data Base = Dec
           | Hex
 
+data Mem = Dot !String SourcePos
+         | Arrow !Expr !String SourcePos
+         | Star !Expr SourcePos
+         | ArrayRef !Expr !Expr SourcePos deriving (Show, Eq)
+
 data Expr = ExpInt !Integer SourcePos !Base
           | ExpBool !Bool SourcePos
           | Ident !String SourcePos
@@ -18,13 +23,10 @@ data Expr = ExpInt !Integer SourcePos !Base
           | ExpUnOp !Op !Expr SourcePos
           | ExpTernary !Expr !Expr !Expr SourcePos
           | ExpFnCall !String ![Expr] SourcePos
-          | ExpNULL SourcePos
-          | ExpDot !Expr !String SourcePos
-          | ExpArrow !Expr !String SourcePos
-          | ExpAlloc !IdentType
-          | ExpStar !Expr SourcePos
+          | ExpNull SourcePos
+          | ExpAlloc !IdentType SourcePos
           | ExpAllocArray !IdentType !Expr SourcePos
-          | ExpArrayRef !Expr !Expr SourcePos
+          | ExpMem !Mem SourcePos
 
 instance Show Expr where
   show (ExpInt n _ _) = show n

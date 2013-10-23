@@ -40,7 +40,13 @@ data ParseSDefn = ParseSDefn {pdefnName :: !String,
 
 data ParseAST = ParseAST !ParseStmt SourcePos 
 
-data ParseStmt = PAsgn {pasgnName :: !String,
+-- A simple wrapper around memory and idents. We enforce that 
+-- the memory locations are in fact l-values and not general exprs
+-- inside of the type-checker. 
+data PLValue = PLId !String
+             | PLMem !Mem
+
+data ParseStmt = PAsgn {pasgnName :: !PLValue,
                         pasgnOp :: !AsgnOp,
                         pasgnExpr :: !Expr,
                         pasgnShadow :: !Bool,
