@@ -18,6 +18,7 @@ data Expr = ExpInt !Integer SourcePos !Base
           | ExpUnOp !Op !Expr SourcePos
           | ExpTernary !Expr !Expr !Expr SourcePos
           | ExpFnCall !String ![Expr] SourcePos
+          | ExpNULL SourcePos
 
 instance Show Expr where
   show (ExpInt n _ _) = show n
