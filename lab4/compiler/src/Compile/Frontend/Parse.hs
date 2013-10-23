@@ -193,13 +193,9 @@ lvalue =
       b' <- complexLValue b
       return b')
 
+-- The non-left-recursive bits
 complexLValue :: PLValue -> C0Parser PLValue
 complexLValue lval =
-  (do char '*'
-      pos <- getPosition
-      c <- complexLValue (PLMem (Star lval pos) pos)
-      return c)
-  <|>
   (do char '['
       e <- expr 
       char ']'
@@ -222,11 +218,18 @@ complexLValue lval =
   <|>
   (do return lval)
 
+-- The left recursive bit 
 basicLValue :: C0Parser PLValue
-basicLValue = do 
+basicLValue = (do 
   pos <- getPosition
   name <- identifier
-  return $ PLId name pos
+  return $ PLId name pos)
+  <|>
+  (do 
+    char '*'
+    pos <- getPosition
+    l <- lvalue
+    return $ PLMem (Star l pos) pos)
   
 
 asgn :: C0Parser ParseStmt
