@@ -41,11 +41,23 @@ data ParseSDefn = ParseSDefn {pdefnName :: !String,
 
 data ParseAST = ParseAST !ParseStmt SourcePos 
 
+type ParseMem = Mem PLValue
+
+lValToExpr :: PLValue -> Expr
+lValToExpr (PLId s p) = (Ident s p)
+lValToExpr (PLMem m p) = (ExpMem (pMemToExpMem m) p)
+
+pMemToExpMem :: ParseMem -> ExprMem
+pMemToExpMem (Dot s id p) = (Dot (lValToExpr s) id p)
+pMemToExpMem (Arrow s id p) = (Arrow (lValToExpr s) id p)
+pMemToExpMem (Star s p) = (Star (lValToExpr s) p)
+pMemToExpr (ArrayRef s e p) = (ArrayRef (lValToExpr s) e p) 
+
 -- A simple wrapper around memory and idents. We enforce that 
 -- the memory locations are in fact l-values and not general exprs
 -- inside of the type-checker. 
-data PLValue = PLId !String
-             | PLMem !Mem
+data PLValue = PLId !String SourcePos 
+             | PLMem !ParseMem SourcePos
 
 data ParseStmt = PAsgn {pasgnName :: !PLValue,
                         pasgnOp :: !AsgnOp,
