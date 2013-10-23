@@ -75,7 +75,6 @@ structParser = do
       return $ PSDefn (ParseSDefn name fields pos) pos)
    <|>
    (do return $ PSDecl (ParseSDecl name pos) pos)
-
   
 declDefnParser :: C0Parser PGDecl
 declDefnParser = do
@@ -113,7 +112,26 @@ getField = (do
   return $ (t,i))
 
 getType :: C0Parser IdentType 
-getType =
+getType = (do
+  bTyp <- getBasicType
+  bTyp' <- getComplexType bTyp
+  return bTyp')
+
+getComplexType :: IdentType -> C0Parser IdentType
+getComplexType (t) = 
+  (do char '*'
+      t <- getComplexType (IPtr t)
+      return t)
+   <|>
+   (do char '['
+       char ']'
+       t <- getComplexType (IArray t)
+       return t)
+   <|>
+   (do return t)
+
+getBasicType :: C0Parser IdentType
+getBasicType =
   (do reserved "int"
       return $ IInt)
    <|>
@@ -125,7 +143,11 @@ getType =
    <|>
    (do typ <- identifier
        return $ ITypeDef typ)
-
+   <|>
+   (do reserved "struct"
+       typ <- identifier
+       return $ IStruct (ITypeDef typ))
+   
 getAST :: C0Parser ParseAST
 getAST = braces (do
   pos   <- getPosition
@@ -158,26 +180,70 @@ typedecl = do
   (do pos' <- getPosition
       op <- asnOp
       e <- expr
-      return $ PDecl ident idType pos (Just (PAsgn (PLId ident) op e False pos')))
+      return $ PDecl ident idType pos (Just (PAsgn (PLId ident pos) op e False pos')))
    <|>
    (do return $ PDecl ident idType pos Nothing)
   <?> "typedecl"
 
+lvalue :: C0Parser PLValue
+lvalue = 
+  (parens lvalue) 
+  <|>
+  (do b <- basicLValue
+      b' <- complexLValue b
+      return b')
+
+complexLValue :: PLValue -> C0Parser PLValue
+complexLValue lval =
+  (do char '*'
+      pos <- getPosition
+      c <- complexLValue (PLMem (Star lval pos) pos)
+      return c)
+  <|>
+  (do char '['
+      e <- expr 
+      char ']'
+      pos <- getPosition
+      c <- complexLValue (PLMem (ArrayRef lval e pos) pos)
+      return c)
+  <|>
+  (do char '-'
+      char '>'
+      i <- identifier
+      pos <- getPosition
+      c <- complexLValue (PLMem (Arrow lval i pos) pos)
+      return c)
+  <|>
+  (do char '.'
+      i <- identifier 
+      pos <- getPosition
+      c <- complexLValue (PLMem (Dot lval i pos) pos)
+      return c)
+  <|>
+  (do return lval)
+
+basicLValue :: C0Parser PLValue
+basicLValue = do 
+  pos <- getPosition
+  name <- identifier
+  return $ PLId name pos
+  
+
 asgn :: C0Parser ParseStmt
 asgn = do
   pos  <- getPosition
-  dest <- identifier
+  dest <- lvalue
   (do op   <- asnOp
       e    <- expr
-      return $ PAsgn (PLId dest) op e False pos)
+      return $ PAsgn dest op e False pos)
    <|>
    (do op <- postOp
-       return $ PAsgn (PLId dest) (Nothing) (expForPostOp dest op pos) False pos)
+       return $ PAsgn dest (Nothing) (expForPostOp dest op pos) False pos)
    <?> "asgn"
 
-expForPostOp :: String -> Op -> SourcePos -> Expr 
-expForPostOp i Incr p = ExpBinOp Add (Ident i p) (ExpInt 1 p Dec) p
-expForPostOp i Decr p = ExpBinOp Sub (Ident i p) (ExpInt 1 p Dec) p
+expForPostOp :: PLValue -> Op -> SourcePos -> Expr 
+expForPostOp i Incr p = ExpBinOp Add (lValToExpr i) (ExpInt 1 p Dec) p
+expForPostOp i Decr p = ExpBinOp Sub (lValToExpr i) (ExpInt 1 p Dec) p
 
 postOp :: C0Parser Op
 postOp = do
