@@ -190,6 +190,7 @@ lvalue =
   (parens lvalue) 
   <|>
   (do b <- basicLValue
+      whiteSpace
       b' <- complexLValue b
       return b')
 
@@ -387,6 +388,11 @@ simp =
       return s)
   <?> "simp"
 
+-- There's a special case to consider here : namely the 
+-- one brought up in the l4 handout of foo * bar. This is
+-- either an expr with foo,bar as idents or the declaration
+-- a pointer of type foo, named bar. We can easily special case
+-- this and handle it in elaboration. 
 stExpr :: C0Parser ParseStmt
 stExpr = do 
   e <- expr 
@@ -436,21 +442,46 @@ expr :: C0Parser Expr
 expr = do 
   pos <- getPosition
   e1 <- expr'
-  s <- parseCond
-  case s of 
-    Nothing -> return $ e1
-    Just (e2,e3) -> return $ ExpTernary e1 e2 e3 pos
+  (do (e2,e3) <- parseCond
+      return $ ExpTernary e1 e2 e3 pos)
+   <|>
+   (do char '['
+       e2 <- expr
+       char ']'
+       return $ ExpMem (ArrayRef e1 e2 pos) pos)
+   <|>
+   (do return e1)
+--   s <- parseCond
+--   case s of 
+--     Nothing -> return $ e1
+--     Just (e2,e3) -> return $ ExpTernary e1 e2 e3 pos
 
-parseCond :: C0Parser (Maybe (Expr, Expr)) 
+parseCond :: C0Parser (Expr, Expr)
 parseCond = (do 
   reservedOp "?"
   e1 <- expr 
   whiteSpace
   reservedOp ":" 
   e2 <- expr
-  return $ Just (e1,e2))
-  <|>
-  (do return Nothing)
+  return $ (e1,e2))
+
+-- parseCond :: C0Parser (Maybe (Expr, Expr)) 
+-- parseCond = (do 
+--   reservedOp "?"
+--   e1 <- expr 
+--   whiteSpace
+--   reservedOp ":" 
+--   e2 <- expr
+--   return $ Just (e1,e2))
+--   <|>
+--   (do return Nothing)
+
+typExp :: C0Parser (IdentType, Expr)
+typExp = do
+  t <- getType
+  comma
+  e <- expr 
+  return $ (t,e)
 
 term :: C0Parser Expr
 term = 
@@ -473,6 +504,20 @@ term =
        return $ ExpBool False p)
    <|>
    (do p <- getPosition
+       t <- reserved "NULL" 
+       return $ ExpNull p)
+   <|>
+   (do p <- getPosition
+       t <- reserved "alloc"
+       typ <- parens getType
+       return $ ExpAlloc typ p)  
+   <|>
+   (do p <- getPosition
+       t <- reserved "alloc_array"
+       (typ,exp) <- parens typExp
+       return $ ExpAllocArray typ exp p)
+   <|>
+   (do p <- getPosition
        n <- Text.Parsec.try hex
        return $ ExpInt n p Hex)
    <|>
@@ -480,11 +525,6 @@ term =
        p <- getPosition
        n <- dec
        return $ ExpInt n p Dec) -- or an integer
---   <|>
---   (do char '-'
---       p <- getPosition
---       e <- expr
---       return $ ExpUnOp Neg (e) p)
    <?> "term"
 
 dec :: C0Parser Integer
@@ -582,9 +622,12 @@ brackets   :: C0Parser a -> C0Parser a
 brackets   = Tok.brackets c0Tokens
 
 opTable :: [[Operator ByteString () Identity Expr]]
-opTable = [[prefix "-"  (ExpUnOp  Neg),
+opTable = [[binary "->" (ExpBinMem FDereference) AssocLeft,
+            binary "." (ExpBinMem Select) AssocLeft],
+           [prefix "-"  (ExpUnOp  Neg),
             prefix "~"  (ExpUnOp  BitwiseNot),
-            prefix "!"  (ExpUnOp  LogicalNot)],
+            prefix "!"  (ExpUnOp  LogicalNot),
+            prefix "*"  (ExpUnMem PDereference)],
            [prefix "--" (ExpUnOp  Decr),  -- Throw errors
             prefix "++" (ExpUnOp  Incr)], -- in checkAST
            [binary "--"  (ExpBinOp Decr) AssocLeft],
