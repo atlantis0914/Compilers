@@ -31,6 +31,9 @@ data Op = Mul
         | BitwiseOr
         | RShift
         | LShift
+        | Select -- .
+        | FDereference -- -> 
+        | PDereference -- *
         | Nop deriving Eq
 
 instance Show Op where
