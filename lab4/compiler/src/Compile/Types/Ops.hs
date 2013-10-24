@@ -34,6 +34,7 @@ data Op = Mul
         | Select -- .
         | FDereference -- -> 
         | PDereference -- *
+        | PArrayRef -- [expr]
         | Nop deriving Eq
 
 instance Show Op where
