@@ -8,30 +8,39 @@ import Compile.Util.IdentTypeUtil
 
 import Compile.Frontend.Expand
 import Compile.Frontend.ElaborateType
-
-
--- type TypeDefs = Map.Map IdentType IdentType
+import Compile.Frontend.ElaborateStruct
 
 -- Takes a parse function list and elaborates it into a post-elab 
 -- function list. 
 elaborate :: ParseFnList -> Either String FnList
--- elaborate (ParseFnList decls pos) = Right $ FnList (map elaboratePGDecl decls) pos
 elaborate (ParseFnList decls pos) = 
   let
-    (elab, map) = foldl elaboratePGDecls ([], baseIdentTypeMap) decls
+    (elab, tMap, sMap) = foldl elaboratePGDecls ([], baseIdentTypeMap, Map.Empty) decls
   in
-    elab `seq` map `seq` Right $ FnList elab pos
+    elab `seq` tMap `seq` sMap `seq` Right $ FnList elab pos
 
-elaboratePGDecls :: ([GDecl], TypeDefs) -> PGDecl -> 
-                        ([GDecl], TypeDefs)
-elaboratePGDecls (convDecls, typeMap) pgdecl@(PTypeDef _ _ _) =
+
+elaboratePGDecls :: ([GDecl], TypeDefs, StructDefs) -> PGDecl -> ([GDecl], TypeDefs, StructDefs)
+elaboratePGDecls (convDecls, typeMap, sMap) pgdecl@(PTypeDef _ _ _) =
   let
     typeMap' = checkTypeDef pgdecl typeMap
   in
-    (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap')
+    (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap', sMap)
 
-elaboratePGDecls (convDecls, typeMap) pgdecl = 
-  (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap)
+elaboratePGDecls (convDecls, typeMap, sMap) pgdecl@(PSDecl _ _) = 
+  let
+    sMap' = checkStructDecl pgdecl sMap
+  in
+    (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap, sMap')
+
+elaboratePGDecls (convDecls, typeMap, sMap) pgdecl@(pSDefn _ _) = 
+  let
+    sMap' = checkStructDefn pgdecl sMap
+  in
+    (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap, sMap')
+
+elaboratePGDecls (convDecls, typeMap, sMap) pgdecl = 
+  (convDecls ++ [elaboratePGDecl pgdecl typeMap], typeMap, sMap)
 
 -- Either errors if we have multiple typedefs of s2, or inserts 
 -- s2 into the typeMap using s1 as 
@@ -80,8 +89,15 @@ elaboratePGDecl (PFDecl (ParseFDecl name args argTypes return isL pos) dPos) typ
   in
     GFDecl (FDecl nName nArgs nArgTypes nReturn isL pos) dPos
 
-elaboratePGDecl (PTypeDef s1 s2 pos) typeDefs = GTypeDef s1 s2 pos
+-- Can add struct field-namespace checking here. 
+elaboratePGDecl (PSDecl (ParseSDecl s p1) p2) = (GSDecl (SDecl s p) p1)
+elaboratePGDecl (PSDefn sdefn@(ParseSDefn s fields p1) p2) = 
+  let
+    init = generateStructDefn sdefn
+  in
+    GSDefn (checkStructFields init) p2
 
+elaboratePGDecl (PTypeDef s1 s2 pos) typeDefs = GTypeDef s1 s2 pos
 
 -- Converts a parse level AST into a post-elaboration AST. Expects the encapsulated
 -- ParseStatement to be a PBlock. 
