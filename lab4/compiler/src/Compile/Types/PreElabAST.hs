@@ -45,13 +45,13 @@ type ParseMem = Mem PLValue
 
 lValToExpr :: PLValue -> Expr
 lValToExpr (PLId s p) = (Ident s p)
-lValToExpr (PLMem m p) = (ExpMem (pMemToExpMem m) p)
+lValToExpr (PLMem m p) = pMemToExpr m
 
-pMemToExpMem :: ParseMem -> ExprMem
-pMemToExpMem (Dot s id p) = (Dot (lValToExpr s) id p)
-pMemToExpMem (Arrow s id p) = (Arrow (lValToExpr s) id p)
-pMemToExpMem (Star s p) = (Star (lValToExpr s) p)
-pMemToExpr (ArrayRef s e p) = (ArrayRef (lValToExpr s) e p) 
+pMemToExpr :: ParseMem -> Expr
+pMemToExpr (Dot s id p) = (ExpBinMem Select (lValToExpr s) (Ident id p) p)
+pMemToExpr (Arrow s id p) = (ExpBinMem FDereference (lValToExpr s) (Ident id p) p)
+pMemToExpr (Star s p) = (ExpUnMem PDereference (lValToExpr s) p)
+pMemToExpr (ArrayRef s e p) = (ExpBinMem PArrayRef (lValToExpr s) e p)
 
 -- A simple wrapper around memory and idents. We enforce that 
 -- the memory locations are in fact l-values and not general exprs
