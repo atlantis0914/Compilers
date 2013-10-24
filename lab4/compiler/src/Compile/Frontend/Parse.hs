@@ -232,7 +232,6 @@ basicLValue = (do
     pos <- getPosition
     l <- lvalue
     return $ PLMem (Star l pos) pos)
-  
 
 asgn :: C0Parser ParseStmt
 asgn = do
