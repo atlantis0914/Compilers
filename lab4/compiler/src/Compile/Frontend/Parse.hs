@@ -72,9 +72,11 @@ structParser = do
   reserved "struct"
   name <- identifier
   (do fields <- braces $ many getField
+      semi
       return $ PSDefn (ParseSDefn name fields pos) pos)
    <|>
-   (do return $ PSDecl (ParseSDecl name pos) pos)
+   (do semi
+       return $ PSDecl (ParseSDecl name pos) pos)
   
 declDefnParser :: C0Parser PGDecl
 declDefnParser = do
@@ -123,8 +125,7 @@ getComplexType (t) =
       t <- getComplexType (IPtr t)
       return t)
    <|>
-   (do char '['
-       char ']'
+   (do reserved "[]"
        t <- getComplexType (IArray t)
        return t)
    <|>
@@ -445,11 +446,6 @@ expr = do
   (do (e2,e3) <- parseCond
       return $ ExpTernary e1 e2 e3 pos)
    <|>
---    (do char '['
---        e2 <- expr
---        char ']'
---        return $ ExpMem (ArrayRef e1 e2 pos) pos)
---    <|>
    (do return e1)
 --   s <- parseCond
 --   case s of 
