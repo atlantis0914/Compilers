@@ -445,11 +445,11 @@ expr = do
   (do (e2,e3) <- parseCond
       return $ ExpTernary e1 e2 e3 pos)
    <|>
-   (do char '['
-       e2 <- expr
-       char ']'
-       return $ ExpMem (ArrayRef e1 e2 pos) pos)
-   <|>
+--    (do char '['
+--        e2 <- expr
+--        char ']'
+--        return $ ExpMem (ArrayRef e1 e2 pos) pos)
+--    <|>
    (do return e1)
 --   s <- parseCond
 --   case s of 
@@ -484,9 +484,11 @@ typExp = do
   return $ (t,e)
 
 term :: C0Parser Expr
-term = 
+term = do
+   whiteSpace
    -- A term is either
-   parens expr -- an expression surrounded by parenthesis
+   (do e <- parens expr -- an expression surrounded by parenthesis
+       return e)
    <|>
    (do p <- getPosition
        i <- identifier
@@ -622,7 +624,8 @@ brackets   :: C0Parser a -> C0Parser a
 brackets   = Tok.brackets c0Tokens
 
 opTable :: [[Operator ByteString () Identity Expr]]
-opTable = [[binary "->" (ExpBinMem FDereference) AssocLeft,
+opTable = [[postfix (brackets expr) (ExpUnMem PArrayRef)],
+           [binary "->" (ExpBinMem FDereference) AssocLeft,
             binary "." (ExpBinMem Select) AssocLeft],
            [prefix "-"  (ExpUnOp  Neg),
             prefix "~"  (ExpUnOp  BitwiseNot),
@@ -663,3 +666,8 @@ prefix :: String -> (a -> SourcePos -> a) -> Operator ByteString () Identity a
 prefix  name f = Prefix $ do pos <- getPosition
                              reservedOp name
                              return $ \x -> f x pos
+
+-- postfix :: String -> (a -> SourcePos -> a) -> Operator ByteString () Identity a
+postfix p f = Postfix $ do pos <- getPosition
+                           p
+                           return $ \x -> f x pos
