@@ -7,12 +7,16 @@ import Compile.Types.IdentType
 import Compile.Types.Expr
 import Compile.Types.Ctrl
 
+import qualified Data.Map as Map
+
 type Ctrl = PolyCtrl Stmt
 
 data FnList = FnList ![GDecl] SourcePos deriving Show
 
 data GDecl = GFDecl !FDecl SourcePos
            | GFDefn !FDefn SourcePos
+           | GSDecl !SDecl SourcePos
+           | GSDefn !SDefn SourcePos
            | GTypeDef !IdentType !IdentType SourcePos deriving Show
 
 data FDefn = FDefn {fnName :: !String,
@@ -30,9 +34,24 @@ data FDecl = FDecl {gdeclName :: !String,
                     gdeclIsLibrary :: !Bool,
                     gdeclPos :: SourcePos} deriving Show
 
+data SDecl = SDecl !String SourcePos deriving Show
+
+data SDefn = SDefn {structName :: !String,
+                    structFields :: ![(IdentType, String)],
+                    -- A map from the fieldName -> (fieldSize, fieldOffset)
+                    structOffsets :: StructOffsets,
+                    structAlignment :: Int, -- 0 mod 4 or 0 mod 8
+                    structSize :: Int, 
+                    structPos :: SourcePos} deriving Show  
+
 data AST = AST !Stmt SourcePos
 
-data Stmt = Asgn !String !AsgnOp !Expr !Bool SourcePos
+type AMem = Mem LValue
+
+data LValue = LId !String SourcePos
+            | LMem !AMem SourcePos
+
+data Stmt = Asgn !LValue !AsgnOp !Expr !Bool SourcePos
           | Decl {declName :: !String,
                   declTyp :: !IdentType,
                   declPos :: SourcePos,
