@@ -36,6 +36,9 @@ data FDecl = FDecl {gdeclName :: !String,
 
 data SDecl = SDecl !String SourcePos deriving Show
 
+-- A map from the fieldName -> (fieldSize, fieldOffset)
+type StructOffsets = Map.Map String (Int, Int)
+
 data SDefn = SDefn {structName :: !String,
                     structFields :: ![(IdentType, String)],
                     -- A map from the fieldName -> (fieldSize, fieldOffset)
@@ -69,7 +72,7 @@ maybeShow Nothing = ""
 maybeShow (Just o) = show o
 
 instance Show Stmt where
-  show (Asgn s o e b _) = "\t" ++ s ++ " " ++ (maybeShow o) ++ "=" ++ " " ++ show e ++ ";"
+  show (Asgn s o e b _) = "\t" ++ " " ++ (maybeShow o) ++ "=" ++ " " ++ show e ++ ";"
   show (Decl i t _ innerS) = "\t" ++ (show t) ++ " " ++ i ++ ";" ++ show innerS
   show (Ctrl c) = show c
   show (Block stmts) = "{\n" ++ (unlines (map show stmts)) ++ "\n" ++ "};" ++ "\n"

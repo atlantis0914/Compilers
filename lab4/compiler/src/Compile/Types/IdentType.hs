@@ -13,3 +13,5 @@ data IdentType = IInt
 getIdentTypeMap = Map.fromList $ [("int", IInt), 
                                   ("bool", IBool),
                                   ("void", IVoid)]
+
+
