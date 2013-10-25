@@ -12,10 +12,6 @@ import Compile.Frontend.ElaborateStruct
 
 type IdMap = Map.Map String String 
 
--- TODO : 
---  1. foo * bar at expr level has to be checked to see whether it's a decl, or a mult. 
---  2. Convert all s->f into (*s).f
-
 -- Takes a parse function list and elaborates it into a post-elab 
 -- function list. 
 elaborate :: ParseFnList -> Either String FnList
@@ -197,6 +193,7 @@ plValToLVal (PLMem mem p) = (LMem (pMemToAMem mem) p )
 
 pMemToAMem :: ParseMem -> AMem
 pMemToAMem (Dot s id p) = Dot (plValToLVal s) id p
-pMemToAMem (Arrow s id p) = Arrow (plValToLVal s) id p
+-- Elaborates s->id into (*s).id
+pMemToAMem (Arrow s id p) = Dot (LMem (Star (plValToLVal s) p) p) id p
 pMemToAMem (Star s p) = Star (plValToLVal s) p
 pMemToAMem (ArrayRef s e p) = ArrayRef (plValToLVal s) e p

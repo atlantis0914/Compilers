@@ -32,6 +32,13 @@ elabExpr' e@(ExpTernary e1 e2 e3 p) = checkExpr e $ ExpTernary (elabExpr e1)
                                                                (elabExpr e3) p
 elabExpr' e@(ExpFnCall fnName expList p) = checkExpr e $ ExpFnCall fnName
                                                        (map elabExpr' expList) p
+elabExpr' e@(ExpAllocArray id e1 p) = checkExpr e $ ExpAllocArray id (elabExpr e1) p
+-- Elaborates e1->e2 into (*e1).e2
+elabExpr' e@(ExpBinMem FDereference e1 e2 p) = ExpBinMem Select (ExpUnMem PDereference (elabExpr e1) p)
+                                                                (elabExpr e2) p
+elabExpr' e@(ExpBinMem o e1 e2 p) = checkExpr e $ ExpBinMem o (elabExpr e1)
+                                                              (elabExpr e2) p
+elabExpr' e@(ExpUnMem o e1 p) = checkExpr e $ ExpUnMem o (elabExpr e1) p 
 elabExpr' e = checkExpr e $ e
 
 checkExpr (ExpInt n p Dec) = 
