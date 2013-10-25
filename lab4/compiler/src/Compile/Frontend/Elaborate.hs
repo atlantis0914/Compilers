@@ -38,8 +38,10 @@ elaboratePGDecls (convDecls, typeMap, sMap) pgdecl@(PSDefn _ _) =
   let
     sMap' = checkStructDefn pgdecl sMap
     typeMap' = addToTypeSpace pgdecl typeMap
+    elaborated = elaboratePGDecl pgdecl typeMap sMap'
+    sMap'' = addStructDefn elaborated sMap
   in
-    (convDecls ++ [elaboratePGDecl pgdecl typeMap sMap'], typeMap', sMap')
+    (convDecls ++ [elaboratePGDecl pgdecl typeMap sMap'], typeMap', sMap'')
 
 elaboratePGDecls (convDecls, typeMap, sMap) pgdecl = 
   (convDecls ++ [elaboratePGDecl pgdecl typeMap sMap], typeMap, sMap)

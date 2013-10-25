@@ -67,13 +67,18 @@ checkStructFields s@(SDefn name fields _ _ _ _) =
 
 checkStructDecl :: PGDecl -> StructDefs -> StructDefs
 checkStructDecl (PSDecl (ParseSDecl name _) _) sMap = 
-  Map.insert name Nothing sMap
+  case (Map.lookup name sMap) of
+    Nothing -> Map.insert name Nothing sMap
+    _ -> sMap
 
 checkStructDefn :: PGDecl -> StructDefs -> StructDefs
-checkStructDefn (PSDefn sdefn@(ParseSDefn name fields _) _) sMap = 
-  -- We just want to generate the name - the struct cannot be referred
-  -- to explicitly yet. 
-  Map.insert name Nothing sMap
+checkStructDefn (PSDefn sdefn@(ParseSDefn name fields p) _) sMap = 
+  case (Map.lookup name sMap) of 
+    Just (Just _) -> error ("Struct " ++ name ++ " multiple declared at " ++ show p)
+    _ -> Map.insert name Nothing sMap
 
+addStructDefn :: GDecl -> StructDefs -> StructDefs
+addStructDefn (GSDefn sdefn@(SDefn {structName = name}) _) sDefs = 
+  Map.insert name (Just sdefn) sDefs 
 
 
