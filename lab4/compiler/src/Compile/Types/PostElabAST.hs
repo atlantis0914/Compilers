@@ -77,7 +77,7 @@ instance Show GDecl where
 instance Show FDefn where 
   show (FDefn name args argTypes retType body _) = 
     (show retType) ++ " " ++ name ++ "(" 
-    ++ (concatMap (\(typ, n) -> show typ ++ " " ++ name ++ ",") (zip argTypes args)) 
+    ++ (concatMap (\(typ, n) -> show typ ++ " " ++ n ++ ",") (zip argTypes args)) 
     ++ ")" ++ show body
 
 instance Show AST where
@@ -102,7 +102,7 @@ instance Show AMem where
 
 instance Show LValue where 
   show (LId s _) = s
-  show (LMem m _) = "" 
+  show (LMem m _) = show m
 
 instance Show Stmt where
   show (Asgn s o e b _) = "\t" ++ show s ++ " " ++ (maybeShow o) ++ "=" ++ " " ++ show e ++ ";"
