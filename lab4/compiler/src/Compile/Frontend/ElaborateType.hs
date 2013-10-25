@@ -2,10 +2,10 @@ module Compile.Frontend.ElaborateType where
 
 import Compile.Types
 import qualified Data.Map as Map
-
 import qualified Debug.Trace as Trace
 
-type TypeDefs = Map.Map IdentType IdentType
+import Compile.Util.IdentTypeUtil
+
 
 checkTDIdent :: TypeDefs -> String -> String
 checkTDIdent typeDefs s = 
@@ -23,10 +23,10 @@ checkTDIdentList typeDefs l =
     ok = all (\s -> (not $ Map.member (ITypeDef s) typeDefs)) l
 
 elaborateTDIdentType :: TypeDefs -> IdentType -> IdentType
-elaborateTDIdentType typeDefs t = 
-  case (Map.lookup t typeDefs) of 
-    Just simp -> simp
-    Nothing -> error ("Used unknown type : " ++ show t)
+elaborateTDIdentType typeDefs t = simplifyTypeDefdType typeDefs t
+--   case (Map.lookup t typeDefs) of 
+--     Just simp -> simp
+--     Nothing -> error ("Used unknown type : " ++ show t)
 
 elaborateTDIdentTypes :: TypeDefs -> [IdentType] -> [IdentType]
 elaborateTDIdentTypes typeDefs l = map (elaborateTDIdentType typeDefs) l
