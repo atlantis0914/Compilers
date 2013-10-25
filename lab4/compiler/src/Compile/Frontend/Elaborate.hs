@@ -10,6 +10,12 @@ import Compile.Frontend.Expand
 import Compile.Frontend.ElaborateType
 import Compile.Frontend.ElaborateStruct
 
+type IdMap = Map.Map String String 
+
+-- TODO : 
+--  1. foo * bar at expr level has to be checked to see whether it's a decl, or a mult. 
+--  2. Convert all s->f into (*s).f
+
 -- Takes a parse function list and elaborates it into a post-elab 
 -- function list. 
 elaborate :: ParseFnList -> Either String FnList
@@ -125,44 +131,65 @@ elaborateParseAST typedefs (ParseAST (PBlock stmts) p) =
   in
     AST elaborated p
 
+-- L4 Note : We need to throw in an identMap here. This is because we 
+-- need to handle the foo * bar case, which gets parsed as decl, type=ptr(foo), name=bar. 
+-- Once we have the identMap, we simply check it to see if foo and bar are decl'd - if they are
+-- we convert it into Expr(foo * bar), and un-stage the decl's scope block, placing this expr at the 
+-- top of it. 
+
 -- Converts a parse-block into a single post-elaboration statement. 
 elabParseBlock :: TypeDefs -> [ParseStmt] -> Stmt
-elabParseBlock typedefs stmts = elabParseBlock' typedefs (Block []) stmts
+elabParseBlock typedefs stmts = elabParseBlock' (Map.empty) typedefs (Block []) stmts
 
 -- Converts a single parseStmt into a stmt, mutually calling elabParseBlock'
 -- if we observe a nested block, and elabParseCtrl if we observe a nested ctrl
-elabParseStmt :: TypeDefs -> ParseStmt -> Stmt
-elabParseStmt td (PAsgn s a e b p) = Asgn (plValToLVal s) a e b p
-elabParseStmt td (PDecl s t p Nothing) = 
+elabParseStmt :: IdMap -> TypeDefs -> ParseStmt -> Stmt
+elabParseStmt _ td (PAsgn s a e b p) = Asgn (plValToLVal s) a e b p
+elabParseStmt _ td (PDecl s t p Nothing) =  -- TODO : Get rid of this. 
   Decl {declName = checkTDIdent td s, 
         declTyp = elaborateTDIdentType td t, 
         declPos = p, 
         declScope = SNop}
-elabParseStmt td (PDecl s t p (Just _)) = error "shouldnt get here just"
-elabParseStmt td (PCtrl c) = Ctrl (elabParseCtrl td c)
-elabParseStmt td (PExpr e) = Expr e
-elabParseStmt td (PBlock stmts) = elabParseBlock' td (Block []) stmts
+elabParseStmt id td (PDecl s t p (Just _)) = error "shouldnt get here just"
+elabParseStmt id td (PCtrl c) = Ctrl (elabParseCtrl id td c)
+elabParseStmt id td (PExpr e) = Expr e
+elabParseStmt id td (PBlock stmts) = elabParseBlock' id td (Block []) stmts
 
 -- Converts a Parse level control flow statement into a post-elab
 -- control flow statement, elaborating inner statements using elabParseStmt. 
-elabParseCtrl :: TypeDefs -> ParseCtrl -> Ctrl
-elabParseCtrl td (If e ps1 ps2 pos) = If e (elabParseStmt td ps1) (elabParseStmt td ps2) pos
-elabParseCtrl td (While e ps1 pos) = While e (elabParseStmt td ps1) pos
-elabParseCtrl td (Assert e pos) = Assert e pos
-elabParseCtrl td (Return e pos) = Return e pos
+elabParseCtrl :: IdMap -> TypeDefs -> ParseCtrl -> Ctrl
+elabParseCtrl id td (If e ps1 ps2 pos) = If e (elabParseStmt id td ps1) (elabParseStmt id td ps2) pos
+elabParseCtrl id td (While e ps1 pos) = While e (elabParseStmt id td ps1) pos
+elabParseCtrl id td (Assert e pos) = Assert e pos
+elabParseCtrl id td (Return e pos) = Return e pos
 
 -- Converts a list of parse level statements into a single statement. We
 -- recursively convert statements and append them to the post-elab block's 
 -- inner list. 
-elabParseBlock' :: TypeDefs -> Stmt -> [ParseStmt] -> Stmt 
-elabParseBlock' _ curblock [] = curblock
-elabParseBlock' td (Block curStmts) ((PDecl s t pos Nothing):xs) = 
-  Block $ curStmts ++ [Decl {declName = checkTDIdent td s,
-                             declTyp = elaborateTDIdentType td t,
-                             declPos = pos,
-                             declScope = elabParseBlock' td (Block []) xs}
-                      ]
-elabParseBlock' td (Block curStmts) (x:xs) = elabParseBlock' td (Block (curStmts ++ [elabParseStmt td x])) xs
+elabParseBlock' :: IdMap -> TypeDefs -> Stmt -> [ParseStmt] -> Stmt 
+elabParseBlock' _ _ curblock [] = curblock
+elabParseBlock' id td (Block curStmts) ((decl@(PDecl s t pos Nothing)):xs) = 
+  case (isDeclMultExpr id decl) of 
+    Nothing -> Block $ curStmts ++ [Decl {declName = checkTDIdent td s,
+                                          declTyp = elaborateTDIdentType td t,
+                                          declPos = pos,
+                                          declScope = elabParseBlock' (Map.insert (checkTDIdent td s) "poop" id) td (Block []) xs}]
+    Just e -> elabParseBlock' id td (Block (curStmts ++ [Expr e])) xs
+                      
+elabParseBlock' id td (Block curStmts) (x:xs) = elabParseBlock' id td (Block (curStmts ++ [elabParseStmt id td x])) xs
+
+-- Handles the context-sensitive case of parsing foo * bar, where 
+-- foo and bar might be idents in scope. Checks to see if we have a parsedecl
+-- with Ptr(TypeDef name) and a declname. If both names are in scope as idents,
+-- we treat this as an expr parse, and convert it out to a decl inside of 
+-- elabParseBlock'
+isDeclMultExpr :: IdMap -> ParseStmt -> Maybe Expr
+isDeclMultExpr td (PDecl e2 (IPtr (ITypeDef e1)) p _) = 
+  case (Map.lookup e1 td, Map.lookup e2 td) of 
+    (Just _, Just _) -> Just (ExpBinOp Mul (Ident e1 p) (Ident e2 p) p)
+    (_, _) -> Nothing
+isDeclMultExpr td decl = Trace.trace ("decl : " ++ show decl) $ Nothing 
+
 
 plValToLVal :: PLValue -> LValue 
 plValToLVal (PLId s p) = (LId s p)
