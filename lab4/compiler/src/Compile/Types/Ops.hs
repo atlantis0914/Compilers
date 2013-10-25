@@ -62,3 +62,7 @@ instance Show Op where
   show BitwiseXOr = "^"
   show RShift = ">>"
   show LShift = "<<"
+  show Select = "."
+  show FDereference = "->"
+  show PDereference = "*"
+  show PArrayRef = "[]"

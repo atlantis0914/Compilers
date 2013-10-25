@@ -8,10 +8,17 @@ data IdentType = IInt
                | IPtr IdentType
                | IArray IdentType
                | IStruct IdentType
-               | ITypeDef String deriving (Eq, Show, Ord)
+               | ITypeDef String deriving (Eq, Ord)
 
 getIdentTypeMap = Map.fromList $ [("int", IInt), 
                                   ("bool", IBool),
                                   ("void", IVoid)]
 
-
+instance Show IdentType where 
+  show IInt = "int"
+  show IBool = "bool"
+  show IVoid = "void"
+  show (IPtr i) = show i ++ "*" 
+  show (IArray i) = show i ++ "[]"
+  show (IStruct i) = "struct " ++ show i
+  show (ITypeDef s) = s

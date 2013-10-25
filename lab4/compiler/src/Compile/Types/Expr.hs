@@ -32,6 +32,12 @@ data Expr = ExpInt !Integer SourcePos !Base
           | ExpUnMem !Op !Expr SourcePos
           | ExpMem !ExprMem SourcePos
 
+instance Show ExprMem where 
+  show (Dot s id _) = "(" ++ show s ++ "." ++ id ++ ")"
+  show (Arrow s id _) = "(" ++ show s ++ "->" ++ id ++ ")"
+  show (Star s _) = "(" ++ "*" ++ show s ++ ")"
+  show (ArrayRef s e _) = "(" ++ show s ++ "[" ++ show e ++ "])"
+
 instance Show Expr where
   show (ExpInt n _ _) = show n
   show (ExpBool b _) = show b
@@ -43,3 +49,9 @@ instance Show Expr where
   show (ExpUnOp op e _) = show op ++ "(" ++ show e ++ ")"
   show (ExpTernary e1 e2 e3 _) = show e1 ++ " ? " ++ show e2 ++ " : " ++ show e3
   show (ExpFnCall n _ _) = "call " ++ n
+  show (ExpNull _) = "NULL"
+  show (ExpAlloc i _) = "alloc(" ++ show i ++ ")"
+  show (ExpAllocArray i e _) = "alloc_array(" ++ show i ++ "," ++ show e ++ ")"
+  show (ExpBinMem op e1 e2 _) = "(" ++ show e1 ++ ")" ++ show op ++ "(" ++ show e2 ++ ")"
+  show (ExpUnMem op e1 _) = "(" ++ show e1 ++ ")" ++ show op 
+  show (ExpMem mem _) = "(" ++ show mem ++ ")"
