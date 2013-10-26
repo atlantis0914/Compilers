@@ -11,10 +11,10 @@ data Base = Dec
 data Mem s = Dot !s !String SourcePos
            | Arrow !s !String SourcePos
            | Star !s SourcePos
-           | ArrayRef !s !Expr SourcePos 
+           | ArrayRef !s !Expr SourcePos
 
 type ExprMem = Mem Expr
- 
+
 data Expr = ExpInt !Integer SourcePos !Base
           | ExpBool !Bool SourcePos
           | Ident !String SourcePos
@@ -32,7 +32,7 @@ data Expr = ExpInt !Integer SourcePos !Base
           | ExpUnMem !Op !Expr SourcePos
           | ExpMem !ExprMem SourcePos
 
-instance Show ExprMem where 
+instance Show ExprMem where
   show (Dot s id _) = "(" ++ show s ++ "." ++ id ++ ")"
   show (Arrow s id _) = "(" ++ show s ++ "->" ++ id ++ ")"
   show (Star s _) = "(" ++ "*" ++ show s ++ ")"
@@ -53,5 +53,5 @@ instance Show Expr where
   show (ExpAlloc i _) = "alloc(" ++ show i ++ ")"
   show (ExpAllocArray i e _) = "alloc_array(" ++ show i ++ "," ++ show e ++ ")"
   show (ExpBinMem op e1 e2 _) = "(" ++ show e1 ++ ")" ++ show op ++ "(" ++ show e2 ++ ")"
-  show (ExpUnMem op e1 _) = "(" ++ show op ++ "(" ++ show e1 ++ ")" ++ ")" 
+  show (ExpUnMem op e1 _) = "(" ++ show op ++ "(" ++ show e1 ++ ")" ++ ")"
   show (ExpMem mem _) = "(" ++ show mem ++ ")"
