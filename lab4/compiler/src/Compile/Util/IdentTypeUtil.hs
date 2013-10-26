@@ -29,6 +29,13 @@ isStruct _ = False
 simplifyTypeDefdType :: TypeDefs -> IdentType -> IdentType 
 simplifyTypeDefdType td (IPtr i) = IPtr (simplifyTypeDefdType td i)
 simplifyTypeDefdType td (IArray i) = IArray (simplifyTypeDefdType td i) 
+-- This is the special case to ensure that we don't throw check-errors for 
+-- structs that have not been explicitly declared. We don't enforce that a struct
+-- must be declared until type-checking when we see a USE of the struct's fields. 
+simplifyTypeDefdType td s@(IStruct (ITypeDef name)) = 
+  case (Map.lookup s td) of 
+    Just simp -> simp
+    Nothing -> s
 simplifyTypeDefdType td s = 
   case (Map.lookup s td) of 
     Just simp -> simp
