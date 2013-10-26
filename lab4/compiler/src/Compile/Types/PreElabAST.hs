@@ -49,7 +49,7 @@ lValToExpr (PLMem m p) = pMemToExpr m
 
 pMemToExpr :: ParseMem -> Expr
 pMemToExpr (Dot s id p) = (ExpBinMem Select (lValToExpr s) (Ident id p) p)
-pMemToExpr (Arrow s id p) = (ExpBinMem FDereference (lValToExpr s) (Ident id p) p)
+pMemToExpr (Arrow s id p) = ExpBinMem Select (ExpUnMem PDereference (lValToExpr s) p) (Ident id p) p
 pMemToExpr (Star s p) = (ExpUnMem PDereference (lValToExpr s) p)
 pMemToExpr (ArrayRef s e p) = (ExpBinMem PArrayRef (lValToExpr s) e p)
 

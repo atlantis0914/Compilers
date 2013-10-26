@@ -9,6 +9,8 @@ checkReturnFnList (FnList gdecls pos) =
 checkGDecl :: GDecl -> Bool 
 checkGDecl (GFDecl _ _) = True
 checkGDecl (GTypeDef _ _ _) = True
+checkGDecl (GSDefn _ _) = True
+checkGDecl (GSDecl _ _) = True
 checkGDecl (GFDefn (FDefn {fnReturnType = retType,
                            fnBody = body}) pos) = 
   if (retType == IVoid) 

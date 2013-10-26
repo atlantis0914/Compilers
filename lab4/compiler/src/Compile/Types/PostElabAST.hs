@@ -50,10 +50,7 @@ data SDefn = SDefn {structName :: !String,
 
 data AST = AST !Stmt SourcePos
 
-type AMem = Mem LValue
-
-data LValue = LId !String SourcePos
-            | LMem !AMem SourcePos
+data LValue = LExpr !Expr SourcePos
 
 data Stmt = Asgn !LValue !AsgnOp !Expr !Bool SourcePos
           | Decl {declName :: !String,
@@ -99,15 +96,14 @@ instance Show SDefn where
     "largestAlign: " ++ (show align) ++ "\n" ++ 
     (concatMap (\(_,s) -> "\t" ++ s ++ (show (Map.lookup s offs)) ++ ";\n") fields)
 
-instance Show AMem where 
-  show (Dot s id _) = "(" ++ show s ++ "." ++ id ++ ")"
-  show (Arrow s id _) = "(" ++ show s ++ "->" ++ id ++ ")"
-  show (Star s _) = "(" ++ "*" ++ show s ++ ")"
-  show (ArrayRef s e _) = "(" ++ show s ++ "[" ++ show e ++ "])"
+-- instance Show AMem where 
+--   show (Dot s id _) = "(" ++ show s ++ "." ++ id ++ ")"
+--   show (Arrow s id _) = "(" ++ show s ++ "->" ++ id ++ ")"
+--   show (Star s _) = "(" ++ "*" ++ show s ++ ")"
+--   show (ArrayRef s e _) = "(" ++ show s ++ "[" ++ show e ++ "])"
 
 instance Show LValue where 
-  show (LId s _) = s
-  show (LMem m _) = show m
+  show (LExpr e _) = show e
 
 instance Show Stmt where
   show (Asgn s o e b _) = "\t" ++ show s ++ " " ++ (maybeShow o) ++ "=" ++ " " ++ show e ++ ";"

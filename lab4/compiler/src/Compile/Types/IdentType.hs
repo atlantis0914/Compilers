@@ -2,7 +2,8 @@ module Compile.Types.IdentType where
 
 import qualified Data.Map as Map
 
-data IdentType = IInt
+data IdentType = IAny 
+               | IInt
                | IBool 
                | IVoid 
                | IPtr IdentType
@@ -15,6 +16,7 @@ getIdentTypeMap = Map.fromList $ [("int", IInt),
                                   ("void", IVoid)]
 
 instance Show IdentType where 
+  show IAny = "any"
   show IInt = "int"
   show IBool = "bool"
   show IVoid = "void"

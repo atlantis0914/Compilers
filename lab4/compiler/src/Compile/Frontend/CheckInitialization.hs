@@ -4,6 +4,8 @@ import Control.Monad.Error
 import Control.Monad.Identity
 import Control.Monad
 
+import Compile.Util.IdentTypeUtil
+
 import qualified Data.Set as Set
 
 import Debug.Trace
@@ -17,6 +19,8 @@ checkInitializationFnList (FnList gdecls pos) =
 checkInitializationGDecl :: GDecl -> Bool 
 checkInitializationGDecl (GFDecl _ _) = True 
 checkInitializationGDecl (GTypeDef _ _ _) = True
+checkInitializationGDecl (GSDecl _ _) = True
+checkInitializationGDecl (GSDefn _ _) = True
 checkInitializationGDecl (GFDefn (FDefn {fnArgs = args,
                                          fnArgTypes = argTypes,
                                          fnBody = body}) pos) = 
@@ -68,9 +72,10 @@ isDeclaredDecl :: String -> Set.Set String -> (a -> a)
 isDeclaredDecl i decls = assert (not (Set.member i decls)) 
                             ("Error : variable " ++ i ++ " declared twice")
 
-isDeclaredAsgn :: String -> Set.Set String -> (a -> a)
-isDeclaredAsgn i decls = assert (Set.member i decls) 
-                           ("Error : variable " ++ i ++ " assigned to undeclared")
+isDeclaredAsgn :: LValue -> Set.Set String -> (a -> a)
+isDeclaredAsgn i decls = assert (Set.member (getIDLVal i) decls) 
+                           ("Error : variable " ++ (show i) ++ " assigned to undeclared")
+
 
 -- produces a (definedSet, liveSet, Bool). Takes a declaredSet 
 -- (the declared variables in scope) and also performs undeclared checking.
@@ -87,7 +92,7 @@ checkStmt args (Decl i t pos rest) doErr decls =
   in
     setI `seq` (Set.difference decsRest setI, Set.difference liveRest setI, b1)
 
-checkStmt args (Asgn i o e _ pos) doErr decls = isDeclaredAsgn i decls (Set.singleton i, used e, False)
+checkStmt args (Asgn i o e _ pos) doErr decls = isDeclaredAsgn i decls (Set.singleton (getIDLVal i), used e, False)
 
 checkStmt args (Expr e) doErr decls = isDeclaredExpr' e decls (Set.empty, used e, False)
 

@@ -58,7 +58,6 @@ checkTypeDef (PTypeDef s1 s2 pos) typeMap =
     Just _ -> error ("Multiple typedef of " ++ (show s1) ++ " at " ++ (show pos))
     Nothing -> (Map.insert s2 (simplifyTypeDefdType typeMap s1) typeMap)
 
-
 addToTypeSpace :: PGDecl -> TypeDefs -> TypeDefs 
 addToTypeSpace (PSDecl (ParseSDecl name _) _) typeMap = 
   Map.insert typeName typeName typeMap
@@ -189,12 +188,5 @@ isDeclMultExpr td decl =  Nothing
 
 
 plValToLVal :: PLValue -> LValue 
-plValToLVal (PLId s p) = (LId s p)
-plValToLVal (PLMem mem p) = (LMem (pMemToAMem mem) p )
-
-pMemToAMem :: ParseMem -> AMem
-pMemToAMem (Dot s id p) = Dot (plValToLVal s) id p
--- Elaborates s->id into (*s).id
-pMemToAMem (Arrow s id p) = Dot (LMem (Star (plValToLVal s) p) p) id p
-pMemToAMem (Star s p) = Star (plValToLVal s) p
-pMemToAMem (ArrayRef s e p) = ArrayRef (plValToLVal s) e p
+plValToLVal lval@(PLId s p) = LExpr (lValToExpr lval) p
+plValToLVal lval@(PLMem mem p) = LExpr (lValToExpr lval) p
