@@ -1,8 +1,10 @@
-#include <c0runtime.h>
 #include <stdio.h>
 #include <stdlib.h>
+/* #include <stdbool.h> */
+/* using int for bool as of Oct 15, 2013 */
 
 typedef int c0_float;
+typedef int c0_bool;
 
 union float_or_int {
   int as_int;
@@ -39,10 +41,10 @@ c0_float fdiv(c0_float a, c0_float b) {
   return z.as_int;
 }
 
-bool fless(c0_float a, c0_float b) {
+c0_bool fless(c0_float a, c0_float b) {
   float_or_int x; x.as_int = a;
   float_or_int y; y.as_int = b;
-  return x.as_float < y.as_float;
+  return x.as_float < y.as_float ? 1 : 0;
 }
 
 c0_float itof(int a) {
