@@ -48,10 +48,10 @@ instance Show Expr where
   show (Ident i _) = i
   show (ExpUnOp op e _) = show op ++ "(" ++ show e ++ ")"
   show (ExpTernary e1 e2 e3 _) = show e1 ++ " ? " ++ show e2 ++ " : " ++ show e3
-  show (ExpFnCall n _ _) = "call " ++ n
+  show (ExpFnCall n elist _) = "call " ++ n ++ "(" ++ (concatMap (\e -> show e ++ ",") elist) ++ ")"
   show (ExpNull _) = "NULL"
   show (ExpAlloc i _) = "alloc(" ++ show i ++ ")"
   show (ExpAllocArray i e _) = "alloc_array(" ++ show i ++ "," ++ show e ++ ")"
   show (ExpBinMem op e1 e2 _) = "(" ++ show e1 ++ ")" ++ show op ++ "(" ++ show e2 ++ ")"
-  show (ExpUnMem op e1 _) = "(" ++ show e1 ++ ")" ++ show op 
+  show (ExpUnMem op e1 _) = "(" ++ show op ++ "(" ++ show e1 ++ ")" ++ ")" 
   show (ExpMem mem _) = "(" ++ show mem ++ ")"

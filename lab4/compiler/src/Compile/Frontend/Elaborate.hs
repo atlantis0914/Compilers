@@ -56,7 +56,8 @@ checkTypeDef (PTypeDef IVoid s2 pos) _ =
 checkTypeDef (PTypeDef s1 s2 pos) typeMap = 
   typeMap `seq` case (Map.lookup s2 typeMap) of
     Just _ -> error ("Multiple typedef of " ++ (show s1) ++ " at " ++ (show pos))
-    Nothing -> (Map.insert s2 (typeMap Map.! s1) typeMap)
+    Nothing -> (Map.insert s2 (simplifyTypeDefdType typeMap s1) typeMap)
+
 
 addToTypeSpace :: PGDecl -> TypeDefs -> TypeDefs 
 addToTypeSpace (PSDecl (ParseSDecl name _) _) typeMap = 
@@ -184,7 +185,7 @@ isDeclMultExpr td (PDecl e2 (IPtr (ITypeDef e1)) p _) =
   case (Map.lookup e1 td, Map.lookup e2 td) of 
     (Just _, Just _) -> Just (ExpBinOp Mul (Ident e1 p) (Ident e2 p) p)
     (_, _) -> Nothing
-isDeclMultExpr td decl = Trace.trace ("decl : " ++ show decl) $ Nothing 
+isDeclMultExpr td decl =  Nothing 
 
 
 plValToLVal :: PLValue -> LValue 

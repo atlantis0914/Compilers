@@ -42,7 +42,7 @@ type StructOffsets = Map.Map String (Int, Int)
 data SDefn = SDefn {structName :: !String,
                     structFields :: ![(IdentType, String)],
                     -- A map from the fieldName -> (fieldSize, fieldOffset)
-                    structTypes :: Map.Map String IdentType
+                    structTypes :: Map.Map String IdentType,
                     structOffsets :: StructOffsets,
                     structAlignment :: Int, -- 0 mod 4 or 0 mod 8
                     structSize :: Int, 
@@ -92,7 +92,7 @@ instance Show SDecl where
   show (SDecl s _) = "struct " ++ s ++ ";" ++ "\n"
 
 instance Show SDefn where
-  show (SDefn name fields offs align size _) = "struct " ++ name ++ "{\n" ++ 
+  show (SDefn name fields _ offs align size _) = "struct " ++ name ++ "{\n" ++ 
     (concatMap (\(typ, s) -> "\t" ++ (show typ) ++ " " ++ s ++ ";\n") fields) ++ "}\n" ++ 
     "stuctinfo: " ++ name ++ "\n" ++ 
     "totalSize: " ++ (show size) ++ "\n" ++ 
