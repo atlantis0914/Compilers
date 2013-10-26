@@ -20,7 +20,7 @@ instance Show IdentType where
   show IInt = "int"
   show IBool = "bool"
   show IVoid = "void"
-  show (IPtr i) = show i ++ "*" 
+  show (IPtr i) = "(" ++ show i ++ ")" ++ "*" 
   show (IArray i) = show i ++ "[]"
-  show (IStruct i) = "struct " ++ show i
+  show (IStruct i) = "struct (" ++ show i ++ ")"
   show (ITypeDef s) = s

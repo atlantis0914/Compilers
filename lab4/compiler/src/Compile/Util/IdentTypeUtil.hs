@@ -24,6 +24,7 @@ isStruct (IStruct (ITypeDef _)) = True
 isStruct _ = False
 
 isSmallType :: IdentType -> Bool
+-- isSmallType IAny = True -- shouldn't need this 
 isSmallType IInt = True
 isSmallType IBool = True
 isSmallType (IPtr _) = True

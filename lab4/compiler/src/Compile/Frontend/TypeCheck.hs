@@ -47,7 +47,9 @@ lTypesEqual l1 l2 = (all (\(t1,t2) -> t1 == t2) $ zip l1 l2) &&
 validateFnArgs :: [IdentType] -> String -> Bool
 validateFnArgs typL fnName = 
   if (all (\t -> (not $ t == IVoid)) typL)
-    then True
+    then if (all isSmallType typL)
+           then True
+           else error ("Error : arguments not all small in function " ++ fnName)
     else error ("Error : cannot have void argument in function declaration of " ++ fnName)
 
 squash :: FnMap -> [GDecl] -> GDecl -> [GDecl]
@@ -239,6 +241,8 @@ checkReturnType fnName (context@(map, fnMap, dMap, tdMap, sMap, valid)) t =
   where 
     (_, retType, _, _, _) = fnMap Map.! fnName 
 
+-- Watch out - we don't actually return result here? Not sure why it's like that
+-- but it could be quite the problem yo.
 matchType :: String -> Context -> Expr -> Expr -> [IdentType] -> IdentType -> (Maybe IdentType)
 matchType f context expr1 expr2 expect result =
   let
@@ -249,6 +253,20 @@ matchType f context expr1 expr2 expect result =
       (Nothing, _) -> Nothing
       (_, Nothing) -> Nothing
       (Just t1, Just t2) -> coerceAnyExpect t1 t2 expect
+
+matchTypeEnsureSmall :: String -> Context -> Expr -> Expr -> IdentType -> (Maybe IdentType)
+matchTypeEnsureSmall f context expr1 expr2 result =
+  let
+    type1 = checkExprType f context expr1
+    type2 = checkExprType f context expr2
+  in
+    Trace.trace (" t1,t2 = " ++ show (type1, type2)) $ case (type1, type2) of
+      (Nothing, _) -> Nothing
+      (_, Nothing) -> Nothing
+      (Just t1, Just t2) -> 
+        case (maybeIsSmallType $ coerceAny t1 t2) of
+          (Just _) -> Just result
+          _ -> Nothing 
 
 -- if t1 == t2 && t1 `elem` expect then Just result
 --                                                            else Nothing
@@ -262,7 +280,12 @@ typeEq fName context expr1 expr2 expect =
     case (type1, type2) of
       (Nothing, _) -> Nothing
       (_, Nothing) -> Nothing
-      (Just t1, Just t2) -> coerceAnyExpect t1 t2 expect
+      (Just t1, Just t2) -> coerceAny t1 t2 
+
+maybeIsSmallType :: Maybe IdentType -> Maybe IdentType
+maybeIsSmallType (Just t1) = Trace.trace ("t1 = " ++ show t1) $ if (isSmallType t1) then (Just t1)
+                                                                                    else Nothing 
+maybeIsSmallType Nothing = Nothing 
 
 --if t1 == t2 && t1 `elem` expect then Just t1
 --                                                            else Nothing
@@ -272,9 +295,8 @@ coerceAny t1 t2 =
   case (t1,t2) of 
     (IPtr IAny, IPtr t) -> Just t2
     (IPtr t, IPtr IAny) -> Just t1
-    (_ , _) -> if (t1 == t2) then Just t1
+    (_ , _) -> if (t1 == t2) then Trace.trace ("returning ==") $ Just t1
                              else Nothing
-
 
 
 coerceAnyExpect :: IdentType -> IdentType -> [IdentType] -> Maybe IdentType
@@ -313,7 +335,7 @@ checkExprType f context (ExpRelOp _ expr1 expr2 _) =
 checkExprType f context (ExpLogOp _ expr1 expr2 _) =
   matchType f context expr1 expr2 [IBool] IBool
 checkExprType f context (ExpPolyEq _ expr1 expr2 _) =
-  matchType f context expr1 expr2 [IBool, IInt] IBool
+  Trace.trace ("e1 = " ++ show (checkExprType f context expr1) ++ " e2 = " ++ show expr2) $ matchTypeEnsureSmall f context expr1 expr2 IBool
 checkExprType f context (ExpUnOp Neg expr _) =
   checkExprIsType (checkExprType f context expr) IInt
 checkExprType f context (ExpUnOp BitwiseNot expr _) =
