@@ -239,7 +239,7 @@ asgn = do
   dest <- lvalue
   (do op   <- asnOp
       e    <- expr
-      Trace.trace ("got expr : " ++ show e) $ return $ PAsgn dest op e False pos)
+      return $ PAsgn dest op e False pos)
    <|>
    (do op <- postOp
        return $ PAsgn dest (Nothing) (expForPostOp dest op pos) False pos)
