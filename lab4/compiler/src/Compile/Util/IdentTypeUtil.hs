@@ -23,6 +23,15 @@ isStruct :: IdentType -> Bool
 isStruct (IStruct (ITypeDef _)) = True
 isStruct _ = False
 
+isSmallType :: IdentType -> Bool
+isSmallType IInt = True
+isSmallType IBool = True
+isSmallType (IPtr _) = True
+isSmallType (IArray _) = True
+isSmallType IVoid = False
+isSmallType (IStruct _) = False
+isSmallType (ITypeDef _) = error ("Why do you have typedefs when calling isSmallType bro")
+
 -- Unwraps ptrs and arrays to get at a 'concrete' type. Note
 -- that this also includes STRUCTS, as they add to the type-space
 -- in a concrete, non-trivial way. 
@@ -71,3 +80,11 @@ getStrictFieldSize t m (ITypeDef name) =
     Nothing -> error ("TypeName " ++ name ++ " not found in context")
     Just (typ) -> getStrictFieldSize t m typ
 -- should probably path-compress the shit out of this, but that's overkill yo
+
+getIDLVal :: LValue -> String 
+getIDLVal (LExpr e _) = getIDExpr e
+
+-- Only need to define over mem exprs 
+getIDExpr (ExpBinMem o e1 e2 _) = getIDExpr e1
+getIDExpr (ExpUnMem o e1 _) = getIDExpr e1
+getIDExpr (Ident s _) = s
