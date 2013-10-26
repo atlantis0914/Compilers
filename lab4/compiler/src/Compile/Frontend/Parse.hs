@@ -239,7 +239,7 @@ asgn = do
   dest <- lvalue
   (do op   <- asnOp
       e    <- expr
-      return $ PAsgn dest op e False pos)
+      Trace.trace ("got expr : " ++ show e) $ return $ PAsgn dest op e False pos)
    <|>
    (do op <- postOp
        return $ PAsgn dest (Nothing) (expForPostOp dest op pos) False pos)
@@ -619,9 +619,9 @@ brackets   :: C0Parser a -> C0Parser a
 brackets   = Tok.brackets c0Tokens
 
 opTable :: [[Operator ByteString () Identity Expr]]
-opTable = [[postfix (brackets expr) (ExpUnMem PArrayRef)],
-           [binary "->" (ExpBinMem FDereference) AssocLeft,
-            binary "." (ExpBinMem Select) AssocLeft],
+opTable = [[binary "->" (ExpBinMem FDereference) AssocLeft,
+            binary "." (ExpBinMem Select) AssocLeft,
+            postfix (brackets expr) (ExpBinMem PArrayRef)],
            [prefix "-"  (ExpUnOp  Neg),
             prefix "~"  (ExpUnOp  BitwiseNot),
             prefix "!"  (ExpUnOp  LogicalNot),
@@ -664,5 +664,5 @@ prefix  name f = Prefix $ do pos <- getPosition
 
 -- postfix :: String -> (a -> SourcePos -> a) -> Operator ByteString () Identity a
 postfix p f = Postfix $ do pos <- getPosition
-                           p
-                           return $ \x -> f x pos
+                           e <- p
+                           return $ \x -> f x e pos
