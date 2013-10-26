@@ -11,13 +11,13 @@ import qualified Data.Map as Map
 
 type Ctrl = PolyCtrl Stmt
 
-data FnList = FnList ![GDecl] SourcePos 
+data FnList = FnList ![GDecl] SourcePos
 
 data GDecl = GFDecl !FDecl SourcePos
            | GFDefn !FDefn SourcePos
            | GSDecl !SDecl SourcePos
            | GSDefn !SDefn SourcePos
-           | GTypeDef !IdentType !IdentType SourcePos 
+           | GTypeDef !IdentType !IdentType SourcePos
 
 data FDefn = FDefn {fnName :: !String,
                     fnArgs :: ![String],
@@ -34,7 +34,7 @@ data FDecl = FDecl {gdeclName :: !String,
                     gdeclIsLibrary :: !Bool,
                     gdeclPos :: SourcePos} deriving Show
 
-data SDecl = SDecl !String SourcePos 
+data SDecl = SDecl !String SourcePos
 
 -- A map from the fieldName -> (fieldSize, fieldOffset)
 type StructOffsets = Map.Map String (Int, Int)
@@ -45,8 +45,8 @@ data SDefn = SDefn {structName :: !String,
                     structTypes :: Map.Map String IdentType,
                     structOffsets :: StructOffsets,
                     structAlignment :: Int, -- 0 mod 4 or 0 mod 8
-                    structSize :: Int, 
-                    structPos :: SourcePos} 
+                    structSize :: Int,
+                    structPos :: SourcePos}
 
 data AST = AST !Stmt SourcePos
 
@@ -62,20 +62,20 @@ data Stmt = Asgn !LValue !AsgnOp !Expr !Bool SourcePos
           | Expr !Expr
           | SNop
 
-instance Show FnList where 
+instance Show FnList where
   show (FnList gdecls _) = concatMap (\s -> show s ++ "\n") gdecls
 
-instance Show GDecl where 
+instance Show GDecl where
   show (GFDecl fdecl _) = show fdecl
-  show (GFDefn fdefn _) = show fdefn 
+  show (GFDefn fdefn _) = show fdefn
   show (GSDecl sdecl _) = show sdecl
   show (GSDefn sdefn _) = show sdefn
   show (GTypeDef t1 t2 _) = "typedef " ++ show t1 ++ " as " ++ show t2
 
-instance Show FDefn where 
-  show (FDefn name args argTypes retType body _) = 
-    (show retType) ++ " " ++ name ++ "(" 
-    ++ (concatMap (\(typ, n) -> show typ ++ " " ++ n ++ ",") (zip argTypes args)) 
+instance Show FDefn where
+  show (FDefn name args argTypes retType body _) =
+    (show retType) ++ " " ++ name ++ "("
+    ++ (concatMap (\(typ, n) -> show typ ++ " " ++ n ++ ",") (zip argTypes args))
     ++ ")" ++ show body
 
 instance Show AST where
@@ -85,24 +85,24 @@ instance Show AST where
 maybeShow Nothing = ""
 maybeShow (Just o) = show o
 
-instance Show SDecl where 
+instance Show SDecl where
   show (SDecl s _) = "struct " ++ s ++ ";" ++ "\n"
 
 instance Show SDefn where
-  show (SDefn name fields _ offs align size _) = "struct " ++ name ++ "{\n" ++ 
-    (concatMap (\(typ, s) -> "\t" ++ (show typ) ++ " " ++ s ++ ";\n") fields) ++ "}\n" ++ 
-    "stuctinfo: " ++ name ++ "\n" ++ 
-    "totalSize: " ++ (show size) ++ "\n" ++ 
-    "largestAlign: " ++ (show align) ++ "\n" ++ 
+  show (SDefn name fields _ offs align size _) = "struct " ++ name ++ "{\n" ++
+    (concatMap (\(typ, s) -> "\t" ++ (show typ) ++ " " ++ s ++ ";\n") fields) ++ "}\n" ++
+    "stuctinfo: " ++ name ++ "\n" ++
+    "totalSize: " ++ (show size) ++ "\n" ++
+    "largestAlign: " ++ (show align) ++ "\n" ++
     (concatMap (\(_,s) -> "\t" ++ s ++ (show (Map.lookup s offs)) ++ ";\n") fields)
 
--- instance Show AMem where 
+-- instance Show AMem where
 --   show (Dot s id _) = "(" ++ show s ++ "." ++ id ++ ")"
 --   show (Arrow s id _) = "(" ++ show s ++ "->" ++ id ++ ")"
 --   show (Star s _) = "(" ++ "*" ++ show s ++ ")"
 --   show (ArrayRef s e _) = "(" ++ show s ++ "[" ++ show e ++ "])"
 
-instance Show LValue where 
+instance Show LValue where
   show (LExpr e _) = show e
 
 instance Show Stmt where
