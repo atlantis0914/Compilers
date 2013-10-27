@@ -51,12 +51,6 @@ genFnAAsm fnMap (GFDefn (FDefn name args _ _ ast _) _) =
   where
     alloc = (Map.empty, 0, 0, [])
     alloc' = foldl addArg alloc args
---     alloc' = case (Map.lookup (name) fnMap) of
---                Nothing -> error ("fuck" ++ name)
---                Just (_,_,_,_,True) -> foldl addArgInline alloc args
---                _ -> foldl addArg alloc args
-
--- genFnAasm (GFDecl (FDecl {
 
 genFnAAsm _ (GFDecl (FDecl name _ _ _ isLib _) _) =
   if isLib then Just $ AAFDecl name
@@ -82,20 +76,22 @@ genStmt fm (m,i,l,aasm) (Decl s t _ scope) = let
   m' = Map.insert s i m -- assign ident s, temp number i
   in genStmt fm (m',i+1,l,aasm) scope
 
-genStmt fm (m,i,l,aasm) (Asgn var op e _ _) = let
-  ident = getIdent var
-  temp = ATemp $ m Map.! ident
+genStmt fm (m,i,l,aasm) (Asgn (LExpr (Ident s _) _) op e _ _) = let
+  temp = ATemp $ m Map.! s
   (_,i',l',aasm') = genExp fm (m,i,l,[]) e temp
   in (m,i',l',aasm ++ aasm')
+
+genStmt fm (m,i,l,aasm) (Asgn (LExpr (ExpUnMem _ (Ident s _) _) _) op e _ _) = let
+  temp = APtr (ATemp $ m Map.! s) 0
+  dest = ATemp $ i
+  (_,i',l',aasm') = genExp fm (m,i+1,l,[]) e dest
+  c = [AAsm [temp] Nop [ALoc $ dest]]
+  in (m,i',l',aasm ++ aasm' ++ c)
 
 genStmt fm (m,i,l,aasm) (Block stmts) = let
   -- Keep scope alive, start new AAsm list, concat when finished.
   (m',i',l',aasm') = foldl (genStmt fm) (m,i,l,[]) stmts
   in (m',i',l',aasm ++ aasm')
-
-getIdent :: LValue -> String
-getIdent (LExpr (Ident s _) _) = s
-getIdent (LExpr (ExpUnMem _ (Ident s _) _) _) = s
 
 genCtrl :: FnMap -> Alloc -> Ctrl -> Alloc
 
@@ -215,8 +211,8 @@ genExp f alloc@(varMap,n,l,aasm) e@(ExpAlloc t _) dest =
   genRealFn f alloc (ExpFnCall "calloc" [ExpInt (getIdentSize t) sourcePos Dec,
                                          ExpInt 1 sourcePos Dec] sourcePos) dest
 
-genExp f alloc@(varMap,n,l,aasm) e@(ExpUnMem _ _ _) dest =
-  alloc
+genExp f alloc@(varMap,n,l,aasm) e@(ExpUnMem _ (Ident s _) _) dest =
+  (varMap,n,l,aasm ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp $ varMap Map.! s) 0]])
 
 getName :: String -> String
 getName (('_'):xs) = getName xs

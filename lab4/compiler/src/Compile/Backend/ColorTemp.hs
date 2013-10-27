@@ -23,7 +23,7 @@ replaceAsm coloring aasm@(AAsm {aAssign = assigns, aOp = op, aArgs = args@[ALoc 
   in
     spillAAsm False $ AAsm {aAssign = assigns', aOp = op, aArgs = args'}
 
-replaceAsm coloring aasm@(AAsm {aAssign = assigns@[ATemp i], aOp = op, aArgs = args}) =
+replaceAsm coloring aasm@(AAsm {aAssign = assigns, aOp = op, aArgs = args}) =
   let
     assigns' = map (replaceAssigns coloring) assigns
     args' = map (replaceArgs coloring) args
@@ -45,8 +45,11 @@ replaceAsm coloring aasm@(AFnCall fnName loc locs lives) =
     locs' = map (replaceAssigns coloring) locs
   in
     spillAAsm True $ AFnCall fnName loc' locs' lives
+replaceAsm coloring aasm = error (" replaceAsm EXHAUSTED" ++ show aasm)
 
 replaceAssigns :: ColoringMap -> ALoc -> ALoc
+replaceAssigns coloring (APtr loc off) =
+  APtr (replaceAssigns coloring loc) off
 replaceAssigns coloring (ATemp i) =
   let
     Color c = coloring Map.! (ATemp i)
@@ -60,4 +63,6 @@ replaceArgs coloring (ALoc (ATemp i)) =
     Color c = coloring Map.! (ATemp i)
   in
     ALoc $ AReg c
+replaceArgs coloring (ALoc (APtr loc off)) =
+  ALoc $ APtr (replaceAssigns coloring loc) off
 replaceArgs coloring val = val

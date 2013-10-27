@@ -16,13 +16,13 @@ genTwoOperand aasmList = concat $ map genForIns aasmList
 genForIns :: AAsm -> [AAsm]
 genForIns aasm@(AAsm {aAssign = locs, aOp = Nop, aArgs = [fst]}) = [aasm]
 genForIns aasm@(AAsm {aAssign = [loc], aOp = op, aArgs = [fst,snd]}) = genForIns' aasm
+
 -- Generates expansion for unary operators
 genForIns aasm@(AAsm {aAssign = [loc], aOp = op, aArgs = [fst]}) =
   if ALoc loc == fst
     then [aasm]
     else [AAsm {aAssign = [loc], aOp = Nop, aArgs = [fst]},
           AAsm {aAssign = [loc], aOp = op, aArgs = [ALoc loc]}]
-
 
 genForIns aasm@(ACtrl c) = [aasm]
 
@@ -35,5 +35,3 @@ genForIns' aasm@(AAsm {aAssign = loc:locs, aOp = op, aArgs = [fst, snd]}) =
 genForDiv aasm@(AAsm {aAssign = loc:locs, aOp = op, aArgs = [fst, snd]}) =
   [AAsm {aAssign = loc:locs, aOp = Nop, aArgs = [fst]},
    AAsm {aAssign = loc:locs, aOp = op, aArgs = [ALoc loc, snd]}]
-
-

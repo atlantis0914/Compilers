@@ -12,7 +12,8 @@ type LiveContext = (LiveMap, Bool)
 extractLocs :: [AVal] -> [ALoc]
 extractLocs [] = []
 extractLocs (val:vals) =
-  case val of ALoc loc -> loc : extractLocs vals
+  case val of ALoc (APtr loc _) -> loc : extractLocs vals
+              ALoc loc -> loc : extractLocs vals
               _ -> extractLocs vals
 
 getLocs :: Int -> LiveMap -> [ALoc]
@@ -42,7 +43,9 @@ runPredicate _ i (AAsm {aAssign = [AReg 0], aArgs = args}) (liveMap, isNew) =
 runPredicate _ i (AAsm {aAssign = assigns, aArgs = args}) (liveMap, isNew) =
   let
     locs = getLocs (i+1) liveMap
-    locs' = (nub $ extractLocs args) `union` (locs \\ assigns)
+    assigns' = filterOutPtrs assigns
+    ptrs = filterPtrs assigns
+    locs' = (nub $ extractLocs args) `union` (locs \\ assigns') `union` ptrs
   in
     addLocs i (liveMap, isNew) locs'
 
@@ -81,8 +84,18 @@ isTemp aloc = case aloc of ATemp _ -> True
                            AReg _ -> True
                            _ -> False
 
+isPtr :: ALoc -> Bool
+isPtr loc = case loc of APtr _ _ -> True
+                        _ -> False
+
 filterLocs :: [ALoc] -> [ALoc]
 filterLocs locs = filter isTemp locs
+
+filterPtrs :: [ALoc] -> [ALoc]
+filterPtrs locs = map (\(APtr loc _) -> loc) (filter isPtr locs)
+
+filterOutPtrs :: [ALoc] -> [ALoc]
+filterOutPtrs locs = filter (\loc -> not $ isPtr loc) locs
 
 labelLocs :: LabelMap -> LiveMap -> Int -> [ALoc]
 labelLocs labelMap liveMap label =

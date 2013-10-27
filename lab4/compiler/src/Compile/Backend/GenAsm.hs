@@ -201,8 +201,9 @@ alocToString ASpill =
 alocToString (AReg i) =
   safeLookup i regMap "SHIT"
 alocToString (AMem i) =  (show ((i - 1) * 8)) ++ "(%rsp)"
-alocToString (ATemp i) =
-  error "There's still an temp!"
+alocToString (ATemp i) = error "There's still an temp!"
+alocToString (APtr (AReg i) offset) = show offset ++ "(" ++ alocToString (AReg i) ++ ")"
+alocToString loc = error (show loc ++ " EXHAUSTED")
 
 divModToString :: ALoc -> AVal -> Op -> String
 divModToString fst snd op = (divPrologue fst snd) ++ (divEpilogue fst op)

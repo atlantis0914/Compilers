@@ -28,6 +28,7 @@ data ALoc = AReg Int
           | ATemp Int
           | ASpill
           | AArg Int
+          | APtr ALoc Int
           | AMem Int deriving (Show, Eq)
 
 data ACtrl = ARet AVal
@@ -40,4 +41,9 @@ instance Ord ALoc where
   (ATemp _) `compare` (AReg _) = LT
   (AReg i) `compare` (AReg i') = i `compare` i'
   (ATemp i) `compare` (ATemp i') = i `compare` i'
+  (APtr _ _) `compare` (AReg _) = GT
+  (APtr _ _) `compare` (ATemp _) = GT
+  (AReg _) `compare` (APtr _ _) = LT
+  (ATemp _) `compare` (APtr _ _) = LT
+  (APtr loc _) `compare` (APtr loc' _) = loc `compare` loc'
 
