@@ -32,7 +32,7 @@ data Op = Mul
         | RShift
         | LShift
         | Select -- .
-        | FDereference -- -> 
+        | FDereference -- ->
         | PDereference -- *
         | PArrayRef -- [expr]
         | Nop deriving Eq
