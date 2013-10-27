@@ -80,7 +80,8 @@ genStmt fm (m,i,l,aasm) (Decl s t _ scope) = let
   in genStmt fm (m',i+1,l,aasm) scope
 
 genStmt fm (m,i,l,aasm) (Asgn var op e _ _) = let
-  temp = ATemp $ m Map.! var
+  ident = getIdent var
+  temp = ATemp $ m Map.! ident
   (_,i',l',aasm') = genExp fm (m,i,l,[]) e temp
   in (m,i',l',aasm ++ aasm')
 
@@ -88,6 +89,10 @@ genStmt fm (m,i,l,aasm) (Block stmts) = let
   -- Keep scope alive, start new AAsm list, concat when finished.
   (m',i',l',aasm') = foldl (genStmt fm) (m,i,l,[]) stmts
   in (m',i',l',aasm ++ aasm')
+
+getIdent :: LValue -> String
+getIdent (LExpr (Ident s _) _) = s
+getIdent (LExpr (ExpUnMem _ (Ident s _) _) _) = s
 
 genCtrl :: FnMap -> Alloc -> Ctrl -> Alloc
 
