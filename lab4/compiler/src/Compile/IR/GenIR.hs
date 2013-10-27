@@ -5,10 +5,13 @@ import qualified Data.Map as Map
 import qualified Data.Maybe as Maybe
 import qualified Data.List.Split as Split
 import Compile.Backend.Registers
+import qualified Text.Parsec.Pos as P
 
 import Compile.IR.CoalesceLabel
 
 import qualified Debug.Trace as Trace
+
+sourcePos = P.initialPos "garbage"
 
 type Alloc = (Map.Map String Int, Int, Int, [AAsm])
 -- (Map from idents -> tempNum, curTempNum)
@@ -205,14 +208,21 @@ genExp f alloc@(varMap,n,l,aasm) e@(ExpFnCall fnName exprs _) dest =
     Just (_,_,_,_,Nothing) -> genRealFn f alloc e dest
     Just (_,_,_,_,Just i) -> genInlineFn f alloc e dest i
 
+genExp f (varMap,n,l,aasm) (ExpNull _) dest =
+  (varMap,n,l, aasm ++ [AAsm [dest] Nop [AImm $ 0]])
+
+genExp f alloc@(varMap,n,l,aasm) e@(ExpAlloc t _) dest =
+  genRealFn f alloc (ExpFnCall "calloc" [ExpInt (getIdentSize t) sourcePos Dec,
+                                         ExpInt 1 sourcePos Dec] sourcePos) dest
+
 getName :: String -> String
 getName (('_'):('_'):('c'):('0'):('_'):xs) = xs
 getName (('_'):xs) = xs
 getName s = s
 
-genInlineFn f alloc@(varMap, n, l, aasm) (ExpFnCall fnName expr _) dest ret =
+genInlineFn f alloc@(varMap, n, l, aasm) (ExpFnCall fnName exprs _) dest ret =
   let
-    allocs = scanl (genExpAcc f) alloc expr
+    allocs = scanl (genExpAcc f) alloc exprs
     lenMinusOne = (length allocs) - 1
     locs = map toLoc (take lenMinusOne allocs)
     last@(varMap',n',l',aasm') = allocs !! lenMinusOne
@@ -222,9 +232,9 @@ genInlineFn f alloc@(varMap, n, l, aasm) (ExpFnCall fnName expr _) dest ret =
   in
     (varMap', n', l', aasm'' ++ [newAasm])
 
-genRealFn f alloc@(varMap, n, l, aasm) (ExpFnCall fnName expr _) dest =
+genRealFn f alloc@(varMap, n, l, aasm) (ExpFnCall fnName exprs _) dest =
   let
-    allocs = scanl (genExpAcc f) alloc expr
+    allocs = scanl (genExpAcc f) alloc exprs
     lenMinusOne = (length allocs) - 1
     locs = map toLoc (take lenMinusOne allocs)
     last@(varMap',n',l',aasm') = allocs !! lenMinusOne

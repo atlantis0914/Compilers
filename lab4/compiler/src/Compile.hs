@@ -68,7 +68,7 @@ compile job = do
       else let asm = fnListCodeGen minFnList fnMap in
               if jobOutFormat job == Asm
                  then stringWriter (jobOut job) asm
-                 else do writer asmFile minFnList 
+                 else do writer asmFile asm
                          let o = if jobOutFormat job == Obj then "-c" else ""
                          gcc o asmFile (jobOut job)
   case res of
