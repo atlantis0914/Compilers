@@ -9,7 +9,7 @@ data Base = Dec
 data IROffset = IROffset Int
 
 data IRExpr = IRExpInt Integer Base
-            | IRExpBool Bool 
+            | IRExpBool Bool
             | IRIdent String
             | IRExpBinOp Op IRExpr IRExpr
             | IRExpRelOp Op IRExpr IRExpr
@@ -21,7 +21,7 @@ data IRExpr = IRExpInt Integer Base
             | IRExpNull
             | IRExpAlloc IdentType IROffset
             | IRExpAllocArray IdentType IRExpr IROffset
--- We add back type information for [], . , and *. 
+-- We add back type information for [], . , and *.
             | IRExpArraySubscript IRExpr IRExpr IdentType IROffset
             | IRExpFieldSelect IRExpr String IdentType IROffset
             | IRExpDereference IRExpr IdentType

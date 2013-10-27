@@ -215,6 +215,9 @@ genExp f alloc@(varMap,n,l,aasm) e@(ExpAlloc t _) dest =
   genRealFn f alloc (ExpFnCall "calloc" [ExpInt (getIdentSize t) sourcePos Dec,
                                          ExpInt 1 sourcePos Dec] sourcePos) dest
 
+genExp f alloc@(varMap,n,l,aasm) e@(ExpUnMem _ _ _) dest =
+  alloc
+
 getName :: String -> String
 getName (('_'):('_'):('c'):('0'):('_'):xs) = xs
 getName (('_'):xs) = xs
