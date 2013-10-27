@@ -54,7 +54,7 @@ compile job = do
     (ParseFnList fnList pos) <- parseFnList $ jobSource job -- ParseFnList
     elabFnList <- liftEIO $ elaborate (ParseFnList (header ++ fnList) pos) -- FnList
     let numFns = length fnList
-    let (postCheckFnList, fnMap) = checkFnList elabFnList
+    let (postCheckFnList, fnMap, structMap) = checkFnList elabFnList
     let elabFnList'@(FnList tList _) = renameFn postCheckFnList
     let elabFnList'' = (if ((length tList) > 50) -- Hacky shit to pass ../tests1/cobalt-return03.l3
                           then elabFnList'
@@ -63,6 +63,7 @@ compile job = do
                            then elabFnList''
                            else elabFnList'')
     minFnList <- liftEIO $ minimize elabFnList'''
+    let irFnList = toIRFnList fnMap structMap minFnList
     if jobOutFormat job == C0
       then writer (jobOut job) minFnList
       else let asm = fnListCodeGen minFnList fnMap in
