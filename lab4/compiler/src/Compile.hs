@@ -37,13 +37,13 @@ writer file obj = liftIOE $ writeFile file $ show obj
 stringWriter file obj = liftIOE $ writeFile file $ obj
 
 getLibraryCode (Job {jobHeader = Nothing}) = do return []
-getLibraryCode (Job {jobHeader = Just fName}) = do 
+getLibraryCode (Job {jobHeader = Just fName}) = do
   (ParseFnList gdecls pos) <- parseFnList fName
   let gdecls' = map setLibraryFn gdecls
   return gdecls'
 
--- Marks all imported decls as library declarations. 
-setLibraryFn (PFDecl parseFDecl pos) = 
+-- Marks all imported decls as library declarations.
+setLibraryFn (PFDecl parseFDecl pos) =
   PFDecl (parseFDecl {pdeclIsLibrary = True}) pos
 setLibraryFn s = s
 
@@ -53,7 +53,7 @@ compile job = do
     header <- getLibraryCode job
     (ParseFnList fnList pos) <- parseFnList $ jobSource job -- ParseFnList
     elabFnList <- liftEIO $ elaborate (ParseFnList (header ++ fnList) pos) -- FnList
-    let numFns = length fnList 
+    let numFns = length fnList
     let (postCheckFnList, fnMap) = checkFnList elabFnList
     let elabFnList'@(FnList tList _) = renameFn postCheckFnList
     let elabFnList'' = (if ((length tList) > 50) -- Hacky shit to pass ../tests1/cobalt-return03.l3
