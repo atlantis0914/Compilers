@@ -2,11 +2,7 @@ module Compile.Types.IRExpr where
 
 import Compile.Types.Ops
 import Compile.Types.IdentType
-
-data Base = Dec
-          | Hex
-
-data IROffset = IROffset Int
+import Compile.Types.Expr
 
 data IRExpr = IRExpInt Integer Base
             | IRExpBool Bool
@@ -19,9 +15,9 @@ data IRExpr = IRExpInt Integer Base
             | IRExpTernary IRExpr IRExpr IRExpr
             | IRExpFnCall String [IRExpr]
             | IRExpNull
-            | IRExpAlloc IdentType IROffset
-            | IRExpAllocArray IdentType IRExpr IROffset
+            | IRExpAlloc IdentType Int
+            | IRExpAllocArray IdentType IRExpr Int
 -- We add back type information for [], . , and *.
-            | IRExpArraySubscript IRExpr IRExpr IdentType IROffset
-            | IRExpFieldSelect IRExpr String IdentType IROffset
-            | IRExpDereference IRExpr IdentType
+            | IRExpArraySubscript IRExpr IRExpr IdentType Int
+            | IRExpFieldSelect IRExpr String IdentType Int
+            | IRExpDereference IRExpr IdentType deriving Show 
