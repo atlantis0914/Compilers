@@ -26,6 +26,7 @@ import Compile.Frontend.RenameFn
 -- import Compile.Frontend.ConstantFold
 import Compile.Frontend.RemVoid
 import Compile.IR.GenIR
+import Compile.IR.GenIRAST
 import Compile.Frontend.Minimize
 import Compile.Backend.CodeGen
 
