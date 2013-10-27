@@ -8,20 +8,20 @@ data Base = Dec
 
 data IROffset = IROffset Int
 
-data IRExpr = ExpInt Integer Base
-            | ExpBool Bool 
-            | Ident String
-            | ExpBinOp Op IRExpr IRExpr
-            | ExpRelOp Op IRExpr IRExpr
-            | ExpLogOp Op IRExpr IRExpr
-            | ExpPolyEq Op IRExpr IRExpr
-            | ExpUnOp Op IRExpr
-            | ExpTernary IRExpr IRExpr IRExpr
-            | ExpFnCall String [IRExpr]
-            | ExpNull
-            | ExpAlloc IdentType IROffset
-            | ExpAllocArray IdentType IRExpr IROffset
+data IRExpr = IRExpInt Integer Base
+            | IRExpBool Bool 
+            | IRIdent String
+            | IRExpBinOp Op IRExpr IRExpr
+            | IRExpRelOp Op IRExpr IRExpr
+            | IRExpLogOp Op IRExpr IRExpr
+            | IRExpPolyEq Op IRExpr IRExpr
+            | IRExpUnOp Op IRExpr
+            | IRExpTernary IRExpr IRExpr IRExpr
+            | IRExpFnCall String [IRExpr]
+            | IRExpNull
+            | IRExpAlloc IdentType IROffset
+            | IRExpAllocArray IdentType IRExpr IROffset
 -- We add back type information for [], . , and *. 
-            | ExpArraySubscript IRExpr IRExpr IdentType IROffset
-            | ExpFieldSelect IRExpr String IdentType IROffset
-            | ExpDereference IRExpr IdentType
+            | IRExpArraySubscript IRExpr IRExpr IdentType IROffset
+            | IRExpFieldSelect IRExpr String IdentType IROffset
+            | IRExpDereference IRExpr IdentType
