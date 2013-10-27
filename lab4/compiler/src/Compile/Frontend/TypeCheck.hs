@@ -41,7 +41,7 @@ checkTypeFnList (FnList gdecls pos) =
 removeDecls m = Map.filter (\(_,_,isLib,defn,_) -> (isLib || defn)) m
 
 lTypesEqual :: [IdentType] -> [IdentType] -> Bool 
-lTypesEqual l1 l2 = (all (\(t1,t2) -> t1 == t2) $ zip l1 l2) && 
+lTypesEqual l1 l2 = (all (\(t1,t2) -> typesEqual t1 t2) $ zip l1 l2) && 
                     (length l1 == length l2)
 
 validateFnArgs :: [IdentType] -> String -> Bool
@@ -198,7 +198,7 @@ checkStmtValid fName (context@(map, fnMap, dMap, tdMap, sMap, valid)) (Ctrl (Whi
                                                       Just t -> t == IBool
   in
     if isBool then (map, fnMap, dMap, tdMap, sMap, valid1 && isBool && valid)
-              else error ("Error: While Expression is not a bool at " ++ show pos ++ " AST:" ++ show expr)
+              else error ("Error: While Expression is not a bool at " ++ show pos ++ " AST:" ++ show expr ++ " got type : " ++ show (checkExprType fName context expr))
 
 checkStmtValid fName (context@(map, fnMap, dMap, tdMap, sMap, valid)) (Ctrl (Return mexpr pos)) =
   case (mexpr) of 
@@ -235,9 +235,9 @@ checkStmtValid _ context SNop = context
 
 checkReturnType :: String -> Context -> IdentType -> a -> a
 checkReturnType fnName (context@(map, fnMap, dMap, tdMap, sMap, valid)) t = 
-  if (retType == t) 
-    then (\x -> x)
-    else error ("Error : Bad type for function with name : " ++ fnName)
+  case (coerceAny retType t) of 
+    (Just _) -> (\x -> x)
+    Nothing -> error ("Error : Bad type for function with name : " ++ fnName ++ " expected " ++ show retType ++ " got " ++ show t)
   where 
     (_, retType, _, _, _) = fnMap Map.! fnName 
 
@@ -252,7 +252,10 @@ matchType f context expr1 expr2 expect result =
     case (type1, type2) of
       (Nothing, _) -> Nothing
       (_, Nothing) -> Nothing
-      (Just t1, Just t2) -> coerceAnyExpect t1 t2 expect
+      (Just t1, Just t2) -> 
+        case (coerceAnyExpect t1 t2 expect) of
+          (Just _) -> Just result
+          _ -> Nothing 
 
 matchTypeEnsureSmall :: String -> Context -> Expr -> Expr -> IdentType -> (Maybe IdentType)
 matchTypeEnsureSmall f context expr1 expr2 result =
@@ -260,7 +263,7 @@ matchTypeEnsureSmall f context expr1 expr2 result =
     type1 = checkExprType f context expr1
     type2 = checkExprType f context expr2
   in
-    Trace.trace (" t1,t2 = " ++ show (type1, type2)) $ case (type1, type2) of
+    case (type1, type2) of
       (Nothing, _) -> Nothing
       (_, Nothing) -> Nothing
       (Just t1, Just t2) -> 
@@ -282,20 +285,25 @@ typeEq fName context expr1 expr2 expect =
       (_, Nothing) -> Nothing
       (Just t1, Just t2) -> coerceAny t1 t2 
 
+
+
 maybeIsSmallType :: Maybe IdentType -> Maybe IdentType
-maybeIsSmallType (Just t1) = Trace.trace ("t1 = " ++ show t1) $ if (isSmallType t1) then (Just t1)
-                                                                                    else Nothing 
+maybeIsSmallType (Just t1) = if (isSmallType t1) then (Just t1)
+                                                 else Nothing 
 maybeIsSmallType Nothing = Nothing 
 
 --if t1 == t2 && t1 `elem` expect then Just t1
 --                                                            else Nothing
+
+typesEqual :: IdentType -> IdentType -> Bool
+typesEqual t1 t2 = Maybe.isJust (coerceAny t1 t2)
 
 coerceAny :: IdentType -> IdentType -> Maybe IdentType
 coerceAny t1 t2 = 
   case (t1,t2) of 
     (IPtr IAny, IPtr t) -> Just t2
     (IPtr t, IPtr IAny) -> Just t1
-    (_ , _) -> if (t1 == t2) then Trace.trace ("returning ==") $ Just t1
+    (_ , _) -> if (t1 == t2) then Just t1
                              else Nothing
 
 
@@ -318,45 +326,58 @@ checkExprIsType maybeType t =
                     Just t' -> if t' == t then Just t
                                           else Nothing
 
-checkExprType :: String -> Context -> Expr -> Maybe IdentType
-checkExprType _ _ (ExpInt _ _ _) = Just IInt
-checkExprType _ _ (ExpBool _ _) = Just IBool
-checkExprType _ _ (ExpAlloc t _) = Just $ IPtr t
-checkExprType f ctx (ExpAllocArray t e _) = 
-  case (checkExprType f ctx e) of 
+checkExprType :: String -> Context -> Expr -> Maybe IdentType 
+checkExprType f ctx@(map, fnMap, dMap, tdMap, sMap, valid) e = 
+  case (checkExprType' f ctx e) of
+    (Just t) -> Just $ simplifyTypeDefdType tdMap t
+    _ -> Nothing 
+
+checkExprType' :: String -> Context -> Expr -> Maybe IdentType
+checkExprType' _ _ (ExpInt _ _ _) = Just IInt
+checkExprType' _ _ (ExpBool _ _) = Just IBool
+checkExprType' _ _ (ExpAlloc t _) = Just $ IPtr t
+checkExprType' f ctx (ExpAllocArray t e _) = 
+  case (checkExprType' f ctx e) of 
     Just IInt -> Just (IArray t)
     _ -> Nothing 
-checkExprType _ _ (ExpNull _) = Just $ IPtr IAny -- :t null = any*
-checkExprType _ (context@(map, _, _, _, _, _)) (Ident name _) = Map.lookup name map
-checkExprType f context (ExpBinOp _ expr1 expr2 _) =
+checkExprType' _ _ (ExpNull _) = Just $ IPtr IAny -- :t null = any*
+checkExprType' _ (context@(map, _, _, _, _, _)) (Ident name _) = Map.lookup name map
+checkExprType' f context (ExpBinOp _ expr1 expr2 _) =
   matchType f context expr1 expr2 [IInt] IInt
-checkExprType f context (ExpRelOp _ expr1 expr2 _) =
+checkExprType' f context (ExpRelOp _ expr1 expr2 _) =
   matchType f context expr1 expr2 [IInt] IBool
-checkExprType f context (ExpLogOp _ expr1 expr2 _) =
+checkExprType' f context (ExpLogOp _ expr1 expr2 _) =
   matchType f context expr1 expr2 [IBool] IBool
-checkExprType f context (ExpPolyEq _ expr1 expr2 _) =
-  Trace.trace ("e1 = " ++ show (checkExprType f context expr1) ++ " e2 = " ++ show expr2) $ matchTypeEnsureSmall f context expr1 expr2 IBool
-checkExprType f context (ExpUnOp Neg expr _) =
+checkExprType' f context (ExpPolyEq _ expr1 expr2 _) =
+  matchTypeEnsureSmall f context expr1 expr2 IBool
+checkExprType' f context (ExpUnOp Neg expr _) =
   checkExprIsType (checkExprType f context expr) IInt
-checkExprType f context (ExpUnOp BitwiseNot expr _) =
+checkExprType' f context (ExpUnOp BitwiseNot expr _) =
   checkExprIsType (checkExprType f context expr) IInt
-checkExprType f context (ExpUnOp LogicalNot expr _) =
+checkExprType' f context (ExpUnOp LogicalNot expr _) =
   checkExprIsType (checkExprType f context expr) IBool
-checkExprType f context (ExpTernary expr1 expr2 expr3 _) =
+checkExprType' f context (ExpTernary expr1 expr2 expr3 _) =
   case checkExprType f context expr1 of
     Nothing -> Nothing
-    Just t -> if t == IBool then typeEq f context expr2 expr3 [IInt, IBool]
-                            else Nothing
-checkExprType _ ctx@(map, fnMap, dMap, tdMap, sMap, valid) call@(ExpFnCall fnName subExps pos) = 
+    Just t -> if (t == IBool && isSmall)
+                then resType
+                else Nothing
+  where 
+    resType = typeEq f context expr2 expr3 [IInt, IBool]
+    isSmall = case (resType) of 
+                (Just typ) -> isSmallType typ
+                Nothing -> False 
+
+checkExprType' _ ctx@(map, fnMap, dMap, tdMap, sMap, valid) call@(ExpFnCall fnName subExps pos) = 
   checkFnCall ctx call False
 
-checkExprType f context (ExpUnMem PDereference e1 p) = 
+checkExprType' f context (ExpUnMem PDereference e1 p) = 
   case checkExprType f context e1 of
     Just (IPtr IAny) -> error ("Error : cannot dereference indefinate type at " ++ show p)
     Just (IPtr t) -> Just t
     _ -> Nothing 
 
-checkExprType f ctx@(_,_,_,_,sMap,_) (ExpBinMem Select e1 e2 p) = 
+checkExprType' f ctx@(_,_,_,_,sMap,_) (ExpBinMem Select e1 e2 p) = 
   case (checkExprType f ctx e1, e2) of 
     (Just (IStruct (ITypeDef name)), Ident field _) -> 
       if (not $ Map.member name sMap) 
@@ -364,12 +385,12 @@ checkExprType f ctx@(_,_,_,_,sMap,_) (ExpBinMem Select e1 e2 p) =
         else typeForField (sMap Map.! name) field
     _ -> Nothing 
 
-checkExprType f ctx (ExpBinMem PArrayRef e1 e2 p) = 
+checkExprType' f ctx (ExpBinMem PArrayRef e1 e2 p) = 
   case (checkExprType f ctx e1, checkExprType f ctx e2) of 
     (Just (IArray t) , Just IInt) -> Just t
-    (s,p) -> Trace.trace ("got : " ++ show s ++ " and " ++ show p) $ Nothing
+    (s,p) -> Nothing
 
-checkExprType f ctx e = error ("have " ++ show e) 
+checkExprType' f ctx e = error ("have " ++ show e) 
 
 typeForField :: SDefn -> String -> (Maybe IdentType)
 typeForField (SDefn {structTypes = sTyps}) field = Map.lookup field sTyps
@@ -392,7 +413,7 @@ consumeType (Just t) = t
 validateFnCall (ctx@(idMap, _, _, tdMap, _, _)) fnName argTypes argExprs retType canBeVoid pos = 
   let
     recTypes = map (consumeType . (checkExprType fnName ctx)) argExprs
-    match = all (\(t1,t2) -> t1 == t2) $ zip argTypes recTypes
+    match = all (\(t1,t2) -> typesEqual t1 t2) $ zip argTypes recTypes
     isShadowed = (Map.lookup fnName idMap == Nothing) 
   in
     if (not match)

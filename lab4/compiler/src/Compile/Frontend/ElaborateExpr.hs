@@ -3,6 +3,10 @@ module Compile.Frontend.ElaborateExpr where
 import Compile.Types 
 
 import Compile.Util.Assert
+import Compile.Util.IdentTypeUtil
+import Compile.Frontend.ElaborateType
+
+import qualified Debug.Trace as Trace
 
 elabExpr :: Expr -> Expr
 elabExpr e = let
@@ -65,3 +69,25 @@ foldExpr e@(ExpTernary e1 e2 e3 p) = (ExpTernary (foldExpr e1) (foldExpr e2) (fo
 foldExpr e@(ExpUnOp op e1 p) = (ExpUnOp op (foldExpr e1) p)
 foldExpr e@(ExpFnCall n eList p) = (ExpFnCall n (map foldExpr eList) p)
 foldExpr e = e
+
+elabExprTD :: TypeDefs -> Expr -> Expr
+elabExprTD td e@(ExpAllocArray id e1 p) = ExpAllocArray (elaborateTDIdentType td id) 
+                                                        (elabExprTD td e1) p
+elabExprTD td e@(ExpAlloc id p) = ExpAlloc (elaborateTDIdentType td id) p
+elabExprTD td e@(ExpBinOp o e1 e2 p) = ExpBinOp o (elabExprTD td e1) 
+                                                  (elabExprTD td e2) p
+elabExprTD td e@(ExpRelOp o e1 e2 p) = ExpRelOp o (elabExprTD td e1) 
+                                                  (elabExprTD td e2) p
+elabExprTD td e@(ExpPolyEq o e1 e2 p) = ExpPolyEq o (elabExprTD td e1) 
+                                                 (elabExprTD td e2) p
+elabExprTD td e@(ExpLogOp _ _ _ _) = error ("shouldn't have log ops in elabExprTD")
+elabExprTD td e@(ExpUnOp o e1 p) = ExpUnOp o (elabExprTD td e1) p 
+elabExprTD td e@(ExpTernary e1 e2 e3 p) = ExpTernary (elabExprTD td e1) 
+                                                     (elabExprTD td e2) 
+                                                     (elabExprTD td e3) p
+elabExprTD td e@(ExpFnCall fnName expList p) = ExpFnCall fnName
+                                                       (map (elabExprTD td) expList) p
+elabExprTD td e@(ExpBinMem FDereference e1 e2 p) = error ("shouldn't have fDereference in elabExprTD")
+elabExprTD td e@(ExpBinMem o e1 e2 p) = ExpBinMem o (elabExprTD td e1) (elabExprTD td e2) p
+elabExprTD td e@(ExpUnMem o e1 p) = checkExpr e $ ExpUnMem o (elabExprTD td e1) p 
+elabExprTD _ e = e

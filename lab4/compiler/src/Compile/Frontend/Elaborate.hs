@@ -8,6 +8,7 @@ import Compile.Util.IdentTypeUtil
 
 import Compile.Frontend.Expand
 import Compile.Frontend.ElaborateType
+import Compile.Frontend.ElaborateExpr
 import Compile.Frontend.ElaborateStruct
 
 type IdMap = Map.Map String String 
@@ -59,15 +60,16 @@ checkTypeDef (PTypeDef s1 s2 pos) typeMap =
     Nothing -> (Map.insert s2 (simplifyTypeDefdType typeMap s1) typeMap)
 
 addToTypeSpace :: PGDecl -> TypeDefs -> TypeDefs 
-addToTypeSpace (PSDecl (ParseSDecl name _) _) typeMap = 
-  Map.insert typeName typeName typeMap
-  where
-    typeName = IStruct (ITypeDef name)
+addToTypeSpace (PSDecl (ParseSDecl name _) _) typeMap = typeMap
+--   Map.insert typeName typeName typeMap
+--   where
+--     typeName = IStruct (ITypeDef name)
 
 addToTypeSpace (PSDefn (ParseSDefn name _ _) _) typeMap = 
   if ((Map.lookup typeName typeMap) == Nothing)
     then Map.insert typeName typeName typeMap
-    else error ("Multiplie definition of struct : " ++ name) 
+    else error ("Multiplie definition of struct : " ++ name ++ " had " ++ 
+            show (Map.lookup typeName typeMap)) 
   where 
     typeName = IStruct (ITypeDef name)
 
@@ -140,7 +142,10 @@ elabParseBlock typedefs stmts = elabParseBlock' (Map.empty) typedefs (Block []) 
 -- Converts a single parseStmt into a stmt, mutually calling elabParseBlock'
 -- if we observe a nested block, and elabParseCtrl if we observe a nested ctrl
 elabParseStmt :: IdMap -> TypeDefs -> ParseStmt -> Stmt
-elabParseStmt _ td (PAsgn s a e b p) = Asgn (plValToLVal s) a e b p
+elabParseStmt _ td (PAsgn s a e b p) = Asgn (LExpr (elabExprTD td eLval) p) 
+                                       a (elabExprTD td e) b p
+  where 
+    (LExpr eLval _) = plValToLVal s
 elabParseStmt _ td (PDecl s t p Nothing) =  -- TODO : Get rid of this. 
   Decl {declName = checkTDIdent td s, 
         declTyp = elaborateTDIdentType td t, 
@@ -148,16 +153,17 @@ elabParseStmt _ td (PDecl s t p Nothing) =  -- TODO : Get rid of this.
         declScope = SNop}
 elabParseStmt id td (PDecl s t p (Just _)) = error "shouldnt get here just"
 elabParseStmt id td (PCtrl c) = Ctrl (elabParseCtrl id td c)
-elabParseStmt id td (PExpr e) = Expr e
+elabParseStmt id td (PExpr e) = Expr (elabExprTD td e)
 elabParseStmt id td (PBlock stmts) = elabParseBlock' id td (Block []) stmts
 
 -- Converts a Parse level control flow statement into a post-elab
 -- control flow statement, elaborating inner statements using elabParseStmt. 
 elabParseCtrl :: IdMap -> TypeDefs -> ParseCtrl -> Ctrl
-elabParseCtrl id td (If e ps1 ps2 pos) = If e (elabParseStmt id td ps1) (elabParseStmt id td ps2) pos
-elabParseCtrl id td (While e ps1 pos) = While e (elabParseStmt id td ps1) pos
-elabParseCtrl id td (Assert e pos) = Assert e pos
-elabParseCtrl id td (Return e pos) = Return e pos
+elabParseCtrl id td (If e ps1 ps2 pos) = If (elabExprTD td e) (elabParseStmt id td ps1) (elabParseStmt id td ps2) pos
+elabParseCtrl id td (While e ps1 pos) = While (elabExprTD td e) (elabParseStmt id td ps1) pos
+elabParseCtrl id td (Assert e pos) = Assert (elabExprTD td e) pos
+elabParseCtrl id td (Return Nothing pos) = Return Nothing pos
+elabParseCtrl id td (Return (Just e) pos) = Return (Just $ elabExprTD td e) pos
 
 -- Converts a list of parse level statements into a single statement. We
 -- recursively convert statements and append them to the post-elab block's 
@@ -185,7 +191,6 @@ isDeclMultExpr td (PDecl e2 (IPtr (ITypeDef e1)) p _) =
     (Just _, Just _) -> Just (ExpBinOp Mul (Ident e1 p) (Ident e2 p) p)
     (_, _) -> Nothing
 isDeclMultExpr td decl =  Nothing 
-
 
 plValToLVal :: PLValue -> LValue 
 plValToLVal lval@(PLId s p) = LExpr (lValToExpr lval) p

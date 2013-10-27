@@ -13,7 +13,8 @@ toIdentType "bool" = IBool
 toIdentType "void" = IVoid
 toIdentType s = ITypeDef s
 
-tM = [(IInt, IInt),
+tM = [(IAny, IAny),
+      (IInt, IInt),
       (IBool, IBool),
       (IVoid, IVoid)]
 
