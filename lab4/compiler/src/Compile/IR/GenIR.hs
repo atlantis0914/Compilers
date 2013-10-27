@@ -214,6 +214,12 @@ genExp f alloc@(varMap,n,l,aasm) e@(ExpAlloc t _) dest =
 genExp f alloc@(varMap,n,l,aasm) e@(ExpUnMem _ (Ident s _) _) dest =
   (varMap,n,l,aasm ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp $ varMap Map.! s) 0]])
 
+genExp f alloc@(varMap,n,l,aasm) e@(ExpUnMem _ (expr) _) dest = let
+  (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr (ATemp $ n)
+  in (varMap,n,l,aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp $ n+1) 0]])
+
+genExp f alloc e dest = error (show e ++ " EXHAUST genExp")
+
 getName :: String -> String
 getName (('_'):xs) = getName xs
 getName (('c'):('0'):('_'):xs) = getName xs
@@ -229,7 +235,6 @@ genInlineFn f alloc@(varMap, n, l, aasm) (ExpFnCall fnName exprs _) dest ret =
     last@(varMap',n',l',aasm') = allocs !! lenMinusOne
     (aasm'', _) = foldl moveArgs (aasm', 0) locs
     newAasm = AAsm {aAssign = [dest], aOp = Nop, aArgs = [AImm (fromIntegral ret)]}
---     newAasm = AFnCall fnName dest locs
   in
     (varMap', n', l', aasm'' ++ [newAasm])
 
