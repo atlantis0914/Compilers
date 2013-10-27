@@ -42,7 +42,7 @@ setOF :: OF -> Job -> Job
 setOF outFormat j = j {jobOutFormat = outFormat}
 
 extTable :: [(String, OF)]
-extTable = [(".S", Asm), (".o", Obj), (".c", C0), ("", ELF)]
+extTable = [(".s", Asm), (".o", Obj), (".c", C0), ("", ELF)]
 
 revExtTable :: [(OF, String)]
 revExtTable = map swap extTable

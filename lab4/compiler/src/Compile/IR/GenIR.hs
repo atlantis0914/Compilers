@@ -219,8 +219,10 @@ genExp f alloc@(varMap,n,l,aasm) e@(ExpUnMem _ _ _) dest =
   alloc
 
 getName :: String -> String
-getName (('_'):('_'):('c'):('0'):('_'):xs) = xs
-getName (('_'):xs) = xs
+getName (('_'):xs) = getName xs
+getName (('c'):('0'):('_'):xs) = getName xs
+--getName (('_'):('_'):('c'):('0'):('_'):xs) = xs
+--getName (('_'):xs) = xs
 getName s = s
 
 genInlineFn f alloc@(varMap, n, l, aasm) (ExpFnCall fnName exprs _) dest ret =

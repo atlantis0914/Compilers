@@ -9,8 +9,8 @@ import Compile.Util.IdentTypeUtil
 type RenameMap = Map.Map String String 
 
 nameIfLibrary :: Bool -> String -> String 
-nameIfLibrary True s = "_" ++ s
-nameIfLibrary False s = "__c0_" ++ s
+nameIfLibrary True s = "" ++ s
+nameIfLibrary False s = "_c0_" ++ s
 
 renameFn :: FnList -> FnList
 renameFn (FnList gdecls pos) = (FnList mDecls pos)
