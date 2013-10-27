@@ -6,7 +6,7 @@ import Compile.Types.Ops
 import Compile.Types.IdentType
 
 data Base = Dec
-          | Hex
+          | Hex deriving Show
 
 data Mem s = Dot !s !String SourcePos
            | Arrow !s !String SourcePos

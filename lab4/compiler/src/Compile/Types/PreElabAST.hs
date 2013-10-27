@@ -7,7 +7,7 @@ import Compile.Types.IdentType
 import Compile.Types.Expr
 import Compile.Types.Ctrl
 
-type ParseCtrl = PolyCtrl ParseStmt
+type ParseCtrl = PolyCtrl ParseStmt Expr
 
 data ParseFnList = ParseFnList ![PGDecl] SourcePos deriving Show
 
