@@ -48,8 +48,12 @@ replaceAsm coloring aasm@(AFnCall fnName loc locs lives) =
 replaceAsm coloring aasm = error (" replaceAsm EXHAUSTED" ++ show aasm)
 
 replaceAssigns :: ColoringMap -> ALoc -> ALoc
-replaceAssigns coloring (APtr loc off) =
-  APtr (replaceAssigns coloring loc) off
+replaceAssigns coloring (APtr base index scale) =
+  let
+    index' = case index of None -> None
+                           Just locs -> replaceAssigns coloring index
+  in
+    APtr (replaceAssigns coloring base) index' scale
 replaceAssigns coloring (ATemp i) =
   let
     Color c = coloring Map.! (ATemp i)
@@ -58,11 +62,4 @@ replaceAssigns coloring (ATemp i) =
 replaceAssigns coloring loc = loc
 
 replaceArgs :: ColoringMap -> AVal -> AVal
-replaceArgs coloring (ALoc (ATemp i)) =
-  let
-    Color c = coloring Map.! (ATemp i)
-  in
-    ALoc $ AReg c
-replaceArgs coloring (ALoc (APtr loc off)) =
-  ALoc $ APtr (replaceAssigns coloring loc) off
-replaceArgs coloring val = val
+replaceArgs coloring (ALoc loc) = ALoc $ replaceAssigns loc

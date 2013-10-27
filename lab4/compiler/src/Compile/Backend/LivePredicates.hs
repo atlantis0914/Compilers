@@ -12,7 +12,9 @@ type LiveContext = (LiveMap, Bool)
 extractLocs :: [AVal] -> [ALoc]
 extractLocs [] = []
 extractLocs (val:vals) =
-  case val of ALoc (APtr loc _) -> loc : extractLocs vals
+  case val of ALoc (APtr base index _) ->
+    case index of None -> base : extractLocs vals
+                  Just loc -> loc : base : extractLocs vals
               ALoc loc -> loc : extractLocs vals
               _ -> extractLocs vals
 
@@ -85,14 +87,21 @@ isTemp aloc = case aloc of ATemp _ -> True
                            _ -> False
 
 isPtr :: ALoc -> Bool
-isPtr loc = case loc of APtr _ _ -> True
+isPtr loc = case loc of APtr _ _ _ -> True
                         _ -> False
 
 filterLocs :: [ALoc] -> [ALoc]
 filterLocs locs = filter isTemp locs
 
+extractLocsFromPtr (APtr base index _) =
+  let
+    index' = case index of None -> []
+                           Just loc -> [loc]
+  in
+    index' ++ [base]
+
 filterPtrs :: [ALoc] -> [ALoc]
-filterPtrs locs = map (\(APtr loc _) -> loc) (filter isPtr locs)
+filterPtrs locs = concatMap extractLocsFromPtr (filter isPtr locs)
 
 filterOutPtrs :: [ALoc] -> [ALoc]
 filterOutPtrs locs = filter (\loc -> not $ isPtr loc) locs

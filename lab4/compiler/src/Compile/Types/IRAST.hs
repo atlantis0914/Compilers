@@ -28,7 +28,7 @@ data IRStructDef = IRStructDef {strctName :: !String,
 
 data IRAST = IRAST IRStmt
 
-type IRCtrl = PolyCtrl IStmt
+type IRCtrl = PolyCtrl IRStmt
 
 data IRStmt = IRAsgn IRExpr AsgnOp IRExpr Bool
             | IRDecl {ideclName :: String,

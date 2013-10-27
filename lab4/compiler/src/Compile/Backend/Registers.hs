@@ -85,3 +85,6 @@ spill_reg_num = 11
 
 max_color_num :: Int
 max_color_num = 10
+
+index_reg_num :: Int
+index_reg_num = 12

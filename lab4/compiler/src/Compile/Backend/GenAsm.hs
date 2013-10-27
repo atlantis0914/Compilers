@@ -198,11 +198,14 @@ alocToString (AArg i) =
   (show ((i + 2) * 8)) ++ "(%rbp)"
 alocToString ASpill =
   safeLookup spill_reg_num regMap "SPILL"
+alocToString AIndex =
+  safeLookup index_reg_num regMap "INDEX"
 alocToString (AReg i) =
   safeLookup i regMap "SHIT"
 alocToString (AMem i) =  (show ((i - 1) * 8)) ++ "(%rsp)"
 alocToString (ATemp i) = error "There's still an temp!"
-alocToString (APtr (AReg i) offset) = show offset ++ "(" ++ alocToString (AReg i) ++ ")"
+alocToString (APtr base None offset) = show offset ++ "(" ++ alocToString base ++ ")"
+alocToString (APtr base (Just index) offset) = "(" ++ alocToString base ++ "," ++ alocToString index ++ ")"
 alocToString loc = error (show loc ++ " EXHAUSTED")
 
 divModToString :: ALoc -> AVal -> Op -> String
