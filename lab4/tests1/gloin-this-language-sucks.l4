@@ -1,0 +1,23 @@
+//test error
+
+//This *would* have been a really cool test, if you were allowed to do any of
+//this.
+
+struct foo {
+	int x;
+	bool y;
+};
+
+int modify(struct foo bar) {
+	bar.y = true;
+	return bar.x;
+}
+
+int main() {
+	struct foo bar;
+	bar.x = 0;
+	bar.y = false;
+	int ret = modify(bar);
+	while(bar.y){}
+	return ret;
+}

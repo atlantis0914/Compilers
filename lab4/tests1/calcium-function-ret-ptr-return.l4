@@ -1,0 +1,16 @@
+//test error
+// function return types must be small
+struct poop;
+
+struct poop *poops() {
+  struct poop *poops = alloc(struct poop);
+  return poops;
+}
+
+int main() {
+  return 0;
+}
+
+struct poop {
+  int int;
+};

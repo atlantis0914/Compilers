@@ -1,0 +1,23 @@
+//test return 0
+
+struct s1{
+  int x;
+  struct s2 *s2;
+};
+
+struct s2{
+  int y;
+  struct s1 *s1;
+};
+
+int main()
+{
+  struct s1 *p1 = alloc(struct s1);
+  struct s2 *p2 = alloc(struct s2);
+  p1 -> x = 15;
+  p2 -> y = 411;
+  p1->s2 = p2;
+  p2->s1 = p1;
+  assert(p1->s2->y == p2->y && p2->s1->x == p1->x);
+  return 0;
+}

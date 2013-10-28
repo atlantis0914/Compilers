@@ -1,0 +1,14 @@
+//test return 64
+
+int main() {
+
+    int ****a;
+    a = alloc(int ***);
+    *a = alloc(int **);
+    **a = alloc(int *);
+    ***a = alloc(int );
+    
+    ****a = 8;
+
+    return ****a*****a;
+}

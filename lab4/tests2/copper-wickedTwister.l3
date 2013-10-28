@@ -1,0 +1,20 @@
+//test return 1000
+
+int rec00() {return 0;}
+int rec01() {return rec00();}
+int rec02() {return rec01();}
+int rec03() {return rec02();}
+int rec04() {return rec03();}
+int rec05() {return rec04();}
+int rec06() {return rec05();}
+int rec07() {return rec06();}
+int rec08() {return rec07();}
+int rec09() {return rec08();}
+int rec10() {return rec09();}
+int rec11() {return rec10();}
+int rec12() {return rec11();}
+int rec13() {return rec12();}
+
+int main() {
+    return (rec13() == rec12() && rec11() == rec07() && rec10() == rec02() ? 1000 : 9000000);
+}

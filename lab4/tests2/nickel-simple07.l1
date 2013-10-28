@@ -1,0 +1,8 @@
+//test return 0
+// test sadfsaf
+int main()
+{
+  int ab = 2*2*2*2*2*2*2*2*2*2;
+  int c = ab - ab;
+  return c;
+}

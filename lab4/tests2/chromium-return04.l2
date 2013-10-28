@@ -1,0 +1,11 @@
+//test return 42565 
+
+int main() {
+  int i = 1000;
+
+  for (i = 1; i < 42565; i++) {
+    int a = 1;
+  }
+
+  return i;
+}

@@ -1,0 +1,14 @@
+//test exception 6
+// 2+2=4
+
+int plus(int x, int y) {
+  if (x == 0) {
+    return y;
+  }
+  return 1 + plus(x-1, y);
+}
+
+int main () {
+  assert(5 == plus(2, 2));
+  return 0;
+}

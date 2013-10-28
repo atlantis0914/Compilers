@@ -1,0 +1,15 @@
+//test return 13
+
+int main() {
+  int x = 1;
+  int y = 1;
+
+  for (int i = 2; i <= 6; i ++)
+    {
+      int temp = y;
+      y = x + y;
+      x = temp;
+    }
+
+  return y;
+}

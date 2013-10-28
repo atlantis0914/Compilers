@@ -1,0 +1,10 @@
+//test exception 8
+
+int main() {
+    int int_min = -2147483648;
+    int neg_one = -1;
+    int_min * neg_one;
+    int_min * neg_one % neg_one;
+    return 0;
+}
+

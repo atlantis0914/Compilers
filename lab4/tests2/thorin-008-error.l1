@@ -1,0 +1,11 @@
+//test error
+/* declarator idents cannot be parenthesized */
+int main()
+{
+    int (a) = 4;
+    return a;
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

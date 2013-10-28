@@ -1,0 +1,28 @@
+//test exception 11
+typedef int confuse;
+typedef struct confuse confuse_t;
+struct confuse {
+    confuse *[]*x;
+};
+
+int
+main()
+{
+    int *[     ] *[     ]*[ ] * [] x = alloc_array(int *[]*[]*[]*, 5);
+    x[1] = alloc(int *[]*[]*[]);
+    *x[1] = alloc_array(int *[]*[]*, 19);
+    (*x[1])[5] = alloc(int *[]*[]);
+    *(*x[1])[5] = alloc_array(int *[]*, 12);
+    confuse_t *y = alloc(struct confuse);
+    confuse_t **yptr = alloc(confuse_t *);
+    *yptr = y;
+    (*yptr)->x = (*(*x[1])[5])[3];
+    *((*yptr)->x) = alloc_array(int *, 7);
+    *((*((*yptr)->x))[2]) = 3;
+    (*(*x[1])[5])[3] = alloc(int *[]);
+    *((*(*x[1])[5])[3]) = alloc_array(int *, 7);
+    (*((*(*x[1])[5])[3]))[0] = alloc(confuse);
+    *((*((*(*x[1])[5])[3]))[0]) = 4;
+    return *((*((*(*x[1])[5])[3]))[0]) + 0xbad1dea;
+}
+

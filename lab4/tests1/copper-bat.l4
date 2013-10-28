@@ -1,0 +1,38 @@
+//test exception
+
+int sum_p(int*[] a, int length) {
+	int sum = 0;
+	for(int i = 0; i < length; i++) {
+		sum += *(a[i]);
+	}
+	return sum;
+}
+
+int*[] int_to_p(int[] a, int length) {
+	int*[] b = alloc_array(int*, length);
+	for(int i = 0; i < length; i++) {
+		b[i] = alloc(int);
+		*(b[i]) = a[i];
+	}
+	return b;
+}
+
+int main() {
+	int n = 10;
+	int[] a = alloc_array(int, n);
+	a[0] = 0;
+	a[1] = 1;
+	a[2] = 2;
+	a[3] = 3;
+	a[4] = 4;
+	a[5] = 5;
+	a[6] = 6;
+	a[7] = 7;
+	a[8] = 8;
+	a[9] = 9;
+	int*[] b = int_to_p(a, n);
+	if(sum_p(b, n) != 45) {return 0;}
+	b[7] = NULL;
+	if(sum_p(b, n) != 45) {return 1;}
+	return 2;
+}

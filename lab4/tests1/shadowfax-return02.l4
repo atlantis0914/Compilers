@@ -1,0 +1,20 @@
+//test return 10
+// allocating small types
+
+struct intps {
+       int* p1;
+       int* p2;
+       int** p3;
+};
+
+typedef struct intps* intptrs;
+
+int main() {
+    intptrs k = alloc(struct intps);
+    k->p1 = alloc(int);
+    *(k->p1) = 23;
+    k->p3 = alloc(int*);
+    *(k->p3) = k->p1;
+    **(k->p3) = 10;
+    return *(k->p1);
+}

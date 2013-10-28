@@ -1,0 +1,18 @@
+//test return 9
+
+
+typedef struct tree* tree;
+
+struct tree{
+  tree* left;
+  tree* right;
+  int root;
+};
+
+int main()
+{
+  struct tree *m = alloc(struct tree);
+  m->root = 9;
+  return m->root;
+}
+

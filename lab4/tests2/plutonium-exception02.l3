@@ -1,0 +1,9 @@
+//test return 2139095040
+/* print and return +infinity in floating point */
+
+int main () {
+  fpt x = fdiv(itof(1), itof(0));
+  print_fpt(x);
+  print_hex(x);
+  return x;
+}

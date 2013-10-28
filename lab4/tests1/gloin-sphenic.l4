@@ -1,0 +1,48 @@
+//test return 36402
+//returns the 7000th sphenic number
+bool has_three(int []primes, int len, int num){
+    int res = 0;
+    for(int i=0;i<len && primes[i] < num;i++){
+        if(num % primes[i] == 0){
+            int num2 = num/primes[i];
+            for(int j=i+1;num2 > 0  && j<len && primes[j] < num2;j++){
+                if(num2 % primes[j] == 0){
+                    int num3 = num2/primes[j];
+                    for(int k=j+1;num3 > 0 && k<len && primes[k] <= num3;k++){
+                        if(num3 == primes[k]){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+int main(){
+    int []primes = alloc_array(int, 3000);
+    int len = 1;
+    primes[0] = 2;
+    for(int i=3; len<3000;i++){
+        int j;
+        bool done = false;
+        for(j=0; j<len && !done; j++){
+            if(i % primes[j]== 0){
+                done = true;    /* break */
+            }
+        }
+        if(j==len){
+            primes[len]=i;
+            len++;
+        }
+    }
+    int count;
+    int i=0;
+    for(count=0;count<7000;i++){
+        if(has_three(primes,3000,i)){
+            count++;
+        }
+    }
+    return i-1;
+}

@@ -1,0 +1,6 @@
+//test error
+int a;
+int main(){
+	return a;
+}
+a=3;

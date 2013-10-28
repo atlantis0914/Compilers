@@ -1,0 +1,17 @@
+//test return 42
+
+struct Foo
+{
+	struct Foo* f;
+};
+
+int main()
+{
+	struct Foo* f = alloc(struct Foo);
+	f->f = f;
+	for (int i = 0; i < 10000000; i++)
+	{
+		f = f->f;
+	}
+	return 42;
+}

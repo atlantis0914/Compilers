@@ -1,0 +1,7 @@
+//test error
+
+int main()
+{
+  while ( x ) {};
+  return 1;
+}

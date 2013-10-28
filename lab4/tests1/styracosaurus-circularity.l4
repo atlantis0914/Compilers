@@ -1,0 +1,43 @@
+//test return 0
+
+struct s {
+	struct s * s;
+	int x;
+};
+
+int main()
+{
+	struct s * s;
+	s = alloc(struct s);
+	s->s = s;
+	return  s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->
+			s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->s->x;
+}

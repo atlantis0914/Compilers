@@ -1,0 +1,10 @@
+//test return 0
+//tests having function declaration
+
+int main () {
+  return 0;
+}
+
+int foo ();
+bool bar ();
+void baz ();

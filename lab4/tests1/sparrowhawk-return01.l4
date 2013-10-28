@@ -1,0 +1,42 @@
+//test return 0
+
+struct node {
+       int data;
+       struct node* n;
+};
+
+typedef struct node node_t;
+
+int add(node_t *cur, node_t *next)
+{
+	cur->n = next;
+	return 0;
+}
+
+int main()
+{
+
+	node_t *zero;
+	node_t *one;
+	node_t *two;
+	node_t *three;
+
+	zero = alloc(node_t);
+	one = alloc(node_t);
+	two = alloc(node_t);
+	three = alloc(node_t);
+
+	zero->data = 0;
+	one->data = 1;
+	two->data = 2;
+	three->data = 3;
+
+	add(one, two);
+	add(two, three);
+	add(three, zero);
+
+	return (one->n->n->n->data);
+}
+
+	
+

@@ -1,0 +1,5 @@
+//test return -536870914
+//tests overflow
+int main() {
+	return 0xEFFFFFFF + 0xEFFFFFFF;
+}

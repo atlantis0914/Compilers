@@ -1,0 +1,155 @@
+//test return 0
+// evaluator (with pretty printer) for the SKI-combinator calculus
+// this program evaluates a simple SKI program
+// see http://en.wikipedia.org/wiki/SKI_combinator_calculus
+
+struct exp_rep {
+  int class;
+  struct exp_rep* e1;
+  struct exp_rep* e2;
+};
+
+typedef struct exp_rep* exp;
+
+exp s () {
+  struct exp_rep* s = alloc(struct exp_rep);
+  s->class = 0;
+  s->e1 = NULL;
+  s->e2 = NULL;
+  return s;
+}
+
+exp k () {
+  struct exp_rep* s = alloc(struct exp_rep);
+  s->class = 1;
+  s->e1 = NULL;
+  s->e2 = NULL;
+  return s;
+}
+
+exp i () {
+  struct exp_rep* s = alloc(struct exp_rep);
+  s->class = 2;
+  s->e1 = NULL;
+  s->e2 = NULL;
+  return s;
+}
+
+exp app (exp e1, exp e2) {
+  struct exp_rep* s = alloc(struct exp_rep);
+  s->class = 3;
+  s->e1 = e1;
+  s->e2 = e2;
+  return s;
+}
+
+exp app2 (exp e1, exp e2) {
+  return app(e1, e2);
+}
+
+exp app3 (exp e1, exp e2, exp e3) {
+  return app(app(e1, e2), e3);
+}
+
+exp app4 (exp e1, exp e2, exp e3, exp e4) {
+  return app(app3(e1, e2, e3), e4);
+}
+
+bool isS (exp e) {
+  return e->class == 0;
+}
+
+bool isK (exp e) {
+  return e->class == 1;
+}
+
+bool isI (exp e) {
+  return e->class == 2;
+}
+
+bool isApp (exp e) {
+  return e->class == 3;
+}
+
+exp getE1 (exp e) {
+  return e->e1;
+}
+
+exp getE2 (exp e) {
+  return e->e2;
+}
+
+exp eval (exp e) {
+  if (isS(e)) {
+    return e;
+  } else if (isK(e)) {
+    return e;
+  } else if (isI(e)) {
+    return e;
+  } else {
+    exp v1 = eval(getE1(e));
+    exp e2 = getE2(e);
+    if (isI(v1)) {
+      // I e2
+      return eval(e2);
+    } else if (isApp(v1)) {
+      exp v11 = getE1(v1);
+      exp v12 = getE2(v1);
+      if (isK(v11)) {
+        // K v12 e2
+        return v12;
+      } else if (isApp(v11)) {
+        exp v111 = getE1(v11);
+        exp v112 = getE2(v11);
+        if (isS(v111)) {
+          // S v112 v12 e2
+          return eval(app(app(v112, e2), app(v12, e2)));
+        } else {
+          return e;
+        }
+      } else {
+        return e;
+      }
+    } else {
+      return e;
+    }
+  }
+}
+
+int _error () {
+  return 0 / 0;
+}
+
+int print (exp e) {
+  if (isS(e)) {
+    print_int(5); // printchar(83); // 'S'
+  } else if (isK(e)) {
+    print_int(4); // printchar(75); // 'K'
+  } else if (isI(e)) {
+    print_int(1); // printchar(73); // 'I'
+  } else if (isApp(e)) {
+    print_int(6); // printchar(40); // '('
+    print(getE1(e));
+    print_int(0); // printchar(32); // ' '
+    print(getE2(e));
+    print_int(7); // printchar(41); // ')'
+  } else {
+    _error();
+  }
+  return 0;
+}
+
+int println () {
+  // printchar(10);
+  return 0;
+}
+
+int main () {
+  exp s_ = s();
+  exp k_ = k();
+  exp i_ = i();
+  exp v = eval(app4(s_, k_, k_, i_));
+  print(v);
+  println();
+  return 0;
+}

@@ -1,0 +1,6 @@
+//test return 1
+//main as variable
+int main() {
+   int main = 1;
+   return main;
+}

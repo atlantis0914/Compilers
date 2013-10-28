@@ -1,0 +1,58 @@
+//test return 1
+//simple matrix multiplication test
+
+struct matrix {
+  int height;
+  int width;
+  int[][] mat;
+};
+
+struct matrix* mat_init(int w, int h) {
+  struct matrix* out = alloc(struct matrix);
+  out -> height = h;
+  out -> width = w;
+  out -> mat = alloc_array(int[], w);
+  for(int i = 0; i < w; i++) {
+    out -> mat[i] = alloc_array(int, h);
+  }
+  return out;
+}
+
+struct matrix* multiply(struct matrix* a, struct matrix* b) {
+  struct matrix* out = mat_init(a->width, b->height);
+  for(int i = 0; i < out->width; i++) {
+    for(int j = 0; j < out->height; j++) {
+      for(int k = 0; k < b->width; k++) {
+        out->mat[i][j] += a->mat[i][k] * b->mat[k][j];
+      }
+    }
+  }
+  return out;
+}
+
+bool equal(struct matrix* a, struct matrix* b) {
+  if((a->height != b->height) || (a->width != b->width)) {
+    return false;
+  }
+  for(int i = 0; i < a->width; i++) {
+    for(int j = 0; j < a->height; j++) {
+      if(a->mat[i][j] != b->mat[i][j]) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+int main() {
+  struct matrix* full = mat_init(10,10);
+  struct matrix* ones = mat_init(10,10);
+  for(int i = 0; i < 10; i++) {
+    for(int j = 0; j < 10; j++) {
+      full->mat[i][j] = 1;
+      if(i == j) ones->mat[i][j] = 1;
+    }
+  }
+  if(equal(multiply(full, ones), full)) return 1;
+  else return 0;
+}

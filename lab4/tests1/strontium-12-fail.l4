@@ -1,0 +1,17 @@
+//test error
+// scope?
+
+struct list
+{
+    int data;
+    struct list * next;
+};
+
+int main()
+{
+    struct list * l0 = alloc(struct list);
+
+    data = 10;
+
+    return sum;
+}

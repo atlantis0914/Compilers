@@ -1,0 +1,11 @@
+//test exception 8
+// Yellow test 01 - tests divison by 0
+
+int main()
+{
+ int a = 10;
+ int b = 100;
+ b -= a * 10;
+ a /= b;
+ return a;
+}

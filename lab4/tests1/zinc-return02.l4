@@ -1,0 +1,25 @@
+//test return 100
+
+int sum_matrix(int[][] A, int size);
+
+int main() {
+  int size = 10;
+  int[][] A = alloc_array(int[], size);
+  for (int i = 0; i < 10; i++) {
+    A[i] = alloc_array(int, size);
+    for (int j = 0; j < size; j++)
+      A[i][j] = 1;
+  }
+
+  int res = sum_matrix(A, size);
+  return res;
+}
+
+int sum_matrix(int[][] A, int size) {
+  int sum = 0;
+  for (int i = 0; i < size; i++) 
+    for (int j = 0; j < size; j++)
+      sum += A[i][j];
+
+  return sum;
+}

@@ -1,0 +1,23 @@
+//test exception 14
+
+struct s;
+typedef struct s s;
+struct s {
+  int a;
+  s* f;
+};
+
+int length(s* b) {
+  int l = 0;
+  while (b != NULL)
+  {
+    l++;
+    b = b->f;
+  }
+  return l;
+}
+int main() {
+  s* p = alloc(struct s);
+  p->f = p;
+  return length(p);
+}

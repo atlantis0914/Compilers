@@ -1,0 +1,11 @@
+//test return 300
+
+int main ()
+{
+  int int0;
+  int __return;
+
+  int0 = 100;
+  __return = 200;
+  return int0+__return;
+}

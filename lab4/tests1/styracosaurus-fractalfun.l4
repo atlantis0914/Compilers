@@ -1,0 +1,111 @@
+//test return 46656
+
+struct square {
+    int[][] m;
+    int w;
+    int h;
+};
+
+typedef struct square square_t;
+
+square_t* fractalize(square_t* seed, int reps)
+{
+    square_t* image = alloc(square_t);
+    int i;
+
+    image->w = 1;
+    image->h = 1;
+    image->m = alloc_array(int[], 1);
+    image->m[0] = alloc_array(int, 1);
+    image->m[0][0] = 1;
+
+    for (i = 0; i < reps; i++)
+    {
+        int j;
+        int r;
+        int c;
+
+        int new_image_w = (image->w) * (seed->w);
+        int new_image_h = (image->h) * (seed->h);
+        square_t* new_image = alloc(square_t);
+
+        new_image->w = new_image_w;
+        new_image->h = new_image_h;
+        new_image->m = alloc_array(int[], new_image_h);
+        for (j = 0; j < new_image_h; j++)
+        {
+            new_image->m[j] = alloc_array(int, new_image_w);
+        }
+
+        for (r = 0; r < image->h; r++)
+        {
+            int offset = image->w - image->h;
+            for (c = 0; c < image->w; c++)
+            {
+                if (image->m[r][c] == 1)
+                {
+                    int sr;
+                    int sc;
+                    int nr = r * seed->h;
+                    int nc = c * seed->w;
+                    for (sr = 0; sr < seed->h; sr++)
+                    {
+                        for (sc = 0; sc < seed->w; sc++)
+                        {
+                            if (seed->m[sr][sc] == 1)
+                            {
+                                new_image->m[nr + sr][nc + sc + offset] = seed->m[sr][sc];
+                            }
+                        }
+                    }
+                }
+                offset -= seed->w - seed->h;
+            }
+        }
+        image = new_image;
+    }
+    return image;
+}
+
+int main()
+{
+    square_t* seed = alloc(square_t);
+    square_t* image;
+    int i;
+    int r;
+    int c;
+
+    seed->w = 3;
+    seed->h = 2;
+    seed->m = alloc_array(int[], 2);
+    seed->m[0] = alloc_array(int, 3);
+    seed->m[1] = alloc_array(int, 3);
+
+    seed->m[0][0] = 0;
+    seed->m[0][1] = 1;
+    seed->m[0][2] = 0;
+    seed->m[1][0] = 1;
+    seed->m[1][1] = 0;
+    seed->m[1][2] = 1;
+
+    image = fractalize(seed, 6);
+
+    for (r = 0; r < image->h; r++)
+    {
+        int offset = (image->w / 2) + 109;
+        for (c = 0; c < image->h * 2; c++)
+        {
+            if (image->m[r][c + offset] == 0)
+            {
+              // printchar(32);
+            }
+            else
+            {
+              // printchar(42);
+            }
+        }
+        // printchar(10);
+    }
+
+    return (image->w * image->h);
+}

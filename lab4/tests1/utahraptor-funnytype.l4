@@ -1,0 +1,7 @@
+//test error
+int* f(){return NULL;}
+int main()
+{
+	int* g = f;
+	return 0;
+}

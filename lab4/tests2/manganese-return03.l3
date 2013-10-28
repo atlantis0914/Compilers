@@ -1,0 +1,17 @@
+//test return 25
+
+int foo(int a, int b, int c, int d, int e, int f, int g, int h, int i, int j) {
+    a++; b++; c++; d++; e++; f++; g++; h++; i++; j++;
+    return a + b + c + d + e + f + g + h + i + j;
+}
+
+int main() {
+    int a = 5;
+    int b = 5;
+    int c = 5;
+    int d = foo (a, b, c, 0, 0, 0, 0, 0, 0, 0);
+    assert(a == 5);
+    assert(b == 5);
+    assert(c == 5);
+    return d;
+}

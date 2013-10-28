@@ -1,0 +1,18 @@
+//test error
+/* Function name vs Typedef */
+
+typedef int test;
+
+int test( int z )
+{
+  int integer = 3;
+  return integer * z;
+}
+
+typedef int integer;
+int main () {
+  integer z;
+  z = 3;
+  z = test(z);
+  return z;
+}

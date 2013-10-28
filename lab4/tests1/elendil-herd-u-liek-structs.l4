@@ -1,0 +1,2835 @@
+//test return 42
+
+struct A0 {
+       int id;
+};
+struct A1 {
+	struct A0 id;
+};
+struct A2 {
+	struct A1 id;
+};
+struct A3 {
+	struct A2 id;
+};
+struct A4 {
+	struct A3 id;
+};
+struct A5 {
+	struct A4 id;
+};
+struct A6 {
+	struct A5 id;
+};
+struct A7 {
+	struct A6 id;
+};
+struct A8 {
+	struct A7 id;
+};
+struct A9 {
+	struct A8 id;
+};
+struct A10 {
+	struct A9 id;
+};
+struct A11 {
+	struct A10 id;
+};
+struct A12 {
+	struct A11 id;
+};
+struct A13 {
+	struct A12 id;
+};
+struct A14 {
+	struct A13 id;
+};
+struct A15 {
+	struct A14 id;
+};
+struct A16 {
+	struct A15 id;
+};
+struct A17 {
+	struct A16 id;
+};
+struct A18 {
+	struct A17 id;
+};
+struct A19 {
+	struct A18 id;
+};
+struct A20 {
+	struct A19 id;
+};
+struct A21 {
+	struct A20 id;
+};
+struct A22 {
+	struct A21 id;
+};
+struct A23 {
+	struct A22 id;
+};
+struct A24 {
+	struct A23 id;
+};
+struct A25 {
+	struct A24 id;
+};
+struct A26 {
+	struct A25 id;
+};
+struct A27 {
+	struct A26 id;
+};
+struct A28 {
+	struct A27 id;
+};
+struct A29 {
+	struct A28 id;
+};
+struct A30 {
+	struct A29 id;
+};
+struct A31 {
+	struct A30 id;
+};
+struct A32 {
+	struct A31 id;
+};
+struct A33 {
+	struct A32 id;
+};
+struct A34 {
+	struct A33 id;
+};
+struct A35 {
+	struct A34 id;
+};
+struct A36 {
+	struct A35 id;
+};
+struct A37 {
+	struct A36 id;
+};
+struct A38 {
+	struct A37 id;
+};
+struct A39 {
+	struct A38 id;
+};
+struct A40 {
+	struct A39 id;
+};
+struct A41 {
+	struct A40 id;
+};
+struct A42 {
+	struct A41 id;
+};
+struct A43 {
+	struct A42 id;
+};
+struct A44 {
+	struct A43 id;
+};
+struct A45 {
+	struct A44 id;
+};
+struct A46 {
+	struct A45 id;
+};
+struct A47 {
+	struct A46 id;
+};
+struct A48 {
+	struct A47 id;
+};
+struct A49 {
+	struct A48 id;
+};
+struct A50 {
+	struct A49 id;
+};
+struct A51 {
+	struct A50 id;
+};
+struct A52 {
+	struct A51 id;
+};
+struct A53 {
+	struct A52 id;
+};
+struct A54 {
+	struct A53 id;
+};
+struct A55 {
+	struct A54 id;
+};
+struct A56 {
+	struct A55 id;
+};
+struct A57 {
+	struct A56 id;
+};
+struct A58 {
+	struct A57 id;
+};
+struct A59 {
+	struct A58 id;
+};
+struct A60 {
+	struct A59 id;
+};
+struct A61 {
+	struct A60 id;
+};
+struct A62 {
+	struct A61 id;
+};
+struct A63 {
+	struct A62 id;
+};
+struct A64 {
+	struct A63 id;
+};
+struct A65 {
+	struct A64 id;
+};
+struct A66 {
+	struct A65 id;
+};
+struct A67 {
+	struct A66 id;
+};
+struct A68 {
+	struct A67 id;
+};
+struct A69 {
+	struct A68 id;
+};
+struct A70 {
+	struct A69 id;
+};
+struct A71 {
+	struct A70 id;
+};
+struct A72 {
+	struct A71 id;
+};
+struct A73 {
+	struct A72 id;
+};
+struct A74 {
+	struct A73 id;
+};
+struct A75 {
+	struct A74 id;
+};
+struct A76 {
+	struct A75 id;
+};
+struct A77 {
+	struct A76 id;
+};
+struct A78 {
+	struct A77 id;
+};
+struct A79 {
+	struct A78 id;
+};
+struct A80 {
+	struct A79 id;
+};
+struct A81 {
+	struct A80 id;
+};
+struct A82 {
+	struct A81 id;
+};
+struct A83 {
+	struct A82 id;
+};
+struct A84 {
+	struct A83 id;
+};
+struct A85 {
+	struct A84 id;
+};
+struct A86 {
+	struct A85 id;
+};
+struct A87 {
+	struct A86 id;
+};
+struct A88 {
+	struct A87 id;
+};
+struct A89 {
+	struct A88 id;
+};
+struct A90 {
+	struct A89 id;
+};
+struct A91 {
+	struct A90 id;
+};
+struct A92 {
+	struct A91 id;
+};
+struct A93 {
+	struct A92 id;
+};
+struct A94 {
+	struct A93 id;
+};
+struct A95 {
+	struct A94 id;
+};
+struct A96 {
+	struct A95 id;
+};
+struct A97 {
+	struct A96 id;
+};
+struct A98 {
+	struct A97 id;
+};
+struct A99 {
+	struct A98 id;
+};
+struct A100 {
+	struct A99 id;
+};
+struct A101 {
+	struct A100 id;
+};
+struct A102 {
+	struct A101 id;
+};
+struct A103 {
+	struct A102 id;
+};
+struct A104 {
+	struct A103 id;
+};
+struct A105 {
+	struct A104 id;
+};
+struct A106 {
+	struct A105 id;
+};
+struct A107 {
+	struct A106 id;
+};
+struct A108 {
+	struct A107 id;
+};
+struct A109 {
+	struct A108 id;
+};
+struct A110 {
+	struct A109 id;
+};
+struct A111 {
+	struct A110 id;
+};
+struct A112 {
+	struct A111 id;
+};
+struct A113 {
+	struct A112 id;
+};
+struct A114 {
+	struct A113 id;
+};
+struct A115 {
+	struct A114 id;
+};
+struct A116 {
+	struct A115 id;
+};
+struct A117 {
+	struct A116 id;
+};
+struct A118 {
+	struct A117 id;
+};
+struct A119 {
+	struct A118 id;
+};
+struct A120 {
+	struct A119 id;
+};
+struct A121 {
+	struct A120 id;
+};
+struct A122 {
+	struct A121 id;
+};
+struct A123 {
+	struct A122 id;
+};
+struct A124 {
+	struct A123 id;
+};
+struct A125 {
+	struct A124 id;
+};
+struct A126 {
+	struct A125 id;
+};
+struct A127 {
+	struct A126 id;
+};
+struct A128 {
+	struct A127 id;
+};
+struct A129 {
+	struct A128 id;
+};
+struct A130 {
+	struct A129 id;
+};
+struct A131 {
+	struct A130 id;
+};
+struct A132 {
+	struct A131 id;
+};
+struct A133 {
+	struct A132 id;
+};
+struct A134 {
+	struct A133 id;
+};
+struct A135 {
+	struct A134 id;
+};
+struct A136 {
+	struct A135 id;
+};
+struct A137 {
+	struct A136 id;
+};
+struct A138 {
+	struct A137 id;
+};
+struct A139 {
+	struct A138 id;
+};
+struct A140 {
+	struct A139 id;
+};
+struct A141 {
+	struct A140 id;
+};
+struct A142 {
+	struct A141 id;
+};
+struct A143 {
+	struct A142 id;
+};
+struct A144 {
+	struct A143 id;
+};
+struct A145 {
+	struct A144 id;
+};
+struct A146 {
+	struct A145 id;
+};
+struct A147 {
+	struct A146 id;
+};
+struct A148 {
+	struct A147 id;
+};
+struct A149 {
+	struct A148 id;
+};
+struct A150 {
+	struct A149 id;
+};
+struct A151 {
+	struct A150 id;
+};
+struct A152 {
+	struct A151 id;
+};
+struct A153 {
+	struct A152 id;
+};
+struct A154 {
+	struct A153 id;
+};
+struct A155 {
+	struct A154 id;
+};
+struct A156 {
+	struct A155 id;
+};
+struct A157 {
+	struct A156 id;
+};
+struct A158 {
+	struct A157 id;
+};
+struct A159 {
+	struct A158 id;
+};
+struct A160 {
+	struct A159 id;
+};
+struct A161 {
+	struct A160 id;
+};
+struct A162 {
+	struct A161 id;
+};
+struct A163 {
+	struct A162 id;
+};
+struct A164 {
+	struct A163 id;
+};
+struct A165 {
+	struct A164 id;
+};
+struct A166 {
+	struct A165 id;
+};
+struct A167 {
+	struct A166 id;
+};
+struct A168 {
+	struct A167 id;
+};
+struct A169 {
+	struct A168 id;
+};
+struct A170 {
+	struct A169 id;
+};
+struct A171 {
+	struct A170 id;
+};
+struct A172 {
+	struct A171 id;
+};
+struct A173 {
+	struct A172 id;
+};
+struct A174 {
+	struct A173 id;
+};
+struct A175 {
+	struct A174 id;
+};
+struct A176 {
+	struct A175 id;
+};
+struct A177 {
+	struct A176 id;
+};
+struct A178 {
+	struct A177 id;
+};
+struct A179 {
+	struct A178 id;
+};
+struct A180 {
+	struct A179 id;
+};
+struct A181 {
+	struct A180 id;
+};
+struct A182 {
+	struct A181 id;
+};
+struct A183 {
+	struct A182 id;
+};
+struct A184 {
+	struct A183 id;
+};
+struct A185 {
+	struct A184 id;
+};
+struct A186 {
+	struct A185 id;
+};
+struct A187 {
+	struct A186 id;
+};
+struct A188 {
+	struct A187 id;
+};
+struct A189 {
+	struct A188 id;
+};
+struct A190 {
+	struct A189 id;
+};
+struct A191 {
+	struct A190 id;
+};
+struct A192 {
+	struct A191 id;
+};
+struct A193 {
+	struct A192 id;
+};
+struct A194 {
+	struct A193 id;
+};
+struct A195 {
+	struct A194 id;
+};
+struct A196 {
+	struct A195 id;
+};
+struct A197 {
+	struct A196 id;
+};
+struct A198 {
+	struct A197 id;
+};
+struct A199 {
+	struct A198 id;
+};
+struct A200 {
+	struct A199 id;
+};
+struct A201 {
+	struct A200 id;
+};
+struct A202 {
+	struct A201 id;
+};
+struct A203 {
+	struct A202 id;
+};
+struct A204 {
+	struct A203 id;
+};
+struct A205 {
+	struct A204 id;
+};
+struct A206 {
+	struct A205 id;
+};
+struct A207 {
+	struct A206 id;
+};
+struct A208 {
+	struct A207 id;
+};
+struct A209 {
+	struct A208 id;
+};
+struct A210 {
+	struct A209 id;
+};
+struct A211 {
+	struct A210 id;
+};
+struct A212 {
+	struct A211 id;
+};
+struct A213 {
+	struct A212 id;
+};
+struct A214 {
+	struct A213 id;
+};
+struct A215 {
+	struct A214 id;
+};
+struct A216 {
+	struct A215 id;
+};
+struct A217 {
+	struct A216 id;
+};
+struct A218 {
+	struct A217 id;
+};
+struct A219 {
+	struct A218 id;
+};
+struct A220 {
+	struct A219 id;
+};
+struct A221 {
+	struct A220 id;
+};
+struct A222 {
+	struct A221 id;
+};
+struct A223 {
+	struct A222 id;
+};
+struct A224 {
+	struct A223 id;
+};
+struct A225 {
+	struct A224 id;
+};
+struct A226 {
+	struct A225 id;
+};
+struct A227 {
+	struct A226 id;
+};
+struct A228 {
+	struct A227 id;
+};
+struct A229 {
+	struct A228 id;
+};
+struct A230 {
+	struct A229 id;
+};
+struct A231 {
+	struct A230 id;
+};
+struct A232 {
+	struct A231 id;
+};
+struct A233 {
+	struct A232 id;
+};
+struct A234 {
+	struct A233 id;
+};
+struct A235 {
+	struct A234 id;
+};
+struct A236 {
+	struct A235 id;
+};
+struct A237 {
+	struct A236 id;
+};
+struct A238 {
+	struct A237 id;
+};
+struct A239 {
+	struct A238 id;
+};
+struct A240 {
+	struct A239 id;
+};
+struct A241 {
+	struct A240 id;
+};
+struct A242 {
+	struct A241 id;
+};
+struct A243 {
+	struct A242 id;
+};
+struct A244 {
+	struct A243 id;
+};
+struct A245 {
+	struct A244 id;
+};
+struct A246 {
+	struct A245 id;
+};
+struct A247 {
+	struct A246 id;
+};
+struct A248 {
+	struct A247 id;
+};
+struct A249 {
+	struct A248 id;
+};
+struct A250 {
+	struct A249 id;
+};
+struct A251 {
+	struct A250 id;
+};
+struct A252 {
+	struct A251 id;
+};
+struct A253 {
+	struct A252 id;
+};
+struct A254 {
+	struct A253 id;
+};
+struct A255 {
+	struct A254 id;
+};
+struct A256 {
+	struct A255 id;
+};
+struct A257 {
+	struct A256 id;
+};
+struct A258 {
+	struct A257 id;
+};
+struct A259 {
+	struct A258 id;
+};
+struct A260 {
+	struct A259 id;
+};
+struct A261 {
+	struct A260 id;
+};
+struct A262 {
+	struct A261 id;
+};
+struct A263 {
+	struct A262 id;
+};
+struct A264 {
+	struct A263 id;
+};
+struct A265 {
+	struct A264 id;
+};
+struct A266 {
+	struct A265 id;
+};
+struct A267 {
+	struct A266 id;
+};
+struct A268 {
+	struct A267 id;
+};
+struct A269 {
+	struct A268 id;
+};
+struct A270 {
+	struct A269 id;
+};
+struct A271 {
+	struct A270 id;
+};
+struct A272 {
+	struct A271 id;
+};
+struct A273 {
+	struct A272 id;
+};
+struct A274 {
+	struct A273 id;
+};
+struct A275 {
+	struct A274 id;
+};
+struct A276 {
+	struct A275 id;
+};
+struct A277 {
+	struct A276 id;
+};
+struct A278 {
+	struct A277 id;
+};
+struct A279 {
+	struct A278 id;
+};
+struct A280 {
+	struct A279 id;
+};
+struct A281 {
+	struct A280 id;
+};
+struct A282 {
+	struct A281 id;
+};
+struct A283 {
+	struct A282 id;
+};
+struct A284 {
+	struct A283 id;
+};
+struct A285 {
+	struct A284 id;
+};
+struct A286 {
+	struct A285 id;
+};
+struct A287 {
+	struct A286 id;
+};
+struct A288 {
+	struct A287 id;
+};
+struct A289 {
+	struct A288 id;
+};
+struct A290 {
+	struct A289 id;
+};
+struct A291 {
+	struct A290 id;
+};
+struct A292 {
+	struct A291 id;
+};
+struct A293 {
+	struct A292 id;
+};
+struct A294 {
+	struct A293 id;
+};
+struct A295 {
+	struct A294 id;
+};
+struct A296 {
+	struct A295 id;
+};
+struct A297 {
+	struct A296 id;
+};
+struct A298 {
+	struct A297 id;
+};
+struct A299 {
+	struct A298 id;
+};
+struct A300 {
+	struct A299 id;
+};
+struct A301 {
+	struct A300 id;
+};
+struct A302 {
+	struct A301 id;
+};
+struct A303 {
+	struct A302 id;
+};
+struct A304 {
+	struct A303 id;
+};
+struct A305 {
+	struct A304 id;
+};
+struct A306 {
+	struct A305 id;
+};
+struct A307 {
+	struct A306 id;
+};
+struct A308 {
+	struct A307 id;
+};
+struct A309 {
+	struct A308 id;
+};
+struct A310 {
+	struct A309 id;
+};
+struct A311 {
+	struct A310 id;
+};
+struct A312 {
+	struct A311 id;
+};
+struct A313 {
+	struct A312 id;
+};
+struct A314 {
+	struct A313 id;
+};
+struct A315 {
+	struct A314 id;
+};
+struct A316 {
+	struct A315 id;
+};
+struct A317 {
+	struct A316 id;
+};
+struct A318 {
+	struct A317 id;
+};
+struct A319 {
+	struct A318 id;
+};
+struct A320 {
+	struct A319 id;
+};
+struct A321 {
+	struct A320 id;
+};
+struct A322 {
+	struct A321 id;
+};
+struct A323 {
+	struct A322 id;
+};
+struct A324 {
+	struct A323 id;
+};
+struct A325 {
+	struct A324 id;
+};
+struct A326 {
+	struct A325 id;
+};
+struct A327 {
+	struct A326 id;
+};
+struct A328 {
+	struct A327 id;
+};
+struct A329 {
+	struct A328 id;
+};
+struct A330 {
+	struct A329 id;
+};
+struct A331 {
+	struct A330 id;
+};
+struct A332 {
+	struct A331 id;
+};
+struct A333 {
+	struct A332 id;
+};
+struct A334 {
+	struct A333 id;
+};
+struct A335 {
+	struct A334 id;
+};
+struct A336 {
+	struct A335 id;
+};
+struct A337 {
+	struct A336 id;
+};
+struct A338 {
+	struct A337 id;
+};
+struct A339 {
+	struct A338 id;
+};
+struct A340 {
+	struct A339 id;
+};
+struct A341 {
+	struct A340 id;
+};
+struct A342 {
+	struct A341 id;
+};
+struct A343 {
+	struct A342 id;
+};
+struct A344 {
+	struct A343 id;
+};
+struct A345 {
+	struct A344 id;
+};
+struct A346 {
+	struct A345 id;
+};
+struct A347 {
+	struct A346 id;
+};
+struct A348 {
+	struct A347 id;
+};
+struct A349 {
+	struct A348 id;
+};
+struct A350 {
+	struct A349 id;
+};
+struct A351 {
+	struct A350 id;
+};
+struct A352 {
+	struct A351 id;
+};
+struct A353 {
+	struct A352 id;
+};
+struct A354 {
+	struct A353 id;
+};
+struct A355 {
+	struct A354 id;
+};
+struct A356 {
+	struct A355 id;
+};
+struct A357 {
+	struct A356 id;
+};
+struct A358 {
+	struct A357 id;
+};
+struct A359 {
+	struct A358 id;
+};
+struct A360 {
+	struct A359 id;
+};
+struct A361 {
+	struct A360 id;
+};
+struct A362 {
+	struct A361 id;
+};
+struct A363 {
+	struct A362 id;
+};
+struct A364 {
+	struct A363 id;
+};
+struct A365 {
+	struct A364 id;
+};
+struct A366 {
+	struct A365 id;
+};
+struct A367 {
+	struct A366 id;
+};
+struct A368 {
+	struct A367 id;
+};
+struct A369 {
+	struct A368 id;
+};
+struct A370 {
+	struct A369 id;
+};
+struct A371 {
+	struct A370 id;
+};
+struct A372 {
+	struct A371 id;
+};
+struct A373 {
+	struct A372 id;
+};
+struct A374 {
+	struct A373 id;
+};
+struct A375 {
+	struct A374 id;
+};
+struct A376 {
+	struct A375 id;
+};
+struct A377 {
+	struct A376 id;
+};
+struct A378 {
+	struct A377 id;
+};
+struct A379 {
+	struct A378 id;
+};
+struct A380 {
+	struct A379 id;
+};
+struct A381 {
+	struct A380 id;
+};
+struct A382 {
+	struct A381 id;
+};
+struct A383 {
+	struct A382 id;
+};
+struct A384 {
+	struct A383 id;
+};
+struct A385 {
+	struct A384 id;
+};
+struct A386 {
+	struct A385 id;
+};
+struct A387 {
+	struct A386 id;
+};
+struct A388 {
+	struct A387 id;
+};
+struct A389 {
+	struct A388 id;
+};
+struct A390 {
+	struct A389 id;
+};
+struct A391 {
+	struct A390 id;
+};
+struct A392 {
+	struct A391 id;
+};
+struct A393 {
+	struct A392 id;
+};
+struct A394 {
+	struct A393 id;
+};
+struct A395 {
+	struct A394 id;
+};
+struct A396 {
+	struct A395 id;
+};
+struct A397 {
+	struct A396 id;
+};
+struct A398 {
+	struct A397 id;
+};
+struct A399 {
+	struct A398 id;
+};
+struct A400 {
+	struct A399 id;
+};
+struct A401 {
+	struct A400 id;
+};
+struct A402 {
+	struct A401 id;
+};
+struct A403 {
+	struct A402 id;
+};
+struct A404 {
+	struct A403 id;
+};
+struct A405 {
+	struct A404 id;
+};
+struct A406 {
+	struct A405 id;
+};
+struct A407 {
+	struct A406 id;
+};
+struct A408 {
+	struct A407 id;
+};
+struct A409 {
+	struct A408 id;
+};
+struct A410 {
+	struct A409 id;
+};
+struct A411 {
+	struct A410 id;
+};
+struct A412 {
+	struct A411 id;
+};
+struct A413 {
+	struct A412 id;
+};
+struct A414 {
+	struct A413 id;
+};
+struct A415 {
+	struct A414 id;
+};
+struct A416 {
+	struct A415 id;
+};
+struct A417 {
+	struct A416 id;
+};
+struct A418 {
+	struct A417 id;
+};
+struct A419 {
+	struct A418 id;
+};
+struct A420 {
+	struct A419 id;
+};
+struct A421 {
+	struct A420 id;
+};
+struct A422 {
+	struct A421 id;
+};
+struct A423 {
+	struct A422 id;
+};
+struct A424 {
+	struct A423 id;
+};
+struct A425 {
+	struct A424 id;
+};
+struct A426 {
+	struct A425 id;
+};
+struct A427 {
+	struct A426 id;
+};
+struct A428 {
+	struct A427 id;
+};
+struct A429 {
+	struct A428 id;
+};
+struct A430 {
+	struct A429 id;
+};
+struct A431 {
+	struct A430 id;
+};
+struct A432 {
+	struct A431 id;
+};
+struct A433 {
+	struct A432 id;
+};
+struct A434 {
+	struct A433 id;
+};
+struct A435 {
+	struct A434 id;
+};
+struct A436 {
+	struct A435 id;
+};
+struct A437 {
+	struct A436 id;
+};
+struct A438 {
+	struct A437 id;
+};
+struct A439 {
+	struct A438 id;
+};
+struct A440 {
+	struct A439 id;
+};
+struct A441 {
+	struct A440 id;
+};
+struct A442 {
+	struct A441 id;
+};
+struct A443 {
+	struct A442 id;
+};
+struct A444 {
+	struct A443 id;
+};
+struct A445 {
+	struct A444 id;
+};
+struct A446 {
+	struct A445 id;
+};
+struct A447 {
+	struct A446 id;
+};
+struct A448 {
+	struct A447 id;
+};
+struct A449 {
+	struct A448 id;
+};
+struct A450 {
+	struct A449 id;
+};
+struct A451 {
+	struct A450 id;
+};
+struct A452 {
+	struct A451 id;
+};
+struct A453 {
+	struct A452 id;
+};
+struct A454 {
+	struct A453 id;
+};
+struct A455 {
+	struct A454 id;
+};
+struct A456 {
+	struct A455 id;
+};
+struct A457 {
+	struct A456 id;
+};
+struct A458 {
+	struct A457 id;
+};
+struct A459 {
+	struct A458 id;
+};
+struct A460 {
+	struct A459 id;
+};
+struct A461 {
+	struct A460 id;
+};
+struct A462 {
+	struct A461 id;
+};
+struct A463 {
+	struct A462 id;
+};
+struct A464 {
+	struct A463 id;
+};
+struct A465 {
+	struct A464 id;
+};
+struct A466 {
+	struct A465 id;
+};
+struct A467 {
+	struct A466 id;
+};
+struct A468 {
+	struct A467 id;
+};
+struct A469 {
+	struct A468 id;
+};
+struct A470 {
+	struct A469 id;
+};
+struct A471 {
+	struct A470 id;
+};
+struct A472 {
+	struct A471 id;
+};
+struct A473 {
+	struct A472 id;
+};
+struct A474 {
+	struct A473 id;
+};
+struct A475 {
+	struct A474 id;
+};
+struct A476 {
+	struct A475 id;
+};
+struct A477 {
+	struct A476 id;
+};
+struct A478 {
+	struct A477 id;
+};
+struct A479 {
+	struct A478 id;
+};
+struct A480 {
+	struct A479 id;
+};
+struct A481 {
+	struct A480 id;
+};
+struct A482 {
+	struct A481 id;
+};
+struct A483 {
+	struct A482 id;
+};
+struct A484 {
+	struct A483 id;
+};
+struct A485 {
+	struct A484 id;
+};
+struct A486 {
+	struct A485 id;
+};
+struct A487 {
+	struct A486 id;
+};
+struct A488 {
+	struct A487 id;
+};
+struct A489 {
+	struct A488 id;
+};
+struct A490 {
+	struct A489 id;
+};
+struct A491 {
+	struct A490 id;
+};
+struct A492 {
+	struct A491 id;
+};
+struct A493 {
+	struct A492 id;
+};
+struct A494 {
+	struct A493 id;
+};
+struct A495 {
+	struct A494 id;
+};
+struct A496 {
+	struct A495 id;
+};
+struct A497 {
+	struct A496 id;
+};
+struct A498 {
+	struct A497 id;
+};
+struct A499 {
+	struct A498 id;
+};
+struct A500 {
+	struct A499 id;
+};
+struct A501 {
+	struct A500 id;
+};
+struct A502 {
+	struct A501 id;
+};
+struct A503 {
+	struct A502 id;
+};
+struct A504 {
+	struct A503 id;
+};
+struct A505 {
+	struct A504 id;
+};
+struct A506 {
+	struct A505 id;
+};
+struct A507 {
+	struct A506 id;
+};
+struct A508 {
+	struct A507 id;
+};
+struct A509 {
+	struct A508 id;
+};
+struct A510 {
+	struct A509 id;
+};
+struct A511 {
+	struct A510 id;
+};
+struct A512 {
+	struct A511 id;
+};
+struct A513 {
+	struct A512 id;
+};
+struct A514 {
+	struct A513 id;
+};
+struct A515 {
+	struct A514 id;
+};
+struct A516 {
+	struct A515 id;
+};
+struct A517 {
+	struct A516 id;
+};
+struct A518 {
+	struct A517 id;
+};
+struct A519 {
+	struct A518 id;
+};
+struct A520 {
+	struct A519 id;
+};
+struct A521 {
+	struct A520 id;
+};
+struct A522 {
+	struct A521 id;
+};
+struct A523 {
+	struct A522 id;
+};
+struct A524 {
+	struct A523 id;
+};
+struct A525 {
+	struct A524 id;
+};
+struct A526 {
+	struct A525 id;
+};
+struct A527 {
+	struct A526 id;
+};
+struct A528 {
+	struct A527 id;
+};
+struct A529 {
+	struct A528 id;
+};
+struct A530 {
+	struct A529 id;
+};
+struct A531 {
+	struct A530 id;
+};
+struct A532 {
+	struct A531 id;
+};
+struct A533 {
+	struct A532 id;
+};
+struct A534 {
+	struct A533 id;
+};
+struct A535 {
+	struct A534 id;
+};
+struct A536 {
+	struct A535 id;
+};
+struct A537 {
+	struct A536 id;
+};
+struct A538 {
+	struct A537 id;
+};
+struct A539 {
+	struct A538 id;
+};
+struct A540 {
+	struct A539 id;
+};
+struct A541 {
+	struct A540 id;
+};
+struct A542 {
+	struct A541 id;
+};
+struct A543 {
+	struct A542 id;
+};
+struct A544 {
+	struct A543 id;
+};
+struct A545 {
+	struct A544 id;
+};
+struct A546 {
+	struct A545 id;
+};
+struct A547 {
+	struct A546 id;
+};
+struct A548 {
+	struct A547 id;
+};
+struct A549 {
+	struct A548 id;
+};
+struct A550 {
+	struct A549 id;
+};
+struct A551 {
+	struct A550 id;
+};
+struct A552 {
+	struct A551 id;
+};
+struct A553 {
+	struct A552 id;
+};
+struct A554 {
+	struct A553 id;
+};
+struct A555 {
+	struct A554 id;
+};
+struct A556 {
+	struct A555 id;
+};
+struct A557 {
+	struct A556 id;
+};
+struct A558 {
+	struct A557 id;
+};
+struct A559 {
+	struct A558 id;
+};
+struct A560 {
+	struct A559 id;
+};
+struct A561 {
+	struct A560 id;
+};
+struct A562 {
+	struct A561 id;
+};
+struct A563 {
+	struct A562 id;
+};
+struct A564 {
+	struct A563 id;
+};
+struct A565 {
+	struct A564 id;
+};
+struct A566 {
+	struct A565 id;
+};
+struct A567 {
+	struct A566 id;
+};
+struct A568 {
+	struct A567 id;
+};
+struct A569 {
+	struct A568 id;
+};
+struct A570 {
+	struct A569 id;
+};
+struct A571 {
+	struct A570 id;
+};
+struct A572 {
+	struct A571 id;
+};
+struct A573 {
+	struct A572 id;
+};
+struct A574 {
+	struct A573 id;
+};
+struct A575 {
+	struct A574 id;
+};
+struct A576 {
+	struct A575 id;
+};
+struct A577 {
+	struct A576 id;
+};
+struct A578 {
+	struct A577 id;
+};
+struct A579 {
+	struct A578 id;
+};
+struct A580 {
+	struct A579 id;
+};
+struct A581 {
+	struct A580 id;
+};
+struct A582 {
+	struct A581 id;
+};
+struct A583 {
+	struct A582 id;
+};
+struct A584 {
+	struct A583 id;
+};
+struct A585 {
+	struct A584 id;
+};
+struct A586 {
+	struct A585 id;
+};
+struct A587 {
+	struct A586 id;
+};
+struct A588 {
+	struct A587 id;
+};
+struct A589 {
+	struct A588 id;
+};
+struct A590 {
+	struct A589 id;
+};
+struct A591 {
+	struct A590 id;
+};
+struct A592 {
+	struct A591 id;
+};
+struct A593 {
+	struct A592 id;
+};
+struct A594 {
+	struct A593 id;
+};
+struct A595 {
+	struct A594 id;
+};
+struct A596 {
+	struct A595 id;
+};
+struct A597 {
+	struct A596 id;
+};
+struct A598 {
+	struct A597 id;
+};
+struct A599 {
+	struct A598 id;
+};
+struct A600 {
+	struct A599 id;
+};
+struct A601 {
+	struct A600 id;
+};
+struct A602 {
+	struct A601 id;
+};
+struct A603 {
+	struct A602 id;
+};
+struct A604 {
+	struct A603 id;
+};
+struct A605 {
+	struct A604 id;
+};
+struct A606 {
+	struct A605 id;
+};
+struct A607 {
+	struct A606 id;
+};
+struct A608 {
+	struct A607 id;
+};
+struct A609 {
+	struct A608 id;
+};
+struct A610 {
+	struct A609 id;
+};
+struct A611 {
+	struct A610 id;
+};
+struct A612 {
+	struct A611 id;
+};
+struct A613 {
+	struct A612 id;
+};
+struct A614 {
+	struct A613 id;
+};
+struct A615 {
+	struct A614 id;
+};
+struct A616 {
+	struct A615 id;
+};
+struct A617 {
+	struct A616 id;
+};
+struct A618 {
+	struct A617 id;
+};
+struct A619 {
+	struct A618 id;
+};
+struct A620 {
+	struct A619 id;
+};
+struct A621 {
+	struct A620 id;
+};
+struct A622 {
+	struct A621 id;
+};
+struct A623 {
+	struct A622 id;
+};
+struct A624 {
+	struct A623 id;
+};
+struct A625 {
+	struct A624 id;
+};
+struct A626 {
+	struct A625 id;
+};
+struct A627 {
+	struct A626 id;
+};
+struct A628 {
+	struct A627 id;
+};
+struct A629 {
+	struct A628 id;
+};
+struct A630 {
+	struct A629 id;
+};
+struct A631 {
+	struct A630 id;
+};
+struct A632 {
+	struct A631 id;
+};
+struct A633 {
+	struct A632 id;
+};
+struct A634 {
+	struct A633 id;
+};
+struct A635 {
+	struct A634 id;
+};
+struct A636 {
+	struct A635 id;
+};
+struct A637 {
+	struct A636 id;
+};
+struct A638 {
+	struct A637 id;
+};
+struct A639 {
+	struct A638 id;
+};
+struct A640 {
+	struct A639 id;
+};
+struct A641 {
+	struct A640 id;
+};
+struct A642 {
+	struct A641 id;
+};
+struct A643 {
+	struct A642 id;
+};
+struct A644 {
+	struct A643 id;
+};
+struct A645 {
+	struct A644 id;
+};
+struct A646 {
+	struct A645 id;
+};
+struct A647 {
+	struct A646 id;
+};
+struct A648 {
+	struct A647 id;
+};
+struct A649 {
+	struct A648 id;
+};
+struct A650 {
+	struct A649 id;
+};
+struct A651 {
+	struct A650 id;
+};
+struct A652 {
+	struct A651 id;
+};
+struct A653 {
+	struct A652 id;
+};
+struct A654 {
+	struct A653 id;
+};
+struct A655 {
+	struct A654 id;
+};
+struct A656 {
+	struct A655 id;
+};
+struct A657 {
+	struct A656 id;
+};
+struct A658 {
+	struct A657 id;
+};
+struct A659 {
+	struct A658 id;
+};
+struct A660 {
+	struct A659 id;
+};
+struct A661 {
+	struct A660 id;
+};
+struct A662 {
+	struct A661 id;
+};
+struct A663 {
+	struct A662 id;
+};
+struct A664 {
+	struct A663 id;
+};
+struct A665 {
+	struct A664 id;
+};
+struct A666 {
+	struct A665 id;
+};
+struct A667 {
+	struct A666 id;
+};
+struct A668 {
+	struct A667 id;
+};
+struct A669 {
+	struct A668 id;
+};
+struct A670 {
+	struct A669 id;
+};
+struct A671 {
+	struct A670 id;
+};
+struct A672 {
+	struct A671 id;
+};
+struct A673 {
+	struct A672 id;
+};
+struct A674 {
+	struct A673 id;
+};
+struct A675 {
+	struct A674 id;
+};
+struct A676 {
+	struct A675 id;
+};
+struct A677 {
+	struct A676 id;
+};
+struct A678 {
+	struct A677 id;
+};
+struct A679 {
+	struct A678 id;
+};
+struct A680 {
+	struct A679 id;
+};
+struct A681 {
+	struct A680 id;
+};
+struct A682 {
+	struct A681 id;
+};
+struct A683 {
+	struct A682 id;
+};
+struct A684 {
+	struct A683 id;
+};
+struct A685 {
+	struct A684 id;
+};
+struct A686 {
+	struct A685 id;
+};
+struct A687 {
+	struct A686 id;
+};
+struct A688 {
+	struct A687 id;
+};
+struct A689 {
+	struct A688 id;
+};
+struct A690 {
+	struct A689 id;
+};
+struct A691 {
+	struct A690 id;
+};
+struct A692 {
+	struct A691 id;
+};
+struct A693 {
+	struct A692 id;
+};
+struct A694 {
+	struct A693 id;
+};
+struct A695 {
+	struct A694 id;
+};
+struct A696 {
+	struct A695 id;
+};
+struct A697 {
+	struct A696 id;
+};
+struct A698 {
+	struct A697 id;
+};
+struct A699 {
+	struct A698 id;
+};
+struct A700 {
+	struct A699 id;
+};
+struct A701 {
+	struct A700 id;
+};
+struct A702 {
+	struct A701 id;
+};
+struct A703 {
+	struct A702 id;
+};
+struct A704 {
+	struct A703 id;
+};
+struct A705 {
+	struct A704 id;
+};
+struct A706 {
+	struct A705 id;
+};
+struct A707 {
+	struct A706 id;
+};
+struct A708 {
+	struct A707 id;
+};
+struct A709 {
+	struct A708 id;
+};
+struct A710 {
+	struct A709 id;
+};
+struct A711 {
+	struct A710 id;
+};
+struct A712 {
+	struct A711 id;
+};
+struct A713 {
+	struct A712 id;
+};
+struct A714 {
+	struct A713 id;
+};
+struct A715 {
+	struct A714 id;
+};
+struct A716 {
+	struct A715 id;
+};
+struct A717 {
+	struct A716 id;
+};
+struct A718 {
+	struct A717 id;
+};
+struct A719 {
+	struct A718 id;
+};
+struct A720 {
+	struct A719 id;
+};
+struct A721 {
+	struct A720 id;
+};
+struct A722 {
+	struct A721 id;
+};
+struct A723 {
+	struct A722 id;
+};
+struct A724 {
+	struct A723 id;
+};
+struct A725 {
+	struct A724 id;
+};
+struct A726 {
+	struct A725 id;
+};
+struct A727 {
+	struct A726 id;
+};
+struct A728 {
+	struct A727 id;
+};
+struct A729 {
+	struct A728 id;
+};
+struct A730 {
+	struct A729 id;
+};
+struct A731 {
+	struct A730 id;
+};
+struct A732 {
+	struct A731 id;
+};
+struct A733 {
+	struct A732 id;
+};
+struct A734 {
+	struct A733 id;
+};
+struct A735 {
+	struct A734 id;
+};
+struct A736 {
+	struct A735 id;
+};
+struct A737 {
+	struct A736 id;
+};
+struct A738 {
+	struct A737 id;
+};
+struct A739 {
+	struct A738 id;
+};
+struct A740 {
+	struct A739 id;
+};
+struct A741 {
+	struct A740 id;
+};
+struct A742 {
+	struct A741 id;
+};
+struct A743 {
+	struct A742 id;
+};
+struct A744 {
+	struct A743 id;
+};
+struct A745 {
+	struct A744 id;
+};
+struct A746 {
+	struct A745 id;
+};
+struct A747 {
+	struct A746 id;
+};
+struct A748 {
+	struct A747 id;
+};
+struct A749 {
+	struct A748 id;
+};
+struct A750 {
+	struct A749 id;
+};
+struct A751 {
+	struct A750 id;
+};
+struct A752 {
+	struct A751 id;
+};
+struct A753 {
+	struct A752 id;
+};
+struct A754 {
+	struct A753 id;
+};
+struct A755 {
+	struct A754 id;
+};
+struct A756 {
+	struct A755 id;
+};
+struct A757 {
+	struct A756 id;
+};
+struct A758 {
+	struct A757 id;
+};
+struct A759 {
+	struct A758 id;
+};
+struct A760 {
+	struct A759 id;
+};
+struct A761 {
+	struct A760 id;
+};
+struct A762 {
+	struct A761 id;
+};
+struct A763 {
+	struct A762 id;
+};
+struct A764 {
+	struct A763 id;
+};
+struct A765 {
+	struct A764 id;
+};
+struct A766 {
+	struct A765 id;
+};
+struct A767 {
+	struct A766 id;
+};
+struct A768 {
+	struct A767 id;
+};
+struct A769 {
+	struct A768 id;
+};
+struct A770 {
+	struct A769 id;
+};
+struct A771 {
+	struct A770 id;
+};
+struct A772 {
+	struct A771 id;
+};
+struct A773 {
+	struct A772 id;
+};
+struct A774 {
+	struct A773 id;
+};
+struct A775 {
+	struct A774 id;
+};
+struct A776 {
+	struct A775 id;
+};
+struct A777 {
+	struct A776 id;
+};
+struct A778 {
+	struct A777 id;
+};
+struct A779 {
+	struct A778 id;
+};
+struct A780 {
+	struct A779 id;
+};
+struct A781 {
+	struct A780 id;
+};
+struct A782 {
+	struct A781 id;
+};
+struct A783 {
+	struct A782 id;
+};
+struct A784 {
+	struct A783 id;
+};
+struct A785 {
+	struct A784 id;
+};
+struct A786 {
+	struct A785 id;
+};
+struct A787 {
+	struct A786 id;
+};
+struct A788 {
+	struct A787 id;
+};
+struct A789 {
+	struct A788 id;
+};
+struct A790 {
+	struct A789 id;
+};
+struct A791 {
+	struct A790 id;
+};
+struct A792 {
+	struct A791 id;
+};
+struct A793 {
+	struct A792 id;
+};
+struct A794 {
+	struct A793 id;
+};
+struct A795 {
+	struct A794 id;
+};
+struct A796 {
+	struct A795 id;
+};
+struct A797 {
+	struct A796 id;
+};
+struct A798 {
+	struct A797 id;
+};
+struct A799 {
+	struct A798 id;
+};
+struct A800 {
+	struct A799 id;
+};
+struct A801 {
+	struct A800 id;
+};
+struct A802 {
+	struct A801 id;
+};
+struct A803 {
+	struct A802 id;
+};
+struct A804 {
+	struct A803 id;
+};
+struct A805 {
+	struct A804 id;
+};
+struct A806 {
+	struct A805 id;
+};
+struct A807 {
+	struct A806 id;
+};
+struct A808 {
+	struct A807 id;
+};
+struct A809 {
+	struct A808 id;
+};
+struct A810 {
+	struct A809 id;
+};
+struct A811 {
+	struct A810 id;
+};
+struct A812 {
+	struct A811 id;
+};
+struct A813 {
+	struct A812 id;
+};
+struct A814 {
+	struct A813 id;
+};
+struct A815 {
+	struct A814 id;
+};
+struct A816 {
+	struct A815 id;
+};
+struct A817 {
+	struct A816 id;
+};
+struct A818 {
+	struct A817 id;
+};
+struct A819 {
+	struct A818 id;
+};
+struct A820 {
+	struct A819 id;
+};
+struct A821 {
+	struct A820 id;
+};
+struct A822 {
+	struct A821 id;
+};
+struct A823 {
+	struct A822 id;
+};
+struct A824 {
+	struct A823 id;
+};
+struct A825 {
+	struct A824 id;
+};
+struct A826 {
+	struct A825 id;
+};
+struct A827 {
+	struct A826 id;
+};
+struct A828 {
+	struct A827 id;
+};
+struct A829 {
+	struct A828 id;
+};
+struct A830 {
+	struct A829 id;
+};
+struct A831 {
+	struct A830 id;
+};
+struct A832 {
+	struct A831 id;
+};
+struct A833 {
+	struct A832 id;
+};
+struct A834 {
+	struct A833 id;
+};
+struct A835 {
+	struct A834 id;
+};
+struct A836 {
+	struct A835 id;
+};
+struct A837 {
+	struct A836 id;
+};
+struct A838 {
+	struct A837 id;
+};
+struct A839 {
+	struct A838 id;
+};
+struct A840 {
+	struct A839 id;
+};
+struct A841 {
+	struct A840 id;
+};
+struct A842 {
+	struct A841 id;
+};
+struct A843 {
+	struct A842 id;
+};
+struct A844 {
+	struct A843 id;
+};
+struct A845 {
+	struct A844 id;
+};
+struct A846 {
+	struct A845 id;
+};
+struct A847 {
+	struct A846 id;
+};
+struct A848 {
+	struct A847 id;
+};
+struct A849 {
+	struct A848 id;
+};
+struct A850 {
+	struct A849 id;
+};
+struct A851 {
+	struct A850 id;
+};
+struct A852 {
+	struct A851 id;
+};
+struct A853 {
+	struct A852 id;
+};
+struct A854 {
+	struct A853 id;
+};
+struct A855 {
+	struct A854 id;
+};
+struct A856 {
+	struct A855 id;
+};
+struct A857 {
+	struct A856 id;
+};
+struct A858 {
+	struct A857 id;
+};
+struct A859 {
+	struct A858 id;
+};
+struct A860 {
+	struct A859 id;
+};
+struct A861 {
+	struct A860 id;
+};
+struct A862 {
+	struct A861 id;
+};
+struct A863 {
+	struct A862 id;
+};
+struct A864 {
+	struct A863 id;
+};
+struct A865 {
+	struct A864 id;
+};
+struct A866 {
+	struct A865 id;
+};
+struct A867 {
+	struct A866 id;
+};
+struct A868 {
+	struct A867 id;
+};
+struct A869 {
+	struct A868 id;
+};
+struct A870 {
+	struct A869 id;
+};
+struct A871 {
+	struct A870 id;
+};
+struct A872 {
+	struct A871 id;
+};
+struct A873 {
+	struct A872 id;
+};
+struct A874 {
+	struct A873 id;
+};
+struct A875 {
+	struct A874 id;
+};
+struct A876 {
+	struct A875 id;
+};
+struct A877 {
+	struct A876 id;
+};
+struct A878 {
+	struct A877 id;
+};
+struct A879 {
+	struct A878 id;
+};
+struct A880 {
+	struct A879 id;
+};
+struct A881 {
+	struct A880 id;
+};
+struct A882 {
+	struct A881 id;
+};
+struct A883 {
+	struct A882 id;
+};
+struct A884 {
+	struct A883 id;
+};
+struct A885 {
+	struct A884 id;
+};
+struct A886 {
+	struct A885 id;
+};
+struct A887 {
+	struct A886 id;
+};
+struct A888 {
+	struct A887 id;
+};
+struct A889 {
+	struct A888 id;
+};
+struct A890 {
+	struct A889 id;
+};
+struct A891 {
+	struct A890 id;
+};
+struct A892 {
+	struct A891 id;
+};
+struct A893 {
+	struct A892 id;
+};
+struct A894 {
+	struct A893 id;
+};
+struct A895 {
+	struct A894 id;
+};
+struct A896 {
+	struct A895 id;
+};
+struct A897 {
+	struct A896 id;
+};
+struct A898 {
+	struct A897 id;
+};
+struct A899 {
+	struct A898 id;
+};
+struct A900 {
+	struct A899 id;
+};
+struct A901 {
+	struct A900 id;
+};
+struct A902 {
+	struct A901 id;
+};
+struct A903 {
+	struct A902 id;
+};
+struct A904 {
+	struct A903 id;
+};
+struct A905 {
+	struct A904 id;
+};
+struct A906 {
+	struct A905 id;
+};
+struct A907 {
+	struct A906 id;
+};
+struct A908 {
+	struct A907 id;
+};
+struct A909 {
+	struct A908 id;
+};
+struct A910 {
+	struct A909 id;
+};
+struct A911 {
+	struct A910 id;
+};
+struct A912 {
+	struct A911 id;
+};
+struct A913 {
+	struct A912 id;
+};
+struct A914 {
+	struct A913 id;
+};
+struct A915 {
+	struct A914 id;
+};
+struct A916 {
+	struct A915 id;
+};
+struct A917 {
+	struct A916 id;
+};
+struct A918 {
+	struct A917 id;
+};
+struct A919 {
+	struct A918 id;
+};
+struct A920 {
+	struct A919 id;
+};
+struct A921 {
+	struct A920 id;
+};
+struct A922 {
+	struct A921 id;
+};
+struct A923 {
+	struct A922 id;
+};
+struct A924 {
+	struct A923 id;
+};
+struct A925 {
+	struct A924 id;
+};
+struct A926 {
+	struct A925 id;
+};
+struct A927 {
+	struct A926 id;
+};
+struct A928 {
+	struct A927 id;
+};
+struct A929 {
+	struct A928 id;
+};
+struct A930 {
+	struct A929 id;
+};
+struct A931 {
+	struct A930 id;
+};
+struct A932 {
+	struct A931 id;
+};
+struct A933 {
+	struct A932 id;
+};
+struct A934 {
+	struct A933 id;
+};
+struct A935 {
+	struct A934 id;
+};
+struct A936 {
+	struct A935 id;
+};
+struct A937 {
+	struct A936 id;
+};
+struct A938 {
+	struct A937 id;
+};
+struct A939 {
+	struct A938 id;
+};
+struct A940 {
+	struct A939 id;
+};
+struct A941 {
+	struct A940 id;
+};
+
+int main() {
+    struct A941 *fun = alloc(struct A941);
+    fun->id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id = 42;
+    return fun->id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id.id;
+}
+

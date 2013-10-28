@@ -1,0 +1,12 @@
+//test exception
+//L to R ordering of functions parameter evaulation
+
+
+int f (int x, int n, int y) {
+    return y;
+}
+
+
+int main () {
+    return f(3+5, 1/0, 200);
+}

@@ -1,0 +1,19 @@
+//test return 0
+// Pointer equality. Not much to tell.
+
+int main() {
+  int *p = alloc(int);
+  int *q = p;
+  int *r = alloc(int);
+  int *s = NULL;
+
+  assert(p != NULL);
+  assert(q != NULL);
+  assert(r != NULL);
+  assert(s == NULL);
+  assert(p == q);
+  assert(p != r);
+  assert(q != r);
+
+  return 0;
+}

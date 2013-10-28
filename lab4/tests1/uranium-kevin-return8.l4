@@ -1,0 +1,14 @@
+//test return 10
+
+int main() {
+    int[] i = alloc_array(int, 5);
+    for (int j = 0; j < 5; j++) {
+        i[j] = 2;
+    }
+    int count = 0;
+    for (int j = 0; j < 5; j++) {
+        count += i[j];
+    }
+    return count;
+}
+        

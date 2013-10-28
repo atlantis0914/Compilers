@@ -1,0 +1,11 @@
+//test error
+
+/* double declaration */
+int main()
+{
+  int x;
+  int x;
+
+  x = 5;
+  return x;
+}

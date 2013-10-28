@@ -1,0 +1,10 @@
+//test error
+//test bad return type
+
+int fun() {
+    return true;
+}
+
+int main() {
+    return fun();
+}

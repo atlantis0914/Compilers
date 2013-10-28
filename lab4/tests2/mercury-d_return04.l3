@@ -1,0 +1,9 @@
+//test return 0
+int main();
+typedef int x;
+x main();
+void f(int a, int b);
+void f(x a, int b);
+int main() {
+  return 0;
+}

@@ -1,0 +1,45 @@
+//test return 0
+
+struct sum_rep {
+  bool left;
+  int* leftv;
+  int* rightv;
+};
+
+typedef struct sum_rep sum;
+
+sum* inl(int val)
+{
+  sum* t;
+  t = alloc(sum);
+  t->left = true;
+  t->leftv = alloc(int);
+  *(t->leftv) = val;
+  return t;
+}
+
+sum* inr(int val)
+{
+  sum* t;
+  t = alloc(sum);
+  t->left = false;
+  t->rightv = alloc(int);
+  *(t->rightv) = val;
+  return t;
+}
+
+bool equals(sum* s1, sum* s2)
+{
+  if (s1->left != s2->left) return false;
+  if (s1->left) return *(s1->leftv) == *(s2->leftv);
+  else return *(s1->rightv) == *(s2->rightv);
+}
+
+int main()
+{
+  sum* s1;
+  sum* s2;
+  s1 = inl(5);
+  s2 = inr(5);
+  return equals(s1, s2) ? 1 : 0;
+}

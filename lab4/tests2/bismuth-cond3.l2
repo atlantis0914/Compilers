@@ -1,0 +1,11 @@
+//test return 1
+//test conditional precedence
+int main()
+{	
+    if (true && false || true && !true)
+    {
+        return 0;
+    }
+    
+    return 1;
+}

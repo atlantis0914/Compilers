@@ -1,0 +1,13 @@
+//test return 42
+
+struct s {
+  struct s* x;
+};
+ 
+int main () {
+  struct s* x = alloc(struct s);
+  x->x = x;
+  x->x->x = x->x;
+  (*(x->x)).x;
+  return 42;
+}

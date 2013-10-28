@@ -1,0 +1,25 @@
+//test return 45
+
+struct boring {
+  int x;
+};
+
+int main()
+{
+  struct boring[] n = alloc_array(struct boring, 10);
+  int i = 0;
+  
+  while (i < 10){
+    n[i].x = i;
+    i++;
+  }
+  
+  i = 0;
+  int sum = 0;
+  while (i < 10){
+    sum += n[i].x;
+    i++;
+  }
+
+  return sum;
+}

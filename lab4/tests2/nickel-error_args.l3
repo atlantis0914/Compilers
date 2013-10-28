@@ -1,0 +1,11 @@
+//test error
+// extra commas in arg list
+
+int bar(int a, int b, , int c)
+{
+	return 1;
+}
+
+int main()
+{
+return 42;}

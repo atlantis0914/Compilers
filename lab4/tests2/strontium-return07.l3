@@ -1,0 +1,24 @@
+//test return 6
+// function call (mutual recursion)
+
+int f1(int a);
+
+int f2(int b)
+{
+    if(b == 0)
+        return 1;
+    else
+        return f1(b-1);
+}
+
+int f1(int a)
+{
+    if(a == 0)
+        return 1;
+    else
+        return f2(a);
+}
+int main()
+{
+    return f1(6) + f1(6) + 4;
+}

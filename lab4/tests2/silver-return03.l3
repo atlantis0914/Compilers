@@ -1,0 +1,10 @@
+//test return 5
+//System calls!
+
+int main() {
+    fpt f1 = itof(5);
+    fpt f2 = itof(2);
+    fpt f3 = fdiv(f1,f2);
+    fpt f4 = fadd(f3,f3);
+    return ftoi(f4);
+}

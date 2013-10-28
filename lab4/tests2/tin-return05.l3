@@ -1,0 +1,20 @@
+//test return 1037385588
+// random number generation
+// based on multiply-with-carry implementation here:
+// http://en.wikipedia.org/wiki/Random_number_generation#Computational_methods
+
+int rand(int seed);
+
+int main() {
+  return rand(0xDEADBEEF);
+}
+
+int rand(int seed) {
+  int seed_1 = seed & 0x0000FFFF;
+  int seed_2 = (seed >> 16) & 0x0000FFFF;
+  for (int i = 0; i < 0xFFFFF; i++) {
+    seed_1 = 36969 * (seed_1 & 65535) + (seed_1 >> 16);
+    seed_2 = 18000 * (seed_2 & 65535) + (seed_2 >> 16);
+  }
+  return (seed_1 << 16) + seed_2;
+}

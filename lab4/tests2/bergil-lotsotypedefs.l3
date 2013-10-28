@@ -1,0 +1,19 @@
+//test return 47
+
+typedef int a;
+typedef a b;
+typedef b c;
+typedef a d;
+
+typedef bool z;
+typedef z y;
+typedef y x;
+typedef x w;
+
+d main() {
+  y mybool = true;
+  z yourbool = mybool && false;
+  
+  b myint = 4;
+  return 4 + 39 + myint;
+}

@@ -1,0 +1,22 @@
+//test return 1
+
+
+int Main() {
+	return 5;
+}
+
+int maiN() {
+	return 4;
+}
+
+int main_() {
+	return 3;
+}
+
+int _c0_main() {
+	return 2;
+}
+
+int main() {
+	return 1;
+}

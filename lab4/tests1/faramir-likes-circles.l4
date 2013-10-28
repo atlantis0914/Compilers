@@ -1,0 +1,44 @@
+//test exception 14
+
+//round and round we go. Where we stop, nobody knows!
+
+struct list { int head; struct list * tail; };
+typedef struct list list_t;
+
+list_t * upto(int n) {
+    list_t * p;
+    list_t * q;
+    list_t * h;
+    q = NULL;
+
+    while (n > 0) {
+        p = alloc(list_t);
+        p->head = n;
+        p->tail = q;
+        q = p;
+        n -= 1;
+    }
+    
+    h = q;
+    while (h->tail != NULL) h = h->tail;
+    h->tail = q;
+
+    return q;
+}
+
+bool search(list_t * xs, int x) {
+        
+    list_t * p = xs;    
+    if(p == NULL) return false;
+    while(p->head != x) {
+        p = p->tail;
+        if(p == NULL) return false;
+    }
+    return true;
+}
+    
+int main() {
+    list_t * p = upto(100); 
+    if(search (p, 200)) return 0;
+    else return 1;
+}

@@ -1,0 +1,9 @@
+//test error
+
+int main() {
+  int foo = 4;
+  int * bar = alloc(int);
+  *bar = 5;
+  foo * bar = 200;
+  return 0;
+}

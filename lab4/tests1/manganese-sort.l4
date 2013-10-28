@@ -1,0 +1,78 @@
+//test return 385
+
+struct node {
+    int val;
+    struct node * next;
+};
+typedef struct node node;
+
+node * merge(node * a, node * b) {
+    if (a == NULL || b == NULL) {
+        return a == NULL ? b : a;
+    }
+
+    node * head;
+    if (a->val < b->val) {
+        head = a; a = a->next;
+    } else {
+        head = b; b = b->next;
+    }
+
+    node * temp = head;
+    while (a != NULL && b != NULL) {
+        if (a->val < b->val) {
+            temp->next = a; a = a->next;
+        } else {
+            temp->next = b; b = b->next;
+        }
+        temp = temp->next;
+    }
+    temp->next = (a != NULL ? a : b);
+
+    return head;
+}
+
+node * merge_sort(node * head) {
+    if (head == NULL || head->next == NULL) {
+        return head;
+    }
+
+    int size = 0;
+    node * first;
+    node * second;
+    first = head;
+    while (first != NULL) {
+        size++;
+        first = first->next;
+    }
+
+    first = head;
+    for (int i = 0; i < (size / 2) - 1; i++) {
+        first = first->next;
+    }
+    second = first->next;
+    first->next = NULL;
+    first = head;
+
+    return merge(merge_sort(first), merge_sort(second));
+}
+
+int main() {
+    node * head = alloc(node);
+    node * temp = head;
+    for (int i = 10; i > 1; i--) {
+        temp->val = i;
+        temp->next = alloc(node);
+        temp = temp->next;
+    }
+    temp->val = 1;
+
+    head = merge_sort(head);
+
+    int total = 0;
+    for (int i = 1; i <= 10; i++) {
+        total += i * head->val;
+        head = head->next;
+    }
+    return total;
+}

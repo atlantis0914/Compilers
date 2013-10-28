@@ -1,0 +1,16 @@
+//test exception
+
+int[]*** foo()
+{
+  int[]*** f = alloc(int[]**);
+  *f = alloc(int[]*);
+  **f = alloc(int[]);
+  ***f = alloc_array(int, 2);
+  return f;
+}
+
+int main()
+{
+  int[] b = alloc_array(int, 5);
+  return (true ? (***foo()) : b)[2];
+}

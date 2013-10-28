@@ -1,0 +1,19 @@
+//test return 541
+//computes the 100th prime number
+
+bool isPrime(int n);
+
+int main() {
+  int i = 0;
+  int n;
+  for (n = 2; i < 100; n++) {
+    if (isPrime(n)) i++;
+  }
+  return n-1;
+}
+
+bool isPrime(int n) {
+  for (int i = 2; i < n; i++)
+    if (n%i == 0) return false;
+  return true;
+}

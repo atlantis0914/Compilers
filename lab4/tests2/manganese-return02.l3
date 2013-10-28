@@ -1,0 +1,14 @@
+//test return 0
+// test typechecking with typedefs
+
+typedef int size_t;
+
+size_t foo(int x) {
+    return 0;
+}
+
+int main() {
+    int x = 0;
+    x = foo(x);
+    return x;
+}

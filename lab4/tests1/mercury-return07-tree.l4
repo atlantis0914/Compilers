@@ -1,0 +1,66 @@
+//test return 0
+
+/*
+      3
+  1      5
+0   2  4   6
+*/
+
+struct tree {
+  struct tree* left;
+  struct tree* right;
+  int val;
+};
+
+bool findInt(struct tree* node, int x) {
+  if (node == NULL) {
+    return false;
+  }
+  if (node->val == x) {
+    return true;
+  }
+  if (node->val > x) {
+    return findInt(node->left, x);
+  }
+  return findInt(node->right, x);
+}
+
+int main() {
+  struct tree* n0 = alloc(struct tree);
+  struct tree* n1 = alloc(struct tree);
+  struct tree* n2 = alloc(struct tree);
+  struct tree* n3 = alloc(struct tree);
+  struct tree* n4 = alloc(struct tree);
+  struct tree* n5 = alloc(struct tree);
+  struct tree* n6 = alloc(struct tree);
+
+  n3->left = n1;
+  n3->right = n5;
+  n1->left = n0;
+  n1->right = n2;
+  n5->left = n4;
+  n5->right = n6;
+
+  n0->val = 0;
+  n1->val = 1;
+  n2->val = 2;
+  n3->val = 3;
+  n4->val = 4;
+  n5->val = 5;
+  n6->val = 6;
+
+  assert(findInt(n3, 0));
+  assert(findInt(n3, 1));
+  assert(findInt(n3, 2));
+  assert(findInt(n3, 3));
+  assert(findInt(n3, 4));
+  assert(findInt(n3, 5));
+  assert(findInt(n3, 6));
+  assert(!findInt(n3, -1));
+  assert(!findInt(n3, 7));
+  assert(findInt(n1, 0));
+  assert(findInt(n1, 2));
+  assert(!findInt(n1, 3));
+
+  return 0;
+}

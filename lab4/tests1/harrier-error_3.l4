@@ -1,0 +1,17 @@
+//test error
+
+typedef int *foo;
+typedef bool *moo;
+
+int myfun(foo * foo, moo * moo)
+{
+    return ** foo * ** moo;
+}
+
+int main()
+{
+    foo a = alloc_array(foo, 1);
+    moo b = alloc_array(moo, 1);
+    myfun(a, b);
+    return 0;
+}

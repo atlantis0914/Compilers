@@ -1,0 +1,23 @@
+//test return -148
+
+int main()
+{
+    int x = 5;
+    int c = 2;
+    while (x > 0) {
+        if (false) return 4; 
+        int y = 1;
+        for (int i = 0; i < 0x111; i++) {
+            if (i % 2 == 0) y += 2;
+            else y *=2; 
+            y -=1;
+        }
+        {
+            int a = 20;
+            int b = (20 % 2 == 0) ? a / 2 : a / 2 + 1; 
+            c -= a + b;
+        }
+        x--;
+    }
+    return c;
+}

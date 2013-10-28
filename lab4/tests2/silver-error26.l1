@@ -1,0 +1,7 @@
+//test error
+// Test invalid reserved keywords.
+
+int main() {
+    int char = 1;
+    return char;
+}

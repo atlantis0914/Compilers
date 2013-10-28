@@ -1,0 +1,12 @@
+//test exception 11
+// negative allocation sizes not permitted
+
+struct a {
+    int[] xs;
+};
+
+int main () {
+    struct a* foo = alloc(struct a);
+    foo->xs = alloc_array(int, -2);
+    return 0;
+}

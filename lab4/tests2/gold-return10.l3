@@ -1,0 +1,14 @@
+//test return -1
+
+int flip(int n, int t) {
+	if (t == 0) {
+		return n;
+	}
+	else {
+		return flip(-n, t - 1);
+	}
+}
+
+int main () {
+	return flip(1, 9);
+}

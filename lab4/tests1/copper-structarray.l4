@@ -1,0 +1,27 @@
+//test return 140
+
+
+struct foo{
+    int val1;
+    int val2;
+    int val3;
+};
+
+int main(){
+    struct foo *[] foos = alloc_array(struct foo *, 5);
+
+    int total = 0;
+
+    for (int i = 0; i < 5; i++){
+        struct foo *f = alloc(struct foo);
+        f->val1 = i;
+        f->val2 = i*i;
+        f->val3 = i*i*i;
+        foos[i] = f;
+    }
+
+    for (int i = 0; i < 5; i++){
+        total += foos[i]->val1 + foos[i]->val2 + foos[i]->val3;
+    }
+    return total;
+}

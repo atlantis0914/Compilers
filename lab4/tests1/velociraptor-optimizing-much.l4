@@ -1,0 +1,32 @@
+//test return 0
+// Hey, are you optimizing? Hey, are you optimizing on loops? Yeah,
+// that's what I thought. You're doing a bit too much, kid.
+
+int average(int[] list, int length) {
+	int n = 1;
+	int i = 0;
+	int sum = 0;
+	for ( ; i < length; i+= 1) {
+		n = length; // In fact, here's where you're doing it wrong
+		sum += list[i];
+	}
+	return sum / n;
+}
+
+
+int main() {
+	int[] vals1;
+	int[] vals2;
+	int x;
+	int y;
+	vals1 = alloc_array(int, 5);
+	vals2 = alloc_array(int, 0);
+	vals1[0] = 6;
+	vals1[1] = 1;
+	vals1[2] = 9;
+	vals1[3] = 43;
+	vals1[4] = 2;
+	x = average(vals1, 5);
+	y = average(vals2, 0);
+	return y;
+}

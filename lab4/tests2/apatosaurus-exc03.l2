@@ -1,0 +1,7 @@
+//test exception
+//overflowsss
+int main(){
+    int x = 1;
+    x = x<<31;
+    return x / (x>>31);
+}

@@ -1,0 +1,7 @@
+//test return 0
+
+int main() {
+  if (NULL != NULL) 1/0;
+  
+  return 0;
+}

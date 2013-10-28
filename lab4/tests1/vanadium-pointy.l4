@@ -1,0 +1,19 @@
+//test return 1
+
+struct pointy {
+	int[] ouch;
+};
+
+void stuff(struct pointy**** pointy) {
+	(****pointy).ouch[42] = 1;
+}
+
+int main() {
+	struct pointy**** p = alloc(struct pointy***);
+	*p = alloc(struct pointy**);
+	**p = alloc(struct pointy*);
+	***p = alloc(struct pointy);
+	(***p)->ouch = alloc_array(int,100);
+	stuff(p);
+	return (***p)->ouch[42];
+}

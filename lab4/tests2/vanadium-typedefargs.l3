@@ -1,0 +1,13 @@
+//test return 123
+
+typedef int f;
+
+int x(int h, int g);
+
+f x(f h,f g) {
+    return h + g;
+}
+
+int main() {
+    return x(100,23);
+}

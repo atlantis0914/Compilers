@@ -1,0 +1,10 @@
+//test error
+// void used for non-functions.
+
+int foo(int x, void v) {
+  return x;
+}
+
+int main() {
+  return foo(12000);
+}

@@ -1,0 +1,13 @@
+//test error
+// redeclaration of a variable under a different type
+int main() {
+  int a = 3;
+  int b = 6;
+
+  if (a > 2) {
+    bool b = false;
+    a = 4;
+  }
+
+  return a;
+}

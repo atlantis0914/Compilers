@@ -1,0 +1,17 @@
+//test return 0
+//int to bool operators
+
+int main ()
+{
+  int x = 0;
+  bool b = true;
+  
+  b = x < x;
+  b = x > x;
+  b = x <= x;
+  b = x >= x;
+  b = x == x;
+  b = x != x;
+
+  return x;
+}

@@ -1,0 +1,22 @@
+//test return 0
+
+typedef int boo;
+typedef boo coo;
+
+struct boo {
+    boo boo;
+};
+
+struct coo {
+    coo boo;
+    coo coo;
+};
+
+int main() {
+    struct boo * boo_ptr = alloc(struct boo);
+    struct coo * coo_ptr = alloc(struct coo);
+    boo_ptr->boo = 0;
+    coo_ptr->coo = boo_ptr->boo;
+    coo_ptr->boo = coo_ptr->coo;
+    return coo_ptr->boo;
+}

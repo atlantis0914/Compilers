@@ -1,0 +1,16 @@
+//test return 8
+
+struct mys {
+   int x;
+   int y;
+   int *z;
+};
+
+int main() {
+   struct mys *x=alloc(struct mys);
+   x->x=7;
+   x->y=1;
+   x->z=alloc(int);
+   *x->z=x->x+x->y;
+   return *x->z;
+}

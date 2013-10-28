@@ -1,0 +1,10 @@
+//test return 21
+//check blocking
+
+int main() {
+  int i;
+  for (i = 0; i < 20; i++) 
+    i++;
+    i++;
+  return i;
+} 

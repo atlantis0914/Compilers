@@ -1,0 +1,12 @@
+//test error
+/* variable multiply declared */
+
+int f (int x, int y, int z, int v, int w, int y) {
+  int x1;
+  int y2;
+  return 0;
+}
+
+int main () {
+  return f(0, 1, 2, 3, 4, 5);
+}

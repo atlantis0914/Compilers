@@ -1,0 +1,13 @@
+//test error
+
+struct suckolai {bool a;};
+
+typedef struct suckolai putin;
+
+int main() {
+    putin *i = alloc(putin);
+    i->a = false;
+    assert(i->a + 1);
+    return 7;
+}
+    

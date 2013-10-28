@@ -1,0 +1,5 @@
+//test return 0
+int main() {
+    int a = 0; // L1 won't let me call this á
+    return a;
+}

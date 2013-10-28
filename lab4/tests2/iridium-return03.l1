@@ -1,0 +1,9 @@
+//test return 1
+// pseudo recursive instruction
+
+int main()
+{
+  int x = 0;
+  x = x + 1;
+  return x;
+}

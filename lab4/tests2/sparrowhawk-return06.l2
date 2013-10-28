@@ -1,0 +1,12 @@
+//test return 1
+
+int main()
+{
+	
+
+	if (true && !false && (!(true) || !!!(false)))
+	   return 1;
+	else
+	   return 0; 
+	
+}

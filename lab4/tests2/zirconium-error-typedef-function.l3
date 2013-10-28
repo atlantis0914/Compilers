@@ -1,0 +1,35 @@
+//test error
+//Turns out this is not kosher
+
+void foo(bool a, int b);
+
+typedef void alphaV;
+typedef bool alphaB;
+typedef int  alphaI;
+
+alphaV foo(alphaB a, alphaI b);
+
+typedef alphaV betaV;
+typedef alphaB betaB;
+typedef alphaI betaI;
+
+betaV foo(betaB a, betaI b);
+
+typedef betaV gammaV;
+typedef betaB gammaB;
+typedef betaI gammaI;
+
+gammaV foo(gammaB a, gammaI b);
+
+typedef gammaV deltaV;
+typedef gammaB deltaB;
+typedef gammaI deltaI;
+
+void foo(bool a, int b) {
+    int x = a ? b : -b;
+}
+
+int main() {
+  return 0;
+  foo();
+}

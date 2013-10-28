@@ -1,0 +1,13 @@
+//test error
+/* Can't have function/typedef collisions */
+
+int main()
+{
+  return 0;
+}
+
+typedef main int;
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

@@ -1,0 +1,14 @@
+//test return 4
+
+int k(int p) {
+	return p-1;
+}
+
+int p(bool kd) {
+	if (kd) return k(5);
+	else return k(3);
+}
+
+int main() {
+	return p(true);
+}

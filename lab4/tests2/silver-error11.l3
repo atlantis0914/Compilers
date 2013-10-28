@@ -1,0 +1,6 @@
+//test error
+//misssing main, but have other function
+
+int fail() {
+    return 0;
+}

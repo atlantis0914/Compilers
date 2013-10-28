@@ -1,0 +1,11 @@
+//test exception
+
+int foo(int m, int n) {
+  if (n==0) return 0;
+  return n / foo(m, n-1);
+}
+
+int main()
+{
+    return foo(1337, 1/0);
+}

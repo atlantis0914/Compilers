@@ -1,0 +1,87 @@
+//test return 3826
+
+struct Node_t;
+typedef struct Node_t Node;
+
+struct Node_t {
+    Node* left;
+    Node* right;
+    int value;
+};
+
+Node* alloc_node(int v){
+    Node* new_node = alloc(Node);
+    new_node->left = NULL;
+    new_node->right = NULL;
+    new_node->value = v;
+    return new_node;
+}
+
+bool contains(Node *root, int value){
+    if(root == NULL)
+        return false;
+    if(value == root->value)
+        return true;
+    if(value < root->value)
+        return contains(root->left, value);
+    else
+        return contains(root->right, value);
+}
+
+int add(Node *root, int value){
+    if(root->value == value)
+        return 0;
+    if(value < root->value){
+        if(root->left == NULL)
+            root->left = alloc_node(value);
+        else
+            add(root->left, value);
+    }else{
+        if(root->right == NULL)
+            root->right = alloc_node(value);
+        else
+            add(root->right, value);
+    }
+    return 0;
+}
+
+int main(){
+    int ans = 0;
+    Node* root = alloc_node(135);
+    if(contains(root, 75))
+        ans += 1;
+    add(root, 75);
+    if(contains(root, 135))
+        ans += 2;
+    add(root, 140);
+    if(contains(root, 76))
+        ans += 4;
+    add(root, 141);
+    if(contains(root, 139))
+        ans += 8;
+    add(root, 142);
+    if(contains(root, 142))
+        ans += 16;
+    add(root, 143);
+    if(contains(root, 143))
+        ans += 32;
+    add(root, 0);
+    if(contains(root, 75))
+        ans += 64;
+    add(root, 2);
+    if(contains(root, 0))
+        ans += 128;
+    add(root, 56);
+    if(contains(root, 1))
+        ans += 256;
+    add(root, 75);
+    if(contains(root, 75))
+        ans += 512;
+    add(root, 76);
+    if(contains(root, 0))
+        ans += 1024;
+    add(root, 77);
+    if(contains(root, 77))
+        ans += 2048;
+    return ans;
+}

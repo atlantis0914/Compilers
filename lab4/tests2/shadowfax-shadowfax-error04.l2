@@ -1,0 +1,12 @@
+//test error
+// tests fucked up nested comments
+int main()
+{
+  int x = 0;
+  /* derp herp LOLOL
+   * wtf is this lol -> /*
+   *
+   */
+  
+  return x;
+}

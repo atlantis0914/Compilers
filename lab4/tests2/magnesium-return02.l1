@@ -1,0 +1,25 @@
+//test return 821212121
+//test div and mod
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+  int e;
+  int f;
+  int g;
+  int h;
+  int i;
+  int j;
+  int k;
+  int l;
+
+  a = 8 / 4; b = -8 / 4; // 2 -2
+  c = 8 / -4; d = -8 / -4; // -2 2
+  e = 9 / 4; f = 9 % 4;  // 2 1
+  g = -9 / 4; h = -9 % 4; // -2 -1
+  i = 9 / -4; j = 9 % -4; // -2 1
+  k = -9 / -4; l = -9 % -4; // 2 -1
+  return -l+10*(k+10*(j+10*(-i+10*(-h+10*(-g+10*(f+10*(e+10*(d-c-b+a))))))));
+}

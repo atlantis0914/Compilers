@@ -1,0 +1,13 @@
+//test return 1
+// test XOR
+int main(){
+    int x = 1;
+    int y = 0;
+    
+    x = x ^ y;
+    y = x ^ y;
+    x = x ^ y;
+
+    return y;
+
+}

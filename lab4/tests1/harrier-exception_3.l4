@@ -1,0 +1,12 @@
+//test exception
+
+int main()
+{
+    for (int i = 233; i >= -3; i--)
+        for (int ii = 32; ii >= -72; ii--)
+        {
+            int iii;
+            iii = i / ii;
+        }
+    return 0;
+}

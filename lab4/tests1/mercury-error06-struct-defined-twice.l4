@@ -1,0 +1,8 @@
+//test error
+
+struct s { int foo; };
+struct s { int foo; };
+
+int main() {
+  return 0;
+}

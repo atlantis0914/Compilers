@@ -1,0 +1,14 @@
+//test error
+
+struct a
+{
+    int b;
+    int c;
+};
+
+int main()
+{
+    struct a temp;
+    temp.b = 5;
+    return temp.b;
+}

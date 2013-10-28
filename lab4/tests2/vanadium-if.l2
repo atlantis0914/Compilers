@@ -1,0 +1,26 @@
+//test return 12
+
+/* Inspired by cheap trick */
+
+int main() {
+	int want = 10;
+	int need = 16;
+	int hide = 0;
+	int mylove = 0;
+	int yougotit = 0;
+	while (mylove < 20) {
+		if (want == mylove)
+			yougotit++;
+		if (need == mylove)
+			yougotit++;
+		if (hide <= mylove)
+			mylove++;
+		if (false)
+			mylove = 0;
+		else if ((mylove <3 ? 1 : 0) + 1 >= 1) {
+			mylove++;
+			yougotit++;
+		}
+	}
+	return yougotit;
+}

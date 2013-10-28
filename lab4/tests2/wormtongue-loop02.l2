@@ -1,0 +1,12 @@
+//test return 37
+
+int main () {
+	int i;
+	int y = 0;
+	int x = 1;
+	for (i = 0; i < 10; i += 1) {
+		x += y;
+		y = i;
+	}
+	return x;
+}

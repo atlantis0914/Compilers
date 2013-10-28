@@ -1,0 +1,13 @@
+//test return 5
+
+struct s {
+  int main;
+};
+
+typedef struct s* s;
+
+int main() {
+  s test = alloc(struct s);
+  test->main = 5;
+  return test->main;
+}

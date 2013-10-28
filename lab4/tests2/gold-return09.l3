@@ -1,0 +1,11 @@
+//test return 999
+
+int bar();
+
+int main () {
+    return bar();
+}
+
+int bar() {
+	return 999;
+}

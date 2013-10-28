@@ -1,0 +1,12 @@
+//test error
+//function inside another function
+
+int main(int x)
+{
+    int inside(int y)
+    {
+      return 1;
+    }
+
+    return inside (4);
+}

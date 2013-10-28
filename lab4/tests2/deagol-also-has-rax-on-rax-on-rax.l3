@@ -1,0 +1,14 @@
+//test return 30236619
+
+int megadivide() {
+  int a = 1;
+  for (int i = 0; i < 500000000; i++) {
+    a += i/7;
+  }
+  return a;
+}
+
+int main() {
+  return megadivide();
+}
+

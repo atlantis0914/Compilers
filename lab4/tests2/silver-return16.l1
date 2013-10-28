@@ -1,0 +1,6 @@
+//test return -2
+// Division check
+
+int main() {
+    return 9/-4;
+}

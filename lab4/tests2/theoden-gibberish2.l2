@@ -1,0 +1,10 @@
+//test return 31
+
+// randomly generated
+int main()
+{
+int OltdPCvb = 31 ;
+int tuuWPbBG = 31 + ( true ? ( ( true ? !true : true ) || true ? 31 : 31 ) : ( OltdPCvb % OltdPCvb ) ) + ( true ? OltdPCvb : OltdPCvb ) - 31 << ( true ? OltdPCvb : ( true ? ( ~31 - OltdPCvb ) : 31 ) ) ;
+!!true ;
+return 31 ;
+}

@@ -1,0 +1,21 @@
+//test error
+//Pass a big type as an arg
+
+struct s {
+  int x;
+  bool y;
+};
+
+int check(struct s it) {
+  if(it.y) {
+    return it.x;
+  }
+  return 0;
+}
+
+int main() {
+  struct s *it = alloc(struct s);
+  s->x = 5;
+  s->y = true;
+  return check(*s);
+}

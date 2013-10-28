@@ -1,0 +1,13 @@
+//test return 10
+// main main
+struct main {
+       int main;
+       bool wat;
+};
+
+
+int main() {
+    struct main* main = alloc(struct main);
+    main->main = 10;
+    return main->main;
+}

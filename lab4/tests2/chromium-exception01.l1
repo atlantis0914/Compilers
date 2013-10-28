@@ -1,0 +1,13 @@
+//test exception 8
+// division overflow
+int main()
+{
+  int TMAX;
+  int overflow;
+
+  TMAX = 2147483647;
+  overflow = (TMAX + 1) / -1;
+  return 0;
+}
+
+  

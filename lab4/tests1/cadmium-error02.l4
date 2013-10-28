@@ -1,0 +1,12 @@
+//test error
+struct str {
+};
+
+int do_something(struct str x) {
+    return 0;
+}
+
+int main() {
+    struct str[] arr = alloc_array(struct str, 100);
+    return 0;
+}

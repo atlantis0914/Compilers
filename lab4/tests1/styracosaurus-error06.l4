@@ -1,0 +1,16 @@
+//test error
+
+struct s;
+struct t;
+
+struct s{
+	struct t t;
+};
+struct t{
+	struct s s;
+};
+
+int main()
+{
+	return 5;
+}

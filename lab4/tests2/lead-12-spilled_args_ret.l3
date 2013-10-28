@@ -1,0 +1,14 @@
+//test return 28
+//tests spilled arguments ( 1 + 2 + ... + 7 = 28)
+
+// there are only 6 registers for argument passing!
+int spilledMilk(int a, int b, int c, int d, int e, int f, int g) {
+  return a + b + c + d + e + f + g;
+}
+
+int main ()
+{
+  int x;
+  x = spilledMilk(1, 2, 3, 4, 5, 6, 7);
+  return x;
+}

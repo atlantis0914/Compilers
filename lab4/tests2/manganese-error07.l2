@@ -1,0 +1,8 @@
+//test error
+// apparently postops are not allowed in expressions.
+int main()
+{
+    int a = 1;
+
+    return (a++ + a++);
+}

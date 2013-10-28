@@ -1,0 +1,12 @@
+//test return 10
+// continuous semicolumn and strange comment block
+int main()
+{
+  int a;
+  int b = -100;
+
+  a = 10;
+  b = /* a = 3
+234 */ a;
+  return b;
+}

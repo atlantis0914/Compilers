@@ -1,0 +1,10 @@
+//test exception
+// test timeout/stack overflow
+
+int A() {
+    return A();
+}
+
+int main() {
+    return A();
+}

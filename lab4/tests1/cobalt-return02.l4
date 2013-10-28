@@ -1,0 +1,74 @@
+//test return 3
+//traverse BST
+
+struct Node{
+  int data;
+  struct Node *right;
+  struct Node *left;
+};
+
+
+struct Node* construct(int[] A, int start, int end){
+
+  if(start == end) {
+    struct Node *a;
+    a = alloc(struct Node);
+    a->data = A[start];
+    return a;
+  }
+  else if (start == end - 1) {
+    struct Node *a;
+    a = alloc(struct Node);
+    a->data = A[start];
+
+    struct Node *b;
+    b = alloc(struct Node);
+    b->data = A[end];
+
+    a->right = b;
+    return a;
+  }
+  else {
+    int i;
+    i = (start + end) / 2;
+
+    struct Node *root;
+    root = alloc(struct Node);
+
+    root->data = A[i];
+    root->left = construct(A, start, i - 1);
+    root->right = construct(A, i + 1, end);
+    return root;
+  }
+}
+
+void traverse (struct Node* node) {
+  
+  if(node->left != NULL) {
+    traverse(node->left);
+  }
+
+  print_int(node->data);
+
+  if(node->right != NULL) {
+    traverse(node->right);
+  }
+
+  return;
+}
+
+int main() {
+  int[] A;
+  A = alloc_array(int, 5);
+  A[0] = 1;
+  A[1] = 2;
+  A[2] = 3;
+  A[3] = 4;
+  A[4] = 5;
+
+  struct Node *root;
+  root = construct(A, 0, 4);
+  traverse(root);
+  return root->data;
+}
+

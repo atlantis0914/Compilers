@@ -1,0 +1,65 @@
+//test return 8
+//unbalanced binary trees!
+
+struct node {
+	int value;
+	struct node* parent;
+	struct node* left;
+	struct node* right;
+};
+typedef struct node* node;
+
+bool contains(node n, int v) {
+	if(n == NULL) {return false;}
+	if(n->value == v) {return true;}
+	if(n->value > v) {return contains(n->left, v);}
+	if(n->value < v) {return contains(n->right, v);}
+	assert(false);
+	return false;
+}
+
+void insert(node n, int v) {
+	assert(n != NULL);
+	if(n->value == v) {return;}
+	if(n->value > v) {
+		if(n->left == NULL) {
+			node new = alloc(struct node);
+			new->parent = n;
+			new->value = v;
+			n->left = new;
+		} else {
+			insert(n->left, v);
+		}
+	}
+	if(n->value < v) {
+		if(n->right == NULL) {
+			node new = alloc(struct node);
+			new->parent = n;
+			new->value = v;
+			n->right = new;
+		} else {
+			insert(n->right, v);
+		}
+	}
+}
+
+int main() {
+	node n = alloc(struct node);
+	n->value = 12;
+	insert(n, 3);
+	insert(n, 42);
+	insert(n, 7);
+	insert(n, 1);
+	insert(n, 2);
+	insert(n, 67);
+	insert(n, 33);
+	if(contains(n, 6)) {return 0;}
+	if(contains(n, 101)) {return 1;}
+	if(contains(n, 4)) {return 2;}
+	if(contains(n, 43)) {return 3;}
+	if(!contains(n, 42)) {return 4;}
+	if(!contains(n, 33)) {return 5;}
+	if(!contains(n, 1)) {return 6;}
+	if(!contains(n, 12)) {return 7;}
+	return 8;
+}

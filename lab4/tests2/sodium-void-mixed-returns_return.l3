@@ -1,0 +1,19 @@
+//test return 0
+// Some branches of the void fn have explicit returns. Others don't.
+
+void wtf(int z) {
+  for (int i = 0; i < z; i++) {
+    if (z % 2 == 0 && z % 2 == 1)
+      return;
+    else if (z > z)
+      return;
+    else if (z >= 10000 && z % 2 == 0)
+      return;
+    z++;
+  }
+}
+
+int main() {
+  wtf(500);
+  return 0;
+}

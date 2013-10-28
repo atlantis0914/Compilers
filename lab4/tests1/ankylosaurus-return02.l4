@@ -1,0 +1,24 @@
+//test return 117
+// Test about to access a field in a struct through a pointer
+
+struct test
+{
+    int x;
+    int y;
+    int [] z;
+};
+
+int main()
+{
+    struct test * testing = alloc(struct test);
+
+    if(testing != NULL) 
+    {
+       testing->z = alloc_array(int, 5);
+       testing->z[2] = 117;
+
+       return testing->z[2];
+    }
+    
+    return 0;
+}

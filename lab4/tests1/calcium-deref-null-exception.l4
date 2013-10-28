@@ -1,0 +1,7 @@
+//test exception 11
+// left to right!
+int main() {
+  int** poop = NULL;
+  **poop = 3 / 0;
+  return **poop;
+}

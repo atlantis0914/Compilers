@@ -1,0 +1,6 @@
+//test return 0
+// Test simplest possible program
+int main()
+{
+  return 0;
+}

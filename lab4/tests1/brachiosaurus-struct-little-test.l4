@@ -1,0 +1,39 @@
+//test return 112358
+
+struct baz;
+
+struct bar {
+	int *bay;
+	struct baz *baz;
+	int *baw;
+};
+
+struct foo {
+	int baq;
+	struct bar bar;
+	int bat;
+};
+
+struct baz {
+	int baa;
+};
+
+int init(struct foo *foo)
+{
+	foo->bar.baz->baa = 112358;
+	return 0;
+}
+
+int main()
+{
+	struct foo *foo = alloc(struct foo);
+	foo->bar.baz = alloc(struct baz);
+	/* Get ready */
+	init(foo);
+	/* Here we go! */
+	foo->baq = 13;
+	foo->bar.bay = NULL;
+	foo->bar.baw = alloc(int);
+	foo->bat = 21;
+	return foo->bar.baz->baa;
+}

@@ -1,0 +1,50 @@
+//test return 42
+//nested typedefs
+
+typedef int type01;
+typedef type01 type02;
+typedef type02 type03;
+typedef type03 type04;
+typedef type04 type05;
+typedef type05 type06;
+typedef type06 type07;
+typedef type07 type08;
+typedef type08 type09;
+typedef type09 type10;
+typedef type10 type11;
+typedef type11 type12;
+typedef type12 type13;
+typedef type13 type14;
+typedef type14 type15;
+typedef type15 type16;
+typedef type16 type17;
+typedef type17 type18;
+typedef type18 type19;
+typedef type19 type20;
+typedef type20 type21;
+typedef type21 type22;
+typedef type22 type23;
+typedef type23 type24;
+typedef type24 type25;
+typedef type25 type26;
+typedef type26 type27;
+typedef type27 type28;
+typedef type28 type29;
+typedef type29 type30;
+typedef type30 type31;
+typedef type31 type32;
+typedef type32 type33;
+typedef type33 type34;
+typedef type34 type35;
+typedef type35 type36;
+typedef type36 type37;
+typedef type37 type38;
+typedef type38 type39;
+typedef type39 type40;
+typedef type40 type41;
+typedef type41 type42;
+
+type01 main() {
+  type42 answer = 42;
+  return answer;
+}

@@ -1,0 +1,16 @@
+//test return 0
+
+bool alwaysTrue() {
+  return true;
+}
+
+bool alwaysDivZero() {
+  int x = 0 / 0;
+  return false;
+}
+
+int main () {
+  if(alwaysTrue() || alwaysDivZero()) 
+    return 0; 
+  return 1;
+}

@@ -1,0 +1,8 @@
+//test error
+// This program fails to compile because a variable is declared more than once
+int main() {
+    int x = 5;
+    int y = 0;
+    int x = 2;
+    return y;
+}

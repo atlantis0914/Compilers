@@ -1,0 +1,8 @@
+//test error
+//invalid return value
+
+
+int main()
+{
+    return {}; 
+}

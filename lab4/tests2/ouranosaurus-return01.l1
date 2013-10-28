@@ -1,0 +1,16 @@
+//test return 3
+// tests all of the assignment operators
+
+int main()
+{
+  int x1;
+  
+  x1 = 80;
+  x1 /= 3;   // 26
+  x1 *= 4;   // 104
+  x1 -= 4;   // 100
+  x1 += -17; // 83 
+  x1 %= 10;  // 3
+
+  return x1;
+}

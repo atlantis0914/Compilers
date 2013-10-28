@@ -1,0 +1,21 @@
+//test return 0
+int printFactorsHelper(int n, int acc) {
+  if (acc > n) {
+    return 0;
+  }
+  if (n % acc == 0) {
+    print_int (acc);
+    return printFactorsHelper(n/acc, acc);
+  } else {
+    return printFactorsHelper(n, acc + 1);
+  }
+}
+
+int printFactors(int n) {
+  //Output all the prime factors of n. It's really inefficient though
+  return printFactorsHelper(n, 2);
+}
+
+int main () {
+  return printFactors(1008);
+}

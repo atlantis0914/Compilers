@@ -1,0 +1,14 @@
+//test return 3
+// more basic if sanity
+
+int main(){
+    int x;
+    int y;
+    y = 1;
+    x = 2;
+    if (y + x <= 2){
+        int d = 2;
+        x = d + 2;}
+    else x = 3;
+    return x;
+}

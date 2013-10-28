@@ -1,0 +1,9 @@
+//test exception 8
+//div by zero
+
+int main() {
+  int i = 1;
+  for (i = 0; i < 1; i++) {}
+  i--;
+  return i/i;
+}

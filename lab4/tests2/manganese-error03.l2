@@ -1,0 +1,10 @@
+//test error
+// uninitialized variables
+int main()
+{
+    int b;
+    if (true) {
+        b = 5;
+    }
+    return b;
+}

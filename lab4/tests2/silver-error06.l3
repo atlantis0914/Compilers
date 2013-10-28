@@ -1,0 +1,13 @@
+//test error
+// typedef stuff.
+
+typedef int f;
+
+f f() {
+  return 0;
+}
+
+int main() {
+    f();
+    return 0;
+}

@@ -1,0 +1,17 @@
+//test error
+
+struct b* foo(struct a* fbl) {
+
+  return fbl->bbbb;
+
+}
+
+struct a {
+  struct b* bbbb;
+};
+
+int main() {
+
+  return 0;
+
+}

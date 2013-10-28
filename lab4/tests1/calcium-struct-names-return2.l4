@@ -1,0 +1,9 @@
+//test return 0
+// arrays of poop are ok
+struct poop {
+  struct poop []poop;
+};
+
+int main() {
+  return 0;
+}

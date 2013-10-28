@@ -1,0 +1,9 @@
+//test return 3407
+
+int main()
+{
+    int a = 48234;
+    while (a > 3432)
+        a -= (a % 71) + 1;
+    return a;
+}

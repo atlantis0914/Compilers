@@ -1,0 +1,10 @@
+//test exception 11
+// test that array sizes are preserved within 2d arrays
+
+int main() {
+    int[][] double_array = alloc_array(int[], 1);
+    int[] single_array = alloc_array(int, 2);
+    double_array[0] = single_array;
+    double_array[0][2] = 0;
+    return 0;
+}

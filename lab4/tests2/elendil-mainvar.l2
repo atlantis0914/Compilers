@@ -1,0 +1,17 @@
+//test return 6
+//  test multiple "main" vars
+int main () {
+  int sum;
+  {
+    int main = 3;
+    sum = 0;
+    sum += main;
+  }
+  {
+    for (int main = 0; main < 3; main ++)
+      if (main != 0)
+        sum *= main;
+  }
+
+  return sum;
+}

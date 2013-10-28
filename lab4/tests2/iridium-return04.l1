@@ -1,0 +1,7 @@
+//test return 42
+// large nested expression return
+
+int main()
+{
+  return (-1 * (((1 + 9)/5) - (4 * (8 + 3))));
+}

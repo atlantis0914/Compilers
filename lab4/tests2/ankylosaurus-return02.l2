@@ -1,0 +1,12 @@
+//test return -2147483648
+// int overflow and while
+int main(){
+    int x = 0x7fffff00;
+    while(x >= 0){
+    	  x++;
+
+
+    }
+    return x;
+
+}

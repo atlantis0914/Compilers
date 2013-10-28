@@ -1,0 +1,435 @@
+//test return 682015260
+/***************************************************************************/
+/*                               micro-Max,                                */
+/* A chess program smaller than 2KB (of non-blank source), by H.G. Muller  */
+/*             version 1.6 Ported to L4 for 15411 F10 by Ben Blum          */
+/*       see http://en.wikipedia.org/wiki/Micro-Max_%28chess_engine%29     */
+/***************************************************************************/
+
+/* I have frobbed this admirable chess engine into L4. It is now notably larger
+ * than its original incarnation, so its original name is no longer suitable.
+ * All the transformations I did on the original C to conform to typesafety/etc
+ * were as simple as possible, so you will forgive me for how ugly they are. */
+
+typedef int character;
+
+struct state {
+	int M;
+	int S;
+	int I;
+	int C;
+	int Q;
+	int O;
+	int K;
+	int N;
+	character L;
+	int P;
+	character[] w;
+	character[] o;
+	character[] b;
+	character[] n;
+	character[] c;
+};
+
+int init_state(struct state *Z)
+{
+	Z->M = 136;
+	Z->S = 128;
+	Z->I = 8000;
+	Z->C = 799;
+
+	Z->w = alloc_array(character, 8);
+	Z->w[0] = 0; Z->w[1] = 1; Z->w[2] = 1; Z->w[3] = -1; Z->w[4] = 3; Z->w[5] = 3; Z->w[6] = 5; Z->w[7] = 9;
+
+	Z->o = alloc_array(character, 32);
+	Z->o[0] = -16; Z->o[1] = -15; Z->o[2] = -17; Z->o[3] = 0; Z->o[4] = 1; Z->o[5] = 16; Z->o[6] = 0; Z->o[7] = 1;
+	Z->o[8] = 16; Z->o[9] = 15; Z->o[10] = 17; Z->o[11] = 0; Z->o[12] = 14; Z->o[13] = 18; Z->o[14] = 31; Z->o[15] = 33;
+	Z->o[16] = 0; Z->o[17] = 7; Z->o[18] = -1; Z->o[19] = 6; Z->o[20] = 11; Z->o[21] = 8; Z->o[22] = 3; Z->o[23] = 6;
+	Z->o[24] = 6; Z->o[25] = 4; Z->o[26] = 5; Z->o[27] = 7; Z->o[28] = 3; Z->o[29] = 5; Z->o[30] = 4; Z->o[31] = 6;
+
+	Z->b = alloc_array(character, 129);
+
+	Z->n = alloc_array(character, 16);
+	Z->n[0] = 46; Z->n[1] = 63; Z->n[2] = 43; Z->n[3] = 107; Z->n[4] = 110; Z->n[5] = 98; Z->n[6] = 114; Z->n[7] = 113;
+	Z->n[8] = 63; Z->n[9] = 42; Z->n[10] = 63; Z->n[11] = 75; Z->n[12] = 78; Z->n[13] = 66; Z->n[14] = 82; Z->n[15] = 81;
+
+	Z->c = alloc_array(character, 9);
+	return 0;
+}
+
+int crc(struct state *Z)
+{
+	int i;
+	int hash = 0;
+	for (i = 0; i < 129; i++) {
+		int noob = Z->b[i] * (i % 17);
+		hash ^= (noob >> (i % 31)) | (noob << (i % 31));
+	}
+	return hash;
+}
+
+struct game {
+	int[] line;
+	int gamelen;
+	int curpos;
+	int mate_in;
+};
+
+int init_game1(struct game *game)
+{
+	/* Convenience values for hard-coding the move strings. */
+	int a =  97; int b =  98; int c =  99; int d = 100;
+	int e = 101; int f = 102; int g = 103; int h = 104;
+	int n1 = 49; int n2 = 50; int n3 = 51; int n4 = 52;
+	int n5 = 53; int n6 = 54; int n7 = 55; int n8 = 56;
+	/* For promotions. */
+	int pN = 78; int pB = 66; int pR = 82; int pQ = 81;
+	/* Terminates a command, or tells the AI to compute a move. */
+	int newline = 10;
+
+	int[] arr;
+	game->gamelen = 245;
+	game->mate_in = 2;
+	game->line = alloc_array(int, game->gamelen);
+	arr = game->line;
+
+	/* This corresponds to 2r2r1k/p1q3pp/8/3Q1p2/2N5/PP3N2/4n1P1/R1B2n1K
+	 * Mate in two: Qh2+ Nxh2 Nfg3// */
+	arr[0] = e; arr[1] = n2; arr[2] = e; arr[3] = n4; arr[4] = newline;
+	arr[5] = e; arr[6] = n7; arr[7] = e; arr[8] = n5; arr[9] = newline;
+	arr[10] = d; arr[11] = n2; arr[12] = d; arr[13] = n4; arr[14] = newline;
+	arr[15] = d; arr[16] = n7; arr[17] = d; arr[18] = n5; arr[19] = newline;
+	arr[20] = e; arr[21] = n4; arr[22] = d; arr[23] = n5; arr[24] = newline;
+	arr[25] = d; arr[26] = n8; arr[27] = d; arr[28] = n5; arr[29] = newline;
+	arr[30] = g; arr[31] = n1; arr[32] = f; arr[33] = n3; arr[34] = newline;
+	arr[35] = c; arr[36] = n7; arr[37] = c; arr[38] = n5; arr[39] = newline;
+	arr[40] = c; arr[41] = n2; arr[42] = c; arr[43] = n3; arr[44] = newline;
+	arr[45] = f; arr[46] = n7; arr[47] = f; arr[48] = n5; arr[49] = newline;
+	arr[50] = f; arr[51] = n1; arr[52] = b; arr[53] = n5; arr[54] = newline;
+	arr[55] = c; arr[56] = n8; arr[57] = d; arr[58] = n7; arr[59] = newline;
+	arr[60] = b; arr[61] = n5; arr[62] = d; arr[63] = n7; arr[64] = newline;
+	arr[65] = b; arr[66] = n8; arr[67] = d; arr[68] = n7; arr[69] = newline;
+	arr[70] = e; arr[71] = n1; arr[72] = g; arr[73] = n1; arr[74] = newline;
+	arr[75] = c; arr[76] = n5; arr[77] = d; arr[78] = n4; arr[79] = newline;
+	arr[80] = c; arr[81] = n3; arr[82] = d; arr[83] = n4; arr[84] = newline;
+	arr[85] = e; arr[86] = n5; arr[87] = d; arr[88] = n4; arr[89] = newline;
+	arr[90] = f; arr[91] = n3; arr[92] = d; arr[93] = n4; arr[94] = newline;
+	arr[95] = b; arr[96] = n7; arr[97] = b; arr[98] = n5; arr[99] = newline;
+	arr[100] = f; arr[101] = n2; arr[102] = f; arr[103] = n4; arr[104] = newline;
+	arr[105] = d; arr[106] = n5; arr[107] = d; arr[108] = n6; arr[109] = newline;
+	arr[110] = d; arr[111] = n4; arr[112] = b; arr[113] = n5; arr[114] = newline;
+	arr[115] = d; arr[116] = n6; arr[117] = c; arr[118] = n7; arr[119] = newline;
+	arr[120] = b; arr[121] = n5; arr[122] = a; arr[123] = n3; arr[124] = newline;
+	arr[125] = a; arr[126] = n8; arr[127] = c; arr[128] = n8; arr[129] = newline;
+	arr[130] = a; arr[131] = n3; arr[132] = c; arr[133] = n4; arr[134] = newline;
+	arr[135] = f; arr[136] = n8; arr[137] = d; arr[138] = n6; arr[139] = newline;
+	arr[140] = d; arr[141] = n1; arr[142] = d; arr[143] = n6; arr[144] = newline;
+	arr[145] = g; arr[146] = n8; arr[147] = f; arr[148] = n6; arr[149] = newline;
+	arr[150] = b; arr[151] = n2; arr[152] = b; arr[153] = n3; arr[154] = newline;
+	arr[155] = f; arr[156] = n6; arr[157] = g; arr[158] = n4; arr[159] = newline;
+	arr[160] = d; arr[161] = n6; arr[162] = d; arr[163] = n4; arr[164] = newline;
+	arr[165] = e; arr[166] = n8; arr[167] = g; arr[168] = n8; arr[169] = newline;
+	arr[170] = d; arr[171] = n4; arr[172] = d; arr[173] = n5; arr[174] = newline;
+	arr[175] = g; arr[176] = n8; arr[177] = h; arr[178] = n8; arr[179] = newline;
+	arr[180] = b; arr[181] = n1; arr[182] = d; arr[183] = n2; arr[184] = newline;
+	arr[185] = d; arr[186] = n7; arr[187] = f; arr[188] = n6; arr[189] = newline;
+	arr[190] = d; arr[191] = n2; arr[192] = f; arr[193] = n3; arr[194] = newline;
+	arr[195] = f; arr[196] = n6; arr[197] = h; arr[198] = n5; arr[199] = newline;
+	arr[200] = g; arr[201] = n1; arr[202] = h; arr[203] = n1; arr[204] = newline;
+	arr[205] = h; arr[206] = n5; arr[207] = f; arr[208] = n4; arr[209] = newline;
+	arr[210] = h; arr[211] = n1; arr[212] = g; arr[213] = n1; arr[214] = newline;
+	arr[215] = g; arr[216] = n4; arr[217] = h; arr[218] = n2; arr[219] = newline;
+	arr[220] = g; arr[221] = n1; arr[222] = h; arr[223] = n1; arr[224] = newline;
+	arr[225] = h; arr[226] = n2; arr[227] = f; arr[228] = n1; arr[229] = newline;
+	arr[230] = h; arr[231] = n1; arr[232] = g; arr[233] = n1; arr[234] = newline;
+	arr[235] = f; arr[236] = n4; arr[237] = e; arr[238] = n2; arr[239] = newline;
+	arr[240] = g; arr[241] = n1; arr[242] = h; arr[243] = n1; arr[244] = newline;
+	return 0;
+}
+
+int init_game2(struct game *game)
+{
+	/* Convenience values for hard-coding the move strings. */
+	int a =  97; int b =  98; int c =  99; int d = 100;
+	int e = 101; int f = 102; int g = 103; int h = 104;
+	int n1 = 49; int n2 = 50; int n3 = 51; int n4 = 52;
+	int n5 = 53; int n6 = 54; int n7 = 55; int n8 = 56;
+	/* For promotions. */
+	int pN = 78; int pB = 66; int pR = 82; int pQ = 81;
+	/* Terminates a command, or tells the AI to compute a move. */
+	int newline = 10;
+
+	int[] arr;
+	game->gamelen = 145;
+	game->mate_in = 3;
+	game->line = alloc_array(int, game->gamelen);
+	arr = game->line;
+
+	/* This corresponds to 6nr/pQ4pp/2Bk4/2b5/3r1pbq/2N5/PPP3PP/R1B2K1R
+	 * Mate in three: Qf2+ Kxf2 Rd1+ Be3 Bxe3// */
+	arr[0] = e; arr[1] = n2; arr[2] = e; arr[3] = n4; arr[4] = newline;
+	arr[5] = e; arr[6] = n7; arr[7] = e; arr[8] = n5; arr[9] = newline;
+	arr[10] = f; arr[11] = n2; arr[12] = f; arr[13] = n4; arr[14] = newline;
+	arr[15] = e; arr[16] = n5; arr[17] = f; arr[18] = n4; arr[19] = newline;
+	arr[20] = d; arr[21] = n2; arr[22] = d; arr[23] = n4; arr[24] = newline;
+	arr[25] = d; arr[26] = n7; arr[27] = d; arr[28] = n5; arr[29] = newline;
+	arr[30] = e; arr[31] = n4; arr[32] = d; arr[33] = n5; arr[34] = newline;
+	arr[35] = c; arr[36] = n7; arr[37] = c; arr[38] = n5; arr[39] = newline;
+	arr[40] = d; arr[41] = n4; arr[42] = c; arr[43] = n5; arr[44] = newline;
+	arr[45] = f; arr[46] = n8; arr[47] = c; arr[48] = n5; arr[49] = newline;
+	arr[50] = g; arr[51] = n1; arr[52] = f; arr[53] = n3; arr[54] = newline;
+	arr[55] = b; arr[56] = n8; arr[57] = c; arr[58] = n6; arr[59] = newline;
+	arr[60] = d; arr[61] = n5; arr[62] = c; arr[63] = n6; arr[64] = newline;
+	arr[65] = b; arr[66] = n7; arr[67] = c; arr[68] = n6; arr[69] = newline;
+	arr[70] = b; arr[71] = n1; arr[72] = c; arr[73] = n3; arr[74] = newline;
+	arr[75] = c; arr[76] = n8; arr[77] = g; arr[78] = n4; arr[79] = newline;
+	arr[80] = f; arr[81] = n1; arr[82] = b; arr[83] = n5; arr[84] = newline;
+	arr[85] = d; arr[86] = n8; arr[87] = h; arr[88] = n4; arr[89] = newline;
+	arr[90] = e; arr[91] = n1; arr[92] = f; arr[93] = n1; arr[94] = newline;
+	arr[95] = a; arr[96] = n8; arr[97] = d; arr[98] = n8; arr[99] = newline;
+	arr[100] = b; arr[101] = n5; arr[102] = c; arr[103] = n6; arr[104] = newline;
+	arr[105] = e; arr[106] = n8; arr[107] = e; arr[108] = n7; arr[109] = newline;
+	arr[110] = f; arr[111] = n3; arr[112] = d; arr[113] = n4; arr[114] = newline;
+	arr[115] = d; arr[116] = n8; arr[117] = d; arr[118] = n4; arr[119] = newline;
+	arr[120] = d; arr[121] = n1; arr[122] = e; arr[123] = n2; arr[124] = newline;
+	arr[125] = e; arr[126] = n7; arr[127] = d; arr[128] = n6; arr[129] = newline;
+	arr[130] = e; arr[131] = n2; arr[132] = a; arr[133] = n6; arr[134] = newline;
+	arr[135] = f; arr[136] = n7; arr[137] = f; arr[138] = n6; arr[139] = newline;
+	arr[140] = a; arr[141] = n6; arr[142] = b; arr[143] = n7; arr[144] = newline;
+	return 0;
+}
+
+int get_char(struct game *game)
+{
+	int x = game->curpos;
+	game->curpos++;
+	if (x < game->gamelen)
+		return game->line[x];
+	else return 10; // newline
+}
+
+int D(struct state *Z, int k, int q, int l, int e, int E, int z, int n)
+{
+	int j; int r; int m; int v; int d; int h; int i; int F; int G; int s;
+	character t; character p; character u; character x; character y; character X; character Y; character H; character B;
+
+	int gotoA; int gotoC;
+
+	q--;
+	d = 0;
+	X = 0;
+	Y = 0;
+	m = 0;
+
+	while (1 == 1) {
+		int noob2 = (d < n) ? 1 : 0;
+		int noob5;
+		d++;
+		if (noob2 == 0) {
+			noob2 = (z == 8 && Z->K == Z->I) ? 1 : 0;
+			if (noob2 != 0) {
+				noob2 = (Z->N < 1000000 && d < 98) ? 1 : 0;
+				if (noob2 == 0) {
+					Z->K = X;
+					Z->L = Y & ~Z->M;
+					d = 2;
+					noob2 = 2;
+				}
+			}
+		}
+		if (noob2 == 0)
+			break;
+		B = X;
+		x = B;
+		h = Y & Z->S;
+		m = d > 1 ? -Z->I : e;
+		Z->N++;
+		noob5 = 1;
+		gotoC = 0;
+		while (noob5 != 0) {
+			u = Z->b[x];
+			if ((u & k) != 0) {
+				p = u & 7;
+				r = p;
+				j = Z->o[p + 16];
+				while (1 == 1) {
+					if (p > 2 && r < 0) {
+						r = -r;
+					} else {
+						j++;
+						r = -Z->o[j];
+					}
+					if (r == 0)
+						break;
+					gotoA = 1;
+					while (gotoA != 0) {
+						gotoA = 0;
+						y = x;
+						G = Z->S;
+						F = G;
+						t = 0;
+						while (t == 0) {
+							int noob1;
+							y = (h != 0) ? Y ^ h : y + r;
+							H = y;
+							if ((y & Z->M) != 0)
+								break;
+							if (E != Z->S && Z->b[E] != 0 && (y - E < 2 && E - y < 2))
+								m = Z->I;	/* castling-on-Pawn-check bug fixed */
+							if (p < 3 && y == E)
+								H ^= 16;
+							t = Z->b[H];
+							if ((t & k | (p < 3 ? 1 : 0) & ((y - x & 7) != 0 ? 0 : 1) - (t != 0 ? 0 : 1)) != 0)
+								break;
+							i = 99 * Z->w[t & 7];
+							m = i < 0 ? Z->I : m;	/* castling-on-Pawn-check bug fixed */
+							if (m >= l) {
+								gotoC = 1;
+								break;
+							}
+
+							s = d - (y != z ? 1 : 0);
+							if (s != 0) {
+								v = p < 6 ? Z->b[x + 8] - Z->b[y + 8] : 0;
+								Z->b[G] = 0;
+								Z->b[H] = 0;
+								Z->b[x] = 0;
+								Z->b[y] = u | 32;
+								if ((G & Z->M) == 0) {
+									Z->b[F] = k + 6;
+									v += 30;
+								}
+								if (p < 3) {
+									int noob3 = x - 2 & Z->M;
+									int noob4 = x + 2 & Z->M;
+									if (noob3 == 0)
+										noob3 = Z->b[x - 2] - u;
+									if (noob3 != 0)
+										noob3 = 1;
+									if (noob4 == 0)
+										noob4 = Z->b[x + 2] - u;
+									if (noob4 != 0)
+										noob4 = 1;
+									v -= 9 * (noob3 + noob4 - 1);
+									if ((y + r + 1 & Z->S) != 0) {
+										Z->b[y] |= 7;
+										i += Z->C;
+									}
+								}
+								v = -D(Z, 24 - k, -l, m > q ? -m : -q, -e - v - i, F, y, s);
+								if (Z->K != Z->I) {
+									if (v + Z->I != 0 && x == Z->K && y == Z->L && z == 8) {
+										Z->Q = -e - i;
+										Z->O = F;
+										if ((Z->b[y] - u & 7) != 0 && Z->P > 5)
+											Z->b[y] -= Z->c[4] & 3;	/* under-promotions */
+										return l;
+									}
+									v = m;
+								}
+								Z->b[G] = k + 6;
+								Z->b[F] = 0;
+								Z->b[y] = 0;
+								Z->b[x] = u;
+								Z->b[H] = t;
+								if (v > m) {
+									m = v;
+									X = x;
+									Y = y | Z->S & F;
+								}
+								if (h != 0) {
+									h = 0;
+									gotoA = 1;
+									break;
+								}
+							}
+							noob1 = p - 3 | j - 7;
+							if (noob1 == 0) {
+								G = x + 3 ^ r >> 1 & 1;
+								noob1 = Z->b[G] - k - 6;
+								if (noob1 == 0)
+									noob1 = Z->b[G ^ 1] | Z->b[G ^ 2];
+							}
+							if (noob1 != 0) noob1 = 1;
+							if ((x + r - y | u & 32 | (p > 2 ? 1 : 0) & noob1) != 0)
+								t += p < 5 ? 1 : 0;
+							else
+								F = y;
+						}
+						if (gotoC != 0)
+							break;
+					}
+					if (gotoC != 0)
+						break;
+				}
+			}
+			if (gotoC != 0)
+				break;
+			x = x + 9 & ~Z->M;
+			noob5 = x - B;
+		}
+		if (m > Z->I - Z->M || m < Z->M - Z->I)
+			d = 98;
+		m = (m + Z->I != 0) ? m : -D(Z, 24 - k, -Z->I, Z->I, 0, Z->S, Z->S, 1);
+	}
+	m += (m < e) ? 1 : 0;
+	return m;
+}
+
+int main()
+{
+	int k = 8;
+	struct state *Z = alloc(struct state);
+	struct game *g = alloc(struct game);
+	init_state(Z);
+	init_game2(g);
+
+	Z->K = 8;
+	while (Z->K != 0) {
+		Z->K--;
+		Z->b[Z->K + 112] = Z->o[Z->K + 24] + 8;
+		Z->b[Z->K] = Z->b[Z->K + 112] + 8;
+		Z->b[Z->K + 16] = 18;
+		Z->b[Z->K + 96] = 9;
+		Z->L = 8;
+		while (Z->L != 0) {
+			Z->L--;
+			Z->b[16 * Z->L + Z->K + 8] = (Z->K - 4) * (Z->K - 4) + ((((Z->L * 10) - 35) * ((Z->L * 10) - 35)) / 100);
+		}
+	}
+
+	while (g->curpos < g->gamelen + (g->mate_in * 2)) {
+		Z->N = -1;
+		if (g->curpos >= g->gamelen) {
+			while (Z->N < 120) {
+				character arg;
+				Z->N++;
+				arg = Z->N & 8;
+				if (arg != 0) {
+					Z->N += 7;
+					arg = Z->N;
+				}
+				if (arg != 0)
+					arg = 10;
+				else
+					arg = Z->n[Z->b[Z->N] & 15];
+				printchar(32);
+				printchar(arg);
+			}
+			printchar(10);
+		}
+		Z->P = 0;
+		Z->c[Z->P] = get_char(g);
+		while (Z->c[Z->P] > 10) {
+			Z->P++;
+			Z->c[Z->P] = get_char(g);
+		}
+		Z->K = Z->I;
+		if (Z->c[0] != 10) {
+			Z->K = Z->c[0] - 16 * Z->c[1] + Z->C;
+			Z->L = Z->c[2] - 16 * Z->c[3] + Z->C;
+		}
+		k ^= D(Z, k, -Z->I, Z->I, Z->Q, Z->O, 8, 2) - Z->I != 0 ? 0 : 24;
+	}
+	return crc(Z);
+}

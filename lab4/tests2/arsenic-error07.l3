@@ -1,0 +1,9 @@
+//test error
+int do(void){
+return 1;
+}
+
+int main() {
+ do(void);
+ return 1;
+}

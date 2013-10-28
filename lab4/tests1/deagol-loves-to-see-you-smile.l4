@@ -1,0 +1,11 @@
+//test return 0
+/*              ---- Story part 9 ----
+   Ended up at McDonalds, and after a while
+   Want fries with lab 4, hope this test makes you smile :) */
+
+int main() {
+  // killer smiley face test coming soon
+  return 0;
+}
+
+

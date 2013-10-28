@@ -1,0 +1,14 @@
+//test return 48024900
+
+int calculateTriangleNumber(int n) {
+  if (n == 0)
+    return 0;
+  if (n == 1)
+    return 1;
+
+  return 34*calculateTriangleNumber(n-1) - calculateTriangleNumber(n-2) + 2;
+}
+
+int main() {
+  return calculateTriangleNumber(6);
+}

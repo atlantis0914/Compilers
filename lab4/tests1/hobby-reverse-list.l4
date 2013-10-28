@@ -1,0 +1,43 @@
+//test return 12345678
+
+struct list {
+    int data;
+    struct list *next;
+};
+
+struct list *insert(struct list *this, int data) {
+    struct list *new = alloc(struct list);
+    new->data = data;
+    new->next = this;
+    return new;
+}
+
+struct list *reverse(struct list *this) {
+    struct list *temp = NULL;
+    struct list *rev = NULL;
+
+    while (this != NULL) {
+        temp = this;
+        this = this->next;
+        temp->next = rev;
+        rev = temp;
+    }
+    return rev;
+}
+
+int main() {
+    struct list *chain = NULL;
+    int acc = 0;
+
+    for (int i = 0; i < 9; i++)
+        chain = insert(chain, i);
+
+    chain = reverse(chain);
+
+    for (int i = 0; i < 9; i++) {
+        acc = 10 * acc + chain->data;
+        chain = chain->next;
+    }
+
+    return acc;
+}

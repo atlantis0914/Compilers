@@ -1,0 +1,11 @@
+//test return 1
+
+struct a {
+	int a;
+};
+
+int main(){
+	struct a * a;
+	a = alloc(struct a);
+	return a->a + 1;
+}

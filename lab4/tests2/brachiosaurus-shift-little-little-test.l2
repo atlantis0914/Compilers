@@ -1,0 +1,7 @@
+//test return 24
+
+int main()
+{
+	int x = 6;
+	return x << 2;
+}

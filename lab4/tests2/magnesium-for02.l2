@@ -1,0 +1,13 @@
+//test return 111111111
+
+int main() {
+  int m = 0;
+  int n;
+  
+  for (n = 1; m < 8; m++) {
+    n *= 10;
+    n += 1;
+  }
+  
+  return n;
+}

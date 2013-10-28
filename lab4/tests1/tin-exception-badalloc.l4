@@ -1,0 +1,7 @@
+//test exception 11
+
+int main() {
+  int[] arr = alloc_array(int, -1);
+  arr[0] = 5;
+  return arr[0];
+}

@@ -1,0 +1,10 @@
+//test error
+//test single operator that is separated by space
+int main()
+{
+  int a;
+  a = 1;
+  a + = 1;
+
+  return a;
+}

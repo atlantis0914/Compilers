@@ -1,0 +1,10 @@
+//test return 10
+
+int main() {
+  int x = 0;
+  int i = -1;
+  while (x != 10 && i < 0) {
+    x++;
+  }
+  return x;
+}

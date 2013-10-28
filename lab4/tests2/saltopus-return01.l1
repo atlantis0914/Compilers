@@ -1,0 +1,20 @@
+//test return 43
+
+int main() 
+{
+    int wibble;
+	int wobble;
+	int bingle;
+	int bongle;
+	int bang;
+    int fluff;
+
+    bang = 43;
+	bongle = 8;
+    
+	wobble = 5;
+    wibble = wobble - bongle;
+	wobble = wobble / bang;
+	bingle = 87;
+	return bang;
+}

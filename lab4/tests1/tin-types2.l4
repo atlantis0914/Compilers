@@ -1,0 +1,8 @@
+//test error
+// tests that arrays do not have the same type as pointers
+
+int main() {
+  int[] A = alloc_array(int, 0);
+  A = NULL;
+  return A[10];
+}

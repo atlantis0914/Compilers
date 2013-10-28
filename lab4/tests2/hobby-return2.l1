@@ -1,0 +1,18 @@
+//test return -4
+
+// test mixed decls and stmts along with div
+
+int main() {
+    int a;
+    a = -1;
+
+    int b;
+    b = 7;
+
+    int c;
+    c = 29;
+
+    int d = a * c / b;
+
+    return d;
+}

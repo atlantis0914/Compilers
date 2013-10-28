@@ -1,0 +1,50 @@
+//test exception 8
+
+void fun0() {
+    20/0;
+}
+
+void fun1() {
+    20/1;
+}
+
+void fun2() {
+    20/2;
+}
+
+void fun3() {
+    20/3;
+}
+
+void fun4() {
+    20/4;
+}
+
+void fun5() {
+    20/5;
+}
+
+void fun6() {
+    20/6;
+}
+
+void fun7() {
+    20/7;
+}
+
+void fun8() {
+    20/8;
+}
+
+int main() {
+    fun0();
+    fun1();
+    fun2();
+    fun3();
+    fun4();
+    fun5();
+    fun6();
+    fun7();
+    fun8();
+    return 0;
+}

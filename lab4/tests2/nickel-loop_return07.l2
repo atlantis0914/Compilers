@@ -1,0 +1,7 @@
+//test return 4
+// simple return from loop
+int main()
+{
+  return 4;
+  while(true) 4;
+}

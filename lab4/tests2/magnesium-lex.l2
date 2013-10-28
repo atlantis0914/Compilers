@@ -1,0 +1,19 @@
+//test return 21
+
+int main ()
+{
+  int return1;
+  int if2;
+  int __else3;
+  int while4;
+  int int_5;
+  int bool6;
+
+  return1 = 1;
+  if2 = 2;
+  __else3 = 3;
+  while4 = 4;
+  int_5 = 5;
+  bool6 = 6;
+  return return1 + if2 + __else3 + while4 + int_5 + bool6;
+}

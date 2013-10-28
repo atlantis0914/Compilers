@@ -1,0 +1,7 @@
+//test return 1
+int main() {
+    bool x = true;
+    if (x) return 1;
+    while (true) {}
+    return 0;
+}

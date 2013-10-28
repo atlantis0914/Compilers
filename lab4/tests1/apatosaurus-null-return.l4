@@ -1,0 +1,10 @@
+//test return 50
+// make sure we can return null 
+
+int ***********  nullret () {
+  return NULL;
+}
+
+int main () {
+  return nullret() == nullret() ? 50 : -1;
+}

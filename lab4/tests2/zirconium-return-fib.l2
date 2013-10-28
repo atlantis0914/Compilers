@@ -1,0 +1,15 @@
+//test return 1445263496
+
+int main ()
+{
+  int a1;
+  int a2;
+  a1 = 1;
+  a2 = 1;
+  for (int n = 0; n < 50; n++)
+  {
+    a1 += a2;
+    a2 += a1;
+  }
+  return a2;
+}

@@ -1,0 +1,14 @@
+//test return 5
+
+int sqrt(int n) {
+	for (int i = 1; i <= n; i++) {
+		if (i * i == n) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+int main () {
+	return sqrt(25);
+}

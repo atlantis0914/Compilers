@@ -1,0 +1,14 @@
+//test exception 8
+// division by zero
+int main(){
+    int x = 0;
+    int y = 1;
+
+    if(x != 0){
+    	return x/y;
+    }   
+    else
+	return y/x;
+    
+
+}

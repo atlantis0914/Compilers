@@ -1,0 +1,10 @@
+//test error
+
+int main()
+{
+    if (int meowmix = 2)
+        return 3;
+    else (int meowmix = 3)
+        return 4;
+    return 5;
+}

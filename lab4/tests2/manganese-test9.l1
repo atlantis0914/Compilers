@@ -1,0 +1,9 @@
+//test error
+
+// uses an out of range constant. should fail to compile
+
+int main() {
+    int x = 0x7FFFFFFFFFFFFFFF;
+    int y = -9223372036854775807;
+    return x + y;
+}

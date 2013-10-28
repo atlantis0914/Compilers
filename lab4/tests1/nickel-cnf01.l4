@@ -1,0 +1,38 @@
+//test return 2
+
+typedef struct foo foo;
+
+struct foo
+{
+	int x0;
+	int x1;
+	int x2;
+};
+
+void s(int[] a, int c)
+{
+	if (c == 0) return;
+	for (int x0 = 0; x0 < 2; x0++)
+	    for (int x1 = 0; x1 < 2; x1++)
+	    	for (int x2 = 0; x2 < 14; x2++)
+		{
+		    if (a[c*3] == -1) a[c] = x0;
+		    else a[c] = a[c*3]+x2;
+
+		    if (a[c*3+1] == -1) a[c] = x1;
+		    else a[c] = a[c*3+1]+x1;
+
+		    if (a[c*3] == -1) a[c] = x2;
+		    else a[c] = a[c*3+2]+x0+x1;
+
+		s(a, c-1);
+		}
+}
+
+int main()
+{
+	int n = 5;
+	int[] a = alloc_array(int, n*100);
+	s(a, n-1);
+	return a[n-1];
+}

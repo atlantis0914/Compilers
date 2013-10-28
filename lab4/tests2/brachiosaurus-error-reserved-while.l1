@@ -1,0 +1,8 @@
+//test error
+// reserved keyword: while
+
+int main()
+{
+    int while;
+    return while;
+}

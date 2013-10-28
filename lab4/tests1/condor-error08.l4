@@ -1,0 +1,9 @@
+//test error
+
+struct Hey {
+   int cat;
+};
+int main () {
+      
+   return NULL->cat;
+}

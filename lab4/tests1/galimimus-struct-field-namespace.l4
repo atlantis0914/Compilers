@@ -1,0 +1,15 @@
+//test return 0
+
+struct Foo {
+  int x;
+  int y;
+};
+
+struct Bar {
+  int x;
+  bool y;
+};
+
+int main() {
+  return 0;
+}

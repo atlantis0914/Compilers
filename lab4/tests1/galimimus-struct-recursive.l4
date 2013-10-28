@@ -1,0 +1,10 @@
+//test return 0
+
+struct node {
+  struct node* next;
+  int val;
+};
+
+int main() {
+  return 0;
+}

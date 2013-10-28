@@ -1,0 +1,9 @@
+//test return 99
+int main()
+{
+    int a = 99;
+    int aa = 1;
+    int b = a << 16;
+    b >>= aa << 4;
+    return b;
+}

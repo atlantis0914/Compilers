@@ -1,0 +1,16 @@
+//test return 26196
+/*              ---- Story part 5 ----
+   And "OMG how can I possibly pass" ... grok what it is?
+   deagol whipped out a stack that was bigger than his */
+
+int bluepill(int framecount) {
+  int a = 2;
+  if (framecount == 0) return 0;
+  // the 2+ is so you can't tailcall, haha
+  return (2+a+bluepill(framecount-1)+framecount+2)/2;
+}
+
+int main() {
+  return bluepill(26192); /* was: 261920 */
+}
+   

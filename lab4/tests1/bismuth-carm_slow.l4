@@ -1,0 +1,73 @@
+//test return 2821
+//Computes carmichael numbers, uses a simplistic primality test that 
+//should be slower than "carmichael"
+
+//computes the exponential mod
+//where expmod(b, e, m) = b^e mod m
+int expmod(int b, int e, int mod)
+{
+    if (e == 0)
+        return 1;
+
+    int c = 1;
+    int e_prime = 0;
+
+    while (e_prime < e) {
+        e_prime++;
+        c = ((b*c) % mod);
+    }
+
+    return c;
+}
+
+//this is really inefficient
+bool is_composite(int n)
+{
+    for (int i = 2; i < n; i++)
+    {
+        if (n % i == 0) 
+            return true;
+    }
+
+    return false;
+}
+    
+bool is_carmichael(int n)
+{
+    if (n < 4)
+        return false;
+
+    //carmichael must be a composite
+    if (!is_composite(n))
+        return false;
+
+    for (int b = 2; b < n - 1; b++)
+    {
+        if (expmod(b, n, n) != b)
+            return false;
+    }
+
+    return true;
+}
+
+//returns array up to the nth carmichael
+int []carm(int x)
+{
+    int[] carm = alloc_array(int, x);
+
+    int candidate = 0;
+    for (int i = 0; i < x; i++)
+    {
+        candidate++;
+        while (!is_carmichael(candidate)) {
+            candidate++;
+        }
+        carm[i] = candidate;
+    }
+
+    return carm;
+}
+
+int main() {
+    return carm(5)[4];
+}

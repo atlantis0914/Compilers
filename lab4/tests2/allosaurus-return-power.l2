@@ -1,0 +1,13 @@
+//test return 125
+
+/* computes 5^3 */
+int main(){
+  int x = 5;
+  int power = 3;
+  int result;
+
+  for ( result = x; power > 1; power-- ){
+    result *= x;
+  }
+  return result;
+}

@@ -1,0 +1,13 @@
+//test return 10
+
+int btest(bool which) {
+	if (which) {
+		return 10;
+	} else {
+		return 0;
+	}
+}
+
+int main() {
+	return btest(true);
+}

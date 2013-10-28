@@ -1,0 +1,14 @@
+//test exception 11
+// dereference fail
+
+struct k {
+       int* point;
+       bool i;
+};
+
+int main() {
+    struct k* mygurl = alloc(struct k);
+    mygurl->point = NULL;
+    *(mygurl->point) = 1;
+    return 0;
+}

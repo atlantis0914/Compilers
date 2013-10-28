@@ -1,0 +1,9 @@
+//test error
+//deref inc
+
+int main() {
+    int* d;
+    *d = 0;
+    *d++;
+    return *d;
+}

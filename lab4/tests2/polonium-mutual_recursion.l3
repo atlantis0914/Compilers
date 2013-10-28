@@ -1,0 +1,18 @@
+//test return 0
+
+int fb(int a);
+
+int fa(int a){
+    if(a == 0)
+        return 0;
+    return fb(a);
+}
+
+int fb(int a){
+    return fa(a - 1);
+}
+
+int main(){
+    assert(fa(10) == fb(10));
+    return 0;
+}

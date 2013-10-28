@@ -1,0 +1,67 @@
+//test return 955
+
+struct ring{
+	int[] buf;
+	int size;
+	int elements;
+	int head;
+	int tail;
+};
+
+typedef struct ring ring_t;
+
+ring_t* buffer_new(int size) {
+	ring_t *buf = alloc(ring_t);
+	buf->buf = alloc_array(int, size);
+	buf->size = size;
+	buf->elements = 0;
+	buf->head = 0;
+	buf->tail = 0;
+	return buf;
+}
+
+/* Returns true if the buffer is empty */
+bool buffer_empty(ring_t* buf) {
+	return buf->elements <= 0;
+}
+
+/* Write an int to the buffer. Return false if some data was lost. */
+bool buffer_write(ring_t* buf, int n) {
+	buf->buf[buf->head] = n;
+	buf->head = (buf->head + 1) % buf->size;
+	buf->elements = buf->elements + 1;
+	if (buf->elements > buf->size) {
+		buf->tail=buf->head;
+		buf->elements = buf->size;
+		return false;
+	}
+	return true;
+}
+
+/* Reads from the buffer. Return val is undefined if the buffer is empty. */
+int buffer_read(ring_t* buf) {
+	int tmp;
+	if (buffer_empty(buf)) return 0;
+	tmp = buf->buf[buf->tail];
+	buf->tail = (buf->tail + 1) % buf->size;
+	buf->elements = buf->elements - 1;
+	return tmp;
+}
+
+
+int main() {
+	ring_t* buffer = buffer_new(10);
+	int i;
+	int sum = 0;
+
+	for (i = 0; i < 101; i++) {
+		buffer_write(buffer, i);
+	}
+
+	while(!buffer_empty(buffer)) {
+		sum += buffer_read(buffer);
+	}
+	return sum;
+}
+
+

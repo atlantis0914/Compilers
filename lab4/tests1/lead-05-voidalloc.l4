@@ -1,0 +1,9 @@
+//test error
+/* no void alloc */
+
+int main () {
+  int *x;
+  x = alloc(void);
+
+  return 0;
+}

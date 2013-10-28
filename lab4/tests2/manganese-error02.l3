@@ -1,0 +1,8 @@
+//test error
+
+typedef int size_t;
+typedef bool size_t;
+
+int main() {
+    return 0;
+}

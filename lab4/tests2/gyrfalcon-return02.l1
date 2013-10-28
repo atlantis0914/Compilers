@@ -1,0 +1,42 @@
+//test return 16384
+// test has 17 variables and we have 16 registers so should cause some spilling as we have statements where everything is live
+int main()
+{
+  int x;
+  int y;
+  int z;
+  int a;
+  int b;
+  int c;
+  int d;
+  int e;
+  int f;
+  int g;
+  int h;
+  int i;
+  int j;
+  int k;
+  int l;
+  int m; 
+  int n;
+
+  x = 0;
+  y = 1;
+  z = x + y;
+  a = z + x + y;
+  b = a + z + x + y;
+  c = b + a + z + x + y;
+  d = c + b + a + z + x + y;
+  e = d + c + b + a + z + x + y;
+  f = e + d + c + b + a + z + x + y;
+  g = f + e + d + c + b + a + z + x + y;
+  h = g + f + e + d + c + b + a + z + x + y;
+  i = h + g + f + e + d + c + b + a + z + x + y;
+  j = i + h + g + f + e + d + c + b + a + z + x + y; 
+  k = j + i + h + g + f + e + d + c + b + a + z + x + y;  
+  l = k + j + i + h + g + f + e + d + c + b + a + z + x + y;  
+  m = l + k + j + i + h + g + f + e + d + c + b + a + z + x + y;  
+  n = m + l + k + j + i + h + g + f + e + d + c + b + a + z + x + y;  
+ 
+return n;
+}

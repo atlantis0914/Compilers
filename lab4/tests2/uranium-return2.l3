@@ -1,0 +1,22 @@
+//test return 0
+// simple co-recursion
+
+int f(int n);
+int g(int n);
+
+int f(int n) {
+    if (n == 0) {
+        return 0;
+    }
+    return g(n-1);
+}
+
+int g(int n) {
+    if (n == 0)
+        return 0;
+    return f(n-1);
+}
+
+int main() {
+    return f(10000);
+}

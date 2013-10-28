@@ -1,0 +1,91 @@
+//test return 4950
+//   /\___/\
+//  ( o   o )
+//  (  =^=  ) 
+//  (        )
+//  (         )
+//  (          )))))))))))
+
+struct htree {
+  int character; // unicode?
+  int feels;
+  struct htree *left;
+  struct htree *right;
+};
+
+int elem_priority(struct htree *x) {
+  return x->feels;
+}
+
+typedef struct htree* htree;
+
+
+bool is_htree_node(htree H);
+bool is_htree_leaf(htree H);
+
+bool is_htree(htree H)
+/* Specification function, so no requires/ensure */
+{
+	if (H == NULL)
+		return false;
+	return (is_htree_node(H) || is_htree_leaf(H));
+}
+
+int get_feel(htree H)
+//@ensures 0 < (\result);
+{
+	if (H == NULL)
+		return 0;
+	if (H->right == NULL && H->left == NULL)
+		return H->feels;
+	return get_feel(H->left) +  get_feel(H->right);
+}
+
+bool feels_maintained(htree H)
+{
+	if (H == NULL)
+		return false;
+	if (!(H->feels == (get_feel(H->left) +
+				get_feel(H->right))))
+		return false;
+	return true;
+}
+
+bool is_htree_node(htree H)
+{
+	if (H == NULL)
+		return false;
+	if (!(H->character == -1))
+		return false;
+	if (!(feels_maintained(H)))
+		return false;
+	if (!(is_htree(H->left) && is_htree(H->right)))
+		return false;
+	return true;
+}
+
+
+bool is_htree_leaf(htree H)
+{
+	if (H->character == -1)
+		return false;
+	if (!(H->left == NULL && H->right == NULL))
+		return false;
+	return true;
+}
+
+
+int main () {
+  htree H = alloc(struct htree);
+  htree[] h_arr = alloc_array(htree, 100);
+  for(int j = 0; j < 100; j++) {
+    h_arr[j] = alloc(struct htree);
+    h_arr[j]->character = j;
+    h_arr[j]->feels = j;
+  }
+  int freqs = 0;
+  for(int j = 0; j < 100; j++) {
+    freqs += h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[h_arr[j]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels]->feels;
+  }
+  return freqs;
+}

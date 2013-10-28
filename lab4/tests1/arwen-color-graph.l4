@@ -1,0 +1,139 @@
+//test return 31
+// Performs the graph algorithms we used for register coloring
+struct nod;
+typedef struct nod node;
+struct nl;
+typedef struct nl nodelist;
+struct nl {
+  node *cur;
+  nodelist *next;
+};
+
+struct nod {
+  nodelist *adj;
+  int color;
+  bool removed;
+  int weight;
+};
+
+int gcd(int x, int y) {
+  if (y > x) {
+    return gcd(y,x);
+  }
+  if (y == 0) {
+    return x;
+  }
+  return gcd(y, x% y);
+}
+
+bool are_coprime(int x, int y) {
+  return 1 == gcd(x, y);
+}
+
+int addEdge(node *from, node *to) {
+  nodelist *old = from->adj;
+  from->adj = alloc(nodelist);
+  from->adj->cur = to;
+  from->adj->next = old;
+  return 0;
+}
+
+int addSymmetricEdge(node *u, node *v) {
+  addEdge(u, v);
+  addEdge(v, u);
+  return 0;
+}
+
+node *[] buildGraph(int n) {
+  int i;
+  int j;
+  node *[] g = alloc_array(node *, n);
+  for (i=0;i<n;i++) {
+    g[i] = alloc(node);
+    for(j=0;j<i;j++) {
+      int I = i + 1;
+      int J = j + 1;
+      if (I % J == 0 || J % I ==0 || are_coprime(I, J)) {
+        /* continue */
+      } else {
+      addSymmetricEdge(g[i], g[j]);
+      }
+    }
+  }
+  return g;
+}
+
+int[] mcs(node *[] g, int n) {
+  int i;
+  int max= -1;
+  int max_index = 0;
+  int [] order = alloc_array(int, n);
+  int index = 0;
+  node *v;
+  while (index != n) {
+    // Find max weight
+    for (i=0; i<n; i++) {
+      v = g[i];
+      if (v->removed) {
+        /* continue; */
+      } else {
+        if(v->weight > max) {
+          max = v->weight;
+          max_index = i;
+        }
+      }
+    }
+    
+    v = g[max_index];
+    //Adjust other weights
+    nodelist *adjs = v->adj;
+    while(adjs != NULL) {
+      adjs->cur->weight++;
+      adjs = adjs->next;
+    }
+
+    //Remove and add to ordering
+    v->removed = true;
+    order[index] = max_index;
+    index++;
+  }
+  return order;
+}
+
+int next_avail(nodelist *l) {
+  int max = 0;
+  while(l != NULL) {
+    if (l->cur->color > max) {
+      max = l->cur->color;
+    }
+    l = l->next;
+  }
+  return max + 1;
+}
+
+int[] color(node *[] g, int n, int[] order) {
+  //Colors are 1 indexed
+  int [] coloring = alloc_array(int, n);
+  int i;
+  for (i=0;i<n;i++) {
+    coloring[i] = next_avail(g[i]->adj);
+    g[i]->color = coloring[i];
+  }
+  return coloring;
+}
+    
+
+int main() {
+  int n = 65;
+  node *[] g = buildGraph(n);
+  int[] order = mcs(g, n);
+  int[] coloring = color(g, n, order);
+  int i;
+  int max = 0;
+  for (i=0;i<n;i++) {
+    if(coloring[i] > max) {
+      max = coloring[i];
+    }
+  }
+  return max;
+}

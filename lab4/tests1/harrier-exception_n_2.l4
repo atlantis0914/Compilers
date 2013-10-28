@@ -1,0 +1,25 @@
+//test exception 11
+
+int myfun1(int a);
+int myfun2(int a, int b);
+int myfun3(int a, int b, int c);
+
+int myfun1(int a)
+{
+    return myfun2(353, a);
+}
+
+int myfun2(int a, int b)
+{
+    return myfun3(a, b, 27);
+}
+
+int myfun3(int a, int b, int c)
+{
+    return myfun1(a) + myfun2(a, b) + myfun3(a, b, c);
+}
+
+int main()
+{
+    return myfun1(76);
+}

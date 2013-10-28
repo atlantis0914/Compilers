@@ -1,0 +1,18 @@
+//test return 3
+// IDIV produces the result for both branches, so a smart binary calculates 
+// it before the branch
+
+int main ()
+{
+  int a = 6;
+  int b = 21;
+  int c = a*a*b*b;   // 15,876
+  int d = (a*b + a*a) * (a*b + b*b);   // 91,854
+  if (c < d) { // false
+    c = b / a;
+    return c;
+  } else {
+    d = b % a; // 3
+    return d;
+  }
+}

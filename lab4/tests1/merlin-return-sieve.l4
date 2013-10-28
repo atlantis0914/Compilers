@@ -1,0 +1,50 @@
+//test return 154 
+//implementation of the sieve of eratosthenes for 
+//finding all the primes among the first n naturals
+
+int get_num_primes(int[] primes, int length)
+{
+  int num_primes = 0;
+  for(int i = 0; i < length; i++)
+  {
+    if(primes[i] > 0)
+      num_primes++;
+  }
+  return num_primes;
+}
+
+int sieve(int[] arr, int length)
+{
+  int i;
+  int j;
+  for(i = 0; i < length-1; i++)
+  {
+    if(arr[i] > 0)
+    {
+      for(j = i+1; j<length; j++)
+      {
+        if(arr[j]>0 && arr[j] % arr[i] == 0)
+          arr[j] = -1;
+      }
+    }
+  }
+  
+  return get_num_primes(arr,length);
+}
+
+int[] make_sieve(int n)
+{
+  int[] arr = alloc_array(int,n);
+  for(int i = 0; i < n; i++)
+  {
+    arr[i] = i+2;
+  }
+  return arr;
+}
+
+int main()
+{
+  int n = 900;
+  int[] a = make_sieve(n);
+  return sieve(a,n);
+}

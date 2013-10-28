@@ -1,0 +1,90 @@
+//test return 8
+// same as tree o'clock, but with persistant trees
+
+struct node;
+typedef struct node* tree;
+struct node {
+  int value;
+  tree left;
+  tree right;
+};
+
+tree init(int val) {
+  tree n = alloc(struct node);
+  n->value = val;
+  return n;
+}
+
+tree insert(tree t, int val) {
+  if (t == NULL)
+    return init(val);
+
+  if (val < t->value) {
+    tree n = init(t->value);
+
+    n->left = insert(t->left, val);
+    n->right = t->right; // okay to copy since t->right is also persistant
+
+    return n;
+  }
+  if (val > t->value) {
+    tree n = init(t->value);
+
+    n->right = insert(t->right, val);
+    n->left = t->left;
+
+    return n;
+  }
+
+  return t;
+}
+
+int inorder(int[] a, tree t, int start) {
+  int r;
+
+  if (t == NULL)
+    return start;
+
+  r = inorder(a, t->left, start);
+  a[r] = t->value;
+  return inorder(a, t->right, r+1);
+}
+
+int main() {
+  tree first = insert(NULL, 10);
+  int[] a = alloc_array(int, 20);
+  int i = 0;
+  tree t = first;
+
+  t = insert(t, 13);
+  t = insert(t, 7);
+  t = insert(t, 3);
+  t = insert(t, 11);
+  t = insert(t, 5);
+  t = insert(t, 1);
+  t = insert(t, 2);
+  t = insert(t, 12);
+  t = insert(t, 9);
+  t = insert(t, 8);
+  t = insert(t, 17);
+  t = insert(t, 20);
+  t = insert(t, 16);
+  t = insert(t, 4);
+  t = insert(t, 15);
+  t = insert(t, 12);
+  t = insert(t, 14);
+  t = insert(t, 6);
+  t = insert(t, 19);
+  t = insert(t, 18);
+
+  inorder(a, t, 0);
+
+  for (; i < 20; i++) {
+    print_int(a[i]);
+    // printchar(32);
+    if (a[i] != i+1) return -1;
+  }
+  // printchar(10);
+
+  return t->left->right->left->value;
+}  

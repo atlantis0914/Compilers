@@ -1,0 +1,14 @@
+//test exception 14
+//  infinite loop
+
+int g() {
+  bool *b = alloc(bool);
+  while (!*b) {
+    *b = !!*b;
+  }
+  return 42;
+}
+
+int main() {
+  return g();
+}

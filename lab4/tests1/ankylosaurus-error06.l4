@@ -1,0 +1,14 @@
+//test error
+// Allocating wrong type
+
+typedef int float;
+typedef bool haha;
+
+int main()
+{
+    float * testing = alloc(haha);
+
+    *testing = 100;
+
+    return *testing;
+}

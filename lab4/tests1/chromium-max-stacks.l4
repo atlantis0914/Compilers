@@ -1,0 +1,48 @@
+//test return 0
+
+struct max_stack {
+    int data;
+    int max;
+    struct max_stack* before;
+};
+
+typedef struct max_stack* max_stack;
+
+max_stack push(max_stack ms, int elem) {
+    max_stack new = alloc(struct max_stack);
+    new->before = ms;
+    new->data = elem;
+    if(ms != NULL)
+        new->max = (elem > ms->max) ? elem : ms->max;
+    else
+        new->max = elem;
+    return new;
+}
+
+max_stack pop(max_stack ms) {
+    assert(ms != NULL);
+    return ms->before;
+}   
+
+int max(max_stack ms) {
+    assert(ms != NULL);
+    return ms->max;
+}
+
+int main () {
+    max_stack ms;
+    ms = push(NULL, 5);
+    ms = push(ms, 6);
+    ms = push(ms, 3);
+    ms = push(ms, 2);
+    assert(max(ms) == 6);
+    ms = pop(ms);
+    assert(max(ms) == 6);
+    ms = pop(ms);
+    assert(max(ms) == 6);
+    ms = pop(ms);
+    assert(max(ms) == 5);
+    ms = pop(ms);
+    return 0;
+}
+

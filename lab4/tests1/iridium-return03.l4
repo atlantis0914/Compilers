@@ -1,0 +1,14 @@
+//test return 125251
+
+int main() {
+  int* p = alloc(int);
+  *p = 1;
+  int* q = alloc(int);
+  *q = 500;
+  while (*q > 0) {
+    (*q)--;
+    (*p)++;
+    *p += *q;
+  }
+  return *p;
+}

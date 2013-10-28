@@ -1,0 +1,16 @@
+//test error
+
+struct foo{
+    int a;
+    int b;
+    int c;
+};
+
+int sum(struct foo){
+    return foo.a + foo.b + foo.c;
+}
+
+int main(){
+    sruct foo* f = alloc(sruct foo);
+    return sum(*f);
+}

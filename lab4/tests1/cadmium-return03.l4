@@ -1,0 +1,19 @@
+//test return 5
+int average(int[] a, int size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        sum += a[i];
+    }
+    return sum / size;
+}
+
+int main() {
+    int size = 4;
+    int[] a = alloc_array(int, size);
+    a[0] = 10;
+    a[1] = 11;
+    a[2] = -5;
+    a[3] = 4;
+    
+    return average(a, size);
+}

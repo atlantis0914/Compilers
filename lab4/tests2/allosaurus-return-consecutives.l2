@@ -1,0 +1,18 @@
+//test return 2
+
+/* returns the number of distinct pairs of consecutive digits of x */
+
+int main(){
+  int x = 10022;
+
+  int pow10;
+  int count = 0;
+  int last_digit = -1;
+  for(pow10 = 10; x / pow10 != 0; pow10 *= 10){
+    int current_digit = (x % pow10) / (pow10 / 10);
+    if ( last_digit > -1 && last_digit == current_digit )
+      count++;
+    last_digit = current_digit;
+  }
+  return count;
+}

@@ -1,0 +1,13 @@
+//test return 0
+
+int main()
+{
+    int y = 2;
+    for(int x; y > 0; y--)
+    {
+        x = 1 + y;
+        y = y - 1;
+    }
+    
+    return y;
+}

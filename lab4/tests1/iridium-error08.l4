@@ -1,0 +1,9 @@
+//test error
+
+int main() {
+  int *x = NULL;
+  int **y = NULL;
+  if (x == y) return 0;
+  else assert(false);
+  return 1;
+}

@@ -1,0 +1,8 @@
+//test return 10
+// MAIN
+
+int main()
+{
+  int main = 10;
+  return main;
+}

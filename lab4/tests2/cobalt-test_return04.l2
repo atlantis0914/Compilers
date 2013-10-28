@@ -1,0 +1,7 @@
+//test return 1
+//test type bool
+
+int main() {
+  bool b = false;
+  return 1;
+}

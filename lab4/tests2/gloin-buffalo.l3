@@ -1,0 +1,13 @@
+//test error
+
+typedef int buffalo;
+
+buffalo buffalo(buffalo buffalo)
+{
+	return buffalo;
+}
+
+int main()
+{
+	return buffalo(100);
+}

@@ -1,0 +1,6 @@
+//test error
+// Should not compile as we do not look inside loops
+int main() {
+	while ( true )
+		return 0;
+}

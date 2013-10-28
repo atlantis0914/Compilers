@@ -1,0 +1,19 @@
+//test error
+/* defined a library function */ 
+
+int print_int(int c)
+{
+    return c;
+}
+
+
+int test( int z , int x)
+{
+    print_int(z);
+    return z * x;
+}
+
+int main()
+{
+    return test(3,2);
+}

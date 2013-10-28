@@ -1,0 +1,8 @@
+//test return 1
+int palindrome (int i, int p) {
+	if (i == 0) return p;
+	return palindrome(i/10, p * 10 + i % 10);
+}
+int main() {
+	return palindrome(123321,0) == 123321 ? 1 : 0;
+}

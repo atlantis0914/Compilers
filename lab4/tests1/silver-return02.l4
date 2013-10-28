@@ -1,0 +1,23 @@
+//test return 0
+//
+
+struct x {
+       int[] y;
+       bool z;
+};
+
+int main() {
+    struct x * q = alloc(struct x);
+    q->y = alloc_array(int, 5);
+    q->z = true;
+    q->y[0] = 0;
+    q->y[1] = 2;
+    q->y[2] = 3;
+    q->y[3] = 4;
+    q->y[4] = 5;
+    if (q->z) {
+        return 0;
+    } else {
+        return 1;
+    }
+}

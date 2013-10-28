@@ -1,0 +1,40 @@
+//test return 285
+// merging 2 sorted lists.
+
+int merge(int[] a, int[] b, int n) {
+    int aindex = n-1;
+    int bindex = n-1;
+    int index = 2 * n - 1;
+    while (index >= 0 && bindex >= 0) {
+        if ((aindex >=0 && a[aindex] > b[bindex])) {
+            a[index] = a[aindex];
+            aindex--;
+        } else {
+            a[index] = b[bindex];
+            bindex--;
+        }
+        index--;
+    }
+    return a[5];
+}
+
+int main() {
+    int[] a = alloc_array(int, 20);
+    int[] b = alloc_array(int, 10);
+    for (int i = 0; i < 10; i++) {
+        a[i] = 2 * i + 6;
+        b[i] = 3 * i;
+    }
+
+    merge(a, b, 10);
+    int sum = 0;
+    int prev = -1;
+    for (int i = 0; i < 20; i++) {
+        if (a[i] < prev) {
+            return 1/0;
+        }
+        sum += a[i];
+        prev = a[i];
+    }
+    return sum;
+}

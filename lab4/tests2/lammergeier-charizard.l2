@@ -1,0 +1,6 @@
+//test exception
+int main() {
+	int x = (1 << 4);
+	while (x != 0) x += (1 << 4);
+	return 1 / x;
+}

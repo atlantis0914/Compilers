@@ -1,0 +1,9 @@
+//test exception 6
+//SIBABRT exception due to bad assert.
+
+int main ()
+{
+  int x = 3;
+  assert(x == 4);
+  return 0;
+}

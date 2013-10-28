@@ -1,0 +1,20 @@
+//test error
+
+struct foo;
+struct bar;
+
+struct foo {
+    int a;
+    struct bar b;
+    int c;
+    int d;
+};
+
+struct bar {
+    struct foo a;
+    int b;
+};
+
+int main(){
+    return 0;
+}

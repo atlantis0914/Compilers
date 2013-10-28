@@ -1,0 +1,12 @@
+//test return 5
+//function name and struct field name
+
+struct main {
+  int main;
+};
+
+int main() {
+  struct main *t = alloc(struct main);
+  t->main = 5;
+  return t->main;
+}

@@ -1,0 +1,26 @@
+//test error
+
+struct a
+{
+    int val;
+    struct a *st;
+};
+
+typedef struct a a_t;
+
+a_t *getst(a_t *at)
+{
+    return at->st;
+}
+
+int main()
+{
+    a_t *temp = alloc(a_t);
+    temp->st  = alloc(a_t);
+    getst(temp)->val = 5;
+
+    if (temp->st->val == 5)
+        return 1;
+
+    return -1;
+}

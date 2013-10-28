@@ -1,0 +1,13 @@
+//test return 5
+// make sure ternary is working
+
+int main() {
+    int a;
+    bool b;
+
+    b = true ? false : true; // false
+
+    a = (!b) ? -5 : 5;
+
+    return -a;
+}

@@ -1,0 +1,11 @@
+//test error 
+//test undeclared y, z
+int main() {
+  int x = 1;
+  {
+    int y = 0;
+    int z = x + 1;
+  }
+  x = y + z;
+  return x;
+}

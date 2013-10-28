@@ -1,0 +1,6 @@
+//test exception
+int main()
+{
+    int[] a = alloc_array(int, 2147483647);
+    return 0;
+}

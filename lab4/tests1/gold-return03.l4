@@ -1,0 +1,19 @@
+//test return 500500
+
+struct t {
+	int n;
+};
+
+int main()
+{
+	struct t[] arr;
+	arr = alloc_array(struct t, 1000);
+	for (int i = 0; i < 1000; i++) {
+		arr[i].n = i + 1;
+	}
+	int sum = 0;
+	for (int i = 0; i < 1000; i++) {
+		sum += arr[i].n;
+	}
+	return sum;
+}

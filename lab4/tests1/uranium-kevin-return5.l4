@@ -1,0 +1,5 @@
+//test return 0
+
+int main() {
+    return (false)? main(): 0;
+}

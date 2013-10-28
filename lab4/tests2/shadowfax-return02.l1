@@ -1,0 +1,17 @@
+//test return 9
+// tests declaration and initialization mixed can be anywhere in program
+int main()
+{
+  int a;
+  int b = 2;
+  int c;
+
+  a = b + 4;
+
+  int d = 3;
+
+  c = a + d;
+
+  return c;
+
+}

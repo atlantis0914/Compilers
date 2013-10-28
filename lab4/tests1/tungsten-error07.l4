@@ -1,0 +1,11 @@
+//test error
+//reference undefined field
+
+struct a {
+
+};
+
+int main() {
+    struct a *b = alloc(struct a);
+    return b->c;
+}

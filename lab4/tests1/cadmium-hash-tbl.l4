@@ -1,0 +1,136 @@
+//test return 0
+// Fixed size hash table based on array of linked lists. Insert, lookup, and
+// delete functionality are all tested.
+
+struct ll_el {
+    int key;
+    int value;
+    struct ll_el *next;
+};
+
+typedef struct ll_el el_t;
+
+struct hash_table {
+    struct ll_el*[] array;
+    int size;
+};
+
+typedef struct hash_table hash_table_t;
+
+// Simple hash function, just modulo the absolute value of the element
+int hash_fn(hash_table_t *ht, int x) {
+    int abs = x < 0 ? -x : x;
+    return abs % (ht->size);
+}
+
+void ht_init(hash_table_t *ht, int size) {
+    ht->array = alloc_array(struct ll_el*, size);
+    for (int i = 0; i < size; i++) {
+        ht->array[i] = NULL;
+    }
+    ht->size = size;
+}
+
+void ht_insert(hash_table_t *ht, int key, int value) {
+    int i = hash_fn(ht, key);
+
+    // Create new element
+    struct ll_el *new = alloc(struct ll_el);
+    new->key = key;
+    new->value = value;
+    new->next = NULL;
+
+    if (ht->array[i] == NULL) {
+        ht->array[i] = new;
+        return;
+    }
+
+    // Find the last element with the same hash
+    struct ll_el *cur;
+    for (cur = ht->array[i]; cur->next != NULL; cur = cur->next) {
+    }
+
+    // Add the new element to the list
+    cur->next = new;
+}
+
+int ht_lookup(hash_table_t *ht, int key, bool *found) {
+    int i = hash_fn(ht, key);
+    *found = false;
+
+    struct ll_el *cur;
+    for (cur = ht->array[i]; cur != NULL; cur = cur->next) {
+        if (cur->key == key) {
+            *found = true;
+            return cur->value;
+        }
+    }
+
+    // Couldn't find it :(
+    return 0;
+}
+
+void ht_delete(hash_table_t *ht, int key, bool *found) {
+    int i = hash_fn(ht, key);
+    *found = false;
+
+    struct ll_el *prev = NULL;
+    struct ll_el *cur = ht->array[i];
+
+    if (cur->key == key) {
+        *found = true;
+        ht->array[i] = cur->next;
+        return;
+    }
+
+    while (cur->next != NULL) {
+        if (cur->key == key) {
+            // NOTE: L4 does not have garbage collection or 'free', so some
+            // memory leakage happens here.
+            prev->next = cur->next;
+            return;
+        }
+        prev = cur;
+        cur = cur->next;
+    }
+}
+
+int main() {
+    int size = 16;
+    int elems = 100;
+
+    hash_table_t *ht = alloc(hash_table_t);
+    ht_init(ht, size);
+
+    // Insert elements into table
+    for (int i = 0; i < elems; i++) {
+        ht_insert(ht, i, i);
+    }
+
+    // Lookup same elements and make sure we get them back
+    bool *found = alloc(bool);
+    for (int want = 0; want < elems; want++) {
+        int got = ht_lookup(ht, want, found);
+
+        if (!(*found) || got != want)
+            return -1;
+    }
+
+    // Delete all the elements
+    for (int want = 0; want < elems; want++) {
+        ht_delete(ht, want, found);
+
+        if (!(*found))
+            return -2;
+    }
+
+    // Make sure delete worked
+    for (int want = 0; want < elems; want++) {
+        ht_lookup(ht, want, found);
+
+        if (*found)
+            return -3;
+    }
+
+    return 0;
+}

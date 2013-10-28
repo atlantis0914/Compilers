@@ -1,0 +1,10 @@
+//test return 1
+
+int foo(struct any *any)
+{
+  return 0;
+}
+int main()
+{
+  return 1; 
+}

@@ -1,0 +1,13 @@
+//test return 0
+
+struct x {
+	struct x* x;
+	int v;	
+};
+
+
+int main(){
+	struct x* x = alloc(struct x);
+	x->x = alloc(struct x);
+	return x->x->v;
+}

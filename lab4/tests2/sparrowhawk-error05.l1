@@ -1,0 +1,6 @@
+//test error
+// comments not balanced
+int main() {
+  /* /* abc */
+  return 0;
+}

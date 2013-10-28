@@ -1,0 +1,37 @@
+//test return 20
+
+struct foo;
+struct bar;
+
+struct foobar
+{
+  struct foo* f;
+  int data;
+};
+
+struct foo
+{
+  struct bar* b;
+  int data;
+};
+
+struct bar
+{
+  struct foobar* fb;
+  int data;
+};
+
+int main()
+{
+  struct foobar* fb = alloc(struct foobar);
+  fb -> f = alloc(struct foo);
+  fb -> f -> b = alloc(struct bar);
+  fb -> f -> b -> fb = fb;
+
+  while (fb -> f -> b -> fb -> data < 20)
+  {
+    fb -> data += 1;
+  }
+
+  return fb -> f -> b -> fb -> data;
+}

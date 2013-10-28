@@ -1,0 +1,9 @@
+//test error
+// Test compiler error for reserved keywords
+// keyword: struct
+int main() {
+    int struct;
+
+    struct=1;
+    return struct;
+}

@@ -1,0 +1,12 @@
+//test error
+
+struct bar
+{
+  struct foo f;
+};
+
+int main()
+{
+  struct foo* f;
+  return 1;
+}

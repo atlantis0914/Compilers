@@ -1,0 +1,10 @@
+//test exception
+//Test for int overflow on division
+
+int main()
+{
+    int x = -2147483648;
+    int y = x/ -1;
+    return y;
+
+}

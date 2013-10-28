@@ -1,0 +1,12 @@
+//test error
+
+typedef struct name name;
+int main() {
+    name *y = alloc(name);
+    int ** x = NULL;
+    return 8;
+}
+
+struct name {
+    int param;
+};

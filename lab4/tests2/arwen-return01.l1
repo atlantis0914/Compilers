@@ -1,0 +1,9 @@
+//test return 3
+// test initizializing variables in the same line they are defined
+int main()
+{
+  int x = 1;
+  int y = x+x;
+  
+  return y+x;
+}

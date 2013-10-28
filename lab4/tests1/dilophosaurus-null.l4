@@ -1,0 +1,12 @@
+//test return 1
+/* comparing  Null */
+
+int comp(bool b1, bool b2){ return b1 && b2 ? 1 : 0; }
+
+typedef int * Int;
+
+int main () {
+  Int x = NULL;
+  Int y = NULL;
+  return comp(x == y, true);
+}

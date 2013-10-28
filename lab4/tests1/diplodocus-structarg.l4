@@ -1,0 +1,22 @@
+//test error 1
+
+struct a
+{
+    int a;
+    int b;
+};
+
+typedef struct a a_t;
+
+int tester(a_t i, a_t j, a_t k);
+
+int main()
+{
+    return 1;
+}
+
+bool tester(a_t i, a_t j, a_t k)
+{
+    return (i.b == j.b && j.b == k.b);
+}
+

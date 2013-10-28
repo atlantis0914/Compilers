@@ -1,0 +1,15 @@
+//test error
+// scoping rule failure
+int main()
+{
+	int y;
+	int z;
+
+	if (z > 0)
+    {
+    	int x;
+    	x = 10;
+    }
+
+    return x;
+}

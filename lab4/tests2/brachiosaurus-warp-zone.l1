@@ -1,0 +1,17 @@
+//test return 768
+// test warp zone functionality for L1
+
+int main()
+{
+	int A;int C;int E;int I;int L;int M;int N;int O;int P;     int Q;
+	int R;int T;int W;int Z;A=1;C=3;E=5;L=2;M=3;N=14;O=15;     P=1+6;
+	R=8;W=2;                                                   Z=2+6;
+	T=8;Q=8    * W-E-L-C-O-M-E * T-O * W-A-R-P * Z-O-N-E *     8+8+8;
+	A=8+8+8                                                    +8+88;
+	C=8+8+8          -4-            -3-          -2-           8+8+8;
+	I=8+8+8        - - - -        - - - -      - - - -         8+8+8;
+	E=8+88+         I   +          I   +        I   +          8+8+8;
+	L=8+8+8         +   I          +   I        +   I          +8+88;
+	M=8+88+         I   +          I   +        I   +          8+8+8;
+	W=8+8+M+88-88+L+88-88+E+88-88+P+88-88+C+88-88+A+88-88+Q;return W;
+}

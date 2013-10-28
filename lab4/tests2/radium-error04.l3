@@ -1,0 +1,19 @@
+//test error
+//arguments in the wrong order
+
+bool isTrueAndEven (int i, bool truth)
+{
+  if ( i % 2 == 0 && truth)
+  {
+    return true;
+  }
+  return false;
+}
+
+int main()
+{
+  int ans1 = isTrueAndEven (4, true);
+  int ans2 = isTrueAndEven (true, 3);
+
+  return ans1 + ans2;
+}

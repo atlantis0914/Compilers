@@ -1,0 +1,57 @@
+//test return 2000
+// tests an array of structs
+
+struct even_odd_struct {
+    int val;
+    bool isEven;
+};
+
+typedef struct even_odd_struct even_odd;
+
+int add_even(even_odd[] array, int size) {
+    int i = 0;
+    int sum = 0;
+    while (i < size) {
+        if (array[i].isEven) {
+            sum += array[i].val;
+        }
+        i++;
+    }
+
+    return sum;
+}
+
+int add_odd(even_odd[] array, int size) {
+    int i = 0;
+    int sum = 0;
+    while (i < size) {
+        if (!array[i].isEven) {
+            sum += array[i].val;
+        }
+        i++;
+    }
+
+    return sum;
+}
+
+int main () {
+
+    int num_structs = 4*1000;
+    even_odd[] many_structs = alloc_array(even_odd, num_structs);
+
+    int i = 0;
+    while (i < num_structs) {
+        if (i % 2 == 0) {
+            many_structs[i].isEven = true;
+        }
+        else {
+            many_structs[i].isEven = false;
+        }
+        many_structs[i].val = i;
+        i++;
+    }
+
+    int even_sum = add_even(many_structs, num_structs);
+    int odd_sum = add_odd(many_structs, num_structs);
+    return odd_sum - even_sum;
+}

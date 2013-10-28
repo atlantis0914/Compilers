@@ -1,0 +1,16 @@
+//test return 51
+//tests simple aritmetic operations & in-code decls
+int main()
+{
+  int a;
+  a = 0;
+  int b;
+  b = a-1;
+  int c;
+  c = b * 10;
+  int d;
+  d = c * -5;
+  int e;
+  e = d + 1;
+  return e;
+}

@@ -1,0 +1,16 @@
+//test exception 14
+
+// actually this will return, when b++ overflows
+
+int never_return() {
+	int a = 1;
+	int b = 2;
+	while (a < b) {
+		b ++;
+	}
+	return a;
+}
+
+int main () {
+	return never_return();
+}

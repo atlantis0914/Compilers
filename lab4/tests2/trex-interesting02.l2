@@ -1,0 +1,31 @@
+//test return 233168
+
+// solves problem 1 on projecteuler.net
+//
+// find the sum of all the multiples of 3 or 5 below 1000
+
+int main()
+{
+  int sum = 0;
+  int upper = 1000;
+
+  int a = 3;
+  int b = 5;
+  int c = a * b;
+
+  int n;
+
+  // add multiples of 3
+  for (n = a; n < upper; n += a)
+    sum += n;
+
+  // add multiples of 5
+  for (n = b; n < upper; n += b)
+    sum += n;
+
+  // subtract multiples of 15 (double counted)
+  for (n = c; n < upper; n += c)
+    sum -= n;
+
+  return sum;
+}

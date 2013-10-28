@@ -1,0 +1,12 @@
+//test return 5
+// tests short circuiting
+
+int main() {
+    if (true || (1/0) > 5) {
+        if (false && (1/0) < 2) {
+            return 0;
+        }
+        return 5;
+    }
+    return 2;
+}

@@ -1,0 +1,12 @@
+//test return 1
+
+int main() {
+   int a;
+   int b;
+   
+   a=1;
+   a<<=32%32;
+   b=13%(a<<1);
+   
+   return b;
+}

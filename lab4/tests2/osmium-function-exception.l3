@@ -1,0 +1,8 @@
+//test exception 8
+
+int f1() { return 1 / 0; }
+
+int main () {
+	int x = f1();
+	return 1;
+}

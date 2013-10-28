@@ -1,0 +1,18 @@
+//test error
+//Test typechecker for return statements
+int main ()
+{
+  int i;
+  bool b = true;
+  for (i=0;i%7 != i% 19; i++) {
+    b = !b;
+  }
+  if (b) {
+    return 0;
+  } else {
+    b = !b;
+  }
+  while (true) {
+    return 0;
+  }
+}

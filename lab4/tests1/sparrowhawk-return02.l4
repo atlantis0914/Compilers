@@ -1,0 +1,43 @@
+//test return 0
+//Multiple swaps
+
+struct s {
+       int a;
+       int b;
+};
+
+typedef struct s s_t;
+
+int swap_internal(s_t *s)
+{
+	int tmp;
+	tmp = s->a;
+	s->a = s->b;
+	s->b = tmp;
+	return 0;
+}
+
+int main()
+{
+	s_t *s1;
+	s_t *s2;
+	s_t *tmp;
+	
+	(s1) = alloc(s_t);
+	(s2) = alloc(s_t);
+
+	(s1)->a = 0;
+	(s1)->b = 1;
+	(s2)->a = 2;
+	(s2)->b = 3;
+
+	swap_internal(s1);
+	swap_internal(s2);
+
+	tmp = s1;
+	s1 = s2;
+	s2 = tmp;
+
+	return (s2)->b;
+}
+	

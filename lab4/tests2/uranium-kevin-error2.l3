@@ -1,0 +1,7 @@
+//test error
+
+void cum() {}
+
+int main() {
+  return cum();
+}

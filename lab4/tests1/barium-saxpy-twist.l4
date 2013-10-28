@@ -1,0 +1,23 @@
+//test return 1073740800
+
+void load_array(int[] array, int len)
+{
+  for (int i = 0; i < len; i++)
+    array[i] = i;
+}
+
+int main()
+{
+  int len = 1024*1024;
+  int[] array_a = alloc_array(int, len);
+  int[] array_b = alloc_array(int, len);
+  int[] array_c = alloc_array(int, len);
+  load_array(array_a, len);
+  load_array(array_b, len);
+
+  for (int i = 0; i < 1024; i++)
+    for (int j = 0; j < 1024; j++)
+      array_c[i*1024+j] = array_a[i*1024+j] + i*array_b[j*1024+i];
+
+  return array_c[len-1];
+}

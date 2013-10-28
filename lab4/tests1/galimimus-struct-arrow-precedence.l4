@@ -1,0 +1,21 @@
+//test return 42
+
+struct Baz {
+  int x;
+};
+
+struct Bar {
+  struct Baz* baz;
+};
+
+struct Foo {
+  struct Bar bar;
+};
+
+int main() {
+  struct Foo* foo = alloc(struct Foo);
+  struct Baz* baz = alloc(struct Baz);
+  baz->x = 7;
+  foo->bar.baz = baz;
+  return 2 * (*foo).bar.baz->x + 3 * 8 + 4;
+}

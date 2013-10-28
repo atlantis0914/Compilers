@@ -1,0 +1,8 @@
+//test return 4
+
+int main()
+{
+  int h;
+  h = 2;
+  return 2 * (h + 0);
+}

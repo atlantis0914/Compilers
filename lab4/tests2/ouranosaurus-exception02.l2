@@ -1,0 +1,15 @@
+//test exception
+//overflow
+
+int main() {
+    int m = 0x80000000;
+    int n = 0xDEADBEEF;
+    int i;
+    
+    for (i = 0; i < 32; i++) {
+        m /= (-1) * (n & 0x1);
+        n >>= 1;
+    }
+
+    return m;
+}

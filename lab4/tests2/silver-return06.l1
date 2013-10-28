@@ -1,0 +1,7 @@
+//test return 2147483647
+// Test int constant range.
+
+int main() {
+   int x = 2147483647;
+   return x;
+}

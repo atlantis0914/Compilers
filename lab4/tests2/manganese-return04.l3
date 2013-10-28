@@ -1,0 +1,21 @@
+//test return 0
+
+bool foo();
+bool bar();
+
+bool foo() {
+    return false;
+}
+
+bool bar() {
+    int x = 0;
+    int y = 1 / x;
+    return true;
+}
+
+int main() {
+    if (foo() && bar()) {
+        return 0xDEADBEEF;
+    }
+    return 0;
+}

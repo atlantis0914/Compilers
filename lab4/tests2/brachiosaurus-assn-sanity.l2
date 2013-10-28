@@ -1,0 +1,14 @@
+//test return 1
+// returns 1
+
+int main () {
+    int a = 1;
+    int b = 2;
+    a <<= 2;
+    a >>= 2;
+    a |= 7;
+    a &= 7;
+    if (a == a && a == a || a >= a)
+        return 1;
+    else return 0;
+}

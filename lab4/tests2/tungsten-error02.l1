@@ -1,0 +1,15 @@
+//test error
+// Red test 02 - tests invalid combinations of binops and asnops
+
+int main()
+{
+ int a = 1;
+ int b = 2;
+
+ a += a -= b;
+ a -= b %= a;
+ a + b /= a;
+ b *= b *= b;
+ b % a;
+ return b;
+}

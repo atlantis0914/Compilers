@@ -1,0 +1,59 @@
+//test return 0
+int fill_reversed(int[] a, int n) {
+    int i;
+
+    for(i = 0; i < n; i++) {
+        a[i] = (n - i);
+    }
+
+    return 0;
+}
+
+int swap(int[] a, int x, int y) {   
+    a[x] ^= a[y];
+    a[y] = a[x];
+    a[x] ^= a[y];
+
+    return 0;
+}
+
+int bs(int[] a, int n) {
+    int i;
+    bool s = true;
+
+    while(s) {
+        s = false;
+
+        for(i = 1; i < n; i++) {
+            if(a[i - 1] > a[i]) {
+                swap(a, i - 1, i);
+                s = true;
+            }
+        }
+    }
+    return 0;
+}
+
+int check(int[] a, int n) {
+    int i = 0;
+
+    for(i = 1; i < n; i++) {
+        if(a[i - 1] > a[i]) {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+int main() {
+    int n = 1000;
+
+    int[] a = alloc_array(int, n);
+    
+    fill_reversed(a, n);
+
+    bs(a, n);
+
+    return check(a, n);
+}

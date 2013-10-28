@@ -1,0 +1,14 @@
+//test return 100 
+//make sure source for args arent modifiable by function
+
+int a(int n);
+
+int main(){ 
+    int b = 100;
+    int c = a(b);
+    return b;
+}
+
+int a(int n){
+    return n - 100;
+}

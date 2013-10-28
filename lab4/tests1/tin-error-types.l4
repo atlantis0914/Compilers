@@ -1,0 +1,11 @@
+//test error
+//typechecking applies to pointers too
+
+typedef int* iptr;
+typedef bool* bptr;
+
+int main() {
+  bptr b = alloc(bool);
+  iptr i = b;
+  return 0;
+}

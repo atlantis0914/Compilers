@@ -1,0 +1,10 @@
+//test return 21
+
+int foo(int a);
+int main(){
+	int	a=3;
+	return foo(foo(foo(foo(foo(foo(a))))));
+}
+int foo(int a){
+	return a+3;
+}

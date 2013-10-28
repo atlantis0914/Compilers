@@ -1,0 +1,94 @@
+//test exception 14
+/* This test ensures proper stack alignment. It is rather more vicious than its
+ * counterpart, chaotic-good-test.l4. */
+
+/* Unfortunately, while this test was founded upon good ideas, it was foiled by
+ * linux's stack randomization. When run under GDB, the stack location is fixed,
+ * and we do as advertised. Otherwise, IT IS A MYSTERY, and we segfault.
+ *
+ * I have left this logic in for posterity; to use it as originally intended,
+ * set "use_gdb" to 1 and run by hand in GDB. */
+
+int spin()
+{
+	int i;
+	for (i = 1; i != (253<<21); i++) {}
+	return 0;
+}
+
+int spin2()
+{
+	int i;
+	for (i = 1; i != 0; i++) {}
+	return 0;
+}
+
+/* Verifies the stack above it has been 16-byte aligned. */
+int verify(int unused)
+{
+	int[] coolface = alloc_array(int, 1);
+	int[][] poor_noob = alloc_array(int[], 1);
+	int[] stack;
+	int index;
+	int use_gdb = 0;
+
+	/* See comment at top of file. */
+	if (use_gdb != 0) {
+		/* Step 0: Dodge the reference compiler. */
+		spin();
+
+		/* Step 1: Find the stack. This should be a fine guess. */
+		coolface[8] = 0xffffd800;
+		coolface[9] = 0x00007fff;
+		stack = poor_noob[0];
+	} else {
+		/* Step 1, backup version: Synthesize a valid stack. */
+		stack = alloc_array(int, 10);
+		stack[0] = 0xbabe;
+		stack[2] = 0x40074a;
+		stack[4] = 0xbeef;
+		stack[6] = 0x4007b2;
+		stack[8] = 0xcafe;
+	}
+
+	/* Step 2: Search */
+	for (index = 0; stack[index] != 0xbabe; index++) ;
+
+	/* Step 3: Count stack frames. */
+	for (; stack[index] != 0xcafe; index++) {
+		/* Does this look like a pushed return address? */
+		if (stack[index] >= 0x400000 && stack[index] <= 0x410000) {
+			/* Is it misaligned? */
+			if (index % 4 != 2) {
+				return 1/0;
+			}
+		}
+	}
+
+	/* Step 4: Looks good. */
+	return spin2();
+
+}
+
+/* Another function with stacked arguments, for good measure. */
+int spill3(int rdi, int rsi, int rdx, int rcx, int r8, int r9, int m1, int m2, int m3)
+{
+	return verify(rdi+rsi+rdx+rcx+r8+r9+m1+m2+m3);
+}
+
+/* A function with an even number of stacked arguments. */
+int spill2(int rdi, int rsi, int rdx, int rcx, int r8, int r9, int m1, int m2)
+{
+	return spill3(rdi, rsi, rdx, rcx, r8, r9, m1 + 1, m2 + 1, 0xbabe);
+}
+
+/* A function with an odd number of stacked arguments. */
+int spill1(int rdi, int rsi, int rdx, int rcx, int r8, int r9, int m1)
+{
+	return spill2(rdi, rsi, rdx, rcx, r8, r9, m1 + 1, 0xbeef);
+}
+
+int main()
+{
+	return spill1(0, 0, 0, 0, 0, 0, 0xcafe);
+}

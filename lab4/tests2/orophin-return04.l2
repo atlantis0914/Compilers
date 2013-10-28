@@ -1,0 +1,7 @@
+//test return 1437226410
+// Test bitshifting mask
+int main() {
+	int a = 0x55aa55aa; // 1437226410
+	a >>= 0; // masked to 5 bits means no shift
+	return a;
+}

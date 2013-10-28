@@ -1,0 +1,12 @@
+//test return 15
+
+int time_hundred(int v) {
+	return v * 100;
+}
+
+int main () {
+	int* p = alloc(int);
+	*p = 15;
+	time_hundred(*p);
+	return *p;
+}

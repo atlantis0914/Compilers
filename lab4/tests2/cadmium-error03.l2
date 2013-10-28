@@ -1,0 +1,6 @@
+//test error
+// while condition must be bool, not int
+int main() {
+  while(1) { }
+  return 0;
+}

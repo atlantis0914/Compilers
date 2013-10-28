@@ -1,0 +1,119 @@
+//test return 0
+
+struct list
+{
+  int v;
+  struct list * next;
+};
+
+struct list * insert(struct list * h, struct list * elem) {
+  assert(h != NULL && elem != NULL);
+
+  if(h->v >= elem->v) {
+    elem->next = h;
+    return elem;
+  }
+
+  struct list * temp = h;
+  while(temp->next != NULL) {
+
+    if(temp->next->v >= elem->v) {
+      elem->next = temp->next;
+      temp->next = elem;
+      return h;
+    }
+    temp = temp->next;
+  }
+  temp->next = elem;
+  elem->next = NULL;
+  return h;
+
+
+}
+
+struct list * sort(struct list * l) {
+  // zero or one element in list
+  if(l == NULL)
+    return l;
+  // head is the first element of resulting sorted list
+  struct list * temp;
+  struct list * h = l;
+  l = l->next;
+  h->next = NULL;
+  while(l != NULL) {
+
+    temp = l->next;
+    l->next = NULL;
+    h = insert(h,l);
+    l = temp;
+
+    /*
+    struct list * cur = l;
+    l = l->next;
+    if(h == NULL || cur->v < h->v) {
+      // insert into the head of the sorted list
+      // or as the first element into an empty sorted list
+      cur->next = h;
+      h = cur;
+    }
+    else {
+      // insert current element into proper position in non-empty sorted list
+      struct list * p = h;
+      bool brk = false;
+      while(p != NULL && !brk) {
+        if(p->next == NULL || cur->v < p->next->v)
+          {
+            cur->next = p->next;
+            p->next = cur;
+            brk = true;
+          }
+        else
+          p = p->next;
+      }
+    }
+    */
+  }
+  return h;
+}
+
+
+
+int main() {
+
+  struct list * one = alloc(struct list);
+  struct list * two = alloc(struct list);
+  struct list * three = alloc(struct list);
+  struct list * four = alloc(struct list);
+  struct list * five = alloc(struct list);
+  struct list * six = alloc(struct list);
+
+  one->v = 9;
+  one->next = two;
+
+  two->v = 1;
+  two->next = three;
+
+  three->v = 20;
+  three->next = four;
+
+  four->v = -90;
+  four->next = five;
+
+  five->v = 7;
+  five->next = six;
+
+  six->v = 8;
+  six->next = NULL;
+
+
+  one = sort(one);
+
+  assert(one->v   == -90);
+  assert(one->next->v   ==   1);
+  assert(one->next->next->v ==   7);
+  assert(one->next->next->next->v  ==   8);
+  assert(one->next->next->next->next->v  ==   9);
+  assert(one->next->next->next->next->next->v   ==  20);
+
+  return 0;
+}

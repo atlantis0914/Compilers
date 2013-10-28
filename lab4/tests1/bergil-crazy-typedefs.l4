@@ -1,0 +1,11 @@
+//test return 2
+
+
+typedef int a;
+typedef a******** b;
+typedef b*[]*****[][][][][][][]*******[]*[]**[] c;
+
+
+int main() {
+    return 2;
+}

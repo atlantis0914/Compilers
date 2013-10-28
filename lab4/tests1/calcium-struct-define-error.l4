@@ -1,0 +1,10 @@
+//test return 0
+// must declare before poops
+typedef struct poop poops;
+struct poop {
+  int poop;
+};
+
+int main() {
+  return 0;
+}

@@ -1,0 +1,60 @@
+//test return 2147483272
+// Does a lot of operations on spilled registers
+
+int main() {
+        int X00 = 0X00;
+        int X01 = 0X01;
+        int X02 = 0X02;
+        int X03 = 0X03;
+        int X04 = 0X04;
+        int X05 = 0X05;
+        int X06 = 0X06;
+        int X07 = 0X07;
+        int X08 = 0X08;
+        int X09 = 0X09;
+        int X0A = 0X0A;
+        int X0B = 0X0B;
+        int X0C = 0X0C;
+        int X0D = 0X0D;
+        int X0E = 0X0E;
+        int X0F = 0X0F;
+        
+        int foo = X00 + X01 + X02 + X03
+                + X04 + X05 + X06 + X07
+                + X08 + X09 + X0A + X0B
+                + X0C + X0D + X0E + X0F;
+
+        for (int i=0; i<0X07FFFFFF; i++) {
+                int X10 = 0X10;
+                int X11 = 0X11;
+                int X12 = 0X12;
+                int X13 = 0X13;
+                int X14 = 0X14;
+                int X15 = 0X15;
+                int X16 = 0X16;
+                int X17 = 0X17;
+                int X18 = 0X18;
+                int X19 = 0X19;
+                int X1A = 0X1A;
+                int X1B = 0X1B;
+                int X1C = 0X1C;
+                int X1D = 0X1D;
+                int X1E = 0X1E;
+                int X1F = 0X1F;
+                
+                foo += X10 + X11 + X12 + X13
+                     + X14 + X15 + X16 + X17
+                     + X18 + X19 + X1A + X1B
+                     + X1C + X1D + X1E + X1F;
+        }
+        
+        for (int i=0; i<0X07FFFFFF; i++) {
+                foo += X00 + X01 + X02 + X03
+                     + X04 + X05 + X06 + X07
+                     + X08 + X09 + X0A + X0B
+                     + X0C + X0D + X0E + X0F;
+        }
+        
+        return foo;
+}
+

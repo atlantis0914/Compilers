@@ -1,0 +1,7 @@
+//test error
+// undeclared variable
+
+int main(){
+    x = 2;   //error here, x undeclared
+    return z;
+}

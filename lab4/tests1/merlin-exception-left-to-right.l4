@@ -1,0 +1,20 @@
+//test exception 8
+
+struct arraywrapper {
+  int size;
+  int[] array;
+};
+
+int set(struct arraywrapper* aw) {
+  aw->array = alloc_array(int,20);
+  aw->array[0] = 0;
+  return 0;
+}
+
+int main() {
+  struct arraywrapper* aw = alloc(struct arraywrapper);
+  aw->size = 1;
+  aw->array = alloc_array(int,20);
+  aw->array[set(aw)] = 1;
+  return 1/aw->array[0];
+}

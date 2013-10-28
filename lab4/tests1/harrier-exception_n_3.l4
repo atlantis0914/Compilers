@@ -1,0 +1,11 @@
+//test exception
+
+int myfun(int n, int i)
+{
+    return myfun(i - n / n + i, n - i / n - i);
+}
+
+int main()
+{
+    return myfun(-4, ((((-2 * 10) - 50) + 70 + 3 - 2 + 4) / 2) * 2);
+}

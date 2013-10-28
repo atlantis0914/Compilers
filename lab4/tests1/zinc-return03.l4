@@ -1,0 +1,60 @@
+//test return 0
+
+bool is_sorted(int[] A, int lower, int upper) { 
+  int i;
+  for (i = lower; i < upper-1; i++)
+    if (!(A[i] <= A[i+1])) return false;
+  return true;
+}
+
+void merge(int[] A, int lower, int mid, int upper) { 
+  int[] B = alloc_array(int, upper-lower);
+  int i = lower; int j = mid; int k = 0;
+  while (i < mid && j < upper) {
+    if (A[i] <= A[j]) {
+      B[k] = A[i]; i++;
+    } 
+    else {
+      B[k] = A[j]; j++;
+    }
+    k++;
+  }
+  while (i < mid) { 
+    B[k] = A[i]; i++; k++; 
+  }
+  while (j < upper) { 
+    B[k] = A[j]; j++; k++; 
+  }
+  for (k = 0; k < upper-lower; k++)
+    A[lower+k] = B[k];
+}
+
+void mergesort (int[] A, int lower, int upper) {
+  if (upper-lower <= 1) return;
+  else {
+    int mid = lower + (upper-lower)/2;
+    mergesort(A, lower, mid);
+    mergesort(A, mid, upper);
+    merge(A, lower, mid, upper);
+  }
+}
+
+int main() {
+  int size = 10;
+  int[] A = alloc_array(int, size);
+  A[0] = 3;
+  A[1] = 1;
+  A[2] = 0;
+  A[3] = 4;
+  A[4] = 2;
+  A[5] = 9;
+  A[6] = 8;
+  A[7] = 7;
+  A[8] = 6;
+  A[9] = 5;
+  mergesort(A, 0, size);
+  for (int i = 0; i < size; i++)
+    if (A[i] != i)
+      return 1;
+  return 0;
+}  

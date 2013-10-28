@@ -1,0 +1,16 @@
+//test return 42
+
+int ackermann(int m, int n) {
+  if (m == 0) return n + 1;
+  if (n == 0) return ackermann(m - 1, 1);
+  return ackermann(m - 1, ackermann(m, n - 1));
+}
+
+int main () {
+  if (ackermann(1, 1) != 3) return -42;
+  if (ackermann(3, 3) != 61) return -42;
+  if (ackermann(3, 4) != 125) return -42;
+  if (ackermann(3, 10) != 8189) return -42;
+  
+  return 42;
+}

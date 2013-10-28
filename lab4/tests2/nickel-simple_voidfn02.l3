@@ -1,0 +1,35 @@
+//test return 42
+// complicated function calling.
+
+int bar()
+{
+	return 1;
+}
+
+void sheep()
+{
+	bar(); bar();
+	return;
+}
+
+void foo()
+{
+	int i = 0;
+	while(i < 10000)
+{
+	bar();bar();sheep();
+	i = i + bar();
+}
+}
+
+
+
+void baz(int n)
+{
+	foo();
+	if (n == 0) return;
+	baz(n-1);
+}
+
+int main()
+{ baz(0); return 42;}

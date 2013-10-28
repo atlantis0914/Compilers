@@ -1,0 +1,17 @@
+//test exception 8
+
+int main ()
+{
+	int num = 148553800; //vortex!
+	int counter = 0;
+	int divisor = 99;
+	while(divisor >= 0) {
+		counter += num / divisor;
+		if(divisor % 2 == 0) {
+			divisor -= 1;
+		} else {
+			divisor -= 3;
+		}
+	}
+	return counter;
+}

@@ -1,0 +1,17 @@
+//test return 2
+// return statement not at the end
+
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+  a = 1;
+  b = 2;
+  c = a + b;
+  return b;
+
+  // no reached
+  d = c + b;
+}

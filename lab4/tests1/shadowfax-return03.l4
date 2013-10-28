@@ -1,0 +1,50 @@
+//test return 934489888
+//this looks familiar, hw01 code from 15-122
+// remove all but the red component of an image, then exchange red with blue, then pixelate, then return sum of the blues
+
+/* make pixel a type alias for int */
+typedef int pixel;
+
+pixel[] remove_except_red (pixel[] A, int width, int height)
+{
+  int i;
+  int j;
+  pixel[] B = alloc_array(pixel, width*height);
+
+  for (j = 0; j < height; j++)
+  {
+      for (i = 0; i < width; i++)
+      {
+        // Clear the bits corresponding to the red component
+        B[j*width+i] = A[j*width+i] & 0xFF00FFFF;
+      }
+  }
+
+  return B;
+}
+
+
+pixel[] dummy_image(int w, int h)
+{
+   pixel[] herp = alloc_array(pixel, w*h);
+   for(int i= 0; i < (w * h); i++) {
+      herp[i] = 0x99115566 + (i << 0x0D);
+      herp[i] ^= 0xDEADBEEF;
+   }
+   return herp;
+}
+
+pixel sum (pixel[] A, int w, int h) {
+  int ret=0;
+  for(int i = 0; i < w * h; i++)
+     ret += A[i];
+  return ret;
+}
+
+
+int main() {
+    pixel[] start = dummy_image(100,200);
+    pixel[] nored = remove_except_red(start, 100, 200);
+    return sum(nored, 100,200);
+
+}

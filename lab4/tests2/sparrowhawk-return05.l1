@@ -1,0 +1,14 @@
+//test return 97
+// test Plus equal operator
+int main()
+{
+  int a;
+  int b;
+
+  a = 55;
+  b = 42;
+
+  b += a;
+
+  return b;
+}

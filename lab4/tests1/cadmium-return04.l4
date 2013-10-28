@@ -1,0 +1,25 @@
+//test return 2
+// convoluted array of pointers
+
+void get_ptr(int*[] arr, int len, int val, int **i) {
+    for (int j = 0; j < len; j++) {
+        if (*arr[j] == val)
+            *i = arr[j];
+    }
+}
+
+int main() {
+    int size = 4;
+    int **i = alloc(int*);
+    int*[] a = alloc_array(int*, size);
+    a[0] = alloc(int);
+    *a[0] = 5;
+    a[1] = alloc(int);
+    *a[1] = 4;
+    a[2] = alloc(int);
+    *a[2] = 3;
+    a[3] = alloc(int);
+    *a[3] = 2;
+    get_ptr(a, 4, 3, i);
+    return *a[**i];
+}

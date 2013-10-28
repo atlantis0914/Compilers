@@ -1,0 +1,86 @@
+//test return -1
+
+struct llist
+{
+  struct llist* next;
+  int data;
+};
+
+struct llist* cons(int n, struct llist* l)
+{
+  struct llist* h = alloc(struct llist);
+  h -> data = n;
+  h -> next = l;
+  return h;
+}
+
+int len(struct llist* l)
+{
+  if (l == NULL)
+  {
+    return 0;
+  }
+  return 1 + len(l -> next);
+}
+
+struct llist* from_list(int[] a, int n)
+{
+  assert(n > 0);
+  struct llist* l = alloc(struct llist);
+  l -> data = a[0];
+  struct llist* curr = l;
+  for (int i = 1; i < n; i++)
+  {
+    curr -> next = alloc(struct llist);
+    curr -> next -> data = a[i];
+    curr = curr -> next;
+  }
+  assert(len(l) == n);
+  return l;
+}
+
+struct llist* longer(struct llist* l1, struct llist* l2)
+{
+  return (len(l1) > len(l2) ? l1 : l2);
+}
+
+struct llist* lcss(struct llist* l1, struct llist* l2)
+{
+  if (len(l1) == 0)
+  {
+    return NULL;
+  }
+  if (len(l2) == 0)
+  {
+    return NULL;
+  }
+  int x = l1 -> data;
+  int y = l2 -> data;
+  if (x == y)
+  {
+    return cons(x, lcss(l1 -> next, l2 -> next));
+  }
+  return longer(lcss(l1, l2 -> next), lcss(l1 -> next, l2));
+}
+
+void print_llist(struct llist* l)
+{
+  if (l == NULL) return;
+  print_int(l -> data);
+  print_llist(l -> next);
+}
+
+int main()
+{
+  int[] a1 = alloc_array (int, 15);
+  int[] a2 = alloc_array (int, 5);
+  a1[0] = 5; a1[1] = 10; a1[2] = 9; a1[3] = 11;
+  a1[4] = 1234; a1[5] = 52645; a1[6] = 4; a1[7] = 10;
+  a1[8] = 5; a1[9] = 5;
+  a2[0] = 1; a2[1] = 1; a2[2] = 5; a2[3] = 5;
+  a2[4] = 5;
+
+  struct llist* l = lcss(from_list(a1, 10), from_list(a2, 5));
+  print_llist(l);
+  return -1;
+}

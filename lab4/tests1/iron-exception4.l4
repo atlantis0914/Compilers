@@ -1,0 +1,7 @@
+//test exception 8
+// fpe inside out of bounds index
+
+int main() {
+		int [] arr = alloc_array(int, 0);
+		return arr[0/0];
+}

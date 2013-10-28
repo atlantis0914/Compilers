@@ -1,0 +1,33 @@
+//test return 17300
+
+struct foo_t{
+    int a;
+    int b;
+    int c;
+    struct bar_t *d;
+};
+
+typedef struct foo_t foo;
+
+struct bar_t{
+    int a;
+};
+
+typedef struct bar_t bar;
+
+int main(){
+    foo[] f = alloc_array(struct foo_t, 100); 
+    int i;
+    int ans;
+
+    for(i = 0; i < 100; i++){
+        f[i].a = i;
+        f[i].b = i*2;
+        f[i].c = i/2;
+    }
+    ans = 0;
+    for(i = 0; i < 100; i++){
+        ans += f[i].a+f[i].b+f[i].c;
+    }
+    return ans;
+}

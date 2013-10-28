@@ -1,0 +1,16 @@
+//test error
+
+bool foo(int a, int b) {
+  if (a > b) return true;
+  return false;
+} 
+
+int main() {
+  int x;
+  int y;
+  bool z = foo(x, y);
+  x = 1;
+  y = 2;
+  return x+y;
+}
+

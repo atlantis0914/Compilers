@@ -1,0 +1,263 @@
+//test return 0
+
+// Implementation of RBTs. Mostly copied from the 15-122 fall 2010 library.
+// Uses int keys and int* values for simplicity.
+
+/* Implementation */
+
+typedef int *elem;
+typedef int key;
+typedef struct tree* tree;
+struct tree {
+  elem data;/* data element */
+  bool red;/* is node red? */
+  tree left;/* left subtree */
+  tree right;/* right subtree */
+};
+
+struct bst {
+  tree root;/* root of the tree */
+};
+
+typedef struct bst *rbt;
+
+void print_tree(tree T);
+
+int elem_key(elem e) {
+  return *e;
+}
+
+int compare(key k1, key k2) {
+  if (k1 == k2) return 0;
+  if (k1 < k2) return -1;
+  return 1;
+}
+
+bool is_ordered(tree T, elem min, elem max) {
+  if (T == NULL) return true; // empty tree is okay!
+  if (T->data == NULL) return false; // no data -- bogus
+  else {
+    key k = elem_key(T->data);
+    return
+      // make sure the data is between min and max
+      (min == NULL || compare(elem_key(min), k) < 0)
+      && (max == NULL || compare(k, elem_key(max)) < 0)
+      // check the subtrees
+      && is_ordered(T->left, min, T->data)
+      && is_ordered(T->right, T->data, max);
+  }
+}
+
+bool is_ordtree(tree T) {
+  return is_ordered(T, NULL, NULL);
+}
+
+/* sat_colorinv(T, red_parent)
+ * iff T satisfies the color invariant
+ */
+bool sat_colorinv(tree T, bool red_parent)
+{ if (T == NULL) return true;
+  if (red_parent && T->red) return false;
+  return sat_colorinv(T->left, T->red)
+    && sat_colorinv(T->right, T->red);
+}
+
+/* black_height(T) >= 0 is the black height of T if it exists,
+ * -1 otherwise
+ */
+int black_height(tree T) {
+  if (T == NULL) return 0;
+  {
+    int hleft = black_height(T->left);
+    int hright = black_height(T->right);
+    if (hleft < 0 || hright < 0 || hleft != hright) return -1;
+    //@assert hleft == hright;
+    if (T->red) return hleft;
+    else return hleft+1;
+  }
+}
+
+bool is_baltree(tree T) {
+  int h = black_height(T);
+  return h >= 0 && sat_colorinv(T, false);
+}
+
+bool is_rbtree(tree T) {
+  return is_ordtree(T) && is_baltree(T);
+}
+
+bool is_rbtree_except_root(tree T) {
+  bool ok = is_ordtree(T);/* order invariant is satisfied */
+  ok = ok && black_height(T) >= 0; /* height invariant is satisfied */
+  if (T->red
+      && T->left != NULL && T->left->red /* left child red */
+      && (T->right == NULL || !T->right->red)) /* right child not red */
+    ok = ok && sat_colorinv(T->left, false) /* pretend parent is not red */
+      && sat_colorinv(T->right, false);
+  else if (T->red
+           && T->right != NULL && T->right->red /* right child red */
+           && (T->left == NULL || !T->left->red)) /* left child not red */
+    ok = ok && sat_colorinv(T->left, false) /* pretend parent is not red */
+      && sat_colorinv(T->right, false);
+  else
+    ok = ok && sat_colorinv(T, false); /* otherwise, color inv. satisfied */
+  return ok;
+}
+
+bool is_rbt(rbt RBT) {
+  return RBT != NULL && is_rbtree(RBT->root);
+}
+
+/* for testing purposes... */
+bool is_bst(rbt RBT) {
+  return is_rbt(RBT);
+}
+
+rbt bst_new()
+//@ensures is_rbt(\result);
+{
+  rbt RBT = alloc(struct bst);
+  RBT->root = NULL;
+  return RBT;
+}
+
+elem tree_search(tree T, key k)
+//@requires is_ordtree(T);
+//@ensures \result == NULL || compare(elem_key(\result), k) == 0;
+{
+  if (T == NULL) return NULL;
+  { key kt = elem_key(T->data);   // key in tree node
+    if (compare(k, kt) == 0)
+      return T->data;
+    else if (compare(k, kt) < 0)
+      return tree_search(T->left, k);
+    else //@assert compare(k, kt) > 0;
+      return tree_search(T->right, k);
+  }
+}
+
+elem bst_search(rbt RBT, key k)
+//@requires is_rbt(RBT);
+//@ensures \result == NULL || compare(elem_key(\result), k) == 0;
+{
+  return tree_search(RBT->root, k);
+}
+
+tree balance_left(tree T)
+//@requires T != NULL;
+//@requires T->red ? is_rbtree(T->left) : is_rbtree_except_root(T->left);
+//@ensures \old(T->red) ? is_rbtree_except_root(\result) : is_rbtree(\result);
+{ if (T->red) return T;
+  //@assert !T->red;
+  if (T->left->red
+      && T->left->left != NULL && T->left->left->red)
+    // rotate right
+  { tree root = T->left; T->left = root->right; root->right = T;
+    root->left->red = false;
+    //@assert root->red == true;
+    //@assert root->right->red == false;
+    return root;
+  } else if (T->left->red
+             && T->left->right != NULL && T->left->right->red)
+    // double rotate right
+  { tree root = T->left->right; T->left->right = root->left;
+    root->left = T->left; T->left = root->right; root->right = T;
+    root->left->red = false;
+    //@assert root->red == true;
+    //@assert root->right->red == false;
+    return root;
+  } else return T;
+}
+
+tree balance_right(tree T)
+//@requires T != NULL;
+//@requires T->red ? is_rbtree(T->right) : is_rbtree_except_root(T->right);
+//@ensures \old(T->red) ? is_rbtree_except_root(\result) : is_rbtree(\result);
+{ if (T->red) return T;
+  //@assert !T->red;
+  if (T->right->red
+      && T->right->right != NULL && T->right->right->red)
+    // rotate left
+  { tree root = T->right; T->right = root->left; root->left = T;
+    root->right->red = false;
+    //@assert root->red == true;
+    //@assert root->left->red == false;
+    return root;
+  } else if (T->right->red
+             && T->right->left != NULL && T->right->left->red)
+    // double rotate left
+  { tree root = T->right->left; T->right->left = root->right;
+    root->right = T->right; T->right = root->left; root->left = T;
+    root->right->red = false;
+    //@assert root->red == true;
+    //@assert root->left->red == false;
+    return root;
+  } else return T;
+}
+
+tree tree_insert(tree T, elem e)
+//@requires is_rbtree(T);
+/*@ensures \old(T != NULL && T->red)
+           ? is_rbtree_except_root(\result)
+           : is_rbtree(\result); @*/
+//@ensures tree_search(\result, elem_key(e)) == e;
+{
+  if (T == NULL) {  /* create new node */
+    T = alloc(struct tree);
+    T->data = e; T->red = true;/* new nodes are red */
+    T->left = NULL; T->right = NULL;
+  } else {
+    key kt = elem_key(T->data);
+    key k = elem_key(e);
+    if (compare(k, kt) == 0) {
+      T->data = e;
+    } else if (compare(k, kt) < 0) {
+      //@assert T->red ? (T->left == NULL || !T->left->red) : true;
+      T->left = tree_insert(T->left, e);
+      //@assert T->red ? is_rbtree(T->left) : is_rbtree_except_root(T->left);
+      T = balance_left(T);
+    } else {
+      //@assert compare(k, kt) > 0;
+      //@assert T->red ? (T->right == NULL || !T->right->red) : true;
+      T->right = tree_insert(T->right, e);
+      //@assert T->red ? is_rbtree(T->right) : is_rbtree_except_root(T->right);
+      T = balance_right(T);
+    }
+  }
+  return T;
+}
+
+void bst_insert(rbt RBT, elem e)
+//@requires is_rbt(RBT);
+//@ensures is_rbt(RBT);
+{
+  // wrapper function to start the process at root
+  RBT->root = tree_insert(RBT->root, e);
+  //@assert is_rbtree_except_root(RBT->root);
+  RBT->root->red = false; /* color root black; might already be black */
+  return;
+}
+
+rbt make_ident_rbt(int n) {
+  rbt t = bst_new();
+  for (int i = 0; i < n; i++) {
+    int *e = alloc(int);
+    *e = i;
+    bst_insert(t, e);
+  }
+  return t;
+}
+
+void rbt_verify(int n, rbt t) {
+  for (int i = 0 ; i < n; i++) {
+    elem e = bst_search(t, i);
+    assert(*e == i);
+  }
+}
+
+int main() {
+  rbt t = make_ident_rbt(1000);
+  assert(is_rbt(t));
+  rbt_verify(1000, t);
+  return 0;
+}

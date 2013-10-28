@@ -1,0 +1,10 @@
+//test exception
+
+//checks that deferencing raises a runtime exception
+
+int main()
+{
+  int* p;
+  p = NULL;
+  return *p;
+}

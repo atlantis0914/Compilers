@@ -1,0 +1,14 @@
+//test return 0
+//test initialization of strux
+
+struct q {int a;};
+
+struct q *nikolaiissohotohmygodsohotplshelp() {
+    return alloc(struct q);
+}
+
+int main() {
+    struct q *a = alloc(struct q);
+    a->a;
+    return nikolaiissohotohmygodsohotplshelp()->a;
+}

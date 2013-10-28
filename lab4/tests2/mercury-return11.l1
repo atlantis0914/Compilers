@@ -1,0 +1,9 @@
+//test return 0
+// don't throw error on defined variable after return
+
+int main()
+{
+  int x = 0;
+  return x;
+  int y;
+}

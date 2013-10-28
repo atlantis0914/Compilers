@@ -1,0 +1,27 @@
+//test return 1
+//test 3d array
+typedef int[] intarr;
+typedef intarr[] intarrarr;
+typedef intarrarr[]  int3arr;
+
+int main()
+{
+int z;
+int y;
+int3arr ia = alloc_array(intarrarr,5);
+
+for(z=0;z<5;z++)
+{
+ia[z] = alloc_array(intarr,5);
+    for(y=0;y<5;y++)
+    ia[z][y] = alloc_array(int,5);
+}
+
+
+ia[0][0][0] = 1;
+
+return ia[0][0][0];
+
+
+}
+

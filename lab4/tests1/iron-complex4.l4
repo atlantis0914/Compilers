@@ -1,0 +1,38 @@
+//test return 4
+// mergesort
+
+int[] merge(int[] low, int[] high, int n) {
+			int i = 0;
+			int j = 0;
+			int[] arr = alloc_array(int, 2*n);
+			while(i < n || j < n) {
+			  if(i == n) {arr[i+j]=high[j];j++;}
+				else if(j == n) {arr[i+j]=low[i];i++;}
+				else if(low[i] > high[j]){arr[i+j]=high[j];j++;}
+				else {
+				arr[i+j]=low[i];i++;
+				}
+			}
+			return arr;
+}
+
+int[] mergesort(int [] arr, int n) {
+			if(n == 1) {
+			  int[] a = alloc_array(int, 1);
+				a[0] = arr[0];
+				return a;
+			}
+			int[] tophalf = alloc_array(int, n/2);
+			for(int i = 0; i < n/2; i++) tophalf[i] = arr[n/2+i];
+			int[] low = mergesort(arr, n/2);
+			int[] high = mergesort(tophalf, n/2);			
+			return merge(low, high, n/2);
+}
+
+int main() {
+		int n = 8;
+		int[] arr = alloc_array(int, n);
+		for(int i = 0; i < n; i++) arr[i] = n-i;
+		arr = mergesort(arr, n);
+		return arr[3];
+}

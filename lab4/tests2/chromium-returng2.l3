@@ -1,0 +1,16 @@
+//test return 5555
+int odd(int n);
+
+int even(int n) {
+    if (n == 0) return 0;
+    return 1 + odd(n-1);
+}
+
+int odd(int n) {
+    return 1 + even(n-1);
+}
+
+int main() {
+    return odd(5555);
+}
+

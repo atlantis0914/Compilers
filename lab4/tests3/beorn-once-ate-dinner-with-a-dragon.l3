@@ -1,0 +1,16 @@
+//test return 5
+int fun(int p1, int p2, int p3, int p4, int p5, int p6, int p7, int p8, int p9, int p10, int p11, int p12, int p13) {
+    int x = p1;
+    int y = p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9 + p10 + p11 + p12 + p13;
+
+    if(x == 1047433) {
+        return 5;
+    } else {
+        return fun(y, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13);
+    }
+}
+
+
+int main() {
+    return fun(1,1,1,1,1,1,1,1,1,1,1,1,1);
+}

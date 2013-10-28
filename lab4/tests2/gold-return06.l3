@@ -1,0 +1,6 @@
+//test return 179
+
+int main() {
+	assert(1 == 2 - 1);
+	return 179;
+}

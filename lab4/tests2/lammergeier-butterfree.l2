@@ -1,0 +1,7 @@
+//test return 588394787
+int main() {
+	int lfg = 0x12345678;
+	for (int i = 0; i < 0x8000000; i++)
+		lfg = ((lfg >> 1) & (0x7fffffff)) | (((lfg << 3) ^ (lfg << 7)) & 0x80000000);
+	return lfg;
+}

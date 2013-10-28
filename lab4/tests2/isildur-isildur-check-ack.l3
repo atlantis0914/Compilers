@@ -1,0 +1,39 @@
+//test return 27
+// hey look, a couple of total computable functions that
+// are not primitive recursive!
+
+int a(int m, int n) {
+    if (m == 0) return n + 1;
+    if (m > 0 && n == 0) {
+        return a(m - 1, 1);
+    }
+    return a(m - 1, a(m, n - 1));
+}
+
+int f(int m, int n, int p) {
+    if (p == 0) { return m + n; }
+    if (p == 1 && n == 0) { return 0; }
+    if (p == 2 && n == 0) { return 1; }
+    if (n == 0) { return m; }
+    return f(m, f(m, n - 1, p), p - 1);
+}
+
+int _pow(int base, int exp) {
+    if (exp == 0) return 1;
+    return base * _pow(base, exp - 1);
+}
+
+int checka(int n) {
+    return _pow(2, n + 3) - 3;
+}
+
+int main() {
+    int i = 0;
+    int r = f(3,3,2);
+    for (i = 0; i < 11; i++) {
+        if (a(3,i) != checka(i)) {
+            r = f(4,4,2);
+        }
+    }
+    return r;
+}

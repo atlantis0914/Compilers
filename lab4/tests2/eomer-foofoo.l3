@@ -1,0 +1,15 @@
+//test error
+// Tests that types and variables can't overlap names
+
+typedef int foo;
+
+foo foo(foo foo);
+
+foo main() {
+    return foo(0);
+}
+
+foo foo(foo foo) {
+    return foo;
+}
+

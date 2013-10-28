@@ -1,0 +1,18 @@
+//test exception
+// USE ALL THE MEMORY
+
+struct list
+{
+    int data;
+    struct list * next;
+};
+
+int main()
+{
+    while(true)
+    {
+        alloc(struct list);
+    }
+
+    return 0;
+}

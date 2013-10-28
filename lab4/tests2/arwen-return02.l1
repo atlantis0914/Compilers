@@ -1,0 +1,19 @@
+//test return -1
+// test declaring variables intermixed with assignments
+int main()
+{
+  int x;
+  x = 1;
+  int y;
+  int z;
+  z = x+x;
+  z *= z+x;
+  int w;
+  w = z -x;
+
+  y = w - z - x;
+
+  int d;
+  
+  return y+x;
+}

@@ -1,0 +1,21 @@
+//test error 
+// make sure array alloc checks types correctly 
+
+int main () {
+    int z = 500;
+    int[] a = alloc_array(int *, z);
+    int i;
+    bool b = true;
+
+    for (i = 0; i < z*2; i++) //note the z*2
+    {
+        a[i] = i*2;
+    }
+
+    for (i = 0; i < z*2; i++)
+    {
+        b = b && i*2 == a[i];
+    }
+
+    return b ? 500 : -1;
+}

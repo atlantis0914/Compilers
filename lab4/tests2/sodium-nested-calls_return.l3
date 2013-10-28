@@ -1,0 +1,42 @@
+//test return 1978152754
+// Short call depth that isn't recursive.
+
+int funa(bool b) {
+  if (b) return 1;
+  return 0;
+}
+
+int funb(int z) {
+  if (z > 0) return funa(true);
+  return funa(false);
+}
+
+bool func(bool b) {
+  int q = funb(4732947);
+  if (q > 0) return b;
+  return !b;
+}
+
+int fund(int d) {
+  bool b;
+  if (d > 0) b = func(true);
+  else b = func(false);
+  if (b) return d;
+  return -d;
+}
+
+int fune(int s) {
+  return fund(s * 2);
+}
+
+int funf(int p) {
+  return fune(p * p);
+}
+
+int fung(int g) {
+  return funf(1000 - g);
+}
+
+int main() {
+  return fung(0xdead);
+}

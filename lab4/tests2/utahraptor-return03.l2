@@ -1,0 +1,8 @@
+//test return 704
+// simple arithmetic operations test
+int main()
+{
+	int x = 16;
+
+	return x * 2 / 4 + x % 2 + 3 << x - 10;
+}

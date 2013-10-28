@@ -1,0 +1,9 @@
+//test return 5
+// tests ternary expression because who doesn't love ternary
+// expressions? Also looks out for order of ops
+int main() {
+	int y = 6;
+	int x = 1;
+	int z = 8;
+	return (0==0) ? y - x : z + x;
+}

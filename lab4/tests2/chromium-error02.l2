@@ -1,0 +1,9 @@
+//test error
+
+int main ()
+{
+  if(int j = 0 == 123)
+    return 1;
+  else
+    return 0;
+}

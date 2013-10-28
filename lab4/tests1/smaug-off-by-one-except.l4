@@ -1,0 +1,12 @@
+//test exception
+
+int main() {
+  int len = 15;
+  int[] xs = alloc_array(int, len);
+  // off-by-one error, oops
+  for (int i = 0; i <= len; i++) {
+    xs[i] = i;
+  }
+
+  return 0;
+}

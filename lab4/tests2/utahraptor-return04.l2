@@ -1,0 +1,10 @@
+//test return 0
+// more operator precedence test
+int main()
+{
+	int y = 0;
+	bool x = y + 4 << 3 != y - 4 * -8;
+	if (x)
+		return 1;
+	return 0;
+}

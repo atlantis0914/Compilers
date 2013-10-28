@@ -1,0 +1,62 @@
+//test return 3
+struct node {
+    struct node *left;
+    struct node *right;
+    int data;
+};
+
+typedef struct node node_t;
+
+node_t *
+insert(node_t *tree, int data)
+{
+    if (tree == NULL) {
+        node_t *new_node = alloc(node_t);
+        new_node->left = NULL;
+        new_node->right = NULL;
+        new_node->data = data;
+        return new_node;
+    }
+    if (data < tree->data) {
+        tree->left = insert(tree->left, data);
+    } else {
+        tree->right = insert(tree->right, data);
+    }
+    return tree;
+}
+
+int
+print_inorder(node_t *tree)
+{
+    if (tree != NULL) {
+        print_inorder(tree->left);
+        print_int(tree->data);
+        print_inorder(tree->right);
+    }
+    return 42;
+}
+
+node_t *
+create_tree(int init) {
+    node_t *ret = alloc(node_t);
+    ret->left = NULL;
+    ret->right = NULL;
+    ret->data = init;
+
+    return ret;
+}
+
+int
+main()
+{
+    node_t *tree = create_tree(300);
+    for (int i = 0; i < 700; i += 8) {
+        tree = insert(tree, i);
+
+    }
+    for (int j = 700; j > 0; j -= 15) {
+        tree = insert(tree, j);
+    }
+    print_inorder(tree);
+    return 3;
+}

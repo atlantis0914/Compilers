@@ -1,0 +1,18 @@
+//test exception 14
+
+struct list {
+  struct list* next;
+};
+
+typedef struct list list;
+
+int main() {
+  list* a = alloc(list);
+  list* b = alloc(list);
+  (*a).next = b; (*b).next = a;
+  list* x = a;
+  while (x != NULL) {
+    x = x->next;
+  }
+  return 0;
+}

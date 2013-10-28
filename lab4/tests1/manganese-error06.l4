@@ -1,0 +1,7 @@
+//test error
+//does NULL work?
+
+int main() {
+    int [] int_p = NULL;
+    return 0;
+}

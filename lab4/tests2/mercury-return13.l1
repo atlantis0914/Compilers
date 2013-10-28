@@ -1,0 +1,10 @@
+//test return 0
+// don't throw error on divide by 0 after return
+
+int main()
+{
+  int x = 0;
+  int y = 0;
+  return x;
+  x = x / y;
+}

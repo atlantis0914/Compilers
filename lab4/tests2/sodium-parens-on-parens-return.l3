@@ -1,0 +1,7 @@
+//test return 19
+int foo(int j) {
+	return j + 1;
+}
+int main() {
+	return foo((foo(((foo(16))))));
+}

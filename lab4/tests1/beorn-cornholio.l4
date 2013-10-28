@@ -1,0 +1,13 @@
+//test exception 8
+int
+main()
+{
+    // Say hello to my little parser
+    int * x = alloc(int);
+    (*x) - 4;
+    *x * *x;
+    int * y;
+    (3 + 3);
+
+    return 1/0;
+}

@@ -1,0 +1,430 @@
+//test return 1468920187
+struct cksum_state_t {
+	int a;
+	int b;
+};
+typedef struct cksum_state_t cksum_state;
+
+cksum_state *cksum_start() {
+	return alloc(cksum_state);
+}
+cksum_state *cksum_update(cksum_state *s, int data) {
+	s->a = (s->a + data) % 65521;
+	s->b = (s->b + s->a) % 65521;
+	return s;
+}
+int cksum_finish(cksum_state *s) {
+	return (s->b << 16) | s->a;
+}
+bool parse(int[] program, int[] stack, int[] targets) {
+	int stackp = 0;
+	int i;
+        bool done = false;
+	for(i = 0; i < 16384 && !done; i++) {
+		if(program[i] == 7) done = true;
+                else {
+		if(program[i] == 5) {
+			stack[stackp] = i;
+			stackp++;
+		}
+
+		if(program[i] == 6) {
+			if(stackp == 0) return false;
+			stackp--;
+			targets[i] = stack[stackp];
+			targets[ stack[stackp] ] = i;
+		}
+                }
+	}
+	return stackp == 0;
+}
+int initialize_program(int[] program);
+
+int main() {
+	cksum_state *s = cksum_start();
+	int[] memory = alloc_array(int, (2*16384));
+	int[] program = alloc_array(int, 16384);
+	int[] stack = alloc_array(int, 16384);
+	int[] targets = alloc_array(int, 16384);
+	int eip = 0;
+	int ptr = 0;
+
+	int i;
+
+	initialize_program(program);
+	if(!parse(program, stack, targets)) return -1;
+
+        bool done = false;
+	for(eip = 0; eip < 16384 && !done; eip++) {
+		if(program[eip] == 0) { memory[ptr]++; } else
+		if(program[eip] == 1) { memory[ptr]--; } else
+		if(program[eip] == 2) { ptr++; } else
+		if(program[eip] == 3) { ptr--; } else
+                if(program[eip] == 4) { /* printchar(memory[ptr]); */ cksum_update(s, memory[ptr]); } else
+		if(program[eip] == 5) { if(memory[ptr] == 0) eip = targets[eip]; } else
+		if(program[eip] == 6) { if(memory[ptr] != 0) eip = targets[eip]; } else
+		if(program[eip] == 7) { done = true; }
+                else 42 / 0;
+	}
+	return cksum_finish(s);
+}
+int initialize_program_0(int[] program) {
+	program[0] = 2; program[1] = 2; program[2] = 2; program[3] = 2; program[4] = 2; 
+	program[5] = 0; program[6] = 0; program[7] = 0; program[8] = 0; program[9] = 0; 
+	program[10] = 0; program[11] = 0; program[12] = 0; program[13] = 5; program[14] = 3; 
+	program[15] = 0; program[16] = 0; program[17] = 0; program[18] = 0; program[19] = 0; 
+		return 0;
+}
+int initialize_program_1(int[] program) {
+	program[20] = 0; program[21] = 0; program[22] = 0; program[23] = 0; program[24] = 2; 
+	program[25] = 1; program[26] = 6; program[27] = 3; program[28] = 0; program[29] = 5; 
+	program[30] = 2; program[31] = 2; program[32] = 5; program[33] = 2; program[34] = 6; 
+	program[35] = 0; program[36] = 5; program[37] = 3; program[38] = 6; program[39] = 3; 
+		return 0;
+}
+int initialize_program_2(int[] program) {
+	program[40] = 1; program[41] = 6; program[42] = 2; program[43] = 0; program[44] = 0; 
+	program[45] = 0; program[46] = 0; program[47] = 0; program[48] = 0; program[49] = 0; 
+	program[50] = 0; program[51] = 0; program[52] = 0; program[53] = 5; program[54] = 3; 
+	program[55] = 0; program[56] = 0; program[57] = 0; program[58] = 0; program[59] = 0; 
+		return 0;
+}
+int initialize_program_3(int[] program) {
+	program[60] = 0; program[61] = 0; program[62] = 0; program[63] = 0; program[64] = 0; 
+	program[65] = 2; program[66] = 1; program[67] = 6; program[68] = 3; program[69] = 5; 
+	program[70] = 2; program[71] = 2; program[72] = 5; program[73] = 0; program[74] = 2; 
+	program[75] = 6; program[76] = 3; program[77] = 5; program[78] = 3; program[79] = 6; 
+		return 0;
+}
+int initialize_program_4(int[] program) {
+	program[80] = 3; program[81] = 1; program[82] = 6; program[83] = 3; program[84] = 0; 
+	program[85] = 0; program[86] = 0; program[87] = 0; program[88] = 0; program[89] = 0; 
+	program[90] = 0; program[91] = 0; program[92] = 5; program[93] = 2; program[94] = 0; 
+	program[95] = 0; program[96] = 0; program[97] = 0; program[98] = 0; program[99] = 0; 
+		return 0;
+}
+int initialize_program_5(int[] program) {
+	program[100] = 0; program[101] = 0; program[102] = 5; program[103] = 2; program[104] = 2; 
+	program[105] = 1; program[106] = 2; program[107] = 1; program[108] = 2; program[109] = 1; 
+	program[110] = 2; program[111] = 2; program[112] = 2; program[113] = 2; program[114] = 2; 
+	program[115] = 2; program[116] = 2; program[117] = 2; program[118] = 2; program[119] = 2; 
+		return 0;
+}
+int initialize_program_6(int[] program) {
+	program[120] = 2; program[121] = 1; program[122] = 2; program[123] = 2; program[124] = 2; 
+	program[125] = 1; program[126] = 2; program[127] = 2; program[128] = 2; program[129] = 2; 
+	program[130] = 2; program[131] = 2; program[132] = 1; program[133] = 2; program[134] = 1; 
+	program[135] = 2; program[136] = 1; program[137] = 2; program[138] = 1; program[139] = 2; 
+		return 0;
+}
+int initialize_program_7(int[] program) {
+	program[140] = 2; program[141] = 1; program[142] = 2; program[143] = 2; program[144] = 2; 
+	program[145] = 1; program[146] = 2; program[147] = 2; program[148] = 2; program[149] = 2; 
+	program[150] = 1; program[151] = 2; program[152] = 2; program[153] = 2; program[154] = 2; 
+	program[155] = 2; program[156] = 1; program[157] = 2; program[158] = 1; program[159] = 2; 
+		return 0;
+}
+int initialize_program_8(int[] program) {
+	program[160] = 2; program[161] = 2; program[162] = 2; program[163] = 2; program[164] = 2; 
+	program[165] = 1; program[166] = 2; program[167] = 2; program[168] = 2; program[169] = 2; 
+	program[170] = 1; program[171] = 2; program[172] = 2; program[173] = 2; program[174] = 2; 
+	program[175] = 2; program[176] = 1; program[177] = 2; program[178] = 1; program[179] = 2; 
+		return 0;
+}
+int initialize_program_9(int[] program) {
+	program[180] = 2; program[181] = 2; program[182] = 2; program[183] = 2; program[184] = 1; 
+	program[185] = 2; program[186] = 2; program[187] = 2; program[188] = 1; program[189] = 2; 
+	program[190] = 2; program[191] = 2; program[192] = 2; program[193] = 2; program[194] = 2; 
+	program[195] = 2; program[196] = 1; program[197] = 2; program[198] = 1; program[199] = 5; 
+		return 0;
+}
+int initialize_program_10(int[] program) {
+	program[200] = 3; program[201] = 6; program[202] = 3; program[203] = 1; program[204] = 6; 
+	program[205] = 2; program[206] = 2; program[207] = 0; program[208] = 0; program[209] = 2; 
+	program[210] = 0; program[211] = 0; program[212] = 2; program[213] = 1; program[214] = 2; 
+	program[215] = 2; program[216] = 0; program[217] = 2; program[218] = 0; program[219] = 0; 
+		return 0;
+}
+int initialize_program_11(int[] program) {
+	program[220] = 2; program[221] = 0; program[222] = 0; program[223] = 2; program[224] = 0; 
+	program[225] = 2; program[226] = 2; program[227] = 2; program[228] = 2; program[229] = 0; 
+	program[230] = 0; program[231] = 2; program[232] = 2; program[233] = 1; program[234] = 2; 
+	program[235] = 0; program[236] = 2; program[237] = 2; program[238] = 1; program[239] = 2; 
+		return 0;
+}
+int initialize_program_12(int[] program) {
+	program[240] = 2; program[241] = 2; program[242] = 2; program[243] = 0; program[244] = 0; 
+	program[245] = 2; program[246] = 2; program[247] = 0; program[248] = 2; program[249] = 0; 
+	program[250] = 2; program[251] = 0; program[252] = 2; program[253] = 1; program[254] = 1; 
+	program[255] = 1; program[256] = 2; program[257] = 2; program[258] = 1; program[259] = 2; 
+		return 0;
+}
+int initialize_program_13(int[] program) {
+	program[260] = 0; program[261] = 2; program[262] = 0; program[263] = 2; program[264] = 1; 
+	program[265] = 2; program[266] = 0; program[267] = 0; program[268] = 2; program[269] = 2; 
+	program[270] = 2; program[271] = 1; program[272] = 2; program[273] = 0; program[274] = 0; 
+	program[275] = 2; program[276] = 2; program[277] = 0; program[278] = 2; program[279] = 0; 
+		return 0;
+}
+int initialize_program_14(int[] program) {
+	program[280] = 2; program[281] = 0; program[282] = 2; program[283] = 1; program[284] = 1; 
+	program[285] = 1; program[286] = 2; program[287] = 2; program[288] = 1; program[289] = 1; 
+	program[290] = 2; program[291] = 2; program[292] = 0; program[293] = 2; program[294] = 2; 
+	program[295] = 1; program[296] = 2; program[297] = 0; program[298] = 2; program[299] = 0; 
+		return 0;
+}
+int initialize_program_15(int[] program) {
+	program[300] = 2; program[301] = 2; program[302] = 1; program[303] = 2; program[304] = 2; 
+	program[305] = 0; program[306] = 2; program[307] = 0; program[308] = 0; program[309] = 2; 
+	program[310] = 0; program[311] = 2; program[312] = 0; program[313] = 2; program[314] = 1; 
+	program[315] = 2; program[316] = 0; program[317] = 2; program[318] = 2; program[319] = 0; 
+		return 0;
+}
+int initialize_program_16(int[] program) {
+	program[320] = 0; program[321] = 2; program[322] = 0; program[323] = 0; program[324] = 2; 
+	program[325] = 1; program[326] = 2; program[327] = 2; program[328] = 0; program[329] = 0; 
+	program[330] = 2; program[331] = 1; program[332] = 2; program[333] = 2; program[334] = 0; 
+	program[335] = 0; program[336] = 2; program[337] = 0; program[338] = 2; program[339] = 0; 
+		return 0;
+}
+int initialize_program_17(int[] program) {
+	program[340] = 0; program[341] = 2; program[342] = 0; program[343] = 2; program[344] = 2; 
+	program[345] = 0; program[346] = 2; program[347] = 1; program[348] = 1; program[349] = 1; 
+	program[350] = 5; program[351] = 3; program[352] = 6; program[353] = 3; program[354] = 3; 
+	program[355] = 1; program[356] = 6; program[357] = 2; program[358] = 2; program[359] = 2; 
+		return 0;
+}
+int initialize_program_18(int[] program) {
+	program[360] = 0; program[361] = 0; program[362] = 0; program[363] = 0; program[364] = 2; 
+	program[365] = 0; program[366] = 0; program[367] = 0; program[368] = 0; program[369] = 2; 
+	program[370] = 0; program[371] = 0; program[372] = 0; program[373] = 2; program[374] = 1; 
+	program[375] = 1; program[376] = 1; program[377] = 2; program[378] = 0; program[379] = 0; 
+		return 0;
+}
+int initialize_program_19(int[] program) {
+	program[380] = 2; program[381] = 1; program[382] = 2; program[383] = 1; program[384] = 2; 
+	program[385] = 1; program[386] = 2; program[387] = 2; program[388] = 5; program[389] = 1; 
+	program[390] = 6; program[391] = 2; program[392] = 1; program[393] = 2; program[394] = 1; 
+	program[395] = 1; program[396] = 2; program[397] = 5; program[398] = 1; program[399] = 6; 
+		return 0;
+}
+int initialize_program_20(int[] program) {
+	program[400] = 2; program[401] = 0; program[402] = 0; program[403] = 0; program[404] = 2; 
+	program[405] = 0; program[406] = 0; program[407] = 2; program[408] = 0; program[409] = 2; 
+	program[410] = 0; program[411] = 0; program[412] = 0; program[413] = 2; program[414] = 1; 
+	program[415] = 1; program[416] = 1; program[417] = 2; program[418] = 2; program[419] = 2; 
+		return 0;
+}
+int initialize_program_21(int[] program) {
+	program[420] = 1; program[421] = 1; program[422] = 1; program[423] = 2; program[424] = 5; 
+	program[425] = 1; program[426] = 6; program[427] = 2; program[428] = 0; program[429] = 2; 
+	program[430] = 0; program[431] = 2; program[432] = 0; program[433] = 2; program[434] = 1; 
+	program[435] = 1; program[436] = 1; program[437] = 2; program[438] = 5; program[439] = 1; 
+		return 0;
+}
+int initialize_program_22(int[] program) {
+	program[440] = 6; program[441] = 2; program[442] = 0; program[443] = 0; program[444] = 0; 
+	program[445] = 2; program[446] = 0; program[447] = 0; program[448] = 2; program[449] = 0; 
+	program[450] = 2; program[451] = 0; program[452] = 0; program[453] = 0; program[454] = 2; 
+	program[455] = 1; program[456] = 2; program[457] = 0; program[458] = 0; program[459] = 0; 
+		return 0;
+}
+int initialize_program_23(int[] program) {
+	program[460] = 2; program[461] = 2; program[462] = 0; program[463] = 0; program[464] = 0; 
+	program[465] = 2; program[466] = 0; program[467] = 0; program[468] = 2; program[469] = 1; 
+	program[470] = 1; program[471] = 1; program[472] = 1; program[473] = 2; program[474] = 1; 
+	program[475] = 2; program[476] = 1; program[477] = 2; program[478] = 0; program[479] = 2; 
+		return 0;
+}
+int initialize_program_24(int[] program) {
+	program[480] = 1; program[481] = 1; program[482] = 1; program[483] = 2; program[484] = 5; 
+	program[485] = 1; program[486] = 6; program[487] = 2; program[488] = 1; program[489] = 2; 
+	program[490] = 1; program[491] = 1; program[492] = 1; program[493] = 1; program[494] = 2; 
+	program[495] = 1; program[496] = 1; program[497] = 2; program[498] = 2; program[499] = 0; 
+		return 0;
+}
+int initialize_program_25(int[] program) {
+	program[500] = 0; program[501] = 0; program[502] = 2; program[503] = 0; program[504] = 0; 
+	program[505] = 2; program[506] = 0; program[507] = 2; program[508] = 2; program[509] = 0; 
+	program[510] = 0; program[511] = 0; program[512] = 2; program[513] = 1; program[514] = 2; 
+	program[515] = 0; program[516] = 0; program[517] = 2; program[518] = 0; program[519] = 0; 
+		return 0;
+}
+int initialize_program_26(int[] program) {
+	program[520] = 2; program[521] = 0; program[522] = 2; program[523] = 1; program[524] = 2; 
+	program[525] = 0; program[526] = 0; program[527] = 0; program[528] = 2; program[529] = 0; 
+	program[530] = 0; program[531] = 0; program[532] = 2; program[533] = 1; program[534] = 1; 
+	program[535] = 1; program[536] = 1; program[537] = 2; program[538] = 1; program[539] = 1; 
+		return 0;
+}
+int initialize_program_27(int[] program) {
+	program[540] = 2; program[541] = 1; program[542] = 1; program[543] = 2; program[544] = 0; 
+	program[545] = 0; program[546] = 0; program[547] = 2; program[548] = 0; program[549] = 0; 
+	program[550] = 0; program[551] = 0; program[552] = 2; program[553] = 1; program[554] = 2; 
+	program[555] = 0; program[556] = 0; program[557] = 0; program[558] = 2; program[559] = 1; 
+		return 0;
+}
+int initialize_program_28(int[] program) {
+	program[560] = 1; program[561] = 1; program[562] = 1; program[563] = 2; program[564] = 1; 
+	program[565] = 1; program[566] = 1; program[567] = 2; program[568] = 0; program[569] = 0; 
+	program[570] = 2; program[571] = 2; program[572] = 0; program[573] = 2; program[574] = 1; 
+	program[575] = 2; program[576] = 1; program[577] = 2; program[578] = 1; program[579] = 1; 
+		return 0;
+}
+int initialize_program_29(int[] program) {
+	program[580] = 1; program[581] = 5; program[582] = 5; program[583] = 3; program[584] = 6; 
+	program[585] = 3; program[586] = 6; program[587] = 0; program[588] = 0; program[589] = 0; 
+	program[590] = 0; program[591] = 0; program[592] = 0; program[593] = 0; program[594] = 0; 
+	program[595] = 0; program[596] = 5; program[597] = 3; program[598] = 0; program[599] = 3; 
+		return 0;
+}
+int initialize_program_30(int[] program) {
+	program[600] = 0; program[601] = 0; program[602] = 0; program[603] = 0; program[604] = 0; 
+	program[605] = 0; program[606] = 0; program[607] = 0; program[608] = 0; program[609] = 0; 
+	program[610] = 0; program[611] = 2; program[612] = 2; program[613] = 1; program[614] = 6; 
+	program[615] = 3; program[616] = 3; program[617] = 5; program[618] = 2; program[619] = 2; 
+		return 0;
+}
+int initialize_program_31(int[] program) {
+	program[620] = 2; program[621] = 2; program[622] = 2; program[623] = 5; program[624] = 3; 
+	program[625] = 6; program[626] = 2; program[627] = 5; program[628] = 4; program[629] = 2; 
+	program[630] = 6; program[631] = 2; program[632] = 1; program[633] = 1; program[634] = 5; 
+	program[635] = 2; program[636] = 4; program[637] = 2; program[638] = 6; program[639] = 3; 
+		return 0;
+}
+int initialize_program_32(int[] program) {
+	program[640] = 5; program[641] = 3; program[642] = 3; program[643] = 6; program[644] = 2; 
+	program[645] = 0; program[646] = 0; program[647] = 2; program[648] = 2; program[649] = 2; 
+	program[650] = 5; program[651] = 4; program[652] = 2; program[653] = 6; program[654] = 2; 
+	program[655] = 5; program[656] = 2; program[657] = 6; program[658] = 2; program[659] = 5; 
+		return 0;
+}
+int initialize_program_33(int[] program) {
+	program[660] = 4; program[661] = 2; program[662] = 6; program[663] = 3; program[664] = 5; 
+	program[665] = 5; program[666] = 3; program[667] = 6; program[668] = 3; program[669] = 6; 
+	program[670] = 2; program[671] = 2; program[672] = 5; program[673] = 4; program[674] = 2; 
+	program[675] = 6; program[676] = 2; program[677] = 1; program[678] = 1; program[679] = 5; 
+		return 0;
+}
+int initialize_program_34(int[] program) {
+	program[680] = 2; program[681] = 4; program[682] = 2; program[683] = 6; program[684] = 3; 
+	program[685] = 5; program[686] = 3; program[687] = 3; program[688] = 6; program[689] = 2; 
+	program[690] = 0; program[691] = 0; program[692] = 2; program[693] = 2; program[694] = 2; 
+	program[695] = 5; program[696] = 4; program[697] = 2; program[698] = 6; program[699] = 2; 
+		return 0;
+}
+int initialize_program_35(int[] program) {
+	program[700] = 5; program[701] = 4; program[702] = 2; program[703] = 6; program[704] = 2; 
+	program[705] = 5; program[706] = 2; program[707] = 6; program[708] = 2; program[709] = 5; 
+	program[710] = 4; program[711] = 2; program[712] = 6; program[713] = 3; program[714] = 5; 
+	program[715] = 5; program[716] = 3; program[717] = 6; program[718] = 3; program[719] = 6; 
+		return 0;
+}
+int initialize_program_36(int[] program) {
+	program[720] = 3; program[721] = 3; program[722] = 5; program[723] = 3; program[724] = 6; 
+	program[725] = 2; program[726] = 2; program[727] = 2; program[728] = 0; program[729] = 3; 
+	program[730] = 5; program[731] = 2; program[732] = 1; program[733] = 6; program[734] = 2; 
+	program[735] = 5; program[736] = 2; program[737] = 6; program[738] = 3; program[739] = 5; 
+		return 0;
+}
+int initialize_program_37(int[] program) {
+	program[740] = 0; program[741] = 0; program[742] = 0; program[743] = 0; program[744] = 0; 
+	program[745] = 0; program[746] = 0; program[747] = 0; program[748] = 0; program[749] = 5; 
+	program[750] = 3; program[751] = 0; program[752] = 3; program[753] = 1; program[754] = 2; 
+	program[755] = 2; program[756] = 2; program[757] = 2; program[758] = 2; program[759] = 0; 
+		return 0;
+}
+int initialize_program_38(int[] program) {
+	program[760] = 3; program[761] = 3; program[762] = 3; program[763] = 1; program[764] = 6; 
+	program[765] = 0; program[766] = 3; program[767] = 3; program[768] = 5; program[769] = 2; 
+	program[770] = 2; program[771] = 1; program[772] = 6; program[773] = 2; program[774] = 2; 
+	program[775] = 2; program[776] = 5; program[777] = 3; program[778] = 6; program[779] = 3; 
+		return 0;
+}
+int initialize_program_39(int[] program) {
+	program[780] = 3; program[781] = 3; program[782] = 0; program[783] = 0; program[784] = 0; 
+	program[785] = 0; program[786] = 0; program[787] = 0; program[788] = 0; program[789] = 0; 
+	program[790] = 0; program[791] = 0; program[792] = 2; program[793] = 2; program[794] = 5; 
+	program[795] = 2; program[796] = 2; program[797] = 5; program[798] = 1; program[799] = 6; 
+		return 0;
+}
+int initialize_program_40(int[] program) {
+	program[800] = 0; program[801] = 3; program[802] = 3; program[803] = 1; program[804] = 6; 
+	program[805] = 2; program[806] = 2; program[807] = 1; program[808] = 3; program[809] = 3; 
+	program[810] = 6; program[811] = 2; program[812] = 2; program[813] = 2; program[814] = 1; 
+	program[815] = 5; program[816] = 2; program[817] = 6; program[818] = 2; program[819] = 1; 
+		return 0;
+}
+int initialize_program_41(int[] program) {
+	program[820] = 3; program[821] = 3; program[822] = 5; program[823] = 3; program[824] = 6; 
+	program[825] = 2; program[826] = 5; program[827] = 4; program[828] = 2; program[829] = 6; 
+	program[830] = 2; program[831] = 1; program[832] = 1; program[833] = 5; program[834] = 2; 
+	program[835] = 4; program[836] = 2; program[837] = 6; program[838] = 3; program[839] = 5; 
+		return 0;
+}
+int initialize_program_42(int[] program) {
+	program[840] = 3; program[841] = 3; program[842] = 6; program[843] = 2; program[844] = 0; 
+	program[845] = 0; program[846] = 2; program[847] = 2; program[848] = 2; program[849] = 5; 
+	program[850] = 4; program[851] = 2; program[852] = 6; program[853] = 2; program[854] = 5; 
+	program[855] = 2; program[856] = 6; program[857] = 2; program[858] = 5; program[859] = 4; 
+		return 0;
+}
+int initialize_program_43(int[] program) {
+	program[860] = 2; program[861] = 6; program[862] = 3; program[863] = 4; program[864] = 5; 
+	program[865] = 5; program[866] = 3; program[867] = 6; program[868] = 3; program[869] = 6; 
+	program[870] = 3; program[871] = 3; program[872] = 5; program[873] = 3; program[874] = 6; 
+	program[875] = 2; program[876] = 2; program[877] = 1; program[878] = 3; program[879] = 1; 
+		return 0;
+}
+int initialize_program_44(int[] program) {
+	program[880] = 6; 	return 0;
+}
+int initialize_program(int[] program) {
+	initialize_program_0(program);
+	initialize_program_1(program);
+	initialize_program_2(program);
+	initialize_program_3(program);
+	initialize_program_4(program);
+	initialize_program_5(program);
+	initialize_program_6(program);
+	initialize_program_7(program);
+	initialize_program_8(program);
+	initialize_program_9(program);
+	initialize_program_10(program);
+	initialize_program_11(program);
+	initialize_program_12(program);
+	initialize_program_13(program);
+	initialize_program_14(program);
+	initialize_program_15(program);
+	initialize_program_16(program);
+	initialize_program_17(program);
+	initialize_program_18(program);
+	initialize_program_19(program);
+	initialize_program_20(program);
+	initialize_program_21(program);
+	initialize_program_22(program);
+	initialize_program_23(program);
+	initialize_program_24(program);
+	initialize_program_25(program);
+	initialize_program_26(program);
+	initialize_program_27(program);
+	initialize_program_28(program);
+	initialize_program_29(program);
+	initialize_program_30(program);
+	initialize_program_31(program);
+	initialize_program_32(program);
+	initialize_program_33(program);
+	initialize_program_34(program);
+	initialize_program_35(program);
+	initialize_program_36(program);
+	initialize_program_37(program);
+	initialize_program_38(program);
+	initialize_program_39(program);
+	initialize_program_40(program);
+	initialize_program_41(program);
+	initialize_program_42(program);
+	initialize_program_43(program);
+	initialize_program_44(program);
+	program[881] = 7;
+	return 0;
+}

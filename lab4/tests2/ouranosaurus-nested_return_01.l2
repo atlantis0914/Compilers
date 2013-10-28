@@ -1,0 +1,15 @@
+//test return 42
+// returns from the middle of a nested for loop
+
+int main() {
+    int i;
+    int j;
+
+    for (i = 0; i < 10; i++) {
+        for (j = 0; j < 10; j++) {
+            return 42;
+        }
+    }
+
+    return 0;
+}

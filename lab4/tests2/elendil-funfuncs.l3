@@ -1,0 +1,13 @@
+//test return -35
+//test the ability to deal with underscores and mutability of parameters.
+int _______(int ___,int ____) {
+  ___++;
+  return ___*____;
+}
+
+int main() {
+  int _ = 5;
+  int __ = 8;
+  int ___ = _______(_,__);
+  return _+__-___;
+}

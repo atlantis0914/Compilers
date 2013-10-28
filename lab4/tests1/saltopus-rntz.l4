@@ -1,0 +1,32 @@
+//test return 42
+
+typedef int rntz;
+typedef bool rnTZ;
+
+struct Rntz {
+	rntz rntz;
+	rntz RNTZ;
+	rntz RNtz;
+};
+typedef struct Rntz rntZ;
+typedef struct Rntz *Rntz;
+
+rnTZ RNtz(Rntz RNTZ) {
+	return RNTZ->rntz == RNTZ->RNTZ && RNTZ->rntz == RNTZ->RNtz && RNTZ->RNTZ == RNTZ->RNtz;
+}
+
+int main() {
+	Rntz RNTZ = alloc(rntZ);
+	rntz _rntz = 42;
+
+	RNTZ->rntz = _rntz;
+	RNTZ->RNTZ = _rntz;
+	RNTZ->RNtz = _rntz;
+
+	if(RNtz(RNTZ)) {
+		return _rntz;
+	}
+
+	return _rntz-_rntz;
+	
+} 

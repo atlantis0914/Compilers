@@ -1,0 +1,7 @@
+//test return 1
+// main decl is valid
+
+int main ();
+
+int main () {return 1;}
+

@@ -1,0 +1,12 @@
+//test error
+/* Invalid control statement.
+ */
+
+int main()
+{
+    int x = 3;
+
+    if while (x > 0) x--;
+
+    return x;
+}

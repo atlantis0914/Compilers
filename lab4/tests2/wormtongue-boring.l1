@@ -1,0 +1,7 @@
+//test return 9
+// tests to make sure we get the result from the right register for divide
+
+int main() {
+	int k = 19 / 2;
+	return k;
+}

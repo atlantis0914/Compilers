@@ -1,0 +1,8 @@
+//test error
+int main() {
+    int x = 1;
+    while(false) {
+        int x = 2;
+    }
+    return x;
+}

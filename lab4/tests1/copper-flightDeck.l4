@@ -1,0 +1,50 @@
+//test return 1087105
+
+struct frac {
+	int num;
+	int den;
+};
+typedef struct frac* frac;
+
+int gcd(int a, int b) {
+	if(b == 0) {return a;}
+	return gcd(b, a % b);
+}
+
+frac make_frac(int num, int den) {
+	frac f = alloc(struct frac);
+	f->num = num;
+	f->den = den;
+	return f;
+}
+
+void simplify(frac f) {
+	int d = gcd(f->num, f->den);
+	f->num /= d;
+	f->den /= d;
+}
+
+frac add(frac f1, frac f2) {
+	frac f = make_frac(f1->num * f2->den + f2->num * f1->den, f1->den * f2->den);
+	simplify(f);
+	return f;
+}
+
+frac add_fracs(frac[] fracs, int length) {
+	frac sum = make_frac(0, 1);
+	for(int i = 0; i < length; i++) {
+		sum = add(sum, fracs[i]);
+	}
+	return sum;
+}
+
+int main() {
+	frac[] fracs = alloc_array(frac, 5);
+	fracs[0] = make_frac(1, 3);
+	fracs[1] = make_frac(51, 7);
+	fracs[2] = make_frac(4, 2);
+	fracs[3] = make_frac(8, 15);
+	fracs[4] = make_frac(1, 5);
+	frac f = add_fracs(fracs, 5);
+	return f->num * 1000 + f->den;
+}

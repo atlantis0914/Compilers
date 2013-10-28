@@ -1,0 +1,28 @@
+//test return 22
+
+typedef int* a_pointer;
+typedef int[] an_array;
+
+int main()
+{
+  a_pointer pointer = alloc(int);
+  an_array array = alloc_array(int, 1023);
+  a_pointer copy1 = pointer;
+  a_pointer copy2 = pointer;
+  a_pointer copy3 = pointer;
+  a_pointer copy4 = pointer;
+  a_pointer copy5 = pointer;
+  an_array copies1 = array;
+  an_array copies2 = array;
+  an_array copies3 = array;
+  an_array copies4 = array;
+  an_array copies5 = array;
+
+  *pointer = 1;
+  *copy2 = *copy1 + 1;
+  copies1[0] = *pointer;
+  array[1022] = copies5[0];
+  copies4[0]++;
+
+  return *pointer + *copy1 + *copy2 + *copy3 + *copy4 + *copy5 + array[0] + array[1022] + copies3[0] + copies3[1022];
+}

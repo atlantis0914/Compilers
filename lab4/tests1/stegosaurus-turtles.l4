@@ -1,0 +1,35 @@
+//test error
+// It's turtles all the way down.
+
+struct TURTLE;
+
+struct turtle {
+  struct TURTLE* down;
+};
+
+struct turTLE {
+  struct turtle* down;
+};
+
+struct TURtle {
+  struct turTLE* down;
+};
+
+struct tUrTlE {
+  struct TURtle* down;
+};
+
+struct TuRtLe {
+  struct tUrTlE* down;
+};
+
+int main() {
+  struct TuRtLe *turtles = alloc(struct TuRtLe);
+  turtles->down = alloc(struct tUrTlE);
+  turtles->down->down = alloc(struct TURtle);
+  turtles->down->down->down = alloc(struct turTLE);
+  turtles->down->down->down->down = alloc(struct turtle);
+  turtles->down->down->down->down->down = alloc(struct TURTLE);
+  turtles->down->down->down->down->down->down = NULL;
+  return 0;
+}

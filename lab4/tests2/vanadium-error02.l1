@@ -1,0 +1,9 @@
+//test error
+
+// invalid (--) symbol
+
+int main() {
+	int x = 0;
+	int y = 2;
+	return x+5+-y--5;
+}

@@ -1,0 +1,24 @@
+//test exception 
+// div by 0, with structs! 
+
+struct zero {
+    int z;
+};
+
+struct zerop {
+    struct zero * zp;
+};
+
+struct zeropp {
+    struct zerop * zpp;
+};
+
+int main () {
+    struct zeropp *pp = alloc(struct zeropp);
+    pp->zpp = alloc (struct zerop);
+    pp->zpp->zp = alloc(struct zero);
+    
+    pp->zpp->zp->z = 0;
+
+    return 10/(pp->zpp->zp->z);
+}

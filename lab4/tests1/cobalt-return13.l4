@@ -1,0 +1,46 @@
+//test return 1
+// stack
+
+struct node{
+  int val;
+  struct node* next;
+};
+
+
+void push (struct node* head, struct node* target) {
+  struct node* temp;
+  temp = head->next;
+  head->next = target;
+  target->next = temp;
+}
+
+
+int pop (struct node* head) {
+  if(head != NULL){
+    
+    struct node* temp = head->next;
+    head = head->next;
+    
+    if (temp != NULL) {
+      return temp->val;
+    } 
+  }
+  return 0;
+}
+
+int main() {
+  struct node* head = alloc(struct node);
+  
+  for (int i = 0; i < 5; i++){
+    struct node* temp = alloc(struct node);
+    temp->val = i;
+    push(head, temp);
+  }
+
+  for (int i = 0; i < 5; i++){
+    print_int(pop(head));
+  }
+
+  return 1;
+}
+

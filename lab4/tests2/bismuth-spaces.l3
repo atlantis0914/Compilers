@@ -1,0 +1,33 @@
+//test return 5
+//lots of spaces
+int 
+main 
+(
+)
+{  
+int 
+y 
+= 
+0
+; 
+for 
+(
+int 
+x 
+= 
+0
+; 
+x 
+< 
+5
+; 
+x
+++
+)
+y
+++
+;
+return 
+y
+;
+}

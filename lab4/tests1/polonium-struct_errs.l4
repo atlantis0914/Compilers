@@ -1,0 +1,13 @@
+//test exception 11
+
+struct main{
+    struct main*[] main;
+};
+
+int main(){
+    struct main *main = alloc(struct main);
+    main->main = alloc_array(struct main*, 1);
+    main->main[0] = alloc(struct main);
+    main->main[0]->main[0] = NULL;
+    return 0;
+}

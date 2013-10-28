@@ -1,0 +1,21 @@
+//test error
+
+struct s1 {
+    int x;
+};
+
+struct s2;
+
+int foo() {
+    struct s2 *y = alloc(struct s2);
+    return y->x;
+}
+
+struct s2 {
+    int x;
+};
+
+int main() {
+    return foo();
+}
+

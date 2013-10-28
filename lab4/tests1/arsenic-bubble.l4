@@ -1,0 +1,38 @@
+//test return 1
+
+int bubble(int[] n, int c) {
+	int i;
+	int j;
+	int temp;
+
+	for(i=0; i<c; i++)
+     {
+       for(j=i; j<c; j++)
+          {
+           if(n[i] > n[j])
+             {
+               temp = n[i];
+               n[i] = n[j];
+               n[j] = temp;
+             }
+          }
+    }
+    return 0;
+}
+
+int main() {
+	int i ;
+	int[] input;
+	input = alloc_array(int,10);
+    
+    for(i = 10; i >0 ; i--) {
+    	input[10-i] = i;
+    }
+    bubble(input, 10);
+
+    for(i = 0; i < 10; i++) {
+    	if(input[i] != (i+1)) return 0;
+    }
+    return 1;
+  }
+

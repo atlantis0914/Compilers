@@ -1,0 +1,16 @@
+//test return 19900
+int main(){
+  int[] a;
+  int * p;
+  int tot = 0;
+  int i;
+ 
+  p = alloc(int);
+  a = alloc_array(int, 200);
+  for(i=0; i< 200; i++){
+    *p = i;
+    tot += *p;
+  }
+  return tot;
+
+}

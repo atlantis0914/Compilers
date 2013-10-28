@@ -1,0 +1,15 @@
+//test error
+//
+
+struct x {
+    bool i;
+};
+
+int f(struct x* y) {
+    return y->i;
+}
+
+int main() {
+    f(NULL);
+    return 0;
+}

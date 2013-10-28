@@ -1,0 +1,11 @@
+//test error
+// if must be exp not stmt
+
+int main ()
+{
+  if (5 = 2) {
+    return 79;
+  } else {
+    return 97;
+  }
+}

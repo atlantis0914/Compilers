@@ -1,0 +1,18 @@
+//test return 3
+
+int main()
+{
+    int returnx = 4;
+    int ifx = 5;
+
+    if (ifx < returnx) ifx = 6;
+    else ifx = 2;
+    
+    bool main = true;
+
+    while (main) {
+        ifx += 1;
+        main = !main;
+    }
+    return ifx;
+}

@@ -1,0 +1,21 @@
+//test return 7
+int main()
+{
+	int a;
+	int b;
+	int c;
+	int d;
+	int e = 10;
+    int f = 2;
+    int g = 1;
+
+	a = 0;
+	b = a+1; 
+	c = b*2; 
+	d = c/3; 
+	e = e/2;   
+    f += e;   
+    g *= f;  
+
+    return g;
+}

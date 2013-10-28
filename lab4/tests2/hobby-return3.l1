@@ -1,0 +1,15 @@
+//test return 22
+
+// test mixed decls and stmts with mod
+
+int main() {
+    int a;
+    int b;
+
+    a = 22 + 1;
+    b = 77;
+
+    int c = 9;
+
+    return (b - c) % a;
+}

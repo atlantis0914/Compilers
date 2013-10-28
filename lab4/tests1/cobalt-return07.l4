@@ -1,0 +1,48 @@
+//test return 240
+
+struct node{
+  int val;
+  struct node * left;
+  struct node * right;
+};
+
+struct node* genBST(int[] arr, int p, int q)
+{
+  if (p > q) return NULL;
+
+  if (p == q)
+  {
+    struct node* n = alloc(struct node);
+    n -> val = arr[p];
+
+    return n;
+  }
+
+  int mid = p + (q-p)/2; 
+  struct node* left = genBST(arr, p, mid-1);
+  struct node* right = genBST(arr, mid+1, q);
+  
+  struct node* this = alloc(struct node); 
+  
+  this -> val = arr[mid]; 
+  this -> left = left;
+  this -> right = right;
+
+  return this;
+}
+
+int main()
+{
+  int length = 10;
+  int[] arr = alloc_array(int, length);
+  
+  for(int i = 0; i < length; i++)
+  {
+    arr[i] = (18+i)*10;
+  }
+  // 180, 190, 200, 210, 220, 230, 240, 250, 260, 270
+  
+  struct node* root = genBST(arr, 0, length-1);
+  
+  return root -> right -> left -> right -> val;
+}

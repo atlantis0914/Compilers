@@ -1,0 +1,32 @@
+//test return 3
+
+
+struct kv {
+  int k;
+  int v;
+};
+
+
+
+int main() {
+  struct kv*[] A = alloc_array(struct kv*, 10);
+
+  struct kv* one = alloc(struct kv);
+  one->k = 0;
+  one->v = 3;
+
+  struct kv* two = alloc(struct kv);
+  two->k = 3;
+  two->v = 0;
+
+  int i;
+  for(i = 0; i < 10; i++) {
+    A[i] = one;
+  } 
+
+  A[3] = two;
+
+  return A[3]->k;
+
+
+}

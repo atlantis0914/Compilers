@@ -1,0 +1,8 @@
+//test exception 11
+
+int main() {
+  bool* needsleep;
+  needsleep = NULL;
+  assert(*needsleep);
+  return 0;
+}

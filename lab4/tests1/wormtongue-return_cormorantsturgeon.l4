@@ -1,0 +1,42 @@
+//test return 21
+// half-working interview question solution
+
+int getLargestSum(int[] array, int l) {
+    int max = array[0];
+    int smax = array[0];
+    int csum = array[0];
+    int start = 0;
+    int end = 0;
+    for (int i = 0; i < l; i++) {
+        if (csum < 0){
+            csum = 0;
+            start = i;
+        }
+        csum += array[i];
+        if (csum > max) {
+            smax = max;
+            max = csum;
+            end = i;
+        } else if (csum > smax) {
+            smax = csum;
+        }
+    }
+
+    if(max < -1) {
+        return 1/0;
+    }
+    if(start == 0 && end == l-1) {
+        max = smax;
+    }
+    return max;
+}
+
+int main() {
+    int[] a = alloc_array(int, 5);
+    a[0] = 10;
+    a[1] = -9;
+    a[2] = 10;
+    a[3] = -9;
+    a[4] = 10;
+    return getLargestSum(a, 5);
+}

@@ -1,0 +1,61 @@
+//test return 787106883
+
+int[] init(int seed)
+{
+    int[] MT = alloc_array(int, 624);
+    int i;
+
+    MT[0] = seed;
+
+    for (i = 1; i < 624; i++)
+    {
+        int prev = MT[i-1];
+        MT[i] = (1812433253 * (prev ^ (prev >> 30)) + i) & 0xFFFFFFFF;
+    }
+    
+    return MT;
+}
+
+int generateNumbers(int[] MT)
+{
+    int i;
+    for (i = 0; i < 624; i++)
+    {
+        int bit = MT[i] & (1 << 31);
+        int y = bit + (MT[(i + 1) % 624] & 0x7FFFFFFF);
+        MT[i] = MT[(i + 397) % 624] ^ (y >> 1);
+        if (y % 2 == 1)
+        {
+            MT[i] = MT[i] ^ (0x1908b0df + (1 << 31));
+        }
+    }
+    return 0;
+}
+
+int nextInt(int[] MT, int* index)
+{
+    int y;
+
+    if (*index == 0) {
+        int _ = generateNumbers(MT);
+    }
+    
+    y = MT[*index];
+    y = y ^ (y >> 11);
+    y = y ^ ((y << 7) & (0x1d2c5680 + (1 << 31)));
+    y = y ^ ((y << 15) & (0x6fc60000 + (1 << 31)));
+    y = y ^ (y >> 18);
+    
+    *index = (*index + 1) % 624;
+    return y;
+}
+
+int main()
+{
+    int seed = 1234;
+    int[] MT = init(seed);
+    int* index = alloc(int);
+    *index = 0;
+    
+    return nextInt(MT, index);
+}

@@ -1,0 +1,9 @@
+//test error
+void myassert(int x, int y, int z) {
+    assert(x + y + z > 0);
+}
+
+int main() {
+    myassert(1, 2, true);
+    return 0;
+}

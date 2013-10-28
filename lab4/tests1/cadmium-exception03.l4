@@ -1,0 +1,12 @@
+//test exception 11
+
+// tests the handling of array default values
+
+struct foo {
+  int[] A;
+};
+
+int main() {
+  struct foo *bar = alloc(struct foo);
+  return bar->A[0];
+}

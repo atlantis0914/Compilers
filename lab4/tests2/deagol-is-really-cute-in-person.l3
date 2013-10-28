@@ -1,0 +1,10 @@
+//test return 12
+
+int _c0_main() {
+  return 11;
+}
+
+int main() {
+  return _c0_main()+1;
+}
+

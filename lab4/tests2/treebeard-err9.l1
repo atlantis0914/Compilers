@@ -1,0 +1,14 @@
+//test error
+// improper lvalue (left value not a variable)
+
+int main(){
+    int x;
+    int y;
+    int z;
+    
+    z = 1;
+    x = 23;
+    y = 4;
+    z + x = y; // error here, improper lvalue
+    return z;
+}

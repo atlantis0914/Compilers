@@ -1,0 +1,19 @@
+//test return 15
+
+typedef int integer;
+
+integer foo(integer x, integer y);
+
+integer main() {
+  int a = 1;
+  int b = 2;
+  int c = 3;
+  int d = 4;
+  int e = 5;
+  int f = foo(foo(foo(foo(a,b),c),d),e);
+  return f;
+}
+
+integer foo(int a, int b) {
+  return a+b;
+}

@@ -1,0 +1,16 @@
+//test error
+// this is not C++
+
+struct class {
+  int member;
+  void ctor() {
+    member = 5;
+  }
+  int get() {
+    return member;
+  }
+};
+
+int main() {
+  return 0;
+}

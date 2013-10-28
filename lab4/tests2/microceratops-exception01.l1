@@ -1,0 +1,14 @@
+//test exception 8
+// division exception due to divide by zero
+
+int main()
+{
+	int x;
+	int y;
+	int z;
+	
+	x = 10;
+	y = 0;
+	z = x / y;
+	return z;
+}

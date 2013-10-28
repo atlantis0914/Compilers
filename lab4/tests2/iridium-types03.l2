@@ -1,0 +1,18 @@
+//test return 4
+
+int main()
+{
+    int x;
+    int y;
+
+    bool b;
+    b = true;
+    y = 4;
+    if (b) y = 3;
+
+    b = !b;
+    x = 1;
+    y = x + y;
+
+    return y;
+}

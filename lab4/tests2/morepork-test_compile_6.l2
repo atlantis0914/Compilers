@@ -1,0 +1,19 @@
+//test error
+
+/* 
+ * This is my test program
+ * Malformed while header
+ */
+int main () {
+  int x;
+  int y = 15;
+  ( x ) = 0;
+  x = 2 + 7;
+  while () 
+  {
+    y = y - ( x );
+  }
+  x += 1;
+  //should return 4
+  return ( x + y);
+}

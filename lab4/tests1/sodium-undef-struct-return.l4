@@ -1,0 +1,9 @@
+//test return 15
+struct s;
+int main() {
+    return 15;
+}
+
+struct s* test(struct s* param) {
+    return param;
+}

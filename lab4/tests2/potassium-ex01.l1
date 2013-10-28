@@ -1,0 +1,10 @@
+//test exception
+
+
+int main() {
+
+  int x = -1;
+  int y = -2147483648;
+  return y/x;
+
+}

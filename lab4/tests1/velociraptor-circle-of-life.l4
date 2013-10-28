@@ -1,0 +1,36 @@
+//test return 1612699714
+// nants ingonyama bagithi baba
+// ...
+// it's the circle of life
+// and it moves us all
+// ...
+// okay so it is just a boring circularly linked list
+
+struct node {
+  int meaning;
+  struct node* next;
+};
+
+typedef struct node col;
+
+int main() {
+  col* a = alloc(col);
+  col* b = alloc(col);
+  col* c = alloc(col);
+  col* traverse = a;
+  int i = 0;
+
+  a->meaning = 0;
+  b->meaning = 0;
+  c->meaning = 1;
+  a->next = b;
+  b->next = c;
+  c->next = a;
+
+  for (; i < 1000; i++) {
+    traverse->meaning += traverse->next->meaning;
+    traverse = traverse->next;
+  }
+
+  return a->meaning;
+}

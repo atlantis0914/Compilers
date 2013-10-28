@@ -1,0 +1,68 @@
+//test return 0
+
+struct list_node {
+  int e;
+  struct list_node *next;
+};
+
+typedef struct list_node *list;
+
+// tortoise and the hare list cycle algorithm
+bool is_cyclical(list l) {
+  if (l == NULL)
+    return false;
+  if (l->next == NULL)
+    return false;
+  if (l->next->next == NULL)
+    return false;
+
+  list tortoise = l->next;
+  list hare = l->next->next;
+
+  while (hare != NULL) {
+    if (tortoise == hare)
+      return true;
+    if (hare->next == NULL)
+      return false;
+    hare = hare->next->next;
+    tortoise = tortoise->next;
+  }
+  return false;
+}
+
+list n_cycle_helper(list head, int n) {
+  list l = alloc(struct list_node);
+  if (n == 1) {
+    l->next = head;
+    return l;
+  }
+  list next = n_cycle_helper(head, n-1);
+  l->next = next;
+  return l;
+}
+
+// create a cyclical list of length n
+list n_cycle(int n) {
+  if (n == 0)
+    return NULL;
+  list head = alloc(struct list_node);
+  if (n == 1) {
+    head->next = head;
+    return head;
+  }
+  list tail = n_cycle_helper(head, n-1);
+  head->next = tail;
+  return head;
+}
+
+int main() {
+  list ten_cycle = n_cycle(10);
+  assert(is_cyclical(ten_cycle));
+  list hundred_cycle = n_cycle(100);
+  assert(is_cyclical(hundred_cycle));
+  list l = alloc(struct list_node);
+  assert(!(is_cyclical(l)));
+  l->next = hundred_cycle;
+  assert(is_cyclical(l));
+  return 0;
+}

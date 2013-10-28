@@ -1,0 +1,35 @@
+//test return 4
+
+
+struct d{
+	int val;
+};
+struct c{
+	int val;
+	struct d * what;
+};
+struct b{
+	int val;
+	struct c * what;
+};
+struct a{
+	int val;
+	struct b * what;
+};
+
+int main(){
+
+	struct a * aa= alloc (struct a);
+	struct b * bb= alloc (struct b);
+	struct c * cc= alloc (struct c);
+	struct d * dd= alloc (struct d);
+	dd->val = 1;
+	cc->val = 1;
+	bb->val = 1;
+	aa->val = 1;
+	aa->what = bb;
+	bb->what = cc;
+	cc->what = dd;
+	return (aa->val + aa->what->val + aa->what->what->val + aa->what->what->what->val);
+}
+

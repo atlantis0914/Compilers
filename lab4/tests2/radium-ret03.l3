@@ -1,0 +1,23 @@
+//test return 1
+
+bool digit_in (int d, int a)
+{
+  if (a == 0) return false;
+  if (a % 10 == d) return true;
+  return digit_in(d, a / 10);
+}
+
+bool is_digit_subset(int a, int b)
+{
+  if (a == 0) return true;
+  int d = a % 10;
+  if (digit_in(d, b))
+    return is_digit_subset(a / 10, b);
+  return false;
+}
+
+int main()
+{
+  if (is_digit_subset(1234, 9043512) == true) return 1;
+  return 0;
+}

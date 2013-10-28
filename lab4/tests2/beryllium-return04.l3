@@ -1,0 +1,5 @@
+//test return -2
+int main(){
+	fpt rt=fdiv(fmul(fsub(fadd(3,2),5),3),-2);
+	return rt;
+}

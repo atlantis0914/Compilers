@@ -1,0 +1,13 @@
+//test return 1
+struct q {int i;
+          bool j;
+         };
+
+typedef struct q as;
+
+int main() {
+    as * k = alloc(struct q);
+    k->i = 1;
+    k->j = false;
+    return (k->j)? 3: k->i;
+}

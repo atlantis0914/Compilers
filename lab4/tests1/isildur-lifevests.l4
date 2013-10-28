@@ -1,0 +1,40 @@
+//test exception 8
+struct a {
+  int alpha;
+  int beta;
+};
+
+struct b {
+  struct a* hello;
+};
+
+struct c {
+  struct b* hello;
+};
+
+struct d {
+  struct c* hello;
+};
+
+struct e {
+  struct d* hello;
+  struct c* hi;
+  struct b* greetings;
+  struct a* wassup;
+};
+typedef struct e* f;
+
+int main() {
+  f mine = alloc(struct e);
+  mine->wassup = alloc(struct a);
+  mine->wassup->alpha = 0;
+  mine->wassup->beta = 4;
+  mine->greetings = alloc(struct b);
+  mine->greetings->hello = mine->wassup;
+  mine->hi = alloc(struct c);
+  mine->hi->hello = mine->greetings;
+  mine->hello = alloc(struct d);
+  mine->hello->hello = mine->hi;
+  
+  return mine->hello->hello->hello->hello->beta/mine->hello->hello->hello->hello->alpha;
+}

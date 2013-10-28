@@ -1,0 +1,11 @@
+//test exception 8
+
+int myfun(int i)
+{
+    return i % -1;
+}
+
+int main()
+{
+    return myfun(0x80000000);
+}

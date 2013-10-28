@@ -1,0 +1,7 @@
+//test return 5
+struct s { int main; };
+int main() {
+	struct s[] arr = alloc_array(struct s, 5);
+	arr[0].main;
+	return 5;
+}

@@ -1,0 +1,9 @@
+//test return 0
+// decls can have different variable names
+int foo (int y, bool z);
+
+int foo (int x, bool y) { if (y) return x; else return 10; }
+
+int main () {
+    return foo (0, true);
+}

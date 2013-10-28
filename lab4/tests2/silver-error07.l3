@@ -1,0 +1,17 @@
+//test error
+// test some uninitialization error.
+
+void f() {
+     if(true) {
+     return;
+     }else{
+     }
+     int j;
+     j++;
+     return;
+}
+
+int main() {
+    f();
+    return 0;
+}

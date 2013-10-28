@@ -1,0 +1,13 @@
+//test return 2048
+
+int pow(int a, int b, int acc) {
+	if (b == 0) {
+		return acc;
+	} else {
+		return pow(a,b-1,acc*a);
+	}
+}
+
+int main() {
+	return pow(2,11,1);
+}

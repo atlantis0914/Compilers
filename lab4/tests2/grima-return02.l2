@@ -1,0 +1,20 @@
+//test return 3
+// All paths must return
+
+int main()
+{
+    bool b = false;
+
+    if( b )
+    {
+        b = true;
+        if( b )
+            return 1;
+        else
+            return 2;
+    }
+    else
+    {
+        return 3;
+    }
+}

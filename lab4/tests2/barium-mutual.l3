@@ -1,0 +1,19 @@
+//test exception
+
+int a ();
+int b ();
+
+int a()
+{
+  return a() + b();
+}
+
+int b()
+{
+  return 2 * b() + a();
+}
+
+int main()
+{
+  return a() + b();
+}

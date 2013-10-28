@@ -1,0 +1,60 @@
+//test return 1961
+
+typedef int[][] matrix;
+
+matrix empty_matrix() {
+	matrix m = alloc_array(int[], 3);
+	int[] r0 = alloc_array(int, 3);
+	int[] r1 = alloc_array(int, 3);
+	int[] r2 = alloc_array(int, 3);
+	m[0] = r0;
+	m[1] = r1;
+	m[2] = r2;
+	return m;
+}
+
+matrix make_matrix(int a00, int a01, int a02, int a10, int a11, int a12, int a20, int a21, int a22) {
+	matrix m = empty_matrix();
+	m[0][0] = a00;
+	m[0][1] = a01;
+	m[0][2] = a02;
+	m[1][0] = a10;
+	m[1][1] = a11;
+	m[1][2] = a12;
+	m[2][0] = a20;
+	m[2][1] = a21;
+	m[2][2] = a22;
+	return m;
+}
+
+matrix multiply(matrix m1, matrix m2) {
+	matrix m = empty_matrix();
+	for(int row = 0; row < 3; row++) {
+		for(int col = 0; col < 3; col++) {
+			int sum = 0;
+			for(int i = 0; i < 3; i++) {
+				sum += m1[row][i] * m2[i][col];
+			}
+			m[row][col] = sum;
+		}
+	}
+	return m;
+}
+
+int small_determinant(int a00, int a01, int a10, int a11) {
+	return a00 * a11 - a01 * a10;
+}
+
+int determinant(matrix m) {
+	int minor1 = m[0][0] * small_determinant(m[1][1], m[1][2], m[2][1], m[2][2]);
+	int minor2 = m[1][0] * small_determinant(m[0][1], m[0][2], m[2][1], m[2][2]);
+	int minor3 = m[2][0] * small_determinant(m[0][1], m[0][2], m[1][1], m[1][2]);
+	return minor1 - minor2 + minor3;
+}
+
+int main() {
+	matrix a = make_matrix(1, 2, 3, 4, 5, 1, 2, -1, 0);
+	matrix b = make_matrix(-2, -3, 5, -7, 3, 5, -1, -2, 1);
+	matrix c = multiply(a, b);
+	return -determinant(c);
+}

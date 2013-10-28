@@ -1,0 +1,49 @@
+//test return 42
+//data structure that has an array and its size
+
+int arraycopy(int size, int[] a, int[] b) {
+  for (int k = 0; k < size; k++) {
+    b[k] = a[k];
+  }
+  return 1;
+}
+
+struct table_rep {
+  int numItems;
+  int[] items;
+};
+
+typedef struct table_rep* table;
+
+int size (table t) {
+  return t->numItems;
+}
+
+int get (table t, int n) {
+  return t->items[n];
+}
+
+int set (table t, int k, int v) {
+  if (k >= 0 && k < t->numItems) {
+    t->items[k] = v;
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+table makeTable (int numItems, int[] initial_contents) {
+  struct table_rep* t = alloc(struct table_rep);
+  int[] items = alloc_array(int, numItems);
+  arraycopy(numItems, initial_contents, items);
+  t->numItems = numItems;
+  t->items = items;
+  return t;
+}
+
+int main () {
+  int[] contents = alloc_array(int, 1);
+  contents[0] = 42;
+  table t = makeTable (1, contents);
+  return get(t, 0);
+}

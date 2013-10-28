@@ -1,0 +1,10 @@
+//test return -1140998160
+// A test of whitespace.
+int main()
+{
+    intbobby = 0xF00FACE;
+    intlucy = 0xCAFEBABE;
+    
+    int difference = lucy - bobby;
+    returndifference;
+}

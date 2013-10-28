@@ -1,0 +1,61 @@
+//test return 1
+ 
+ /* pseudo-random generator example
+    from http://en.wikipedia.org/wiki/Random_number_generator
+ */
+ 
+ struct rands{
+   int z;
+   int w;
+ };
+ 
+ typedef struct rands rand_t;
+ typedef rand_t * rand;
+ 
+// get a random number
+int random(rand r){
+    r->z = 36969 * (r->z & 65535) + (r->z >> 16);
+    r->w = 18000 * (r->w & 65535) + (r->w >> 16);
+    return (r->z << 16) + r->w;  /* 32-bit result */
+}
+
+// check whether an array is sorted or not
+int is_sorted (int[] a, int n) {
+  int i;
+  for (i = 1; i < n; i += 1)
+    if (a[i-1] >= a[i]) return 0;
+  return 1;
+}
+
+int swap(int[] A, int x, int y){
+    int t = A[x];
+    A[x] = A[y];
+    A[y] = t;
+    return 0;
+}
+
+int bubbleSort(int[] A, int n) {
+  int a;
+  int b;
+  for(a=0; a < n; a++)
+     for(b=n-1; b > a; b--) 
+        if(A[b-1] > A[b])
+           swap(A, b-1, b);
+  return 0;
+}
+
+int main(){
+    int[] A = alloc_array(int, 100);
+    rand r = alloc(rand_t);
+    int i;
+    // seed
+    r->z = 100;
+    r->w = 42;
+    for(i = 0; i < 100; i++)
+        A[i] = random(r);
+    
+    // now, we sort the list
+    bubbleSort(A, 100);
+    
+    return is_sorted(A, 100);
+}   

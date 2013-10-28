@@ -1,0 +1,13 @@
+//test error
+/* Variable declared before being used, after return */
+int main()
+{
+    return 2;
+    int a = 4;
+    b = 6;
+    int b;
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

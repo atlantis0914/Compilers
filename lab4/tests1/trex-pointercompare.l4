@@ -1,0 +1,12 @@
+//test error
+
+//comparisons of differently-typed pointers are disallowed
+
+int main()
+{
+  int* p1;
+  int** p2;
+  p1 = NULL;
+  p2 = NULL;
+  return p1 == p2 ? 1 : 0;
+}

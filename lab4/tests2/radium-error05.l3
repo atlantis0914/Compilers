@@ -1,0 +1,10 @@
+//test error
+//declared but never defined function
+
+int foo(int x, int y);
+
+int main()
+{
+  return foo(4,5);
+}
+

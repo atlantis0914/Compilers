@@ -1,0 +1,9 @@
+//test error
+
+int f(int a, int a) { // parameter identifiers must be unique
+	return 1;
+}
+
+int main () {
+  return f();
+}

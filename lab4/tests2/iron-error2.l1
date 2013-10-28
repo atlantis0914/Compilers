@@ -1,0 +1,9 @@
+//test error
+//use before declaration
+
+int main()
+{
+    int a = b;
+    int b = 6;
+    return a+b;
+}

@@ -1,0 +1,10 @@
+//test return 100
+int main() {
+  int x = 0xFFFFffff;
+
+  int y = 1;
+
+  y = x + y;
+
+  return ((((y == 3 ? 10 : 100))));
+}

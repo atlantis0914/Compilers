@@ -1,0 +1,16 @@
+//test return 20
+
+/*
+ * My test program
+ * Nothing should go wrong
+ */
+int main () {
+  int x = 3 + 7;
+  int y;
+  for (y = 0; y < 10; y = y + 1)
+  {
+    x = x + 1;
+  }
+  // comment for fun
+  return x;
+}

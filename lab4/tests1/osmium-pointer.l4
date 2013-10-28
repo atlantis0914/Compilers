@@ -1,0 +1,19 @@
+//test return 1
+
+typedef int foo;
+
+void helper(foo * thingo) {
+  *thingo = *thingo -1;
+}
+
+foo main() {
+  foo * int_ptr = alloc(int);
+
+  * int_ptr = 6;
+
+  while(* int_ptr > 0) {
+    helper(int_ptr);
+  }
+
+  return 1;
+}

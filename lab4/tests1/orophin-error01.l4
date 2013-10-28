@@ -1,0 +1,6 @@
+//test error
+//  dereference of NULL
+
+int main() {
+  return (*(NULL));
+}

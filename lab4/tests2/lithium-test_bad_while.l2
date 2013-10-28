@@ -1,0 +1,7 @@
+//test error
+int main() {
+	for (bool y = true; y, y = false) {
+		int x = 0;
+	}
+	return x;
+}

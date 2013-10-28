@@ -1,0 +1,11 @@
+//test return 0
+
+int main(){
+  int[] a;
+  int b;
+
+  for (b = 0; b < 100000; b++)
+    a = alloc_array(int, 100);
+
+  return 0;
+}

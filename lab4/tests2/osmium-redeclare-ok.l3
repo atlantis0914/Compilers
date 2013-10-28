@@ -1,0 +1,14 @@
+//test return 1
+//redeclaring many times ok
+int f1();
+int f1();
+int f1();
+int f1();
+int f1() { return 1; }
+int f1();
+int f2() { return 2; }
+int f1();
+int main () {
+	return f1();
+}
+int f1();

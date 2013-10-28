@@ -1,0 +1,13 @@
+//test exception 11
+
+int main()
+{
+  int[][] arrs = alloc_array(int[], 10);
+  for(int i = 0; i < 9; i++) {
+    arrs[9-i] = alloc_array(int, i);
+    for (int j = 0; j < i; j++) {
+      arrs[9-i][j] = i + j /(2*i + 1);
+    }
+  }
+  return arrs[0][0];
+}

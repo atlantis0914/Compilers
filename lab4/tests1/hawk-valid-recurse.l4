@@ -1,0 +1,11 @@
+//test return 1
+// a very simple isolation to check if this gets handled correctly
+
+struct yo {
+	struct yo * dawg;
+};
+
+int main ()
+{
+	return 1;
+}

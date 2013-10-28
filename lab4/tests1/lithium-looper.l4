@@ -1,0 +1,11 @@
+//test exception
+
+int main() {
+	int[] A = alloc_array(int, 1);
+	int i = 0;
+	while (true) {
+		int t = A[i];
+		i = i + 1;
+	}
+	return i;
+}

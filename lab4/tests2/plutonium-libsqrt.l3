@@ -1,0 +1,43 @@
+//test return 27
+
+// #use <15411>
+
+fpt fabs(fpt x) {
+  if (fless(x,itof(0)))
+    return fsub(itof(0),x);
+  else
+    return x;
+}
+
+/* Naive implementation of floating point square root
+ * based on Newton's method
+ */
+
+fpt fsqrt(fpt x) {
+  if (fless(x,itof(0))) return itof(-1);
+  fpt epsilon = fdiv(itof(1),itof(100000)); /* 10^{-5} */
+  int max_iter = 100000;                    /* 10^5 */
+  int i = 0;
+  fpt y = x;                    /* initial approx. */
+  while (!fless(fabs(fsub(fmul(y,y),x)),epsilon) && i < max_iter) {
+    y = fadd(fdiv(y,itof(2)),fdiv(fdiv(x,itof(2)),y));
+    i = i+1;
+  }
+  return y;
+}
+
+int main () {
+  fpt epsilon = fdiv(itof(1),itof(100000)); /* 10^{-5} */
+  fpt q27 = fsqrt(itof(27));  
+  fpt f27 = fmul(q27,q27);
+  /* adding tolerance and rounding down should yield
+   * exact answer on intergers
+   */
+  int i27 = ftoi(fadd(f27,epsilon));
+
+  print_fpt(q27);
+  print_fpt(f27);
+  print_int(i27);
+
+  return i27;
+}

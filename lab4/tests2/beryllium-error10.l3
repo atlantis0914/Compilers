@@ -1,0 +1,11 @@
+//test error
+int foo(){
+	int a=3;
+	int fooinside(int b ){
+		return b+3;
+	}
+	return fooinside(a);
+}
+int main(){
+	return foo();
+}

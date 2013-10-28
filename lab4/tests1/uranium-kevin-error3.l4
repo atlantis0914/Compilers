@@ -1,0 +1,9 @@
+//test error
+
+struct q {bool a;};
+struct p {bool a; bool b;};
+
+int main() {
+    struct q *q = alloc(struct p);
+    return 1;
+}

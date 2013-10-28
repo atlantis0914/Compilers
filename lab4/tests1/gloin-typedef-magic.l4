@@ -1,0 +1,13 @@
+//test return 0
+
+struct x { 
+    int y;
+};
+
+typedef struct x y;
+
+int main()
+{
+    y* foo = alloc(y);
+    return foo->y;
+}

@@ -1,0 +1,23 @@
+//test error
+
+struct f;
+
+struct f* get_f(int x)
+{
+    struct f* fp = alloc(struct f);
+    fp->x = x;
+
+    return fp;
+}
+
+struct f{
+    int x;
+};
+
+int main()
+{
+    struct f * fp = get_f(10);
+
+    // should have been fp->
+    return fp.x;
+}

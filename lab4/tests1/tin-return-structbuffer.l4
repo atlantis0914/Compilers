@@ -1,0 +1,68 @@
+//test return 3
+//stuff with fixed-size buffer
+
+struct buffer8 {
+  bool filled;
+  int b0;
+  int b1;
+  int b2;
+  int b3;
+  int b4;
+  int b5;
+  int b6;
+  int b7;
+};
+
+typedef struct buffer8 buffer8;
+
+buffer8 *make_buffer() {
+  buffer8 *new_buf = alloc(buffer8);
+  return new_buf;
+}
+
+buffer8 *clear_buffer(buffer8 *buf) {
+  buf->b0 = 0;
+  buf->b1 = 0;
+  buf->b2 = 0;
+  buf->b3 = 0;
+  buf->b4 = 0;
+  buf->b5 = 0;
+  buf->b6 = 0;
+  buf->b7 = 0;
+  buf->filled = false;
+  return buf;
+}
+
+buffer8 *fill_buffer(buffer8 *buf, int n0, int n1, int n2, int n3, int n4, int n5, int n6, int n7) {
+  buf->b0 = n0;
+  buf->b1 = n1;
+  buf->b2 = n2;
+  buf->b3 = n3;
+  buf->b4 = n4;
+  buf->b5 = n5;
+  buf->b6 = n6;
+  buf->b7 = n7;
+  buf->filled = true;
+  return buf;
+}
+
+buffer8 *reverse_buffer(buffer8 *buf) {
+  assert(buf->filled);
+  int t0 = buf->b0;
+  int t1 = buf->b1;
+  int t2 = buf->b2;
+  int t3 = buf->b3;
+  int t4 = buf->b4;
+  int t5 = buf->b5;
+  int t6 = buf->b6;
+  int t7 = buf->b7;
+  return fill_buffer(buf, t7, t6, t5, t4, t3, t2, t1, t0);
+}
+
+int main() {
+  buffer8 *my_buf = make_buffer();
+  my_buf = fill_buffer(my_buf, 2, 3, 5, 7, 11, 13, 19, 23);
+  assert(my_buf->filled);
+  my_buf = reverse_buffer(my_buf);
+  return my_buf->b6;
+}

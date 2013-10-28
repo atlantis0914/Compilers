@@ -1,0 +1,10 @@
+//test return 0
+int main(){
+	int v0=0;
+	v0-= -  - v0/4;
+	v0*=(v0);
+	v0=v0*3;
+	v0-=0;
+	v0/=5;
+	return 0+v0;
+}

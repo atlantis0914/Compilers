@@ -1,0 +1,8 @@
+//test return 0
+// test some bitwise operators
+
+int main() {
+    int x = 0x75319022;
+
+    return (x ^ ~0) & x;
+}

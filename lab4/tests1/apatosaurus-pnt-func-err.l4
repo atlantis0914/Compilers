@@ -1,0 +1,24 @@
+//test error
+// keep track of pointer type through function calls 
+
+int derefd (int p) {
+    return p;
+}
+int derefc (int * p) {
+    return derefd(**p);
+}
+int derefb (int ** p) {
+    return derefc(*p);
+}
+int derefa (int *** p) {
+    return derefb(*p);
+}
+int main () {
+  int *** p;
+  p = alloc(int **);
+  *p = alloc (int *);
+  **p = alloc (int);
+  ***p = 50;
+  
+  return derefa(p);
+}

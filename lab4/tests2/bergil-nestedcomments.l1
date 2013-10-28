@@ -1,0 +1,18 @@
+//test return 2
+
+// correct nested comments
+
+int main() {
+    int x;
+
+    /* this is a comment --
+
+    /* oh look, we had previously commented something -- now it's nested!
+       done with nested comment */
+
+    we're done with the top level comment! */
+
+    x = 2;
+
+    return x;
+}

@@ -1,0 +1,18 @@
+//test return 9
+
+int main() {
+	int***** a;
+	int**** b;
+	a = alloc(int****);
+	*a = alloc(int***);
+	**a = alloc(int**);
+	***a = alloc(int*);
+	****a = alloc(int);
+	*****a = 4;
+	b = alloc(int***);
+	*b = alloc(int**);
+	**b = alloc(int*);
+	***b = alloc(int);
+	****b = 5;
+	return *****a + ****b;
+}

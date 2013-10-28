@@ -1,0 +1,16 @@
+//test return 50
+// dont forget how long your array is 
+
+int main () {
+    int[] a = alloc_array(int, 3);
+    int[] b = alloc_array(int, 2);
+
+    a[0] = 40;
+    a[1] = 10;
+
+    b = a;
+
+    b[2] = 50;
+
+    return b[2];
+}
