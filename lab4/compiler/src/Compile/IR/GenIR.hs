@@ -80,8 +80,16 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpDereference (IRIdent s) t) op e) = let
   temp = APtr (ATemp $ m Map.! s) Nothing 0
   dest = ATemp $ i
   (_,i',l',aasm') = genExp fm (m,i+1,l,[]) e dest
-  c = [AAsm [temp] Nop [ALoc $ dest]]
+  c = [AAsm [temp] Nop [ALoc dest]]
   in (m,i',l',aasm ++ aasm' ++ c)
+
+genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect (IRExpDereference base _) _ _ size) op e) = let
+  dest = ATemp $ i
+  (m',i',l',aasm') = genExp fm (m,i+1,l,[]) e dest
+  dest' = ATemp $ i'
+  (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') base dest
+  c = [AAsm [APtr dest' Nothing size] Nop [ALoc dest]] 
+  in (m'',i'',l'',aasm'' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript (IRIdent s) index t size) op e) = let
   dest = AIndex
@@ -226,7 +234,11 @@ genExp f alloc@(varMap,n,l,aasm) e@(IRExpDereference (IRIdent s) t) dest =
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpDereference expr _) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr (ATemp n)
-  in (varMap,n,l,aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp $ n+1) Nothing 0]])
+  in (varMap',n'+1,l',aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) Nothing 0]])
+
+genExp f alloc@(varMap,n,l,aasm) e@(IRExpFieldSelect (IRExpDereference expr _) field t size) dest = let
+  (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr (ATemp n)
+  in (varMap',n'+1,l',aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) Nothing size]])
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpArraySubscript expr1 expr2 t o) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr1 (ATemp n)
