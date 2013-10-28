@@ -52,6 +52,22 @@ simplifyTypeDefdType td s =
     Just simp -> simp
     Nothing -> error ("Used unknown type :: " ++ show s)
 
+-- Checks to see if the type is a valid concrete type
+isValidConcreteType :: TypeDefs -> Map.Map String SDefn -> IdentType -> Bool
+isValidConcreteType td sm IInt = True
+isValidConcreteType td sm IBool = True
+isValidConcreteType td sm IVoid = False
+isValidConcreteType td sm (IPtr i) = isValidConcreteType td sm i
+isValidConcreteType td sm (IArray i) = isValidConcreteType td sm i
+isValidConcreteType td sm s@(IStruct (ITypeDef name)) = 
+  case (Map.lookup name sm) of 
+    Just simp -> True
+    Nothing -> False
+isValidConcreteType td sm s = 
+  case (Map.lookup s td) of 
+    Just simp -> isValidConcreteType td sm simp
+    Nothing -> False
+
 getSizeForType :: TypeDefs -> Map.Map String (Maybe SDefn) -> IdentType -> Int
 getSizeForType _ _ IInt = 4
 getSizeForType _ _ IBool = 4

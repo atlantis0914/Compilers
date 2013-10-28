@@ -44,12 +44,17 @@ lTypesEqual :: [IdentType] -> [IdentType] -> Bool
 lTypesEqual l1 l2 = (all (\(t1,t2) -> typesEqual t1 t2) $ zip l1 l2) && 
                     (length l1 == length l2)
 
-validateFnArgs :: [IdentType] -> String -> Bool
-validateFnArgs typL fnName = 
+
+--validateFnArgs :: [IdentType] -> String -> Bool
+validateFnArgs td sm typL fnName = 
   if (all (\t -> (not $ t == IVoid)) typL)
-    then if (all isSmallType typL)
-           then True
-           else error ("Error : arguments not all small in function " ++ fnName)
+    then 
+      if (all isSmallType typL)
+        then 
+          if (all (isValidConcreteType td sm) typL)
+            then True
+            else error ("Error : arguments not concrete in function " ++ fnName)
+        else error ("Error : arguments not all small in function " ++ fnName)
     else error ("Error : cannot have void argument in function declaration of " ++ fnName)
 
 squash :: FnMap -> [GDecl] -> GDecl -> [GDecl]
@@ -112,7 +117,7 @@ checkGDecl (ctx@(map, fnMap, dMap, tdMap, sMap, valid))
                            gdeclReturnType = returnType, 
                            gdeclIsLibrary = isLibrary}) pos) = 
   let
-    argValid = validateFnArgs argTypes name
+    argValid = validateFnArgs tdMap sMap argTypes name
   in
     (map, fnMap, Map.insert name True dMap, tdMap, sMap, valid && argValid)
 
@@ -132,7 +137,7 @@ checkGDecl (ctx@(_, fnMap, dMap, tdMap, sMap, valid))
                            fnBody = body}) pos) = 
   let
     idMap = generateIdentContext args argTypes 
-    argValid = validateFnArgs argTypes name
+    argValid = validateFnArgs tdMap sMap argTypes name
   in 
     checkASTTypes name (idMap, fnMap, Map.insert name True dMap, tdMap, sMap, valid && argValid) body 
 
@@ -162,7 +167,7 @@ checkStmtValid fName (context@(map, fnMap, dMap, tdMap, sMap, valid)) (Asgn lval
 
 checkStmtValid fName (context@(map, fnMap, dMap, tdMap, sMap, valid)) (Decl declName declType pos asgn) =
   let
-    validType = (not $ declType == IVoid)
+    validType = (not $ declType == IVoid) && (isValidConcreteType tdMap sMap declType)
     hasSmallType = isSmallType declType 
     exists = Maybe.isNothing (Map.lookup declName map)
     map' = Map.insert declName declType map
