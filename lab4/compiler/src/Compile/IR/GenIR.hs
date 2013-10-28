@@ -92,13 +92,13 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect (IRExpDereference base _) _ _ 
   in (m'',i'',l'',aasm'' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript (IRIdent s) index t size) op e) = let
+  dest' = ATemp $ i
+  (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) e dest'
   dest = AIndex
-  (m',i',l',aasm') = genExp fm (m,i,l,[]) index dest
   temp = APtr (ATemp $ m' Map.! s) (Just dest) size
-  dest' = ATemp $ i'
-  (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',[]) e dest'
+  (m'',i'',l'',aasm'') = genExp fm (m',i',l',aasm') index dest
   c = [AAsm [temp] Nop [ALoc $ dest']]
-  in (m'',i'',l'',aasm ++ aasm' ++ aasm'' ++ c)
+  in (m'',i'',l'', aasm'' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRBlock stmts) = let
   -- Keep scope alive, start new AAsm list, concat when finished.
