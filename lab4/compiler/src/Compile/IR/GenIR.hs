@@ -71,23 +71,23 @@ genStmt fm (m,i,l,aasm) (IRDecl s t scope) = let
   m' = Map.insert s i m -- assign ident s, temp number i
   in genStmt fm (m',i+1,l,aasm) scope
 
-genStmt fm (m,i,l,aasm) (IRAsgn (IRIdent s) op e) = let
+genStmt fm (m,i,l,aasm) (IRAsgn (IRIdent s) _ e) = let
   temp = ATemp $ m Map.! s
-  (_,i',l',aasm') = genExp fm (m,i,l,[]) e temp
-  in (m,i',l',aasm ++ aasm')
+  (m',i',l',aasm') = genExp fm (m,i,l,aasm) e temp
+  in (m',i',l',aasm')
 
-genStmt fm (m,i,l,aasm) (IRAsgn (IRExpDereference (IRIdent s) t) op e) = let
+genStmt fm (m,i,l,aasm) (IRAsgn (IRExpDereference (IRIdent s) t) _ e) = let
   temp = APtr (ATemp $ m Map.! s) Nothing 0
   dest = ATemp $ i
-  (_,i',l',aasm') = genExp fm (m,i+1,l,[]) e dest
+  (_,i',l',aasm') = genExp fm (m,i+1,l,aasm) e dest
   c = [AAsm [temp] Nop [ALoc dest]]
-  in (m,i',l',aasm ++ aasm' ++ c)
+  in (m,i',l',aasm' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect (IRExpDereference base _) _ _ size) op e) = let
   dest = ATemp $ i
-  (m',i',l',aasm') = genExp fm (m,i+1,l,[]) e dest
+  (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) e dest
   dest' = ATemp $ i'
-  (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') base dest
+  (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') base dest'
   c = [AAsm [APtr dest' Nothing size] Nop [ALoc dest]] 
   in (m'',i'',l'',aasm'' ++ c)
 
@@ -223,7 +223,7 @@ genExp f (varMap,n,l,aasm) (IRExpNull) dest =
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpAlloc t s) dest =
   genRealFn f alloc (IRExpFnCall "calloc" [IRExpInt (fromIntegral s) Dec,
-                                           IRExpInt 1 Dec]) dest
+                                                 IRExpInt 1 Dec]) dest
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpAllocArray t expr s) dest =
   genRealFn f alloc (IRExpFnCall "calloc" [IRExpInt (fromIntegral s) Dec,
