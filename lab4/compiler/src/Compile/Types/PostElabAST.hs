@@ -42,10 +42,10 @@ type StructOffsets = Map.Map String (Int, Int)
 data SDefn = SDefn {structName :: !String,
                     structFields :: ![(IdentType, String)],
                     -- A map from the fieldName -> (fieldSize, fieldOffset)
-                    structTypes :: Map.Map String IdentType,
-                    structOffsets :: StructOffsets,
-                    structAlignment :: Int, -- 0 mod 4 or 0 mod 8
-                    structSize :: Int,
+                    structTypes :: !(Map.Map String IdentType),
+                    structOffsets :: !StructOffsets,
+                    structAlignment :: !Int, -- 0 mod 4 or 0 mod 8
+                    structSize :: !Int,
                     structPos :: SourcePos}
 
 data AST = AST !Stmt SourcePos

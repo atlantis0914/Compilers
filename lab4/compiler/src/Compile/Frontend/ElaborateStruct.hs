@@ -56,15 +56,32 @@ genFieldOffsets sDefs (((typ,name),size):xs) m i =
         Just (SDefn {structAlignment = align}) -> align
     
 
-checkStructFields :: SDefn -> SDefn 
-checkStructFields s@(SDefn name fields _ _ _ _ _) = 
+checkStructFields :: StructDefs -> SDefn -> SDefn 
+checkStructFields sMap s@(SDefn name fields _ _ _ _ _) = 
   let
     names = map snd fields 
     uniques = nub names 
   in
     if (length uniques == length names) 
-      then s
+      then checkLargeStructFields sMap s
       else error ("Struct defn : " ++ name ++ " has non-unique names")
+
+checkLargeStructFields :: StructDefs -> SDefn -> SDefn 
+checkLargeStructFields sMap s@(SDefn name fields _ _ _ _ _) = 
+  let
+    fields' = map (checkFieldType sMap) fields
+  in
+    s {structFields = fields'}
+
+checkFieldType :: StructDefs -> (IdentType, String) -> (IdentType, String)
+checkFieldType sMap (typ, name) = 
+  case (typ) of 
+    (IStruct (ITypeDef sName)) -> 
+      if (Map.member sName sMap)  
+        then Trace.trace ("name : " ++ name ++ " is member") $ (typ, name)
+        else error ("Using concrete name of : " ++ name ++ " in struct defn before define")
+    _ -> Trace.trace (" name is not struct" ++ name) $ (typ, name)
+
 
 -- Called when parsing a Decl - this isn't a declaration so we just insert 
 -- Nothing into the ctx. 

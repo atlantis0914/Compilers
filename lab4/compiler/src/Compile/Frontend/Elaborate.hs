@@ -115,8 +115,9 @@ elaboratePGDecl (PSDecl (ParseSDecl s p1) p2) typeDefs _ = (GSDecl (SDecl s p2) 
 elaboratePGDecl (PSDefn sdefn@(ParseSDefn s fields p1) p2) typeDefs sDefs = 
   let
     init = generateStructDefn typeDefs sDefs sdefn
+    fin = checkStructFields sDefs init
   in
-    GSDefn (checkStructFields init) p2
+    fin `seq` GSDefn fin p2
 
 elaboratePGDecl (PTypeDef s1 s2 pos) typeDefs _ = GTypeDef s1 s2 pos
 
