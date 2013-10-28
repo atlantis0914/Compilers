@@ -5,6 +5,8 @@ import qualified Data.Map as Map
 import qualified Data.Maybe as Maybe
 import qualified Debug.Trace as Trace
 
+import Compile.Util.IRUtil
+
 import Compile.Util.IdentTypeUtil
 
 type TypeMap = Map.Map String IdentType
@@ -97,7 +99,7 @@ toIRExpr' fm sm tm (ExpTernary e1 e2 e3 _) = (IRExpTernary e1' e2' e3', t)
 toIRExpr' fm sm tm (ExpFnCall s elist _) = (IRExpFnCall s elist' , typ)
   where 
     elist' = map (fst . toIRExpr' fm sm tm) elist
-    (_,typ,_,_,_) = fm Map.! s
+    (_,typ,_,_,_) = fm Map.! (getName s)
 
 toIRExpr' fm sm tm (ExpBinMem Select e1 (Ident field _) _) = 
   case (toIRExpr' fm sm tm e1) of

@@ -7,6 +7,8 @@ import qualified Data.List.Split as Split
 import Compile.Backend.Registers
 import qualified Text.Parsec.Pos as P
 
+import Compile.Util.IRUtil
+
 import Compile.IR.CoalesceLabel
 
 import qualified Debug.Trace as Trace
@@ -246,13 +248,6 @@ genExp f alloc@(varMap,n,l,aasm) e@(IRExpArraySubscript expr1 expr2 t o) dest = 
   in (varMap'',n'',l'',aasm'' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) (Just AIndex) o]])
 
 genExp f alloc e dest = error (show e ++ " EXHAUST genExp")
-
-getName :: String -> String
-getName (('_'):xs) = getName xs
-getName (('c'):('0'):('_'):xs) = getName xs
---getName (('_'):('_'):('c'):('0'):('_'):xs) = xs
---getName (('_'):xs) = xs
-getName s = s
 
 genInlineFn f alloc@(varMap, n, l, aasm) (IRExpFnCall fnName exprs) dest ret =
   let
