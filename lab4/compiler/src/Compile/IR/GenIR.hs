@@ -19,7 +19,7 @@ type Alloc = (Map.Map String Int, Int, Int, [AAsm])
 type FnMap = Map.Map String ([IdentType], IdentType, Bool, Bool, Maybe Integer) -- Map of global fn defines
 
 genFIR :: IRFnList -> FnMap -> [FnAAsm]
-genFIR (IRFnList gdecls _) fnMap =
+genFIR (IRFnList gdecls) fnMap =
   let
     initIR = Maybe.mapMaybe (genFnAAsm fnMap) gdecls
     coalIR = coalesceLabel initIR
@@ -45,53 +45,59 @@ addArgInline alloc@(varMap, n, l, aasms) arg =
   in
     (varMap', n+1, l, aasms')
 
-genFnAAsm :: FnMap -> IRGDecl -> Maybe FnAAsm
-genFnAAsm fnMap (IRGFDefn (IRFDefn name args _ _ ast _) _) =
+genFnAAsm :: FnMap -> IRDecl -> Maybe FnAAsm
+genFnAAsm fnMap (IRFDefn (IRFuncDef name args _ _ ast)) =
     Just $ AAFDefn (genIR fnMap ast alloc') name (length args)
   where
     alloc = (Map.empty, 0, 0, [])
     alloc' = foldl addArg alloc args
 
-genFnAAsm _ (IRGFDecl (IRFDecl name _ _ _ isLib _) _) =
-  if isLib then Just $ AAFDecl name
-           else Nothing
-
 genFnAAsm _ _ = Nothing
 
 genIR :: FnMap -> IRAST -> Alloc -> [AAsm]
-genIR fnMap (IRAST (Block stmts) _) alloc =
+genIR fnMap (IRAST (IRBlock stmts)) alloc =
   let
     (_,_,_,aasm) = foldl (genStmt fnMap) alloc stmts
   in
     aasm
 
-genStmt :: FnMap -> Alloc -> Stmt -> Alloc
-genStmt _ alloc IRSNop = alloc
+genStmt :: FnMap -> Alloc -> IRStmt -> Alloc
 genStmt fm alloc (IRCtrl c) = genCtrl fm alloc c
 genStmt fnMap (m,i,l,aasm) (IRExpr e) = let
   (_,i',l',aasm') = genExp fnMap (m,i+1,l,[]) e (ATemp i)
   in (m,i',l',aasm ++ aasm')
 
-genStmt fm (m,i,l,aasm) (IRDecl s t _ scope) = let
+genStmt fm (m,i,l,aasm) (IRDecl s t scope) = let
   m' = Map.insert s i m -- assign ident s, temp number i
   in genStmt fm (m',i+1,l,aasm) scope
 
-genStmt fm (m,i,l,aasm) (IRAsgn (IRIdent s) op e _) = let
+genStmt fm (m,i,l,aasm) (IRAsgn (IRIdent s) op e) = let
   temp = ATemp $ m Map.! s
   (_,i',l',aasm') = genExp fm (m,i,l,[]) e temp
   in (m,i',l',aasm ++ aasm')
 
-genStmt fm (m,i,l,aasm) (IRAsgn (IRExpDereference (IRIdent s) t) op e _) = let
-  temp = APtr (ATemp $ m Map.! s) None 0
+genStmt fm (m,i,l,aasm) (IRAsgn (IRExpDereference (IRIdent s) t) op e) = let
+  temp = APtr (ATemp $ m Map.! s) Nothing 0
   dest = ATemp $ i
   (_,i',l',aasm') = genExp fm (m,i+1,l,[]) e dest
   c = [AAsm [temp] Nop [ALoc $ dest]]
   in (m,i',l',aasm ++ aasm' ++ c)
 
+genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript (IRIdent s) index t size) op e) = let
+  dest = AIndex
+  (m',i',l',aasm') = genExp fm (m,i,l,[]) index dest
+  temp = APtr (ATemp $ m' Map.! s) (Just dest) size
+  dest' = ATemp $ i'
+  (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',[]) e dest'
+  c = [AAsm [temp] Nop [ALoc $ dest']]
+  in (m'',i'',l'',aasm ++ aasm' ++ aasm'' ++ c)
+
 genStmt fm (m,i,l,aasm) (IRBlock stmts) = let
   -- Keep scope alive, start new AAsm list, concat when finished.
   (m',i',l',aasm') = foldl (genStmt fm) (m,i,l,[]) stmts
   in (m',i',l',aasm ++ aasm')
+
+genStmt _ _ stmtm = error ("GENSTMT " ++ show stmtm)
 
 genCtrl :: FnMap -> Alloc -> IRCtrl -> Alloc
 
@@ -204,24 +210,28 @@ genExp f alloc@(varMap,n,l,aasm) e@(IRExpFnCall fnName exprs) dest =
     Just (_,_,_,_,Nothing) -> genRealFn f alloc e dest
     Just (_,_,_,_,Just i) -> genInlineFn f alloc e dest i
 
-genExp f (varMap,n,l,aasm) (IRExpNull _) dest =
+genExp f (varMap,n,l,aasm) (IRExpNull) dest =
   (varMap,n,l, aasm ++ [AAsm [dest] Nop [AImm $ 0]])
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpAlloc t s) dest =
-  genRealFn f alloc (IRExpFnCall "calloc" [IRExpInt s Dec,
+  genRealFn f alloc (IRExpFnCall "calloc" [IRExpInt (fromIntegral s) Dec,
                                            IRExpInt 1 Dec]) dest
 
+genExp f alloc@(varMap,n,l,aasm) e@(IRExpAllocArray t expr s) dest =
+  genRealFn f alloc (IRExpFnCall "calloc" [IRExpInt (fromIntegral s) Dec,
+                                           expr]) dest
+
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpDereference (IRIdent s) t) dest =
-  (varMap,n,l,aasm ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp $ varMap Map.! s) None 0]])
+  (varMap,n,l,aasm ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp $ varMap Map.! s) Nothing 0]])
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpDereference expr _) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr (ATemp n)
-  in (varMap,n,l,aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp $ n+1) None 0]])
+  in (varMap,n,l,aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp $ n+1) Nothing 0]])
 
-genExp f alloc@(varMap,n,l,aasm) e@(IRExpDereference expr1 expr2 t o) dest = let
+genExp f alloc@(varMap,n,l,aasm) e@(IRExpArraySubscript expr1 expr2 t o) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr1 (ATemp n)
-  (varMap'',n'',l'',aasm'') = genExp f (varMap',n'+1,l',aasm') (ATemp n')
-in (varMap'',n'',l'',aasm'' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) (Just ATemp n') o]])
+  (varMap'',n'',l'',aasm'') = genExp f (varMap',n'+1,l',aasm') expr2 (ATemp n')
+  in (varMap'',n'',l'',aasm'' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) (Just (ATemp n')) o]])
 
 genExp f alloc e dest = error (show e ++ " EXHAUST genExp")
 
@@ -232,7 +242,7 @@ getName (('c'):('0'):('_'):xs) = getName xs
 --getName (('_'):xs) = xs
 getName s = s
 
-genInlineFn f alloc@(varMap, n, l, aasm) (ExpFnCall fnName exprs _) dest ret =
+genInlineFn f alloc@(varMap, n, l, aasm) (IRExpFnCall fnName exprs) dest ret =
   let
     allocs = scanl (genExpAcc f) alloc exprs
     lenMinusOne = (length allocs) - 1
@@ -243,7 +253,7 @@ genInlineFn f alloc@(varMap, n, l, aasm) (ExpFnCall fnName exprs _) dest ret =
   in
     (varMap', n', l', aasm'' ++ [newAasm])
 
-genRealFn f alloc@(varMap, n, l, aasm) (ExpFnCall fnName exprs _) dest =
+genRealFn f alloc@(varMap, n, l, aasm) (IRExpFnCall fnName exprs) dest =
   let
     allocs = scanl (genExpAcc f) alloc exprs
     lenMinusOne = (length allocs) - 1

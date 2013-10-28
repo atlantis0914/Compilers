@@ -9,7 +9,7 @@ import Compile.Types.Ctrl
 
 import qualified Data.Map as Map
 
-type Ctrl = PolyCtrl Stmt
+type Ctrl = PolyCtrl Stmt Expr
 
 data FnList = FnList ![GDecl] SourcePos
 

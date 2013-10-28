@@ -50,8 +50,8 @@ replaceAsm coloring aasm = error (" replaceAsm EXHAUSTED" ++ show aasm)
 replaceAssigns :: ColoringMap -> ALoc -> ALoc
 replaceAssigns coloring (APtr base index scale) =
   let
-    index' = case index of None -> None
-                           Just locs -> replaceAssigns coloring index
+    index' = case index of Nothing -> Nothing
+                           Just loc -> Just (replaceAssigns coloring loc)
   in
     APtr (replaceAssigns coloring base) index' scale
 replaceAssigns coloring (ATemp i) =
@@ -62,4 +62,5 @@ replaceAssigns coloring (ATemp i) =
 replaceAssigns coloring loc = loc
 
 replaceArgs :: ColoringMap -> AVal -> AVal
-replaceArgs coloring (ALoc loc) = ALoc $ replaceAssigns loc
+replaceArgs coloring (ALoc loc) = ALoc $ replaceAssigns coloring loc
+replaceArgs coloring aval = aval

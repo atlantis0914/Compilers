@@ -24,18 +24,18 @@ type StructMap = Map.Map String SDefn -- Map from struct name -> struct definiti
 type Context = (IdentMap, FnMap, DeclMap, TDMap, StructMap, Bool)
 
 -- Each function should be type checked independently 
-checkTypeFnList :: FnList -> (Bool, [GDecl], FnMap)
+checkTypeFnList :: FnList -> (Bool, [GDecl], FnMap, StructMap)
 checkTypeFnList (FnList gdecls pos) = 
   let
     initFnMap = foldl genFnMap (Map.empty) gdecls
     gdecls' = foldl (squash initFnMap) [] gdecls
-    (_, endMap, _, _, _, valid) = foldl checkGDecl (Map.empty, initFnMap, Map.singleton "main" True, baseIdentTypeMap, Map.empty, True) gdecls'
+    (_, endMap, _, _, sMap, valid) = foldl checkGDecl (Map.empty, initFnMap, Map.singleton "main" True, baseIdentTypeMap, Map.empty, True) gdecls'
   in  
     case (Map.lookup "main" endMap) of
       Nothing -> error ("Error : int main() must be declared.")
       Just (argTypes, retType, lDecl, defn, _) -> (
         if ((length argTypes == 0) && (retType == IInt)) 
-          then (valid, gdecls', (removeDecls endMap))
+          then (valid, gdecls', (removeDecls endMap), sMap)
           else error ("Error : int main() must be the right type"))
 
 removeDecls m = Map.filter (\(_,_,isLib,defn,_) -> (isLib || defn)) m

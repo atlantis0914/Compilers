@@ -39,6 +39,13 @@ spillAAsm spillArgs aasm@(AAsm {aAssign = [AReg i], aOp = BitwiseNot, aArgs = [a
                     aArgs = [ALoc $ ASpill]}]
         else [aasm]
 
+spillAAsm spillArgs aasm@(AAsm {aAssign = [AIndex], aOp = op, aArgs = [arg]}) =
+  let
+    arg' = if spillArgs then spillVal arg
+                        else arg
+  in
+    [AAsm {aAssign = [AIndex], aOp = op, aArgs = [arg']}]
+
 spillAAsm spillArgs aasm@(AAsm {aAssign = [AReg i], aOp = op, aArgs = [arg]}) =
   let
     arg' = if spillArgs then spillVal arg
@@ -57,45 +64,20 @@ spillAAsm spillArgs aasm@(AAsm {aAssign = [AReg i], aOp = op, aArgs = [arg]}) =
                   aArgs = [ALoc $ ASpill]}]
       else [aasm']
 
-spillAAsm spillArgs aasm@(AAsm {aAssign = [APtr (AReg i) None off], aOp = op, aArgs = [arg]}) =
+spillAAsm spillArgs aasm@(AAsm {aAssign = [APtr (AReg i) index off], aOp = op, aArgs = [arg]}) =
   let
     arg' = if spillArgs then spillVal arg
                         else arg
-    aasm' = AAsm {aAssign = [APtr (AReg i) None off], aOp = op, aArgs = [arg']}
+    aasm' = AAsm {aAssign = [APtr (AReg i) index off], aOp = op, aArgs = [arg']}
   in
     if i > max_color_num
       then [AAsm {aAssign = [ASpill],
                   aOp = Nop,
                   aArgs = [ALoc $ AMem $ i - max_color_num]},
-            AAsm {aAssign = [APtr ASpill None off],
+            AAsm {aAssign = [APtr ASpill index off],
                   aOp = op,
                   aArgs = [arg']}]
       else [aasm']
-
-spillAAsm spillArgs aasm@(AAsm {aAssign = [APtr (AReg i) (Just (AReg j)) off], aOp = op, aArgs = [arg]}) =
-  let
-    arg' = if spillArgs then spillVal arg
-                        else arg
-    aasm' = AAsm {aAssign = [APtr (AReg i) (Just $ AReg j) off], aOp = op, aArgs = [arg']}
-    base = if i > max_color_num then ASpill
-                                else AReg i
-    spillBase = if i > max_color_num
-      then [AAsm {aAssign = [ASpill],
-                  aOp = Nop,
-                  aArgs = [ALoc $ AMem $ i - max_color_num]}]
-      else []
-    index = if j > max_color_num then Just AIndex
-                                 else Just $ AReg i
-    spillIndex = if j > max_color_num
-      then [AAsm {aAssign = [AIndex],
-                  aOp = Nop,
-                  aArgs = [ALoc $ AMem $ j - max_color_num]}]
-      else []
-  in
-    spillBase ++ spillIndex ++
-      [AAsm {aAssign = [APtr base index off],
-             aOp = op,
-             aArgs = [arg']}]
 
 spillAAsm _ aasm@(ACtrl (AIf (ALoc (AReg i)) label)) =
   if i > max_color_num
@@ -113,3 +95,4 @@ spillAAsm _ aasm@(AFnCall n loc locs lives) =
     locs' = map spillLoc locs
   in
     [AFnCall n loc' locs' lives]
+spillAAsm _ aasm = error ("SPILLASM " ++ show aasm)

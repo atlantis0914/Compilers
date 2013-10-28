@@ -8,6 +8,8 @@ import Compile.Types.AbstractAssembly as X
 import Compile.Types.Ops as X
 import Compile.Types.PreElabAST as X
 import Compile.Types.PostElabAST as X
+import Compile.Types.IRAST as X
+import Compile.Types.IRExpr as X
 import Compile.Types.Expr as X
 import Compile.Types.Ctrl as X
 import Compile.Types.Graph as X

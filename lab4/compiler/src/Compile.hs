@@ -26,6 +26,7 @@ import Compile.Frontend.RenameFn
 -- import Compile.Frontend.ConstantFold
 import Compile.Frontend.RemVoid
 import Compile.IR.GenIR
+import Compile.IR.GenIRAST
 import Compile.Frontend.Minimize
 import Compile.Backend.CodeGen
 
@@ -54,7 +55,7 @@ compile job = do
     (ParseFnList fnList pos) <- parseFnList $ jobSource job -- ParseFnList
     elabFnList <- liftEIO $ elaborate (ParseFnList (header ++ fnList) pos) -- FnList
     let numFns = length fnList
-    let (postCheckFnList, fnMap) = checkFnList elabFnList
+    let (postCheckFnList, fnMap, structMap) = checkFnList elabFnList
     let elabFnList'@(FnList tList _) = renameFn postCheckFnList
     let elabFnList'' = (if ((length tList) > 50) -- Hacky shit to pass ../tests1/cobalt-return03.l3
                           then elabFnList'
@@ -63,9 +64,10 @@ compile job = do
                            then elabFnList''
                            else elabFnList'')
     minFnList <- liftEIO $ minimize elabFnList'''
+    let irFnList = toIRFnList fnMap structMap minFnList
     if jobOutFormat job == C0
       then writer (jobOut job) minFnList
-      else let asm = fnListCodeGen minFnList fnMap in
+      else let asm = fnListCodeGen irFnList fnMap in
               if jobOutFormat job == Asm
                  then stringWriter (jobOut job) asm
                  else do writer asmFile minFnList

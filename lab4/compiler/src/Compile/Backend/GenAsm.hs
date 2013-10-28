@@ -204,8 +204,8 @@ alocToString (AReg i) =
   safeLookup i regMap "SHIT"
 alocToString (AMem i) =  (show ((i - 1) * 8)) ++ "(%rsp)"
 alocToString (ATemp i) = error "There's still an temp!"
-alocToString (APtr base None offset) = show offset ++ "(" ++ alocToString base ++ ")"
-alocToString (APtr base (Just index) offset) = "(" ++ alocToString base ++ "," ++ alocToString index ++ ")"
+alocToString (APtr base Nothing offset) = show offset ++ "(" ++ alocToString base ++ ")"
+alocToString (APtr base (Just index) scale) = "(" ++ alocToString base ++ "," ++ alocToString index ++ "," ++ show scale ++ ")"
 alocToString loc = error (show loc ++ " EXHAUSTED")
 
 divModToString :: ALoc -> AVal -> Op -> String
