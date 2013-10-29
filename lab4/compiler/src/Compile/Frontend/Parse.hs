@@ -190,7 +190,9 @@ typedecl = do
 
 lvalue :: C0Parser PLValue
 lvalue = 
-  (parens lvalue) 
+  (do l <- (parens lvalue) 
+      l' <- complexLValue l
+      return l')
   <|>
   (do b <- basicLValue
       b' <- complexLValue b
