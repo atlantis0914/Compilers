@@ -116,7 +116,7 @@ genCtrl fm (m,i,l,aasm) (Assert e _) = let
   (_,i',el,eAasm) = genExp fm (m,i+1,l,[]) e (ATemp i)
   abortLabel = el
   endLabel = el + 1
-  abortAasm = [ACtrl $ ALabel abortLabel] ++ [AFnCall "_abort" (ATemp i) [] []]
+  abortAasm = [ACtrl $ ALabel abortLabel] ++ [AFnCall "abort" (ATemp i) [] []]
   outputAasm =
     eAasm
     ++ [ACtrl $ AIf (ALoc $ ATemp i) endLabel,
