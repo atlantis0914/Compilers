@@ -7,8 +7,8 @@ import Compile.Frontend.ElaborateExpr
 -- assigns with an operation into a Nop assign with the ident as an lvalue. 
 expandPStatements :: [ParseStmt] -> [ParseStmt]
 expandPStatements stmts = concatMap expandPStatement stmts
-  where expandPStatement s@(PAsgn lval Nothing e b p) = [PAsgn lval Nothing (elabExpr e) b p]
-        expandPStatement s@(PAsgn lval (Just op) e b p) = [PAsgn lval Nothing (ExpBinOp op (lValToExpr lval) (elabExpr e) p) b p]
+  where expandPStatement s@(PAsgn lval Nothing e b p) = [PAsgn (expandLVal lval) Nothing (elabExpr e) b p]
+        expandPStatement s@(PAsgn lval (Just op) e b p) = [PAsgn (expandLVal lval) Nothing (ExpBinOp op (lValToExpr (expandLVal lval)) (elabExpr e) p) b p]
         expandPStatement s@(PCtrl c) = [PCtrl $ expandCtrl c]
         expandPStatement s@(PBlock stmts) = let
           innerExpanded = expandPStatements stmts
@@ -34,3 +34,11 @@ expandPStatements stmts = concatMap expandPStatement stmts
         expandCtrl (Return (Just e) p) = Return (Just (elabExpr e)) p
         expandCtrl (Assert e p) = Assert (elabExpr e) p
         expandCtrl (Return Nothing p) = Return Nothing p
+
+        expandLVal l@(PLId _ _) = l
+        expandLVal (PLMem mem p) = PLMem (expandLMem mem) p 
+  
+        expandLMem (Dot lv s p) = Dot (expandLVal lv) s p
+        expandLMem (Arrow lv s p) = Arrow (expandLVal lv) s p
+        expandLMem (Star lv p) = Star (expandLVal lv) p
+        expandLMem (ArrayRef lv e p) = ArrayRef (expandLVal lv) (elabExpr e) p

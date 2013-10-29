@@ -43,7 +43,13 @@ elabExpr' e@(ExpBinMem FDereference e1 e2 p) = ExpBinMem Select (ExpUnMem PDeref
 elabExpr' e@(ExpBinMem o e1 e2 p) = checkExpr e $ ExpBinMem o (elabExpr e1)
                                                               (elabExpr e2) p
 elabExpr' e@(ExpUnMem o e1 p) = checkExpr e $ ExpUnMem o (elabExpr e1) p 
-elabExpr' e = checkExpr e $ e
+elabExpr' e@(ExpBool _ _) = checkExpr e $ e
+elabExpr' e@(ExpInt _ _ _) = checkExpr e $ e
+elabExpr' e@(ExpNull _) = checkExpr e $ e
+elabExpr' e@(ExpAlloc _ _) = checkExpr e $ e 
+elabExpr' e@(Ident _ _) = e
+elabExpr' e = error ("fucked up on e : " ++ show e)
+-- elabExpr' e = checkExpr e $ e
 
 checkExpr (ExpInt n p Dec) = 
   assert  (n <= (2^31)) (show n ++ " too large at " ++ show p)
@@ -66,6 +72,7 @@ foldExpr e@(ExpRelOp op e1 e2 p) = (ExpRelOp op (foldExpr e1) (foldExpr e2) p)
 foldExpr e@(ExpPolyEq op e1 e2 p) = (ExpPolyEq op (foldExpr e1) (foldExpr e2) p)
 foldExpr e@(ExpLogOp op e1 e2 p) = (ExpLogOp op (foldExpr e1) (foldExpr e2) p)
 foldExpr e@(ExpTernary e1 e2 e3 p) = (ExpTernary (foldExpr e1) (foldExpr e2) (foldExpr e3) p)
+foldExpr e@(ExpUnOp BitwiseNot (ExpUnOp BitwiseNot e' p2) p1) = foldExpr e'
 foldExpr e@(ExpUnOp op e1 p) = (ExpUnOp op (foldExpr e1) p)
 foldExpr e@(ExpFnCall n eList p) = (ExpFnCall n (map foldExpr eList) p)
 foldExpr e = e
@@ -87,7 +94,23 @@ elabExprTD td e@(ExpTernary e1 e2 e3 p) = ExpTernary (elabExprTD td e1)
                                                      (elabExprTD td e3) p
 elabExprTD td e@(ExpFnCall fnName expList p) = ExpFnCall fnName
                                                        (map (elabExprTD td) expList) p
-elabExprTD td e@(ExpBinMem FDereference e1 e2 p) = error ("shouldn't have fDereference in elabExprTD")
+elabExprTD td e@(ExpBinMem FDereference e1 e2 p) = error ("shouldn't have fDereference in elabExprTD : " ++ show p)
+elabExprTD td e@(ExpBinMem Select e1 e2 p) = selectOrder (elabExprTD td e1) (elabExprTD td e2) p
 elabExprTD td e@(ExpBinMem o e1 e2 p) = ExpBinMem o (elabExprTD td e1) (elabExprTD td e2) p
 elabExprTD td e@(ExpUnMem o e1 p) = checkExpr e $ ExpUnMem o (elabExprTD td e1) p 
 elabExprTD _ e = e
+
+
+selectOrder e1 e2@(Ident _ _) p = ExpBinMem Select e1 e2 p
+selectOrder e1 e2 p = 
+  case (extractLIdent e2 Nothing) of
+    (id, Nothing) -> ExpBinMem Select e1 id p
+    (id, Just (o, e2')) -> ExpBinMem o (ExpBinMem Select e1 id p) e2' p
+  where
+
+extractLIdent e@(Ident _ _) save = (e,save)
+extractLIdent (ExpBinMem o e1 e2 p) save = 
+  case save of 
+    Nothing -> extractLIdent e1 (Just (o, e2))
+    _ -> extractLIdent e1 save
+  
