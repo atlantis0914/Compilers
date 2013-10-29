@@ -27,9 +27,10 @@ generateStructDefn tDefs sDefs (ParseSDefn name fields p)  =
     alignment = if (length sortedAlignments == 0)
                   then 0
                   else snd $ last sortedAlignments 
-    structTypeMap = Map.fromList (map (\(t,s) -> (s,t)) fields)
+    fields' = map (\(t,s) -> (simplifyTypeDefdType tDefs t, s)) fields
+    structTypeMap = Map.fromList (map (\(t,s) -> (s,t)) fields')
   in
-    SDefn name fields structTypeMap fieldOffsets alignment totalSize  p
+    SDefn name fields' structTypeMap fieldOffsets alignment totalSize  p
 
 genFieldOffsets :: StructDefs -> [((IdentType, String), Int)] -> StructOffsets 
                                    -> Int -> (StructOffsets, Int)
