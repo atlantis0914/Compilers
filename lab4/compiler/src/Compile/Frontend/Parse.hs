@@ -53,7 +53,7 @@ gdecl :: C0Parser PGDecl
 gdecl = 
   typedefParser
   <|>
-  structParser
+  (Text.Parsec.try structParser)
   <|>
   declDefnParser 
 
@@ -198,27 +198,29 @@ lvalue =
 
 -- The non-left-recursive bits
 complexLValue :: PLValue -> C0Parser PLValue
-complexLValue lval =
-  (do e <- brackets expr
-      pos <- getPosition
-      c <- complexLValue (PLMem (ArrayRef lval e pos) pos)
-      return c)
-  <|>
-  (do (Text.Parsec.try (do char '-' -- Maybe I feel just a little bad. 
-                           char '>'))
-      i <- identifier
-      pos <- getPosition
-      c <- complexLValue (PLMem (Arrow lval i pos) pos)
-      return c)
-  <|>
-  (do char '.'
-      i <- identifier 
-      pos <- getPosition
-      c <- complexLValue (PLMem (Dot lval i pos) pos)
-      return c)
-  <|>
-  (do return lval)
-  <?> "complexLValue"
+complexLValue lval = 
+  do whiteSpace
+     (do e <- brackets expr
+         pos <- getPosition
+         c <- complexLValue (PLMem (ArrayRef lval e pos) pos)
+         return c)
+     <|>
+     (do (Text.Parsec.try (do char '-' -- Maybe I feel just a little bad. 
+                              char '>'))
+         whiteSpace
+         i <- identifier
+         pos <- getPosition
+         c <- complexLValue (PLMem (Arrow lval i pos) pos)
+         return c)
+     <|>
+     (do char '.'
+         i <- identifier 
+         pos <- getPosition
+         c <- complexLValue (PLMem (Dot lval i pos) pos)
+         return c)
+     <|>
+     (do return lval)
+     <?> "complexLValue"
 
 -- The left recursive bit 
 basicLValue :: C0Parser PLValue
