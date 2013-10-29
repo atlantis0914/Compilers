@@ -172,12 +172,12 @@ elabParseCtrl id td (Return (Just e) pos) = Return (Just $ elabExprTD td e) pos
 elabParseBlock' :: IdMap -> TypeDefs -> Stmt -> [ParseStmt] -> Stmt 
 elabParseBlock' _ _ curblock [] = curblock
 elabParseBlock' id td (Block curStmts) ((decl@(PDecl s t pos Nothing)):xs) = 
-  case (isDeclMultExpr id decl) of 
+  case (isDeclMultExpr id decl 0) of 
     Nothing -> Block $ curStmts ++ [Decl {declName = checkTDIdent td s,
                                           declTyp = elaborateTDIdentType td t,
                                           declPos = pos,
                                           declScope = elabParseBlock' (Map.insert (checkTDIdent td s) "poop" id) td (Block []) xs}]
-    Just e -> elabParseBlock' id td (Block (curStmts ++ [Expr e])) xs
+    Just e -> Trace.trace ("Got back : " ++ show e) $ elabParseBlock' id td (Block (curStmts ++ [Expr e])) xs
                       
 elabParseBlock' id td (Block curStmts) (x:xs) = elabParseBlock' id td (Block (curStmts ++ [elabParseStmt id td x])) xs
 
@@ -186,12 +186,18 @@ elabParseBlock' id td (Block curStmts) (x:xs) = elabParseBlock' id td (Block (cu
 -- with Ptr(TypeDef name) and a declname. If both names are in scope as idents,
 -- we treat this as an expr parse, and convert it out to a decl inside of 
 -- elabParseBlock'
-isDeclMultExpr :: IdMap -> ParseStmt -> Maybe Expr
-isDeclMultExpr td (PDecl e2 (IPtr (ITypeDef e1)) p _) = 
-  case (Map.lookup e1 td, Map.lookup e2 td) of 
-    (Just _, Just _) -> Just (ExpBinOp Mul (Ident e1 p) (Ident e2 p) p)
+isDeclMultExpr :: IdMap -> ParseStmt -> Int -> Maybe Expr
+isDeclMultExpr td (PDecl declName (IPtr (ITypeDef leftIdent)) p _) nDRef = 
+  case (Map.lookup leftIdent td, Map.lookup declName td) of 
+    (Just _, Just _) -> Just (ExpBinOp Mul (Ident leftIdent p) (wrapDeRef (nDRef) p $ Ident declName p) p)
     (_, _) -> Nothing
-isDeclMultExpr td decl =  Nothing 
+
+isDeclMultExpr td (PDecl name (IPtr inner) p l) nDRef = isDeclMultExpr td (PDecl name inner p l) (nDRef + 1)
+isDeclMultExpr td decl _ =  Nothing 
+
+-- Wraps the expr in a * num many times 
+wrapDeRef 0 p e = e
+wrapDeRef n p e = ExpUnMem PDereference (wrapDeRef (n-1) p e) p
 
 plValToLVal :: PLValue -> LValue 
 plValToLVal lval@(PLId s p) = LExpr (lValToExpr lval) p
