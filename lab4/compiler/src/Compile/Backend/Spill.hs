@@ -12,6 +12,9 @@ spillVal arg =
     ALoc (AReg i) -> if i > max_color_num
                        then ALoc $ AMem $ i - max_color_num
                        else arg
+    ALoc (APtr (AReg i) Nothing off) -> if i > max_color_num
+                                        then ALoc $ AMem $ i - max_color_num
+                                        else arg
     _ -> arg
 
 spillLoc :: ALoc -> ALoc
@@ -74,9 +77,12 @@ spillAAsm spillArgs aasm@(AAsm {aAssign = [APtr (AReg i) index off], aOp = op, a
       then [AAsm {aAssign = [ASpill],
                   aOp = Nop,
                   aArgs = [ALoc $ AMem $ i - max_color_num]},
+            AAsm {aAssign = [AIndex],
+                  aOp = op,
+                  aArgs = [arg']},
             AAsm {aAssign = [APtr ASpill index off],
                   aOp = op,
-                  aArgs = [arg']}]
+                  aArgs = [ALoc AIndex]}]
       else [aasm']
 
 spillAAsm _ aasm@(ACtrl (AIf (ALoc (AReg i)) label)) =
