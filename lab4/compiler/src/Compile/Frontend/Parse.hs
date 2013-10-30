@@ -37,10 +37,8 @@ parseFnList file = do
     Left e  -> throwError (show e)
     Right a -> return a
 
--- Currently, the state is simply just to check for parens in an lValue. 
--- This can easily be expanded - somehow I waited until l4 to take advantage
--- of a stateful parser. 
 type MState = Bool
+
 
 type C0Parser = Parsec ByteString MState
 
@@ -215,6 +213,7 @@ basicLValue = (do
   <|>
   (do 
     char '*'
+    whiteSpace
     pos <- getPosition
     l <- lvalue
     return $ PLMem (Star l pos) pos)
@@ -263,7 +262,8 @@ asgn = do
   (dest, op) <- lValWithPostOp
   case (op) of 
     (Just o) -> (do return $ PAsgn dest (Nothing) (expForPostOp dest o pos) False pos)
-    _ -> (do op   <- asnOp
+    _ -> (do whiteSpace
+             op   <- asnOp
              e    <- expr
              return $ PAsgn dest op e False pos)
    <?> "asgn"
@@ -284,7 +284,8 @@ lValWithPostOp =
       (do o <- postOp
           return (lv, Just o))
        <|>
-       (do return (lv, Nothing)))
+       (do lv' <- complexLValue lv 
+           return (lv', Nothing)))
    <|>
    (do lv <- lvalue
        case (lv) of
@@ -441,7 +442,8 @@ simp =
 -- this and handle it in elaboration. 
 stExpr :: C0Parser ParseStmt
 stExpr = do 
-  e <- expr 
+  whiteSpace
+  e <- expr
   return $ PExpr e
 
 stmt :: C0Parser ParseStmt
