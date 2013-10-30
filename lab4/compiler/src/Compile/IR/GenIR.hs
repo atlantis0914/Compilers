@@ -94,12 +94,12 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect (IRExpDereference base _) _ _ 
   in (m'',i'',l'',aasm'' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript (IRIdent s) index t size) op e) = let
-  dest' = ATemp $ i
-  (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) e dest'
-  dest = AIndex
+  dest = ATemp i
   temp = APtr (ATemp $ m' Map.! s) (Just dest) size
-  (m'',i'',l'',aasm'') = genExp fm (m',i',l',aasm') index dest
-  c = [AAsm [temp] Nop [ALoc $ dest']]
+  (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) index dest
+  dest' = ATemp $ i'
+  (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') e dest'
+  c = [AAsm [AIndex] Nop [ALoc $ dest], AAsm [temp] Nop [ALoc $ dest']]
   in (m'',i'',l'', aasm'' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRBlock stmts) = let
@@ -244,9 +244,9 @@ genExp f alloc@(varMap,n,l,aasm) e@(IRExpFieldSelect (IRExpDereference expr _) f
   in (varMap',n'+1,l',aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) Nothing size]])
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpArraySubscript expr1 expr2 t o) dest = let
-  (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr1 (ATemp n)
-  (varMap'',n'',l'',aasm'') = genExp f (varMap',n'+1,l',aasm') expr2 (AIndex)
-  in (varMap'',n'',l'',aasm'' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) (Just AIndex) o]])
+  (varMap',n',l',aasm') = genExp f (varMap,n,l,aasm) expr2 (AIndex)
+  (varMap'',n'',l'',aasm'') = genExp f (varMap',n'+1,l',aasm') expr1 (ATemp n')
+  in (varMap'',n'',l'',aasm'' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n') (Just AIndex) o]])
 
 genExp f alloc e dest = error (show e ++ " EXHAUST genExp")
 
