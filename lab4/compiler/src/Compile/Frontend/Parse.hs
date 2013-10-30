@@ -11,6 +11,7 @@
 module Compile.Frontend.Parse where
 
 import Control.Monad.Error
+import Control.Monad.State
 import Data.ByteString as BS
 import Compile.Types
 
@@ -32,12 +33,16 @@ import qualified Debug.Trace as Trace
 parseFnList :: FilePath -> ErrorT String IO ParseFnList
 parseFnList file = do
   code <- liftIOE $ BS.readFile file
-  case parse topLevelParser file code of
+  case runP topLevelParser False file code of
     Left e  -> throwError (show e)
     Right a -> return a
 
--- C0Parser AST is actually ParsecT ByteString () Identity AST
-type C0Parser = Parsec ByteString ()
+-- Currently, the state is simply just to check for parens in an lValue. 
+-- This can easily be expanded - somehow I waited until l4 to take advantage
+-- of a stateful parser. 
+type MState = Bool
+
+type C0Parser = Parsec ByteString MState
 
 -- Produces a list of ParseFns. These are either decls or definitions
 topLevelParser :: C0Parser ParseFnList
@@ -190,6 +195,7 @@ typedecl = do
    (do return $ PDecl ident idType pos Nothing)
   <?> "typedecl"
 
+
 lvalue :: C0Parser PLValue
 lvalue = 
   (do l <- (parens lvalue) 
@@ -199,6 +205,19 @@ lvalue =
   (do b <- basicLValue
       b' <- complexLValue b
       return b')
+
+-- The left recursive bit 
+basicLValue :: C0Parser PLValue
+basicLValue = (do 
+  pos <- getPosition
+  name <- identifier
+  return $ PLId name pos)
+  <|>
+  (do 
+    char '*'
+    pos <- getPosition
+    l <- lvalue
+    return $ PLMem (Star l pos) pos)
 
 -- The non-left-recursive bits
 complexLValue :: PLValue -> C0Parser PLValue
@@ -226,34 +245,55 @@ complexLValue lval =
      (do return lval)
      <?> "complexLValue"
 
--- The left recursive bit 
-basicLValue :: C0Parser PLValue
-basicLValue = (do 
-  pos <- getPosition
-  name <- identifier
-  return $ PLId name pos)
-  <|>
-  (do 
-    char '*'
-    pos <- getPosition
-    l <- lvalue
-    return $ PLMem (Star l pos) pos)
-
+-- asgn :: C0Parser ParseStmt
+-- asgn = do
+--   pos  <- getPosition
+--   dest <- lvalue
+--   (do op   <- asnOp
+--       e    <- expr
+--       return $ PAsgn dest op e False pos)
+--    <|>
+--    (do op <- postOp
+--        return $ PAsgn dest (Nothing) (expForPostOp dest op pos) False pos)
+--    <?> "asgn"
+--
 asgn :: C0Parser ParseStmt
 asgn = do
   pos  <- getPosition
-  dest <- lvalue
-  (do op   <- asnOp
-      e    <- expr
-      return $ PAsgn dest op e False pos)
-   <|>
-   (do op <- postOp
-       return $ PAsgn dest (Nothing) (expForPostOp dest op pos) False pos)
+  (dest, op) <- lValWithPostOp
+  case (op) of 
+    (Just o) -> (do return $ PAsgn dest (Nothing) (expForPostOp dest o pos) False pos)
+    _ -> (do op   <- asnOp
+             e    <- expr
+             return $ PAsgn dest op e False pos)
    <?> "asgn"
+
+
 
 expForPostOp :: PLValue -> Op -> SourcePos -> Expr 
 expForPostOp i Incr p = ExpBinOp Add (lValToExpr i) (ExpInt 1 p Dec) p
 expForPostOp i Decr p = ExpBinOp Sub (lValToExpr i) (ExpInt 1 p Dec) p
+
+isLValueSimple :: PLValue -> Bool
+isLValueSimple (PLId s _) = True
+isLValueSimple (PLMem _ _) = False
+
+lValWithPostOp :: C0Parser (PLValue, Maybe Op)
+lValWithPostOp = 
+  (do lv <- parens lvalue
+      (do o <- postOp
+          return (lv, Just o))
+       <|>
+       (do return (lv, Nothing)))
+   <|>
+   (do lv <- lvalue
+       case (lv) of
+         (PLMem (Star _ _) _) -> return (lv, Nothing)
+         _ -> (do o <- postOp
+                  return (lv, Just o))
+               <|>
+               (do return (lv, Nothing)))
+
 
 postOp :: C0Parser Op
 postOp = do
@@ -542,7 +582,7 @@ hex = do char '0'
          return n
 
 -- Language Definition used by parser generating functions in Tok
-c0Def :: GenLanguageDef ByteString () Identity
+c0Def :: GenLanguageDef ByteString MState Identity 
 c0Def = LanguageDef
    {commentStart    = string "/*",
     commentStartStr = "/*",
@@ -564,7 +604,7 @@ c0Def = LanguageDef
                        "&&", "||", "!=", ">=", "<="],
     caseSensitive   = True}
 
-c0Tokens :: Tok.GenTokenParser ByteString () Identity
+c0Tokens :: Tok.GenTokenParser ByteString MState Identity
 c0Tokens = Tok.makeTokenParser c0Def
 
 -- Identifies that the string is reserved, and returns the updated monad
@@ -624,7 +664,7 @@ semiSep    = Tok.semiSep    c0Tokens
 brackets   :: C0Parser a -> C0Parser a
 brackets   = Tok.brackets c0Tokens
 
-opTable :: [[Operator ByteString () Identity Expr]]
+opTable :: [[Operator ByteString MState Identity Expr]]
 opTable = [[binary "->" (ExpBinMem FDereference) AssocLeft,
             binary "." (ExpBinMem Select) AssocLeft,
             postfix (brackets expr) (ExpBinMem PArrayRef)],
@@ -658,17 +698,16 @@ opTable = [[binary "->" (ExpBinMem FDereference) AssocLeft,
 We used a few helper functions which are in the Parsec documentation of Text.Parsec.Expr, located at \url{http://hackage.haskell.org/packages/archive/parsec/3.1.0/doc/html/Text-Parsec-Expr.html} The functions ``binary'', ``prefix'', and ``postfix'' were taken from there and are not my work, however they are used because rewriting them would look much the same, and they do not provide any core functionality, just make my code easier to read. Type signatures and location annotations were added by me.
 -}
 
-binary :: String -> (a -> a -> SourcePos -> a) -> Assoc -> Operator ByteString () Identity a
+binary :: String -> (a -> a -> SourcePos -> a) -> Assoc -> Operator ByteString MState Identity a
 binary  name f = Infix $ do pos <- getPosition
                             reservedOp name
                             return $ \x y -> f x y pos
 
-prefix :: String -> (a -> SourcePos -> a) -> Operator ByteString () Identity a
+prefix :: String -> (a -> SourcePos -> a) -> Operator ByteString MState Identity a
 prefix  name f = Prefix $ do pos <- getPosition
                              reservedOp name
                              return $ \x -> f x pos
 
--- postfix :: String -> (a -> SourcePos -> a) -> Operator ByteString () Identity a
 postfix p f = Postfix $ do pos <- getPosition
                            e <- p
                            return $ \x -> f x e pos
