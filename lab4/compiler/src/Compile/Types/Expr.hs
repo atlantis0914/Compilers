@@ -5,6 +5,8 @@ import Text.ParserCombinators.Parsec.Pos (SourcePos)
 import Compile.Types.Ops
 import Compile.Types.IdentType
 
+import Control.DeepSeq
+
 data Base = Dec
           | Hex deriving Show
 
@@ -55,3 +57,20 @@ instance Show Expr where
   show (ExpBinMem op e1 e2 _) = "(" ++ show e1 ++ ")" ++ show op ++ "(" ++ show e2 ++ ")"
   show (ExpUnMem op e1 _) = "(" ++ show op ++ "(" ++ show e1 ++ ")" ++ ")"
   show (ExpMem mem _) = "(" ++ show mem ++ ")"
+
+instance NFData Expr where 
+  rnf (ExpInt n _ _) = n `deepseq` ()
+  rnf (ExpBool b _) = b `deepseq` ()
+  rnf (ExpBinOp op e1 e2 _) = e1 `deepseq` e2 `deepseq` ()
+  rnf (ExpRelOp op e1 e2 _) = e1 `deepseq` e2 `deepseq` ()
+  rnf (ExpPolyEq op e1 e2 _) = e1 `deepseq` e2 `deepseq` ()
+  rnf (ExpLogOp op e1 e2 _) = e1 `deepseq` e2 `deepseq` ()
+  rnf (Ident i _) = i `deepseq` ()
+  rnf (ExpUnOp op e _) = e `deepseq` ()
+  rnf (ExpTernary e1 e2 e3 _) = e1 `deepseq` e2 `deepseq` e3 `deepseq` ()
+  rnf (ExpFnCall n elist _) = n `deepseq` elist `deepseq` ()
+  rnf (ExpNull _) = ()
+  rnf (ExpAlloc i _) = i `deepseq` ()
+  rnf (ExpAllocArray i e _) = i `deepseq` e `deepseq` ()
+  rnf (ExpBinMem op e1 e2 _) = e1 `deepseq` e2 `deepseq` ()
+  rnf (ExpUnMem op e1 _) = e1 `deepseq` ()

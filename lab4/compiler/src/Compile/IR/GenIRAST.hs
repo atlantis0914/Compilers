@@ -101,10 +101,10 @@ toIRExpr' fm sm tm (ExpFnCall s elist _) = (IRExpFnCall s elist' , typ)
     elist' = map (fst . toIRExpr' fm sm tm) elist
     (_,typ,_,_,_) = fm Map.! (getName s)
 
-toIRExpr' fm sm tm (ExpBinMem Select e1 (Ident field _) _) = 
+toIRExpr' fm sm tm (ExpBinMem Select e1 e2@(Ident field _) _) = 
   case (toIRExpr' fm sm tm e1) of
     (e1', IStruct (ITypeDef sName)) -> (IRExpFieldSelect e1' field typ offset, typ)
-    _ -> error ("Didn't get struct return type in Select case of toIRExpr'")
+    (e1', typ) -> error ("Didn't get struct return type in Select case of toIRExpr : " ++ show e1 ++ " and " ++ show e2 ++ "got " ++ show e1' ++ " and typ = " ++ show typ)
   where 
     (e1',e1Typ) = toIRExpr' fm sm tm e1
     typ = getTypeForStructField sm e1Typ field
@@ -145,4 +145,4 @@ getSizeForTypeMap sm (IStruct (ITypeDef name)) =
   case (Map.lookup name sm) of
     Just (SDefn {structSize = size}) -> size
     _ -> error ("Struct " ++ name ++ " must be declared before use")
-getSizeForTypeMap sm (ITypeDef name) = error ("Trying to get size for a type-def. Should be gone by GneIRAST")
+getSizeForTypeMap sm (ITypeDef name) = error ("Trying to get size for a type-def. Should be gone by GneIRAST : " ++ name)

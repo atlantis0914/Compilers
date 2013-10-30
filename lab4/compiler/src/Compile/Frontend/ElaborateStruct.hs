@@ -79,9 +79,9 @@ checkFieldType sMap (typ, name) =
   case (typ) of 
     (IStruct (ITypeDef sName)) -> 
       if (Map.member sName sMap)  
-        then Trace.trace ("name : " ++ name ++ " is member") $ (typ, name)
+        then (typ, name)
         else error ("Using concrete name of : " ++ name ++ " in struct defn before define")
-    _ -> Trace.trace (" name is not struct" ++ name) $ (typ, name)
+    _ -> (typ, name)
 
 
 -- Called when parsing a Decl - this isn't a declaration so we just insert 

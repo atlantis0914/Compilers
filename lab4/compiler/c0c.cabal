@@ -10,7 +10,7 @@ Cabal-version:       >= 1.8
 Executable c0c
   Main-Is:        c0c.hs
   Hs-Source-Dirs: src
-  Build-Depends:  base, filepath, mtl, process, bytestring, syb, containers, split
+  Build-Depends:  base, filepath, mtl, process, bytestring, syb, containers, split, deepseq
   Extensions:     DeriveDataTypeable, RankNTypes, FlexibleInstances,
                   MultiParamTypeClasses, FlexibleContexts
 

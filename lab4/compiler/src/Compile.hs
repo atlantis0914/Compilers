@@ -16,6 +16,7 @@ import System.Process
 import System.Exit
 
 import Control.Monad.Error
+import Control.DeepSeq
 
 import Compile.Types
 import Compile.Frontend.Parse
@@ -55,7 +56,7 @@ compile job = do
     (ParseFnList fnList pos) <- parseFnList $ jobSource job -- ParseFnList
     elabFnList <- liftEIO $ elaborate (ParseFnList (header ++ fnList) pos) -- FnList
     let numFns = length fnList
-    let (postCheckFnList, fnMap, structMap) = checkFnList elabFnList
+    let (postCheckFnList, fnMap, structMap) = elabFnList `deepseq` checkFnList elabFnList
     let elabFnList'@(FnList tList _) = renameFn postCheckFnList
     let elabFnList'' = (if ((length tList) > 50) -- Hacky shit to pass ../tests1/cobalt-return03.l3
                           then elabFnList'
@@ -65,6 +66,7 @@ compile job = do
                            else elabFnList'')
     minFnList <- liftEIO $ minimize elabFnList'''
     let irFnList = toIRFnList fnMap structMap minFnList
+--    writer (jobOut job) elabFnList
     if jobOutFormat job == C0
       then writer (jobOut job) minFnList
       else let asm = fnListCodeGen irFnList fnMap in

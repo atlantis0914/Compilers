@@ -57,12 +57,14 @@ isValidConcreteType :: TypeDefs -> Map.Map String SDefn -> IdentType -> Bool
 isValidConcreteType td sm IInt = True
 isValidConcreteType td sm IBool = True
 isValidConcreteType td sm IVoid = False
+isValidConcreteType td sm (IPtr (IStruct (ITypeDef _))) = True
+isValidConcreteType td sm (IArray (IStruct (ITypeDef _))) = True
 isValidConcreteType td sm (IPtr i) = isValidConcreteType td sm i
 isValidConcreteType td sm (IArray i) = isValidConcreteType td sm i
-isValidConcreteType td sm s@(IStruct (ITypeDef name)) = 
-  case (Map.lookup name sm) of 
-    Just simp -> True
-    Nothing -> False
+isValidConcreteType td sm s@(IStruct (ITypeDef name)) = False
+--  case (Map.lookup name sm) of 
+--    Just simp -> True
+--    Nothing -> False
 isValidConcreteType td sm s = 
   case (Map.lookup s td) of 
     Just simp -> isValidConcreteType td sm simp

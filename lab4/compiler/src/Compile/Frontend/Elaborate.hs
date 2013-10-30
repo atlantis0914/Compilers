@@ -4,6 +4,8 @@ import Compile.Types
 import qualified Data.Map as Map
 import qualified Debug.Trace as Trace
 
+import Control.DeepSeq
+
 import Compile.Util.IdentTypeUtil
 
 import Compile.Frontend.Expand
@@ -21,7 +23,6 @@ elaborate (ParseFnList decls pos) =
     (elab, tMap, sMap) = foldl elaboratePGDecls ([], baseIdentTypeMap, Map.empty) decls
   in
     elab `seq` tMap `seq` sMap `seq` Right $ FnList elab pos
-
 
 elaboratePGDecls :: ([GDecl], TypeDefs, StructDefs) -> PGDecl -> ([GDecl], TypeDefs, StructDefs)
 elaboratePGDecls (convDecls, typeMap, sMap) pgdecl@(PTypeDef _ _ _) =
@@ -148,10 +149,12 @@ elabParseStmt _ td (PAsgn s a e b p) = Asgn (LExpr (elabExprTD td eLval) p)
   where 
     (LExpr eLval _) = plValToLVal s
 elabParseStmt _ td (PDecl s t p Nothing) =  -- TODO : Get rid of this. 
-  Decl {declName = checkTDIdent td s, 
-        declTyp = elaborateTDIdentType td t, 
-        declPos = p, 
-        declScope = SNop}
+  newType `seq` Decl {declName = checkTDIdent td s, 
+                      declTyp = elaborateTDIdentType td t, 
+                      declPos = p, 
+                      declScope = SNop}
+  where
+    newType = elaborateTDIdentType td t
 elabParseStmt id td (PDecl s t p (Just _)) = error "shouldnt get here just"
 elabParseStmt id td (PCtrl c) = Ctrl (elabParseCtrl id td c)
 elabParseStmt id td (PExpr e) = Expr (elabExprTD td e)
@@ -177,7 +180,7 @@ elabParseBlock' id td (Block curStmts) ((decl@(PDecl s t pos Nothing)):xs) =
                                           declTyp = elaborateTDIdentType td t,
                                           declPos = pos,
                                           declScope = elabParseBlock' (Map.insert (checkTDIdent td s) "poop" id) td (Block []) xs}]
-    Just e -> Trace.trace ("Got back : " ++ show e) $ elabParseBlock' id td (Block (curStmts ++ [Expr e])) xs
+    Just e -> elabParseBlock' id td (Block (curStmts ++ [Expr e])) xs
                       
 elabParseBlock' id td (Block curStmts) (x:xs) = elabParseBlock' id td (Block (curStmts ++ [elabParseStmt id td x])) xs
 

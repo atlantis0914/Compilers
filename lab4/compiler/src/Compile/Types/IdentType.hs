@@ -1,6 +1,7 @@
 module Compile.Types.IdentType where
 
 import qualified Data.Map as Map
+import Control.DeepSeq
 
 data IdentType = IAny
                | IInt
@@ -28,3 +29,13 @@ instance Show IdentType where
   show (IArray i) = show i ++ "[]"
   show (IStruct i) = "struct (" ++ show i ++ ")"
   show (ITypeDef s) = s
+
+instance NFData IdentType where
+  rnf IAny = ()
+  rnf IInt = ()
+  rnf IBool = ()
+  rnf IVoid = ()
+  rnf (IPtr i) = i `deepseq` ()
+  rnf (IArray i) = i `deepseq` () 
+  rnf (IStruct i) = i `deepseq` ()
+  rnf (ITypeDef s) = s `deepseq` ()

@@ -2,6 +2,8 @@ module Compile.Types.PostElabAST where
 
 import Text.ParserCombinators.Parsec.Pos (SourcePos)
 
+import Control.DeepSeq
+
 import Compile.Types.Ops
 import Compile.Types.IdentType
 import Compile.Types.Expr
@@ -117,4 +119,50 @@ instance Show Ctrl where
   show (While e1 s1 _) = "while(" ++ show e1 ++ ")\n" ++ show s1
   show (Return Nothing _) = "return " ++ ";"
   show (Return (Just e1) _) = "return " ++ show e1 ++ ";"
+
+instance NFData FnList where
+  rnf (FnList decls _) = decls `deepseq` ()
+
+instance NFData GDecl where
+  rnf (GFDecl fdecl _) = fdecl `deepseq` ()
+  rnf (GFDefn fdefn _) = fdefn `deepseq` ()
+  rnf (GSDecl sdecl _) = sdecl `deepseq` ()
+  rnf (GSDefn sdefn _) = sdefn `deepseq` ()
+  rnf (GTypeDef t1 t2 _) = t1 `deepseq` t2 `deepseq` ()
+
+instance NFData FDefn where 
+  rnf (FDefn name args argTypes retType body _) = 
+    name `deepseq` args `deepseq` argTypes `deepseq` retType `deepseq` body `deepseq` ()
+
+instance NFData FDecl where 
+  rnf (FDecl name args argTypes retType isLib _) = 
+    name `deepseq` args `deepseq` argTypes `deepseq` retType `deepseq` isLib `deepseq` ()
+
+instance NFData SDecl where
+  rnf (SDecl n _) = n `deepseq` ()
+
+instance NFData SDefn where 
+  rnf (SDefn name fields fieldTypes offsets align size _) = 
+    name `deepseq` fields `deepseq` fieldTypes `deepseq` offsets `deepseq` align `deepseq` size `deepseq` ()
+
+instance NFData AST where 
+  rnf (AST stmt _) = stmt `deepseq` ()
+
+instance NFData Stmt where
+  rnf (Asgn lv as e b _) = lv `deepseq` e `deepseq` b `deepseq` ()
+  rnf (Decl name typ _ scp) = name `deepseq` typ `deepseq` scp `deepseq` ()
+  rnf (Ctrl c) = c `deepseq` ()
+  rnf (Block stmts) = stmts `deepseq` ()
+  rnf (Expr e) = e `deepseq` ()
+  rnf (SNop) = ()
+
+instance NFData LValue where 
+  rnf (LExpr e _) = e `deepseq` ()
+
+instance NFData Ctrl where 
+  rnf (If e s1 s2 _) = e `deepseq` s1 `deepseq` s2 `deepseq` ()
+  rnf (While e s1 _) = e `deepseq` s1 `deepseq` ()
+  rnf (Assert e _) = e `deepseq` ()
+  rnf (Return me _) = me `deepseq` ()
+
 

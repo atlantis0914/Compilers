@@ -388,7 +388,7 @@ checkExprType' f ctx@(_,_,_,_,sMap,_) (ExpBinMem Select e1 e2 p) =
       if (not $ Map.member name sMap) 
         then error ("Struct " ++ name ++ " mus be defined before use at " ++ show p)
         else typeForField (sMap Map.! name) field
-    _ -> Nothing 
+    (t1,t2) -> error ("Have (t1,t2) = " ++ show t1 ++ " and " ++ show t2)
 
 checkExprType' f ctx (ExpBinMem PArrayRef e1 e2 p) = 
   case (checkExprType f ctx e1, checkExprType f ctx e2) of 

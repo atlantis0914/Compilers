@@ -99,4 +99,3 @@ renameFnName rm f =
   case (Map.lookup f rm) of 
     Just t -> t
     Nothing -> error ("Error couldn't find it") 
--- renameFnName rm f = Trace.trace (" naming : " ++ (rm Map.! f)) $ rm Map.! f

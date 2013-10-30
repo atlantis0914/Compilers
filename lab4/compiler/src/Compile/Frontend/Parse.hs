@@ -127,7 +127,9 @@ getComplexType (t) = do
       t <- getComplexType (IPtr t)
       return t)
    <|>
-   (do reserved "[]"
+   (do char '['
+       whiteSpace
+       char ']'
        t <- getComplexType (IArray t)
        return t)
    <|>
