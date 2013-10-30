@@ -225,11 +225,12 @@ genExp f (varMap,n,l,aasm) (IRExpNull) dest =
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpAlloc t s) dest =
   genRealFn f alloc (IRExpFnCall "calloc" [IRExpInt (fromIntegral s) Dec,
-                                                 IRExpInt 1 Dec]) dest
+                                           IRExpInt 1 Dec]) dest
 
-genExp f alloc@(varMap,n,l,aasm) e@(IRExpAllocArray t expr s) dest =
-  genRealFn f alloc (IRExpFnCall "calloc" [IRExpInt (fromIntegral s) Dec,
+genExp f alloc@(varMap,n,l,aasm) e@(IRExpAllocArray t expr s) dest = let
+  (varMap',n',l',aasm') = genRealFn f alloc (IRExpFnCall "calloc" [IRExpInt (fromIntegral s) Dec,
                                            expr]) dest
+  in (varMap',n',l',aasm' ++ [AAsm [AIndex] Nop [ALoc $ APtr dest Nothing 0]])
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpDereference (IRIdent s) t) dest =
   (varMap,n,l,aasm ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp $ varMap Map.! s) Nothing 0]])

@@ -188,10 +188,8 @@ alocByteToString (AMem i) =
   alocToString (AMem i)
 
 alocToQString :: ALoc -> String
-alocToQString (AReg i) =
-  safeLookup i regQMap "SHIT"
-alocToQString (AMem i) =
-  alocToString (AMem i)
+alocToQString (AReg i) = safeLookup i regQMap "SHIT"
+alocToQString (AMem i) = alocToString (AMem i)
 
 alocToString :: ALoc -> String
 alocToString (AArg i) =
