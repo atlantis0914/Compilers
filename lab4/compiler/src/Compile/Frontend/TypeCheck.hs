@@ -95,9 +95,10 @@ genFnMap fnMap (GFDefn (FDefn {fnName = name,
       if (isDeclared || oldLib) 
         -- One error message, two birds
         then error ("Error : function " ++ name ++ " redefined or library at " ++ show pos)
-        else if ((lTypesEqual argTypes oldArgs) && (oldRet == retType)) 
-               then (Map.insert name (argTypes, retType, oldLib, True, shouldInline body) fnMap)
-               else error ("Error : function " ++ name ++ " typed incorrectly at " ++ show pos)
+        else 
+          if ((lTypesEqual argTypes oldArgs) && (oldRet == retType)) 
+            then (Map.insert name (argTypes, retType, oldLib, True, shouldInline body) fnMap)
+            else error ("Error : function " ++ name ++ " typed incorrectly at " ++ show pos)
     Nothing -> (Map.insert name (argTypes, retType, False, True, shouldInline body) fnMap)
 
 checkGDecl :: Context -> GDecl -> Context
@@ -118,8 +119,9 @@ checkGDecl (ctx@(map, fnMap, dMap, tdMap, sMap, valid))
                            gdeclIsLibrary = isLibrary}) pos) = 
   let
     argValid = validateFnArgs tdMap sMap argTypes name
+    retValid = isSmallType returnType
   in
-    (map, fnMap, Map.insert name True dMap, tdMap, sMap, valid && argValid)
+    (map, fnMap, Map.insert name True dMap, tdMap, sMap, valid && argValid && retValid)
 
 -- Do nothing for struct decls. They are not useful in the least. 
 checkGDecl ctx (GSDecl _ _) = ctx
@@ -134,12 +136,14 @@ checkGDecl (ctx@(_, fnMap, dMap, tdMap, sMap, valid))
       gdef@(GFDefn (FDefn {fnArgs = args,
                            fnName = name,
                            fnArgTypes = argTypes,
+                           fnReturnType = retType, 
                            fnBody = body}) pos) = 
   let
     idMap = generateIdentContext args argTypes 
     argValid = validateFnArgs tdMap sMap argTypes name
+    retValid = isSmallType retType
   in 
-    checkASTTypes name (idMap, fnMap, Map.insert name True dMap, tdMap, sMap, valid && argValid) body 
+    checkASTTypes name (idMap, fnMap, Map.insert name True dMap, tdMap, sMap, valid && argValid && retValid) body 
 
 generateIdentContext :: [String] -> [IdentType] -> Map.Map String IdentType
 generateIdentContext args argTypes = 
@@ -165,18 +169,18 @@ checkStmtValid fName (context@(map, fnMap, dMap, tdMap, sMap, valid)) (Asgn lval
     if correctType then (map, fnMap, dMap, tdMap, sMap, valid && correctType)
                    else error ("Error: Wrong type in assignment to " ++ (show lval) ++ " at " ++ show pos ++ " Expr: " ++ show expr ++ " got " ++ (show maybeType) ++ " and " ++ (show maybeExprType))
 
-checkStmtValid fName (context@(map, fnMap, dMap, tdMap, sMap, valid)) (Decl declName declType pos asgn) =
+checkStmtValid fName (context@(map, fnMap, dMap, tdMap, sMap, valid)) (Decl declName declType pos scope) =
   let
     validType = (not $ declType == IVoid) && (isValidConcreteType tdMap sMap declType)
-    hasSmallType = isSmallType declType 
+    hasSmallType = isSmallType declType
     exists = Maybe.isNothing (Map.lookup declName map)
     map' = Map.insert declName declType map
-    (_,_,_,_,_,checkAsgn) = checkStmtValid fName (map', fnMap, dMap, tdMap, sMap, valid) asgn
+    (_,_,_,_,_,checkAsgn) = checkStmtValid fName (map', fnMap, dMap, tdMap, sMap, valid) scope
   in
     if exists then (map', fnMap, dMap, tdMap, sMap, validType && valid && exists && checkAsgn && hasSmallType)
               else error ("Error: " ++ declName ++ " doesn't exist at " ++ show pos)
 
-checkStmtValid fName (context@(map, fnMap, dMap, tdMap, sMap, valid)) (Ctrl (Assert expr pos)) = 
+checkStmtValid fName (context@(map, fnMap, dMap, tdMap, sMap, valid)) (Ctrl (Assert expr pos)) =
   let
     typeT = checkExprType fName context expr
     valid' = case checkExprType fName context expr of Nothing -> False
@@ -291,7 +295,6 @@ typeEq fName context expr1 expr2 expect =
       (Just t1, Just t2) -> coerceAny t1 t2 
 
 
-
 maybeIsSmallType :: Maybe IdentType -> Maybe IdentType
 maybeIsSmallType (Just t1) = if (isSmallType t1) then (Just t1)
                                                  else Nothing 
@@ -340,7 +343,10 @@ checkExprType f ctx@(map, fnMap, dMap, tdMap, sMap, valid) e =
 checkExprType' :: String -> Context -> Expr -> Maybe IdentType
 checkExprType' _ _ (ExpInt _ _ _) = Just IInt
 checkExprType' _ _ (ExpBool _ _) = Just IBool
-checkExprType' _ _ (ExpAlloc t _) = Just $ IPtr t
+checkExprType' _ (_,_,_,tdMap,sMap,_) (ExpAlloc t p) = 
+  if (concreteTypeExists tdMap sMap t) 
+    then Just $ IPtr t
+    else error ("Didn't get a valid concrete type at : " ++ show p)
 checkExprType' f ctx (ExpAllocArray t e _) = 
   case (checkExprType' f ctx e) of 
     Just IInt -> Just (IArray t)

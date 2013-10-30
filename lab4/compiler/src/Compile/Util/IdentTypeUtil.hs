@@ -30,8 +30,8 @@ isSmallType IInt = True
 isSmallType IBool = True
 isSmallType (IPtr _) = True
 isSmallType (IArray _) = True
-isSmallType IVoid = False
-isSmallType (IStruct _) = False
+isSmallType IVoid = True
+isSmallType (IStruct _) = error ("Struct type not small")
 isSmallType (ITypeDef _) = error ("Why do you have typedefs when calling isSmallType bro")
 
 -- Unwraps ptrs and arrays to get at a 'concrete' type. Note
@@ -69,6 +69,25 @@ isValidConcreteType td sm s =
   case (Map.lookup s td) of 
     Just simp -> isValidConcreteType td sm simp
     Nothing -> False
+
+concreteTypeExists :: TypeDefs -> Map.Map String SDefn -> IdentType -> Bool
+concreteTypeExists td sm IInt = True
+concreteTypeExists td sm IBool = True
+concreteTypeExists td sm IVoid = False
+concreteTypeExists td sm (IPtr (IStruct (ITypeDef _))) = True
+concreteTypeExists td sm (IArray (IStruct (ITypeDef _))) = True
+concreteTypeExists td sm (IPtr i) = concreteTypeExists td sm i
+concreteTypeExists td sm (IArray i) = concreteTypeExists td sm i
+concreteTypeExists td sm s@(IStruct (ITypeDef name)) = 
+  case (Map.lookup name sm) of 
+    Just simp -> True
+    Nothing -> False
+concreteTypeExists td sm s = 
+  case (Map.lookup s td) of 
+    Just simp -> concreteTypeExists td sm simp
+    Nothing -> False
+
+
 
 getSizeForType :: TypeDefs -> Map.Map String (Maybe SDefn) -> IdentType -> Int
 getSizeForType _ _ IInt = 4
