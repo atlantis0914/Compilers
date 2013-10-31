@@ -24,9 +24,10 @@ genFIR :: IRFnList -> FnMap -> [FnAAsm]
 genFIR (IRFnList gdecls) fnMap =
   let
     initIR = Maybe.mapMaybe (genFnAAsm fnMap) gdecls
-    coalIR = coalesceLabel initIR
+--    coalIR = coalesceLabel initIR
   in
-    coalIR
+    initIR
+--    coalIR
 
 addArg :: Alloc -> String -> Alloc
 addArg alloc@(varMap, n, l, aasms) arg =
@@ -93,21 +94,15 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpDereference b t) _ e) = let
   c = [AAsm [APtr b' Nothing 0] Nop [ALoc dest]]
   in (m'',i'',l'',aasm'' ++ c)
 
-genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect (IRExpDereference base _) _ _ size) op e) = let
-  dest = ATemp $ i
-  (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) e dest
-  dest' = ATemp $ i'
-  (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') base dest'
-  c = [AAsm [APtr dest' Nothing size] Nop [ALoc dest]]
-  in (m'',i'',l'',aasm'' ++ c)
-
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect base _ _ size) op e) = let
   dest = ATemp $ i
   (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) e dest
   dest' = ATemp $ i'
   (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') base dest'
-  c = [AAsm [APtr dest' Nothing size] Nop [ALoc dest]]
-  in (m'',i'',l'',aasm'' ++ c)
+  (tNum, ind, off) = getPtrFromLastOp aasm''
+  c = [AAsm [APtr (ATemp tNum) ind (off + size)] Nop [ALoc dest]]
+  in Trace.trace ("Last op is : " ++ show (last aasm'') ++ " and " ++ 
+      " produced " ++ show c) $ (m'',i'',l'',aasm'' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript (IRIdent s) index t size) op e) = let
   dest = ATemp i
@@ -265,13 +260,18 @@ genExp f alloc@(varMap,n,l,aasm) e@(IRExpDereference expr _) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr (ATemp n)
   in (varMap',n'+1,l',aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) Nothing 0]])
 
-genExp f alloc@(varMap,n,l,aasm) e@(IRExpFieldSelect (IRExpDereference expr _) field t size) dest = let
-  (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr (ATemp n)
-  in (varMap',n',l',aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) Nothing size]])
-
+--genExp f alloc@(varMap,n,l,aasm) e@(IRExpFieldSelect (IRExpDereference expr _) field t size) dest = let
+--  (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr (ATemp n)
+--  in (varMap',n',l',aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) Nothing size]])
+--
+--genExp f alloc@(varMap,n,l,aasm) e@(IRExpFieldSelect base field t size) dest = let
+--  (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) base (ATemp n)
+--  in (varMap',n',l',aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) Nothing size]])
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpFieldSelect base field t size) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) base (ATemp n)
-  in (varMap',n',l',aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) Nothing size]])
+  (tNum, ind, off) = getPtrFromLastOp aasm'
+  c = [AAsm [dest] Nop [ALoc $ APtr (ATemp tNum) ind (off + size)]]
+  in (varMap',n'+1,l',aasm' ++ c)
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpArraySubscript expr1 expr2 t o) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr1 (ATemp n)
@@ -328,3 +328,13 @@ genBinOp f (varMap,n,l,aasm) (op,e1,e2) dest = let
   c  = [AAsm [dest] op [ALoc $ ATemp n, ALoc $ ATemp $ n1]]
   -- Questionable variable indexing here
   in (varMap, n2, l'', aasm ++ aasm' ++ aasm'' ++ c)
+
+getPtrFromLastOp aasm = 
+  case (last aasm) of
+    aasm@(AAsm _ _ [src]) -> extractPtrAasm aasm src
+    p -> error ("Got something fucked up in getPtrFromLastOp")
+
+extractPtrAasm _ (ALoc (APtr (ATemp i) Nothing off)) = (i, Nothing, off)
+extractPtrAasm _ (ALoc (APtr (ATemp i) (Just AIndex) off)) = (i, Just AIndex, off)
+extractPtrAasm aasm s = error ("Got s instead of expected expr in extractPtrAasm : " ++ show aasm)
+
