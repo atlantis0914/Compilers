@@ -21,7 +21,6 @@ import Compile.Backend.GenAsm
 import Compile.Backend.Spill
 import Compile.Backend.BackendUtils
 import Compile.Backend.Registers
-import Compile.Backend.Squash
 
 import qualified Debug.Trace as Trace
 
@@ -38,11 +37,8 @@ fnListCodeGen fnList fnMap =
     asm = concatMap fnAAsmCodeGen fnAasms
     epilogue = concat ["error:\n", "  movw $1, %ax\n", "  movw $0, %bx\n", "  divw %bx\n"]
     asm' = asm ++ epilogue
-    asm'' = if ((length asm') < 10000)
-              then squash (asm')
-              else asm'
   in
-    asm''
+    asm'
 
 genFnProlugues :: Int -> Int -> String
 genFnProlugues numArgs m =
@@ -109,7 +105,7 @@ codeGen aasmList fnName numArgs = let
               asm = genAsm coloredAasmList (fnName, m'', numArgs, m)
             in
               if (debugFlag)
-                then (genDebug aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList asm, m'', m)
+                then (genDebug aasmList liveVars interference_graph simp_ordering coloring twoOpAasmList coloredAasmList (concat asm), m'', m)
                 else (concat asm, m'', m))
 
 genDebug aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAasm asm =
@@ -121,7 +117,7 @@ genDebug aasm liveVars (Graph gmap) simp_ord coloring twoOpAasm coloredAasm asm 
     simp_ord' = listShow simp_ord
     twoOpAasm' = listShow twoOpAasm
     coloredAasm' = listShow coloredAasm
-    asm' = listShow asm
+    asm' = asm
   in
     "Aasm\n" ++ aasm' ++ "\n\n" ++
     "LiveVars\n" ++ liveVars' ++ "\n\n" ++
