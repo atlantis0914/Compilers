@@ -98,7 +98,7 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect (IRExpDereference base _) _ _ 
   (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) e dest
   dest' = ATemp $ i'
   (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') base dest'
-  c = [AAsm [APtr dest' Nothing size] Nop [ALoc dest]] 
+  c = [AAsm [APtr dest' Nothing size] Nop [ALoc dest]]
   in (m'',i'',l'',aasm'' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect base _ _ size) op e) = let
@@ -106,7 +106,7 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect base _ _ size) op e) = let
   (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) e dest
   dest' = ATemp $ i'
   (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') base dest'
-  c = [AAsm [APtr dest' Nothing size] Nop [ALoc dest]] 
+  c = [AAsm [APtr dest' Nothing size] Nop [ALoc dest]]
   in (m'',i'',l'',aasm'' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript (IRIdent s) index t size) op e) = let
