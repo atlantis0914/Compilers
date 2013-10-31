@@ -144,7 +144,7 @@ getSizeForTypeMap _ IInt = 4
 getSizeForTypeMap _ IBool = 4
 getSizeForTypeMap _ IVoid = error ("Trying to get size for void")
 getSizeForTypeMap _ (IPtr _) = 8
-getSizeForTypeMap _ (IArray _) = 10
+getSizeForTypeMap _ (IArray _) = 8
 getSizeForTypeMap sm (IStruct (ITypeDef name)) = 
   case (Map.lookup name sm) of
     Just (SDefn {structSize = size}) -> size
