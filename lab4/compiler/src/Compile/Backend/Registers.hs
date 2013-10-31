@@ -88,3 +88,6 @@ max_color_num = 10
 
 index_reg_num :: Int
 index_reg_num = 12
+
+util_reg_num :: Int
+util_reg_num = 13

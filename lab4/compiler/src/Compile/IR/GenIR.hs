@@ -85,7 +85,23 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpDereference (IRIdent s) t) _ e) = let
   c = [AAsm [temp] Nop [ALoc dest]]
   in (m,i',l',aasm' ++ c)
 
+genStmt fm (m,i,l,aasm) (IRAsgn (IRExpDereference b t) _ e) = let
+  b' = ATemp i
+  (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) b b'
+  dest = ATemp i'
+  (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') e dest
+  c = [AAsm [APtr b' Nothing 0] Nop [ALoc dest]]
+  in (m'',i'',l'',aasm'' ++ c)
+
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect (IRExpDereference base _) _ _ size) op e) = let
+  dest = ATemp $ i
+  (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) e dest
+  dest' = ATemp $ i'
+  (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') base dest'
+  c = [AAsm [APtr dest' Nothing size] Nop [ALoc dest]] 
+  in (m'',i'',l'',aasm'' ++ c)
+
+genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect base _ _ size) op e) = let
   dest = ATemp $ i
   (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) e dest
   dest' = ATemp $ i'
@@ -95,12 +111,22 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect (IRExpDereference base _) _ _ 
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript (IRIdent s) index t size) op e) = let
   dest = ATemp i
-  temp = APtr (ATemp $ m' Map.! s) (Just dest) size
+  temp = APtr (ATemp $ m' Map.! s) (Just AIndex) size
   (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) index dest
   dest' = ATemp $ i'
   (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') e dest'
   c = [AAsm [AIndex] Nop [ALoc $ dest], AAsm [temp] Nop [ALoc $ dest']]
   in (m'',i'',l'', aasm'' ++ c)
+
+genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript base index t size) op e) = let
+  base' = ATemp i
+  (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) base base'
+  index' = AIndex
+  (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') index index'
+  val = ATemp $ i''
+  (m''',i''',l''',aasm''') = genExp fm (m'',i''+1,l'',aasm'') e val
+  c = [AAsm [AIndex] Nop [ALoc $ index'], AAsm [APtr base' (Just index') size] Nop [ALoc $ val]]
+  in (m''',i''',l''', aasm''' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRBlock stmts) = let
   -- Keep scope alive, start new AAsm list, concat when finished.
@@ -241,6 +267,10 @@ genExp f alloc@(varMap,n,l,aasm) e@(IRExpDereference expr _) dest = let
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpFieldSelect (IRExpDereference expr _) field t size) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr (ATemp n)
+  in (varMap',n'+1,l',aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) Nothing size]])
+
+genExp f alloc@(varMap,n,l,aasm) e@(IRExpFieldSelect base field t size) dest = let
+  (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) base (ATemp n)
   in (varMap',n'+1,l',aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) Nothing size]])
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpArraySubscript expr1 expr2 t o) dest = let

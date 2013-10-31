@@ -27,6 +27,7 @@ data AVal = ALoc ALoc
 data ALoc = AReg Int
           | ATemp Int
           | ASpill
+          | AUtil
           | AIndex
           | AArg Int
           | APtr ALoc (Maybe ALoc) Int

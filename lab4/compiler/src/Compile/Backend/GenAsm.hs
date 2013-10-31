@@ -192,14 +192,11 @@ alocToQString (AReg i) = safeLookup i regQMap "SHIT"
 alocToQString (AMem i) = alocToString (AMem i)
 
 alocToString :: ALoc -> String
-alocToString (AArg i) =
-  (show ((i + 2) * 8)) ++ "(%rbp)"
-alocToString ASpill =
-  safeLookup spill_reg_num regMap "SPILL"
-alocToString AIndex =
-  safeLookup index_reg_num regMap "INDEX"
-alocToString (AReg i) =
-  safeLookup i regMap "SHIT"
+alocToString (AArg i) = (show ((i + 2) * 8)) ++ "(%rbp)"
+alocToString ASpill = safeLookup spill_reg_num regMap "SPILL"
+alocToString AIndex = safeLookup index_reg_num regMap "INDEX"
+alocToString AUtil = safeLookup util_reg_num regMap "INDEX"
+alocToString (AReg i) = safeLookup i regMap "SHIT"
 alocToString (AMem i) =  (show ((i - 1) * 8)) ++ "(%rsp)"
 alocToString (ATemp i) = error "There's still an temp!"
 alocToString (APtr base Nothing offset) = show offset ++ "(" ++ alocToString base ++ ")"
