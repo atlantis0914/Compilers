@@ -72,6 +72,10 @@ toIRExpr' fm sm tm (Ident s _) =
 toIRExpr' fm sm tm (ExpNull _) = (IRExpNull, IPtr IAny)
 -- We return a (typ *) after the alloc. 
 toIRExpr' fm sm tm (ExpAlloc typ _) = (IRExpAlloc typ $ getSizeForTypeMap sm typ, IPtr typ)
+toIRExpr' fm sm tm (ExpAllocArray typ@(IStruct _) e _) = (IRExpAllocArray typ e' structArraySize, IPtr typ)
+  where 
+    structArraySize = 8
+    (e',_) = toIRExpr' fm sm tm e
 toIRExpr' fm sm tm (ExpAllocArray typ e _) = (IRExpAllocArray typ e' (getSizeForTypeMap sm typ), IPtr typ)
   where 
     (e',_) = toIRExpr' fm sm tm e
@@ -140,7 +144,7 @@ getSizeForTypeMap _ IInt = 4
 getSizeForTypeMap _ IBool = 4
 getSizeForTypeMap _ IVoid = error ("Trying to get size for void")
 getSizeForTypeMap _ (IPtr _) = 8
-getSizeForTypeMap _ (IArray _) = 8
+getSizeForTypeMap _ (IArray _) = 10
 getSizeForTypeMap sm (IStruct (ITypeDef name)) = 
   case (Map.lookup name sm) of
     Just (SDefn {structSize = size}) -> size
