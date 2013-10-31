@@ -13,12 +13,12 @@ trim :: String -> String
 trim = f . f
    where f = reverse . dropWhile isSpace
 
-squash l = 
-  let
-    l' = Split.splitOn ("\n") l
-    (_, l'') = foldl squashList ("", []) l'
-  in
-    foldl (++) "" (map (\x -> x ++ "\n") l'')
+squash l = l
+--  let
+--    l' = Split.splitOn ("\n") l
+--    (_, l'') = foldl squashList ("", []) l'
+--  in
+--    foldl (++) "" (map (\x -> x ++ "\n") l'')
 
 squashList :: (String, [String]) -> String -> (String, [String])
 squashList (pS, prev) cur = 
