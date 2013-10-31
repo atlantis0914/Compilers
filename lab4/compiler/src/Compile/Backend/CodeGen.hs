@@ -29,7 +29,7 @@ type Alloc = (Map.Map String Int, Int)
 
 debugFlag = False
 
-maxTempsBeforeSpilling = 400
+maxTempsBeforeSpilling = 40000000
 
 -- fnListCodeGen :: FnList -> FnMap -> String
 fnListCodeGen fnList fnMap =
@@ -68,8 +68,7 @@ fnAAsmCodeGen (AAFDefn aasms fnName numArgs) =
                then "  subq $" ++ show size ++ ", %rsp\n"
                else ""
 
-fnAAsmCodeGen (AAFDecl fnName) =
-  ""
+fnAAsmCodeGen (AAFDecl fnName) = ""
 
 maxColor :: ColoringMap -> Int
 maxColor coloring = Map.foldl maxColor' 0 coloring
