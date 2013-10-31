@@ -72,12 +72,13 @@ toIRExpr' fm sm tm (Ident s _) =
 toIRExpr' fm sm tm (ExpNull _) = (IRExpNull, IPtr IAny)
 -- We return a (typ *) after the alloc. 
 toIRExpr' fm sm tm (ExpAlloc typ _) = (IRExpAlloc typ $ getSizeForTypeMap sm typ, IPtr typ)
-toIRExpr' fm sm tm (ExpAllocArray typ@(IStruct _) e _) = (IRExpAllocArray typ e' structArraySize, IPtr typ)
+--toIRExpr' fm sm tm (ExpAllocArray typ@(IStruct _) e _) = (IRExpAllocArray typ e' structArraySize, IPtr typ)
+--  where 
+--    structArraySize = 8
+--    (e',_) = toIRExpr' fm sm tm e
+toIRExpr' fm sm tm (ExpAllocArray typ e _) = (IRExpAllocArray typ e' size, IPtr typ)
   where 
-    structArraySize = 8
-    (e',_) = toIRExpr' fm sm tm e
-toIRExpr' fm sm tm (ExpAllocArray typ e _) = (IRExpAllocArray typ e' (getSizeForTypeMap sm typ), IPtr typ)
-  where 
+    size = (getSizeForArrayRef typ)
     (e',_) = toIRExpr' fm sm tm e
 toIRExpr' fm sm tm (ExpBinOp o e1 e2 _) = (IRExpBinOp o e1' e2', t1)
   where 
@@ -116,7 +117,7 @@ toIRExpr' fm sm tm (ExpBinMem Select e1 e2@(Ident field _) _) =
 
 toIRExpr' fm sm tm (ExpBinMem PArrayRef e1 e2 _) = 
   case (toIRExpr' fm sm tm e1) of 
-    (e1', IArray arrayTyp) -> (IRExpArraySubscript e1' e2' arrayTyp (getSizeForTypeMap sm arrayTyp), arrayTyp)
+    (e1', IArray arrayTyp) -> (IRExpArraySubscript e1' e2' arrayTyp (getSizeForArrayRef arrayTyp), arrayTyp)
     _ -> error ("Didn't get array return type in PArrayRef case of toIRExpr'")
   where
     (e2', _) = toIRExpr' fm sm tm e2
@@ -150,3 +151,12 @@ getSizeForTypeMap sm (IStruct (ITypeDef name)) =
     Just (SDefn {structSize = size}) -> size
     _ -> error ("Struct " ++ name ++ " must be declared before use")
 getSizeForTypeMap sm (ITypeDef name) = error ("Trying to get size for a type-def. Should be gone by GneIRAST : " ++ name)
+
+getSizeForArrayRef :: IdentType -> Int
+getSizeForArrayRef IInt = 4
+getSizeForArrayRef IBool = 4
+getSizeForArrayRef IVoid = error ("Trying to get size for void")
+getSizeForArrayRef (IPtr _) = 8
+getSizeForArrayRef (IArray _) = 8
+getSizeForArrayRef (IStruct (ITypeDef _)) = 8
+getSizeForArrayRef (ITypeDef name) = error ("Trying to get size for a type-def. Should be gone by GneIRAST : " ++ name)
