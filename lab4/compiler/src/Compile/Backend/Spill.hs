@@ -17,13 +17,6 @@ spillVal arg =
                                         else arg
     _ -> arg
 
-spilledPtr arg =
-  case arg of
-    ALoc (APtr (AReg i) Nothing off) -> if i > max_color_num
-                                        then True
-                                        else False
-    _ -> False
-
 spillLoc :: ALoc -> ALoc
 spillLoc loc =
   case loc of (AReg i) -> if i > max_color_num
@@ -94,10 +87,8 @@ spillAAsm spillArgs (AAsm [APtr (AReg i) index off] op [arg]) =
   let
     arg' = if spillArgs then spillVal arg
                         else arg
-    aasm' = if spilledPtr arg && spillArgs
-              then [AAsm [ASpill] op [arg'],
-                    AAsm [APtr (AReg i) index off] op [ALoc ASpill]]
-              else [AAsm [APtr (AReg i) index off] op [arg']]
+    aasm' = [AAsm [ASpill] op [arg'],
+             AAsm [APtr (AReg i) index off] op [ALoc ASpill]]
   in
     if i > max_color_num
       then [AAsm [ASpill] Nop [ALoc $ AMem $ i - max_color_num],

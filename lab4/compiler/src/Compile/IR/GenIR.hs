@@ -121,11 +121,11 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript (IRIdent s) index t size) o
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript base index t size) op e) = let
   base' = ATemp i
   (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) base base'
-  index' = AIndex
+  index' = ATemp i'
   (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') index index'
   val = ATemp $ i''
   (m''',i''',l''',aasm''') = genExp fm (m'',i''+1,l'',aasm'') e val
-  c = [AAsm [AIndex] Nop [ALoc $ index'], AAsm [APtr base' (Just index') size] Nop [ALoc $ val]]
+  c = [AAsm [AIndex] Nop [ALoc $ index'], AAsm [APtr base' (Just AIndex) size] Nop [ALoc $ val]]
   in (m''',i''',l''', aasm''' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRBlock stmts) = let

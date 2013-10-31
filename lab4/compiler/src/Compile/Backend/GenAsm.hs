@@ -190,6 +190,9 @@ alocByteToString (AMem i) =
 alocToQString :: ALoc -> String
 alocToQString (AReg i) = safeLookup i regQMap "SHIT"
 alocToQString (AMem i) = alocToString (AMem i)
+alocToQString (APtr base _ _) = alocToQString base
+alocToQString AIndex = safeLookup index_reg_num regQMap "SHIT"
+alocToQString AUtil = safeLookup util_reg_num regQMap "SHIT"
 
 alocToString :: ALoc -> String
 alocToString (AArg i) = (show ((i + 2) * 8)) ++ "(%rbp)"
