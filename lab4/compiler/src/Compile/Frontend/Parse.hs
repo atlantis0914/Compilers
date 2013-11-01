@@ -28,17 +28,19 @@ import Text.Parsec.Expr                       -- Expression Parser Generator
 import Text.Parsec.Token (GenLanguageDef(..)) -- Language Definition Structure
 import qualified Text.Parsec.Token as Tok
 
+import qualified Data.Map as Map
+
 import qualified Debug.Trace as Trace 
 
 parseFnList :: FilePath -> ErrorT String IO ParseFnList
 parseFnList file = do
   code <- liftIOE $ BS.readFile file
-  case runP topLevelParser False file code of
+  case runP topLevelParser (Map.empty, Map.empty) file code of
     Left e  -> throwError (show e)
     Right a -> return a
 
-type MState = Bool
-
+-- A map of fns in global context at this point, and idents in this fns context at this point. 
+type MState = (Map.Map String Bool, Map.Map String Bool)
 
 type C0Parser = Parsec ByteString MState
 
@@ -53,12 +55,12 @@ topLevelParser = do
   <?> "topLevel"
 
 gdecl :: C0Parser PGDecl
-gdecl = 
+gdecl =
   typedefParser
   <|>
   (Text.Parsec.try structParser)
   <|>
-  declDefnParser 
+  declDefnParser
 
 typedefParser :: C0Parser PGDecl
 typedefParser = do
@@ -83,6 +85,8 @@ structParser = do
   
 declDefnParser :: C0Parser PGDecl
 declDefnParser = do
+  (f,_) <- getState
+  setState (f,Map.empty)
   pos <- getPosition
   whiteSpace
   retType <- getType
@@ -90,10 +94,12 @@ declDefnParser = do
   (paramTypes, params) <- getParamList
   -- Now we either have a declaration, or a definition. 
   (do semi
+      setState (Map.insert name True f, Map.empty)
       -- We place False into the Decl as a place-holder. 
       return $ PFDecl (ParseFDecl name params paramTypes retType False pos) pos)
    <|>
    (do ast <- getAST
+       setState (Map.insert name True f, Map.empty)
        return $ PFDefn (ParseFDefn {pfnName = name,
                                     pfnArgs = params,
                                     pfnArgTypes = paramTypes,
@@ -150,11 +156,19 @@ getBasicType =
        return $ IVoid)
    <|>
    (do typ <- identifier
+       checkIdentifier typ
        return $ ITypeDef typ)
    <|>
    (do reserved "struct"
        typ <- identifier
        return $ IStruct (ITypeDef typ))
+
+checkIdentifier :: String -> C0Parser ()
+checkIdentifier s = do
+  (f,sMap) <- getState
+  if (Map.member s sMap)
+    then do fail "shit"
+    else do return ()
    
 getAST :: C0Parser ParseAST
 getAST = braces (do
@@ -162,37 +176,25 @@ getAST = braces (do
   stmts <- many stmt
   return $ ParseAST (PBlock stmts) pos)
 
-astParser :: C0Parser ParseAST
-astParser = do
-  whiteSpace -- parse white-space before the program start
-  reserved "int"
-  reserved "main"
-  parens $ return () -- parses int main ()
-  ast <- braces (do
-   pos   <- getPosition
-   stmts <- many stmt
-   return $ ParseAST (PBlock stmts) pos)
-  eof
-  return ast
-  <?> "block"
-
 decl :: C0Parser ParseStmt
 decl = typedecl
   <?> "decl"
 
 typedecl :: C0Parser ParseStmt
 typedecl = do 
+  (f,s) <- getState
   pos <- getPosition
   idType <- getType
   ident <- declidentifier
   (do pos' <- getPosition
       op <- asnOp
       e <- expr
+      setState (f, Map.insert ident True s)
       return $ PDecl ident idType pos (Just (PAsgn (PLId ident pos) op e False pos')))
    <|>
-   (do return $ PDecl ident idType pos Nothing)
+   (do setState (f, Map.insert ident True s) 
+       return $ PDecl ident idType pos Nothing)
   <?> "typedecl"
-
 
 lvalue :: C0Parser PLValue
 lvalue = 
@@ -306,16 +308,19 @@ postOp = do
 
 -- Parses a control flow structure
 ctrl :: C0Parser ParseStmt
-ctrl = 
-  ret 
-  <|>
-  ctrlIf
-  <|>
-  ctrlWhile
-  <|>
-  ctrlFor
-  <|>
-  ctrlAssert
+ctrl = do
+  (f,v) <- getState
+  ct <- (ret 
+         <|>
+         ctrlIf
+         <|>
+         ctrlWhile
+         <|>
+         ctrlFor
+         <|>
+         ctrlAssert)
+  setState (f,v)
+  return $ ct
 
 ctrlAssert :: C0Parser ParseStmt
 ctrlAssert = do
@@ -695,8 +700,8 @@ opTable = [[postfix' $ choice [arrayParser,
            [prefix "-"  (ExpUnOp  Neg),
             prefix "~"  (ExpUnOp  BitwiseNot),
             prefix "!"  (ExpUnOp  LogicalNot),
-            prefix "*"  (ExpUnMem PDereference)],
-           [prefix "--" (ExpUnOp  Decr),  -- Throw errors
+            prefix "*"  (ExpUnMem PDereference),
+            prefix "--" (ExpUnOp  Decr),  -- Throw errors
             prefix "++" (ExpUnOp  Incr)], -- in checkAST
            [binary "--"  (ExpBinOp Decr) AssocLeft],
            [binary "++"  (ExpBinOp Incr) AssocLeft],
