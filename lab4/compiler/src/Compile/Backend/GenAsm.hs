@@ -17,9 +17,7 @@ cmpAsm loc val =
 
 aasmToString :: (String, Int, Int, Int) -> AAsm -> String
 
-{-aasmToString aasm | Trace.trace (show aasm) False = undefined-}
-
-aasmToString _ AAsm {aAssign = [loc], aOp = LogicalNot, aArgs = [arg]} =
+aasmToString _ (AAsm [loc] LogicalNot [arg]) =
   "  movl " ++ (avalToString arg) ++ ", " ++ (alocToString loc) ++ "\n  not " ++ (alocToString loc) ++ "\n  and $1, " ++ (alocToString loc) ++ "\n"
 
 aasmToString _ AAsm {aAssign = [loc], aOp = Lt, aArgs = [arg]} =
@@ -128,7 +126,7 @@ genFnEpilogues numArgs m =
     buffer ++ rest ++ popBP
 
 notSpilled :: ALoc -> Bool
-notSpilled (AReg i) = i < spill_reg_num
+notSpilled (AReg i b) = i < spill_reg_num
 notSpilled _ = False
 
 genProlugues :: ALoc -> [ALoc] -> Int -> [ALoc] -> (String, Int)
@@ -183,31 +181,31 @@ safeLookup i map s =
   case Map.lookup i map of Nothing -> error ("NOT FOUND " ++ (show i) ++ " wtf " ++ s)
                            Just r -> r
 alocByteToString :: ALoc -> String
-alocByteToString ASpill =
+alocByteToString (ASpill b) =
   safeLookup spill_reg_num regByteMap "SPILL"
-alocByteToString (AReg i) =
+alocByteToString (AReg i b) =
   safeLookup i regByteMap "FUCK"
-alocByteToString (AMem i) =
-  alocToString (AMem i)
+alocByteToString (AMem i b) =
+  alocToString (AMem i b)
 alocByteToString wut = ""
 
 alocToQString :: ALoc -> String
-alocToQString (AReg i) = safeLookup i regQMap "SHIT"
-alocToQString (AMem i) = alocToString (AMem i)
-alocToQString (APtr base _ _ _) = alocToQString base
-alocToQString AIndex = safeLookup index_reg_num regQMap "SHIT"
-alocToQString AUtil = safeLookup util_reg_num regQMap "SHIT"
+alocToQString (AReg i b) = safeLookup i regQMap "SHIT"
+alocToQString (AMem i b) = alocToString (AMem i b)
+alocToQString (APtr base _ _ _ b) = alocToQString base
+alocToQString (AIndex b) = safeLookup index_reg_num regQMap "SHIT"
+alocToQString (AUtil b) = safeLookup util_reg_num regQMap "SHIT"
 
 alocToString :: ALoc -> String
-alocToString (AArg i) = (show ((i + 2) * 8)) ++ "(%rbp)"
-alocToString ASpill = safeLookup spill_reg_num regMap "SPILL"
-alocToString AIndex = safeLookup index_reg_num regMap "INDEX"
-alocToString AUtil = safeLookup util_reg_num regMap "INDEX"
-alocToString (AReg i) = safeLookup i regMap "SHIT"
-alocToString (AMem i) =  (show ((i - 1) * 8)) ++ "(%rsp)"
-alocToString (ATemp i) = error "There's still an temp!"
-alocToString (APtr base Nothing scale offset) = show scale ++ "(" ++ alocToString base ++ ")"
-alocToString (APtr base (Just index) scale offset) = show offset ++ "(" ++ alocToString base ++ "," ++ alocToString index ++ "," ++ show scale ++ ")"
+alocToString (AArg i b) = (show ((i + 2) * 8)) ++ "(%rbp)"
+alocToString (ASpill b) = safeLookup spill_reg_num regMap "SPILL"
+alocToString (AIndex b) = safeLookup index_reg_num regMap "INDEX"
+alocToString (AUtil b) = safeLookup util_reg_num regMap "INDEX"
+alocToString (AReg i b) = safeLookup i regMap "SHIT"
+alocToString (AMem i b) =  (show ((i - 1) * 8)) ++ "(%rsp)"
+alocToString (ATemp i b) = error "There's still an temp!"
+alocToString (APtr base Nothing scale offset b) = show scale ++ "(" ++ alocToString base ++ ")"
+alocToString (APtr base (Just index) scale offset b) = show offset ++ "(" ++ alocToString base ++ "," ++ alocToString index ++ "," ++ show scale ++ ")"
 alocToString loc = error (show loc ++ " EXHAUSTED")
 
 divModToString :: ALoc -> AVal -> Op -> String

@@ -100,8 +100,8 @@ getConflict assign (loc:ls) =
 
 getDivConflict :: [ALoc] -> [Edge]
 getDivConflict [] = []
-getDivConflict (x:xs) = [Edge (x, AReg eax_color_num), Edge (x, AReg edx_color_num)] ++ (getDivConflict xs)
+getDivConflict (x:xs) = [Edge (x, AReg eax_color_num True), Edge (x, AReg edx_color_num True)] ++ (getDivConflict xs)
 
 getShiftConflict :: [ALoc] -> [Edge]
 getShiftConflict [] = []
-getShiftConflict (x:xs) = [Edge (x, AReg ecx_color_num)] ++ (getShiftConflict xs)
+getShiftConflict (x:xs) = [Edge (x, AReg ecx_color_num True)] ++ (getShiftConflict xs)

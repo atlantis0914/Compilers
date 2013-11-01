@@ -58,9 +58,9 @@ replaceAssigns :: ColoringMap -> ALoc -> ALoc
 replaceAssigns coloring (APtr base index scale off b) =
   let
     index' = case index of Nothing -> Nothing
-                           Just loc -> Just (replaceAssigns coloring loc b)
+                           Just loc -> Just (replaceAssigns coloring loc)
   in
-    APtr (replaceAssigns coloring base) index' scale off
+    APtr (replaceAssigns coloring base) index' scale off b
 replaceAssigns coloring (ATemp i b) =
   let
     Color c = coloring Map.! (ATemp i b)
