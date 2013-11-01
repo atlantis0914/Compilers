@@ -100,7 +100,7 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect base _ _ size) op e) = let
   dest' = ATemp $ i'
   (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') base dest'
   (tNum, ind, off) = getPtrFromLastOp aasm''
-  c = case ind of Just _ -> [AAsm [APtr (ATemp tNum) ind (off + size) 8] Nop [ALoc dest]]
+  c = case ind of Just _ -> [AAsm [APtr (ATemp tNum) ind (off) (8 + size)] Nop [ALoc dest]]
                   Nothing -> [AAsm [APtr (ATemp tNum) ind (off + size) 0] Nop [ALoc dest]]
   in Trace.trace ("Last op is : " ++ show (last aasm'') ++ " and " ++ 
       " produced " ++ show c) $ (m'',i'',l'',aasm'' ++ c)
@@ -285,7 +285,7 @@ genExp f alloc@(varMap,n,l,aasm) e@(IRExpDereference expr _) dest = let
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpFieldSelect base field t size) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) base (ATemp n)
   (tNum, ind, off) = getPtrFromLastOp aasm'
-  c = case ind of Just _ -> [AAsm [dest] Nop [ALoc $ APtr (ATemp tNum) ind (off + size) 8]]
+  c = case ind of Just _ -> [AAsm [dest] Nop [ALoc $ APtr (ATemp tNum) ind (off) (8 + size)]]
                   Nothing -> [AAsm [dest] Nop [ALoc $ APtr (ATemp tNum) ind (off + size) 0]]
   in (varMap',n'+1,l',aasm' ++ c)
 
