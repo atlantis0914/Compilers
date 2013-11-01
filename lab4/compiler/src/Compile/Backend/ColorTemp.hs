@@ -8,6 +8,13 @@ colorTemps :: [AAsm] -> ColoringMap -> [AAsm]
 colorTemps aasms coloring = concatMap (replaceAsm coloring) aasms
 
 replaceAsm :: ColoringMap -> AAsm -> [AAsm]
+replaceAsm coloring aasm@(AAsm assigns@[AReg i] op [ALoc (APtr base index scale off)]) =
+  let
+    assigns' = map (replaceAssigns coloring) assigns
+    args' = map (replaceArgs coloring) [ALoc (APtr base index scale off)]
+  in
+    spillAAsm True $ AAsm {aAssign = assigns', aOp = op, aArgs = args'}
+
 replaceAsm coloring aasm@(AAsm {aAssign = assigns@[AReg i], aOp = op, aArgs = args}) =
   let
     assigns' = map (replaceAssigns coloring) assigns
