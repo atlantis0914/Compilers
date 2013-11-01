@@ -27,10 +27,11 @@ toIRStructDef _ _ (SDefn n f t o a s _) = IRStructDef n f t o a s
 
 toIRFuncDef :: FMap -> SMap -> FDefn -> IRFuncDef 
 toIRFuncDef fMap sMap (FDefn name args argTypes retType body _) = 
-  IRFuncDef name args argTypes retType body'
+  IRFuncDef name args argTypes retType body' sizes
   where 
     tMap = Map.fromList $ zip args argTypes
     body' = toIRAST fMap sMap tMap body
+    sizes = map getLongVsQuad argTypes 
 
 toIRAST :: FMap -> SMap -> TypeMap -> AST -> IRAST
 toIRAST fMap sMap tMap (AST stmt _) = IRAST stmt'

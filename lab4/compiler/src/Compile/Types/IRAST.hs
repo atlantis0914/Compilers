@@ -46,7 +46,7 @@ instance Show IRDecl where
   show (IRSDefn sdefn) = show sdefn
 
 instance Show IRFuncDef where
-  show (IRFuncDef name args argTypes retType body) =
+  show (IRFuncDef name args argTypes retType body sizes) =
     (show retType) ++ " " ++ name ++ "("
     ++ (concatMap (\(typ, n) -> show typ ++ " " ++ n ++ ",") (zip argTypes args))
     ++ ")" ++ show body
