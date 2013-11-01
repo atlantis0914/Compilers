@@ -109,20 +109,22 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript (IRIdent s) index t size) o
   dest = ATemp i
   temp = APtr (ATemp $ m' Map.! s) (Just AIndex) size 8
   (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) index dest
+  aasm'' = aasm' ++ genArrayCheck (ATemp $ m' Map.! s) dest
   dest' = ATemp $ i'
-  (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') e dest'
-  c = [AAsm [AIndex] Nop [ALoc $ dest]] ++ genArrayCheck (ATemp $ m' Map.! s) ++ [AAsm [temp] Nop [ALoc $ dest']]
-  in (m'',i'',l'', aasm'' ++ c)
+  (m'',i'',l'',aasm''') = genExp fm (m',i'+1,l',aasm'') e dest'
+  c = [AAsm [AIndex] Nop [ALoc $ dest], AAsm [temp] Nop [ALoc $ dest']]
+  in (m'',i'',l'', aasm''' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript base index t size) op e) = let
   base' = ATemp i
   (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) base base'
   index' = ATemp i'
   (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') index index'
+  aasm''' = aasm'' ++  genArrayCheck base' index' 
   val = ATemp $ i''
-  (m''',i''',l''',aasm''') = genExp fm (m'',i''+1,l'',aasm'') e val
-  c = [AAsm [AIndex] Nop [ALoc $ index']] ++ genArrayCheck base' ++ [AAsm [APtr base' (Just AIndex) size 8] Nop [ALoc $ val]]
-  in (m''',i''',l''', aasm''' ++ c)
+  (m''',i''',l''',aasm'''') = genExp fm (m'',i''+1,l'',aasm''') e val
+  c = [AAsm [AIndex] Nop [ALoc $ index'], AAsm [APtr base' (Just AIndex) size 8] Nop [ALoc $ val]]
+  in (m''',i''',l''', aasm'''' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRBlock stmts) = let
   -- Keep scope alive, start new AAsm list, concat when finished.
@@ -196,11 +198,11 @@ genCtrl fm (m,i,l,aasm) (Return Nothing _) =
   -- dummy value
   (m,i,l,aasm ++ [ACtrl $ ARet (AImm 1)])
 
-genArrayCheck :: ALoc -> [AAsm]
-genArrayCheck base =
-  [AAsm [ASpill] Lt [ALoc AIndex, AImm 0],
+genArrayCheck :: ALoc -> ALoc -> [AAsm]
+genArrayCheck base index =
+  [AAsm [ASpill] Lt [ALoc index, AImm 0],
    ACtrl $ AIf (ALoc ASpill) 0 (Just "mem_error"),
-   AAsm [ASpill] Gte [ALoc AIndex, ALoc $ APtr base Nothing 0 0],
+   AAsm [ASpill] Gte [ALoc index, ALoc $ APtr base Nothing 0 0],
    ACtrl $ AIf (ALoc ASpill) 0 (Just "mem_error")]
 
 genArrayAllocCheck :: ALoc -> [AAsm]
@@ -290,7 +292,7 @@ genExp f alloc@(varMap,n,l,aasm) e@(IRExpArraySubscript expr1 expr2 t o) dest = 
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr1 (ATemp n)
   (varMap'',n'',l'',aasm'') = genExp f (varMap',n'+1,l',aasm') expr2 (ATemp n')
   in (varMap'',n'',l'',aasm'' ++ [AAsm [AIndex] Nop [ALoc $ ATemp n']] ++ 
-                                  (genArrayCheck (ATemp n)) ++ 
+                                  (genArrayCheck (ATemp n) (ATemp n')) ++ 
                                   [AAsm [dest] Nop [ALoc $ APtr (ATemp n) (Just AIndex) o 8]])
 
 genExp f alloc e dest = error (show e ++ " EXHAUST genExp")
