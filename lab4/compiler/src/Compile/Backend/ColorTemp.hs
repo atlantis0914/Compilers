@@ -8,14 +8,14 @@ colorTemps :: [AAsm] -> ColoringMap -> [AAsm]
 colorTemps aasms coloring = concatMap (replaceAsm coloring) aasms
 
 replaceAsm :: ColoringMap -> AAsm -> [AAsm]
-replaceAsm coloring aasm@(AAsm assigns@[AReg i] op [ALoc (APtr base index scale off)]) =
+replaceAsm coloring aasm@(AAsm assigns@[AReg i b] op [ALoc (APtr base index scale off size)]) =
   let
     assigns' = map (replaceAssigns coloring) assigns
-    args' = map (replaceArgs coloring) [ALoc (APtr base index scale off)]
+    args' = map (replaceArgs coloring) [ALoc (APtr base index scale off size)]
   in
     spillAAsm True $ AAsm {aAssign = assigns', aOp = op, aArgs = args'}
 
-replaceAsm coloring aasm@(AAsm {aAssign = assigns@[AReg i], aOp = op, aArgs = args}) =
+replaceAsm coloring aasm@(AAsm {aAssign = assigns@[AReg i b], aOp = op, aArgs = args}) =
   let
     assigns' = map (replaceAssigns coloring) assigns
     args' = map (replaceArgs coloring) args
@@ -23,7 +23,7 @@ replaceAsm coloring aasm@(AAsm {aAssign = assigns@[AReg i], aOp = op, aArgs = ar
   in
     [AAsm {aAssign = assigns', aOp = op, aArgs = args''}]
 
-replaceAsm coloring aasm@(AAsm {aAssign = assigns, aOp = op, aArgs = args@[ALoc (AReg i)]}) =
+replaceAsm coloring aasm@(AAsm {aAssign = assigns, aOp = op, aArgs = args@[ALoc (AReg i b)]}) =
   let
     assigns' = map (replaceAssigns coloring) assigns
     args' = map (replaceArgs coloring) args
@@ -55,17 +55,17 @@ replaceAsm coloring aasm@(AFnCall fnName loc locs lives) =
 replaceAsm coloring aasm = error (" replaceAsm EXHAUSTED" ++ show aasm)
 
 replaceAssigns :: ColoringMap -> ALoc -> ALoc
-replaceAssigns coloring (APtr base index scale off) =
+replaceAssigns coloring (APtr base index scale off b) =
   let
     index' = case index of Nothing -> Nothing
-                           Just loc -> Just (replaceAssigns coloring loc)
+                           Just loc -> Just (replaceAssigns coloring loc b)
   in
     APtr (replaceAssigns coloring base) index' scale off
-replaceAssigns coloring (ATemp i) =
+replaceAssigns coloring (ATemp i b) =
   let
-    Color c = coloring Map.! (ATemp i)
+    Color c = coloring Map.! (ATemp i b)
   in
-    AReg c
+    AReg c b
 replaceAssigns coloring loc = loc
 
 replaceArgs :: ColoringMap -> AVal -> AVal

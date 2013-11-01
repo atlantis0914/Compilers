@@ -16,7 +16,8 @@ data IRFuncDef = IRFuncDef {funcName :: !String,
                             funcArgs :: ![String],
                             funcArgTypes :: ![IdentType],
                             funcRetType :: !IdentType,
-                            funcBody :: !IRAST}
+                            funcBody :: !IRAST,
+                            funcArgSizes :: ![Int]}
 
 data IRStructDef = IRStructDef {strctName :: !String,
                                 strctFields :: ![(IdentType, String)],
