@@ -77,7 +77,7 @@ toIRExpr' fm sm tm (ExpAlloc typ _) = (IRExpAlloc typ $ getSizeForTypeMap sm typ
 --  where 
 --    structArraySize = 8
 --    (e',_) = toIRExpr' fm sm tm e
-toIRExpr' fm sm tm (ExpAllocArray typ e _) = (IRExpAllocArray typ e' size, IPtr typ)
+toIRExpr' fm sm tm (ExpAllocArray typ e _) = (IRExpAllocArray typ e' size, IArray typ)
   where 
     size = Trace.trace ("Looking up type for : " ++ show typ) $ (getSizeForTypeMap sm typ)
     (e',_) = toIRExpr' fm sm tm e
