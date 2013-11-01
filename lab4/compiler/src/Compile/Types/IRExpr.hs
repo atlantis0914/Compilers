@@ -19,8 +19,8 @@ data IRExpr = IRExpInt Integer Base
             | IRExpAllocArray IdentType IRExpr Int
 -- We add back type information for [], . , and *.
             | IRExpArraySubscript IRExpr IRExpr IdentType Int
-            | IRExpFieldSelect IRExpr String IdentType Int
-            | IRExpDereference IRExpr IdentType
+            | IRExpFieldSelect IRExpr String IdentType Int Int
+            | IRExpDereference IRExpr IdentType Int
 
 instance Show IRExpr where
   show (IRExpInt n _) = show n

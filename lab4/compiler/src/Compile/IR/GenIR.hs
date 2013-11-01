@@ -145,7 +145,13 @@ getSize IRExpLogOp _ e _ -> getSize e
 getSize IRExpPolyEq _ e _ -> getSize e
 getSize IRExpUnOp _ e -> getSize e
 getSize IRExpTernary _ e _ -> getSize e
-getSize IRExpFnCall _ _ -> False
+getSize IRExpFnCall _ _ size -> size == 8
+getSize IRExpNull = True
+getSize IRExpAlloc = True
+getSize IRExpAllocArray = True
+getSize IRExpArraySubscript _ _ _ size = size >= 8
+getSize IRExpFieldSelect _ _ _ _ size = size == 8
+getSize IRExpDereference _ _ size = size == 8
 
 genCtrl :: FnMap -> Alloc -> IRCtrl -> Alloc
 
