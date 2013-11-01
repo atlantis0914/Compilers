@@ -189,6 +189,7 @@ alocByteToString (AReg i) =
   safeLookup i regByteMap "FUCK"
 alocByteToString (AMem i) =
   alocToString (AMem i)
+alocByteToString wut = ""
 
 alocToQString :: ALoc -> String
 alocToQString (AReg i) = safeLookup i regQMap "SHIT"

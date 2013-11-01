@@ -49,6 +49,13 @@ spillAAsm spillArgs aasm@(AAsm {aAssign = [AIndex], aOp = op, aArgs = [arg]}) =
   in
     [AAsm {aAssign = [AIndex], aOp = op, aArgs = [arg']}]
 
+spillAAsm spillArgs aasm@(AAsm {aAssign = [ASpill], aOp = op, aArgs = [arg]}) =
+  let
+    arg' = if spillArgs then spillVal arg
+                        else arg
+  in
+    [AAsm {aAssign = [ASpill], aOp = op, aArgs = [arg']}]
+
 spillAAsm spillArgs (AAsm [AReg i] op [ALoc (APtr (AReg j) index scale off)]) =
   let
     aasm' = if j > max_color_num
@@ -67,8 +74,6 @@ spillAAsm spillArgs (AAsm [AReg i] op [ALoc (APtr (AReg j) index scale off)]) =
                    AAsm [ASpill] op [ALoc $ APtr (AReg j) index scale off],
                    AAsm [AMem $ i - max_color_num] Nop [ALoc ASpill]]
       else aasm'
-
-spillAAsm spillArgs aasm@(AAsm [ASpill] op [arg]) = [aasm]
 
 spillAAsm spillArgs (AAsm [AReg i] op [arg]) =
   let
