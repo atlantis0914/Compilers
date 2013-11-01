@@ -170,5 +170,6 @@ getLongVsQuad IBool = 4
 getLongVsQuad (IPtr _) = 8
 getLongVsQuad (IArray _) = 8
 getLongVsQuad IVoid = error ("Trying to get size for void")
-getLongVsQuad (IStruct (ITypeDef name)) = error("Trying to get size for concrete struct")
+getLongVsQuad (IStruct (ITypeDef name)) = 8
+--error("Trying to get size for concrete struct : " ++ show name)
 getLongVsQuad (ITypeDef name) = error ("Trying to get size for a type-def. Should be gone by GneIRAST : " ++ name)
