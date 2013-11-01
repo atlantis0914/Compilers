@@ -666,10 +666,32 @@ semiSep    = Tok.semiSep    c0Tokens
 brackets   :: C0Parser a -> C0Parser a
 brackets   = Tok.brackets c0Tokens
 
+
+--[binary "->" (ExpBinMem FDereference) AssocLeft,
+--            binary "." (ExpBinMem Select) AssocLeft,
+--            postfix (brackets expr) (ExpBinMem PArrayRef)],
+
+arrayParser = do pos <- getPosition
+                 e' <- brackets expr
+                 return $ \x -> ExpBinMem PArrayRef x e' pos
+
+dotParser = do pos <- getPosition
+               char '.'
+               i <- identifier
+               return $ \x -> ExpBinMem Select x (Ident i pos) pos
+  
+arrowParser = do pos <- getPosition
+                 whiteSpace
+                 (do (Text.Parsec.try (do char '-'
+                                          char '>')))
+                 whiteSpace
+                 i <- identifier
+                 return $ \x -> ExpBinMem FDereference x (Ident i pos) pos
+
 opTable :: [[Operator ByteString MState Identity Expr]]
-opTable = [[binary "->" (ExpBinMem FDereference) AssocLeft,
-            binary "." (ExpBinMem Select) AssocLeft,
-            postfix (brackets expr) (ExpBinMem PArrayRef)],
+opTable = [[postfix' $ choice [arrayParser,
+                               dotParser,
+                               arrowParser]],
            [prefix "-"  (ExpUnOp  Neg),
             prefix "~"  (ExpUnOp  BitwiseNot),
             prefix "!"  (ExpUnOp  LogicalNot),
@@ -713,3 +735,5 @@ prefix  name f = Prefix $ do pos <- getPosition
 postfix p f = Postfix $ do pos <- getPosition
                            e <- p
                            return $ \x -> f x e pos
+
+postfix' p = Postfix . chainl1 p $ return (flip (.))
