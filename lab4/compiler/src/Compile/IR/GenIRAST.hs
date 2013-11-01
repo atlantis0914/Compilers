@@ -127,9 +127,7 @@ toIRExpr' fm sm tm (ExpBinMem PArrayRef e1 e2 _) =
 
 toIRExpr' fm sm tm (ExpUnMem PDereference e1 _) = 
   case (toIRExpr' fm sm tm e1) of 
-    (e1', IPtr innerTyp) -> (IRExpDereference e1' innerTyp datasize, innerTyp)
-  where
-    datasize = getLongVsQuad innerTyp
+    (e1', IPtr innerTyp) -> (IRExpDereference e1' innerTyp (getLongVsQuad innerTyp), innerTyp)
 
 toIRExpr' fm sm tm (ExpLogOp o e1 e2 _) = error ("Should no longer have log-ops in GenIRAST")
 
@@ -167,10 +165,10 @@ getSizeForArrayRef (IStruct (ITypeDef _)) = 8
 getSizeForArrayRef (ITypeDef name) = error ("Trying to get size for a type-def. Should be gone by GneIRAST : " ++ name)
 
 getLongVsQuad :: IdentType -> Int
-getLongVsQuad _ IInt = 4
-getLongVsQuad _ IBool = 4
-getLongVsQuad _ (IPtr _) = 8
-getLongVsQuad _ (IArray _) = 8
-getLongVsQuad _ IVoid = error ("Trying to get size for void")
-getLongVsQuad sm (IStruct (ITypeDef name)) = error("Trying to get size for concrete struct")
-getLongVsQuad sm (ITypeDef name) = error ("Trying to get size for a type-def. Should be gone by GneIRAST : " ++ name)
+getLongVsQuad IInt = 4
+getLongVsQuad IBool = 4
+getLongVsQuad (IPtr _) = 8
+getLongVsQuad (IArray _) = 8
+getLongVsQuad IVoid = error ("Trying to get size for void")
+getLongVsQuad (IStruct (ITypeDef name)) = error("Trying to get size for concrete struct")
+getLongVsQuad (ITypeDef name) = error ("Trying to get size for a type-def. Should be gone by GneIRAST : " ++ name)
