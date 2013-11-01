@@ -39,8 +39,8 @@ genForIns aasm@(ACtrl c) = [aasm]
 genForIns aasm = [aasm]
 
 conv (ATemp i _) (ALoc loc) = ATemp i (getLocSize loc)
-conv (AMem i _) (ALoc loc) = ATemp i (getLocSize loc)
-conv (AReg i _) (ALoc loc) = ATemp i (getLocSize loc)
+conv (AMem i _) (ALoc loc) = AMem i (getLocSize loc)
+conv (AReg i _) (ALoc loc) = AReg i (getLocSize loc)
 conv (ASpill _) (ALoc loc) = ASpill (getLocSize loc)
 conv (AIndex _) (ALoc loc) = AIndex (getLocSize loc)
 conv loc (AImm _) = loc
