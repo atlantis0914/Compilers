@@ -200,9 +200,10 @@ genCtrl fm (m,i,l,aasm) (Return Nothing _) =
 
 genArrayCheck :: ALoc -> ALoc -> [AAsm]
 genArrayCheck base index =
-  [AAsm [ASpill] Lt [ALoc index, AImm 0],
+  [AAsm [AIndex] Nop [ALoc index],
+   AAsm [ASpill] Lt [ALoc AIndex, AImm 0],
    ACtrl $ AIf (ALoc ASpill) 0 (Just "mem_error"),
-   AAsm [ASpill] Gte [ALoc index, ALoc $ APtr base Nothing 0 0],
+   AAsm [ASpill] Gte [ALoc AIndex, ALoc $ APtr base Nothing 0 0],
    ACtrl $ AIf (ALoc ASpill) 0 (Just "mem_error")]
 
 genArrayAllocCheck :: ALoc -> [AAsm]
