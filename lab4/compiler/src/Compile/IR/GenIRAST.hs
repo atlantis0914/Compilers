@@ -101,19 +101,21 @@ toIRExpr' fm sm tm (ExpTernary e1 e2 e3 _) = (IRExpTernary e1' e2' e3', t)
     (e2', _) = toIRExpr' fm sm tm e2
     (e3', t) = toIRExpr' fm sm tm e3
 
-toIRExpr' fm sm tm (ExpFnCall s elist _) = (IRExpFnCall s elist' , typ)
+toIRExpr' fm sm tm (ExpFnCall s elist _) = (IRExpFnCall s elist' datasize, typ)
   where 
     elist' = map (fst . toIRExpr' fm sm tm) elist
     (_,typ,_,_,_) = fm Map.! (getName s)
+    datasize = getLongVsQuad typ
 
 toIRExpr' fm sm tm (ExpBinMem Select e1 e2@(Ident field _) _) = 
   case (toIRExpr' fm sm tm e1) of
-    (e1', IStruct (ITypeDef sName)) -> (IRExpFieldSelect e1' field typ offset, typ)
+    (e1', IStruct (ITypeDef sName)) -> (IRExpFieldSelect e1' field typ offset datasize, typ)
     (e1', typ) -> error ("Didn't get struct return type in Select case of toIRExpr : " ++ show e1 ++ " and " ++ show e2 ++ "got " ++ show e1' ++ " and typ = " ++ show typ)
   where 
     (e1',e1Typ) = toIRExpr' fm sm tm e1
     typ = getTypeForStructField sm e1Typ field
     (size, offset) = getOffsetForStructField sm e1Typ field 
+    datasize = getLongVsQuad typ
 
 toIRExpr' fm sm tm (ExpBinMem PArrayRef e1 e2 _) = 
   case (toIRExpr' fm sm tm e1) of 
@@ -124,7 +126,9 @@ toIRExpr' fm sm tm (ExpBinMem PArrayRef e1 e2 _) =
 
 toIRExpr' fm sm tm (ExpUnMem PDereference e1 _) = 
   case (toIRExpr' fm sm tm e1) of 
-    (e1', IPtr innerTyp) -> (IRExpDereference e1' innerTyp, innerTyp)
+    (e1', IPtr innerTyp) -> (IRExpDereference e1' innerTyp datasize, innerTyp)
+  where
+    datasize = getLongVsQuad innerTyp
 
 toIRExpr' fm sm tm (ExpLogOp o e1 e2 _) = error ("Should no longer have log-ops in GenIRAST")
 
