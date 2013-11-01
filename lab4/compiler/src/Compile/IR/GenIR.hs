@@ -80,7 +80,7 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRIdent s) _ e) = let
   in (m',i',l',aasm')
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpDereference (IRIdent s) t) _ e) = let
-  temp = APtr (ATemp $ m Map.! s) Nothing 0
+  temp = APtr (ATemp $ m Map.! s) Nothing 0 0
   dest = ATemp $ i
   (_,i',l',aasm') = genExp fm (m,i+1,l,aasm) e dest
   c = [AAsm [temp] Nop [ALoc dest]]
@@ -91,7 +91,7 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpDereference b t) _ e) = let
   (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) b b'
   dest = ATemp i'
   (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') e dest
-  c = [AAsm [APtr b' Nothing 0] Nop [ALoc dest]]
+  c = [AAsm [APtr b' Nothing 0 0] Nop [ALoc dest]]
   in (m'',i'',l'',aasm'' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect base _ _ size) op e) = let
@@ -100,17 +100,18 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect base _ _ size) op e) = let
   dest' = ATemp $ i'
   (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') base dest'
   (tNum, ind, off) = getPtrFromLastOp aasm''
-  c = [AAsm [APtr (ATemp tNum) ind (off + size)] Nop [ALoc dest]]
+  c = case ind of Just _ -> [AAsm [APtr (ATemp tNum) ind (off + size) 8] Nop [ALoc dest]]
+                  Nothing -> [AAsm [APtr (ATemp tNum) ind (off + size) 0] Nop [ALoc dest]]
   in Trace.trace ("Last op is : " ++ show (last aasm'') ++ " and " ++ 
       " produced " ++ show c) $ (m'',i'',l'',aasm'' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript (IRIdent s) index t size) op e) = let
   dest = ATemp i
-  temp = APtr (ATemp $ m' Map.! s) (Just AIndex) size
+  temp = APtr (ATemp $ m' Map.! s) (Just AIndex) size 8
   (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) index dest
   dest' = ATemp $ i'
   (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') e dest'
-  c = [AAsm [AIndex] Nop [ALoc $ dest], AAsm [temp] Nop [ALoc $ dest']]
+  c = [AAsm [AIndex] Nop [ALoc $ dest]] ++ genArrayCheck (ATemp $ m' Map.! s) ++ [AAsm [temp] Nop [ALoc $ dest']]
   in (m'',i'',l'', aasm'' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript base index t size) op e) = let
@@ -120,7 +121,7 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript base index t size) op e) = 
   (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') index index'
   val = ATemp $ i''
   (m''',i''',l''',aasm''') = genExp fm (m'',i''+1,l'',aasm'') e val
-  c = [AAsm [AIndex] Nop [ALoc $ index'], AAsm [APtr base' (Just AIndex) size] Nop [ALoc $ val]]
+  c = [AAsm [AIndex] Nop [ALoc $ index']] ++ genArrayCheck base' ++ [AAsm [APtr base' (Just AIndex) size 8] Nop [ALoc $ val]]
   in (m''',i''',l''', aasm''' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRBlock stmts) = let
@@ -140,7 +141,7 @@ genCtrl fm (m,i,l,aasm) (Assert e _) = let
   abortAasm = [ACtrl $ ALabel abortLabel] ++ [AFnCall "abort" (ATemp i) [] []]
   outputAasm =
     eAasm
-    ++ [ACtrl $ AIf (ALoc $ ATemp i) endLabel,
+    ++ [ACtrl $ AIf (ALoc $ ATemp i) endLabel Nothing,
         ACtrl $ AGoto abortLabel]
     ++ abortAasm
     ++ [ACtrl $ ALabel endLabel]
@@ -159,7 +160,7 @@ genCtrl fm (m,i,l,aasm) (If e s1 s2 _) = let
   s2Aasm' = (ACtrl $ ALabel s2Label):s2Aasm ++ [ACtrl $ AGoto endLabel]
   outputAasm =
     eAasm ++ -- assembly for e
-    [ACtrl $ AIf (ALoc $ ATemp i) s1Label,
+    [ACtrl $ AIf (ALoc $ ATemp i) s1Label Nothing,
      ACtrl $ AGoto s2Label] -- Assembly for conditional jmp to s1 or s2
     ++ s1Aasm' -- Assembly for s1, including goto endLabel.
     ++ s2Aasm' -- Assembly for s2, including goto endLabel.
@@ -177,7 +178,7 @@ genCtrl fm (m,i,l,aasm) (While e s1 _) = let
   outputAasm =
     [ACtrl $ ALabel startLabel] ++
     eAasm ++
-    [ACtrl $ AIf (ALoc $ ATemp i) loopLabel,
+    [ACtrl $ AIf (ALoc $ ATemp i) loopLabel Nothing,
      ACtrl $ AGoto endLabel] ++
     s1Aasm' ++
     [ACtrl $ ALabel endLabel]
@@ -195,6 +196,17 @@ genCtrl fm (m,i,l,aasm) (Return Nothing _) =
   -- dummy value
   (m,i,l,aasm ++ [ACtrl $ ARet (AImm 1)])
 
+genArrayCheck :: ALoc -> [AAsm]
+genArrayCheck base =
+  [AAsm [ASpill] Lt [ALoc AIndex, AImm 0],
+   ACtrl $ AIf (ALoc ASpill) 0 (Just "mem_error"),
+   AAsm [ASpill] Gte [ALoc AIndex, ALoc $ APtr base Nothing 0 0],
+   ACtrl $ AIf (ALoc ASpill) 0 (Just "mem_error")]
+
+genArrayAllocCheck :: ALoc -> [AAsm]
+genArrayAllocCheck size =
+  [AAsm [ASpill] Lt [ALoc $ size, AImm 0],
+   ACtrl $ AIf (ALoc ASpill) 0 (Just "mem_error")]
 
 genExp :: FnMap -> Alloc -> IRExpr -> ALoc -> Alloc
 genExp _ (varMap,n,l,aasm) (IRExpInt num _) dest =
@@ -220,7 +232,7 @@ genExp f alloc@(varMap,n,l,aasm) (IRExpTernary e1 e2 e3) dest = let
   e3Aasm' = (ACtrl $ ALabel e3Label):e3Aasm ++ [ACtrl $ AGoto endLabel]
   outputAasm =
     e1Aasm ++
-    [ACtrl $ AIf (ALoc $ ATemp n) e2Label,
+    [ACtrl $ AIf (ALoc $ ATemp n) e2Label Nothing,
      ACtrl $ AGoto e3Label]
     ++ e2Aasm'
     ++ e3Aasm'
@@ -249,35 +261,37 @@ genExp f alloc@(varMap,n,l,aasm) e@(IRExpAlloc t s) dest =
                                            IRExpInt 1 Dec]) dest
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpAllocArray t expr s) dest = let
-  (varMap',n',l',aasm') = genRealFn f alloc (IRExpFnCall "calloc" [IRExpInt (fromIntegral s) Dec,
-                                           expr]) dest
-  in (varMap',n',l',aasm' ++ [AAsm [AIndex] Nop [ALoc $ APtr dest Nothing 0]])
+  (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr $ ATemp n
+  
+  locs = [ATemp n', ATemp n]
+  aasm'' = aasm' ++ genArrayAllocCheck (ATemp n) ++
+                    [AAsm [ATemp (n' + 1)] Add [ALoc $ ATemp n, AImm $ fromIntegral (8 `div` s)],
+                     AAsm [ATemp n'] Nop [AImm $ fromIntegral s],
+                     AAsm [AReg 12] Nop [ALoc $ ATemp n'],
+                     AAsm [AReg 13] Nop [ALoc $ ATemp (n' + 1)],
+                     AFnCall "calloc" dest locs []]
+  in (varMap',n'+2,l',aasm'' ++ [AAsm [APtr dest Nothing 0 0] Nop [ALoc $ ATemp n]])
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpDereference (IRIdent s) t) dest =
-  (varMap,n,l,aasm ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp $ varMap Map.! s) Nothing 0]])
+  (varMap,n,l,aasm ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp $ varMap Map.! s) Nothing 0 0]])
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpDereference expr _) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr (ATemp n)
-  in (varMap',n'+1,l',aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) Nothing 0]])
+  in (varMap',n'+1,l',aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) Nothing 0 0]])
 
---genExp f alloc@(varMap,n,l,aasm) e@(IRExpFieldSelect (IRExpDereference expr _) field t size) dest = let
---  (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr (ATemp n)
---  in (varMap',n',l',aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) Nothing size]])
---
---genExp f alloc@(varMap,n,l,aasm) e@(IRExpFieldSelect base field t size) dest = let
---  (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) base (ATemp n)
---  in (varMap',n',l',aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n) Nothing size]])
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpFieldSelect base field t size) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) base (ATemp n)
   (tNum, ind, off) = getPtrFromLastOp aasm'
-  c = [AAsm [dest] Nop [ALoc $ APtr (ATemp tNum) ind (off + size)]]
+  c = case ind of Just _ -> [AAsm [dest] Nop [ALoc $ APtr (ATemp tNum) ind (off + size) 8]]
+                  Nothing -> [AAsm [dest] Nop [ALoc $ APtr (ATemp tNum) ind (off + size) 0]]
   in (varMap',n'+1,l',aasm' ++ c)
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpArraySubscript expr1 expr2 t o) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr1 (ATemp n)
   (varMap'',n'',l'',aasm'') = genExp f (varMap',n'+1,l',aasm') expr2 (ATemp n')
-  in (varMap'',n'',l'',aasm'' ++ [AAsm [AIndex] Nop [ALoc $ ATemp n'],
-                                  AAsm [dest] Nop [ALoc $ APtr (ATemp n) (Just AIndex) o]])
+  in (varMap'',n'',l'',aasm'' ++ [AAsm [AIndex] Nop [ALoc $ ATemp n']] ++ 
+                                  (genArrayCheck (ATemp n)) ++ 
+                                  [AAsm [dest] Nop [ALoc $ APtr (ATemp n) (Just AIndex) o 8]])
 
 genExp f alloc e dest = error (show e ++ " EXHAUST genExp")
 
@@ -334,7 +348,7 @@ getPtrFromLastOp aasm =
     aasm@(AAsm _ _ [src]) -> extractPtrAasm aasm src
     p -> error ("Got something fucked up in getPtrFromLastOp")
 
-extractPtrAasm _ (ALoc (APtr (ATemp i) Nothing off)) = (i, Nothing, off)
-extractPtrAasm _ (ALoc (APtr (ATemp i) (Just AIndex) off)) = (i, Just AIndex, off)
+extractPtrAasm _ (ALoc (APtr (ATemp i) Nothing off _)) = (i, Nothing, off)
+extractPtrAasm _ (ALoc (APtr (ATemp i) (Just AIndex) off _)) = (i, Just AIndex, off)
 extractPtrAasm aasm s = error ("Got s instead of expected expr in extractPtrAasm : " ++ show aasm)
 

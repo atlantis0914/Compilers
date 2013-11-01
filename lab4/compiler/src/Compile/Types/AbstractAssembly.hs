@@ -30,10 +30,10 @@ data ALoc = AReg Int
           | AUtil
           | AIndex
           | AArg Int
-          | APtr ALoc (Maybe ALoc) Int
+          | APtr ALoc (Maybe ALoc) Int Int
           | AMem Int deriving (Show, Eq, Ord)
 
 data ACtrl = ARet AVal
            | ALabel Int
-           | AIf AVal Int
+           | AIf AVal Int (Maybe String)
            | AGoto Int deriving (Show, Eq)

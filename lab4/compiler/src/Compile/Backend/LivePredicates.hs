@@ -12,8 +12,8 @@ type LiveContext = (LiveMap, Bool)
 extractLocs :: [AVal] -> [ALoc]
 extractLocs [] = []
 extractLocs (val:vals) =
-  case val of ALoc (APtr base index _) -> (case index of Nothing -> base : extractLocs vals
-                                                         Just loc -> loc : base : extractLocs vals)
+  case val of ALoc (APtr base index _ _) -> (case index of Nothing -> base : extractLocs vals
+                                                           Just loc -> loc : base : extractLocs vals)
               ALoc loc -> loc : extractLocs vals
               _ -> extractLocs vals
 
@@ -58,14 +58,19 @@ runPredicate _ i (ACtrl (ALabel _)) (liveMap, isNew) =
   in
     addLocs i (liveMap, isNew) locs
 
-runPredicate labelMap i (ACtrl (AIf aval label)) (liveMap, isNew) =
-  let
+runPredicate labelMap i (ACtrl (AIf aval label Nothing)) (liveMap, isNew) = let
     locs = getLocs (i+1) liveMap
     locs' = locs `union` (labelLocs labelMap liveMap label)
     locs'' = case aval of ALoc loc -> locs' `union` [loc]
                           _ -> locs'
   in
     addLocs i (liveMap, isNew) locs''
+
+runPredicate labelMap i (ACtrl (AIf aval label (Just e))) (liveMap, isNew) =
+  let
+    locs = getLocs (i+1) liveMap
+  in
+    addLocs i (liveMap, isNew) locs
 
 runPredicate labelMap i (ACtrl (AGoto label)) (liveMap, isNew) =
   let
@@ -86,13 +91,13 @@ isTemp aloc = case aloc of ATemp _ -> True
                            _ -> False
 
 isPtr :: ALoc -> Bool
-isPtr loc = case loc of APtr _ _ _ -> True
+isPtr loc = case loc of APtr _ _ _ _ -> True
                         _ -> False
 
 filterLocs :: [ALoc] -> [ALoc]
 filterLocs locs = filter isTemp locs
 
-extractLocsFromPtr (APtr base index _) =
+extractLocsFromPtr (APtr base index _ _) =
   let
     index' = case index of Nothing -> []
                            Just loc -> [loc]

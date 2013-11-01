@@ -82,7 +82,10 @@ aasmToString (fnName, _, _ ,_) (ACtrl (ALabel i)) =
 aasmToString (fnName, _, _, _) (ACtrl (AGoto i)) =
   "  jmp " ++ fnName ++ "label" ++ show i ++ "\n"
 
-aasmToString (fnName, _, _, _) (ACtrl (AIf aval label)) =
+aasmToString (fnName, _, _, _) (ACtrl (AIf aval label (Just l))) =
+  "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz " ++ l ++ "\n"
+
+aasmToString (fnName, _, _, _) (ACtrl (AIf aval label Nothing)) =
   "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz " ++ fnName ++ "label" ++ (show label) ++ "\n"
 
 aasmToString (_, size, numArgs, m) (ACtrl (ARet _)) =
@@ -190,7 +193,7 @@ alocByteToString (AMem i) =
 alocToQString :: ALoc -> String
 alocToQString (AReg i) = safeLookup i regQMap "SHIT"
 alocToQString (AMem i) = alocToString (AMem i)
-alocToQString (APtr base _ _) = alocToQString base
+alocToQString (APtr base _ _ _) = alocToQString base
 alocToQString AIndex = safeLookup index_reg_num regQMap "SHIT"
 alocToQString AUtil = safeLookup util_reg_num regQMap "SHIT"
 
@@ -202,8 +205,8 @@ alocToString AUtil = safeLookup util_reg_num regMap "INDEX"
 alocToString (AReg i) = safeLookup i regMap "SHIT"
 alocToString (AMem i) =  (show ((i - 1) * 8)) ++ "(%rsp)"
 alocToString (ATemp i) = error "There's still an temp!"
-alocToString (APtr base Nothing offset) = show offset ++ "(" ++ alocToString base ++ ")"
-alocToString (APtr base (Just index) scale) = "(" ++ alocToString base ++ "," ++ alocToString index ++ "," ++ show scale ++ ")"
+alocToString (APtr base Nothing scale offset) = show scale ++ "(" ++ alocToString base ++ ")"
+alocToString (APtr base (Just index) scale offset) = show offset ++ "(" ++ alocToString base ++ "," ++ alocToString index ++ "," ++ show scale ++ ")"
 alocToString loc = error (show loc ++ " EXHAUSTED")
 
 divModToString :: ALoc -> AVal -> Op -> String

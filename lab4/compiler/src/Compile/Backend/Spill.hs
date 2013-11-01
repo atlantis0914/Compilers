@@ -12,7 +12,7 @@ spillVal arg =
     ALoc (AReg i) -> if i > max_color_num
                        then ALoc $ AMem $ i - max_color_num
                        else arg
-    ALoc (APtr (AReg i) Nothing off) -> if i > max_color_num
+    ALoc (APtr (AReg i) Nothing _ _) -> if i > max_color_num
                                         then ALoc $ AMem $ i - max_color_num
                                         else arg
     _ -> arg
@@ -49,24 +49,26 @@ spillAAsm spillArgs aasm@(AAsm {aAssign = [AIndex], aOp = op, aArgs = [arg]}) =
   in
     [AAsm {aAssign = [AIndex], aOp = op, aArgs = [arg']}]
 
-spillAAsm spillArgs (AAsm [AReg i] op [ALoc (APtr (AReg j) index off)]) =
+spillAAsm spillArgs (AAsm [AReg i] op [ALoc (APtr (AReg j) index scale off)]) =
   let
     aasm' = if j > max_color_num
               then [AAsm [ASpill] Nop [ALoc $ AMem $ j - max_color_num],
                     AAsm [AReg i] op [ALoc ASpill]]
-              else [AAsm [AReg i] op [ALoc (APtr (AReg j) index off)]]
+              else [AAsm [AReg i] op [ALoc (APtr (AReg j) index scale off)]]
   in
     if i > max_color_num
       then if j > max_color_num
              then [AAsm [AUtil] Nop [ALoc $ AMem $ j - max_color_num],
-                   AAsm [AUtil] Nop [ALoc $ APtr AUtil index off],
+                   AAsm [AUtil] Nop [ALoc $ APtr AUtil index scale off],
                    AAsm [ASpill] Nop [ALoc $ AMem $ i - max_color_num],
                    AAsm [ASpill] op [ALoc AUtil],
                    AAsm [AMem $ i - max_color_num] Nop [ALoc ASpill]]
              else [AAsm [ASpill] Nop [ALoc $ AMem $ i - max_color_num],
-                   AAsm [ASpill] op [ALoc $ APtr (AReg j) index off],
+                   AAsm [ASpill] op [ALoc $ APtr (AReg j) index scale off],
                    AAsm [AMem $ i - max_color_num] Nop [ALoc ASpill]]
       else aasm'
+
+spillAAsm spillArgs aasm@(AAsm [ASpill] op [arg]) = [aasm]
 
 spillAAsm spillArgs (AAsm [AReg i] op [arg]) =
   let
@@ -80,30 +82,30 @@ spillAAsm spillArgs (AAsm [AReg i] op [arg]) =
             AAsm [AMem $ i - max_color_num] Nop [ALoc ASpill]]
       else [aasm']
 
-spillAAsm spillArgs (AAsm [APtr (AReg i) index off] op [ALoc (APtr (AReg j) index' off')]) =
+spillAAsm spillArgs (AAsm [APtr (AReg i) index scale off] op [ALoc (APtr (AReg j) index' scale' off')]) =
   error ("BANANA ")
 
-spillAAsm spillArgs (AAsm [APtr (AReg i) index off] op [arg]) =
+spillAAsm spillArgs (AAsm [APtr (AReg i) index scale off] op [arg]) =
   let
     arg' = if spillArgs then spillVal arg
                         else arg
     aasm' = case arg' of
               ALoc (AMem j) -> [AAsm [ASpill] op [arg'],
-                    AAsm [APtr (AReg i) index off] op [ALoc ASpill]]
-              _ -> [AAsm [APtr (AReg i) index off] op [arg']]
+                    AAsm [APtr (AReg i) index scale off] op [ALoc ASpill]]
+              _ -> [AAsm [APtr (AReg i) index scale off] op [arg']]
   in
     if i > max_color_num
       then [AAsm [ASpill] Nop [ALoc $ AMem $ i - max_color_num],
             AAsm [AUtil] op [arg'],
-            AAsm [APtr ASpill index off] op [ALoc AUtil]]
+            AAsm [APtr ASpill index scale off] op [ALoc AUtil]]
       else aasm'
 
-spillAAsm _ aasm@(ACtrl (AIf (ALoc (AReg i)) label)) =
+spillAAsm _ aasm@(ACtrl (AIf (ALoc (AReg i)) label err)) =
   if i > max_color_num
     then [AAsm {aAssign = [ASpill],
                 aOp = Nop,
                 aArgs = [ALoc $ AMem $ i - max_color_num]},
-          ACtrl (AIf (ALoc (ASpill)) label)]
+          ACtrl (AIf (ALoc (ASpill)) label err)]
     else [aasm]
 
 spillAAsm _ aasm@(ACtrl c) = [aasm]

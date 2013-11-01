@@ -31,11 +31,11 @@ replaceAsm coloring aasm@(AAsm {aAssign = assigns, aOp = op, aArgs = args}) =
   in
     spillAAsm True aasm
 
-replaceAsm coloring aasm@(ACtrl (AIf aval label)) =
+replaceAsm coloring aasm@(ACtrl (AIf aval label err)) =
   let
     aval' = replaceArgs coloring aval
   in
-    spillAAsm True $ ACtrl (AIf aval' label)
+    spillAAsm True $ ACtrl (AIf aval' label err)
 
 replaceAsm coloring aasm@(ACtrl a) = spillAAsm True aasm
 
@@ -48,12 +48,12 @@ replaceAsm coloring aasm@(AFnCall fnName loc locs lives) =
 replaceAsm coloring aasm = error (" replaceAsm EXHAUSTED" ++ show aasm)
 
 replaceAssigns :: ColoringMap -> ALoc -> ALoc
-replaceAssigns coloring (APtr base index scale) =
+replaceAssigns coloring (APtr base index scale off) =
   let
     index' = case index of Nothing -> Nothing
                            Just loc -> Just (replaceAssigns coloring loc)
   in
-    APtr (replaceAssigns coloring base) index' scale
+    APtr (replaceAssigns coloring base) index' scale off
 replaceAssigns coloring (ATemp i) =
   let
     Color c = coloring Map.! (ATemp i)

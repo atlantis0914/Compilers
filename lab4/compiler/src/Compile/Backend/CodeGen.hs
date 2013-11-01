@@ -35,7 +35,7 @@ fnListCodeGen fnList fnMap =
   let
     fnAasms = genFIR fnList fnMap
     asm = concatMap fnAAsmCodeGen fnAasms
-    epilogue = concat ["error:\n", "  movw $1, %ax\n", "  movw $0, %bx\n", "  divw %bx\n"]
+    epilogue = concat ["error:\n", "  movw $1, %ax\n", "  movw $0, %bx\n", "  divw %bx\n", "mem_error:\n", "  jmp 0\n"]
     asm' = asm ++ epilogue
   in
     asm'
