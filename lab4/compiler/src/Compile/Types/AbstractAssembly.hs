@@ -24,14 +24,14 @@ data AVal = ALoc ALoc
           | ABool Bool
           | AImm Int deriving (Show, Eq)
 
-data ALoc = AReg Int
-          | ATemp Int
-          | ASpill
-          | AUtil
-          | AIndex
-          | AArg Int
-          | APtr ALoc (Maybe ALoc) Int Int
-          | AMem Int deriving (Show, Eq, Ord)
+data ALoc = AReg Int Bool
+          | ATemp Int Bool
+          | ASpill Bool
+          | AUtil Bool
+          | AIndex Bool
+          | AArg Int Bool
+          | APtr ALoc (Maybe ALoc) Int Int Bool
+          | AMem Int Bool deriving (Show, Eq, Ord)
 
 data ACtrl = ARet AVal
            | ALabel Int

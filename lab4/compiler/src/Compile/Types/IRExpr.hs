@@ -6,7 +6,7 @@ import Compile.Types.Expr
 
 data IRExpr = IRExpInt Integer Base
             | IRExpBool Bool
-            | IRIdent String
+            | IRIdent String Int
             | IRExpBinOp Op IRExpr IRExpr
             | IRExpRelOp Op IRExpr IRExpr
             | IRExpLogOp Op IRExpr IRExpr

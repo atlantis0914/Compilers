@@ -135,6 +135,11 @@ genStmt fm (m,i,l,aasm) (IRBlock stmts) = let
 
 genStmt _ _ stmtm = error ("GENSTMT " ++ show stmtm)
 
+getSize :: IRExpr -> Bool
+getSize IRExpInt _ _ -> False
+getSize IRExpBool _ -> False
+getSize IRIdent s -> m Map.! s
+
 genCtrl :: FnMap -> Alloc -> IRCtrl -> Alloc
 
 genCtrl fm (m,i,l,aasm) (Assert e _) = let
