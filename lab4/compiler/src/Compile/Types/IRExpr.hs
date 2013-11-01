@@ -13,7 +13,7 @@ data IRExpr = IRExpInt Integer Base
             | IRExpPolyEq Op IRExpr IRExpr
             | IRExpUnOp Op IRExpr
             | IRExpTernary IRExpr IRExpr IRExpr
-            | IRExpFnCall String [IRExpr]
+            | IRExpFnCall String [IRExpr] Int
             | IRExpNull
             | IRExpAlloc IdentType Int
             | IRExpAllocArray IdentType IRExpr Int

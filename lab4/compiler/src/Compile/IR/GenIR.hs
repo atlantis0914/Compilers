@@ -138,7 +138,14 @@ genStmt _ _ stmtm = error ("GENSTMT " ++ show stmtm)
 getSize :: IRExpr -> Bool
 getSize IRExpInt _ _ -> False
 getSize IRExpBool _ -> False
-getSize IRIdent s -> m Map.! s
+getSize IRIdent _ size -> size == 8
+getSize IRExpBinOp _ e _ -> getSize e
+getSize IRExpRelOp _ e _ -> getSize e
+getSize IRExpLogOp _ e _ -> getSize e
+getSize IRExpPolyEq _ e _ -> getSize e
+getSize IRExpUnOp _ e -> getSize e
+getSize IRExpTernary _ e _ -> getSize e
+getSize IRExpFnCall _ _ -> False
 
 genCtrl :: FnMap -> Alloc -> IRCtrl -> Alloc
 
