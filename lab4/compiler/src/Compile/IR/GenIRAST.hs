@@ -146,7 +146,7 @@ getTypeForStructField sm (IStruct (ITypeDef sName)) field =
 getSizeForTypeMap :: SMap -> IdentType -> Int
 getSizeForTypeMap _ IInt = 4
 getSizeForTypeMap _ IBool = 4
-getSizeForTypeMap _ IVoid = error ("Trying to get size for void")
+getSizeForTypeMap _ IVoid = error ("Trying to get size for void typeMap")
 getSizeForTypeMap _ (IPtr _) = 8
 getSizeForTypeMap _ (IArray _) = 8
 getSizeForTypeMap sm (IStruct (ITypeDef name)) = 
@@ -169,7 +169,7 @@ getLongVsQuad IInt = 4
 getLongVsQuad IBool = 4
 getLongVsQuad (IPtr _) = 8
 getLongVsQuad (IArray _) = 8
-getLongVsQuad IVoid = error ("Trying to get size for void")
+getLongVsQuad IVoid = 4
 getLongVsQuad (IStruct (ITypeDef name)) = 8
 --error("Trying to get size for concrete struct : " ++ show name)
 getLongVsQuad (ITypeDef name) = error ("Trying to get size for a type-def. Should be gone by GneIRAST : " ++ name)

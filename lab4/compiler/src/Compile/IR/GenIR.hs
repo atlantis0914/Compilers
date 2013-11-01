@@ -104,18 +104,19 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect base _ _ size _) op e) = let
   (tNum, ind, off, additive) = getPtrFromLastOp aasm''
   c = case ind of Just _ -> [AAsm [APtr (ATemp tNum True) ind (off) (additive + size) (getSize e)] Nop [ALoc dest]]
                   Nothing -> [AAsm [APtr (ATemp tNum True) ind (off + size) 0 (getSize e)] Nop [ALoc dest]]
-  in Trace.trace ("Last op is : " ++ show (last aasm'') ++ " and " ++
-      " produced " ++ show c) $ (m'',i'',l'',aasm'' ++ c)
+  in (m'',i'',l'',aasm'' ++ c)
+--Trace.trace ("Last op is : " ++ show (last aasm'') ++ " and " ++
+--      " produced " ++ show c) $ (m'',i'',l'',aasm'' ++ c)
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript (IRIdent s _) index t size) op e) = let
   dest = ATemp i (getSize index)
-  temp = APtr (ATemp (m' Map.! s) True) (Just (AIndex False)) 1 8 (getSize e)
+  temp = APtr (ATemp (m' Map.! s) True) (Just (AIndex (getSize index))) 1 8 (getSize e)
   (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) index dest
   aasm'' = aasm' ++ genArrayCheck (ATemp (m' Map.! s) True) dest
   dest' = ATemp i' (getSize e)
   (m'',i'',l'',aasm''') = genExp fm (m',i'+1,l',aasm'') e dest'
   b = [AAsm [dest] Mul [ALoc $ dest, AImm size]]
-  c = [AAsm [AIndex False] Nop [ALoc $ dest], AAsm [temp] Nop [ALoc $ dest']]
+  c = [AAsm [AIndex (getSize index)] Nop [ALoc $ dest], AAsm [temp] Nop [ALoc $ dest']]
   in (m'',i'',l'', aasm''' ++ b ++ c)
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript base index t size) op e) = let
@@ -127,7 +128,7 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript base index t size) op e) = 
   val = ATemp i'' (getSize e)
   (m''',i''',l''',aasm'''') = genExp fm (m'',i''+1,l'',aasm''') e val
   b = [AAsm [index'] Mul [ALoc $ index', AImm size]]
-  c = [AAsm [AIndex False] Nop [ALoc index'], AAsm [APtr base' (Just (AIndex False)) 1 8 (getSize e)] Nop [ALoc $ val]]
+  c = [AAsm [AIndex (getSize index)] Nop [ALoc index'], AAsm [APtr base' (Just (AIndex (getSize index))) 1 8 (getSize e)] Nop [ALoc $ val]]
   in (m''',i''',l''', aasm'''' ++ b ++ c)
 
 genStmt fm (m,i,l,aasm) (IRBlock stmts) = let
@@ -184,7 +185,7 @@ genCtrl fm (m,i,l,aasm) (If e s1 s2 _) = let
   s2Aasm' = (ACtrl $ ALabel s2Label):s2Aasm ++ [ACtrl $ AGoto endLabel]
   outputAasm =
     eAasm ++ -- assembly for e
-    [ACtrl $ AIf (ALoc $ ATemp i False) s1Label Nothing,
+    [ACtrl $ AIf (ALoc $ ATemp i (getSize e)) s1Label Nothing,
      ACtrl $ AGoto s2Label] -- Assembly for conditional jmp to s1 or s2
     ++ s1Aasm' -- Assembly for s1, including goto endLabel.
     ++ s2Aasm' -- Assembly for s2, including goto endLabel.
@@ -290,12 +291,12 @@ genExp f alloc@(varMap,n,l,aasm) e@(IRExpAllocArray t expr s) dest = let
 
   locs = [ATemp n' False, ATemp n False]
   aasm'' = aasm' ++ genArrayAllocCheck (ATemp n False) ++
-                    [AAsm [ATemp (n' + 1) False] Add [ALoc $ ATemp n False, AImm $ fromIntegral (min (8 `div` (max s 4)) 1)],
+                    [AAsm [ATemp (n' + 1) False] Add [ALoc $ ATemp n False, AImm $ fromIntegral (max (8 `div` (max s 4)) 1)],
                      AAsm [ATemp n' False] Nop [AImm $ fromIntegral s],
                      AAsm [AReg 12 False] Nop [ALoc $ ATemp n' False],
                      AAsm [AReg 13 False] Nop [ALoc $ ATemp (n' + 1) False],
                      AFnCall "calloc" dest locs []]
-  in (varMap',n'+2,l',aasm'' ++ [AAsm [APtr dest Nothing 0 0 False] Nop [ALoc $ ATemp n False]])
+  in Trace.trace ("Dest is : " ++ show dest) $ (varMap',n'+2,l',aasm'' ++ [AAsm [APtr dest Nothing 0 0 False] Nop [ALoc $ ATemp n False]])
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpDereference (IRIdent s _) t _) dest =
   (varMap,n,l,aasm ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp (varMap Map.! s) True) Nothing 0 0 (getSize e)]])
