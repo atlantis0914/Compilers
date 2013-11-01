@@ -7,18 +7,30 @@ import qualified Debug.Trace as Trace
 import Compile.Backend.Registers
 import Compile.Backend.BackendUtils
 
+getLocSize :: ALoc -> Bool
+getLocSize (AReg _ b) = b
+getLocSize (ATemp _ b) = b
+getLocSize (ASpill b) = b
+getLocSize (AUtil b) = b
+getLocSize (AIndex b) = b
+getLocSize (AArg _ b) = b
+getLocSize (APtr _ _ _ _ b) = b
+getLocSize (AMem _ b) = b
+
 genAsm :: [AAsm] -> (String, Int, Int, Int) -> [String]
 genAsm aasms fnContext =
   map (aasmToString fnContext) aasms
 
 cmpAsm :: ALoc -> AVal -> String
 cmpAsm loc val =
-  "cmpl " ++ (avalToString val) ++ ", " ++ (alocToString loc)
+  if getLocSize loc 
+    then "cmpq " ++ (avalToString val) ++ ", " ++ (alocToString loc)
+    else "cmpl " ++ (avalToString val) ++ ", " ++ (alocToString loc)
 
 aasmToString :: (String, Int, Int, Int) -> AAsm -> String
 
 aasmToString _ (AAsm [loc] LogicalNot [arg]) =
-  "  movl " ++ (avalToString arg) ++ ", " ++ (alocToString loc) ++ "\n  not " ++ (alocToString loc) ++ "\n  and $1, " ++ (alocToString loc) ++ "\n"
+  "  " ++ (opToString Nop loc) ++ " " ++ (avalToString arg) ++ ", " ++ (alocToString loc) ++ "\n  not " ++ (alocToString loc) ++ "\n  and $1, " ++ (alocToString loc) ++ "\n"
 
 aasmToString _ AAsm {aAssign = [loc], aOp = Lt, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setl " ++ (alocByteToString loc) ++ "\n"
@@ -39,26 +51,26 @@ aasmToString _ AAsm {aAssign = [loc], aOp = Neq, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setne " ++ (alocByteToString loc) ++ "\n"
 
 aasmToString _ AAsm {aAssign = [loc], aOp = Neg, aArgs = [arg]} =
-  (aasmToString ("", 0, 0, 0) (AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]}) ++ "  " ++ (opToString Neg) ++ " " ++ (alocToString loc) ++ "\n")
+  (aasmToString ("", 0, 0, 0) (AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]}) ++ "  " ++ (opToString Neg loc) ++ " " ++ (alocToString loc) ++ "\n")
 
 aasmToString _ AAsm {aAssign = [loc], aOp = Div, aArgs = [snd]} = divModToString loc snd Div
 aasmToString _ AAsm {aAssign = [loc], aOp = Mod, aArgs = [snd]} = divModToString loc snd Mod
 
 aasmToString _ AAsm {aAssign = [loc], aOp = LShift, aArgs = [snd]} =
   (checkLt32 snd) ++ (checkGte0 snd) ++
-  "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString LShift) ++ " %cl, " ++ (alocToString loc) ++ "\n"
+  "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString LShift loc) ++ " %cl, " ++ (alocToString loc) ++ "\n"
 
 aasmToString _ AAsm {aAssign = [loc], aOp = RShift, aArgs = [snd]} =
   (checkLt32 snd) ++ (checkGte0 snd) ++
-  "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString RShift) ++ " %cl, " ++ (alocToString loc) ++ "\n"
+  "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString RShift loc) ++ " %cl, " ++ (alocToString loc) ++ "\n"
 
 aasmToString _ AAsm {aAssign = [loc], aOp = BitwiseNot, aArgs = [arg]} =
-  "  " ++ (opToString BitwiseNot) ++ " " ++ (alocToString loc) ++ "\n"
+  "  " ++ (opToString BitwiseNot loc) ++ " " ++ (alocToString loc) ++ "\n"
 
 aasmToString _ AAsm {aAssign = [loc], aOp = Add, aArgs = [arg]} = 
   if (isZero arg) 
     then ""
-    else "  " ++ (opToString Add) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
+    else "  " ++ (opToString Add loc) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
   where 
     isZero (AImm 0) = True
     isZero _ = False
@@ -66,13 +78,13 @@ aasmToString _ AAsm {aAssign = [loc], aOp = Add, aArgs = [arg]} =
 aasmToString _ AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]} =
   if (argEq loc arg)
     then ""
-    else "  " ++ (opToString Nop) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
+    else "  " ++ (opToString Nop loc) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
   where
     argEq loc (ALoc loc') = loc == loc'
     argEq _ _ = False
 
 aasmToString _ AAsm {aAssign = [loc], aOp = op, aArgs = [arg]} =
-  "  " ++ (opToString op) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
+  "  " ++ (opToString op loc) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
 
 aasmToString (fnName, _, _ ,_) (ACtrl (ALabel i)) =
   "\n" ++ fnName ++ "label" ++ show i ++ ":\n"
@@ -94,7 +106,12 @@ aasmToString (_, size, numArgs, m) (ACtrl (ARet _)) =
                else ""
 
 aasmToString (_, size, numArgs, m) (AFnCall fnName loc locs lives) =
-    prologue ++ "  call " ++ fnName ++ "\n  movl %eax, %r15d\n" ++ addSize ++ (genEpilogues loc m lives) ++ "  movl %r15d, " ++ (alocToString loc) ++ "\n"
+    prologue ++ "  call " ++ fnName ++ "\n  " ++ (opToString Nop loc) ++ " " ++
+    alocToString (AReg 0 (getLocSize loc)) ++ ", " ++ 
+    (alocToString (ASpill (getLocSize loc))) ++ 
+    "\n" ++ addSize ++ (genEpilogues loc m lives) ++ "  " ++ 
+    (opToString Nop loc) ++ " " ++ (alocToString (ASpill (getLocSize loc))) ++
+    ", " ++ (alocToString loc) ++ "\n"
   where 
     (prologue, size) = genProlugues loc locs m lives
     addSize = if (size > 0) 
@@ -195,17 +212,22 @@ alocToQString (AMem i b) = alocToString (AMem i b)
 alocToQString (APtr base _ _ _ b) = alocToQString base
 alocToQString (AIndex b) = safeLookup index_reg_num regQMap "SHIT"
 alocToQString (AUtil b) = safeLookup util_reg_num regQMap "SHIT"
+alocToQString (ASpill b) = safeLookup spill_reg_num regQMap "SHIT"
 
 alocToString :: ALoc -> String
 alocToString (AArg i b) = (show ((i + 2) * 8)) ++ "(%rbp)"
-alocToString (ASpill b) = safeLookup spill_reg_num regMap "SPILL"
-alocToString (AIndex b) = safeLookup index_reg_num regMap "INDEX"
-alocToString (AUtil b) = safeLookup util_reg_num regMap "INDEX"
-alocToString (AReg i b) = safeLookup i regMap "SHIT"
+alocToString (ASpill b) = if b then alocToQString (ASpill b)
+                               else safeLookup spill_reg_num regMap "SPILL"
+alocToString (AIndex b) = if b then alocToQString (AIndex b)
+                               else safeLookup index_reg_num regMap "INDEX"
+alocToString (AUtil b) = if b then alocToQString (AUtil b)
+                              else safeLookup util_reg_num regMap "INDEX"
+alocToString (AReg i b) = if b then alocToQString (AReg i b)
+                               else safeLookup i regMap "SHIT"
 alocToString (AMem i b) =  (show ((i - 1) * 8)) ++ "(%rsp)"
 alocToString (ATemp i b) = error "There's still an temp!"
 alocToString (APtr base Nothing scale offset b) = show scale ++ "(" ++ alocToString base ++ ")"
-alocToString (APtr base (Just index) scale offset b) = show offset ++ "(" ++ alocToString base ++ "," ++ alocToString index ++ "," ++ show scale ++ ")"
+alocToString (APtr base (Just index) scale offset b) = show offset ++ "(" ++ alocToString base ++ "," ++ alocToQString index ++ "," ++ show scale ++ ")"
 alocToString loc = error (show loc ++ " EXHAUSTED")
 
 divModToString :: ALoc -> AVal -> Op -> String
@@ -213,33 +235,50 @@ divModToString fst snd op = (divPrologue fst snd) ++ (divEpilogue fst op)
 
 divPrologue :: ALoc -> AVal -> String
 divPrologue fst snd =
-  "  " ++ "movl" ++ " " ++ (alocToString fst) ++ ", " ++ "%eax" ++ "\n" ++
+  "  " ++ (opToString Nop fst) ++ " " ++ (alocToString fst) ++ ", " ++ alocToString (AReg 0 (getLocSize fst)) ++ "\n" ++
   "  " ++ "cltd" ++ "\n" ++
-  "  " ++ (opToString Div) ++ " " ++ (avalToString snd) ++ "\n"
+  "  " ++ (opToString Div fst) ++ " " ++ (avalToString snd) ++ "\n"
 
 divEpilogue :: ALoc -> Op -> String
 divEpilogue fst op
-  | op == Div = "  " ++ "movl" ++ " " ++ "%eax" ++ "," ++ (alocToString fst) ++ "\n"
-  | op == Mod = "  " ++ "movl" ++ " " ++ "%edx" ++ "," ++ (alocToString fst) ++ "\n"
+  | op == Div = "  " ++ (opToString Nop fst) ++ " " ++ alocToString (AReg 0 (getLocSize fst)) ++ "," ++ (alocToString fst) ++ "\n"
+  | op == Mod = "  " ++ (opToString Nop fst) ++ " " ++ alocToString (AReg 2 (getLocSize fst)) ++ "," ++ (alocToString fst) ++ "\n"
 
-opToString :: Op -> String
-opToString op =
-  case op of Mul -> "imull"
-             Add -> "addl"
-             Sub -> "subl"
-             Div -> "idivl"
-             Neg -> "negl"
-             Mod -> "idivl"
-             Nop -> "movl"
-             RShift -> "sarl"
-             LShift -> "sall"
-             BitwiseAnd -> "andl"
-             BitwiseOr -> "orl"
-             BitwiseNot -> "notl"
-             BitwiseXOr -> "xorl"
-             Incr -> "addl"
-             Decr -> "subl"
-             _ -> error ("error matching " ++ show op)
+opToString :: Op -> ALoc -> String
+opToString op loc =
+  if getLocSize loc 
+    then case op of Mul -> "imulq"
+                    Add -> "addq"
+                    Sub -> "subq"
+                    Div -> "idivq"
+                    Neg -> "negq"
+                    Mod -> "idivq"
+                    Nop -> "movq"
+                    RShift -> "sarq"
+                    LShift -> "salq"
+                    BitwiseAnd -> "andq"
+                    BitwiseOr -> "orq"
+                    BitwiseNot -> "notq"
+                    BitwiseXOr -> "xorq"
+                    Incr -> "addq"
+                    Decr -> "subq"
+                    _ -> error ("error matching " ++ show op)
+    else case op of Mul -> "imull"
+                    Add -> "addl"
+                    Sub -> "subl"
+                    Div -> "idivl"
+                    Neg -> "negl"
+                    Mod -> "idivl"
+                    Nop -> "movl"
+                    RShift -> "sarl"
+                    LShift -> "sall"
+                    BitwiseAnd -> "andl"
+                    BitwiseOr -> "orl"
+                    BitwiseNot -> "notl"
+                    BitwiseXOr -> "xorl"
+                    Incr -> "addl"
+                    Decr -> "subl"
+                    _ -> error ("error matching " ++ show op)
 
 checkGte0 :: AVal -> String
 checkGte0 aval =

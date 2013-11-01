@@ -141,10 +141,10 @@ getSize :: IRExpr -> Bool
 getSize (IRExpInt _ _) = False
 getSize (IRExpBool _) = False
 getSize (IRIdent _ size) = size == 8
-getSize (IRExpBinOp _ e _) = getSize e
-getSize (IRExpRelOp _ e _) = getSize e
-getSize (IRExpLogOp _ e _) = getSize e
-getSize (IRExpPolyEq _ e _) = getSize e
+getSize (IRExpBinOp _ e _) = False
+getSize (IRExpRelOp _ e _) = False
+getSize (IRExpLogOp _ e _) = False
+getSize (IRExpPolyEq _ e _) = False
 getSize (IRExpUnOp _ e) = getSize e
 getSize (IRExpTernary _ e _) = getSize e
 getSize (IRExpFnCall _ _ size) = size == 8
