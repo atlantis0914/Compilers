@@ -6,7 +6,7 @@ import Compile.Types.Expr
 
 data IRExpr = IRExpInt Integer Base
             | IRExpBool Bool
-            | IRIdent String Int
+            | IRIdent String Int 
             | IRExpBinOp Op IRExpr IRExpr
             | IRExpRelOp Op IRExpr IRExpr
             | IRExpLogOp Op IRExpr IRExpr
@@ -25,7 +25,7 @@ data IRExpr = IRExpInt Integer Base
 instance Show IRExpr where
   show (IRExpInt n _) = show n
   show (IRExpBool b) = show b
-  show (IRIdent i) = i
+  show (IRIdent i size) = i
   show (IRExpNull) = "NULL"
   show (IRExpBinOp op e1 e2) = "(" ++ show e1 ++ ") " ++ show op ++ " (" ++ show e2 ++ ")"
   show (IRExpRelOp op e1 e2) = "(" ++ show e1 ++ ") " ++ show op ++ " (" ++ show e2 ++ ")"

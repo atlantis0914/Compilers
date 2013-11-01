@@ -79,7 +79,7 @@ isDeclaredAsgn i decls = assert (Set.member (getIDLVal i) decls)
 
 -- produces a (definedSet, liveSet, Bool). Takes a declaredSet 
 -- (the declared variables in scope) and also performs undeclared checking.
-checkStmt :: [String] -> Stmt -> Bool -> Set.Set String -> (Set.Set String, Set.Set String, Bool)
+checkStmt :: [String] -> Stmt -> Bool -> Set.Set (String, IdentType) -> (Set.Set (String, IdentType), Set.Set (String, IdentType), Bool)
 checkStmt args (Ctrl (Return (Just e) pos)) _ decls = 
   isDeclaredExpr e decls pos (Set.empty, used e, True)
 checkStmt args (Ctrl (Return Nothing pos)) _ decls = (Set.empty, Set.empty, True)
@@ -87,7 +87,7 @@ checkStmt args (Ctrl (Return Nothing pos)) _ decls = (Set.empty, Set.empty, True
 checkStmt args (Block stmts) doErr decls = checkBlock args stmts doErr decls
 checkStmt args (Decl i t pos rest) doErr decls = 
   let
-    (decsRest, liveRest, b1) = isDeclaredDecl i decls $ checkStmt args rest doErr (Set.insert i decls)
+    (decsRest, liveRest, b1) = isDeclaredDecl i decls $ checkStmt args rest doErr (Set.insert (i,t) decls)
     setI = isInitDecl args doErr liveRest i pos $ Set.singleton(i)
   in
     setI `seq` (Set.difference decsRest setI, Set.difference liveRest setI, b1)

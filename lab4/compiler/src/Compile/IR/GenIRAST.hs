@@ -67,7 +67,7 @@ toIRExpr' fm sm tm (ExpInt i _ b) = (IRExpInt i b, IInt)
 toIRExpr' fm sm tm (ExpBool b _) = (IRExpBool b, IBool)
 toIRExpr' fm sm tm (Ident s _) = 
   case (Map.lookup s tm) of 
-    Just t -> (IRIdent s, t)
+    Just t -> (IRIdent s (getLongVsQuad t), t)
     _ -> error ("error looking up ident : " ++ show s)
 toIRExpr' fm sm tm (ExpNull _) = (IRExpNull, IPtr IAny)
 -- We return a (typ *) after the alloc. 
@@ -160,3 +160,12 @@ getSizeForArrayRef (IPtr _) = 8
 getSizeForArrayRef (IArray _) = 8
 getSizeForArrayRef (IStruct (ITypeDef _)) = 8
 getSizeForArrayRef (ITypeDef name) = error ("Trying to get size for a type-def. Should be gone by GneIRAST : " ++ name)
+
+getLongVsQuad :: IdentType -> Int
+getLongVsQuad _ IInt = 4
+getLongVsQuad _ IBool = 4
+getLongVsQuad _ (IPtr _) = 8
+getLongVsQuad _ (IArray _) = 8
+getLongVsQuad _ IVoid = error ("Trying to get size for void")
+getLongVsQuad sm (IStruct (ITypeDef name)) = error("Trying to get size for concrete struct")
+getLongVsQuad sm (ITypeDef name) = error ("Trying to get size for a type-def. Should be gone by GneIRAST : " ++ name)
