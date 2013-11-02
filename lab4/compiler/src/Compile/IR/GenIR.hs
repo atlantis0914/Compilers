@@ -96,15 +96,25 @@ genStmt fm (m,i,l,aasm) (IRAsgn expr@(IRExpDereference b t s) _ e) = let
   c = [AAsm [APtr b' Nothing 0 0 (getSize expr)] Nop [ALoc dest]]
   in (m'',i'',l'',aasm'' ++ c)
 
-genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect base _ _ size _) op e) = let
+genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect base@(IRExpDereference _ _ _) _ _ size _) op e) = let
   dest = ATemp i (getSize e)
-  (m',i',l',aasm') = genExp fm (m,i+1,l,aasm) e dest
+  (m',i',l',aasm') = genExp fm (m,i+1,l,[]) e dest
   dest' = ATemp i' (getSize base)
-  (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',aasm') base dest'
+  (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',[]) base dest'
   (tNum, ind, off, additive) = getPtrFromLastOp aasm''
   c = case ind of Just _ -> [AAsm [APtr (ATemp tNum True) ind (off) (additive + size) (getSize e)] Nop [ALoc dest]]
                   Nothing -> [AAsm [APtr (ATemp tNum True) ind (off + size) 0 (getSize e)] Nop [ALoc dest]]
-  in (m'',i'',l'',aasm'' ++ c)
+  in (m'',i'',l'',aasm ++ aasm'' ++ aasm' ++ c)
+
+genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect base _ _ size _) op e) = let
+  dest = ATemp i (getSize e)
+  (m',i',l',aasm') = genExp fm (m,i+1,l,[]) e dest
+  dest' = ATemp i' (getSize base)
+  (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',[]) base dest'
+  (tNum, ind, off, additive) = getPtrFromLastOp aasm''
+  c = case ind of Just _ -> [AAsm [APtr (ATemp tNum True) ind (off) (additive + size) (getSize e)] Nop [ALoc dest]]
+                  Nothing -> [AAsm [APtr (ATemp tNum True) ind (off + size) 0 (getSize e)] Nop [ALoc dest]]
+  in (m'',i'',l'',aasm ++ aasm' ++ (init aasm'') ++ c)
 --Trace.trace ("Last op is : " ++ show (last aasm'') ++ " and " ++
 --      " produced " ++ show c) $ (m'',i'',l'',aasm'' ++ c)
 
