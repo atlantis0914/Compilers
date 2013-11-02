@@ -28,7 +28,7 @@ type Alloc = (Map.Map String Int, Int)
 
 debugFlag = False
 
-maxTempsBeforeSpilling = 40000000
+maxTempsBeforeSpilling = 1000
 
 -- fnListCodeGen :: FnList -> FnMap -> String
 fnListCodeGen fnList fnMap =
