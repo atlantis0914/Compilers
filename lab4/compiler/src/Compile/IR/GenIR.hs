@@ -239,9 +239,12 @@ genArrayCheck base index =
    AAsm [ASpill False] Gte [ALoc $ AIndex False, ALoc $ APtr base Nothing 0 0 False],
    ACtrl $ AIf (ALoc $ ASpill False) 0 (Just "mem_error")]
 
-genArrayAllocCheck :: ALoc -> [AAsm]
-genArrayAllocCheck size =
-  [AAsm [ASpill False] Lt [ALoc $ size, AImm 0],
+genArrayAllocCheck :: ALoc -> Int -> [AAsm]
+genArrayAllocCheck size s =
+  [AAsm [ASpill False] Lt [ALoc size, AImm 0],
+   ACtrl $ AIf (ALoc $ ASpill False) 0 (Just "mem_error"),
+   AAsm [ASpill False] Mul [ALoc size, AImm s],
+   AAsm [ASpill False] Lt [ALoc $ ASpill False, AImm 0],
    ACtrl $ AIf (ALoc $ ASpill False) 0 (Just "mem_error")]
 
 genExp :: FnMap -> Alloc -> IRExpr -> ALoc -> Alloc
@@ -299,7 +302,7 @@ genExp f alloc@(varMap,n,l,aasm) e@(IRExpAlloc t s) dest =
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpAllocArray t expr s) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr $ ATemp n False
   locs = [ATemp n' False, ATemp n False]
-  aasm'' = aasm' ++ genArrayAllocCheck (ATemp n False) ++
+  aasm'' = aasm' ++ genArrayAllocCheck (ATemp n False) s ++
                     [AAsm [ATemp (n' + 1) False] Add [ALoc $ ATemp n False, AImm $ fromIntegral (max (8 `div` (max s 4)) 1)],
                      AAsm [ATemp n' False] Nop [AImm $ fromIntegral s],
                      AAsm [AReg 12 False] Nop [ALoc $ ATemp n' False],
