@@ -263,7 +263,7 @@ asgn = do
   pos  <- getPosition
   (dest, op) <- lValWithPostOp
   case (op) of 
-    (Just o) -> (do return $ PAsgn dest (Nothing) (expForPostOp dest o pos) False pos)
+    (Just o) -> (do return $ PAsgn dest (Just o) (ExpInt 1 pos Dec) False pos)
     _ -> (do whiteSpace
              op   <- asnOp
              e    <- expr
@@ -301,10 +301,10 @@ lValWithPostOp =
 postOp :: C0Parser Op
 postOp = do
   (do reserved "++"
-      return $ Incr)
+      return $ Add)
    <|>
    (do reserved "--"
-       return $ Decr)
+       return $ Sub)
 
 -- Parses a control flow structure
 ctrl :: C0Parser ParseStmt
