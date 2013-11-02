@@ -163,7 +163,9 @@ checkStmtValid fName (context@(map, fnMap, dMap, tdMap, sMap, valid)) (Asgn lval
 --    maybeType = Map.lookup (getIDLVal name) map
     maybeType = checkExprType fName context e
     correctType = case (maybeType, maybeExprType) of
-                    (Just t1, Just t2) -> (Maybe.isJust $ coerceAny t1 t2) && (Maybe.maybe False isSmallType $ coerceAny t1 t2) 
+                    (Just t1, Just t2) -> 
+                      let mType = coerceAny t1 t2 
+                      in (Maybe.isJust $ mType) && (Maybe.maybe False isSmallType $ mType) 
                     (_, _) -> False
   in
     if correctType then (map, fnMap, dMap, tdMap, sMap, valid && correctType)
@@ -218,7 +220,7 @@ checkStmtValid fName (context@(map, fnMap, dMap, tdMap, sMap, valid)) (Ctrl (Ret
                                                          Just t -> checkReturnType fName context t $ True
       in
         if isInt then (map, fnMap, dMap, tdMap, sMap, valid && isInt)
-                 else error ("Error: Expression has incorrect return type at " ++ show pos ++ " AST" ++ show expr))
+                 else error ("Error: Expression has incorrect return type at "))  -- ++ show pos ++ " AST" ++ show expr))
 
 checkStmtValid fName (context@(map, fnMap, dMap, tdMap, sMap, valid)) (Block stmts) =
   let
