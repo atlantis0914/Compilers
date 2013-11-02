@@ -75,4 +75,17 @@ instance Ord ALoc where
   (APtr _ _ _ _ _) `compare` (AUtil _) = LT
   (ASpill _) `compare` (AUtil _) = LT
   (AIndex _) `compare` (AUtil _) = LT
+  (AArg _ _) `compare` (AArg _ _) = EQ
+  (AArg _ _) `compare` (AIndex _) = GT
+  (AArg _ _) `compare` (AUtil _) = GT
+  (AArg _ _) `compare` (ASpill _) = GT
+  (AArg _ _) `compare` (AReg _ _) = GT
+  (AArg _ _) `compare` (ATemp _ _) = GT
+  (AArg _ _) `compare` (APtr _ _ _ _ _) = GT
+  (AReg _ _) `compare` (AArg _ _) = LT
+  (ATemp _ _) `compare` (AArg _ _) = LT
+  (APtr _ _ _ _ _) `compare` (AArg _ _) = LT
+  (ASpill _) `compare` (AArg _ _) = LT
+  (AIndex _) `compare` (AArg _ _) = LT
+  (AUtil _) `compare` (AArg _ _) = LT
 
