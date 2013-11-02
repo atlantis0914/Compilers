@@ -288,7 +288,6 @@ genExp f alloc@(varMap,n,l,aasm) e@(IRExpAlloc t s) dest =
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpAllocArray t expr s) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr $ ATemp n False
-
   locs = [ATemp n' False, ATemp n False]
   aasm'' = aasm' ++ genArrayAllocCheck (ATemp n False) ++
                     [AAsm [ATemp (n' + 1) False] Add [ALoc $ ATemp n False, AImm $ fromIntegral (max (8 `div` (max s 4)) 1)],
@@ -296,7 +295,7 @@ genExp f alloc@(varMap,n,l,aasm) e@(IRExpAllocArray t expr s) dest = let
                      AAsm [AReg 12 False] Nop [ALoc $ ATemp n' False],
                      AAsm [AReg 13 False] Nop [ALoc $ ATemp (n' + 1) False],
                      AFnCall "calloc" dest locs []]
-  in Trace.trace ("Dest is : " ++ show dest) $ (varMap',n'+2,l',aasm'' ++ [AAsm [APtr dest Nothing 0 0 False] Nop [ALoc $ ATemp n False]])
+  in (varMap',n'+2,l',aasm'' ++ [AAsm [APtr dest Nothing 0 0 False] Nop [ALoc $ ATemp n False]])
 
 genExp f alloc@(varMap,n,l,aasm) e@(IRExpDereference (IRIdent s _) t _) dest =
   (varMap,n,l,aasm ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp (varMap Map.! s) True) Nothing 0 0 (getSize e)]])
