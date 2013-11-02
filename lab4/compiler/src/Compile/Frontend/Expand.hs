@@ -13,7 +13,7 @@ expandPStatements stmts = concatMap expandPStatement stmts
         expandPStatement s@(PAsgn lval (Just op) e b p) = 
           if (funcCallInLVal lval) 
             then [s]
-            else [PAsgn (expandLVal lval) (Just op) (ExpBinOp op (lValToExpr (expandLVal lval)) (elabExpr e) p) b p]
+            else [PAsgn (expandLVal lval) (Nothing) (ExpBinOp op (lValToExpr (expandLVal lval)) (elabExpr e) p) b p]
         expandPStatement s@(PCtrl c) = [PCtrl $ expandCtrl c]
         expandPStatement s@(PBlock stmts) = let
           innerExpanded = expandPStatements stmts
