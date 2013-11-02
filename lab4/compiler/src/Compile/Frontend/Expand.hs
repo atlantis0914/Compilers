@@ -8,7 +8,7 @@ import Compile.Frontend.ElaborateExpr
 expandPStatements :: [ParseStmt] -> [ParseStmt]
 expandPStatements stmts = concatMap expandPStatement stmts
   where expandPStatement s@(PAsgn lval Nothing e b p) = [PAsgn (expandLVal lval) Nothing (elabExpr e) b p]
-        expandPStatement s@(PAsgn lval (Just op) e b p) = [PAsgn (expandLVal lval) Nothing (ExpBinOp op (lValToExpr (expandLVal lval)) (elabExpr e) p) b p]
+        expandPStatement s@(PAsgn lval (Just op) e b p) = [PAsgn (expandLVal lval) (Just op) (ExpBinOp op (lValToExpr (expandLVal lval)) (elabExpr e) p) b p]
         expandPStatement s@(PCtrl c) = [PCtrl $ expandCtrl c]
         expandPStatement s@(PBlock stmts) = let
           innerExpanded = expandPStatements stmts
