@@ -163,7 +163,7 @@ checkStmtValid fName (context@(map, fnMap, dMap, tdMap, sMap, valid)) (Asgn lval
 --    maybeType = Map.lookup (getIDLVal name) map
     maybeType = checkExprType fName context e
     correctType = case (maybeType, maybeExprType) of
-                    (Just t1, Just t2) -> Maybe.isJust $ coerceAny t1 t2 
+                    (Just t1, Just t2) -> (Maybe.isJust $ coerceAny t1 t2) && (Maybe.maybe False isSmallType $ coerceAny t1 t2) 
                     (_, _) -> False
   in
     if correctType then (map, fnMap, dMap, tdMap, sMap, valid && correctType)
