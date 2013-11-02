@@ -81,6 +81,13 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRIdent s size) _ e) = let
   (m',i',l',aasm') = genExp fm (m,i,l,aasm) e temp
   in (m',i',l',aasm')
 
+
+genStmt fm (m,i,l,aasm) (IRAsgn expr@(IRExpDereference (IRIdent s size) t _) _ e) = let
+  temp = APtr (ATemp (m Map.! s) (getSize (IRIdent s size))) Nothing 0 0 (getSize expr)
+  dest = ATemp i (getSize e)
+  (_,i',l',aasm') = genExp fm (m,i+1,l,aasm) e dest
+  c = [AAsm [temp] Nop [ALoc dest]]
+  in (m,i',l',aasm' ++ c)
 genStmt fm (m,i,l,aasm) (IRAsgn expr@(IRExpDereference (IRIdent s size) t _) _ e) = let
   temp = APtr (ATemp (m Map.! s) (getSize (IRIdent s size))) Nothing 0 0 (getSize expr)
   dest = ATemp i (getSize e)
@@ -112,11 +119,14 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpFieldSelect base _ _ size _) op e) = let
   dest' = ATemp i' (getSize base)
   (m'',i'',l'',aasm'') = genExp fm (m',i'+1,l',[]) base dest'
   (tNum, ind, off, additive) = getPtrFromLastOp aasm''
-  c = case ind of Just _ -> [AAsm [APtr (ATemp tNum True) ind (off) (additive + size) (getSize e)] Nop [ALoc dest]]
-                  Nothing -> [AAsm [APtr (ATemp tNum True) ind (off + size) 0 (getSize e)] Nop [ALoc dest]]
-  in (m'',i'',l'',aasm ++ aasm' ++ (init aasm'') ++ c)
---Trace.trace ("Last op is : " ++ show (last aasm'') ++ " and " ++
---      " produced " ++ show c) $ (m'',i'',l'',aasm'' ++ c)
+  c = case op of
+        Nothing -> case ind of Just _ -> [AAsm [APtr (ATemp tNum True) ind (off) (additive + size) (getSize e)] Nop [ALoc dest]]
+                               Nothing -> [AAsm [APtr (ATemp tNum True) ind (off + size) 0 (getSize e)] Nop [ALoc dest]]
+        Just op' -> [AAsm [ATemp i'' (getSize e)] Nop [ALoc $ APtr (ATemp tNum True) ind (off) (additive + size) (getSize e)],
+                     AAsm [ATemp i'' (getSize e)] op' [ALoc dest],
+                     AAsm [APtr (ATemp tNum True) ind (off) (additive + size) (getSize e)] Nop [ALoc $ ATemp i'' (getSize e)]]
+  
+  in (m'',i''+1,l'',aasm ++ aasm' ++ (init aasm'') ++ c)
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript (IRIdent s _) index t size) op e) = let
   dest = ATemp i (getSize index)
@@ -125,9 +135,12 @@ genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript (IRIdent s _) index t size)
   aasm'' = aasm' ++ genArrayCheck (ATemp (m' Map.! s) True) dest
   dest' = ATemp i' (getSize e)
   (m'',i'',l'',aasm''') = genExp fm (m',i'+1,l',aasm'') e dest'
-  b = [AAsm [dest] Mul [ALoc $ dest, AImm size]]
-  c = [AAsm [AIndex (getSize index)] Nop [ALoc $ dest], AAsm [temp] Nop [ALoc $ dest']]
-  in (m'',i'',l'', aasm''' ++ b ++ c)
+  b = [AAsm [dest] Mul [ALoc $ dest, AImm size],
+       AAsm [AIndex (getSize index)] Nop [ALoc $ dest]]
+  c = [AAsm [temp] Nop [ALoc dest']]
+  d = case op of Nothing -> []
+                 Just op' -> [AAsm [dest'] op' [ALoc temp]]
+  in (m'',i''+1,l'', aasm''' ++ b ++ d ++ c)
 
 genStmt fm (m,i,l,aasm) (IRAsgn (IRExpArraySubscript base index t size) op e) = let
   base' = ATemp i (getSize base)
