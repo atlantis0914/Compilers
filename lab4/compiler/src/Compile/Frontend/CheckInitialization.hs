@@ -66,16 +66,17 @@ isDeclaredExpr e decl pos =
 isDeclaredExpr' :: Expr -> (Set.Set String) -> (a -> a)
 isDeclaredExpr' e decl = 
   assert ((Set.size (Set.intersection (decl) (used e))) == (Set.size $ used e))
-         ("Error : Variable used undeclared in expression : " ++ (show e) ++ " at ")
+         (show(used e) ++ "Error : Variable used undeclared in expression : " ++ (show e) ++ " at ")
 
 isDeclaredDecl :: String -> Set.Set String -> (a -> a)
 isDeclaredDecl i decls = assert (not (Set.member i decls)) 
                             ("Error : variable " ++ i ++ " declared twice")
 
-isDeclaredAsgn :: LValue -> Set.Set String -> (a -> a)
-isDeclaredAsgn i decls = assert (Set.member (getIDLVal i) decls) 
+isDeclaredAsgn :: LValue -> Set.Set String -> Expr -> (a -> a)
+isDeclaredAsgn i decls (ExpAlloc _ _) = (\x -> x)
+isDeclaredAsgn i decls (ExpAllocArray _ _ _) = (\x -> x)
+isDeclaredAsgn i decls _ = assert (Set.member (getIDLVal i) decls) 
                            ("Error : variable " ++ (show i) ++ " assigned to undeclared")
-
 
 -- produces a (definedSet, liveSet, Bool). Takes a declaredSet 
 -- (the declared variables in scope) and also performs undeclared checking.
@@ -85,14 +86,20 @@ checkStmt args (Ctrl (Return (Just e) pos)) _ decls =
 checkStmt args (Ctrl (Return Nothing pos)) _ decls = (Set.empty, Set.empty, True)
 
 checkStmt args (Block stmts) doErr decls = checkBlock args stmts doErr decls
+
 checkStmt args (Decl i t pos rest) doErr decls = 
   let
-    (decsRest, liveRest, b1) = isDeclaredDecl i decls $ checkStmt args rest doErr (Set.insert i decls)
+    set' = Set.insert i decls
+    (decsRest, liveRest, b1) = isDeclaredDecl i decls $ checkStmt args rest doErr set' 
     setI = isInitDecl args doErr liveRest i pos $ Set.singleton(i)
   in
     setI `seq` (Set.difference decsRest setI, Set.difference liveRest setI, b1)
 
-checkStmt args (Asgn i o e _ pos) doErr decls = isDeclaredAsgn i decls (Set.singleton (getIDLVal i), used e, False)
+checkStmt args (Asgn i@(LExpr (Ident aname _) _) o e _ _) doErr decls = 
+  isDeclaredAsgn i decls e (Set.singleton aname, 
+    Set.difference (Set.singleton aname) $ Set.union (usedLVal i) (used e), False)
+
+checkStmt args (Asgn i o e _ pos) doErr decls = isDeclaredAsgn i decls e (Set.empty, (Set.union (usedLVal i) (used e)), False)
 
 checkStmt args (Expr e) doErr decls = isDeclaredExpr' e decls (Set.empty, used e, False)
 
@@ -104,7 +111,6 @@ checkStmt args (Ctrl (If e s1 s2 pos)) doErr decls =
     decs1 `seq` lives1 `seq` decs2 `seq` lives2 `seq` 
     (Set.intersection decs1 decs2, Set.union (used e) (Set.union lives1 lives2), b1 && b2)
 
-
 checkStmt args (Ctrl (Assert e pos)) doErr decls =  
   isDeclaredExpr e decls pos $ (Set.empty, used e, False)
 
@@ -115,7 +121,6 @@ checkStmt args (Ctrl (While e s1 pos)) doErr decls =
     decs1 `seq` lives1 `seq` (Set.empty, Set.union lives1 (used e), b1)
 
 checkStmt args SNop _ _ = (Set.empty, Set.empty, False)
-
     
 checkBlock :: [String] -> [Stmt] -> Bool -> Set.Set String -> (Set.Set String, Set.Set String, Bool)
 checkBlock _ [] _ _ = (Set.empty, Set.empty, True)
@@ -124,7 +129,7 @@ checkBlock args (stmt:stmts) doErr decls =
   let
     (decStmt, liveStmt, b1) = checkStmt args stmt doErr decls
     dropLiveAfter = (isReturn stmt || b1) -- b1 Checks if all sub-branches have returns. 
-    (decRest, liveRest, b2) = checkBlock args stmts doErr decls
+    (decRest, liveRest, b2) = checkBlock args stmts doErr (Set.union decStmt decls)
   in
     if (dropLiveAfter)
       then decRest `seq` liveRest `seq` (decStmt, liveStmt, b1) 
@@ -145,5 +150,13 @@ used (ExpUnOp _ e1 _) = used e1
 used (ExpTernary e1 e2 e3 _) = Set.union (used e1) $
                                     Set.union (used e2) (used e3)
 used (ExpFnCall _ el _) = foldl Set.union Set.empty (map used el)
+used (ExpUnMem o e _) = used e
+used (ExpBinMem Select e1 e2 _) = (used e1)
+used (ExpBinMem o e1 e2 _) = Set.union (used e1) (used e2)
+used (ExpAllocArray _ e _) = used e 
 used _ = Set.empty
 
+usedLVal :: LValue -> (Set.Set String)
+usedLVal (LExpr e _) = trace ("Used : " ++ show res ++ " expr : " ++ show e) $ res
+  where 
+    res = used e
