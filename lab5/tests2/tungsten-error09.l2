@@ -1,0 +1,11 @@
+//test error
+//mix int with bool
+
+int main() {
+  int a = 10;
+  int b = 50;
+  if (a && true){
+   return b;
+  }
+  return a;
+}

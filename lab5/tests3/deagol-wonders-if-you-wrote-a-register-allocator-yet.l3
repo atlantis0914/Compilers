@@ -1,0 +1,57 @@
+//test return 29
+
+int a() {
+  int rax = 1;
+  int rbx = 2;
+  int rcx = 3;
+  int rdx = 4;
+  int rsi = 5;
+  int rdi = 6;
+  int rsp = 7;
+  int rbp = 8;
+  int r8 = 9;
+  int r9 = 10;
+  int r10 = 11;
+  int r11 = 12;
+  int r12 = 13;
+  int r13 = 14;
+  int r14 = 15;
+  int r15 = 16;
+
+  int fake_reg_1 = 1;
+  int fake_reg_2 = 2;
+  int fake_reg_3 = 3;
+
+  r9 += 23;
+  r13 += 4;
+  r14 += 12121;
+
+  int im_on_the_stack_lol = 0;
+  int im_on_the_stack_2_lol = 0;
+
+  for (im_on_the_stack_lol = 0; im_on_the_stack_lol < 1000000; im_on_the_stack_lol++) {
+    im_on_the_stack_2_lol += r8;
+    im_on_the_stack_2_lol += r9;
+    im_on_the_stack_2_lol += r10;
+    im_on_the_stack_2_lol += r11;
+  }
+
+  for (im_on_the_stack_lol = 0; im_on_the_stack_lol < 1000000; im_on_the_stack_lol++) {
+    im_on_the_stack_2_lol += rax;
+    im_on_the_stack_2_lol += rbx;
+    im_on_the_stack_2_lol += rcx;
+    im_on_the_stack_2_lol += rdx;
+  }
+
+  return im_on_the_stack_2_lol;
+}
+
+int main() {
+  int w = 0;
+  for (int i = 0; i < 240; i++) {
+    w += a();
+  }
+
+  return (w + a() + a() + a()) % 69;
+}
+

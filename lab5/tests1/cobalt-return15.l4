@@ -1,0 +1,34 @@
+//test return 9
+struct node{
+  int val;
+  struct node* next;
+};
+
+typedef struct node* list;
+
+list empty(){
+  return NULL;
+}
+
+list add(int x, list l)
+{
+  list head = alloc(struct node);
+  head-> val = x;
+  head-> next = l;
+
+  return head;
+}
+
+int main()
+{
+  list l = empty();
+
+  int i = 0;
+  while (i < 10)
+  {
+    l = add(i, l);
+    i++;
+  }
+  
+  return l->val;
+}

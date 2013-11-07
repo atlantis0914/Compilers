@@ -1,0 +1,9 @@
+//test error
+// Test invalid reserved keywords.
+
+int main() {
+    int x = 0;
+    int y = 0;
+    x = x--y;
+    return 0;
+}

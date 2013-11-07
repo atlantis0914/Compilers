@@ -1,0 +1,30 @@
+//test return 40
+int main() {
+	int x = 10;
+	int y = 10;
+	int z = 10;
+	int w = 10;
+	int t = 0;
+	while (x+y+z+w > 0) {
+		if (x > 0) {
+			t++;
+			x--;
+		} else {
+			if (y > 0) {
+				t++;
+				y--;
+			} else {
+				if (z > 0) {
+					t++;
+					z--;
+				} else {
+					if (w > 0) {
+						t++;
+						w--;
+					}
+				}
+			}
+		}
+	}
+	return t;
+}

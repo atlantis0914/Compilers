@@ -1,0 +1,21 @@
+//test return 755517047
+// test some really long expressions
+
+int main()
+{
+    int a;
+    int b;
+    int c;
+    int d;
+    int e;
+
+    a = 5;
+    b = (a*13+1)/54;
+    c = (2*a-b/a)*(a+2*a-4*b)/((a+b)*(a-b));
+    d = (a+2*b+3*c+4*(a+b)+5*(a+c)+6*(b+c)+
+        7*(a+c))*(a-b-c+a*b+a*c+b*c-a*b*c);
+    e = (42*a+1337*b+0xdeadbeef*c)/(a*a+b*b+c*c+d*d)-(a*b*c*d+a/b/c/d)/
+        (a+b+c+d+123456)+(3*a*b-2*b*c+4*c*d)*(a*a*b*b*c*c*d*d);
+
+    return e;
+}

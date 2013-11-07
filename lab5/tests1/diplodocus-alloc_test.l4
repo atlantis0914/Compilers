@@ -1,0 +1,25 @@
+//test return 1
+
+typedef int i;
+typedef i j;
+typedef j k;
+
+int take_arr(int[] arr)
+{
+return arr[0];
+}
+
+
+int main()
+{
+int x =5;
+int [] arr = alloc_array(int, 2000/x+500);
+int [] brr = alloc_array(k, 100/x);
+
+brr[0] = 55;
+arr[0] = 1;
+take_arr(brr);
+
+return take_arr(arr);
+
+}

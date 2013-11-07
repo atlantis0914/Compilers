@@ -1,0 +1,12 @@
+//test return 7
+
+int funktion(int a, int weeeee) {
+  if (weeeee == 0) return a;
+  // tail call much?
+  return funktion(a, weeeee-1);
+}
+
+int main() {
+  return funktion(7, 260000);
+}
+

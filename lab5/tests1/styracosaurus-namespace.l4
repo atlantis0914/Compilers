@@ -1,0 +1,20 @@
+//test return 1000
+
+struct x;
+
+struct main {
+	struct x * x;
+};
+
+struct x {
+	int x;
+};
+
+int main()
+{
+	struct main * x;
+	x = alloc(struct main);
+	x->x = alloc(struct x);
+	x->x->x = 1000;
+	return x->x->x;
+}

@@ -1,0 +1,9 @@
+//test error
+// Attempts to assign to an uninitialized variable
+
+int main()
+{
+  x = 0;
+  return x;
+}
+

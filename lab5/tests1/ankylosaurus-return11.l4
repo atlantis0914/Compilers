@@ -1,0 +1,32 @@
+//test return 1
+
+bool isPal(int[] n, int count){
+     int i;
+     for(i = 0; i < count;i++){
+     	   if(n[i] != n[count - i - 1])
+	   	   return false;
+
+     }
+     return true;
+
+
+}
+
+
+int main(){
+    int[] arr = alloc_array(int, 20);
+    int i;
+    bool lol;
+    for(i = 0; i < 20; i++){
+        arr[i] = 1;
+
+
+    }
+
+    lol = isPal(arr,20);
+
+    if(lol) return 1;
+    else return 0;
+
+
+}

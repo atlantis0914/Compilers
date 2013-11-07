@@ -1,0 +1,38 @@
+//test return 9
+
+int[] merge(int[] a, int [] b, int n)
+{
+  int[] c = alloc_array(int, 2*n);
+  int ia=0; int ib=0; int ic;
+
+  for (ic = 0; ic < 2*n && ia < n && ib < n; ic++)
+  {
+    if (a[ia] <= b[ib]) {
+      c[ic] = a[ia];
+      ia++;
+    }
+    else {
+      c[ic] = b[ib];
+      ib++;
+    }
+  }
+
+  return c;
+}
+
+int main()
+{
+  int[] a = alloc_array(int, 10);
+  int[] b = alloc_array(int, 10);
+  int i;
+
+  for (i = 0; i < 10; i++) {
+    a[i] = 10 - i;
+    b[i] = i;
+  }
+
+  int[] c = merge(a,b,10);
+
+  return c[9];
+}
+

@@ -1,0 +1,44 @@
+//test return 63
+// trees!
+
+struct tree
+{
+    int data;
+    struct tree * left;
+    struct tree * right;
+};
+
+typedef struct tree* T;
+
+void fill_tree(int level, T t)
+{
+    t->data = 1;
+
+    if(level == 0)
+    {
+        t->left = NULL;
+        t->right = NULL;
+        return;
+    }
+
+    t->left = alloc(struct tree);
+    t->right = alloc(struct tree);
+    fill_tree(level - 1, t->left);
+    fill_tree(level - 1, t->right);
+}
+
+int count_tree(T t)
+{
+    if(t == NULL)
+        return 0;
+
+    return 1 + count_tree(t->left) + count_tree(t->right);
+}
+
+int main()
+{
+    T t = alloc(struct tree);
+    fill_tree(5, t);
+
+    return count_tree(t);
+}

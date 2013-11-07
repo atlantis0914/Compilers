@@ -1,0 +1,7 @@
+//test exception 8
+//division by zero
+
+int main() {
+  assert(false || 1/0 == 1 || true);
+  return 0;
+}

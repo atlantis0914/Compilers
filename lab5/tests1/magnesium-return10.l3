@@ -1,0 +1,14 @@
+//test return 15
+
+int sumFrom1(int n) {
+  int sum = 0;
+  while (n >= 1) {
+    sum += n;
+    n--;
+  }
+  return sum;
+}
+
+int main () {
+  return sumFrom1(5);
+}

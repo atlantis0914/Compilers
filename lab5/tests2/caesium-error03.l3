@@ -1,0 +1,11 @@
+//test error
+int ftoi(fpt x)
+{
+    return 0;
+}
+
+int main()
+{
+    fpt x = 0;
+    return ftoi(x);
+}

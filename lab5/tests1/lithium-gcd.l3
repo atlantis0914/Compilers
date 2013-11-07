@@ -1,0 +1,16 @@
+//test return 1
+
+int gcd(int x, int y) {
+	if (x == y) {
+		return x;
+	}
+	if (y < x) {
+		return gcd(x-y,y);
+	} else {
+		return gcd(x,y-x);
+	}
+}
+
+int main() {
+	return gcd(134248, 267);
+}

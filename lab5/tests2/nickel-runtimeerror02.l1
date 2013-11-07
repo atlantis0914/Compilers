@@ -1,0 +1,7 @@
+//test exception 8
+//div overflow error
+
+int main(){
+  int a = (-2147483647) - 1;
+  return a/-1;
+}

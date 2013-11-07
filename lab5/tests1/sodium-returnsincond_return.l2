@@ -1,0 +1,9 @@
+//test return 1
+// Only have returns inside the conditional.
+int main() {
+  int x = 42;
+  if (x > 0)
+    return 1;
+  else
+    return 0;
+}

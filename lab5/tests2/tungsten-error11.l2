@@ -1,0 +1,7 @@
+//test error
+//bool var gets int
+
+int main() {
+  bool a = 10;
+  return 10;
+}

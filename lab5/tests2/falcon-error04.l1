@@ -1,0 +1,8 @@
+//test error
+//
+
+int main() {
+    5 = 5;
+
+    return 5;
+}

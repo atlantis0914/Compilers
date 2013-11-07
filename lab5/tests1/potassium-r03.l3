@@ -1,0 +1,12 @@
+//test return 6788125
+
+int fibby(int n) {
+  if(n <= 0) return 0;
+  if(n == 1) return 1;
+  if(n == 2) return 1;
+  return (5*fibby(n-1)) + (10*fibby(n-2));
+}
+
+int main() {
+  return fibby(10);
+}

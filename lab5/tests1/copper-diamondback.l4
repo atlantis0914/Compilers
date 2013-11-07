@@ -1,0 +1,47 @@
+//test return 26565
+//sooooooooo many pointers
+
+int************ make_super_pointer(int n) {
+	int* a = alloc(int);
+	*a = n;
+	int** b = alloc(int*);
+	*b = a;
+	int*** c = alloc(int**);
+	*c = b;
+	int**** d = alloc(int***);
+	*d = c;
+	int***** e = alloc(int****);
+	*e = d;
+	int****** f = alloc(int*****);
+	*f = e;
+	int******* g = alloc(int******);
+	*g = f;
+	int******** h = alloc(int*******);
+	*h = g;
+	int********* i = alloc(int********);
+	*i = h;
+	int********** j = alloc(int*********);
+	*j = i;
+	int*********** k = alloc(int**********);
+	*k = j;
+	int************ l = alloc(int***********);
+	*l = k;
+	return l;
+}
+
+int deref_super_pointer(int************ p) {
+	return (*(*(*(*(*(*(*(*(*(*(*(*p))))))))))));
+}
+
+int main() {
+	int n = 230;
+	int************[] a = alloc_array(int************, n);
+	for(int i = 0; i < n; i++) {
+		a[i] = make_super_pointer(i + 1);
+	}
+	int sum = 0;
+	for(int i = 0; i < n; i++) {
+		sum += deref_super_pointer(a[i]);
+	}
+	return sum;
+}

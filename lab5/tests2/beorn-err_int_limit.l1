@@ -1,0 +1,11 @@
+//test error
+int
+main()
+{
+    int x = 3;
+    int y = 4;
+    int bool = 14;
+    int z = x + y * 17;
+
+    return z + 0x100000000;
+}

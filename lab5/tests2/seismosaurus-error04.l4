@@ -1,0 +1,18 @@
+//test error
+
+// Can't redefine struct
+
+struct foo{
+	int f;
+	int o;
+	bool t;
+};
+
+struct foo {
+	int f;
+};
+
+int main() {
+	return 12341;
+}
+

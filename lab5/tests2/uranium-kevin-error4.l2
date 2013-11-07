@@ -1,0 +1,8 @@
+//test error
+//preops not valid in l2
+
+int main() {
+    int i = 2;
+    ++i;
+    return i;
+}

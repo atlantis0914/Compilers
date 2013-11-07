@@ -1,0 +1,12 @@
+//test error
+//mismatched types in def/decl
+
+void fun();
+
+int fun() {
+    return 0;
+}
+
+int main() {
+    return 0;
+}

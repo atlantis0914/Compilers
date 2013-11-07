@@ -1,0 +1,8 @@
+//test return 10
+int main() {
+  bool cond = true;
+  int x = 10;
+  if (cond) if (x == 10) if (cond && cond) if (cond || !cond) if (!cond || cond)
+  if (cond ? (cond ? cond : false) : false) if (1+2*4+1 == x) return 10;
+  return 6;
+}

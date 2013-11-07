@@ -1,0 +1,77 @@
+//test return 0
+// Fun with DLLs!
+
+typedef int elem;
+
+struct dll_node {
+  elem data;
+  struct dll_node *prev;
+  struct dll_node *next;
+};
+typedef struct dll_node node;
+
+struct dll_header {
+  node *start;
+  node *end;
+};
+typedef struct dll_header* dll;
+
+bool is_dll(dll l) {
+  if (l == NULL) return false;
+  if (l->start == NULL || l->end == NULL) return false;
+  if (l->start == l->end) return false;
+
+  node *pos = l->start->next;
+  while (pos != l->end) {
+    if (pos->next == NULL) return false;
+    if (pos != pos->next->prev) return false;
+    if (pos != pos->prev->next) return false;
+    pos = pos->next;
+  }
+  return true;
+}
+
+dll dll_new() {
+  dll l = alloc(struct dll_header);
+  node *start = alloc(node);
+  node *end = alloc(node);
+  start->next = end;
+  end->prev = start;
+  l->start = start;
+  l->end = end;
+  assert(is_dll(l));  // Almost like a contract!
+  return l;
+}
+
+void dll_add_to_end(dll l, elem e) {
+  assert(is_dll(l));
+  node *new = alloc(node);
+  new->data = e;
+  new->prev = l->end->prev;
+  new->next = l->end;
+  l->end->prev->next = new;
+  l->end->prev = new;
+  assert(is_dll(l));
+}
+
+int main() {
+  dll l = dll_new();
+
+  // Add some stuff.
+  for (int i = 0; i < 100; i++) {
+    dll_add_to_end(l, i);
+  }
+
+  // Validate the contents.
+  int idx = 0;
+  node *pos = l->start->next;
+  while (pos != l->end) {
+    assert(pos->data == idx);
+    pos = pos->next;
+    idx++;
+  }
+
+  assert(is_dll(l));
+
+  return 0;
+}

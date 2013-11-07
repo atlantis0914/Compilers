@@ -1,0 +1,16 @@
+//test error
+// no mutually recursive functions
+
+int rec1 (int x) {
+    int y = rec2(x-2);
+    return y;
+}
+
+int rec2 (int y) {
+    if(y == 0) return 42;
+    return rec1(y+1);
+}
+
+int main () {
+    return 123;
+}

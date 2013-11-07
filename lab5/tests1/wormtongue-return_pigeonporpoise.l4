@@ -1,0 +1,48 @@
+//test return 7
+// find the one number with odd occurrances, the non-xor way
+
+int numodd(int[] a, int l) {
+    bool[] bs = alloc_array(bool, l);
+    for (int i = 0; i < l; i++) {
+        bs[i] = false;
+    }
+    for (int i = 0; i < l; i++) {
+        if (bs[a[i]])
+            bs[a[i]]= false;
+        else
+            bs[a[i]] = true;
+    }
+    for (int i = 0; i < l; i++) {
+        if (bs[i]) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int main() {
+    int[] opt = alloc_array(int, 21);
+    opt[0] = 2; //6
+    opt[1] = 5; //2
+    opt[2] = 3; //4
+    opt[3] = 2;
+    opt[4] = 9; //2
+    opt[5] = 3;
+    opt[6] = 2;
+    opt[7] = 2;
+    opt[8] = 9;
+    opt[9] = 7; //2
+    opt[10] = 13; //2
+    opt[11] = 5;
+    opt[12] = 7;
+    opt[13] = 2;
+    opt[14] = 3;
+    opt[15] = 2;
+    opt[16] = 7;
+    opt[17] = 13;
+    opt[18] = 7;
+    opt[19] = 7;
+    opt[20] = 3;
+    return numodd(opt, 21);
+}
+

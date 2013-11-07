@@ -1,0 +1,16 @@
+//test return 16796
+//computes 10th catalan number
+
+int choose(int n, int k) {
+  assert (n >= 0);
+  if (k == 0 || k == n) {
+    return 1;
+  }
+  return choose(n-1,k-1) + choose(n-1, k);
+}
+
+int main() {
+  int n = 10;
+  int result = choose(2*n, n) - choose(2*n, n+1);
+  return result;
+}

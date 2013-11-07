@@ -1,0 +1,15 @@
+//test error
+
+struct A{
+    int q;
+    boolean b;
+    int meh;
+};
+
+int main() {
+    struct A mee;
+    mee.q = 5;
+    mee->meh = 10;
+    mee.b = 15;
+    return mee.q;
+}

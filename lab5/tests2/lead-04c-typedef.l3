@@ -1,0 +1,8 @@
+//test error
+//typedefs only allowed at top level.
+
+int main () {
+  typedef int blarg;
+  blarg x = 0;
+  return x;
+}

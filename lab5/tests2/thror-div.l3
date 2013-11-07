@@ -1,0 +1,15 @@
+//test exception
+
+int f(int i)
+{
+  return i / i;
+}
+int main ()
+{
+  int i = 0;
+  while(i <= 200)
+  {
+    i += f(200-i);
+  }
+  return i;
+}

@@ -1,0 +1,17 @@
+//test error
+//No fighting in the war room!
+
+int war_room();
+
+int main() {
+
+    return war_room()
+}
+
+int war_room() {
+    typedef int fighting;
+
+    fighting x = 4;
+
+    return x;
+}

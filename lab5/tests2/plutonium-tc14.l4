@@ -1,0 +1,11 @@
+//test error
+
+typedef struct s bar;
+
+struct s {
+       int foo;
+}
+
+int main () {
+    return alloc(bar)->foo;
+}

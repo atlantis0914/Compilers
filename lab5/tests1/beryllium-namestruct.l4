@@ -1,0 +1,13 @@
+//test return 2
+//same name as struct type and field
+struct s{
+	int p;
+};
+typedef struct s* Sp;
+int main(){
+	Sp s=alloc(struct s);
+	s->p=2;			
+	int p;
+	p=s->p;
+	return p;
+}

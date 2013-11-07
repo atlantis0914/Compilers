@@ -1,0 +1,8 @@
+//test return 0
+//the classic test
+
+int main() {
+
+  return 0;
+
+}

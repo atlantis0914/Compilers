@@ -1,0 +1,9 @@
+//test return 0
+//don't evaluate both expressions in ternary operator
+
+int main() {
+    int x;
+    x = (1 == 1 ? 0 : 1/0);
+    x = (1 == 0 ? 1/0 : 0);
+    return 0;
+}

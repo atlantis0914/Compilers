@@ -1,0 +1,11 @@
+//test return 3
+int main(){
+    int x;
+    int y;
+    y = 1;
+    x = 2;
+    if (y + x <= 2){
+        x++;}
+    else x = 3;
+    return x;
+}

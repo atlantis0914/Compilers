@@ -1,0 +1,10 @@
+//test return 1
+/* good pointer use */
+
+int main () {
+  int* x;
+  x = alloc(int);
+  *x = 1;
+
+  return *x;
+}

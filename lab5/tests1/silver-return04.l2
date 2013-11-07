@@ -1,0 +1,9 @@
+//test return 0
+//tests &
+
+int main() {
+    int y = 0xF;
+    int x = 0xF0;
+    int z = y & x;
+    return z;
+}

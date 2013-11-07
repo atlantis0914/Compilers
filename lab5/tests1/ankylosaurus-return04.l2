@@ -1,0 +1,11 @@
+//test return 0
+int main(){
+    int x = 0;
+    int y = 1;
+    
+    y = x < y ? x : y;
+
+    return y;
+
+
+}

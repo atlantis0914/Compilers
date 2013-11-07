@@ -1,0 +1,11 @@
+//test return 760
+
+int f(int x01, int x02, int x03, int x04, int x05, int x06, int x07,
+      int x08, int x09, int x10, int x11, int x12, int x13, int x14,
+      int x15, int x16, int x17, int x18, int x19, int x20) {
+    return x19 * x20 * x02;
+}
+
+int main() {
+    return f(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20);
+}

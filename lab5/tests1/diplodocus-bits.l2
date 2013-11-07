@@ -1,0 +1,30 @@
+//test return 1337
+int main()
+{
+    int ret = -1;
+    int a = 1;
+    int b = 1;
+    int mask = 0xFF;
+    
+    a <<= 2;
+    if (a == (b << 2))
+    {
+        b = b << 2;
+        a ^= mask;
+        if (a == (b ^ mask))
+        {
+            a = b;
+            a &= mask;
+            a |= mask;
+            if (a == ((b & mask) | mask))
+            {
+                ret = 1337;
+            }
+        }
+    }
+    else
+    {
+        return -111;
+    }
+    return ret;
+}

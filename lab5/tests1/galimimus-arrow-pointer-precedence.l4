@@ -1,0 +1,12 @@
+//test return 42
+
+struct Foo {
+  int* x;
+};
+
+int main() {
+  struct Foo* bar = alloc(struct Foo);
+  bar->x = alloc(int);
+  *bar->x = 42; // arrow binds more tightly *(bar->x)
+  return *((*bar).x);
+}

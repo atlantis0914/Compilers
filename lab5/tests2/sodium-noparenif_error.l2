@@ -1,0 +1,11 @@
+//test error
+// Missing braces around the conditional.
+int main() {
+  int x = 12;
+  if x > 0 {
+    x++;
+  } else {
+    x--;
+  }
+  return 0;
+}

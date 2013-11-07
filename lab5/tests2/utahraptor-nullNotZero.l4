@@ -1,0 +1,6 @@
+//test error
+int main()
+{
+	int* nullary = 0;
+	return 0;
+}

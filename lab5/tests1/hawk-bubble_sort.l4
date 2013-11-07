@@ -1,0 +1,47 @@
+//test return 0
+
+int main () {
+        int size = 10;
+
+	int[] array = alloc_array (int, size);
+	/*
+	for (int i = 0; i < size; i++) {
+		array[i] = readint();
+	}
+        */
+        array[0] = 10;
+        array[1] = 3;
+        array[2] = 4;
+        array[3] = 2;
+        array[4] = 9;
+        array[5] = 8;
+        array[6] = 5;
+        array[7] = 6;
+        array[8] = 7;
+        array[9] = 1;
+
+	bool done = false;
+
+	while (! done)
+	{
+		done = true;
+		for (int i = 0; i < size -1; i++)
+		{
+			int tmp = array[i];
+			if (array[i] > array[i+1]) {
+				array[i] = array[i+1];
+				array[i+1] = tmp;
+				done = false;
+			}
+		}
+	}
+
+	for (int i = 0; i < size; i ++)
+	{
+		print_int(array[i]);
+		// printchar(0x20); //space
+	}
+
+	// printchar(0xA); //because ?
+	return 0;
+}

@@ -1,0 +1,6 @@
+//test return 0
+
+int main() {
+	int aaihfdddddddddddddddddddddddddddddddddddddddddddddddddddddd = 0;
+	return aaihfdddddddddddddddddddddddddddddddddddddddddddddddddddddd;
+}

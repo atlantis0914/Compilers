@@ -1,0 +1,12 @@
+//test exception
+
+// infinite recursion
+
+int rec(int n) {
+  return rec(n+1);
+}
+
+int main()
+{
+  return rec(1);
+}

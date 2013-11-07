@@ -1,0 +1,10 @@
+//test return 1
+//looks like function argument identifier with function name do not conflict
+
+int func(int func) {
+  return func + 1;
+}
+
+int main() {
+  return func(0);
+}

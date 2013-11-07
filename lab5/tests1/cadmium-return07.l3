@@ -1,0 +1,20 @@
+//test return 1
+
+//mutually recursive functions.
+bool even(int n);
+
+bool odd(int n) {
+  if (n == 0)
+    return false;
+  return even(n-1);
+}
+
+bool even(int n) {
+  if (n == 0)
+    return true;
+  return odd(n-1);
+}
+
+int main() {
+  return even(13657) ? 0 : 1;
+}

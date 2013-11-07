@@ -1,0 +1,19 @@
+//test return 53
+// operator precedence
+
+int main()
+{
+  int x1;
+  int x2;
+  int x3;
+  int x4;
+  int x5;  
+
+  x1 = 7;
+  x2 = 4;
+  x3 = - (x1 + x2) * (x1); // -11 * 7 = -77
+  x4 = - (x3 + x1) + x2;   // 74
+  x4 += - (x1 - x3) / x2;  // -84 / 4 + 74 = 53
+
+  return x4;
+}

@@ -1,0 +1,6 @@
+//test error
+
+int main() {
+   int x=0xdeadbeeeeef;
+   return x;
+}

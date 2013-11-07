@@ -1,0 +1,10 @@
+//test return 500
+
+// is x divisible by 5
+bool predicate(int x) {
+    return x % 5 == 0;
+}
+
+int main() {
+    return predicate(200) ? 500 : 0;
+}

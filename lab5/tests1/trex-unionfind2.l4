@@ -1,0 +1,55 @@
+//test return 1
+
+//Taken from Robert Sedgewick's lecture notes on union find
+//Quick-find eager approach
+
+typedef int[] dj_set;
+
+bool find(dj_set s, int x1, int x2, int N)
+{
+  return s[x1] == s[x2];
+}
+
+int union(dj_set s, int x1, int x2, int N)
+{
+  int id1 = s[x1];
+  int id2 = s[x2];
+  int n;
+  for(n = 0; n < N; n++)
+  {
+    if(s[n] == id1)
+      s[n] = id2;
+  }
+  return 1;
+}
+
+int setup(dj_set s, int N)
+{
+  int n;
+  for(n = 0; n < N; n++)
+    s[n] = n;
+  return 1;
+}
+
+bool query(dj_set s, int N)
+{
+  int n;
+  for(n = 0; n < N - 1; n++)
+    union(s, n, n+1, N);
+  return find(s, 0, 99, N);
+}
+
+int go()
+{
+  dj_set s;
+  int N;
+  N = 100;
+  s = alloc_array(int, N);
+  setup(s, N);
+  return query(s, N) ? 1 : 0;
+}
+
+int main()
+{
+  return go();
+}

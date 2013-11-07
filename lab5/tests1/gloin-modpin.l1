@@ -1,0 +1,10 @@
+//test return 2
+
+int main() {
+	int x;
+	int y;
+	x = 5;
+	y = 3;
+	// pin eax and then cause an ensuing pinned mov
+	return x % y;
+}

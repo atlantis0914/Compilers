@@ -1,0 +1,14 @@
+//test exception 8
+// division by zero
+int main()
+{
+	int x = 10;
+	int y = 10;
+	while (x >= 0)
+    {
+    	y = y / x;
+    	x--;
+    }
+
+    return y;
+}

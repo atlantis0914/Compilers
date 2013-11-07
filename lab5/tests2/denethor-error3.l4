@@ -1,0 +1,11 @@
+//test error
+
+struct mys {
+   int **x;
+}
+
+int main() {
+   struct mys s;
+   s.x=alloc(int *);
+   return *(s.x);
+}

@@ -1,0 +1,11 @@
+//test error
+//redeclared in nested scope
+
+int main() {
+  int i = 2;
+  for (int j = 4; j < 0; j++) {
+    int i = j;
+    return i;
+  }
+  return 0;
+}

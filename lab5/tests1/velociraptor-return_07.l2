@@ -1,0 +1,17 @@
+//test return 18
+// ternary operators in a conditional check
+
+int main() {
+  bool hello = false;
+  int whos = 6;
+  bool there = true;
+  int tis = 18;
+  int i = 36;
+
+  if (tis < i ? hello : there)
+    tis += whos;
+  else if (hello ? whos < i : tis < whos)
+    i += tis;
+
+  return hello? whos : there? tis : i;
+}

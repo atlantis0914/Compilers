@@ -1,0 +1,8 @@
+//test error
+// Declaration in for statement.
+
+int main() {
+    for(;bool b;) {
+    }
+    return 0;
+}

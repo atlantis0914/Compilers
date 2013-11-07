@@ -1,0 +1,16 @@
+//test exception
+
+int stacks_on_stacks_on_stacks();
+
+int stacks2() {
+  return stacks_on_stacks_on_stacks();
+}
+
+int stacks_on_stacks_on_stacks() {
+  return stacks2();
+}
+
+int main() {
+  return stacks_on_stacks_on_stacks();
+}
+

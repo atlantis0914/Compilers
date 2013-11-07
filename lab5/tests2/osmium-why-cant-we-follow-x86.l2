@@ -1,0 +1,14 @@
+//test exception 8
+
+int main() {/*let's put some comments here*/
+    int x = -1;
+    for (int i = 0; i <= 32; i++) {
+        x <<= i;
+    }
+
+    return x;
+}
+
+//and here!
+
+//don't forget here

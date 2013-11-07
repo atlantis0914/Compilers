@@ -1,0 +1,26 @@
+//test error
+
+struct backward {
+       int x;
+       int y;
+};
+
+struct nowhere;
+
+int main()
+{
+	struct backward *b;
+	struct nowhere *c;
+
+	b = alloc(struct backward);
+	c = alloc(struct nowhere);
+
+	b->x = 2;
+	b->y = 3;
+
+	return b->x;
+}
+
+
+struct backward;
+

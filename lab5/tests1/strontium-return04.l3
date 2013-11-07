@@ -1,0 +1,13 @@
+//test return 4
+// function call (basic)
+
+int stuff(int thing)
+{
+    return 1 + thing;
+}
+
+int main()
+{
+    int x = stuff(2);
+    return x + 1;
+}

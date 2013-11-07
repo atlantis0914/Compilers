@@ -1,0 +1,4 @@
+//test error
+bool main() {
+	return true;
+}

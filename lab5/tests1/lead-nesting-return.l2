@@ -1,0 +1,13 @@
+//test return 1
+//Positive test for nested loops.
+
+int main ()
+{
+  int x = 0;
+  int j = 0;
+  for (int i = 0; i < 10; i++) while (j < 10) {
+    for (int k = 10; k > 0; k--) j++;
+    x++;
+  }
+  return x;
+}

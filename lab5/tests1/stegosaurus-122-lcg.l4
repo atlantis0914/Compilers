@@ -1,0 +1,35 @@
+//test return 1021132185
+/* 
+ * Slightly modified 15-122 resource code
+ * Original at: http://www.cs.cmu.edu/~fp/courses/15122-f10/misc/rand/lcg.c0
+ */
+
+// Linear congruential pseudorandom number generator
+// According to Wikipedia according to "Numerical Recipes"
+// Not for anything serious, but okay for testing
+
+struct rand {
+	int seed;
+};
+
+typedef struct rand* rand_t;
+
+rand_t init_rand (int seed) {
+	rand_t gen = alloc(struct rand);
+	gen->seed = seed;
+	return gen;
+}
+
+int rand(rand_t gen) {
+	gen->seed = gen->seed * 1664525 + 1013904223;
+	return gen->seed;
+}
+
+int main() {
+	rand_t r = init_rand(1234567890);
+	int i;
+	for (i = 0; i < 10000; i++) {
+		rand(r);
+	}
+	return rand(r);
+}

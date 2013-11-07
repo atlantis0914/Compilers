@@ -1,0 +1,15 @@
+//test return 314159
+// A bit of fixed-point math
+int main() {
+  int one = 100000000;
+  int sum = 0;
+  int i;
+  for (i = 0; i < 20000000; i++) {
+    int denom = 2*i+1;
+    if (i % 2 == 0)
+      sum += one / denom;
+    else
+      sum -= one / denom;
+  }
+  return sum * 4 / 1000;
+}

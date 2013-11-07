@@ -1,0 +1,38 @@
+//test return 1
+
+struct list_rep {
+  int head;
+  struct list_rep* tail;
+};
+
+typedef struct list_rep list;
+
+int square(int x)
+{
+  return x*x;
+}
+
+list* map(list* L)
+{
+  if (L == NULL) return NULL;
+  L->head = square(L->head);
+  L->tail = map(L->tail);
+  return L;
+}
+
+int main()
+{
+  list* L1;
+  list* L2;
+  list* L3;
+  L1 = alloc(list);
+  L2 = alloc(list);
+  L3 = alloc(list);
+  L1->head = 1;
+  L1->tail = L2;
+  L2->head = 2;
+  L2->tail = L3;
+  L3->head = 3;
+  L3->tail = NULL;
+  return map(L1)->head;
+}

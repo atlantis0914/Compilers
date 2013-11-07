@@ -1,0 +1,6 @@
+//test return 0
+// tests that ternary conditions work
+int main()
+{
+  return (true ? 0 : 1);
+}

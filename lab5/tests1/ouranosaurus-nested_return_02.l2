@@ -1,0 +1,17 @@
+//test return 42
+// returns from the middle of a nested if statement
+
+int main() {
+    int i = 0;
+    int j = 3;
+
+    if (i == 0) {
+        if (j == 3) {
+            if (true) {
+                return 42;
+            }
+        }
+    }
+
+    return 0;
+}

@@ -1,0 +1,8 @@
+//test error
+/* not an lvalue */
+
+int main () {
+  int x;
+  x+1 = 3;
+  return x;
+}

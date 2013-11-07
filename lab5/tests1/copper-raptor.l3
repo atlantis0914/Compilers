@@ -1,0 +1,48 @@
+//test return 137
+
+int digitCount(int n) {
+    return (n <= 0 ? 0 : 1 + digitCount(n / 10));
+}
+
+int lookup(int n, int i) {
+    return (i <= 0 ? n % 10 : lookup(n / 10, i - 1));
+}
+
+int setDigit(int n, int i, int newVal /* should only be 0-9 */) {
+    return (i <= 0 ? n - (n % 10) + newVal : setDigit(n / 10, i - 1, newVal) * 10 + n % 10);
+}
+
+int swapDigits(int n, int i1, int i2) {
+    int d1 = lookup(n, i1);
+    int d2 = lookup(n, i2);
+    n = setDigit(n, i1, d2);
+    n = setDigit(n, i2, d1);
+    return n;
+}
+
+int selectionsort(int n) {
+    for(int end = digitCount(n); end > 1; end--) {
+        int minD = 10;
+        int minI = 0;
+        for(int i = 0; i < end; i++) {
+            int d = lookup(n, i);
+            if(d < minD) {
+                minD = d;
+                minI = i;
+            }
+        }
+        n = swapDigits(n, minI, end - 1);
+    }
+    return n;
+}
+
+bool checkSort() {
+    if(selectionsort(948371625) != 123456789) {return false;}
+    if(selectionsort(483716295) != 123456789) {return false;}
+    if(selectionsort(123) != 123) {return false;}
+    return true;
+}
+
+int main() {
+    return (checkSort() ? 137 : 1994);
+}

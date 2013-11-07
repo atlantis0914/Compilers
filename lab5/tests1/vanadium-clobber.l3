@@ -1,0 +1,60 @@
+//test return 630
+
+int f(int x01, int x02, int x03, int x04, int x05, int x06, int x07,
+      int x08, int x09, int x10, int x11, int x12, int x13, int x14,
+      int x15, int x16, int x17, int x18, int x19, int x20) {
+    int y01 = 1;
+    int y02 = 2;
+    int y03 = 3;
+    int y04 = 4;
+    int y05 = 5;
+    int y06 = 6;
+    int y07 = 7;
+    int y08 = 8;
+    int y09 = 9;
+    int y10 = 10;
+    int y11 = 11;
+    int y12 = 12;
+    int y13 = 13;
+    int y14 = 14;
+    int y15 = 15;
+    int y16 = 16;
+    int y17 = 17;
+    int y18 = 18;
+    int y19 = 19;
+    int y20 = 20;
+
+    return x01 + x02 + x03 + x04 + x05 + x06 + x07 + x08 + x09 + x10 +
+           x11 + x12 + x13 + x14 + x15 + x16 + x17 + x18 + x19 + x20 +
+           y01 + y02 + y03 + y04 + y05 + y06 + y07 + y08 + y09 + y10 +
+           y11 + y12 + y13 + y14 + y15 + y16 + y17 + y18 + y19 + y20;
+}
+
+int main() {
+    int z01 = 1;
+    int z02 = 2;
+    int z03 = 3;
+    int z04 = 4;
+    int z05 = 5;
+    int z06 = 6;
+    int z07 = 7;
+    int z08 = 8;
+    int z09 = 9;
+    int z10 = 10;
+    int z11 = 11;
+    int z12 = 12;
+    int z13 = 13;
+    int z14 = 14;
+    int z15 = 15;
+    int z16 = 16;
+    int z17 = 17;
+    int z18 = 18;
+    int z19 = 19;
+    int z20 = 20;
+
+    int v = f(z01,z02,z03,z04,z05,z06,z07,z08,z09,z10,
+              z11,z12,z13,z14,z15,z16,z17,z18,z19,z20);
+
+    return z01 + z02 + z03 + z04 + z05 + z06 + z07 + z08 + z09 + z10 +
+           z11 + z12 + z13 + z14 + z15 + z16 + z17 + z18 + z19 + z20 + v;
+}

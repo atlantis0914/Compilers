@@ -1,0 +1,28 @@
+//test return 95150
+
+int loop_all_the_things();
+int loop1(int x);
+int loop2(int x);
+int loop3(int x);
+
+int main() {
+  return loop_all_the_things();
+}
+
+
+int loop_all_the_things() {
+  return loop1(400000);
+}
+
+int loop1(int x) {
+  return loop2(x - 1);
+}
+
+int loop2(int x) {
+  return loop3(x - 2);
+}
+
+int loop3(int x) {
+  if(x < 0) return 15150;
+  return 1 + loop1(x - 2);
+}

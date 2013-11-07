@@ -1,0 +1,9 @@
+//test exception 14
+int main()
+{
+  while(true) {
+  // time out code
+  }
+  return 0;
+  // unreachable
+ }

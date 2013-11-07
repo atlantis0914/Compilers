@@ -1,0 +1,9 @@
+//test return 100
+int main(){
+    int []arr;
+    int i;
+    for(i=0;i<100;i++){
+      arr = alloc_array(int,100); // was 10000000
+    }
+    return i;
+}

@@ -1,0 +1,15 @@
+//test error
+// redeclaring a variable within a for loop initializer
+// Interestingly, the explicit rules on page 7 of the handout don't
+// disallow this program, but the English text around those rules does.
+int main()
+{
+    int n = 7;
+    int i;
+
+    for (int i = 0; i < n; i++)
+        n += i;
+
+    return 42;
+}
+

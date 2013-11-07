@@ -1,0 +1,14 @@
+//test return 5
+/* outputs the number of the rightmost '1' bit of a number */
+int main(){
+    int i;
+    int n = 34900000;
+
+    for(i=0; i < 32; i++){
+      int a = 1<<i;
+      if ((n & a) != 0)
+        return i;
+    }
+
+    return -1;
+}

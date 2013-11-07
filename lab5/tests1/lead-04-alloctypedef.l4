@@ -1,0 +1,19 @@
+//test return 2
+/* alloc with typedef */
+
+typedef int  var;
+typedef bool proof;
+
+int main () {
+  int* x;
+  x = alloc(var);
+  *x = 2;
+
+  bool *y;
+  y = alloc(proof);
+  *y = false;
+
+  if(*y) return 0;
+
+  return *x;
+}

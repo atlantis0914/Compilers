@@ -1,0 +1,97 @@
+//test return 18
+
+int [] * merge(int a_hi, int b_hi, int [] A, int [] B)
+{
+	int count = 0;
+	int a_lo = 0;
+	int b_lo = 0;
+
+	int [] * retval = alloc(int[]);
+	*retval = alloc_array(int, a_hi+b_hi);
+
+	while(count < a_hi+b_hi)
+	{
+		//End cases -- one list has been exhausted
+		if(a_lo >= a_hi)
+		{
+			(*retval)[count] = B[b_lo];
+			b_lo++; count++;
+			// continue;
+		} else
+		if(b_lo >= b_hi)
+		{
+			(*retval)[count] = A[a_lo];
+			a_lo++; count++;
+			// continue;
+		} else
+		
+		//Interesting case -- must choose smallest element from either list
+		if(A[a_lo] < B[b_lo])
+		{
+			(*retval)[count] = A[a_lo];
+			a_lo++; count++;
+		}
+		else
+		{
+			(*retval)[count] = B[b_lo];
+			b_lo++; count++;
+		}
+	}
+
+	return retval;
+}
+
+int [] * mergesort(int lo, int hi, int [] A)
+{
+	int [] * left;
+	int [] * right;
+	int mid; 
+
+	if(lo == hi-1)
+	{
+		int [] * retval;
+		retval  = alloc(int[]);
+		*retval = alloc_array(int, 1);
+		(*retval)[0] = A[lo];
+		return retval;
+	}
+
+	mid  = (lo + hi) / 2;
+	left  = mergesort(lo, mid, A);
+	right = mergesort(mid, hi, A);
+	
+	return merge(mid - lo, hi - mid, *left, *right);
+}
+
+
+int main()
+{
+	int [] A = alloc_array(int, 100);
+	int [] * sorted;
+	int i;
+
+	for(i=0; i<100; i++)
+	{
+		//Generate somewhat pseudorandom numbers
+		A[i] = (i + 17)%28 + (i+3)%13 + (i+21)%75;
+	}
+
+	//Print array before sorting
+	for(i=0; i<100; i++)
+	{
+		print_int(A[i]);
+		// printchar(10);
+	}
+
+	sorted = mergesort(0, 100, A);
+
+	//printchar(10); printchar(10); printchar(10); //linebreaks
+	//Print array after sorting
+	for(i=0; i<100; i++)
+	{
+		print_int((*sorted)[i]);
+		// printchar(10);
+	}
+
+	return (*sorted)[0];
+}

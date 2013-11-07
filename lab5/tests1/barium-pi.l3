@@ -1,0 +1,19 @@
+//test return 0
+
+fpt pi_helper(fpt i, int depth)
+{
+  if(depth == 0)
+    return itof(1);
+
+  fpt fpt2 = itof(2);
+  fpt fpt1 = itof(1);
+  fpt r = fmul(fadd(fpt1, fdiv(i, (fadd(fmul(fpt2, i), fpt1)))),
+                pi_helper(fadd(i, fpt1), depth-1));
+  return r;
+}
+
+int main()
+{
+  fpt pi = pi_helper(itof(1), 1000);
+  return 0;
+}

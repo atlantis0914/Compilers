@@ -1,0 +1,12 @@
+//test error
+//ensure void can't be a type in a struct.
+
+struct s {
+    int a;
+    void v;
+};
+
+int main() {
+    struct s* s_ptr = alloc(struct s);
+    return 0;
+}

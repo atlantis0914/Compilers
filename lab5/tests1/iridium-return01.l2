@@ -1,0 +1,15 @@
+//test return 12
+
+int main()
+{
+    int a;
+    int b;
+    int c;
+    // int while;
+
+    a = 4;
+    b = 4;
+    c = a * b - b;
+
+    return c;
+}

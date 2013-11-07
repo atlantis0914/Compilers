@@ -1,0 +1,8 @@
+//test error
+
+int main()
+{
+    typedef int myinttype;
+    myinttype *a = alloc_array(myinttype, 5);
+    return 0;
+}

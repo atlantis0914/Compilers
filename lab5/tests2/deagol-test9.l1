@@ -1,0 +1,6 @@
+//test error
+int main() {
+  elephant a;
+  return a;
+  // i RETURN AN elephant
+}

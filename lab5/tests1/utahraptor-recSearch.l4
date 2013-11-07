@@ -1,0 +1,36 @@
+//test return 0
+struct node
+{
+	struct node* left;
+	struct node* right;
+	int val;
+};
+bool binsearch(struct node* root, int target)
+{
+	if (root == NULL)
+		return false;
+	if (target == root->val)
+		return true;
+	if (binsearch(root->left, target))
+		return true;
+	if (binsearch(root->right, target))
+		return true;
+	return false;
+}
+int asserter(bool b)
+{
+	return b ? 0 : 1 / 0;
+}
+int main()
+{
+	struct node* root = alloc(struct node);
+	root->left = alloc(struct node);
+	root->right = alloc(struct node);
+	root->left->left = alloc(struct node);
+	root->left->right = alloc(struct node);
+	root->left->right->left = alloc(struct node);
+	root->left->right->left->val = 3;
+	asserter(binsearch(root, 3));
+	asserter(!binsearch(root, 2));
+	return 0;
+}

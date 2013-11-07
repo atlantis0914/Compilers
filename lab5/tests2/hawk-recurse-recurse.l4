@@ -1,0 +1,10 @@
+//test error
+int main () {
+	return 0;
+}
+
+struct recurse;
+typedef struct recurse recurse;
+struct recurse {
+	recurse recurse;
+};

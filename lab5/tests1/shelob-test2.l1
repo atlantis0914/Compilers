@@ -1,0 +1,11 @@
+//test return 13
+int main(){
+	int v0=2;
+	int v1= - v0*6- - 8;
+	int v2= - 1/v1;
+	v0+= - 0+7;
+	v0=8*4;
+	v2-=7;
+	v1-=8;
+	return 0+v0+v1+v2;
+}

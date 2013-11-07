@@ -1,0 +1,10 @@
+//test error
+//not all paths return
+
+int main() {
+  int a = 10;
+  bool c = false;
+
+  if (c) return a;
+  else c = true;
+}

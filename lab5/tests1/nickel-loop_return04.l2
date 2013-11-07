@@ -1,0 +1,7 @@
+//test return 4
+// simple return from loop
+int main()
+{
+  for (int i = 0; i != 99999; i++) int j = 0xDEADBEEF;
+  return 4;
+}

@@ -1,0 +1,6 @@
+//test error
+
+int main() {
+	for(int z = 25; z == 25; z++);
+	return 1;
+}

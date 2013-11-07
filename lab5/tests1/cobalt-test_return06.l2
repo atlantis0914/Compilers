@@ -1,0 +1,13 @@
+//test return 1
+//test for block
+
+int main() {
+
+  for(int z = 1; z < 10; z++) {
+    int y = 0;
+    y = z + 1;
+  }
+
+  int y = 1;
+  return y;
+}

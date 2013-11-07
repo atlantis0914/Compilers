@@ -1,0 +1,10 @@
+//test error
+//bad param list
+
+int fail(int x, int y int z) {
+    return 0;
+}
+
+int main() {
+    return fail(1, 2, 3);
+}

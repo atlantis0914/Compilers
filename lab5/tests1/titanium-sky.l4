@@ -1,0 +1,14 @@
+//test return 11
+void swap(int[] arr, int i, int j) {
+  int tmp = arr[i];
+  arr[i] = arr[j];
+  arr[j] = tmp;
+}
+
+int main() {
+  int[] a = alloc_array(int, 2);
+  a[0] = 11;
+  a[1] = 12;
+  swap(a, 0, 1);
+  return a[1];
+}

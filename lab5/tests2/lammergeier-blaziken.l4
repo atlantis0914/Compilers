@@ -1,0 +1,14 @@
+//test error
+struct ken {
+    int blazi;
+};
+struct blazi {
+    struct ken blazi;
+};
+struct ken {
+    struct blazi ken;
+};
+int main() {
+    struct blaziken *blaziken = alloc(struct blaziken);
+    return 0;
+}

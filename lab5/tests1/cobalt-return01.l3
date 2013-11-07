@@ -1,0 +1,13 @@
+//test return 1
+//tests simple recursion
+
+int recursion(int n)
+{
+  if (n == 0) return 1;
+  else return recursion(n-1);
+}
+
+int main()
+{
+  return recursion(10000);
+}

@@ -1,0 +1,15 @@
+//test return 18
+// chained typedefs
+
+typedef int t1;
+typedef t1 t2;
+typedef t2 t3;
+
+t3 mult(t3 a, t3 b) {
+   return a*b;
+}
+
+t3 main() {
+    return mult(3,6);
+}
+

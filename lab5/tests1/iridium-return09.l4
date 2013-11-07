@@ -1,0 +1,12 @@
+//test return 0
+
+typedef int* cat;
+typedef int* dog;
+
+int main() {
+  dog x = NULL;
+  cat y = NULL;
+  if (x == y) return 0;
+  else assert(false);
+  return 1;
+}

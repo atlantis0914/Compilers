@@ -1,0 +1,11 @@
+//test error
+// nested functions?
+
+int main() {
+    int nested() {
+        return 4;
+    }
+    int a = nested();
+    return a + 1;
+}
+

@@ -1,0 +1,10 @@
+//test error
+/* field name used twice */
+
+struct point {int x; int y; int z; int* y;};
+
+int main () {
+  struct point *p;
+  p = alloc(struct point);
+  return -1;
+}

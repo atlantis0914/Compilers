@@ -1,0 +1,14 @@
+//test return 89
+// fibonacci
+
+int main ()
+{  
+  int lastnum = 0;
+  int num = 1; 
+  for(int i = 0; i < 10; i++) {
+    int new = num + lastnum;
+    lastnum = num;
+    num = new;
+  }    
+  return num;
+}

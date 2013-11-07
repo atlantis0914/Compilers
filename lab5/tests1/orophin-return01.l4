@@ -1,0 +1,54 @@
+//test return 42
+//  checks for implementation of typedef, stuct, nested structs, passing array as arguments
+
+/*
+struct FILEPOS {
+  int read;
+  int write;
+};
+*/
+// Note: you cannot do typedef struct x {} x; in reference compiler
+typedef struct FILEPOS FILEPOS;
+struct FILE {
+  int fd;
+  bool opened;
+//  FILEPOS position;
+  int total_io_bytes;
+  int []cache;
+};
+typedef struct FILE FILE;
+
+
+FILE [] copy(FILE [] a, int from, int to) {
+  a[to].fd             = a[from].fd;
+  a[to].opened         = a[from].opened;
+//  a[to].position       = a[from].position;
+  a[to].total_io_bytes = a[from].total_io_bytes;
+  a[to].cache          = a[from].cache;
+  return a;
+}
+
+FILE [] openfiles() {
+  FILE [] retval = alloc_array(FILE, 3);
+  retval[0].fd = 0;
+  retval[0].opened = true;
+//  retval[0].position.read = 0;
+//  retval[0].position.write = 0;
+  retval[0].total_io_bytes = 0;
+  retval[0].cache = alloc_array(int, 1024);
+  // "type struct FILE not small"
+//  retval[1] = retval[0];
+  retval = copy(retval, 0, 1);
+  retval[1].fd = 1;
+  // "type struct FILE not small"
+//  retval[2] = retval[1];
+  retval = copy(retval, 1, 2);
+  retval[2].fd = 42;
+  retval[2].opened = false;
+  return retval;
+}
+
+int main() {
+  FILE [] x = openfiles();
+  return x[2].fd;
+}

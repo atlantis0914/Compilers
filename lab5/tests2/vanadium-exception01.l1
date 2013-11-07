@@ -1,0 +1,6 @@
+//test exception
+// Test your math abilities
+
+int main() {
+	return 1/(1/(1/6)-6);
+}

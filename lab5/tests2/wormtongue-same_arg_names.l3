@@ -1,0 +1,12 @@
+//test error
+// Test to make sure the compiler rejects
+// two function arguments having the same
+// name.
+
+int foo(int a, bool a) {
+	return 0;
+}
+
+int main() {
+	foo(1, true);
+}

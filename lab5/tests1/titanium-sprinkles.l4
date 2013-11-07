@@ -1,0 +1,47 @@
+//test return 262143
+typedef int spaghetti;
+// let me play you the song of my people
+//             ___0~
+//             \ \/
+//               |
+//              / \
+//              \  \
+//              ~  ~
+// you shall hear it, and cry
+
+
+struct sprinkles {
+  struct sprinkles *sprinkley;
+  struct sprinkles *sprinklier;
+  spaghetti soup;
+};
+
+int sprinkle(struct sprinkles *spronkle, struct sprinkles *sphongle, int i, int end) {
+  // let's put sprinkles on the spaghetti soup
+  if (i == end) {
+    return 0;
+  }
+  return 1 + sprinkle(sphongle->sprinkley, spronkle->sprinklier, i+1, end) 
+           + sprinkle(spronkle->sprinkley, sphongle->sprinklier, i+1, end);
+}
+
+int make_sprinkles(struct sprinkles *spooky, int i, int end) {
+  if ( i == end) {
+    return 1;
+  }
+  spooky->sprinkley = alloc(struct sprinkles);
+  spooky->sprinklier = alloc(struct sprinkles);
+  spooky->soup = i;
+  return make_sprinkles(spooky->sprinkley, i+1, end) + make_sprinkles(spooky->sprinklier, i+1, end);
+}
+
+int main () {
+  int end = 19;
+  struct sprinkles *delicious = alloc(struct sprinkles);
+  delicious->soup = 1;
+  make_sprinkles(delicious, 1, end);
+  struct sprinkles *soup = alloc(struct sprinkles);
+  soup->soup = 1;
+  make_sprinkles(soup, 1, end);
+  return sprinkle(delicious, soup, 1, end);
+}

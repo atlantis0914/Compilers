@@ -1,0 +1,5 @@
+//test return 24
+
+int main() {
+   return ~(~(0xcafebabe&(3<<(1|2))));
+}

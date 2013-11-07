@@ -1,0 +1,17 @@
+//test exception 8
+// simple shifting error.
+int main()
+{
+  int i = 1 << 5;
+  int j = 1 << 5;
+  int k = i / j;
+  if (k == 1)
+
+
+
+
+
+
+				return 556/(((((((((((0)))))))))));
+				else return 4;
+}

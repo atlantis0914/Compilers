@@ -1,0 +1,109 @@
+//test return 385
+// perform union find
+
+struct set {
+  int index;
+  int parent;
+  int rank;
+};
+
+typedef struct set* setp;
+
+struct unionfind {
+  int size;
+  int next;
+  setp[] sets;
+};
+
+typedef struct unionfind * ufp;
+
+// each new set is the next integer
+int makeset(ufp uf) {
+  // resize the array if necessary
+  if(uf->next >= uf->size) {
+    setp[] temp = alloc_array(setp,uf->size*2);
+    for(int i = 0; i < uf->size; i++) {
+      temp[i] = uf->sets[i];
+    }
+    uf->sets = temp;
+    uf->size *= 2;
+  }
+
+  setp new_set = alloc(struct set);
+  new_set->index = uf->next;
+  new_set->parent = uf->next;
+  new_set->rank = 0;
+
+  uf->sets[uf->next] = new_set;
+  uf->next++;
+  return 1;
+}
+
+int find (setp x, ufp uf) {
+  if (x->parent == x->index) {
+    return x->parent;
+  }
+  else {
+    x->parent = find(uf->sets[x->parent], uf);
+    return x->parent;
+  }
+}
+
+// union not a keyword in C0
+int union (setp x, setp y, ufp uf) {
+  int x_root = find(x,uf);
+  int y_root = find(y,uf);
+  if(x_root == y_root) {
+    return 1;
+  }
+
+  setp x_root_set = uf->sets[x_root];
+  setp y_root_set = uf->sets[y_root];
+  if(x_root_set->rank < y_root_set->rank) {
+    x_root_set->parent = y_root_set->index;
+  }
+  else if (x_root_set->rank > y_root_set->rank){
+    y_root_set->parent = x_root_set->index;
+  }
+  else {
+    y_root_set->parent = x_root_set->index;
+    x_root_set->rank = x_root_set->rank + 1;
+  }
+  return 1;
+}
+
+
+int main() {
+
+  // Initialize the union find
+  ufp uf = alloc(struct unionfind);
+  uf->size = 1;
+  uf->next = 0;
+  uf->sets = alloc_array(setp,1);
+
+  // Add 500 sets
+  for(int i = 0; i < 500; i++) {
+    makeset(uf);
+  }
+
+  // 10
+  int a = find(uf->sets[uf->sets[10]->parent], uf);
+  // 125
+  int b = find(uf->sets[uf->sets[125]->parent], uf);
+
+  for(int j = 0; j < 249; j++) {
+    union(uf->sets[j],uf->sets[j+1], uf);
+  }
+  for(int j = 250; j < 499; j++) {
+    union(uf->sets[j],uf->sets[j+1], uf);
+  }
+
+  // 0
+  int c = find(uf->sets[uf->sets[110]->parent], uf);
+  // 250
+  int d = find(uf->sets[uf->sets[411]->parent], uf);
+
+  return a + b + c + d;
+}
+
+

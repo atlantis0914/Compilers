@@ -1,0 +1,8 @@
+//test exception
+//division error due to overflow
+int main()
+{
+  int TMAX = 2147483647;
+  int overflow = (TMAX+1)/(TMAX + 1 + TMAX);
+  return overflow;
+}

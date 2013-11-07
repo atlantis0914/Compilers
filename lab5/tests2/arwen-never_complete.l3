@@ -1,0 +1,12 @@
+//test exception
+//Look for numbers x s.t. x + 1 = x^2
+
+int main() {
+  int x;
+  for(x=0;true;x++) {
+    if ( x + 1 == x * x) {
+      return x;
+    }
+  }
+  return x;
+}

@@ -1,0 +1,5 @@
+//test exception
+
+int main() {    
+    return 5 / ((0 < 5 ? (2 < 4 ? 0 : 3) : 42)); 
+}

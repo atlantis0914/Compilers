@@ -1,0 +1,11 @@
+//test error
+//No return statement
+
+int main(){
+   int a;
+   int n;
+
+   a = 907;
+   b = 1107;
+
+}

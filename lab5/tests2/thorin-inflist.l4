@@ -1,0 +1,24 @@
+//test exception 14
+
+struct list_st {
+    int node;
+    struct list_st *next;
+};
+
+
+int main()
+{
+    struct list_st *node = alloc(struct list_st);
+    node->next = alloc(struct list_st);
+    node->next->next = node;
+    while (node != NULL) {
+        node = node->next;
+        node->node++;
+    }
+    return 0;
+}
+
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

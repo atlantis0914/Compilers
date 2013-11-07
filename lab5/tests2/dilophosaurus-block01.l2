@@ -1,0 +1,16 @@
+//test error
+// test scoping and invalid identifier overload
+int main()
+{
+	int x = 0;
+	{
+		int y = 1;
+		{
+		    int z = 1;
+	    }
+	    {
+		    int x = 1;
+	    }
+	}
+	return x;
+}

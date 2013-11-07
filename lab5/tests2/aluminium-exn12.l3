@@ -1,0 +1,9 @@
+//test exception
+
+int plus (int x, int y) {
+  return plus(x, y);
+}
+
+int main () {
+  return plus(0, 1);
+}

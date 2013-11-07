@@ -1,0 +1,38 @@
+//test return 0
+
+// #use <15411>
+
+// magnitude of complex number z
+fpt fmag(fpt zxr, fpt zyi) {
+  return fadd(fmul(zxr, zxr), fmul(zyi, zyi));
+}
+
+int mandelbrot(fpt cxr, fpt cyi) {
+  fpt zxr = itof(0);
+  fpt zyi = itof(0);
+
+  int i = 0;
+  int max_iter = 1000;
+
+  while(i < max_iter && fless(fmag(zxr, zyi), itof(4))) {
+    i++;
+    //zx = zx^2 - zy^2 + cx
+    zxr = fadd(fsub(fmul(zxr, zxr), fmul(zyi, zyi)), cxr);
+    //zy = 2 zx zy + cy
+    zyi = fadd(fmul(fmul(itof(2), zxr), zyi), cyi);
+  }
+
+  return i;
+}
+
+int main () {
+  int a = mandelbrot(itof(0), itof(0)); // in set
+  int b = mandelbrot(itof(2), itof(2)); // def not in set
+  int c = mandelbrot(itof(1), itof(1)); // escapes after a bit
+
+  assert(a == 1000);
+  assert(b == 1);
+  assert(c > 1 && c < 100);
+
+  return 0;
+}

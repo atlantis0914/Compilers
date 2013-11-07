@@ -1,0 +1,21 @@
+//test error
+
+typedef int a;
+typedef bool b;
+struct s{
+    a a;
+    struct s* p;
+};
+
+typedef struct s s;
+
+// parsing error
+struct t{
+    s s;
+    struct t t[];
+};
+
+int main()
+{
+    return 0;
+}

@@ -1,0 +1,16 @@
+//test return 1
+//Positive test for ternary operator.
+
+int main ()
+{
+  bool x;
+  int y = 1;
+  int z = 101;
+  x = y == z;
+  while (!x) {
+    y = y < z ? y : y / 2;
+    z = y < z ? z / 2 : z;
+    x = y == z;
+  }
+  return y;
+}

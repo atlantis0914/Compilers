@@ -1,0 +1,16 @@
+//test return 3
+
+int f1(int a)
+{
+    if (((a >> 11) & 0x1) == 1)
+        return 3;
+    
+    return f1((a + 52) ^ 0x23);
+}
+
+int main()
+{
+
+    return f1(0xCAFEBABE);
+
+}

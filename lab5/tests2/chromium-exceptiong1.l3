@@ -1,0 +1,15 @@
+//test exception 8
+
+void a(int n) {
+    while(n >= 0) {
+        1/n;
+        n--;
+    }
+}
+
+int main() {
+    int n = 5454;
+    a(n);
+    return 0;
+}
+

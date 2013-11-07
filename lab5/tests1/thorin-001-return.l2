@@ -1,0 +1,23 @@
+//test return 39
+
+/* Test new operations */
+int main()
+{
+    int b;
+    b = 1;                      /* 0x1 */
+    b <<= 2;                    /* 0x4 */
+    int c = b + b;              /* 0x8 */
+    c = c << 1;                 /* 0x10 */
+    int a;
+    a = c >> 1;                 /* 0x8 */
+    int d = a | b;              /* 0xc */
+    int e = c | b;              /* 0x14 */
+    int f = ~e & 0x3f;          /* 0x2b */
+    int g = d ^ f;              /* 0x27 */
+    return g;
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */
+

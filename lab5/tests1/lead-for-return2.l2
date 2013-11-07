@@ -1,0 +1,11 @@
+//test return 0
+//Positive test for loops.
+
+int main ()
+{
+  bool x = true;
+  for (int y = 0; x; y++) {
+    x = y <= 100;
+  }
+  return 0;
+}

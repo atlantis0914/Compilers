@@ -1,0 +1,30 @@
+//test return 10
+struct n{
+	int x;
+	struct n * next;
+};
+
+struct n * insert (int[] arr, int m, struct n * root){
+	struct n * newNode = alloc(struct n);
+	newNode->x = arr[m];
+	newNode->next = root;
+	return newNode;
+}
+
+int sum (struct n * head){
+	if (head == NULL) return 0;
+	return head->x + sum (head->next);
+}
+int main(){
+	int[] arr = alloc_array (int, 5);
+	int i;
+	struct n * root = NULL;
+	for(i = 0; i<5; i++){
+		arr[i] = i;
+	}
+	for(i = 0; i<5; i++){
+		root = insert(arr, i, root);
+	}
+	int s = sum (root);
+	return s;
+} 

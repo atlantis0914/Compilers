@@ -1,0 +1,13 @@
+//test return 5
+//make sure prototypes and defintion dont need to match exactly
+
+int a (int b, int c, int d);
+
+
+int main(){
+    return 5;
+}
+
+int a (int e, int f, int g){
+    return e + f + g;
+}

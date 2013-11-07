@@ -1,0 +1,8 @@
+//test return 3
+int foo(){
+	return 3;
+	return 4;
+}
+int main(){
+	return foo();
+}

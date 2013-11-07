@@ -1,0 +1,10 @@
+//test error
+// reserved keyword
+
+int main()
+{
+	int char;
+
+	char = 5;
+	return 0;
+}

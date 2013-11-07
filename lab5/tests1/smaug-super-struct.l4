@@ -1,0 +1,49 @@
+//test return 5
+
+struct a {
+  int val;
+};
+
+struct b {
+  struct a* val;
+};
+
+struct c {
+  struct b* val;
+};
+
+struct d {
+  struct c* val;
+};
+
+struct e {
+  struct d* val;
+};
+
+struct f {
+  struct e* val;
+};
+
+struct g {
+  struct f* val;
+};
+
+int main() {
+  struct a* a1 = alloc(struct a);
+  struct b* b1 = alloc(struct b);
+  struct c* c1 = alloc(struct c);
+  struct d* d1 = alloc(struct d);
+  struct e* e1 = alloc(struct e);
+  struct f* f1 = alloc(struct f);
+  struct g* g1 = alloc(struct g);
+  a1->val = 5;
+  b1->val = a1;
+  c1->val = b1;
+  d1->val = c1;
+  e1->val = d1;
+  f1->val = e1;
+  g1->val = f1;
+
+  return g1->val->val->val->val->val->val->val;
+}
+

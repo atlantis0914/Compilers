@@ -1,0 +1,14 @@
+//test error
+
+void fun() {
+
+  int x = 100;
+  return x;
+
+}
+
+int main() {
+
+  return 100;
+
+}

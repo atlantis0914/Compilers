@@ -1,0 +1,10 @@
+//test return 1
+// forward decls
+
+int foo (int x);
+
+int main () {
+    return foo (1);
+}
+
+int foo (int x) {return x;}

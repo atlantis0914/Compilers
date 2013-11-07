@@ -1,0 +1,36 @@
+//test return 0
+//Problem 109: Magic of David Copperfield II
+//Saratove State University Online Contester
+
+int main() {
+  int N = 3;
+
+  int k = N;
+  if(N%2==0)
+    k++;
+
+  print_int(k);	
+
+  for(int i = 0; i < N*N; i++) {
+    int x = i%N;
+    int y = i/N;
+    if(i!=2 &&((x+y)%2==0)) {
+      print_int(i+1);
+    }
+  }
+  // printchar(10);
+
+  k += 2;
+  print_int(k);
+
+  for(int i = 0; i < N*N; i++) {
+    int x = i%N;
+    int y = i/N;
+    if(((x+y)%2==1)) {
+      // printchar(32);
+      print_int(i+1);
+    }
+  }
+  // printchar(10);
+  return 0;
+}

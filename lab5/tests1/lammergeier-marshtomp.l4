@@ -1,0 +1,32 @@
+//test return 666
+//compute a lousy approximation of an uninteresting function of pi
+int rand(int[] context)
+{
+    int n = context[6] ^ context[2];
+    context[0] = context[1];
+    context[1] = context[2];
+    context[2] = context[3];
+    context[3] = context[4];
+    context[4] = context[5];
+    context[5] = context[6];
+    context[6] = n;
+    return n;
+}
+int main() {
+    int[] context = alloc_array(int, 7);
+    context[0] = 304;
+    context[1] = 679;
+    context[2] = 760;
+    context[3] = 584;
+    context[4] = 436;
+    context[5] = 462;
+    context[6] = 852;
+    int count = 0;
+    for (int i = 0; i < 1000000; i = i + 1) {
+        int x = rand(context);
+        int y = rand(context);
+        if ((x * x + y * y) < 1024 * 1024)
+            count++;
+    }
+    return count / 1000;
+}

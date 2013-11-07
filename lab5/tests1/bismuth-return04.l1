@@ -1,0 +1,8 @@
+//test return 160
+// test initialize variables
+int main()
+{
+  int a = 0x0a0;
+    
+  return a;
+}

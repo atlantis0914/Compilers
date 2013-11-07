@@ -1,0 +1,7 @@
+//test return 4
+int main() {
+  if (1 == 0)
+    return 5;
+
+  return 4;
+}

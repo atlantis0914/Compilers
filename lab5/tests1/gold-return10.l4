@@ -1,0 +1,31 @@
+//test return 1
+
+struct interval {
+	int beg;
+	int end;
+};
+
+typedef struct interval interval;
+
+bool inter_cmp(interval* i1, interval* i2) {
+	if (i1->beg < i2->beg) {
+		return true;
+	}
+	else if (i1->beg == i2->beg && i1->end < i2->end) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+int main () {
+	interval* i1 = alloc(interval);
+	interval* i2 = alloc(interval);
+	i1->beg = 3;
+	i1->end = 5;
+	i2->beg = 2;
+	i2->end = 10;
+	bool res = inter_cmp(i1, i2);
+	return (res? 0 : 1);
+}

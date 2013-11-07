@@ -1,0 +1,7 @@
+//test error
+//tests recursive definitions
+
+int main() {
+    int x = x + 1;
+    return x;
+}

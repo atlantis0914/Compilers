@@ -1,0 +1,25 @@
+//test return 2871
+
+struct alpha {
+    struct alpha *a;
+    int b;
+};
+typedef struct alpha alpha;
+
+alpha *makeShit(int n) {
+    alpha *a = alloc(alpha);
+    
+    if (n == 0) {
+        a->b = 0;
+        a->a = NULL;
+    } else {
+        a->b = n;
+        a->a = makeShit(n - 1);
+    }
+    return a;
+}
+
+int main() {
+    alpha *a = makeShit(3000);
+    return a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->a->b;
+}

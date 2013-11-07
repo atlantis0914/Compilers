@@ -1,0 +1,2056 @@
+//test return 1023
+// Test a looooooooong chain of calls.
+
+int func0();
+int func1();
+int func2();
+int func3();
+int func4();
+int func5();
+int func6();
+int func7();
+int func8();
+int func9();
+int func10();
+int func11();
+int func12();
+int func13();
+int func14();
+int func15();
+int func16();
+int func17();
+int func18();
+int func19();
+int func20();
+int func21();
+int func22();
+int func23();
+int func24();
+int func25();
+int func26();
+int func27();
+int func28();
+int func29();
+int func30();
+int func31();
+int func32();
+int func33();
+int func34();
+int func35();
+int func36();
+int func37();
+int func38();
+int func39();
+int func40();
+int func41();
+int func42();
+int func43();
+int func44();
+int func45();
+int func46();
+int func47();
+int func48();
+int func49();
+int func50();
+int func51();
+int func52();
+int func53();
+int func54();
+int func55();
+int func56();
+int func57();
+int func58();
+int func59();
+int func60();
+int func61();
+int func62();
+int func63();
+int func64();
+int func65();
+int func66();
+int func67();
+int func68();
+int func69();
+int func70();
+int func71();
+int func72();
+int func73();
+int func74();
+int func75();
+int func76();
+int func77();
+int func78();
+int func79();
+int func80();
+int func81();
+int func82();
+int func83();
+int func84();
+int func85();
+int func86();
+int func87();
+int func88();
+int func89();
+int func90();
+int func91();
+int func92();
+int func93();
+int func94();
+int func95();
+int func96();
+int func97();
+int func98();
+int func99();
+int func100();
+int func101();
+int func102();
+int func103();
+int func104();
+int func105();
+int func106();
+int func107();
+int func108();
+int func109();
+int func110();
+int func111();
+int func112();
+int func113();
+int func114();
+int func115();
+int func116();
+int func117();
+int func118();
+int func119();
+int func120();
+int func121();
+int func122();
+int func123();
+int func124();
+int func125();
+int func126();
+int func127();
+int func128();
+int func129();
+int func130();
+int func131();
+int func132();
+int func133();
+int func134();
+int func135();
+int func136();
+int func137();
+int func138();
+int func139();
+int func140();
+int func141();
+int func142();
+int func143();
+int func144();
+int func145();
+int func146();
+int func147();
+int func148();
+int func149();
+int func150();
+int func151();
+int func152();
+int func153();
+int func154();
+int func155();
+int func156();
+int func157();
+int func158();
+int func159();
+int func160();
+int func161();
+int func162();
+int func163();
+int func164();
+int func165();
+int func166();
+int func167();
+int func168();
+int func169();
+int func170();
+int func171();
+int func172();
+int func173();
+int func174();
+int func175();
+int func176();
+int func177();
+int func178();
+int func179();
+int func180();
+int func181();
+int func182();
+int func183();
+int func184();
+int func185();
+int func186();
+int func187();
+int func188();
+int func189();
+int func190();
+int func191();
+int func192();
+int func193();
+int func194();
+int func195();
+int func196();
+int func197();
+int func198();
+int func199();
+int func200();
+int func201();
+int func202();
+int func203();
+int func204();
+int func205();
+int func206();
+int func207();
+int func208();
+int func209();
+int func210();
+int func211();
+int func212();
+int func213();
+int func214();
+int func215();
+int func216();
+int func217();
+int func218();
+int func219();
+int func220();
+int func221();
+int func222();
+int func223();
+int func224();
+int func225();
+int func226();
+int func227();
+int func228();
+int func229();
+int func230();
+int func231();
+int func232();
+int func233();
+int func234();
+int func235();
+int func236();
+int func237();
+int func238();
+int func239();
+int func240();
+int func241();
+int func242();
+int func243();
+int func244();
+int func245();
+int func246();
+int func247();
+int func248();
+int func249();
+int func250();
+int func251();
+int func252();
+int func253();
+int func254();
+int func255();
+int func256();
+int func257();
+int func258();
+int func259();
+int func260();
+int func261();
+int func262();
+int func263();
+int func264();
+int func265();
+int func266();
+int func267();
+int func268();
+int func269();
+int func270();
+int func271();
+int func272();
+int func273();
+int func274();
+int func275();
+int func276();
+int func277();
+int func278();
+int func279();
+int func280();
+int func281();
+int func282();
+int func283();
+int func284();
+int func285();
+int func286();
+int func287();
+int func288();
+int func289();
+int func290();
+int func291();
+int func292();
+int func293();
+int func294();
+int func295();
+int func296();
+int func297();
+int func298();
+int func299();
+int func300();
+int func301();
+int func302();
+int func303();
+int func304();
+int func305();
+int func306();
+int func307();
+int func308();
+int func309();
+int func310();
+int func311();
+int func312();
+int func313();
+int func314();
+int func315();
+int func316();
+int func317();
+int func318();
+int func319();
+int func320();
+int func321();
+int func322();
+int func323();
+int func324();
+int func325();
+int func326();
+int func327();
+int func328();
+int func329();
+int func330();
+int func331();
+int func332();
+int func333();
+int func334();
+int func335();
+int func336();
+int func337();
+int func338();
+int func339();
+int func340();
+int func341();
+int func342();
+int func343();
+int func344();
+int func345();
+int func346();
+int func347();
+int func348();
+int func349();
+int func350();
+int func351();
+int func352();
+int func353();
+int func354();
+int func355();
+int func356();
+int func357();
+int func358();
+int func359();
+int func360();
+int func361();
+int func362();
+int func363();
+int func364();
+int func365();
+int func366();
+int func367();
+int func368();
+int func369();
+int func370();
+int func371();
+int func372();
+int func373();
+int func374();
+int func375();
+int func376();
+int func377();
+int func378();
+int func379();
+int func380();
+int func381();
+int func382();
+int func383();
+int func384();
+int func385();
+int func386();
+int func387();
+int func388();
+int func389();
+int func390();
+int func391();
+int func392();
+int func393();
+int func394();
+int func395();
+int func396();
+int func397();
+int func398();
+int func399();
+int func400();
+int func401();
+int func402();
+int func403();
+int func404();
+int func405();
+int func406();
+int func407();
+int func408();
+int func409();
+int func410();
+int func411();
+int func412();
+int func413();
+int func414();
+int func415();
+int func416();
+int func417();
+int func418();
+int func419();
+int func420();
+int func421();
+int func422();
+int func423();
+int func424();
+int func425();
+int func426();
+int func427();
+int func428();
+int func429();
+int func430();
+int func431();
+int func432();
+int func433();
+int func434();
+int func435();
+int func436();
+int func437();
+int func438();
+int func439();
+int func440();
+int func441();
+int func442();
+int func443();
+int func444();
+int func445();
+int func446();
+int func447();
+int func448();
+int func449();
+int func450();
+int func451();
+int func452();
+int func453();
+int func454();
+int func455();
+int func456();
+int func457();
+int func458();
+int func459();
+int func460();
+int func461();
+int func462();
+int func463();
+int func464();
+int func465();
+int func466();
+int func467();
+int func468();
+int func469();
+int func470();
+int func471();
+int func472();
+int func473();
+int func474();
+int func475();
+int func476();
+int func477();
+int func478();
+int func479();
+int func480();
+int func481();
+int func482();
+int func483();
+int func484();
+int func485();
+int func486();
+int func487();
+int func488();
+int func489();
+int func490();
+int func491();
+int func492();
+int func493();
+int func494();
+int func495();
+int func496();
+int func497();
+int func498();
+int func499();
+int func500();
+int func501();
+int func502();
+int func503();
+int func504();
+int func505();
+int func506();
+int func507();
+int func508();
+int func509();
+int func510();
+int func511();
+int func512();
+int func513();
+int func514();
+int func515();
+int func516();
+int func517();
+int func518();
+int func519();
+int func520();
+int func521();
+int func522();
+int func523();
+int func524();
+int func525();
+int func526();
+int func527();
+int func528();
+int func529();
+int func530();
+int func531();
+int func532();
+int func533();
+int func534();
+int func535();
+int func536();
+int func537();
+int func538();
+int func539();
+int func540();
+int func541();
+int func542();
+int func543();
+int func544();
+int func545();
+int func546();
+int func547();
+int func548();
+int func549();
+int func550();
+int func551();
+int func552();
+int func553();
+int func554();
+int func555();
+int func556();
+int func557();
+int func558();
+int func559();
+int func560();
+int func561();
+int func562();
+int func563();
+int func564();
+int func565();
+int func566();
+int func567();
+int func568();
+int func569();
+int func570();
+int func571();
+int func572();
+int func573();
+int func574();
+int func575();
+int func576();
+int func577();
+int func578();
+int func579();
+int func580();
+int func581();
+int func582();
+int func583();
+int func584();
+int func585();
+int func586();
+int func587();
+int func588();
+int func589();
+int func590();
+int func591();
+int func592();
+int func593();
+int func594();
+int func595();
+int func596();
+int func597();
+int func598();
+int func599();
+int func600();
+int func601();
+int func602();
+int func603();
+int func604();
+int func605();
+int func606();
+int func607();
+int func608();
+int func609();
+int func610();
+int func611();
+int func612();
+int func613();
+int func614();
+int func615();
+int func616();
+int func617();
+int func618();
+int func619();
+int func620();
+int func621();
+int func622();
+int func623();
+int func624();
+int func625();
+int func626();
+int func627();
+int func628();
+int func629();
+int func630();
+int func631();
+int func632();
+int func633();
+int func634();
+int func635();
+int func636();
+int func637();
+int func638();
+int func639();
+int func640();
+int func641();
+int func642();
+int func643();
+int func644();
+int func645();
+int func646();
+int func647();
+int func648();
+int func649();
+int func650();
+int func651();
+int func652();
+int func653();
+int func654();
+int func655();
+int func656();
+int func657();
+int func658();
+int func659();
+int func660();
+int func661();
+int func662();
+int func663();
+int func664();
+int func665();
+int func666();
+int func667();
+int func668();
+int func669();
+int func670();
+int func671();
+int func672();
+int func673();
+int func674();
+int func675();
+int func676();
+int func677();
+int func678();
+int func679();
+int func680();
+int func681();
+int func682();
+int func683();
+int func684();
+int func685();
+int func686();
+int func687();
+int func688();
+int func689();
+int func690();
+int func691();
+int func692();
+int func693();
+int func694();
+int func695();
+int func696();
+int func697();
+int func698();
+int func699();
+int func700();
+int func701();
+int func702();
+int func703();
+int func704();
+int func705();
+int func706();
+int func707();
+int func708();
+int func709();
+int func710();
+int func711();
+int func712();
+int func713();
+int func714();
+int func715();
+int func716();
+int func717();
+int func718();
+int func719();
+int func720();
+int func721();
+int func722();
+int func723();
+int func724();
+int func725();
+int func726();
+int func727();
+int func728();
+int func729();
+int func730();
+int func731();
+int func732();
+int func733();
+int func734();
+int func735();
+int func736();
+int func737();
+int func738();
+int func739();
+int func740();
+int func741();
+int func742();
+int func743();
+int func744();
+int func745();
+int func746();
+int func747();
+int func748();
+int func749();
+int func750();
+int func751();
+int func752();
+int func753();
+int func754();
+int func755();
+int func756();
+int func757();
+int func758();
+int func759();
+int func760();
+int func761();
+int func762();
+int func763();
+int func764();
+int func765();
+int func766();
+int func767();
+int func768();
+int func769();
+int func770();
+int func771();
+int func772();
+int func773();
+int func774();
+int func775();
+int func776();
+int func777();
+int func778();
+int func779();
+int func780();
+int func781();
+int func782();
+int func783();
+int func784();
+int func785();
+int func786();
+int func787();
+int func788();
+int func789();
+int func790();
+int func791();
+int func792();
+int func793();
+int func794();
+int func795();
+int func796();
+int func797();
+int func798();
+int func799();
+int func800();
+int func801();
+int func802();
+int func803();
+int func804();
+int func805();
+int func806();
+int func807();
+int func808();
+int func809();
+int func810();
+int func811();
+int func812();
+int func813();
+int func814();
+int func815();
+int func816();
+int func817();
+int func818();
+int func819();
+int func820();
+int func821();
+int func822();
+int func823();
+int func824();
+int func825();
+int func826();
+int func827();
+int func828();
+int func829();
+int func830();
+int func831();
+int func832();
+int func833();
+int func834();
+int func835();
+int func836();
+int func837();
+int func838();
+int func839();
+int func840();
+int func841();
+int func842();
+int func843();
+int func844();
+int func845();
+int func846();
+int func847();
+int func848();
+int func849();
+int func850();
+int func851();
+int func852();
+int func853();
+int func854();
+int func855();
+int func856();
+int func857();
+int func858();
+int func859();
+int func860();
+int func861();
+int func862();
+int func863();
+int func864();
+int func865();
+int func866();
+int func867();
+int func868();
+int func869();
+int func870();
+int func871();
+int func872();
+int func873();
+int func874();
+int func875();
+int func876();
+int func877();
+int func878();
+int func879();
+int func880();
+int func881();
+int func882();
+int func883();
+int func884();
+int func885();
+int func886();
+int func887();
+int func888();
+int func889();
+int func890();
+int func891();
+int func892();
+int func893();
+int func894();
+int func895();
+int func896();
+int func897();
+int func898();
+int func899();
+int func900();
+int func901();
+int func902();
+int func903();
+int func904();
+int func905();
+int func906();
+int func907();
+int func908();
+int func909();
+int func910();
+int func911();
+int func912();
+int func913();
+int func914();
+int func915();
+int func916();
+int func917();
+int func918();
+int func919();
+int func920();
+int func921();
+int func922();
+int func923();
+int func924();
+int func925();
+int func926();
+int func927();
+int func928();
+int func929();
+int func930();
+int func931();
+int func932();
+int func933();
+int func934();
+int func935();
+int func936();
+int func937();
+int func938();
+int func939();
+int func940();
+int func941();
+int func942();
+int func943();
+int func944();
+int func945();
+int func946();
+int func947();
+int func948();
+int func949();
+int func950();
+int func951();
+int func952();
+int func953();
+int func954();
+int func955();
+int func956();
+int func957();
+int func958();
+int func959();
+int func960();
+int func961();
+int func962();
+int func963();
+int func964();
+int func965();
+int func966();
+int func967();
+int func968();
+int func969();
+int func970();
+int func971();
+int func972();
+int func973();
+int func974();
+int func975();
+int func976();
+int func977();
+int func978();
+int func979();
+int func980();
+int func981();
+int func982();
+int func983();
+int func984();
+int func985();
+int func986();
+int func987();
+int func988();
+int func989();
+int func990();
+int func991();
+int func992();
+int func993();
+int func994();
+int func995();
+int func996();
+int func997();
+int func998();
+int func999();
+int func1000();
+int func1001();
+int func1002();
+int func1003();
+int func1004();
+int func1005();
+int func1006();
+int func1007();
+int func1008();
+int func1009();
+int func1010();
+int func1011();
+int func1012();
+int func1013();
+int func1014();
+int func1015();
+int func1016();
+int func1017();
+int func1018();
+int func1019();
+int func1020();
+int func1021();
+int func1022();
+int func1023();
+
+int func0() { return func1(); }
+int func1() { return func2(); }
+int func2() { return func3(); }
+int func3() { return func4(); }
+int func4() { return func5(); }
+int func5() { return func6(); }
+int func6() { return func7(); }
+int func7() { return func8(); }
+int func8() { return func9(); }
+int func9() { return func10(); }
+int func10() { return func11(); }
+int func11() { return func12(); }
+int func12() { return func13(); }
+int func13() { return func14(); }
+int func14() { return func15(); }
+int func15() { return func16(); }
+int func16() { return func17(); }
+int func17() { return func18(); }
+int func18() { return func19(); }
+int func19() { return func20(); }
+int func20() { return func21(); }
+int func21() { return func22(); }
+int func22() { return func23(); }
+int func23() { return func24(); }
+int func24() { return func25(); }
+int func25() { return func26(); }
+int func26() { return func27(); }
+int func27() { return func28(); }
+int func28() { return func29(); }
+int func29() { return func30(); }
+int func30() { return func31(); }
+int func31() { return func32(); }
+int func32() { return func33(); }
+int func33() { return func34(); }
+int func34() { return func35(); }
+int func35() { return func36(); }
+int func36() { return func37(); }
+int func37() { return func38(); }
+int func38() { return func39(); }
+int func39() { return func40(); }
+int func40() { return func41(); }
+int func41() { return func42(); }
+int func42() { return func43(); }
+int func43() { return func44(); }
+int func44() { return func45(); }
+int func45() { return func46(); }
+int func46() { return func47(); }
+int func47() { return func48(); }
+int func48() { return func49(); }
+int func49() { return func50(); }
+int func50() { return func51(); }
+int func51() { return func52(); }
+int func52() { return func53(); }
+int func53() { return func54(); }
+int func54() { return func55(); }
+int func55() { return func56(); }
+int func56() { return func57(); }
+int func57() { return func58(); }
+int func58() { return func59(); }
+int func59() { return func60(); }
+int func60() { return func61(); }
+int func61() { return func62(); }
+int func62() { return func63(); }
+int func63() { return func64(); }
+int func64() { return func65(); }
+int func65() { return func66(); }
+int func66() { return func67(); }
+int func67() { return func68(); }
+int func68() { return func69(); }
+int func69() { return func70(); }
+int func70() { return func71(); }
+int func71() { return func72(); }
+int func72() { return func73(); }
+int func73() { return func74(); }
+int func74() { return func75(); }
+int func75() { return func76(); }
+int func76() { return func77(); }
+int func77() { return func78(); }
+int func78() { return func79(); }
+int func79() { return func80(); }
+int func80() { return func81(); }
+int func81() { return func82(); }
+int func82() { return func83(); }
+int func83() { return func84(); }
+int func84() { return func85(); }
+int func85() { return func86(); }
+int func86() { return func87(); }
+int func87() { return func88(); }
+int func88() { return func89(); }
+int func89() { return func90(); }
+int func90() { return func91(); }
+int func91() { return func92(); }
+int func92() { return func93(); }
+int func93() { return func94(); }
+int func94() { return func95(); }
+int func95() { return func96(); }
+int func96() { return func97(); }
+int func97() { return func98(); }
+int func98() { return func99(); }
+int func99() { return func100(); }
+int func100() { return func101(); }
+int func101() { return func102(); }
+int func102() { return func103(); }
+int func103() { return func104(); }
+int func104() { return func105(); }
+int func105() { return func106(); }
+int func106() { return func107(); }
+int func107() { return func108(); }
+int func108() { return func109(); }
+int func109() { return func110(); }
+int func110() { return func111(); }
+int func111() { return func112(); }
+int func112() { return func113(); }
+int func113() { return func114(); }
+int func114() { return func115(); }
+int func115() { return func116(); }
+int func116() { return func117(); }
+int func117() { return func118(); }
+int func118() { return func119(); }
+int func119() { return func120(); }
+int func120() { return func121(); }
+int func121() { return func122(); }
+int func122() { return func123(); }
+int func123() { return func124(); }
+int func124() { return func125(); }
+int func125() { return func126(); }
+int func126() { return func127(); }
+int func127() { return func128(); }
+int func128() { return func129(); }
+int func129() { return func130(); }
+int func130() { return func131(); }
+int func131() { return func132(); }
+int func132() { return func133(); }
+int func133() { return func134(); }
+int func134() { return func135(); }
+int func135() { return func136(); }
+int func136() { return func137(); }
+int func137() { return func138(); }
+int func138() { return func139(); }
+int func139() { return func140(); }
+int func140() { return func141(); }
+int func141() { return func142(); }
+int func142() { return func143(); }
+int func143() { return func144(); }
+int func144() { return func145(); }
+int func145() { return func146(); }
+int func146() { return func147(); }
+int func147() { return func148(); }
+int func148() { return func149(); }
+int func149() { return func150(); }
+int func150() { return func151(); }
+int func151() { return func152(); }
+int func152() { return func153(); }
+int func153() { return func154(); }
+int func154() { return func155(); }
+int func155() { return func156(); }
+int func156() { return func157(); }
+int func157() { return func158(); }
+int func158() { return func159(); }
+int func159() { return func160(); }
+int func160() { return func161(); }
+int func161() { return func162(); }
+int func162() { return func163(); }
+int func163() { return func164(); }
+int func164() { return func165(); }
+int func165() { return func166(); }
+int func166() { return func167(); }
+int func167() { return func168(); }
+int func168() { return func169(); }
+int func169() { return func170(); }
+int func170() { return func171(); }
+int func171() { return func172(); }
+int func172() { return func173(); }
+int func173() { return func174(); }
+int func174() { return func175(); }
+int func175() { return func176(); }
+int func176() { return func177(); }
+int func177() { return func178(); }
+int func178() { return func179(); }
+int func179() { return func180(); }
+int func180() { return func181(); }
+int func181() { return func182(); }
+int func182() { return func183(); }
+int func183() { return func184(); }
+int func184() { return func185(); }
+int func185() { return func186(); }
+int func186() { return func187(); }
+int func187() { return func188(); }
+int func188() { return func189(); }
+int func189() { return func190(); }
+int func190() { return func191(); }
+int func191() { return func192(); }
+int func192() { return func193(); }
+int func193() { return func194(); }
+int func194() { return func195(); }
+int func195() { return func196(); }
+int func196() { return func197(); }
+int func197() { return func198(); }
+int func198() { return func199(); }
+int func199() { return func200(); }
+int func200() { return func201(); }
+int func201() { return func202(); }
+int func202() { return func203(); }
+int func203() { return func204(); }
+int func204() { return func205(); }
+int func205() { return func206(); }
+int func206() { return func207(); }
+int func207() { return func208(); }
+int func208() { return func209(); }
+int func209() { return func210(); }
+int func210() { return func211(); }
+int func211() { return func212(); }
+int func212() { return func213(); }
+int func213() { return func214(); }
+int func214() { return func215(); }
+int func215() { return func216(); }
+int func216() { return func217(); }
+int func217() { return func218(); }
+int func218() { return func219(); }
+int func219() { return func220(); }
+int func220() { return func221(); }
+int func221() { return func222(); }
+int func222() { return func223(); }
+int func223() { return func224(); }
+int func224() { return func225(); }
+int func225() { return func226(); }
+int func226() { return func227(); }
+int func227() { return func228(); }
+int func228() { return func229(); }
+int func229() { return func230(); }
+int func230() { return func231(); }
+int func231() { return func232(); }
+int func232() { return func233(); }
+int func233() { return func234(); }
+int func234() { return func235(); }
+int func235() { return func236(); }
+int func236() { return func237(); }
+int func237() { return func238(); }
+int func238() { return func239(); }
+int func239() { return func240(); }
+int func240() { return func241(); }
+int func241() { return func242(); }
+int func242() { return func243(); }
+int func243() { return func244(); }
+int func244() { return func245(); }
+int func245() { return func246(); }
+int func246() { return func247(); }
+int func247() { return func248(); }
+int func248() { return func249(); }
+int func249() { return func250(); }
+int func250() { return func251(); }
+int func251() { return func252(); }
+int func252() { return func253(); }
+int func253() { return func254(); }
+int func254() { return func255(); }
+int func255() { return func256(); }
+int func256() { return func257(); }
+int func257() { return func258(); }
+int func258() { return func259(); }
+int func259() { return func260(); }
+int func260() { return func261(); }
+int func261() { return func262(); }
+int func262() { return func263(); }
+int func263() { return func264(); }
+int func264() { return func265(); }
+int func265() { return func266(); }
+int func266() { return func267(); }
+int func267() { return func268(); }
+int func268() { return func269(); }
+int func269() { return func270(); }
+int func270() { return func271(); }
+int func271() { return func272(); }
+int func272() { return func273(); }
+int func273() { return func274(); }
+int func274() { return func275(); }
+int func275() { return func276(); }
+int func276() { return func277(); }
+int func277() { return func278(); }
+int func278() { return func279(); }
+int func279() { return func280(); }
+int func280() { return func281(); }
+int func281() { return func282(); }
+int func282() { return func283(); }
+int func283() { return func284(); }
+int func284() { return func285(); }
+int func285() { return func286(); }
+int func286() { return func287(); }
+int func287() { return func288(); }
+int func288() { return func289(); }
+int func289() { return func290(); }
+int func290() { return func291(); }
+int func291() { return func292(); }
+int func292() { return func293(); }
+int func293() { return func294(); }
+int func294() { return func295(); }
+int func295() { return func296(); }
+int func296() { return func297(); }
+int func297() { return func298(); }
+int func298() { return func299(); }
+int func299() { return func300(); }
+int func300() { return func301(); }
+int func301() { return func302(); }
+int func302() { return func303(); }
+int func303() { return func304(); }
+int func304() { return func305(); }
+int func305() { return func306(); }
+int func306() { return func307(); }
+int func307() { return func308(); }
+int func308() { return func309(); }
+int func309() { return func310(); }
+int func310() { return func311(); }
+int func311() { return func312(); }
+int func312() { return func313(); }
+int func313() { return func314(); }
+int func314() { return func315(); }
+int func315() { return func316(); }
+int func316() { return func317(); }
+int func317() { return func318(); }
+int func318() { return func319(); }
+int func319() { return func320(); }
+int func320() { return func321(); }
+int func321() { return func322(); }
+int func322() { return func323(); }
+int func323() { return func324(); }
+int func324() { return func325(); }
+int func325() { return func326(); }
+int func326() { return func327(); }
+int func327() { return func328(); }
+int func328() { return func329(); }
+int func329() { return func330(); }
+int func330() { return func331(); }
+int func331() { return func332(); }
+int func332() { return func333(); }
+int func333() { return func334(); }
+int func334() { return func335(); }
+int func335() { return func336(); }
+int func336() { return func337(); }
+int func337() { return func338(); }
+int func338() { return func339(); }
+int func339() { return func340(); }
+int func340() { return func341(); }
+int func341() { return func342(); }
+int func342() { return func343(); }
+int func343() { return func344(); }
+int func344() { return func345(); }
+int func345() { return func346(); }
+int func346() { return func347(); }
+int func347() { return func348(); }
+int func348() { return func349(); }
+int func349() { return func350(); }
+int func350() { return func351(); }
+int func351() { return func352(); }
+int func352() { return func353(); }
+int func353() { return func354(); }
+int func354() { return func355(); }
+int func355() { return func356(); }
+int func356() { return func357(); }
+int func357() { return func358(); }
+int func358() { return func359(); }
+int func359() { return func360(); }
+int func360() { return func361(); }
+int func361() { return func362(); }
+int func362() { return func363(); }
+int func363() { return func364(); }
+int func364() { return func365(); }
+int func365() { return func366(); }
+int func366() { return func367(); }
+int func367() { return func368(); }
+int func368() { return func369(); }
+int func369() { return func370(); }
+int func370() { return func371(); }
+int func371() { return func372(); }
+int func372() { return func373(); }
+int func373() { return func374(); }
+int func374() { return func375(); }
+int func375() { return func376(); }
+int func376() { return func377(); }
+int func377() { return func378(); }
+int func378() { return func379(); }
+int func379() { return func380(); }
+int func380() { return func381(); }
+int func381() { return func382(); }
+int func382() { return func383(); }
+int func383() { return func384(); }
+int func384() { return func385(); }
+int func385() { return func386(); }
+int func386() { return func387(); }
+int func387() { return func388(); }
+int func388() { return func389(); }
+int func389() { return func390(); }
+int func390() { return func391(); }
+int func391() { return func392(); }
+int func392() { return func393(); }
+int func393() { return func394(); }
+int func394() { return func395(); }
+int func395() { return func396(); }
+int func396() { return func397(); }
+int func397() { return func398(); }
+int func398() { return func399(); }
+int func399() { return func400(); }
+int func400() { return func401(); }
+int func401() { return func402(); }
+int func402() { return func403(); }
+int func403() { return func404(); }
+int func404() { return func405(); }
+int func405() { return func406(); }
+int func406() { return func407(); }
+int func407() { return func408(); }
+int func408() { return func409(); }
+int func409() { return func410(); }
+int func410() { return func411(); }
+int func411() { return func412(); }
+int func412() { return func413(); }
+int func413() { return func414(); }
+int func414() { return func415(); }
+int func415() { return func416(); }
+int func416() { return func417(); }
+int func417() { return func418(); }
+int func418() { return func419(); }
+int func419() { return func420(); }
+int func420() { return func421(); }
+int func421() { return func422(); }
+int func422() { return func423(); }
+int func423() { return func424(); }
+int func424() { return func425(); }
+int func425() { return func426(); }
+int func426() { return func427(); }
+int func427() { return func428(); }
+int func428() { return func429(); }
+int func429() { return func430(); }
+int func430() { return func431(); }
+int func431() { return func432(); }
+int func432() { return func433(); }
+int func433() { return func434(); }
+int func434() { return func435(); }
+int func435() { return func436(); }
+int func436() { return func437(); }
+int func437() { return func438(); }
+int func438() { return func439(); }
+int func439() { return func440(); }
+int func440() { return func441(); }
+int func441() { return func442(); }
+int func442() { return func443(); }
+int func443() { return func444(); }
+int func444() { return func445(); }
+int func445() { return func446(); }
+int func446() { return func447(); }
+int func447() { return func448(); }
+int func448() { return func449(); }
+int func449() { return func450(); }
+int func450() { return func451(); }
+int func451() { return func452(); }
+int func452() { return func453(); }
+int func453() { return func454(); }
+int func454() { return func455(); }
+int func455() { return func456(); }
+int func456() { return func457(); }
+int func457() { return func458(); }
+int func458() { return func459(); }
+int func459() { return func460(); }
+int func460() { return func461(); }
+int func461() { return func462(); }
+int func462() { return func463(); }
+int func463() { return func464(); }
+int func464() { return func465(); }
+int func465() { return func466(); }
+int func466() { return func467(); }
+int func467() { return func468(); }
+int func468() { return func469(); }
+int func469() { return func470(); }
+int func470() { return func471(); }
+int func471() { return func472(); }
+int func472() { return func473(); }
+int func473() { return func474(); }
+int func474() { return func475(); }
+int func475() { return func476(); }
+int func476() { return func477(); }
+int func477() { return func478(); }
+int func478() { return func479(); }
+int func479() { return func480(); }
+int func480() { return func481(); }
+int func481() { return func482(); }
+int func482() { return func483(); }
+int func483() { return func484(); }
+int func484() { return func485(); }
+int func485() { return func486(); }
+int func486() { return func487(); }
+int func487() { return func488(); }
+int func488() { return func489(); }
+int func489() { return func490(); }
+int func490() { return func491(); }
+int func491() { return func492(); }
+int func492() { return func493(); }
+int func493() { return func494(); }
+int func494() { return func495(); }
+int func495() { return func496(); }
+int func496() { return func497(); }
+int func497() { return func498(); }
+int func498() { return func499(); }
+int func499() { return func500(); }
+int func500() { return func501(); }
+int func501() { return func502(); }
+int func502() { return func503(); }
+int func503() { return func504(); }
+int func504() { return func505(); }
+int func505() { return func506(); }
+int func506() { return func507(); }
+int func507() { return func508(); }
+int func508() { return func509(); }
+int func509() { return func510(); }
+int func510() { return func511(); }
+int func511() { return func512(); }
+int func512() { return func513(); }
+int func513() { return func514(); }
+int func514() { return func515(); }
+int func515() { return func516(); }
+int func516() { return func517(); }
+int func517() { return func518(); }
+int func518() { return func519(); }
+int func519() { return func520(); }
+int func520() { return func521(); }
+int func521() { return func522(); }
+int func522() { return func523(); }
+int func523() { return func524(); }
+int func524() { return func525(); }
+int func525() { return func526(); }
+int func526() { return func527(); }
+int func527() { return func528(); }
+int func528() { return func529(); }
+int func529() { return func530(); }
+int func530() { return func531(); }
+int func531() { return func532(); }
+int func532() { return func533(); }
+int func533() { return func534(); }
+int func534() { return func535(); }
+int func535() { return func536(); }
+int func536() { return func537(); }
+int func537() { return func538(); }
+int func538() { return func539(); }
+int func539() { return func540(); }
+int func540() { return func541(); }
+int func541() { return func542(); }
+int func542() { return func543(); }
+int func543() { return func544(); }
+int func544() { return func545(); }
+int func545() { return func546(); }
+int func546() { return func547(); }
+int func547() { return func548(); }
+int func548() { return func549(); }
+int func549() { return func550(); }
+int func550() { return func551(); }
+int func551() { return func552(); }
+int func552() { return func553(); }
+int func553() { return func554(); }
+int func554() { return func555(); }
+int func555() { return func556(); }
+int func556() { return func557(); }
+int func557() { return func558(); }
+int func558() { return func559(); }
+int func559() { return func560(); }
+int func560() { return func561(); }
+int func561() { return func562(); }
+int func562() { return func563(); }
+int func563() { return func564(); }
+int func564() { return func565(); }
+int func565() { return func566(); }
+int func566() { return func567(); }
+int func567() { return func568(); }
+int func568() { return func569(); }
+int func569() { return func570(); }
+int func570() { return func571(); }
+int func571() { return func572(); }
+int func572() { return func573(); }
+int func573() { return func574(); }
+int func574() { return func575(); }
+int func575() { return func576(); }
+int func576() { return func577(); }
+int func577() { return func578(); }
+int func578() { return func579(); }
+int func579() { return func580(); }
+int func580() { return func581(); }
+int func581() { return func582(); }
+int func582() { return func583(); }
+int func583() { return func584(); }
+int func584() { return func585(); }
+int func585() { return func586(); }
+int func586() { return func587(); }
+int func587() { return func588(); }
+int func588() { return func589(); }
+int func589() { return func590(); }
+int func590() { return func591(); }
+int func591() { return func592(); }
+int func592() { return func593(); }
+int func593() { return func594(); }
+int func594() { return func595(); }
+int func595() { return func596(); }
+int func596() { return func597(); }
+int func597() { return func598(); }
+int func598() { return func599(); }
+int func599() { return func600(); }
+int func600() { return func601(); }
+int func601() { return func602(); }
+int func602() { return func603(); }
+int func603() { return func604(); }
+int func604() { return func605(); }
+int func605() { return func606(); }
+int func606() { return func607(); }
+int func607() { return func608(); }
+int func608() { return func609(); }
+int func609() { return func610(); }
+int func610() { return func611(); }
+int func611() { return func612(); }
+int func612() { return func613(); }
+int func613() { return func614(); }
+int func614() { return func615(); }
+int func615() { return func616(); }
+int func616() { return func617(); }
+int func617() { return func618(); }
+int func618() { return func619(); }
+int func619() { return func620(); }
+int func620() { return func621(); }
+int func621() { return func622(); }
+int func622() { return func623(); }
+int func623() { return func624(); }
+int func624() { return func625(); }
+int func625() { return func626(); }
+int func626() { return func627(); }
+int func627() { return func628(); }
+int func628() { return func629(); }
+int func629() { return func630(); }
+int func630() { return func631(); }
+int func631() { return func632(); }
+int func632() { return func633(); }
+int func633() { return func634(); }
+int func634() { return func635(); }
+int func635() { return func636(); }
+int func636() { return func637(); }
+int func637() { return func638(); }
+int func638() { return func639(); }
+int func639() { return func640(); }
+int func640() { return func641(); }
+int func641() { return func642(); }
+int func642() { return func643(); }
+int func643() { return func644(); }
+int func644() { return func645(); }
+int func645() { return func646(); }
+int func646() { return func647(); }
+int func647() { return func648(); }
+int func648() { return func649(); }
+int func649() { return func650(); }
+int func650() { return func651(); }
+int func651() { return func652(); }
+int func652() { return func653(); }
+int func653() { return func654(); }
+int func654() { return func655(); }
+int func655() { return func656(); }
+int func656() { return func657(); }
+int func657() { return func658(); }
+int func658() { return func659(); }
+int func659() { return func660(); }
+int func660() { return func661(); }
+int func661() { return func662(); }
+int func662() { return func663(); }
+int func663() { return func664(); }
+int func664() { return func665(); }
+int func665() { return func666(); }
+int func666() { return func667(); }
+int func667() { return func668(); }
+int func668() { return func669(); }
+int func669() { return func670(); }
+int func670() { return func671(); }
+int func671() { return func672(); }
+int func672() { return func673(); }
+int func673() { return func674(); }
+int func674() { return func675(); }
+int func675() { return func676(); }
+int func676() { return func677(); }
+int func677() { return func678(); }
+int func678() { return func679(); }
+int func679() { return func680(); }
+int func680() { return func681(); }
+int func681() { return func682(); }
+int func682() { return func683(); }
+int func683() { return func684(); }
+int func684() { return func685(); }
+int func685() { return func686(); }
+int func686() { return func687(); }
+int func687() { return func688(); }
+int func688() { return func689(); }
+int func689() { return func690(); }
+int func690() { return func691(); }
+int func691() { return func692(); }
+int func692() { return func693(); }
+int func693() { return func694(); }
+int func694() { return func695(); }
+int func695() { return func696(); }
+int func696() { return func697(); }
+int func697() { return func698(); }
+int func698() { return func699(); }
+int func699() { return func700(); }
+int func700() { return func701(); }
+int func701() { return func702(); }
+int func702() { return func703(); }
+int func703() { return func704(); }
+int func704() { return func705(); }
+int func705() { return func706(); }
+int func706() { return func707(); }
+int func707() { return func708(); }
+int func708() { return func709(); }
+int func709() { return func710(); }
+int func710() { return func711(); }
+int func711() { return func712(); }
+int func712() { return func713(); }
+int func713() { return func714(); }
+int func714() { return func715(); }
+int func715() { return func716(); }
+int func716() { return func717(); }
+int func717() { return func718(); }
+int func718() { return func719(); }
+int func719() { return func720(); }
+int func720() { return func721(); }
+int func721() { return func722(); }
+int func722() { return func723(); }
+int func723() { return func724(); }
+int func724() { return func725(); }
+int func725() { return func726(); }
+int func726() { return func727(); }
+int func727() { return func728(); }
+int func728() { return func729(); }
+int func729() { return func730(); }
+int func730() { return func731(); }
+int func731() { return func732(); }
+int func732() { return func733(); }
+int func733() { return func734(); }
+int func734() { return func735(); }
+int func735() { return func736(); }
+int func736() { return func737(); }
+int func737() { return func738(); }
+int func738() { return func739(); }
+int func739() { return func740(); }
+int func740() { return func741(); }
+int func741() { return func742(); }
+int func742() { return func743(); }
+int func743() { return func744(); }
+int func744() { return func745(); }
+int func745() { return func746(); }
+int func746() { return func747(); }
+int func747() { return func748(); }
+int func748() { return func749(); }
+int func749() { return func750(); }
+int func750() { return func751(); }
+int func751() { return func752(); }
+int func752() { return func753(); }
+int func753() { return func754(); }
+int func754() { return func755(); }
+int func755() { return func756(); }
+int func756() { return func757(); }
+int func757() { return func758(); }
+int func758() { return func759(); }
+int func759() { return func760(); }
+int func760() { return func761(); }
+int func761() { return func762(); }
+int func762() { return func763(); }
+int func763() { return func764(); }
+int func764() { return func765(); }
+int func765() { return func766(); }
+int func766() { return func767(); }
+int func767() { return func768(); }
+int func768() { return func769(); }
+int func769() { return func770(); }
+int func770() { return func771(); }
+int func771() { return func772(); }
+int func772() { return func773(); }
+int func773() { return func774(); }
+int func774() { return func775(); }
+int func775() { return func776(); }
+int func776() { return func777(); }
+int func777() { return func778(); }
+int func778() { return func779(); }
+int func779() { return func780(); }
+int func780() { return func781(); }
+int func781() { return func782(); }
+int func782() { return func783(); }
+int func783() { return func784(); }
+int func784() { return func785(); }
+int func785() { return func786(); }
+int func786() { return func787(); }
+int func787() { return func788(); }
+int func788() { return func789(); }
+int func789() { return func790(); }
+int func790() { return func791(); }
+int func791() { return func792(); }
+int func792() { return func793(); }
+int func793() { return func794(); }
+int func794() { return func795(); }
+int func795() { return func796(); }
+int func796() { return func797(); }
+int func797() { return func798(); }
+int func798() { return func799(); }
+int func799() { return func800(); }
+int func800() { return func801(); }
+int func801() { return func802(); }
+int func802() { return func803(); }
+int func803() { return func804(); }
+int func804() { return func805(); }
+int func805() { return func806(); }
+int func806() { return func807(); }
+int func807() { return func808(); }
+int func808() { return func809(); }
+int func809() { return func810(); }
+int func810() { return func811(); }
+int func811() { return func812(); }
+int func812() { return func813(); }
+int func813() { return func814(); }
+int func814() { return func815(); }
+int func815() { return func816(); }
+int func816() { return func817(); }
+int func817() { return func818(); }
+int func818() { return func819(); }
+int func819() { return func820(); }
+int func820() { return func821(); }
+int func821() { return func822(); }
+int func822() { return func823(); }
+int func823() { return func824(); }
+int func824() { return func825(); }
+int func825() { return func826(); }
+int func826() { return func827(); }
+int func827() { return func828(); }
+int func828() { return func829(); }
+int func829() { return func830(); }
+int func830() { return func831(); }
+int func831() { return func832(); }
+int func832() { return func833(); }
+int func833() { return func834(); }
+int func834() { return func835(); }
+int func835() { return func836(); }
+int func836() { return func837(); }
+int func837() { return func838(); }
+int func838() { return func839(); }
+int func839() { return func840(); }
+int func840() { return func841(); }
+int func841() { return func842(); }
+int func842() { return func843(); }
+int func843() { return func844(); }
+int func844() { return func845(); }
+int func845() { return func846(); }
+int func846() { return func847(); }
+int func847() { return func848(); }
+int func848() { return func849(); }
+int func849() { return func850(); }
+int func850() { return func851(); }
+int func851() { return func852(); }
+int func852() { return func853(); }
+int func853() { return func854(); }
+int func854() { return func855(); }
+int func855() { return func856(); }
+int func856() { return func857(); }
+int func857() { return func858(); }
+int func858() { return func859(); }
+int func859() { return func860(); }
+int func860() { return func861(); }
+int func861() { return func862(); }
+int func862() { return func863(); }
+int func863() { return func864(); }
+int func864() { return func865(); }
+int func865() { return func866(); }
+int func866() { return func867(); }
+int func867() { return func868(); }
+int func868() { return func869(); }
+int func869() { return func870(); }
+int func870() { return func871(); }
+int func871() { return func872(); }
+int func872() { return func873(); }
+int func873() { return func874(); }
+int func874() { return func875(); }
+int func875() { return func876(); }
+int func876() { return func877(); }
+int func877() { return func878(); }
+int func878() { return func879(); }
+int func879() { return func880(); }
+int func880() { return func881(); }
+int func881() { return func882(); }
+int func882() { return func883(); }
+int func883() { return func884(); }
+int func884() { return func885(); }
+int func885() { return func886(); }
+int func886() { return func887(); }
+int func887() { return func888(); }
+int func888() { return func889(); }
+int func889() { return func890(); }
+int func890() { return func891(); }
+int func891() { return func892(); }
+int func892() { return func893(); }
+int func893() { return func894(); }
+int func894() { return func895(); }
+int func895() { return func896(); }
+int func896() { return func897(); }
+int func897() { return func898(); }
+int func898() { return func899(); }
+int func899() { return func900(); }
+int func900() { return func901(); }
+int func901() { return func902(); }
+int func902() { return func903(); }
+int func903() { return func904(); }
+int func904() { return func905(); }
+int func905() { return func906(); }
+int func906() { return func907(); }
+int func907() { return func908(); }
+int func908() { return func909(); }
+int func909() { return func910(); }
+int func910() { return func911(); }
+int func911() { return func912(); }
+int func912() { return func913(); }
+int func913() { return func914(); }
+int func914() { return func915(); }
+int func915() { return func916(); }
+int func916() { return func917(); }
+int func917() { return func918(); }
+int func918() { return func919(); }
+int func919() { return func920(); }
+int func920() { return func921(); }
+int func921() { return func922(); }
+int func922() { return func923(); }
+int func923() { return func924(); }
+int func924() { return func925(); }
+int func925() { return func926(); }
+int func926() { return func927(); }
+int func927() { return func928(); }
+int func928() { return func929(); }
+int func929() { return func930(); }
+int func930() { return func931(); }
+int func931() { return func932(); }
+int func932() { return func933(); }
+int func933() { return func934(); }
+int func934() { return func935(); }
+int func935() { return func936(); }
+int func936() { return func937(); }
+int func937() { return func938(); }
+int func938() { return func939(); }
+int func939() { return func940(); }
+int func940() { return func941(); }
+int func941() { return func942(); }
+int func942() { return func943(); }
+int func943() { return func944(); }
+int func944() { return func945(); }
+int func945() { return func946(); }
+int func946() { return func947(); }
+int func947() { return func948(); }
+int func948() { return func949(); }
+int func949() { return func950(); }
+int func950() { return func951(); }
+int func951() { return func952(); }
+int func952() { return func953(); }
+int func953() { return func954(); }
+int func954() { return func955(); }
+int func955() { return func956(); }
+int func956() { return func957(); }
+int func957() { return func958(); }
+int func958() { return func959(); }
+int func959() { return func960(); }
+int func960() { return func961(); }
+int func961() { return func962(); }
+int func962() { return func963(); }
+int func963() { return func964(); }
+int func964() { return func965(); }
+int func965() { return func966(); }
+int func966() { return func967(); }
+int func967() { return func968(); }
+int func968() { return func969(); }
+int func969() { return func970(); }
+int func970() { return func971(); }
+int func971() { return func972(); }
+int func972() { return func973(); }
+int func973() { return func974(); }
+int func974() { return func975(); }
+int func975() { return func976(); }
+int func976() { return func977(); }
+int func977() { return func978(); }
+int func978() { return func979(); }
+int func979() { return func980(); }
+int func980() { return func981(); }
+int func981() { return func982(); }
+int func982() { return func983(); }
+int func983() { return func984(); }
+int func984() { return func985(); }
+int func985() { return func986(); }
+int func986() { return func987(); }
+int func987() { return func988(); }
+int func988() { return func989(); }
+int func989() { return func990(); }
+int func990() { return func991(); }
+int func991() { return func992(); }
+int func992() { return func993(); }
+int func993() { return func994(); }
+int func994() { return func995(); }
+int func995() { return func996(); }
+int func996() { return func997(); }
+int func997() { return func998(); }
+int func998() { return func999(); }
+int func999() { return func1000(); }
+int func1000() { return func1001(); }
+int func1001() { return func1002(); }
+int func1002() { return func1003(); }
+int func1003() { return func1004(); }
+int func1004() { return func1005(); }
+int func1005() { return func1006(); }
+int func1006() { return func1007(); }
+int func1007() { return func1008(); }
+int func1008() { return func1009(); }
+int func1009() { return func1010(); }
+int func1010() { return func1011(); }
+int func1011() { return func1012(); }
+int func1012() { return func1013(); }
+int func1013() { return func1014(); }
+int func1014() { return func1015(); }
+int func1015() { return func1016(); }
+int func1016() { return func1017(); }
+int func1017() { return func1018(); }
+int func1018() { return func1019(); }
+int func1019() { return func1020(); }
+int func1020() { return func1021(); }
+int func1021() { return func1022(); }
+int func1022() { return func1023(); }
+int func1023() { return 1023; }
+
+int main() {
+	return func0();
+}

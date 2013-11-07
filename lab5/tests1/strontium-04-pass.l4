@@ -1,0 +1,16 @@
+//test return 0
+// tests struct read and write
+
+struct blob
+{
+    int x;
+    int y;
+};
+
+int main()
+{
+    struct blob * b = alloc(struct blob);
+    b->y = 0;
+    b->x = b->y;
+    return b->x;
+}

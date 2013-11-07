@@ -1,0 +1,17 @@
+//test return 0
+/* type not small */
+
+struct point {int x; int y;};
+typedef struct point point_t;
+
+int mirror (point_t *p) {
+  int z;
+  z = p -> x;
+  p -> x = p -> y;
+  p -> y = z;
+  return 0;
+}
+
+int main () {
+  return 0;
+}

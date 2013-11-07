@@ -1,0 +1,16 @@
+//test exception 8
+
+int foo(int x){
+    return x;
+}
+
+int bar(int x){
+    return x - 1;
+}
+
+int main(){
+    int x = bar(foo(11) - foo(10));
+    int y = bar(foo(bar(foo(bar(3)))));
+    int z = bar(foo(x) / foo(y));
+    return z;
+}

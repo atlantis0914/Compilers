@@ -1,0 +1,7 @@
+//test error
+// syntax error due to no close }
+int main() {
+    int a = 4;
+    return a;
+
+

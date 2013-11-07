@@ -1,0 +1,30 @@
+//test exception 11
+
+struct p {
+	int x;
+	int y;
+};
+
+typedef struct p pair;
+
+struct s {
+	int*  a;
+	pair b;
+	int  c;
+	pair d;
+	int  e;
+};
+
+int main()
+{
+	struct s * s = alloc(struct s);
+
+	s->e = 15;
+	s->e %= 16;
+	s->e /= 3;
+	s->c = 24;
+	s->c /= 6;
+	s->c <<= s->e;
+	
+	return s->c % s->e + *(s->a);
+}

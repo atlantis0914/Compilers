@@ -1,0 +1,14 @@
+//test exception 11
+
+struct ohno {
+  struct ohno*[] more;
+};
+
+int main () {
+  struct ohno*[] huge = alloc_array(struct ohno*, 500);
+  for(int i = 0; i < 500; i++) {
+    huge[i]->more = alloc_array(struct ohno*, 500);
+    huge[i]->more = huge;
+  }
+  return 0;
+}

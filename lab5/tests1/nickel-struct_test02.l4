@@ -1,0 +1,124 @@
+//test return 9999
+// weird struct
+
+typedef struct Foo Foo;
+
+struct Bar
+{
+	Foo* l;
+	Foo* r;
+	Foo* a;
+	Foo* b;
+	Foo* saf;
+	Foo* asfj;
+	Foo* asdfjaksdf;
+	Foo* fsajdf;
+	Foo* fdjska;
+};
+
+struct c0_Bar
+{
+	       struct Bar sdas;
+       struct Bar jsfa;
+       struct Bar dsfjlksdf;
+       struct Bar dsadadfsa;
+       struct Bar sdas_;
+       struct Bar jsfafds;
+       struct Bar dsfjaslkssdfadf;
+       struct Bar dsadsaadfsa;
+       struct Bar sdsaas;
+       struct Bar jsfasa;
+       struct Bar dsfjlasksdf;
+       struct Bar dsadassaadfsa;
+       struct Bar sdaasfs;
+       struct Bar jsasfsfasa;
+       struct Bar dsfjsaaslksdf;
+       struct Bar dsadaasdfsdfsa;
+       struct Bar sdsafas;
+       struct Bar jsfdasfasfa;
+       struct Bar dsfjlasfksdf;
+       struct Bar dsadadfasfsa;
+       struct Bar sdassaas_;
+       struct Bar jsfafsads;
+       struct Bar dsfjassalkssdfadf;
+       struct Bar dsadsaaasdfsa;
+       struct Bar sdsaasssa;
+       struct Bar jsfasaassss;
+       struct Bar dsfjlasksdaaf;
+       struct Bar dsadassaadafsa;
+       struct Bar sdaasafs;
+       struct Bar jsfasaaa;
+       struct Bar dsfjasaaaaslksdf;
+       struct Bar dsadaaaaasdfsdfsa;
+};
+
+struct Foo{
+       Foo* l;
+       Foo* r;
+
+       struct Bar* ll;
+
+       int[] A;
+       int[] B;
+       int[] C;
+       bool d;
+       int[] E;
+       int a;
+       int b;
+       int c;
+       int ddsa;
+       int* df;
+       int* askfas;
+       int* fakj;
+       struct c0_Bar sdas;
+       struct c0_Bar jsfa;
+       struct c0_Bar dsfjlksdf;
+       struct c0_Bar dsadadfsa;
+       struct c0_Bar sdas_;
+       struct c0_Bar jsfafds;
+       struct c0_Bar dsfjaslkssdfadf;
+       struct c0_Bar dsadsaadfsa;
+       struct c0_Bar sdsaas;
+       struct c0_Bar jsfasa;
+       struct c0_Bar dsfjlasksdf;
+       struct c0_Bar dsadassaadfsa;
+       struct c0_Bar sdaasfs;
+       struct c0_Bar jsasfsfasa;
+       struct c0_Bar dsfjsaaslksdf;
+       struct Bar dsadaasdfsdfsa;
+       struct Bar sdsafas;
+       struct Bar jsfdasfasfa;
+       struct Bar dsfjlasfksdf;
+       struct Bar dsadadfasfsa;
+       struct Bar sdassaas_;
+       struct Bar jsfafsads;
+       struct Bar dsfjassalkssdfadf;
+       struct Bar dsadsaaasdfsa;
+       struct Bar sdsaasssa;
+       struct Bar jsfasaassss;
+       struct Bar dsfjlasksdaaf;
+       struct Bar dsadassaadafsa;
+       struct Bar sdaasafs;
+       struct Bar jsfasaaa;
+       struct Bar dsfjasaaaaslksdf;
+       struct Bar dsadaaaaasdfsdfsa;
+       bool sdaaaaaaaaaaaaaaaa;
+       int v;
+};
+
+int main()
+{
+	Foo* a = alloc(struct Foo);
+	a->ll = alloc(struct Bar);
+	Foo* b = a;
+	for (int i = 0; i < 10000; i++)
+	{
+            b->ll->l = alloc(struct Foo);
+	    b = b->ll->l;
+	    b->ll = alloc(struct Bar);
+	    b->v = i;
+	}
+	for (int i = 0; i < 10000; i++)
+	    a = a->ll->l;
+	return a->v;
+}

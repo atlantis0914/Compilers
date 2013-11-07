@@ -1,0 +1,7 @@
+//test error
+
+int main() {
+    if (true) {
+        return 24;
+    }
+}

@@ -1,0 +1,23 @@
+//test return 0
+
+int main()
+{
+	int x;
+	int low;
+	int high;
+	int mask;
+
+	mask = 0x0000ffff;
+	x = 0x12345678;
+
+	//Swap low and high order bits
+	low = x & mask;
+	high = x & (~mask);
+
+	x = (low << 16) | ((high >> 16) & mask);
+
+	if(x == 0x56781234)
+		return 0;
+	else
+		return -1;
+}

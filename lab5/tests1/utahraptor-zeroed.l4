@@ -1,0 +1,8 @@
+//test return 0
+struct single {int x;};
+//Verify structs are zeroed
+int main()
+{
+	struct single* x = alloc(struct single);
+	return (*x).x;
+}

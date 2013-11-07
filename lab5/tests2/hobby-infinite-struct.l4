@@ -1,0 +1,11 @@
+//test error
+
+struct mistake {
+    int ival;
+    struct mistake dammit;
+    bool bval;
+};
+
+int main() {
+    return 5;
+}

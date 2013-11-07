@@ -1,0 +1,8 @@
+//test exception
+/* this really just duplicates tests from l1....no new exceptions */
+int main(){
+    int TMIN = -2147483648;
+    int x;
+    x = TMIN / -1;
+    return x;
+}

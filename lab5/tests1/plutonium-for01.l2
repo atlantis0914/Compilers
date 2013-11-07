@@ -1,0 +1,22 @@
+//test return 11111110
+
+int main ()
+{
+  int n;
+  int m;
+  int b;
+  bool d0;
+
+  n = 254;
+  m = 1;
+  for (b = 0 ; n > 0 ; n /= 2) {
+    if (n % 2 == 0)
+      d0 = false;
+    else
+      d0 = true;
+    if (m < 0) return 1/0;	/* raise exception on overflow */
+    if (!d0) { m *= 10; }
+    else { b = m + b;  m *= 10; }
+  }
+  return b;
+}

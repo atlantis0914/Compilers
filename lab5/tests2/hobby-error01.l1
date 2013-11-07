@@ -1,0 +1,12 @@
+//test error
+
+// undeclared variable
+
+int main() {
+    int x;
+    int y;
+
+    x = 10 + 5;
+    y = 4 + x + z;
+    return y + 8;
+}

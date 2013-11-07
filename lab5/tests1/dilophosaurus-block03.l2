@@ -1,0 +1,44 @@
+//test return 42
+// block testing
+int main()
+{
+	int ret = 0xffffffff;
+	{
+		int x = 0;
+		x++;
+		ret += x;
+	}
+	{
+		int x = 0X2;
+		ret += x;
+		{
+		    int y = 1;
+		    { int y1 = 1; y += y1; 
+		        { int y2 = 1; y += y2; 
+		            { int y3 = 1; y += y3; 
+		                { int y4 = 1; y += y4; 
+		                    { int y5 = 1; y += y5; 
+		                        { int y6 = 1; y += y3; 
+		                            { int y7 = 1;
+		                                { int y8 = 1;
+		                                    { int y9 = 1;
+		                                        { int y10 = 1;
+		                                            { int y11 = 1;
+		                                                 y *= y6 + y7 + y8 + y9 + y10 + -(-y11);
+		                                            }
+		                                        }
+		                                    }
+		                                }
+		                            }
+		                        }
+		                    }
+		                }
+		            }
+		        }
+		    }
+		    ret |= y;
+		}
+		
+	}
+	return ret;
+}

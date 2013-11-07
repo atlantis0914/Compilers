@@ -1,0 +1,23 @@
+//test return 1
+
+void ptr_swap(int **a, int **b)
+{   
+    int *t = *a;
+    *a = *b;
+    *b = t;
+}
+
+int main()
+{
+    int **a = alloc(int *);
+    int **b = alloc(int *);
+    int *a_start = *a;
+    int *b_start = *b;
+    
+    ptr_swap(a,b);
+
+    if (*a == b_start && *b == a_start)
+        return 1;
+
+    return 0;
+}

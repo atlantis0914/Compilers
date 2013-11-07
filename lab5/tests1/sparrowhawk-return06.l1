@@ -1,0 +1,12 @@
+//test return 0
+// test Multiple Divides
+int main()
+{
+  int a;
+
+  a = 32;
+
+  a = a / a / a / a / a / a;
+
+  return a;
+}

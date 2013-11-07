@@ -1,0 +1,9 @@
+//test error
+int main()
+{
+    int a = 5;
+    int aa = a*a;
+    int aaa = aa*a;
+    int b = a + aa - aaa--;
+    return b;
+}

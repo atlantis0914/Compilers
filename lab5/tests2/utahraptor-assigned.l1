@@ -1,0 +1,11 @@
+//test error
+/* Makes sure the compiler checks the lhs in a ?= expression for prior
+ * assignment. If it does this, it is very likely the assignment testing
+ * works.
+ */
+int main()
+{
+	int x;
+	x += 1;
+	return x;
+}

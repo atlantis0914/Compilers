@@ -1,0 +1,28 @@
+//test return 58
+
+int* e(int* p) {
+	*p += 17;
+	return p;
+}
+
+int* h(int* p) {
+	*p /= 9;
+	return p;
+}
+
+int* l(int* p) {
+	*p -= 20;
+	return p;
+}
+
+int* o(int* p) {
+	*p *= 13;
+	return p;
+}
+
+int main() {
+	int* world = alloc(int);
+	*world = 42;
+	h(e(l(l(o(world)))));
+	return *world;
+}

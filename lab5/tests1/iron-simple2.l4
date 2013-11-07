@@ -1,0 +1,21 @@
+//test return 0
+// struct
+
+struct alignme {
+			 bool x1;
+			 bool * x2;
+			 bool x3;
+};
+
+int main() {
+		struct alignme * a;
+		bool * b;
+		a = alloc(struct alignme);
+		b = alloc(bool);
+		*b = false;
+		a->x1 = true;
+		a->x2 = b;
+		a->x3 = true;
+		return *(a->x2) ? 1 : 0;
+}
+

@@ -1,0 +1,11 @@
+//test exception
+
+struct foo {
+  int *x;
+};
+
+int main() {
+  struct foo *fp = alloc(struct foo);
+  int[] intarr = alloc_array(int, *(fp->x));
+  return 0;
+}

@@ -1,0 +1,16 @@
+//test return 0
+
+int main() {
+	int[][] d = alloc_array(int [], 72); 
+	int i; int j;
+	for(i = 0; i <= 70; i++) {
+		d[i] = alloc_array(int, 52);
+	}
+
+	for(j = 0; j <= 50; j++) {
+		d[0][j] = j;
+	}
+
+	return 0;
+}
+

@@ -1,0 +1,13 @@
+//test return 111
+
+int collatz_length(int n) {
+  if (n == 1)
+    return 0;
+  if (n % 2 == 0)
+    return 1 + collatz_length(n/2);
+  return 1 + collatz_length(3*n + 1);
+}
+
+int main() {
+  return collatz_length(27);
+}

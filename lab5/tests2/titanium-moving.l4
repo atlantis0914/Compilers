@@ -1,0 +1,15 @@
+//test error
+//shadow
+
+bool a(int[] arr, int n) {
+  return false;
+}
+
+int main() {
+  int[] a = alloc_array(int, 5);
+  if (a(a)) {
+    return 5;
+  }
+  return 3;
+}
+

@@ -1,0 +1,39 @@
+//test exception 8
+// circularly going around a linked list
+
+struct Node {
+    struct Node * next;
+    int num;
+};
+
+struct Node* genList(int x);
+
+int main() {
+    struct Node* list = genList(10);
+    struct Node* trans = list;
+    while (trans != NULL) {
+        trans = trans->next;
+        if (trans == list) {
+            return 1/0;
+        }
+    }
+    return -1;
+}
+
+struct Node* genList(int n) {
+    struct Node * head;
+    head = alloc(struct Node);
+    int value = 0;
+    head->num = 0;
+    head->next = NULL;
+    struct Node * temp = head;
+    value += 1;
+    while (value < n) {
+        temp->next = alloc(struct Node);
+        temp = temp->next;
+        temp->num = value;
+        value += 1;
+    }
+    temp->next = head;
+    return head;
+}

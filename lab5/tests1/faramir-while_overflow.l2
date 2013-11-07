@@ -1,0 +1,10 @@
+//test return 5
+
+int main() {
+   int x = (0X11)<<30;
+    
+    // x will eventually overflow...right?
+    while (x >= 0) x++;
+    
+    return 5;
+}

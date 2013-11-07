@@ -1,0 +1,11 @@
+//test return 15411
+//multiplication test
+
+int main()
+{
+  int x = 3;
+  int y = 11;
+  int z = 467;
+  
+  return x * y * z;
+}

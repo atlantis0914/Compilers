@@ -1,0 +1,21 @@
+//test return 0
+
+/* different struct types in comparison */
+
+int boo(bool b);
+
+struct point {int x; int y;};
+
+int main () {
+  struct point *p;
+  struct point *r;
+  p = alloc(struct point);
+  p->x = 1; p->y = 2;
+  r = alloc(struct point);
+  r->x = 1; r->y = 2;
+  return boo(p == r);
+}
+
+int boo(bool b){
+    return b ? 1 : 0;
+}

@@ -1,0 +1,16 @@
+//test exception 11
+
+struct Node {
+  int data;
+  struct Node *next;
+};
+
+int main() {
+  struct Node* cur = alloc(struct Node);
+
+  while(true){
+    cur = cur->next;
+  }
+  
+  return 0;
+}

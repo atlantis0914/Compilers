@@ -1,0 +1,10 @@
+//test return 314
+
+int main() {
+    int**** a = alloc(int***);
+    *a = alloc(int**);
+    **a = alloc(int*);
+    ***a = alloc(int);
+    ****a = 314;
+    return ****a;
+}

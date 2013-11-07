@@ -1,0 +1,19 @@
+//test return 13
+
+struct a {
+    struct a *b;
+    int c;
+};
+
+struct d {
+    struct a e;
+    bool f;
+    struct a g;
+};
+
+int main() {
+    struct d *h = alloc(struct d);
+    ((*h).e).b = alloc(struct a);
+
+    return 13;
+}

@@ -1,0 +1,7 @@
+//test exception
+// mod minint by -1
+int main() {
+  int a = 2147483647;
+  int b = -a - 1;
+  return b % -1;
+}

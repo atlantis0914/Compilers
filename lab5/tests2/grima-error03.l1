@@ -1,0 +1,11 @@
+//test error
+// Malformed hexadecimal number
+
+int main()
+{
+  int x;
+
+  x = 0xf12g;
+
+  return x;
+}

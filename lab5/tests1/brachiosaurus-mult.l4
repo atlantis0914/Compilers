@@ -1,0 +1,17 @@
+//test return 720
+int main(){
+	int * a = alloc(int);
+	int * b = alloc(int);
+	int * c = alloc(int);
+	int * d = alloc(int);
+	int * e = alloc(int);
+	int * f = alloc(int);
+	*a = 1;
+	*b = 2;
+	*c = 3;
+	*d = 4;
+	*e = 5;
+	*f = 6;
+	*a = *a**b**c**d**e**f;
+	return *a;
+}

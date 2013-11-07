@@ -1,0 +1,11 @@
+//test exception
+
+int dumbrecur(int x) {
+    x--;
+    int y = dumbrecur(x+1);
+    return x + y;
+}
+
+int main() {
+    return dumbrecur(2);
+}

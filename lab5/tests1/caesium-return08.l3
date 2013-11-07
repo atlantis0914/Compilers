@@ -1,0 +1,9 @@
+//test return 3
+// tests shdowing
+
+
+int main()
+{
+  int main = 3;
+  return main;
+}

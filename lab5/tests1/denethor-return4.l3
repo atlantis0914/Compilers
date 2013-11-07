@@ -1,0 +1,22 @@
+//test return 13145528
+
+int func1(int x);
+
+int func2(int x) {
+   if (x!=0)
+      return func1(x-1)+x;
+   else
+      return 0;
+}
+
+int func1(int x) {
+   if (x!=0)
+      return func2(x-1)+x;
+   else
+      return 0;
+}
+
+int main() {
+   
+   return func1(142)+func2(5125);
+}

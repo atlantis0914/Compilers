@@ -1,0 +1,11 @@
+//test exception
+
+int myfun(int n)
+{
+    return myfun(n + 1 / n - 1);
+}
+
+int main()
+{
+    return myfun(22);
+}

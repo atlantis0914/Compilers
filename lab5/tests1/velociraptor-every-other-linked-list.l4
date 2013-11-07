@@ -1,0 +1,43 @@
+//test return 4
+
+struct node;
+
+struct node {
+	int val;
+	struct node* next;
+};
+
+struct node* every_other(struct node* n) {
+	struct node* next;
+	struct node* nextnext;
+	if (n == NULL)
+		return n;
+	next = n->next;
+	if (next == NULL) {
+		nextnext = NULL;
+	}
+	else {
+		nextnext = next->next;
+	}
+	n->next = every_other(nextnext);
+	return n;
+}
+
+int main() {
+	struct node* head;
+	struct node* cur;
+	struct node* next;
+	int i = 0;
+	head = alloc(struct node);
+	cur = head;
+	for ( ; i < 10; i++) {
+		cur->val = i;
+		next = alloc(struct node);
+		cur->next = next;
+		cur = cur->next;
+	}
+	cur->val = i;
+	cur->next = NULL;
+	cur = every_other(head);
+	return cur->next->next->val;
+}

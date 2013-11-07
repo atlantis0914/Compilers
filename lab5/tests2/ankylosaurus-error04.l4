@@ -1,0 +1,16 @@
+//test error
+// Array cannot be passed as param that is a pointer
+
+int test(int * x);
+
+int main()
+{
+    int [] array = alloc_array(int, 99);
+
+    return test(array);
+}
+
+int test(int * x)
+{
+    return *x;
+}

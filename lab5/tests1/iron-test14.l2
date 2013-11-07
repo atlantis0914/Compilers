@@ -1,0 +1,8 @@
+//test return 0
+// exclamation
+
+int main ()
+{  
+  bool cake = !!!!!!!!!true;
+  if(cake) return 1; else return 0;
+}

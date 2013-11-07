@@ -1,0 +1,12 @@
+//test error
+
+struct block;
+
+int main() {
+    int x = 5;
+    struct block b = alloc(struct block);
+
+    b->x = x;
+
+    return 0;
+}

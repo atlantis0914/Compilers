@@ -1,0 +1,12 @@
+//test return 5
+// function call (slightly less basic)
+
+int stuff(int thing)
+{
+    return 1 + thing;
+}
+
+int main()
+{
+    return stuff(1) + stuff(1) + stuff(2 - stuff(1));
+}

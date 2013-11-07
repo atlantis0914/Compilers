@@ -1,0 +1,15 @@
+//test return 0
+int main() {
+  int k = 16;
+  int a = 100;
+  int b = 2000;
+  int c = b / a;
+  int d = b / c;
+  int e = c / a;
+  int f = c / b;
+  int g = 12;
+  int h = e * e;
+  int i = c + d;
+  int j = (a + b + c) / (d + e + f);
+  return k / j;
+}

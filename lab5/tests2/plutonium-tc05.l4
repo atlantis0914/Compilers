@@ -1,0 +1,10 @@
+//test error
+/* comparing pointer and non-pointer */
+
+int main () {
+  int x;
+  int * y;
+  y = alloc(int);
+  y = NULL;
+  return y != x;
+}

@@ -1,0 +1,17 @@
+//test return 6
+// function call (basic recursion)
+
+int stuff(int a, int b)
+{
+    if(b > 0)
+    {
+        return 1 + stuff(a, b - 1);
+    }
+    
+    return a;
+}
+
+int main()
+{
+    return stuff(3,3);
+}

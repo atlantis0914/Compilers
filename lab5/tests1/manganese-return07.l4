@@ -1,0 +1,22 @@
+//test return 7
+
+int main() {
+    int [] array = alloc_array(int, 1);
+    int i = 1;
+    int n = 50;
+    int s = 1;
+    array[0] = 1;
+    for(i = 0; i < n; i++) {
+        int [] arrayb = alloc_array(int, array[i] + s);
+        int j = 0;
+        for (; j < s; j++) {
+            arrayb[j] = array[j];
+        }
+        s = array[i] + s;
+        for (int k = 0; k < array[i]; k++) {
+            arrayb[j+k] = array[i]+1;
+        }
+        array = arrayb;
+    }
+    return array[s-1];
+}

@@ -1,0 +1,13 @@
+//test error
+
+// too big int constant
+
+int main() {
+    int x;
+    int y;
+
+    x = 5;
+    y = 2147483649; // 2^31 + 1
+
+    return y - x;
+}

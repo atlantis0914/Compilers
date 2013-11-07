@@ -1,0 +1,11 @@
+//test return 42
+
+int main() {
+    int foo = 0;
+    int x = 10;
+
+    foo * x;
+
+    return x * 4 + 2;
+}
+

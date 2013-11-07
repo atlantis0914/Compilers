@@ -1,0 +1,10 @@
+//test return 0
+
+bool fuck() {
+  return true?true:false;
+}
+
+int main() {
+  bool fuck = fuck();
+  return fuck?0:1;
+}

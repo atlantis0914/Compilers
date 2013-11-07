@@ -1,0 +1,13 @@
+//test return 2
+// Test precedence of operators
+int main() {
+  int a = 3;
+  int b = 3;
+  int c = -a;
+  if(!(b < a << b)) {
+    return 0;
+  }
+  else {
+    return a ^ a & c;
+  }
+}

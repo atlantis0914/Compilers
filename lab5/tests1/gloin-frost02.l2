@@ -1,0 +1,12 @@
+//test return 165
+// test if statements, also
+
+int main () {
+	int x = 15;
+	if (false) {
+		int y = x / 0;
+	} else {
+		x *= 11;
+	}
+	return x;
+}

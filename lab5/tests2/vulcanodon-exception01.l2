@@ -1,0 +1,9 @@
+//test exception
+//divide by 0: x/x where x=0
+int main()
+{
+  int x;
+  x=0;
+  x/=x;
+  return x;
+}

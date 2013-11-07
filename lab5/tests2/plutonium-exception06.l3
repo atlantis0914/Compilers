@@ -1,0 +1,19 @@
+//test exception 8
+// formerly camembert-order-of-eval
+// do you evaluate left-to-right?
+
+int f(int a, int b, int c, int d, int e)
+{
+    return a+b+c+d+e;
+}
+
+int the_void()
+{
+  while (true) {}
+  return 0;
+}
+
+int main()
+{
+  return f(7 + 4, 1 / 0, 6, the_void(), 15);
+}

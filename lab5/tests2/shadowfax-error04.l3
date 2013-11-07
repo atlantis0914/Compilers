@@ -1,0 +1,14 @@
+//test error
+// function def != function decl
+
+
+int f (int x, int n, int y) {
+    return 231234;
+}
+
+
+int main () {
+    return f(3+5, 1/0, 200);
+}
+
+bool f (int x, int n, int y);

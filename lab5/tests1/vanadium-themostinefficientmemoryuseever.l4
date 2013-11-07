@@ -1,0 +1,18 @@
+//test return 500000
+
+int* ohmy(int* k,int a) {
+	int* t = alloc(int);
+	*t = *k+a;
+	return t;
+}
+
+int main() {
+	int* start = alloc(int);
+	int* i = alloc(int);
+	*start = 0;
+	*i = 0;
+	for (; *i < 100000; i=ohmy(i,1)) {
+		start = ohmy(start,5); //Go garbage collector go!
+	}
+	return *start;
+}

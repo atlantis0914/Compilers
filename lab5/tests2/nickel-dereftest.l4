@@ -1,0 +1,19 @@
+//test error
+//testing parsing of struct derefs
+
+struct foo
+{
+	struct foo* f;
+	int val;
+};
+
+
+int main
+(/*void*/)
+{
+	struct foo* f = alloc(struct foo);
+	f->f->f->(f->val) = 3;
+	return f->val;
+}
+
+/*dsfjasd*/

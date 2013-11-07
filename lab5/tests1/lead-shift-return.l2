@@ -1,0 +1,11 @@
+//test return 2
+//Positive test for shifting.
+
+int main ()
+{
+  bool x;
+  int y = 1;
+  y <<= 1;
+  x = y <= 2;
+  return 2;
+}

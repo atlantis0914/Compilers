@@ -1,0 +1,60 @@
+//test return 55
+
+typedef struct Node Node;
+typedef Node* List;
+
+struct Node {
+       List rest;
+       int num;
+};
+
+List cons(int num, List l)
+{
+	Node* n = alloc(Node);
+	n->rest = l;
+	n->num = num;
+	return n;
+}
+
+int getElem(int idx, List L)
+//@requires 0 <= idx;
+{
+	while(idx != 0)
+	{
+		L = L->rest;
+		idx--;
+	}
+	return L->num;
+}
+
+List toList(int[] A, int n)
+//@requires \length(A) == n;
+//@ensures \forall i, 0 <= i && i < n A[i] == getElem(\result, i);
+{
+	List res = NULL;
+	for (int i = n-1; i >= 0; i--)
+	{
+		res = cons(A[i], res);
+	}
+	return res;
+}
+
+int main()
+{
+	int n = 12000;
+	int[] A = alloc_array(int, n);
+	int fi = 0;
+	int fi1 = 1;
+	for (int i = 0; i < n; i++)
+	{
+		A[i] = fi + fi1;
+		fi = fi1;
+		fi1 = A[i];
+	}
+	List L = toList(A, n);
+	for (int i = 0; i < n; i++)
+	{
+		assert (A[i] == getElem(i, L));
+	}
+	return A[8];
+}

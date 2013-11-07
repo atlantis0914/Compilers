@@ -1,0 +1,6 @@
+//test error
+//no main
+
+int dummy() {
+    return 2;
+}

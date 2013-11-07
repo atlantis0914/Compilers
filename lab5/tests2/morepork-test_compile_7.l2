@@ -1,0 +1,19 @@
+//test error
+
+/* 
+ * This is my test program
+ * Malformed for statement
+ */
+int main () {
+  int x;
+  int y = 15;
+  ( x ) = 0;
+  for (x = 1; x = x + 1)
+  {
+    y = y - ( x );
+  }
+  y = -y;
+  x += 1;
+  //should return 4
+  return ( x + y);
+}

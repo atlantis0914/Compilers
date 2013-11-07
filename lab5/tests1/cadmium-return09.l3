@@ -1,0 +1,14 @@
+//test return 0
+void print_to(int n) {
+        print_int(n);
+
+        if (n == 0)
+                return;
+
+        print_to(n-1);
+}
+
+int main() {
+    print_to(5);
+    return 0;
+}

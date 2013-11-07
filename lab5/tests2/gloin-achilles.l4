@@ -1,0 +1,58 @@
+//test exception
+//tries to find the first two consecutive Achilles numbers (hint: these are 524506944{7,8})
+bool is_powerful(int []primes, int len, int num){
+    int res = 0;
+    for(int i=0; i < len && primes[i] <= num;i++){
+        if(num % primes[i] == 0){
+            if(num % (primes[i]*primes[i]) != 0){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool is_perfect_power(int num){
+    for(int i=2;i<=num/2;i++){
+      if(num % i != 0) {
+        /* continue; */
+      } else {
+        int mul = i;
+        for(;mul < num; mul*=i){ i;}
+        if(mul == num)
+          return true;
+      }
+    }
+    return false;
+}
+
+int main(){
+    int []primes = alloc_array(int, 20000);
+    int len = 1;
+    primes[0] = 2;
+    for(int i=3; len<20000;i++){
+        int j;
+        bool done = false;
+        for(j=0; j<len && !done; j++){
+            if(i % primes[j]== 0){
+                done = true;    /* break */
+            }
+        }
+        if(j==len){
+            primes[len]=i;
+            len++;
+        }
+    }
+    int cur = -1;
+    int i=3;
+    while(true){
+        if(is_powerful(primes,20000,i) && !is_perfect_power(i)){
+            if(cur == -1 || cur != i-1)
+                cur = i;
+            else
+                return i;
+        }
+        i++;
+    }
+    return -7;
+}

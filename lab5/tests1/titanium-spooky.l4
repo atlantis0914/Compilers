@@ -1,0 +1,27 @@
+//test return 8189
+// toospooky4me
+
+// G(0, x) = x + 1
+// G(n + 1, 0) = G(n, 1)
+// G(n + 1, x + 1) = G(n, G(n + 1, x))
+
+int G(int i, int y) {
+  if (i == 0) {
+    return y + 1;
+  }
+  if (y == 0) {
+    return G(i-1, 1);
+  }
+  // this 
+  // really
+  // is
+  // too
+  // spooky
+  // 4
+  // u
+  return G(i-1,G(i,y-1));
+}
+
+int main() {
+  return G(3,10);
+}

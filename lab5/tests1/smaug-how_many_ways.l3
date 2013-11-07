@@ -1,0 +1,20 @@
+//test return 12416
+
+int how_many_ways_change(int dollars) {
+  int total = 0;
+  for (int dol1 = 0; dol1 <= dollars; dol1+=1) {
+    for (int dol2 = 0; dol2 <= dollars; dol2+=2) {
+      for (int dol3 = 0; dol3 <= dollars; dol3+=3) {
+        if (dol1 + dol2 + dol3 == dollars) {
+          total++;
+        }
+      }
+    }
+  }
+
+  return total;
+}
+
+int main() {
+  return how_many_ways_change(383);
+}

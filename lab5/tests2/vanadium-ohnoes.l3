@@ -1,0 +1,10 @@
+//test error
+
+int f(int x, bool y, int y) {
+	//This function has two arguments with the same name!
+	return 1;
+}
+
+int main() {
+	return f(1,true,3)
+}

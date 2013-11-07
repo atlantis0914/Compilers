@@ -1,0 +1,26 @@
+//test return 0
+int
+main ()
+{
+  int v0 = 4;
+  v0 *v0 | v0;
+  return 9 & v0;
+  {
+    int v1 = 9;
+    int v2 = (v0);
+    int v3 = (4);
+    int v4 = 9;
+    v4 *= (-(v1 | v4));
+    {
+      int v5 = ((3));
+      int v6 = ((v3));
+      int v7 = (v3);
+      int v8 = 2;
+    } v2 | v0;
+    for (; ((-7) == (~-v3));)
+      {
+	int v5 = 5;
+	int v6 = v1 % v1;
+	v6++;
+  }} return 9;
+}

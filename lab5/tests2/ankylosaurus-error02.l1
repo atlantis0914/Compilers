@@ -1,0 +1,12 @@
+//test error
+// Program uses reserved keyword as variable name
+int main()
+{
+    int x;
+    int string;
+
+    x = 1;
+    string = x + 1;
+
+    return string;
+}

@@ -1,0 +1,9 @@
+//test exception
+
+int myfunc(int x, int y) {
+   return -2147483648/-1;
+}
+
+int main() {
+   return myfunc(-2147483648, -1);
+}

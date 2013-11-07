@@ -1,0 +1,22 @@
+//test return 0
+
+struct foobar
+{
+  int x;
+};
+
+struct foo
+{
+  struct foobar fb;
+};
+
+struct bar
+{
+  struct foo f;
+};
+
+int main()
+{
+  struct bar* b = alloc(struct bar);
+  return (b -> f).fb.x;
+}

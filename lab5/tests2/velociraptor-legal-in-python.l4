@@ -1,0 +1,31 @@
+//test error
+// All of this would be legal if translated to python, because
+// python is MAAAAAGICAL like that.
+
+int compare(int[] nums, bool[] facts) {
+	int j;
+	bool first = (nums < facts);
+	for (j = 0; j < 4; j+=1) {
+		first = first && (nums[j] < facts[j]);
+	}
+	return first;
+} 
+
+
+int main() {
+	int[] nums;
+	bool[] facts;
+	int i = 0;
+	nums = alloc_array(int, 4);
+	facts = alloc_array(bool, 4);
+	for ( ; i < 4; i++) {
+		nums[i] = (i+1);
+		facts[i] = (i % 2 == 0);
+	}
+	if (compare(nums, facts)) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}

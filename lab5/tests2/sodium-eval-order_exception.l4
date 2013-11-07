@@ -1,0 +1,14 @@
+//test exception 8
+// Evaluation order. Divide by 0 before seeing q->A is NULL.
+
+struct foo {
+  int[] A;
+};
+
+int main() {
+  struct foo *q = alloc(struct foo);
+
+  q->A[-1 + 1/0] = 12;
+
+  return -1;
+}

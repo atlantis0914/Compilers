@@ -1,0 +1,9 @@
+//test error
+int main()
+{
+    int  +++ = 5;
+    int  ___ = 6;
+    bool <<< = 7;
+    bool >>> = 8;
+    return 1;
+}

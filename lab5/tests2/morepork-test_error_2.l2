@@ -1,0 +1,19 @@
+//test exception 8
+
+/* 
+ * This is my test program
+ * Division of INT_MIN by -1
+ * should result in overflow
+ */
+int main () {
+  int x;
+  int i;
+  int y = -1;
+  ( x ) = -2147483648;
+  for ( i = 3; i > 0; i = i - 1)
+  {
+    x = x / y;
+  }
+  y = -y;
+  return ( x + y);
+}

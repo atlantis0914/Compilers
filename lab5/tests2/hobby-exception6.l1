@@ -1,0 +1,10 @@
+//test exception
+
+// div AND mod TMIN by -1
+
+int main() {
+    int x = -2147483648;
+    int y = -1;
+
+    return x / y + x % y;
+}

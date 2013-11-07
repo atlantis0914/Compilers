@@ -1,0 +1,8 @@
+//test return 20
+// Simple test for operator precedence
+int main() {
+  int x = 3;
+  int y = 8;
+
+  return 2 + y << 1;
+}

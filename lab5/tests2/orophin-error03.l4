@@ -1,0 +1,9 @@
+//test error
+//  checking for pointer "ordering"
+
+int main () {
+  if ( alloc(bool) < alloc(bool) )
+    return 42;
+  else
+    return 1/0;
+}

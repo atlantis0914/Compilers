@@ -1,0 +1,21 @@
+//test error
+//typechecking error
+
+int sum(int n, int z)
+{
+  return n + z;
+}
+
+int main()
+{
+  int n = 7;
+  int e = 3;
+  int sum = sum (n, e);
+  
+  if (sum)
+  {
+    sum;
+  }
+
+  return (1/0);
+}

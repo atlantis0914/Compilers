@@ -1,0 +1,8 @@
+//test error
+// struct in itself is not defined
+
+struct q {struct q q; int v;};
+
+int main() {
+  return 9;
+}

@@ -1,0 +1,8 @@
+//test return 0
+// Tests that short circuit division will happen and not evaluate divide by 0
+
+int main() {
+    bool a = false && (1 / 0 == 1);
+
+    return 0;
+}

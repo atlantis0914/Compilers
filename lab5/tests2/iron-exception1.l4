@@ -1,0 +1,10 @@
+//test exception 11
+// out of bounds exception
+
+int main() {
+		int[] arr;
+		int n = 100;
+		arr = alloc_array(int, n);
+		arr[n+5] = 10;
+		return arr[n+5];
+}

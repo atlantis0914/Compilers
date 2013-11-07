@@ -1,0 +1,15 @@
+//test error
+
+typedef int wrong;
+
+int myfun(wrong way)
+{
+    way *= *way;
+    return *way;
+}
+
+int main()
+{
+    myfun(5);
+    return 0;
+}

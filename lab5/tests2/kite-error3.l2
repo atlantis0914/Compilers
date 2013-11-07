@@ -1,0 +1,10 @@
+//test error
+// variable may not be initialized
+
+int main()
+{
+  int x;
+  if(true)
+    x=0;
+  return x;
+}

@@ -1,0 +1,13 @@
+//test error
+
+struct s
+{
+
+};
+
+int main()
+{
+    struct s[] a;
+    a = alloc_array(struct s, 2000);
+    return s[0] -> a;
+}

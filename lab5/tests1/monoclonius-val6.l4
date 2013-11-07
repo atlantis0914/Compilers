@@ -1,0 +1,29 @@
+//test return 4
+
+struct bar_t;
+
+struct foo_t{
+    int a;
+    int b;
+    int c;
+    struct bar_t *d;
+};
+
+typedef struct foo_t foo;
+
+struct bar_t{
+    int a;
+};
+
+typedef struct bar_t bar;
+
+int main(){
+    foo* f = alloc(struct foo_t); 
+    f->a = 1;
+    f->b = 1;
+    f->c = 1;
+    f->d = alloc(struct bar_t);
+    f->d->a = 1;
+
+    return f->a+f->b+(*f).c+(*((*f).d)).a;
+}

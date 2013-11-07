@@ -1,0 +1,41 @@
+//test return 2
+
+typedef int[][] matrix;
+
+
+bool is_identity(matrix m) {
+
+  int N = 100;
+
+  bool id = true;
+  for (int i=0; i<N; i++) {
+    for (int j=0; j<N; j++) {
+      if ((m[i][j] == 0 && i == j) || (m[i][j] != 0 && i != j)) {
+        id = false;
+      }
+    }
+  }
+
+  return id;
+
+}
+
+int main() {
+    int N = 100;
+    matrix m = alloc_array(int[], N);
+    for (int i=0; i<N; i++) {
+      m[i] = alloc_array(int, N);
+    }
+    
+    // populate
+    for (int i=0; i<N; i++) {
+      for (int j=0; j<N; j++) {
+
+        m[i][j] = (i * 113 + j * 97) % 53;
+
+      }
+    }
+   
+   return is_identity(m) ? 1 : 2;
+
+}

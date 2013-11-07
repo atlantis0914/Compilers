@@ -1,0 +1,36 @@
+//test return 2
+// You need to unfold tail recursion to pass this
+// At least homework 3 prepared you for this
+
+int a_lot_of_recursions(int x)
+{
+  int animals = 0;
+  int plants = 1;
+  int minerals = 2;
+  int THE_ROCK = 666;
+  int person = 0;
+
+  for (int i = 0; i < 1; i++)
+  {
+    bool I_am_an_animal = animals == person;
+    bool I_am_green = plants == person;
+    bool I_am_not_a_rock = person == minerals;
+    bool I_am_the_ROCK = person == THE_ROCK;
+
+    int my_classification = I_am_green ? plants : I_am_not_a_rock ? minerals : I_am_an_animal ? animals : 42;
+
+    int what_is_this_loop_for = my_classification / 1;
+    int how_long_will_this_go = what_is_this_loop_for == my_classification ? /* I have no idea */ 1 : /* but who cares */ 0;
+  }
+
+  if (x == 0)
+    return 1 + person + 0 + 0 + 0 + 0 + 0 + 0 + person + 1; // Base Case
+  else
+    return a_lot_of_recursions(x - 1); // Tail Recursive
+}
+
+int main()
+{
+  /* Tail recursion == loop */
+  return a_lot_of_recursions(140*1000);  // Beware of stack overflow
+}

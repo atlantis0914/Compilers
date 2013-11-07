@@ -1,0 +1,36 @@
+//test return 198
+
+int f(int[][] A, int i, int j){
+  A[i+1][j] = 3*A[i][j] - 2*A[i+1][j];
+  i++;
+  return i;
+}
+
+int g(int[][] A, int i, int j){
+  A[i][j+1] = 3*A[i][j] - 2*A[i][j-1];
+  j++;
+  return j;
+}
+
+int main(){
+  int[][] A = alloc_array(int[], 100);
+  for(int i = 0; i < 100; i++)
+    A[i] = alloc_array(int, 100);
+  for(int i = 0; i < 100; i++){
+    for(int j = 0; j < 100; j++){
+      A[i][j] = 1;
+    }
+  }
+  for(int i = 0; i < 99; i++){
+    for(int j = 1; j < 99; j++){
+      A[f(A,i,j)][g(A,i,j)] = 12345;
+    }
+  }
+  for(int i = 0; i < 100; i++){
+    for(int j = 0; j < 100; j++){
+      if(A[i][j] == 12345)
+        return i+j;
+    }
+  }
+  return 0;
+}

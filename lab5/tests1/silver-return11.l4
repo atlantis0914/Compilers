@@ -1,0 +1,13 @@
+//test return 0
+//
+
+
+typedef int complex;
+struct complex {
+       struct complex* p;
+       complex* q;
+};
+
+int main() {
+    return 0;
+}

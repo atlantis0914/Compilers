@@ -1,0 +1,19 @@
+//test return 1
+struct s {
+    int x;
+    int* y;
+};
+typedef struct s node;
+
+node* f(node* s) {
+    s->x++;
+    (*s->y)++;
+    return s;
+}
+
+int main() {
+    node* x = alloc(node);
+    x->y = alloc(int);
+    f(x);
+    return *x->y;
+}

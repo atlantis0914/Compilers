@@ -1,0 +1,7 @@
+//test error
+// bad for loop
+int main() {
+    for(int x = 0; x++) {
+    }
+    return 0;
+}

@@ -1,0 +1,20 @@
+//test error
+int main()
+{
+  int x = 0;
+  {
+    int y;
+    {
+      int z;
+      {
+        z = 5;
+        y = z + 10;
+        {
+          z = 2;
+        }
+        x *= z;
+      }
+    }
+  }
+  return y;
+}

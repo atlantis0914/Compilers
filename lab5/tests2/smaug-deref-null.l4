@@ -1,0 +1,13 @@
+//test exception
+
+int doSomeWork(int i) {
+  return i*78;
+}
+
+int main() {
+  int * x = NULL;
+  for (int i = 0; i < 10; i++) {
+    doSomeWork(i);
+  }
+  return *x; // NULL pointer
+}

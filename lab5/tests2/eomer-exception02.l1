@@ -1,0 +1,12 @@
+//test exception 8
+// div by zero
+
+int main () {
+    int a = 0xffffffff;
+    a += 1;
+    
+    int b = a;
+    b = b % a;
+    
+    return b;
+}

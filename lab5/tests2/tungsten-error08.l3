@@ -1,0 +1,6 @@
+//test error
+//mismatched return type
+
+int main() {
+  return false;
+}

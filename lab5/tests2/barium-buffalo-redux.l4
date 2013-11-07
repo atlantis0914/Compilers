@@ -1,0 +1,15 @@
+//test exception
+// buffalo buffalo buffalo buffalo buffalo buffalo
+
+struct buffalo {
+  struct buffalo *buffalo;
+  int buffalos;
+};
+
+struct buffalo *buffalo (struct buffalo *buffa1o) { return buffalo(alloc(struct buffalo)->buffalo); }
+
+
+int main()
+{
+  return buffalo(buffalo(alloc(struct buffalo)->buffalo)->buffalo)->buffalos;
+}

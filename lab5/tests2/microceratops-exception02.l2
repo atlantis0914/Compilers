@@ -1,0 +1,21 @@
+//test exception
+
+int main ()
+{
+  int n;
+	int i;
+
+	n = 1024;
+
+	for ( i = 0; n > 0; i++) {
+		{
+			n /= 2;
+		}	
+	}
+
+	if ( i == 11 ) {
+		return 1 % 0;
+	}	else {
+		return 1;
+	}	
+}

@@ -1,0 +1,8 @@
+//test error
+int main() {
+  int[][] mine = alloc_array(int[], 5);
+  mine[0] = alloc_array(int,3);
+  mine[0][1] = 5;
+  mine[[1]] = mine[0][1];
+  return 0;
+}

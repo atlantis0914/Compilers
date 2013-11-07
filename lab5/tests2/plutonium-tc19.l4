@@ -1,0 +1,11 @@
+//test error
+/* break outside loop */
+
+int main () {
+  int x;
+  x = 20;
+  while (x > 0)
+    x -= 1;
+    break;
+  return x;
+}

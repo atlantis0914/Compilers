@@ -1,0 +1,52 @@
+//test return 1320
+//tests all callee saved registers
+
+// use all registers here so that the callee saved ones
+// must be saved then restored
+int savePlz() {
+  int a =  10;
+  int b =  20;
+  int c =  30;
+  int d =  40;
+  int e =  50;
+  int f =  60;
+  int g =  70;
+  int h =  80;
+  int i =  90;
+  int j = 100;
+  int k = 110;
+  int l = 120;
+  int m = 130;
+  int n = 140;
+  int o = 150;
+
+  int x = a+b+c+d+e+f+g+h+i+j+k+l+m+n+o;
+  return x;
+}
+
+// all registers are live across the function call
+// so all callee saved registers must remain intact
+int main ()
+{
+  int a =  1;
+  int b =  2;
+  int c =  3;
+  int d =  4;
+  int e =  5;
+  int f =  6;
+  int g =  7;
+  int h =  8;
+  int i =  9;
+  int j = 10;
+  int k = 11;
+  int l = 12;
+  int m = 13;
+  int n = 14;
+  int o = 15;
+
+  int x = savePlz();
+
+  int y = a+b+c+d+e+f+g+h+i+j+k+l+m+n+o;
+
+  return x + y;
+}

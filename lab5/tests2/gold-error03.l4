@@ -1,0 +1,13 @@
+//test error
+
+struct t;
+
+int main () {
+	struct t[] arr = alloc_array(strcut t, 10);
+	return 10;
+}
+
+struct t {
+	int a;
+	int b;
+};

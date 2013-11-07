@@ -1,0 +1,6 @@
+//test error
+//no main
+
+int a(){
+  return 0;
+}

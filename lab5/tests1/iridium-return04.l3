@@ -1,0 +1,10 @@
+//test return 32
+
+int num_bits (int n) {
+  if (n == 0) return 0;
+  else return (n & 1) + num_bits(0x7fffffff & (n >> 1));
+}
+
+int main () {
+  return num_bits(0xffffffff);
+}

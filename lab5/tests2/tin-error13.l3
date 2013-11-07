@@ -1,0 +1,16 @@
+//test error
+// tests some function syntax stuff
+
+typedef int bar;
+
+int foo((int x), bool int y, (bar) z) {
+  return 1;
+}
+
+baz((())) {
+  return;
+}
+
+int main() {
+  return 0;
+}

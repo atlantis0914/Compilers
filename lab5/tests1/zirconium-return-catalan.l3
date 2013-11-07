@@ -1,0 +1,36 @@
+//test return 0
+
+int main();
+int Catalan1(int n);
+int Catalan2(int n);
+int choose(int n, int r);
+int fact(int n);
+
+int main() { if (Catalan1(6) == Catalan2(6)) return 0; else return -1;
+}
+
+//Factorial required for Binomial Coefficients
+int fact(int n) {
+  if (n < 1) return 1/0;
+  else if (n == 1) return n;
+  else return (n * fact(n-1));
+}
+
+//Binomial Coefficients are required for Catalan numbers
+int choose(int n, int r) {
+  return (fact(n)/(fact(r) * fact(n-r)));
+}
+
+//Computes the nth Catalan number, if n <= 6
+int Catalan1(int n) {
+  return (choose(2*n, n)/(n+1));
+}
+
+//This should be "equivalent", and faster, than the above.
+int Catalan2(int n) {
+  int less = n-1;
+  if (less < 0) return 1/0;
+  else if (less == 0) return 1;
+  else return ((Catalan2(less) * (4 * less+2))/(less+2));
+}
+

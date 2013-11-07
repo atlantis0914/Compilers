@@ -1,0 +1,8 @@
+//test error
+// *a-- is an error
+
+int main () {
+    int *b = alloc(int);
+    *b--;
+    return *b;
+}

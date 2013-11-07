@@ -1,0 +1,8 @@
+//test return 0
+// Test invalid constants.
+
+int main() {
+   int x = 13;
+   return 0;
+   x += 21;
+}

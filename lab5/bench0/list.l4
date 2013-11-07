@@ -1,0 +1,60 @@
+//test return 25000
+
+/* Computing the length of a linked list */
+
+struct list_node {
+  int data;
+  struct list_node* next;
+};
+typedef struct list_node list;
+
+int length (list* p) {
+  int n = 0;
+  while (p != NULL) {
+    n += 1;
+    p = p->next;
+  }
+  return n;
+}
+
+/* Cycle counting interface */
+
+struct io {
+  list* l;
+  int len;
+};
+typedef struct io data;
+
+data* init(int n) {
+  int limit = n*25;
+  data* io = alloc(data);
+  list* q = NULL;
+  while (limit > 0) {
+    list* p = alloc(list);
+    p->data = limit;
+    p->next = q;
+    q = p;
+    limit--;
+  }
+  io->l = q;
+  return io;
+}
+
+void prepare(data* io, int n) {
+  io->len = 0;
+}
+
+void run(data* io, int n) {
+  io->len = length(io->l);
+}
+
+int checksum(data* io, int n) {
+  return io->len;
+}
+
+int main () {
+  data* io = init(1000);
+  prepare(io, 1000);
+  run(io, 1000);
+  return checksum(io, 1000);
+}

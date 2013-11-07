@@ -1,0 +1,17 @@
+//test error
+// pointers and arrays are not quite the same
+struct Foo
+{
+	int[] a;
+	int b;
+	int c;
+	int[] d;
+	int e;
+	int f;
+};
+
+int main()
+{
+	struct Foo* a = alloc(struct Foo);
+	return a[0];
+}

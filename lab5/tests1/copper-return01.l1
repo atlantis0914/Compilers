@@ -1,0 +1,24 @@
+//test return 9
+// woohoo basic arithmatic
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+  int e;
+  int f;
+  int g;
+
+  a = 3;
+  b = 4;
+  c = 5;
+  c *= c;
+  c -= a * a;
+  c -= b * b;
+  d = c; //0
+  e = d + 42;
+  f = (e - c) * 2 - (18 * 4); //2
+  g = f - 3;
+  return g;
+}

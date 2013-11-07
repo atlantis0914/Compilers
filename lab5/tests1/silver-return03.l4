@@ -1,0 +1,30 @@
+//test return 3
+//
+
+struct y {
+    int a;
+    int b;
+};
+
+struct y * f(struct y * q) {
+    if (q->a == 0) return q;
+    if (q->a > q->b) {
+        struct y * w = alloc(struct y);
+        w->a = q->b;
+        w->b = q->a;
+        return f(w);
+    } else {
+        struct y * w = alloc(struct y);
+        w->a = q->b%q->a;
+        w->b = q->a;
+        return f(w);
+    }
+}
+
+int main() {
+    struct y * q = alloc(struct y);
+    q->a = 10101;
+    q->b = 1011;
+    q = f(q);
+    return q->b;
+}

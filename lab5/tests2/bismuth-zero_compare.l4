@@ -1,0 +1,19 @@
+//test exception 11
+
+struct s
+{
+    int val;
+};
+
+int main()
+{
+    struct s[] a;
+    struct s[] b;
+    a = alloc_array(struct s, 0);
+    b = alloc_array(struct s, 0);
+    if (a==b)
+        return 0;
+    else
+        b[0].val;
+        return 224;
+}

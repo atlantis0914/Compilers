@@ -1,0 +1,16 @@
+//test error
+struct s {
+    int a;
+};
+
+struct sb {
+    struct s b;
+};
+
+int main()
+{
+    struct sb *tmp = alloc(struct sb);
+    struct s *tmp2 = alloc(struct s);
+    tmp->b = *a;
+    return 0;
+}

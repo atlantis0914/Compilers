@@ -1,0 +1,11 @@
+//test error
+
+struct a_struct
+{
+  struct a_struct this_is_wrong;
+};
+
+int main()
+{
+  return 0;
+}

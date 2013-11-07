@@ -1,0 +1,7 @@
+//test error
+
+int main() {
+  bool[] x = alloc_array(bool, 1);
+  int[] y = alloc_array(int, 1);
+  return (x == y) ? 1 : 0;
+}

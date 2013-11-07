@@ -1,0 +1,16 @@
+//test error
+//return statement references out of scope variable
+
+int main() {
+  int i = 0 + 2;
+  for (i = 0; i < 20; i++) {
+    if (i == 10) {
+        int j = 3;
+        return j;
+    }
+    else {
+        return j + 1;
+    }
+  }
+  return 1;
+}

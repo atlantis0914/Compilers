@@ -1,0 +1,15 @@
+//test return 0
+
+int main() {
+    int[] NIKOLAI_MUSHEGIAN = alloc_array(int, 7);
+    NIKOLAI_MUSHEGIAN[6] = 1;
+    int i = 6;
+    for (;NIKOLAI_MUSHEGIAN[i] == 0; i--) {
+      i++;
+    }
+
+    for (i = 0;NIKOLAI_MUSHEGIAN[i] == 0; i++)
+        i = i;
+
+    return 0;
+}

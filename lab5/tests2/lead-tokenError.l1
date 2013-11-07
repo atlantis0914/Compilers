@@ -1,0 +1,7 @@
+//test error
+// parser should fail to parse token due to missing space
+intmain() {
+    int a = 3;
+    return a;
+}
+

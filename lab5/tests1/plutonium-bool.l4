@@ -1,0 +1,17 @@
+//test return 1
+/* using an int as a boolean */
+
+bool xor (bool b, bool c) {
+  return (b && !c) || (!b && c);
+}
+
+int main () {
+  bool t;
+  bool f;
+  t = true;
+  f = false;
+  if (!xor(t,t) && xor(t,f) && xor(f,t) && !xor(f,f))
+    return 1;
+  else
+    return 0;
+}

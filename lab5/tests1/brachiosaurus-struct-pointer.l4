@@ -1,0 +1,19 @@
+//test return 0
+
+struct a;
+
+struct b {
+	struct a* c;
+};
+
+struct a {
+	int a;
+};
+
+typedef struct a lol;
+typedef struct b lol2;
+
+int main() {
+	lol* a = alloc(lol);
+	return 0;
+}

@@ -1,0 +1,11 @@
+//test exception 14
+// timeout
+
+
+int main() {
+    int x = 1;
+    while(true) {
+        x -= 2;
+    }
+    return 3;
+}

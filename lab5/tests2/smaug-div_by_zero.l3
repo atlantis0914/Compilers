@@ -1,0 +1,13 @@
+//test exception
+
+int bar() {
+  return 1/0;
+}
+
+int foo() {
+  return bar();
+}
+
+int main() {
+  return foo();
+}

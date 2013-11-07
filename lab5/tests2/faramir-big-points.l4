@@ -1,0 +1,17 @@
+//test error
+
+//type sizes, how do they work?
+
+struct p { int x; int y; };
+typedef p point;
+point origin () {
+    point * p = alloc(point);
+    p->x = 0;
+    p->y = 0;
+    return *p;
+}
+
+int main() {
+    point q = origin();
+    return q.x;
+}

@@ -1,0 +1,7 @@
+//test error
+// tests returning undeclared var
+int main()
+{
+  int a;
+  return d;
+}

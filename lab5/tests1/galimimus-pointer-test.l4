@@ -1,0 +1,13 @@
+//test return 0
+
+int rob(int* bank) {
+  *bank = 0;
+  return 1;
+}
+
+int main() {
+  int* bank = alloc(int);
+  *bank = 1000;
+  rob(bank);
+  return *bank;
+}

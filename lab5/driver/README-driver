@@ -1,0 +1,38 @@
+This directory contains the driver files for testing your compiler.
+
+Copy the driver files to the directory where your compiler is
+
+$ cp driver/* compiler/
+$ cp runtime/* compiler/
+
+Now you can call the driver as in
+
+$ cd compiler
+$ ./driver.pl [options] [files ...]
+
+For a complete list of options, pass driver.pl the -h flag; for more
+documentation, run
+
+$ perldoc driver.pl
+
+As of Lab 5, this directory also contains the cycle timing infrastructure
+
+$ ./timer.pl [options] [files ...]
+
+The files set up in this manner are lab5/bench?/*.l4.  The interface is as follows:
+
+void* init(int param);
+void prepare(void* data, int param);
+void run(void* data, int param);
+void checksum(void* data, int param);
+
+p = init(n) - initializes data structures for the problem instance with
+              parameter n, default n = 1000.  Run once per benchmark.
+
+prepare(p,n) - sets data structures to defined initial value
+run(p,n)     - run test, with cycle counting
+
+prepare(p,n); run(p,n) are iterated some number of times until we have
+convergence to a good cycle count, but a maximum of 1000 iterations
+
+checksum(p,n) - a checksum to validate result of a run

@@ -1,0 +1,12 @@
+//test return 3
+// tests typedef
+
+typedef int foo;
+typedef foo bar;
+
+
+bar main()
+{
+  foo tmp = 3;
+  return tmp;
+}

@@ -1,0 +1,45 @@
+//test return 40
+
+bool isPrime(int n) {
+    if(n < 2) {return false;}
+    if(n == 2) {return true;}
+    if(n % 2 == 0) {return false;}
+    for(int f = 3; f < n; f += 2) {
+        if(n % f == 0) {return false;}
+    }
+    return true;
+}
+
+int digitSum(int n) {
+    return (n <= 0 ? 0 : n % 10 + digitSum(n / 10)); 
+}
+
+int sumOfDigitsOfPrimeFactors(int n) {
+    int f = 2;
+    int sum = 0;
+    while(n > 1) {
+        while(n % f == 0) {
+            sum += digitSum(f);
+            n /= f;
+        }
+        f++;
+    }
+    return sum;
+}
+
+bool isSmithNumber(int n) {
+    return !isPrime(n) && digitSum(n) == sumOfDigitsOfPrimeFactors(n);
+}
+
+int nthSmithNumber(int n) {
+    int guess = 4; //0th one
+    while(n > 0) {
+        guess++;
+        n -= (isSmithNumber(guess) ? 1 : 0);
+    }
+    return guess;
+}
+
+int main() {
+    return (nthSmithNumber(5) == 94 && nthSmithNumber(6) == 121 ? 40 : 1987);
+}

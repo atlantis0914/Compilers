@@ -1,0 +1,18 @@
+//test exception 14
+
+/* http://tinyurl.com/23mj73y */
+
+struct s {
+	struct s* s;
+	int n;
+};
+
+int main() {
+	struct s* s = alloc(struct s);
+	s->s = alloc(struct s);
+	s->s->s = s;
+	while (s->s != NULL) {
+		s = s->s;
+	}
+	return s->n;
+}

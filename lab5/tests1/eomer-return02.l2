@@ -1,0 +1,18 @@
+//test return 0
+
+int main() {
+    int i = 0;
+    int j = 0;
+
+    while(i < 15) {
+        i += 1;
+        i *= i;
+    }
+
+    for ( ; j < 15; ) {
+        j += 1;
+        j *= j;
+    }
+
+    return j-i;
+}

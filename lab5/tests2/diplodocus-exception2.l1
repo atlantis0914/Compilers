@@ -1,0 +1,6 @@
+//test exception
+
+int main()
+{
+    return 5 % 0;
+}

@@ -1,0 +1,25 @@
+//test return 30
+
+void do(int i)
+{
+  int x0 = i;
+  int x1 = x0 + i;
+  int x2 = x1 + x0 + i;
+  int x3 = x2 + x1 + x0 + i;
+  int x4 = x3 + x2 + x1 + x0 + i;
+  int x5 = x4 + x3 + x2 + x1 + x0+ i;
+  if(i == 0)
+    return;
+  do(i-1);
+}
+
+int main()
+{
+  int i = 0;
+  while (i < 256)
+  {
+    do(i);
+    i++;
+  }
+  return 30;
+}

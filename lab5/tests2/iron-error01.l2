@@ -1,0 +1,11 @@
+//test error
+//using postop incorrectly
+
+int main ()
+{
+  int x = 0;
+  
+  --x;
+
+  return x;
+}

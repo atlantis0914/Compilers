@@ -1,0 +1,13 @@
+//test error
+// to many mains
+
+struct main {
+       int main;
+       bool i;
+};
+typedef struct main main;
+
+int main() {
+    main *main = alloc(struct main);
+    return main->main;
+}

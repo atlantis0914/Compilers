@@ -1,0 +1,30 @@
+//test return 2
+/*              ---- Story part 4 ----
+   Okay I put forth my greatest effort at last
+   But deagol was hollerin "THOU SHALL NOT PASS" */
+
+int inc(int* a) {
+  (*a)++;
+  return 1;  /* gotta be true */
+}
+
+int ballin(int* a);
+
+int main() {
+  int foo = 0;
+  int* a = alloc(int);
+  foo*inc(a);
+
+  ballin(a);
+
+  return *a;
+}
+
+typedef int foo;
+
+int ballin(int* a) {
+  foo*b = a;
+  inc(b);
+  return 0;  /* you are not ballin */
+}
+

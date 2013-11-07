@@ -1,0 +1,15 @@
+//test return 1 
+// testing binary operators
+
+int main () {
+	int x = -4;
+    int n = 3;
+    int newx = x ^ (x >> 31);
+    newx = newx >> (n + ~1 + 1);
+    newx = (newx & 0xffff) | (0xffff & (newx >> 16));
+    newx = (newx & 0xff) | (0xff & (newx >> 8));
+    newx = (newx & 0xf) | (0xf & (newx >> 4));
+    newx = (newx & 3) | (0x3 & (newx >> 2));
+    newx = (newx & 1) | (1 & (newx >>1));
+    return -newx + 1;
+}

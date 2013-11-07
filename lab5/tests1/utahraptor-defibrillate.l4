@@ -1,0 +1,15 @@
+//test return 1
+int defibrillate(int[] fibs, int n)
+{
+	if (n == 1)
+		return fibs[n];
+	fibs[n - 1] = fibs[n + 1] - fibs[n];
+	return defibrillate(fibs, n - 1);
+}
+int main()
+{
+	int[] fibs = alloc_array(int, 41);
+	fibs[40] = 102334155;
+	fibs[39] = 63245986;
+	return defibrillate(fibs, 39);
+}

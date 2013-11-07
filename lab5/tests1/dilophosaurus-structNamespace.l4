@@ -1,0 +1,13 @@
+//test return 42
+/* no collisions in different namespaces */
+
+struct s {
+  int s;
+};
+
+int main() {
+    struct s* s = alloc(struct s);
+    s-> s = 42;
+    return (*s).s;
+}
+

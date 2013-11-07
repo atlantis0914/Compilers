@@ -1,0 +1,19 @@
+//test return 89
+
+int foo(int *p, int *q)
+{
+	if (p == q) {
+		*q = 89;
+		return *p;
+	} else {
+		*p = 98;
+		return *q;
+	}
+}
+
+int main()
+{
+	int *p = alloc(int);
+	int *q = alloc(int);
+	return foo(p, p);
+}

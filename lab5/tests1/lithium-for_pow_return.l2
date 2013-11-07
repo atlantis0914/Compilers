@@ -1,0 +1,11 @@
+//test return 2048
+int main()
+{
+	int y = 2;
+	int x;
+	for (x = 0; x < 10; x++)
+	{
+		y = y * 2;
+	}
+	return y;
+}

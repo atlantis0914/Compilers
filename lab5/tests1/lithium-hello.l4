@@ -1,0 +1,26 @@
+//test return 12
+
+int main() {
+	int[] ascii = alloc_array(int, 13);
+	ascii[0] = 72;
+	ascii[1] = 101;
+	ascii[2] = 108;
+	ascii[3] = 108;
+	ascii[4] = 111;
+	ascii[5] = 32;
+	ascii[6] = 87;
+	ascii[7] = 111;
+	ascii[8] = 114;
+	ascii[9] = 108;
+	ascii[10] = 100;
+	ascii[11] = 33;
+	ascii[12] = 0;
+
+	int n = 0;
+	while (ascii[n] != 0) {
+		ascii[n];
+		n = n + 1;
+	}
+
+	return n;
+}

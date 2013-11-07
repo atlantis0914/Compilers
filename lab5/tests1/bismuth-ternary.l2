@@ -1,0 +1,7 @@
+//test return 5
+// test ternary evaluation
+int main()
+{	
+    int x = 0;
+    return true ? 5 + x : 5/x;
+}

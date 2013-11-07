@@ -1,0 +1,21 @@
+//test error
+int main() {
+  int A;
+  int F = 0;
+
+  // lol should this really be an error?
+  if (F == 0) {
+    A = 99;
+  }
+
+  for (int i=0; i < 10; i++) {
+    if (i == 11) break;
+  }
+
+  // my grade in compilers
+  A++;
+  // your grade in compilers
+  F--;
+  // what you'll be returning with if you don't pass my tests :)
+  return F;
+}

@@ -1,0 +1,20 @@
+//test error
+/*              ---- Story part 1 ----
+   Once upon a time, twas a hobbit, like smeagol
+   Who was sad, his compiler, was worser than deagol's */
+
+typedef struct AAAAAAAAAAAAAAAA_STORYTIME_AAAAAAAAAAAAAAAA b;
+
+struct e {
+  b d;
+};
+
+struct AAAAAAAAAAAAAAAA_STORYTIME_AAAAAAAAAAAAAAAA {
+  int c;
+  struct e d;
+};
+
+int main() {
+  return 0;
+}
+

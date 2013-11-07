@@ -1,0 +1,14 @@
+//test return 1
+
+struct s{
+  int s;
+};
+
+typedef struct s s;
+
+int main(){
+  s *ss;
+  ss = alloc(s);
+  ss -> s = 1;
+  return (ss -> s);
+}

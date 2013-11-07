@@ -1,0 +1,12 @@
+//test error
+//return uninitialized field
+
+struct str {
+    int my;
+    bool field;
+};
+
+int main() {
+    struct str* myStr = alloc(struct str);
+    return myStr.field;
+}

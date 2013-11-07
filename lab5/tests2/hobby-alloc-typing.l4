@@ -1,0 +1,11 @@
+//test error
+
+int main() {
+    int *x = NULL;
+
+    x = alloc(bool);
+
+    *x = 5;
+
+    return *x;
+}

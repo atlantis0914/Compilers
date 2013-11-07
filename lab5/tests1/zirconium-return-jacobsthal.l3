@@ -1,0 +1,12 @@
+//test return 10923
+//Calculates the nth Jacobsthal number
+int Jacobsthal(int n) {
+  if (n < 0) return 1/0;
+  if (n == 0) return 0;
+  if (n == 1) return 1;
+  return Jacobsthal(n-1) + 2 * Jacobsthal(n-2);
+}
+
+int main() {
+  return Jacobsthal(15);
+}

@@ -1,0 +1,14 @@
+//test error
+
+struct sturct;
+
+int main ()
+{
+	struct sturct * sturcture = alloc(sturct);
+	sturcture->itn = 0;
+	return sturcture->itn;
+}
+
+struct sturct {
+	int itn;
+}

@@ -1,0 +1,14 @@
+//test error
+// Voids can only be returned
+
+void foo()
+{
+  void a;
+
+  return void;
+}
+
+int main()
+{
+  return 0;
+}

@@ -1,0 +1,10 @@
+//test exception
+
+int myfunc(int y) {
+   myfunc(y);
+   return 0;
+}
+
+int main() {
+   return myfunc(0);
+}

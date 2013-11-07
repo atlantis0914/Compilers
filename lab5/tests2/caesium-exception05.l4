@@ -1,0 +1,6 @@
+//test exception
+int main()
+{
+    int *a = alloc(int);
+    return 1/(*a);
+}

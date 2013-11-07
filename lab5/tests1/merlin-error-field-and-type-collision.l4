@@ -1,0 +1,17 @@
+//test return 1
+struct foo{int PEWPEW; bool LAZERBEEM;};
+
+typedef bool LAZERBEEM;
+
+LAZERBEEM PEWPEW(LAZERBEEM PEW)
+{
+  return PEW;
+}
+
+int main()
+{
+  if(PEWPEW(true))
+    return 1;
+  else 
+    return 0;
+}

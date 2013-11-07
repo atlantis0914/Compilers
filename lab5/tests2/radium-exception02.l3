@@ -1,0 +1,21 @@
+//test exception 8
+//Evaluation order
+
+int some_func(int a, int b, int c)
+{
+  return a;
+}
+
+int infinite()
+{
+  int i = 100;
+  while (i > 0) {
+    i++;
+  }
+  return 0;
+}
+
+int main()
+{
+  return some_func(4, 1/0, infinite());
+}

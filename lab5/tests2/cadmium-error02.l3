@@ -1,0 +1,9 @@
+//test error
+int f(int x, int y) {
+    int x = x * 5;
+    return x;
+}
+
+int main() {
+    return f(1, 2);
+}

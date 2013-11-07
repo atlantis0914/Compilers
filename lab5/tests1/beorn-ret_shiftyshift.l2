@@ -1,0 +1,9 @@
+//test return 1024
+int main() {
+    int x = 1;
+    int y;
+
+    y = x << 3 << 2 >> 4 << 6 >> 7 << 2 << (0xF2 % 32) >> 1 << 2 >> 9 >> 2;
+
+    return y;
+}

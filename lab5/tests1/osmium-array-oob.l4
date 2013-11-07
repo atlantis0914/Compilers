@@ -1,0 +1,16 @@
+//test return 8
+
+int main() {
+    int x = 4;
+
+    for(int * i = alloc(int); *i < 9; (*i)++) {
+        if (*i % 2 == 0) {
+            x <<= 1;
+        }
+    }
+    if (x != (1<<(2 + 5))) {
+        assert(false);
+    }
+
+    return 8;
+}

@@ -1,0 +1,7 @@
+//test error
+
+int main()
+{
+  int *const = true ? false ? alloc(int) : false ? alloc(int) : NULL : 0x402100;
+  return *const;
+}

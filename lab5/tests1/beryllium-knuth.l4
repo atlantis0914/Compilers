@@ -1,0 +1,16 @@
+//test return 27
+
+// Knuth up-arrow notation
+
+int up(int x, int y, int n)
+{
+  if(n == 0) return x * y;
+  if(y == 0) return 1;
+  
+  return up(x, up(x, y - 1, n), n - 1);
+}
+
+int main()
+{
+  return up(3,2,2);
+}

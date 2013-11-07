@@ -1,0 +1,11 @@
+//test error
+// basic lexer test
+int main()
+{
+    int i;
+    int y = 0;
+    for(for (i=0; i < 20; i++){y++;}; i<20; i++){
+        y=y+1;
+    }
+    return y;
+}

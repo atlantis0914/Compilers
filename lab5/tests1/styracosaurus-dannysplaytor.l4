@@ -1,0 +1,187 @@
+//test return 1101
+
+struct node;
+typedef struct node node_t;
+
+struct node {
+	node_t * parent;
+	node_t * left;
+	node_t * right;
+	int val;
+};
+
+
+
+//Tree rotations
+node_t * rotate_left(node_t * top)
+{
+	node_t * new_top;
+	
+	if(top == NULL)
+		return top;
+	if(top->right == NULL)
+		return top;
+
+	//rotate right child of 'top' to above 'top'
+	new_top			= top->right;
+	top->right		= new_top->left;
+	new_top->left	= top;
+
+	//fix parent relationships
+	new_top->parent = top->parent;
+	if(top->parent != NULL && top->parent->right == top)
+		top->parent->right = new_top;
+	if(top->parent != NULL && top->parent->left == top)
+		top->parent->left = new_top;
+	top->parent = new_top;
+	if(top->right != NULL) top->right->parent = top;
+
+	return new_top;
+}
+
+node_t * rotate_right(node_t * top)
+{
+	node_t * new_top;
+
+	if(top == NULL)
+		return top;
+	if(top->left == NULL)
+		return top;
+
+	//rotate left child of 'top' to above 'top'
+	new_top			= top->left;
+	top->left		= new_top->right;
+	new_top->right	= top;
+
+	//fix parent relationships
+	new_top->parent = top->parent;
+	if(top->parent != NULL && top->parent->right == top)
+		top->parent->right = new_top;
+	if(top->parent != NULL && top->parent->left == top)
+		top->parent->left = new_top;
+	top->parent = new_top;
+	if(top->left != NULL) top->left->parent = top;
+
+	return new_top;
+}
+int height(node_t * x);
+
+node_t * splay(node_t * x)
+{
+	if(x==NULL)
+		return x;
+	//Already at top
+	if(x->parent == NULL)
+		return x;
+	//Zig step
+	else if (x->parent->parent == NULL)
+	{
+		if(x==(x->parent)->left)
+			return rotate_right(x->parent);
+		else if(x==(x->parent)->right)
+			return rotate_left(x->parent);
+	}
+	//Zig-zig, zig-zag
+	else
+	{
+		//Temporary nodes
+		node_t * p;
+		node_t * g;
+		p = x->parent;
+		g = p->parent;
+		//Zig-zig step  right
+		if(x==p->left && p==g->left)
+		{
+			rotate_right(g);
+			rotate_right(p);
+		}
+		//Zig-zig step  left
+		else if(x==p->right && p==g->right)
+		{
+			rotate_left(g);
+			rotate_left(p);
+		}
+		//Zig-zag step  right
+		else if(x==p->right && p==g->left)
+		{
+			rotate_left(p);
+			rotate_right(g);
+		}
+		//Zig-zag step  right
+		else if(x==p->left && p==g->right)
+		{
+			rotate_right(p);
+			rotate_left(g);
+		}
+	}
+	return splay(x);
+}
+
+node_t * merge(node_t * new_node, node_t * root)
+{
+	node_t * p = root;
+	if(root == NULL)
+		return new_node;
+	if(new_node == NULL)
+		return root;
+	
+	//Walk tree to find insertion point
+	if(new_node->val < p->val)
+	{
+		if(p->right == NULL)
+		{
+			p->right = new_node;
+			new_node->parent = p;
+			return splay(new_node);
+		}
+		else
+			return merge(new_node, p->right);
+	}
+	else
+	{
+		if(p->left == NULL)
+		{
+			p->left = new_node;
+			new_node->parent = p;
+			return splay(new_node);
+		}
+		else
+			return merge(new_node, p->left);
+	}
+}
+
+node_t * insert(int x, node_t * root)
+{
+	node_t * new_node = alloc(node_t);
+	new_node->val = x;
+	return merge(new_node, root);
+}
+
+int height(node_t * root)
+{
+	int l;
+	int r;
+
+	if(root == NULL)
+		return 0;
+
+	l = height(root->left);
+	r = height(root->right);
+
+	return (l > r) ? l+1 : r+1;
+}
+
+
+int main()
+{
+	int i;
+	node_t * root = NULL;
+
+	for(i=0; i<100000; i++)
+	{
+		int x = (i + 17)%28 + (i+3)%13 + (i+21)%75;
+		root = insert(x, root);
+	}
+
+	return height(root);
+}

@@ -1,0 +1,12 @@
+//test error
+
+struct return {
+	int x;
+};
+
+int main()
+{
+	struct return * p;
+	p = alloc(struct return);
+	return p -> x;
+}

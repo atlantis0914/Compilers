@@ -1,0 +1,9 @@
+//test exception 11
+// decreasing allocation in for loop
+
+int main() {
+  int i = 411;
+  for (int[] dummy = alloc_array(int,1); dummy != alloc_array(int,i); i--) {
+  }
+  return 0;
+}

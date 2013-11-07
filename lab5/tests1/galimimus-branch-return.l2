@@ -1,0 +1,8 @@
+//test return 42
+int main() {
+  int x = 2;
+  if (x>0)
+    return 42;
+  else
+    return 0;
+}

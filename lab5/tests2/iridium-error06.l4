@@ -1,0 +1,8 @@
+//test error
+
+struct cactus;
+
+int main() {
+  struct cactus* c = alloc(struct cactus);
+  return 1;
+}

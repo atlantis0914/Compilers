@@ -1,0 +1,16 @@
+//test exception 8
+// Test the initializer of a for loop is always executed,
+// even if the body is never executed.
+
+int main()
+{
+   int x = 7;
+   int y = 0;
+
+   for( int a = 10/y; a < 3 ; a++)
+   {
+       return y;
+   }
+
+   return x;
+}

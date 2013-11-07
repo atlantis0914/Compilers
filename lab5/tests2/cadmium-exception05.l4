@@ -1,0 +1,10 @@
+//test exception 11
+
+// array bounds checking. A[-2] without checking would give you the lenght
+// of the array (assuming A is an int array).
+
+int main() {
+  int[] A = alloc_array(int, 10);
+  assert(A[-2] == 10);
+  return 0;
+}

@@ -1,0 +1,10 @@
+//test error
+
+typedef foo;
+
+int main()
+{
+    foo *foo = 5;
+    *foo * foo = foo;
+    return foo;
+}

@@ -1,0 +1,10 @@
+//test return 4
+int main(){
+	int x=4;
+	int y=5;
+	if(x>0){
+		return x;
+	}else{
+		return y;
+	}
+}

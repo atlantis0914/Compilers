@@ -1,0 +1,10 @@
+//test return 3
+// doh added a space
+
+int main() {
+  int a = 3;
+  a = a + a;
+  a = a + a;
+  a = a / 4;
+  return a;
+}

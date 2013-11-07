@@ -1,0 +1,20 @@
+//test error
+
+/* 
+ * This is my test program
+ * Bad type to if
+ */
+int main () {
+  int x;
+  int y = 15;
+  ( x ) = 0;
+  x = 2 + 7;
+  if (y + 13)
+  {
+    return 0;
+  } 
+  y = -y;
+  x += 1;
+  //should return 4
+  return ( x + y);
+}

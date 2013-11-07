@@ -1,0 +1,14 @@
+//test return 95592191
+int collatz(int n, int prev) {
+  if (n < prev) {
+    return n;
+  } else if (n % 2 == 0) {
+    return collatz(n/2, n);
+  } else {
+    return collatz(3*n+1, n);
+  }
+}
+
+int main() {
+  return collatz(63728127, 0);
+}

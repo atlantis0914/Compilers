@@ -1,0 +1,13 @@
+//test return 5
+
+/* counts the number of digits in x */
+int main(){
+  int x = 12345;
+  int pow10;
+  int n_digits = 1;
+
+  for(pow10 = 10; x / pow10 != 0; pow10 *= 10){
+    n_digits++;
+  }
+  return n_digits;
+}

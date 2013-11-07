@@ -1,0 +1,11 @@
+//test exception
+// /= 0
+
+int main()
+{
+  int x;
+
+  x = 3;
+  x /= (1 / 2);
+  return x;
+}

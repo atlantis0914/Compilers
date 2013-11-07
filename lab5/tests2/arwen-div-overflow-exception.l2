@@ -1,0 +1,13 @@
+//test exception
+// decrements the counter until we get a division overflow error
+int main () {
+    int i = 0;
+    int store = 0;
+
+    while (i < 1) {
+        store = i / -1;
+        i--;
+    }
+
+    return store;
+}

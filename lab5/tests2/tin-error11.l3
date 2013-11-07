@@ -1,0 +1,18 @@
+//test error
+// reserved keywords in different scopes
+
+typedef int struct;
+
+typedef bool assert;
+
+int assert(int x) {
+  return x + 1;
+}
+
+bool for(bool x) {
+  return (!x);
+}
+
+int main() {
+  return 1;
+}

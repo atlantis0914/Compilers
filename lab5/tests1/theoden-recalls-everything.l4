@@ -1,0 +1,163 @@
+//test return 42
+
+// radnom nbumesr /////////////////////////////////////////////////////////////
+
+typedef int *rand;
+
+rand rand_init(int seed)
+{
+  rand r = alloc(int);
+  *r = seed;
+  return r;
+}
+
+int rand_next(rand r)
+{
+  *r = *r * 1664525 + 1013904223;
+  return *r;
+}
+
+// library ////////////////////////////////////////////////////////////////////
+
+bool is_sorted(int[] A, int length)
+{
+  for(int i = 1; i < length; i++)
+    if(A[i-1] > A[i])
+      return false;
+  
+  return true;
+}
+
+int[] rand_array(rand r, int length)
+{
+  int[] A = alloc_array(int, length);
+
+  for(int i = 0; i < length; i++)
+    A[i] = rand_next(r);
+
+  return A;
+}
+
+int xwap(int[] A, int i, int j)
+{
+  if(i != j)
+    {
+      A[i] ^= A[j];
+      A[j] ^= A[i];
+      A[i] ^= A[j];
+    }
+  return 0;
+}
+
+// what da fffff //////////////////////////////////////////////////////////////
+
+bool over(int *lower, int *upper)
+{
+  if(*upper - *lower <= 1)
+    return true;
+  else
+    return false;
+}
+
+int set_pivot(int *pivot_index, int *lower, int *upper)
+{
+  *pivot_index = (*upper - *lower) / 2 + *lower;
+  return 0;
+}
+
+int inc_pivot(int *pivot_index)
+{
+  (*pivot_index)++;
+  return 0;
+}
+
+int partition(int[] A, int *lower, int *pivot_index, int *upper)
+{
+  int pindex = *pivot_index;
+  int left = *lower;
+  int right = *upper - 2;
+  int pivot = A[pindex];
+
+  // save the pivot above upper
+  xwap(A, pindex, *upper-1);
+
+  // partition based on the pivot
+  while(left <= right)
+    {
+      if(A[left] <= pivot)
+	left++;
+      else{
+	xwap(A, left, right);
+	right--;
+      }
+    }
+  
+  // put the pivot back in the middle
+  xwap(A, left, *upper-1);
+
+  // update the location of the pivot
+  *pivot_index = left;
+  return 0;
+}
+
+
+// this might win a record for most convoluted quicksort ever
+int qs(int c1, int c2, int c3, int c4, 
+       int[] A, int *lower, int *pivot_index, int *upper)
+{
+  if(over(lower, upper))
+    return 0;
+  else return qs(set_pivot(pivot_index, lower, upper),
+		 partition(A, lower, pivot_index, upper),
+		 qs(0, 0, 0, 0, A, lower, alloc(int), pivot_index),
+		 inc_pivot(pivot_index),
+		 A, pivot_index, alloc(int), upper);
+}
+
+int quicksort(int[]  A, int length)
+{
+  int *lower = alloc(int);
+  *lower = 0;
+  int *upper = alloc(int);
+  *upper = length;
+  return qs(0, 0, 0, 0, A, lower, alloc(int), upper);
+}
+
+// go! ////////////////////////////////////////////////////////////////////////
+
+/*
+int ps(int c)
+{
+  //printchar(char_chr(c));
+  printchar(c);
+  return 0;
+}
+*/
+
+int printarray(int[] A, int k)
+{
+  for(int i = 0; i < k; i++)
+    {
+      print_int(A[i]);
+    }
+  return 0;
+}
+
+int main()
+{
+  rand r = rand_init(0xbabe0001);
+
+  int arrlen = 1313;
+  int[] arr = rand_array(r, arrlen);
+
+  printarray(arr, arrlen);
+
+  quicksort(arr, arrlen);
+
+  printarray(arr, arrlen);
+
+  if(is_sorted(arr, arrlen))
+    return 42;
+
+  return -42;
+}

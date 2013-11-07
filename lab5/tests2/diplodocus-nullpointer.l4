@@ -1,0 +1,22 @@
+//test exception
+
+int main()
+{
+int* [] arr = alloc_array(int*,1);
+
+int* npi = NULL;
+arr[0] = npi;
+
+
+if(arr[0] != NULL)
+return 0;
+
+
+*arr[0];
+
+return 0;
+
+}
+
+
+

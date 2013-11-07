@@ -1,0 +1,19 @@
+//test exception 11
+
+struct bar{
+    int a;
+    int b;
+};
+
+int main(){
+    struct bar* a = alloc(struct bar);
+    struct bar* b = NULL;
+
+    a->a = 1;
+    a->b = 2;
+    b->a = 3;
+    b->b = 4;
+
+
+    return 0;
+}

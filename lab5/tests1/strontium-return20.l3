@@ -1,0 +1,7 @@
+//test return 0
+
+int main()
+{
+    assert(true != false);
+    return 0;
+}

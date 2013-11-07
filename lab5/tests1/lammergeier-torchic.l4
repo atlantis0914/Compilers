@@ -1,0 +1,79 @@
+//test return 541
+struct torchic {
+    int t0rchic;
+    struct torchic *torchic;
+};
+int chic() { return 0; }
+int ch1c() { return 10000000; }
+int chick(int torchic) { return torchic+1; }
+int ch1ck(struct torchic *torchic, int tor) { while (tor > 0) { torchic = torchic->torchic; tor--; } return torchic->t0rchic; }
+int ch1ckk(int tor, int chic) { return tor ^ chic; }
+int ch1k() { return 1342; }
+int ch1kc(struct torchic *torchic, int tor) { if (torchic == NULL) return tor; return ch1kc(torchic->torchic, chick(tor)); }
+int torchic() {
+    struct torchic *torchic = alloc(struct torchic);
+    struct torchic *t0rchic = alloc(struct torchic);
+    torchic->t0rchic = 4973;
+    t0rchic->torchic = torchic;
+    torchic = t0rchic;
+    t0rchic = alloc(struct torchic);
+    torchic->t0rchic = 6081;
+    t0rchic->torchic = torchic;
+    torchic = t0rchic;
+    t0rchic = alloc(struct torchic);
+    torchic->t0rchic = 9314;
+    t0rchic->torchic = torchic;
+    torchic = t0rchic;
+    t0rchic = alloc(struct torchic);
+    torchic->t0rchic = 5771;
+    t0rchic->torchic = torchic;
+    torchic = t0rchic;
+    t0rchic = alloc(struct torchic);
+    torchic->t0rchic = 527;
+    t0rchic->torchic = torchic;
+    torchic = t0rchic;
+    t0rchic = alloc(struct torchic);
+    torchic->t0rchic = 628;
+    t0rchic->torchic = torchic;
+    torchic = t0rchic;
+    t0rchic = alloc(struct torchic);
+    torchic->t0rchic = 2645;
+    t0rchic->torchic = torchic;
+    torchic = t0rchic;
+    t0rchic = alloc(struct torchic);
+    torchic->t0rchic = 251;
+    t0rchic->torchic = torchic;
+    torchic = t0rchic;
+    t0rchic = alloc(struct torchic);
+    torchic->t0rchic = 8758;
+    t0rchic->torchic = torchic;
+    torchic = t0rchic;
+    t0rchic = alloc(struct torchic);
+    torchic->t0rchic = 3030;
+    t0rchic->torchic = torchic;
+    torchic = t0rchic;
+    t0rchic = alloc(struct torchic);
+    torchic->t0rchic = 2860;
+    t0rchic->torchic = torchic;
+    torchic = t0rchic;
+    t0rchic = alloc(struct torchic);
+    torchic->t0rchic = 7483;
+    t0rchic->torchic = torchic;
+    torchic = t0rchic;
+    bool done = false;
+    for (int tor = chic(); tor < ch1c() && !done; tor = chick(tor)) {
+        t0rchic = alloc(struct torchic);
+        torchic->t0rchic = ch1ckk(ch1ck(torchic, 7), ch1ck(torchic, 10));
+        if (torchic->t0rchic == ch1k()) {
+          done = true;
+        } else {
+          t0rchic->torchic = torchic;
+          torchic = t0rchic;
+        }
+    }
+    return ch1kc(torchic, chic());
+}
+        
+int main() {
+    return torchic();
+}

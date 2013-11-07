@@ -1,0 +1,10 @@
+//test return 99
+// variables and functions have different namespaces
+
+int poops(int poops) {
+  return poops;
+}
+
+int main () {
+  return poops(99);
+}

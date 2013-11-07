@@ -1,0 +1,13 @@
+//test exception
+int main ()
+{
+  int tmin = 0x80000000;
+  int tmax = tmin - 1;
+  tmax >>= 32;
+  int x = tmin / (tmax | tmin);
+  return x;
+}
+/* Local Variables: */
+/* mode: c          */
+/* End:             */
+

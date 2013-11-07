@@ -1,0 +1,10 @@
+//test exception
+
+// Test detection of bad argument of shift.
+int main()
+{
+  int x = 12;
+  int y = 24;
+  int z = 1 << ((x - y > 0) ? 39 : -39);
+  return z;
+}

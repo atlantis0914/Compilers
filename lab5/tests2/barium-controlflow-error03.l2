@@ -1,0 +1,12 @@
+//test error
+
+// Test the detection of unused variable in loop.
+int main()
+{
+  int z = 0;
+  for(int i = 0; i < 100; int k)
+  {
+    z += 1;
+  }
+  return z;
+}

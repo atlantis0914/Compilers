@@ -1,0 +1,15 @@
+//test error
+// test return control flow
+
+void f() {
+     if (true) {
+         return;
+     } else {
+         return 0;
+     }
+}
+
+int main() {
+    f();
+    return 0;
+}

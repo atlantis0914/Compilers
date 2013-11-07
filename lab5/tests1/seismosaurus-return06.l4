@@ -1,0 +1,31 @@
+//test return -2437
+
+struct foo{
+	int a;
+	int b;
+	int c;
+};
+
+bool deep_copy(struct foo* a, struct foo* b){
+	if(a == NULL || b == NULL)
+		return false;
+		
+	b->a = a->a;
+	b->b = a->b;
+	b->c = a->c;
+	
+	return true;
+}
+
+int main(){
+	struct foo* a = alloc(struct foo);
+	struct foo* b = alloc(struct foo);
+	
+	a->a = 103857;
+	a->b = -2437;
+	a->c = 0;
+	
+	deep_copy(a,b);
+	
+	return b->b;
+}

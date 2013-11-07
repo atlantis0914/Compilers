@@ -1,0 +1,11 @@
+//test return 42
+// simple return from loop
+int main()
+{
+  int i = 0;
+  for (; i < 10000; i++)
+  {
+	return 42;
+  }
+  return i;
+}

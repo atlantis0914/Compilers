@@ -1,0 +1,10 @@
+//test return 1
+
+struct s {
+};
+
+int main() {
+    struct s[] a = alloc_array(struct s, 2147483647);
+    return 1;
+}
+

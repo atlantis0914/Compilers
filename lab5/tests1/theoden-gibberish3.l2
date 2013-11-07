@@ -1,0 +1,10 @@
+//test return 0
+
+// randomly generated
+int main()
+{
+  int EQsmZfxU = ( ( false || !false ) ? ( ( ( ( 77 + ( 77 | ~3 ) ) / 77 / ~3 ) / 73 ) - ( 73 + 73 ) ^ ( ~~25 + ~3 ) ) : ~46 ) * ~46 | ( ( false ? false : false ) ? ~25 : 77 + 77 ) + ~46 ^ -77 / 13 * ( 77 | ~25 | ~57 | (61 << ((~~( false ? ( false ? 73 : ( false || false ? ~57 : 61 - ( true ? ( ~25 % ( !false ? ~25 % ~25 : ~46 ) ) : 13 ) + ~3 ) ) : 77 ))&0x1f)) * 61 ^ ( ~77 + ( 73 ^ -65 ) ) * 73 * ~77 ) / ~46 - -~57 - ( 77 << (~77 & 0x1f) ) ;
+  EQsmZfxU = ~3 ;
+  return ~EQsmZfxU / EQsmZfxU ;
+  return EQsmZfxU ;
+}

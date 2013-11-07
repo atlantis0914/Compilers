@@ -1,0 +1,10 @@
+//test exception
+
+struct iptr {
+  int *i;
+};
+
+int main() {
+  struct iptr[] arr = alloc_array(struct iptr, 10);
+  return *(arr[4].i);
+}

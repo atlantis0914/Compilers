@@ -1,0 +1,36 @@
+//test exception 11
+
+struct node;
+typedef struct node node_t;
+
+struct node {
+	int x;
+	node_t * next;
+};
+
+
+int main()
+{
+	int i;
+	int sum;
+	node_t * head;
+	head = NULL;
+
+	for(i=1; i<6; i++)
+	{
+		node_t * n = alloc(node_t);
+		n->x = i;
+		n->next = head;
+		head = n;
+	}
+
+	sum = 0;
+	while(true)
+	{
+		sum *= 10;
+		sum += head->x;
+		head = head->next;
+	}
+
+	return sum;
+}

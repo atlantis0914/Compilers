@@ -1,0 +1,8 @@
+//test return 0
+
+int main() {
+    int ** hi = alloc(int *);
+    *hi = alloc(int);
+    **hi = 0;
+    return **hi;
+}

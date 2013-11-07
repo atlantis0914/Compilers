@@ -1,0 +1,6 @@
+//test error
+// can't return a boolean
+int main()
+{	
+  return false;
+}

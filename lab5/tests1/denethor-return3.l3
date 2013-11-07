@@ -1,0 +1,19 @@
+//test return 403
+
+int func(int x) {
+   if (x%3==0)
+      return 7;
+   else
+      return 11;
+}
+
+int main() {
+   int i=45;
+   int x=0;
+   while(i!=0) {
+      x+=func(x);
+      i--;
+   }
+   
+   return x;
+}

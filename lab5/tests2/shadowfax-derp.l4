@@ -1,0 +1,5 @@
+//test error
+// lol main isn't () -> int[]
+int[] main() {
+  return 0;
+}

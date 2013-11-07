@@ -1,0 +1,12 @@
+//test return 0
+/* 32-bit hexadecimal constants */
+int main()
+{
+    int a = 0xffffffff;
+    int b = -1;
+    return a-b;
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

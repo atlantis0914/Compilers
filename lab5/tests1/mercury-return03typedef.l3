@@ -1,0 +1,7 @@
+//test return 1
+
+typedef int bwahahaha;
+
+bwahahaha main() {
+  return 1;
+}

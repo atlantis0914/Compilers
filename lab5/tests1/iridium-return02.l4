@@ -1,0 +1,14 @@
+//test return 1
+
+struct cat {
+  int meow;
+  int whiskers;
+};
+
+int main () {
+  int meow = 1;
+  struct cat* fred = alloc(struct cat);
+  fred->meow = 500;
+  fred->meow = meow;
+  return fred->meow;
+}

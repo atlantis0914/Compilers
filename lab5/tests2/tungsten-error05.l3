@@ -1,0 +1,17 @@
+//test error
+//multiple function decls of same name
+
+bool a();
+
+int main() {
+  int s = a() ? 1 : 0;
+  return s;
+}
+
+bool a(){
+  return false;
+}
+
+bool a(){
+  return true;
+}

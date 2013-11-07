@@ -1,0 +1,10 @@
+//test error
+//undefined b
+
+int main() {
+  int a = 0;
+  for (;a<10;a++){
+    int b = 1;
+  }
+  return b;
+}

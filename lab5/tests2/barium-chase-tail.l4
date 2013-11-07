@@ -1,0 +1,19 @@
+//test exception
+
+struct dog {
+  struct dog *tail;
+};
+
+typedef struct dog* dog;
+
+int main()
+{
+  dog this_dog = alloc(struct dog);
+  dog another_dog = this_dog;
+  another_dog->tail = this_dog;
+
+  while (another_dog->tail != NULL)
+    another_dog = another_dog->tail;
+
+  return 0;
+}

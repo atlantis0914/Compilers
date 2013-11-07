@@ -1,0 +1,15 @@
+//test return 12
+
+struct s {
+  int i;
+};
+
+int main()
+{
+  struct s[] a = alloc_array(struct s, 1);
+
+  a[0].i = 12;
+
+  return a[0].i;
+}
+

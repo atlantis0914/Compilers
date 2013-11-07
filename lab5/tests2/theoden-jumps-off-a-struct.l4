@@ -1,0 +1,119 @@
+//test exception 11
+
+// look before you leap off a struct
+
+struct i2_0{
+  int i;
+};
+
+struct i2_1{
+  struct i2_0 s1;
+  struct i2_0 s2;
+};
+
+struct i2_2{
+  struct i2_1 s1;
+  struct i2_1 s2;
+};
+
+struct i2_3{
+  struct i2_2 s1;
+  struct i2_2 s2;
+};
+
+struct i2_4{
+  struct i2_3 s1;
+  struct i2_3 s2;
+};
+
+struct i2_5{
+  struct i2_4 s1;
+  struct i2_4 s2;
+};
+
+struct i2_6{
+  struct i2_5 s1;
+  struct i2_5 s2;
+};
+
+struct i2_7{
+  struct i2_6 s1;
+  struct i2_6 s2;
+};
+  
+struct i2_8{
+  struct i2_7 s1;
+  struct i2_7 s2;
+};
+
+struct i2_9{
+  struct i2_8 s1;
+  struct i2_8 s2;
+};
+
+struct i2_10{
+  struct i2_9 s1;
+  struct i2_9 s2;
+};
+
+struct i2_11{
+  struct i2_10 s1;
+  struct i2_10 s2;
+};
+
+struct i2_12{
+  struct i2_11 s1;
+  struct i2_11 s2;
+};
+
+struct i2_13{
+  struct i2_12 s1;
+  struct i2_12 s2;
+};
+
+struct i2_14{
+  struct i2_13 s1;
+  struct i2_13 s2;
+};
+
+struct i2_15{
+  struct i2_14 s1;
+  struct i2_14 s2;
+};
+
+struct i2_16{
+  struct i2_15 s1;
+  struct i2_15 s2;
+};
+
+struct i2_17{
+  struct i2_16 s1;
+  struct i2_16 s2;
+};
+
+struct i2_18{
+  struct i2_17 s1;
+  struct i2_17 s2;
+};
+
+struct i2_19{
+  struct i2_18 s1;
+  struct i2_18 s2;
+};
+
+struct i2_20{
+  struct i2_19 s1;
+  struct i2_19 s2;
+};
+
+struct i2_21{
+  struct i2_20 s1;
+  struct i2_20 s2;
+};
+
+int main()
+{
+  struct i2_21 *thing = NULL;
+
+  return thing->s2.s1.s1.s1.s1.s1.s1.s1.s1.s1.s1.s1.s1.s2.s2.s1.s1.s1.s1.s1.s1.i;
+}

@@ -1,0 +1,29 @@
+//test return 1078530010
+//    == 3.14159
+
+//returns pi
+fpt recur_pi(int i, int cur_depth, int depth)
+{
+    if (cur_depth == depth)
+        return 0;
+    
+    fpt num = itof(i*i);
+
+    fpt den = fadd(itof(cur_depth * 2 - 1),
+        recur_pi(cur_depth, cur_depth + 1, depth));
+
+    return fdiv(num, den);
+}
+
+//returns pi
+fpt calc_pi(int depth)
+{
+    return recur_pi(2,1,depth);
+}
+
+int main() {
+    fpt pi = calc_pi(12);
+    print_fpt(pi);
+    print_int(pi);
+    return pi;
+}

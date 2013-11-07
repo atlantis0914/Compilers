@@ -1,0 +1,19 @@
+//test return 51
+// mutually recursive functions
+
+int odd(int a);
+int even(int a);
+
+int odd(int a) {
+    return 3*even(a-1);
+}
+
+int even(int a) {
+    if(a == 0) return 1;
+    return odd(a-1)+2;
+}
+
+int main() {
+    return odd(5);
+}
+

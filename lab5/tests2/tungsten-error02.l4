@@ -1,0 +1,9 @@
+//test error
+//disallow *d--
+
+int main() {
+    int *a = alloc(int);
+    *a = 10;
+    *a--;
+    return a;
+}

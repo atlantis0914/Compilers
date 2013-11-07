@@ -1,0 +1,22 @@
+//test return 2558
+
+int useless(int i) {
+    return (i <= 2 ? 1 : useless((i % 2 == 0 ? i * 2 / 3 : i - 1)));
+}
+
+int forEach(int n) {
+    int acc = 0;
+    for(int i = 0; i < n; i++) {
+        acc += useless(i);
+    }
+    return acc;
+}
+
+int rec(int n) {
+    return (n <= 0 ? 0 : forEach(n) + rec(n - 1));
+}
+
+int main() {
+    int n = 12;
+    return (rec(n) == n * (n + 1) / 2 ? 2558 : 78);
+}

@@ -1,0 +1,7 @@
+//test error
+
+int global;
+
+int main () {
+    return 3 + global;
+}

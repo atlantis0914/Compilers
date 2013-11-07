@@ -1,0 +1,92 @@
+//test return 0
+
+/* Computes Ackermann using the noob math */
+
+/******************************************************************/
+/* Does a bunch of noob arithmetic. Modeled after the presentation
+ * of arithmetic in The Little Schemer.
+ * Now implemented as unary numbers! */
+
+struct nat_t {
+	struct nat_t *n;
+};
+
+typedef struct nat_t *nat;
+
+nat get_zero() { return NULL; }
+
+nat add1(nat n) {
+	nat n1 = alloc(struct nat_t);
+	n1->n = n;
+	return n1;
+}
+nat sub1(nat n) { return n->n; }
+bool iszero(nat n) { return n == NULL; }
+
+nat plus(nat n, nat m) {
+	return iszero(n) ? m : add1(plus(sub1(n), m));
+}
+nat minus(nat n, nat m) {
+	return iszero(m) ? n : sub1(minus(n, sub1(m)));
+}
+nat times(nat n, nat m) {
+	return iszero(m) ? get_zero() : plus(n, times(n, sub1(m)));
+}
+
+bool gt(nat n, nat m) {
+	return iszero(n) ? false : (iszero(m) || gt(sub1(n), sub1(m)));
+}
+bool lt(nat n, nat m) {
+	return gt(m, n);
+}
+bool eq(nat n, nat m) {
+	return !gt(n, m) && !lt(n, m);
+}
+
+nat power(nat n, nat m) {
+	return iszero(m) ? add1(get_zero()) : times(n, power(n, sub1(m)));
+}
+
+nat quotient(nat n, nat m) {
+	return lt(n, m) ? get_zero() : add1(quotient(minus(n, m), m));
+}
+
+bool odd(nat n);
+bool even(nat n) {
+	return iszero(n) ? true : odd(sub1(n));
+}
+bool odd(nat n) {
+	return iszero(n) ? false : even(sub1(n));
+}
+
+nat int2nat(int n) {
+	return n == 0 ? get_zero() : add1(int2nat(n-1));
+}
+int nat2int(nat n) {
+	return iszero(n) ? 0 : nat2int(sub1(n))+1;
+}
+
+/******************************************************************/
+
+nat A(nat m, nat n) {
+	return iszero(m) ?
+		add1(n) :
+		(iszero(n) ? A(sub1(m), add1(get_zero())) :
+		 A(sub1(m), A(m, sub1(n))));
+}
+
+int main() {
+	int n;
+	nat n_ = get_zero();
+	nat _2 = int2nat(2);
+	nat _3 = int2nat(3);
+
+	for (n = 0; n < 10; n++) {
+		nat a3_calculated = A(_3, n_);
+		nat a3_expected = minus(power(_2, plus(n_, _3)), _3);
+		if (!eq(a3_calculated, a3_expected)) return -n;
+		n_ = add1(n_);
+	}
+
+	return 0;	
+}

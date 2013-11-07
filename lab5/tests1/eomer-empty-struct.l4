@@ -1,0 +1,10 @@
+//test return 0
+
+struct s {
+};
+
+int main() {
+    struct s *x = alloc(struct s);
+    return 0;
+}
+

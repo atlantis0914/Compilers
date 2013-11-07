@@ -1,0 +1,12 @@
+//test return 8
+// test sadfsaf
+int main()
+{
+  int a = 1;
+  int b = 1;
+  int c = a + b;
+  int d = b + c;
+  int e = d + c;
+  e += d;
+  return e;
+}

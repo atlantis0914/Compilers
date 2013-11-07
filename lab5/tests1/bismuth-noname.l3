@@ -1,0 +1,15 @@
+//test return 0
+// Call function defined later
+
+int foo ();
+
+int main ()
+{
+    return foo ();
+}
+
+int foo ()
+{
+  return 0;
+}
+

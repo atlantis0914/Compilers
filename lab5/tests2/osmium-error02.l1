@@ -1,0 +1,9 @@
+//test error
+// reserved keyword, not used in l1
+
+int main() {
+  int while;
+
+  while = 1;
+  return while;
+}

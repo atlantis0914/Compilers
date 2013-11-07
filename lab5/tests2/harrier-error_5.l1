@@ -1,0 +1,8 @@
+//test error
+
+int main()
+{
+    int meowmixUNDERFLOW;
+    meowmixUNDERFLOW = -2147483649;
+    return meowmixUNDERFLOW;
+}

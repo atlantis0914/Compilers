@@ -1,0 +1,11 @@
+//test exception 6
+
+struct array {
+  bool field;
+};
+
+int main() {
+  struct array *arr = alloc(struct array);
+  assert(arr->field);
+  return 0;
+}

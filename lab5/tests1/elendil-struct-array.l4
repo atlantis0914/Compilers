@@ -1,0 +1,18 @@
+//test return 2000
+struct A {
+  int b;
+  int c;
+};
+
+int main() {
+  struct A[] arr =  alloc_array(struct A, 1000);
+  for (int i = 0; i < 1000; i++) {
+    arr[i].b = i + 1;
+    arr[i].c = i - 1;
+  }
+  int sum = 0;
+  for (int i = 0; i < 1000; i++) {
+    sum += arr[i].b - arr[i].c;
+  }
+  return sum;
+}

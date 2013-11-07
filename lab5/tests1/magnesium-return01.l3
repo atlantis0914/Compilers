@@ -1,0 +1,23 @@
+//test return 1
+/* Simple function call to do arithmetic */
+
+
+int add(int i, int j) {
+  return i + j;
+}
+
+int sub(int i, int j) {
+  return i - j;
+}
+
+int mul(int i, int j) {
+  return i * j;
+}
+
+int main () {
+  int x = 1;
+  int y = 1;
+  int z = 1;
+  int w = 1;
+  return mul(sub(add(x, y), z), w);
+}

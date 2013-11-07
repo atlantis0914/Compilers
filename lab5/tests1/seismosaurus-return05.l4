@@ -1,0 +1,13 @@
+//test return 3278
+//Test expressions in array accesses
+int main(){
+	int[] arr = alloc_array(int,4);
+	int i =0;
+	
+	arr[0]=0;
+	arr[1]=3278;
+	arr[2]=2;
+	arr[3]=3;
+
+	return arr[i+1];
+}

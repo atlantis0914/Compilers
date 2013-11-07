@@ -1,0 +1,14 @@
+//test error
+// alloc mismatch
+
+
+struct k {
+       int* game;
+       int  on;
+};
+
+int main() {
+    struct k* mygurl;
+    mygurl = alloc(bool);
+    return 0;
+}

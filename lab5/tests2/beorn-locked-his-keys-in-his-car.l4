@@ -1,0 +1,12 @@
+//test error
+struct keys {
+    int car;
+};
+
+int main() {
+    struct keys* bus = alloc(struct keys);
+    
+    bus++;
+
+    return 5;
+}

@@ -1,0 +1,7 @@
+//test error
+// must return expression of type int
+
+int main ()
+{
+  return false;
+}

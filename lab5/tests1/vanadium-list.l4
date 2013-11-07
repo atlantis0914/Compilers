@@ -1,0 +1,46 @@
+//test return 0
+
+struct ll {
+	struct ll *next;
+};
+
+typedef struct ll ll_t;
+
+bool is_loop(ll_t *ll) {
+	ll_t *a = ll;
+	if(a == NULL || a->next == NULL)
+		return false;
+	ll_t *b = a->next;
+	
+	while(a != b) {
+		if(b->next == NULL || b->next->next == NULL)
+			return false;
+		b = b->next->next;
+		a = a->next;
+	}
+	
+	return true;
+}
+
+int main() {
+
+	ll_t *a = alloc(ll_t);
+	ll_t *b = alloc(ll_t);
+	ll_t *c = alloc(ll_t);
+	ll_t *d = alloc(ll_t);
+	ll_t *e = alloc(ll_t);
+	
+	a->next = b;
+	b->next = c;
+	c->next = d;
+	d->next = e;
+	e->next = NULL;
+	
+	assert(!is_loop(a));
+	
+	e->next = a;
+	
+	assert(is_loop(a));
+
+	return 0;
+}

@@ -1,0 +1,20 @@
+//test return 1337
+
+struct a
+{
+    int [] x;
+};
+
+typedef struct a a_t;
+
+int main()
+{
+    a_t *ahh = alloc(a_t);
+
+    ahh->x = alloc_array(int, 5);
+    ahh->x[4] = 1337;
+    if (ahh->x[1] != 0)
+        return 1/0;
+
+    return ahh->x[4];
+}

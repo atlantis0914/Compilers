@@ -1,0 +1,19 @@
+//test error
+
+typedef int * type0;
+typedef int* type1;
+typedef int* type0*;
+
+int a(int* arr);
+
+int a(int* arr) {
+    int* null_arr;
+    null_arr = NULL;
+    return arr == NULL ? 0 : 1;
+}
+
+int main () {
+  int* A;
+  A = NULL;
+  return a(A);
+}

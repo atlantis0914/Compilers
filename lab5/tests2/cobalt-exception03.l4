@@ -1,0 +1,19 @@
+//test exception 14
+
+struct node{
+  int val;
+  struct node* next;
+};
+
+int main() {
+  struct node* head = alloc(struct node);
+  head->next = head;
+
+  int count = 0;
+  while(head != NULL) {
+    count += 1;
+  }
+
+  return count;
+}
+

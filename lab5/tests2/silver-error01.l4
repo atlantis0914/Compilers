@@ -1,0 +1,11 @@
+//test error
+//
+
+struct s {
+       int i;
+};
+
+int main() {
+    struct s p = *alloc(struct s);
+    return p.i;
+}

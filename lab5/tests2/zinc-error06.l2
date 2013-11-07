@@ -1,0 +1,5 @@
+//test error
+int main() {
+  int x = false ? 3 : x;
+  return 1;
+}

@@ -1,0 +1,15 @@
+//test return 2
+
+int main()
+{
+    int x;
+    int y;
+    
+    x = 3;
+    x = x*x;
+    
+    y = 4;
+    int z = x - y;
+    
+    return z % 3;
+}

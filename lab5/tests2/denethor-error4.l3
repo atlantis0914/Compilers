@@ -1,0 +1,12 @@
+//test error
+
+int myfunc(int x, bool y) {
+      if (y)
+        return x;
+      else
+        return 0;
+}
+
+int main() {
+   return myfunc(0, true, 0);
+}

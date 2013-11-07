@@ -1,0 +1,12 @@
+//test return 1
+
+/* returns 1 if x is a prime, 0 otherwise */
+int main(){
+  int x = 19;
+  int i;
+  for(i=2;i<x/2;i++){
+    if (x % i == 0)
+      return 0; // must be composite
+  }
+  return 1;
+}

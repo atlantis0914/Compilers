@@ -1,0 +1,7 @@
+//test error
+//more mismatched types
+
+int main() {
+  int a = true;
+  return a;
+}

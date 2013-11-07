@@ -1,0 +1,14 @@
+//test exception 8
+
+// mod error inside statement
+
+int main() {
+    int i=10;
+    int j=0;
+
+    while (0x80000000 % i != 11) {
+          j++;
+          i--;
+    }
+    return j;
+}

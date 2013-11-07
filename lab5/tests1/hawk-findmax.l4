@@ -1,0 +1,50 @@
+//test return 27
+
+struct node {
+    int val;
+    struct node* left;
+    struct node* right;
+};
+
+//returns the max of three ints
+int intmax(int a, int b, int c) {
+    int x = a > b ? a : b;
+    return x > c ? x : c;
+}
+
+//returns the maximum number in an arbitrary binary tree
+//assumes no cycles, and all vals are positive
+int findmax (struct node* tree) {
+    if (tree == NULL)
+       return 0;
+    int ml = findmax(tree->left);
+    int mr = findmax(tree->right);
+    return intmax (tree->val, ml, mr);
+}
+
+//builds a fixed tree and feeds it to findmax
+int main () {
+    struct node* n1 = alloc(struct node);
+    struct node* n2 = alloc(struct node);
+    struct node* n3 = alloc(struct node);
+    struct node* n4 = alloc(struct node);
+    struct node* n5 = alloc(struct node);
+
+    n5->val = 5;
+    n5->left = NULL;
+    n5->right = NULL;
+    n4->val = 27;
+    n4->left = n5;
+    n4->right = NULL;
+    n3->val = 3;
+    n3->left = n4;
+    n3->right = NULL;
+    n2->val = 9;
+    n2->left = NULL;
+    n2->right = NULL;
+    n1->val = 6;
+    n1->left = n2;
+    n1->right = n3;
+
+    return findmax(n1);
+}

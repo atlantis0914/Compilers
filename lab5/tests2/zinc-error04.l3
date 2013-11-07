@@ -1,0 +1,7 @@
+//test error
+//expecting identifier, found bool
+typedef int bool;
+
+bool main(){
+     return 0;
+}

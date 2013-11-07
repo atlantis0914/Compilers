@@ -1,0 +1,39 @@
+//test return 129
+// tests many arguments and caller/callee save
+
+int foo(int a, int b, int c, int d, int e, int f, int g, int h) {
+  int x1 = 1;
+  int x2 = 2;
+  int x3 = 3;
+  int x4 = 4;
+  int x5 = 5;
+  int x6 = 6;
+  int x7 = 7;
+  int hahah = x1 + x2 + x3 + x4 + x5 + x6 + x7;
+  return a + b + c + d + e + f + g + h + hahah;
+}
+
+int main()
+{
+  int a = 1;
+  int b = 2;
+  int c = 3;
+  int d = 4;
+  int e = 5;
+  int f = 6;
+  int g = 7;
+  int h = 8;
+  int res = foo(a, b, c, d, e, f, g, h);
+  int i = 10;
+  int j = 11;
+  a++;
+  b++;
+  c++;
+  d++;
+  e++;
+  f++;
+  g++;
+  h++;
+  res += (i+j+a+b+c+d+e+f+g+h);
+  return res;
+}

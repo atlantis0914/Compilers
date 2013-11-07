@@ -1,0 +1,21 @@
+//test error
+
+struct s {
+
+  int m;
+
+};
+
+struct s* foo(int moog) {
+
+  return alloc(s)
+
+}
+
+int moin() {
+
+  foo(5);
+  foo(300);
+  return 0;
+
+}

@@ -1,0 +1,8 @@
+//test error
+// missing return statement
+
+int main(){
+    int x;
+    x = 1;
+    // no return statement
+}

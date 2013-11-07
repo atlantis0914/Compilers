@@ -1,0 +1,25 @@
+//test return 102334155
+
+int memo_fib(int n, int[] memo) {
+	if (memo[n] != -1) {
+		return memo[n];
+	}
+	if (n == 0) return 0;
+	if (n == 1) return 1;
+
+	int sv = memo_fib(n-1, memo) + memo_fib(n-2, memo);
+	memo[n] = sv;
+	return sv;
+}
+
+int fib(int n) {
+	int[] A = alloc_array(int, 2*n);
+	for (int i = 0; i < 2*n; i++) {
+		A[i] = -1;
+	}
+	return memo_fib(n, A);
+}
+
+int main() {
+	return fib(40);
+}

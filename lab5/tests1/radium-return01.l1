@@ -1,0 +1,13 @@
+//test return 9
+
+int main(){
+   int x;
+   int y;
+   int z;
+
+   x = 9;
+   y = x / 1;
+   z = y % 1;
+
+   return x; 
+}

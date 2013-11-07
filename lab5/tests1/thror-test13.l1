@@ -1,0 +1,12 @@
+//test return -10
+int main()
+{
+  int x = 0;
+  x += 5;
+  x -= -65;
+  x /= 7;
+  x %= 4;
+  x = -x;
+  x *= 6;
+  return x + 2;
+}

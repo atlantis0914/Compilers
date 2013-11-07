@@ -1,0 +1,9 @@
+//test error
+// alloc_array (foo) not an lvalue.
+
+int main ()
+{
+    (alloc_array (int, 1))[0] = 1;
+
+    return 0;
+}

@@ -1,0 +1,38 @@
+//test return 12
+
+// randomly generated
+int main()
+{
+  int iaSvhezj = 84 ;
+  bool SPVzyern = ( false ? false : false ) ;
+  for ( iaSvhezj ; SPVzyern ; 84 )
+    {
+      return ( SPVzyern && ( SPVzyern || ( SPVzyern && SPVzyern ) ? SPVzyern : SPVzyern ) ? ( ( SPVzyern && SPVzyern ) ? ( ~84 + ( 84 >> ( iaSvhezj * 84 / 84 ) ) | 84 ) * iaSvhezj >> iaSvhezj : iaSvhezj ) : 84 ) ;
+      SPVzyern = SPVzyern ;
+      SPVzyern = SPVzyern ;
+      if ( !false || SPVzyern )
+	{
+	  ( SPVzyern ? 7 : iaSvhezj ) ;
+	  SPVzyern = SPVzyern ;
+	}
+      else
+	{
+	  iaSvhezj -- ;
+	  for ( SPVzyern ; !SPVzyern ; SPVzyern = SPVzyern )
+	    SPVzyern = SPVzyern ;
+	  int dDqDWlpm = ( SPVzyern && !SPVzyern && SPVzyern && SPVzyern && SPVzyern ? ( 84 / 81 ) : 7 ) ;
+	  -84 ;
+	}
+      iaSvhezj -- ;
+      iaSvhezj ++ ;
+      bool CCqJaiGd = SPVzyern ;
+      iaSvhezj %= 84 / ( CCqJaiGd && false ? ( ~iaSvhezj << iaSvhezj ) : iaSvhezj ) & iaSvhezj * iaSvhezj ;
+      SPVzyern = SPVzyern ;
+      bool qDekiqiK = SPVzyern ;
+      CCqJaiGd = qDekiqiK ;
+      SPVzyern = qDekiqiK ;
+      qDekiqiK = qDekiqiK ;
+      iaSvhezj -- ;
+    }
+  return ( iaSvhezj / 7 ) ;
+}

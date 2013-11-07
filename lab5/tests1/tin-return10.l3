@@ -1,0 +1,7 @@
+//test return 6
+//variable name without letters
+
+int main() {
+  int _5 = 6;
+  return _5;
+}

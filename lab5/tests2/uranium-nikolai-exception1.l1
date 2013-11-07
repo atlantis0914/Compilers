@@ -1,0 +1,8 @@
+//test exception 8
+// This program raises an exception due to division by zero
+int main() {
+    int x = 0;
+    int y = 5;
+    int z = y / x;
+    return z;
+}

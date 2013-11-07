@@ -1,0 +1,19 @@
+//test error
+// more type errors
+
+bool istrue(int x, int y)
+{
+    return x - y;
+}
+
+int main()
+{
+    if(istrue(2,1))
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
+}

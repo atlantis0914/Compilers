@@ -1,0 +1,6 @@
+//test error
+
+int main(){
+    int[] arr;
+    return arr[0];
+}

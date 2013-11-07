@@ -1,0 +1,8 @@
+//test return -2147483648
+
+// check to see if 2^31 becomes -2^31
+
+int main()
+{
+  return 2147483648;
+}

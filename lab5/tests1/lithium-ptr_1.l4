@@ -1,0 +1,6 @@
+//test return 5
+int main() {
+	int* p = alloc(int);
+	*p = 5;
+	return *p;
+}
