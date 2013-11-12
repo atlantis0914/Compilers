@@ -1,0 +1,115 @@
+//test return -2063068144
+
+/* Matrix multiplication */
+/* using arrays of arrays */
+
+void mmult (int[][] A, int[][] B, int[][] C, int n)
+//@requires 0 <= n && n < 1>>15;
+//@requires 0 <= n && n <= \length(A);
+//@requires \length(A) == \length(B) && \length(B) == \length(C);
+{
+  for (int i = 0; i < n; i += 1) {
+    for (int j = 0; j < n; j += 1) {
+      C[i][j] = 0;
+      for (int k = 0; k < n; k += 1)
+	C[i][j] += A[k][j] * B[i][k];
+    }
+  }
+}
+
+/* Cycle counting interface */
+
+struct rand {
+  int seed;
+};
+typedef struct rand* rand_t;
+
+rand_t init_rand (int seed) {
+  rand_t gen = alloc(struct rand);
+  gen->seed = seed;
+  return gen;
+}
+
+int rand(rand_t gen) {
+  gen->seed = gen->seed * 1664525 + 1013904223;
+  return gen->seed;
+}
+
+struct io {
+  int n;
+  int[][] A;
+  int[][] B;
+  int[][] C;
+};
+typedef struct io data;
+
+int init_array (int[][] A, int n) {
+  rand_t gen = init_rand(0xc0c0ffee);
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++)
+      A[i][j] = rand(gen);
+  return 0;
+}
+
+int isqrt (int k)
+//@requires k >= 0;
+{
+  if (k == 0) return 0;
+  int n = k/2 + 1;
+  int n1 = (n + k/n) / 2;
+  while (n1 < n) {
+    n = n1;
+    n1 = (n + k/n) / 2;
+  }
+  return n;
+}
+
+int[][] alloc_sqarray(int n) {
+  int[][] A = alloc_array(int[], n);
+  for (int i = 0; i < n; i++)
+    A[i] = alloc_array(int, n);
+  return A;
+}
+
+data* init (int param) {
+  int n = isqrt(param/2); /* slower than mmult, so divide parameter */
+  int[][] A = alloc_sqarray(n);
+  int[][] B = alloc_sqarray(n);
+  int[][] C = alloc_sqarray(n);
+  init_array(A, n);
+  init_array(B, n);
+  data* io = alloc(data);
+  io->n = n;
+  io->A = A;
+  io->B = B;
+  io->C = C;
+  return io;
+}
+
+void prepare (data* io, int param) {
+  int n = io->n;
+  int[][] C = io->C;
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++)
+      C[i][j] = 0;
+}
+
+void run (data* io, int param) {
+  mmult(io->A, io->B, io->C, io->n);
+}
+
+int checksum (data* io, int param) {
+  int n = io->n;
+  int sum = 0;
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++)
+      sum += io->C[i][j];
+  return sum;
+}
+
+int main () {
+  data* io = init(29*29);
+  prepare(io, 29*29);
+  run(io, 29*29);
+  return checksum(io, 29*29);
+}

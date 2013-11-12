@@ -1,0 +1,145 @@
+//test return 26
+// Cellular automata implementation
+
+struct CA {
+  int[] rule;
+};
+
+struct config {
+  int size;
+  int[] vals;
+};
+
+// Creates a CA and initializes to the indicated rule.
+struct CA* init_CA(int f) {
+
+  int len = 8;
+  struct CA* ca = alloc(struct CA);
+  ca->rule = alloc_array(int,len);
+
+  for (int i = 0; i < len; i++)
+    ca->rule[i] = (f & (1 << i)) >> i;
+
+  return ca;
+}
+
+// Uses the rule to determine the value in the next row given the previous
+// neighborhood
+int lookup(struct CA* ca, int left, int middle, int right) {
+  return ca->rule[left | (middle << 1) | (right << 2)];
+}
+
+// Generates a random configuration.
+struct rand {
+  int seed;
+};
+typedef struct rand* rand_t;
+
+rand_t init_rand (int seed) {
+  rand_t gen = alloc(struct rand);
+  gen->seed = seed;
+  return gen;
+}
+
+int rand(rand_t gen) {
+  gen->seed = gen->seed * 1664525 + 1013904223;
+  return gen->seed;
+}
+
+struct config* new_config(int size) {
+  rand_t gen = init_rand(0xc0c0de);
+
+  struct config* c = alloc(struct config);
+  c->size = size;
+  c->vals = alloc_array(int,size);
+
+  for (int i = 0; i < size; i++)
+    c->vals[i] = rand(gen) % 2 == 0 ? 0 : 1;
+
+  return c;
+}
+
+int get_left(struct config* c, int index) {
+  if (index == 0)
+    return c->vals[c->size - 1];
+  return c->vals[index - 1];
+}
+
+int get_right(struct config* c, int index) {
+  if (index == c->size - 1)
+    return c->vals[0];
+  return c->vals[index + 1];
+}
+
+void update (struct CA* ca, struct config* c_old, struct config* c_new)
+{
+  for (int i = 0; i < c_old->size; i++)
+    c_new->vals[i] = lookup(ca, get_left(c_old, i), c_old->vals[i],
+        get_right(c_old, i));
+}
+
+/* Cycle counting interface */
+
+struct io {
+  struct config* in;
+  struct config* out;
+};
+typedef struct io data;
+
+data* init(int param)
+{
+  int size = param / 19 + 19;
+
+  struct config* c = new_config(size);
+  struct config* d = new_config(size);
+  data* io = alloc(data);
+
+  io->in = c;
+  io->out = d;
+
+  return io;
+}
+
+void prepare (data* io, int param) {
+  int n = param / 19 + 19;
+  for (int i = 0; i < n/2; i++)
+    io->out->vals[i] = io->in->vals[i];
+  return;
+}
+
+void run(data* io, int param)
+{
+  struct config* c = io->out;
+
+  int size = c->size;
+  struct config* c_old = new_config(size);
+
+  struct CA* ca = init_CA(90);
+
+  for (int i = 0; i < 100; i += 2)
+  {
+    update(ca, c, c_old);
+    update(ca, c_old, c);
+  }
+
+}
+
+int checksum(data* io, int param)
+{
+  struct config* c = io->out;
+  int sum = 0;
+
+  for (int i = 0; i < c->size; i++)
+    sum += c->vals[i];
+
+  return sum;
+}
+
+int main()
+{
+  data* c = init(1000);
+  prepare(c, 1000);
+  run(c, 1000);
+
+  return checksum(c, 1000);
+}

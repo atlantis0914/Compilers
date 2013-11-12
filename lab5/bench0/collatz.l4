@@ -1,0 +1,42 @@
+//test return 6790
+
+/* Computing the stopping times for Collatz sequences */
+
+int collatzSteps(int n) {
+  if (n == 1)
+    return 1;
+  else if ((n & 1) == 1)
+    return 1 + collatzSteps(3*n+1);
+  else
+    return 1 + collatzSteps(n>>1);
+}
+
+/* Cycle testing interface */
+
+int* init(int n) {
+  return alloc(int);
+}
+
+void prepare(int* p, int n) {
+  *p = 0;
+}
+
+void run(int* p, int n) {
+  int limit = n/8;
+  int sum = 0;
+  for (int i = 0; i < limit; i++)
+    sum += collatzSteps(100+i);
+
+  *p = sum;
+}
+
+int checksum(int* p) {
+  return *p;
+}
+
+int main() {
+  int* p = init(1000);
+  prepare(p, 1000);
+  run(p, 1000);
+  return checksum(p);
+}

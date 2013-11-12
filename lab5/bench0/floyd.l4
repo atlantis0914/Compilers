@@ -1,0 +1,51 @@
+//test return 1
+
+struct node {
+  struct node* next;
+  bool value;
+};
+
+void circular (struct node* head) {
+  if (head == NULL) { head->value = false; return; }
+  struct node* slow = head;
+  struct node* fast = head->next;
+  while (fast != NULL) {
+    if (fast == slow) { head->value = true; return; }
+    fast = fast->next;
+    if (fast == NULL) { head->value = false; return; }
+    fast = fast->next;
+    slow = slow->next;
+  }
+}
+
+struct node* init(int param) {
+  int n = 7*param + 5;
+  struct node* head = alloc(struct node);
+  struct node* curr = head;
+  for (int i = 0; i < n; i++) {
+    curr->next = alloc(struct node);
+    curr = curr->next;
+  }
+  curr->next = head;
+  return head;
+}
+
+void prepare(struct node* head, int param) {
+  head->value = false;
+}
+  
+void run(struct node* head, int param) {
+  circular(head);
+}
+
+int checksum(struct node* head, int param) {
+  if (head->value) return 1;
+  else return 0;
+}
+
+int main() {
+  struct node* head = init(1000);
+  prepare(head, 1000);
+  run(head, 1000);
+  return checksum(head, 1000);
+}

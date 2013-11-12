@@ -1,0 +1,60 @@
+//test return 109323919
+
+typedef struct tree_node tree;
+struct tree_node {
+  int data;
+  tree* left;
+  tree* right;
+};
+
+int tree_sum (tree* t) {
+  if (t == NULL)
+    return 0;
+  else
+    return t->data + tree_sum(t->left) + tree_sum(t->right);
+}
+
+/* Cycle counting interface */
+
+struct io {
+  tree* tree;
+  int sum;
+};
+
+tree* init_tree(int n) {
+  if (n == 0) {
+    return NULL;
+  } else {
+    tree* t = alloc(tree);
+    t->data = n*n;
+    t->left = init_tree((n-1)/2);
+    t->right = init_tree(n/2);
+    return t;
+  }
+}
+
+struct io* init (int param) {
+  int n = param * 7;
+  struct io* io = alloc(struct io);
+  io->tree = init_tree(n);
+  return io;
+}
+
+void prepare (struct io* io, int param) {
+  io->sum = 0;
+}
+
+void run(struct io* io, int param) {
+  io->sum = tree_sum(io->tree);
+}
+
+int checksum(struct io* io, int param) {
+  return io->sum;
+}
+
+int main () {
+  struct io* io = init(1057);
+  prepare(io, 1057);
+  run(io, 1057);
+  return checksum(io, 1057);
+}

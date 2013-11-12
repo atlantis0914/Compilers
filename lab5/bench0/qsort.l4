@@ -1,4 +1,4 @@
-//test return 1614389294
+//test return 1614389295
 
 /* Quicksort
  * 15-122 Principles of Imperative Computation, Spring 2011
@@ -99,6 +99,8 @@ void qsort(int[] A, int lower, int upper)
   return;
 }
 
+/* Cycle counting interface */
+
 struct rand {
   int seed;
 };
@@ -117,30 +119,34 @@ int rand(rand_t gen) {
 }
 
 struct io {
+  int size;
   int[] in;
   int[] out;
 };
 typedef struct io data;
 
-data* init (int n) {
+data* init (int param) {
   rand_t gen = init_rand(0xdeadbeef);
+  int n = param;
   int[] in = alloc_array(int, n);
   int[] out = alloc_array(int, n);
   for (int i = 0; i < n; i++)
     in[i] = rand(gen);
   data* io = alloc(data);
+  io->size = param;
   io->in = in;
   io->out = out;
   return io;
 }
 
-void prepare (data* io, int n) {
+void prepare (data* io, int param) {
+  int n = io->size;
   for (int i = 0; i < n; i++)
     io->out[i] = io->in[i];
 }
 
-void run (data* io, int n) {
-  qsort(io->out, 0, n-1);
+void run (data* io, int param) {
+  qsort(io->out, 0, io->size);
 }
 
 int sum(int[] A, int lower, int upper) {
@@ -150,7 +156,8 @@ int sum(int[] A, int lower, int upper) {
   return r;
 }
 
-int checksum (data* io, int n) {
+int checksum (data* io, int param) {
+  int n = io->size;
   int b = is_sorted(io->out, 0, n) ? 1 : 0;
   int sum = sum(io->out, 0, n);
   return b+sum;
