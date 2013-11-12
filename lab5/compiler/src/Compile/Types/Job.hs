@@ -11,6 +11,8 @@ data Job = Job
   , jobSource    :: FilePath
   , jobOutFormat :: OF
   , jobHeader    :: Maybe FilePath
+  , jobOptimization :: Int
+  , jobSafeCompilation :: Bool
   }
 
 data OF = C0
@@ -23,4 +25,7 @@ defaultJob :: Job
 defaultJob = Job {jobOut       = "",
                   jobSource    = "",
                   jobOutFormat = ELF,
-                  jobHeader    = Nothing}
+                  jobHeader    = Nothing,
+                  jobOptimization = 2,
+                  jobSafeCompilation = True
+                  }

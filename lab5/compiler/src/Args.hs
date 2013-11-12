@@ -31,6 +31,9 @@ parseArgs initialJob args = let
 
 argTable :: [OptDescr (Job -> Job)]
 argTable = [
+  Option [] ["safe"] (NoArg (setSafety True)) "Compiles with runtime checks",
+  Option [] ["unsafe"] (NoArg (setSafety False)) "Compiles without runtime checks",
+  Option ['O'] ["poop"] (ReqArg setOpLevel "num") "Sets the optimization level to 0",
   Option ['o'] ["out"] (ReqArg setOut "out.S") "Redirects output of the compiler to a particular target file. Will attempt to autodetect output type. - represents stdout.",
   Option ['S'] ["asm"] (NoArg (setOF Asm)) "Sets the output target to be assembly type.",
   Option ['c'] ["obj"] (NoArg (setOF Obj)) "Sets the output target to be an elf intermediate object.",
@@ -40,6 +43,15 @@ argTable = [
 
 setOF :: OF -> Job -> Job
 setOF outFormat j = j {jobOutFormat = outFormat}
+
+setSafety :: Bool -> Job -> Job
+setSafety b j = j {jobSafeCompilation = b}
+
+setOpLevel :: String -> Job -> Job
+setOpLevel s j = j {jobOptimization = read s}
+
+-- setOpt :: Int -> Job -> Job
+-- setOpt oLevel j = j {jobOptimization = oLevel}
 
 extTable :: [(String, OF)]
 extTable = [(".s", Asm), (".o", Obj), (".c", C0), ("", ELF)]
