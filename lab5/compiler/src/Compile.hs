@@ -61,15 +61,11 @@ compile job = do
     let elabFnList'' = (if ((length tList) > 50) -- Hacky shit to pass ../tests1/cobalt-return03.l3
                           then elabFnList'
                           else remFn elabFnList')
-    let elabFnList''' = (if (numFns == 1)
-                           then elabFnList''
-                           else elabFnList'')
-    minFnList <- liftEIO $ minimize elabFnList'''
+    minFnList <- liftEIO $ minimize elabFnList''
     let irFnList = toIRFnList fnMap structMap minFnList
---    writer (jobOut job) elabFnList
     if jobOutFormat job == C0
       then writer (jobOut job) minFnList
-      else let asm = fnListCodeGen irFnList fnMap in
+      else let asm = fnListCodeGen job irFnList fnMap in
               if jobOutFormat job == Asm
                  then stringWriter (jobOut job) asm
                  else do writer asmFile minFnList

@@ -31,9 +31,10 @@ debugFlag = False
 maxTempsBeforeSpilling = 1000
 
 -- fnListCodeGen :: FnList -> FnMap -> String
-fnListCodeGen fnList fnMap =
+fnListCodeGen job fnList fnMap =
   let
-    fnAasms = genFIR fnList fnMap
+    safeCompilation = jobSafeCompilation job
+    fnAasms = genFIR fnList fnMap safeCompilation
     asm = concatMap fnAAsmCodeGen fnAasms
     epilogue = concat ["error:\n", "  movw $1, %ax\n", "  movw $0, %bx\n", "  divw %bx\n", "mem_error:\n", "  jmp 0\n"]
     asm' = asm ++ epilogue
