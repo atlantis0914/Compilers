@@ -1,8 +1,8 @@
 all: l4c
 
 l4c:
-	runhaskell Setup.hs configure
-	runhaskell Setup.hs build
+	runhaskell Setup.hs configure --enable-optimization=2
+	runhaskell Setup.hs build 
 	rm -rf bin/
 	cp -r shellbins/ bin/
 	chmod +x bin/*
