@@ -30,6 +30,7 @@ import Compile.IR.GenIR
 import Compile.IR.GenIRAST
 import Compile.Frontend.Minimize
 import Compile.Backend.CodeGen
+import Compile.Frontend.ConstantPropagate
 
 import qualified Debug.Trace as Trace
 
@@ -63,9 +64,11 @@ compile job = do
                           else remFn elabFnList')
     minFnList <- liftEIO $ minimize elabFnList''
     let irFnList = toIRFnList fnMap structMap minFnList
+    let irFnList' = constantFold irFnList
+--    writer (jobOut job) irFnList'
     if jobOutFormat job == C0
       then writer (jobOut job) minFnList
-      else let asm = fnListCodeGen job irFnList fnMap in
+      else let asm = fnListCodeGen job irFnList' fnMap in
               if jobOutFormat job == Asm
                  then stringWriter (jobOut job) asm
                  else do writer asmFile minFnList
