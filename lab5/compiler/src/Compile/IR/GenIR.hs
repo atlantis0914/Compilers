@@ -69,6 +69,7 @@ genIR fnMap (IRAST (IRBlock stmts)) alloc =
     aasm
 
 genStmt :: FnMap -> Alloc -> IRStmt -> Alloc
+genStmt fm alloc IRNop = alloc
 genStmt fm alloc (IRCtrl c) = genCtrl fm alloc c
 genStmt fnMap (sc,m,i,l,aasm) (IRExpr e) = let
   (_,_,i',l',aasm') = genExp fnMap (sc,m,i+1,l,[]) e (ATemp i (getSize e))
@@ -186,7 +187,7 @@ genCtrl fm (sc,m,i,l,aasm) (Assert e _) = let
   in
     (sc, m, i', el + 2, aasm ++ outputAasm)
 
-genCtrl fm (sc,m,i,l,aasm) (If e s1 s2 _) = let
+genCtrl fm (sc@(True),m,i,l,aasm) (If e s1 s2 _) = let
   -- store aasm for e in Temp(i)
   (_, _,i',el,eAasm) = genExp fm (sc,m,i+1,l,[]) e (ATemp i (getSize e))
   (_,m',i'',l',s1Aasm) = genStmt fm (sc,m,i',el,[]) s1
@@ -200,6 +201,26 @@ genCtrl fm (sc,m,i,l,aasm) (If e s1 s2 _) = let
     eAasm ++ -- assembly for e
     [ACtrl $ AIf (ALoc $ ATemp i (getSize e)) s1Label Nothing,
      ACtrl $ AGoto s2Label] -- Assembly for conditional jmp to s1 or s2
+    ++ s1Aasm' -- Assembly for s1, including goto endLabel.
+    ++ s2Aasm' -- Assembly for s2, including goto endLabel.
+    ++ [ACtrl $ ALabel endLabel] -- Assembly for endLabel.
+  in
+    (sc,m'',i''',l''+3, aasm ++ outputAasm)
+
+-- Eliminates a few gotos, for unsafe mode. 
+genCtrl fm (sc@(False),m,i,l,aasm) (If e s1 s2 _) = let
+  -- store aasm for e in Temp(i)
+  (_, _,i',el,eAasm) = genExp fm (sc,m,i+1,l,[]) (IRExpUnOp LogicalNot e) (ATemp i (getSize e))
+  (_,m',i'',l',s1Aasm) = genStmt fm (sc,m,i',el,[]) s1
+  (_,m'',i''', l'',s2Aasm) = genStmt fm (sc,m',i'',l',[]) s2
+  s1Label = l''
+  s2Label = l''+1
+  endLabel = l''+2
+  s1Aasm' = (ACtrl $ ALabel s1Label):s1Aasm ++ [ACtrl $ AGoto endLabel]
+  s2Aasm' = (ACtrl $ ALabel s2Label):s2Aasm 
+  outputAasm =
+    eAasm ++ -- assembly for e
+    [ACtrl $ AIf (ALoc $ ATemp i (getSize e)) s2Label Nothing]
     ++ s1Aasm' -- Assembly for s1, including goto endLabel.
     ++ s2Aasm' -- Assembly for s2, including goto endLabel.
     ++ [ACtrl $ ALabel endLabel] -- Assembly for endLabel.

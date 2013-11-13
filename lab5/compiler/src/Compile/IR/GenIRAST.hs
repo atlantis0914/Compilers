@@ -46,6 +46,8 @@ toIRStmt' fm sm tm (Ctrl c) = IRCtrl $ toIRCtrl fm sm tm c
 toIRStmt' fm sm tm (Expr e) = IRExpr $ toIRExpr fm sm tm e
 toIRStmt' fm sm tm (Asgn (LExpr e1 _) op e2 _ _) = IRAsgn (toIRExpr fm sm tm e1)
                                                      op (toIRExpr fm sm tm e2)
+toIRStmt' _ _ _ SNop = IRNop
+toIRStmt' _ _ _ e = error ("shit : " ++ show e)
 
 toIRCtrl :: FMap -> SMap -> TypeMap -> Ctrl -> IRCtrl 
 toIRCtrl fm sm tm (If e s1 s2 p) = If (toIRExpr fm sm tm e) 

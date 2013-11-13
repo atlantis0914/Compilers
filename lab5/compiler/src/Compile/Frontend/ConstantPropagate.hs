@@ -35,6 +35,8 @@ processAST (IRAST stmt) = do
   return $ IRAST stmt'
 
 processStmt :: IRStmt -> CFState IRStmt
+processStmt a@(IRNop) = do 
+  return a
 processStmt a@(IRAsgn (IRIdent asgn sz) Nothing (IRExpInt val b)) = do
   (curUsed, curMod, curConsts) <- get
   let curConsts' = Map.insert asgn val curConsts
@@ -152,4 +154,4 @@ cfExpr m e@(IRExpFieldSelect e1 s typ i1 i2) =
 cfExpr m (IRExpDereference e t s) = IRExpDereference (cfExpr m e) t s
 cfExpr m (IRExpFnCall s elist i) = 
   IRExpFnCall s (map (cfExpr m) elist) i
-cfExpr m e = error ("rawr : " ++ show e)
+--cfExpr m e = error ("rawr : " ++ show e)

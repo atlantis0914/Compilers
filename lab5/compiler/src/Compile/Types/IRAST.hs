@@ -37,6 +37,7 @@ data IRStmt = IRAsgn IRExpr AsgnOp IRExpr
             | IRCtrl IRCtrl
             | IRBlock [IRStmt]
             | IRExpr IRExpr
+            | IRNop
 
 instance Show IRFnList where
   show (IRFnList gdecls) = concatMap (\s -> show s ++ "\n") gdecls
@@ -76,6 +77,7 @@ instance Show IRStmt where
 instance Show IRCtrl where
   show (If e1 s1 s2 _) = "if(" ++ show e1 ++ ") " ++ show s1 ++ "else" ++ show s2 ++ "\n"
   show (While e1 s1 _) = "while(" ++ show e1 ++ ")\n" ++ show s1
+  show (Assert e _) = "assert(" ++ show e ++ ")\n"
   show (Return Nothing _) = "return " ++ ";"
   show (Return (Just e1) _) = "return " ++ show e1 ++ ";"
 
