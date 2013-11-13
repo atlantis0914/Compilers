@@ -3,6 +3,7 @@ module Compile.Util.Graph where
 import Compile.Types
 import Data.Map
 import qualified Data.List as List
+import qualified Data.Set as Set
 
 import qualified Debug.Trace as Trace
 
@@ -14,6 +15,12 @@ isEdge (Graph m) src target =
     Just srcV -> case (Data.Map.lookup target (vertexAdjacencies srcV)) of
                    Nothing -> False
                    Just _ -> True
+
+getNeighborsAsSet :: (Ord a) => Graph a -> a -> Set.Set a
+getNeighborsAsSet (Graph m) src = 
+  case (Data.Map.lookup src m) of 
+    Nothing -> Trace.trace ("Set empty") $ Set.empty
+    Just srcV -> Trace.trace ("Set notempty") $ keysSet (vertexAdjacencies srcV) 
 
 -- Creates a new Graph 
 newGraph :: (Graph a)
@@ -27,6 +34,12 @@ newVertex s = Vertex {vertexData = s,
                       vertexIsLive = True,
                       vertexColor = Uncolored,
                       prohibitedColors = []}
+
+extractColor :: (Ord a) => (Graph a) -> a -> Color 
+extractColor (Graph m) s =
+  case (Data.Map.lookup s m) of 
+    Nothing -> error ("Bad vertex looked up in extractColor")
+    Just (Vertex {vertexColor = color}) -> color 
 
 -- Safely adds a vertex to a graph
 addVertexSafe :: (Ord a) => (Graph a) -> a -> (Graph a, Vertex a)
