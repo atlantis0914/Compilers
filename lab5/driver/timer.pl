@@ -27,6 +27,7 @@ use Term::ANSIColor;
 ###
 # Declarations and Initialization
 #
+our $Opt_Autograding    = 0;    # -A, autograding
 our $Opt_Color          = "auto"; # -c, color
 our $Opt_Help           = 0;    # -h, help
 our $Opt_Make           = 1;    # -m, build compiler (on by default)
@@ -44,6 +45,7 @@ my $result          = "";   # result string for Autolab server
 
 Getopt::Long::Configure ("bundling");
 my $success = GetOptions (
+    'A|autograde'   => \$Opt_Autograding,
     'c|color=s'     => \$Opt_Color,
     'h|help'        => \$Opt_Help,
     'make!'         => \$Opt_Make,
@@ -138,6 +140,7 @@ sub grade_compiler {
     my @failed = ();
     my $succeeded = 0;
     my $score = 0;
+    my %results = ();
 
     my @failedhere;
 
@@ -162,41 +165,42 @@ sub grade_compiler {
 # ($tried, $succeeded) = run_suite(file1, file2, ...);
 #
 sub run_bench {
-    my $good = 0;
-    my $count = 0;
-	my $flag;
-	my $safe;
-	my %sums;
-	foreach $flag (@BENCH_FLAGS) {
-		foreach $safe (@BENCH_SAFES) {
-			my $key = "$safe $flag";
-			$sums{$key} = 0;
-		}
-	}
-    my @failed = ();
-    foreach my $test (@_) {
-		my ($g, $c) = bench($test, \%sums);
-		$good += $g;
-		$count += $c;
+  my $good = 0;
+  my $count = 0;
+  my $flag;
+  my $safe;
+  my %sums;
+  my %result;
+  foreach $flag (@BENCH_FLAGS) {
+    foreach $safe (@BENCH_SAFES) {
+      my $key = "$safe $flag";
+      $sums{$key} = 0;
     }
-	print " --- Summary ---\n";
-	printf("Total test runs:      %4d\n", $count);
-	printf("Tests which improved: %4d\n", $good);
-	print "\n";
-	my $base;
-	foreach $flag (@BENCH_FLAGS) {
-		foreach $safe (@BENCH_SAFES) {
-			my $key = "$safe $flag";
-			if ( $flag eq $BENCH_FLAGS[0] && $safe eq $BENCH_SAFES[0] ) {
-				$base = $sums{$key};
-				printf("Total for %12s: %4d\n", $key, $sums{$key});
-			} else {
-				my $ratio = $sums{$key} / $base;
-				my $s = sprintf("Total for %12s: %4d (%1.4f)\n", $key, $sums{$key}, $ratio);
-				color_range($s, $ratio);
-			}
-		}
-	}
+  }
+  my @failed = ();
+  foreach my $test (@_) {
+    my ($g, $c) = bench($test, \%sums, \%result);
+    $good += $g;
+    $count += $c;
+  }
+  print " --- Summary ---\n";
+  printf("Total test runs:      %4d\n", $count);
+  printf("Tests which improved: %4d\n", $good);
+  print "\n";
+  my $base;
+  foreach $flag (@BENCH_FLAGS) {
+    foreach $safe (@BENCH_SAFES) {
+      my $key = "$safe $flag";
+      if ( $flag eq $BENCH_FLAGS[0] && $safe eq $BENCH_SAFES[0] ) {
+        $base = $sums{$key};
+        printf("Total for %12s: %4d\n", $key, $sums{$key});
+      } else {
+        my $ratio = $sums{$key} / $base;
+        my $s = sprintf("Total for %12s: %4d (%1.4f)\n", $key, $sums{$key}, $ratio);
+        color_range($s, $ratio);
+      }
+    }
+  }
 }
 
 
@@ -206,7 +210,8 @@ sub run_bench {
 #
 sub bench {
     my $file = shift;
-	my $sums = shift;
+    my $sums = shift;
+    my $result = shift;
     my ($directive, $expected, $valid, $error, $asm_file, $result, $line);
     my $command;
     my $ret;
@@ -243,32 +248,30 @@ sub bench {
 			if (-e $asm_file) {move($asm_file, $asm_file.".old")
 					or die "could not rename $asm_file from previous compilation\n";}
 			$command = "$COMPILER_EXEC $args $file";
-			($result, $timeout) = system_with_timeout($COMPILER_TIMEOUT, "$command",
-													  $write, $write);
+			($result, $timeout) = system_with_timeout($COMPILER_TIMEOUT, "$command", $write, $write);
 
 			if ($result == 0) {
 				$command = "$GCC $asm_file $BENCH_LINK";
-				($result, $timeout) = system_with_timeout($GCC_TIMEOUT, $command,
-														  $write, $write);
+				($result, $timeout) = system_with_timeout($GCC_TIMEOUT, $command, $write, $write);
 			} else {
 				die "compilation timed out";
 			}
 
 			$command = "./bench -d 0";
-			my $in_file = in_suffix($file);
-			if (-f $in_file) {
-				$in_file = "< $in_file";
-			} else {
-				$in_file = undef;
-			}
+			# my $in_file = in_suffix($file);
+			# if (-f $in_file) {
+			#	$in_file = "< $in_file";
+			# } else {
+			#	$in_file = undef;
+			# }
 			($result, $timeout) = system_with_timeout($BENCH_RUN_TIMEOUT, $command,
-													  "> a.result", "> /dev/null",
-													  $in_file);
+                                                                  "> a.result", "> /dev/null"); # ,$in_file
 			my $cycles = read_file("a.result");
 			chomp $cycles;
 
 			print pack("A15", "$key: ");
 			$sums->{$key} = $sums->{$key} + $cycles;
+                        $result->{$key} = $cycles;
 			if ($first) {
 				$base = $cycles;
 				printf("%15d\n", $cycles);
