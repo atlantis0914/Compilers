@@ -1,0 +1,35 @@
+//test exception
+//linked list that goes in circles
+
+struct n
+{
+struct n* next;
+};
+
+typedef struct n node;
+
+int main()
+{
+node* n1;
+node* n2;
+node* curr;
+
+n1 = alloc(node);
+n2 = alloc(node);
+
+n1->next = n2;
+n2->next = n1;
+
+
+curr = n1;
+while((curr->next)!=NULL)
+{
+curr = curr->next;
+}
+return 1;
+}
+
+
+
+
+

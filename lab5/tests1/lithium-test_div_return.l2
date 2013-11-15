@@ -1,0 +1,15 @@
+//test return 10
+int main() 
+{
+	int x = 0;
+	int y = 100;
+	int z = 10;
+	int r = 0;
+	bool t = true;
+	if (t) {
+		r = z;
+	} else {
+		r = y;
+	}
+	return y/r;
+}

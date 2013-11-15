@@ -1,0 +1,9 @@
+//test error
+/* struct multiply defined */
+
+struct point {int x; int y;};
+struct point {int x; int y;};
+
+int main () {
+  return 2;
+}

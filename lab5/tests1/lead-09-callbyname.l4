@@ -1,0 +1,16 @@
+//test return 5
+/* simple call by name */
+
+void plusTwo(int *n) {
+  *n += 1;
+  *n = *n + 1;
+}
+
+int main () {
+  int *x;
+  x = alloc(int);
+  plusTwo(x);
+  plusTwo(x);
+
+  return *x + 1;
+}

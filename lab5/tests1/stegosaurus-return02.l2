@@ -1,0 +1,66 @@
+//test return 0
+/* A little bitwise operator party. */
+
+int main () {
+  int a = 6;
+  int b = 5;
+  int c;
+  int d;
+  int e;
+  
+  c = ~(~a&~b);
+  d = (c^7);
+  if (d != 0)
+    return 1;
+  
+  {
+    int g = 0x55;
+    g = (g << 8) + 0x55;
+    g = (g << 16) + g;
+    if ((0xA&g) != 0)
+      return 2;
+  }
+  
+  e = 0x13578642;
+  
+  {
+    int n = 4;
+    int y = e<<n;
+    int z = e>>1;
+    z = z&~(0x1<<31);
+    z = z>>(32+~n);
+    if ((y|z) != 0x35786421)
+      return 3;
+  }
+  
+  { 
+    int t;
+    int z;
+    int f = e;
+    f |= (f>>1);
+    f |= (f>>2);
+    f |= (f>>4);
+    f |= (f>>8);
+    f |= (f>>16);
+    z = f>>1;
+    t = z&~(1<<31);
+    if (((t+1)&f) != 0x10000000)
+      return 4;
+  }
+  
+  a = 0x12467531;
+  
+  { 
+    int xtwo = a<<1;
+    int xthree = xtwo+a;
+    int xsign = (xtwo^a)>>31;
+    int xtsign = (xthree^a)>>31;
+    int sc = xsign|xtsign;
+    int xosign = a>>31;
+    int TMin = 0x1<<31;
+    if (((sc&((sc^xosign)^TMin))|(~sc&xthree)) != 0x36d35f93)
+      return 5;
+  }
+  
+  return 0;
+}

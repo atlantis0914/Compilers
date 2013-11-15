@@ -1,0 +1,11 @@
+//test error
+
+int main()
+{
+	int x = 7;
+	bool y = false;
+
+	y = x;
+
+	return y;
+}

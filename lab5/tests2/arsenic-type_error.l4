@@ -1,0 +1,28 @@
+//test error 
+
+struct testa
+{
+    int x;
+     bool y;
+};
+struct testb
+{
+	int y;
+	bool x;
+};
+copy(struct testa *a, struct testb *b) {
+	b->x = a->x;
+	b->y = a->y
+}
+
+int main() {
+	struct testa *a = alloc(struct testa);
+	struct testb *b = alloc(struct testb);
+	a->x = 1;
+	a->y = true;
+
+	b->x = true;
+	b->y = 1;
+
+	return copy(a,b);
+}

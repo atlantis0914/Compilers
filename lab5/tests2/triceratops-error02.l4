@@ -1,0 +1,14 @@
+//test error
+
+int *a(bool[] arr);
+
+int[] a(bool[] arr) {
+    return NULL;
+}
+
+int main () {
+  bool[] A;
+  A = alloc_array(bool, 4);
+  a(A);
+  return 1;
+}

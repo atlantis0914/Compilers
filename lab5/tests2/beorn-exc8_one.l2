@@ -1,0 +1,13 @@
+//test exception 8
+int main()  {
+    int x;
+    int y = 0;
+
+    x = 1;
+    x <<= 0xFF;
+    x = ~x;
+    x &= (1 << 0x3F);
+    y = (y | 0x80000000) / x;
+
+    return y;
+}

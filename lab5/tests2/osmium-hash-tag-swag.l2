@@ -1,0 +1,8 @@
+//test error
+
+int main() {
+    int x = 420;
+    int y = 42;
+
+    return x / y; #yolo
+}

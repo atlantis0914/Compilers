@@ -1,0 +1,39 @@
+//test return 47
+
+struct empty {
+};
+
+struct tuple {
+	int a;
+	int *b;
+	struct empty e;
+	bool c;
+};
+
+typedef struct tuple tuple_t;
+
+int main() {
+
+	int LEN = 7;
+
+	tuple_t[] arr = alloc_array(tuple_t,LEN);
+	
+	for(int i = 0; i < LEN; i++) {
+		arr[i].a = i;
+		arr[i].b = alloc(int);
+		*arr[i].b = i * i;
+		arr[i].c = i % 2 == 0;
+	}
+	
+	int res = 0;
+	
+	for(int i = 0; i < LEN; i++) {
+		if(arr[i].c)
+			res += arr[i].a;
+		else
+			res += *arr[i].b;
+	}
+	
+	//0 + 1^2 + 2 + 3^2 + 4 + 5^2 + 6
+	return res;
+}

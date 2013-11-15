@@ -1,0 +1,12 @@
+//test error
+/* recursively defined struct */
+
+struct list {
+  int head;
+  struct list tail;
+};
+
+int main () {
+  return -1;
+}
+  

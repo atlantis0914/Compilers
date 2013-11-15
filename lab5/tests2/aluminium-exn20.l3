@@ -1,0 +1,7 @@
+//test exception 8
+
+int main () {
+  int a = 0 / 0;
+  assert (false);
+  return 1; 
+}

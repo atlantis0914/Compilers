@@ -1,0 +1,11 @@
+//test exception
+// mod by zero.
+int main()
+{
+  int a = 100; // 100
+  int b = 100 - 40; // 60
+  int c = a + b; // 160
+  int d = a - c; // -60
+  int e = a % (d + b);
+  return e;
+}

@@ -1,0 +1,16 @@
+//test exception
+int main ()
+{
+	int i = 20000;
+	int j = 34;
+	for (; i > j; j *= 4)
+	{
+		// an empty loop body to be a pain
+	}
+	while (true)
+	{
+		j = j % i;
+		i = i % j;
+	}
+	return 1;
+}

@@ -1,0 +1,12 @@
+//test exception 11
+
+int main() {
+	bool
+	
+	**god = alloc(bool*);
+	
+	
+	**god; //did you see that coming, god??? Haha you are dereferenced and now OH SH---
+           //THE WORLD TERMINATES
+	return 42;
+}

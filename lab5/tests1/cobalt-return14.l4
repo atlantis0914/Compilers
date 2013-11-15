@@ -1,0 +1,65 @@
+//test return 14
+
+typedef int foo;
+foo func();
+
+
+void swap(int *x, int *y)
+{
+  *x ^= *y;
+  *y ^= *x;
+  *x ^= *y;
+}
+
+
+int main()
+{
+  foo* x0 = alloc(foo);
+  foo* x1 = alloc(foo);
+  foo* x2 = alloc(foo);
+  foo* x3 = alloc(foo);
+  foo* x4 = alloc(foo);
+  foo* x5 = alloc(foo);
+  foo* x6 = alloc(foo);
+  foo* x7 = alloc(foo);
+  foo* x8 = alloc(foo);
+  foo* x9 = alloc(foo);
+  foo* x10 = alloc(foo);
+  foo* x11 = alloc(foo);
+  foo* x12 = alloc(foo);
+  foo* x13 = alloc(foo);
+  foo* x14 = alloc(foo);
+
+  *x0 = 0;
+  *x1 = 1;
+  *x2 = 2;
+  *x3 = 3;
+  *x4 = 4;
+  *x5 = 5;
+  *x6 = 6;
+  *x7 = 7;
+  *x8 = 8;
+  *x9 = 9;
+  *x10 = 10;
+  *x11 = 11;
+  *x12 = 12;
+  *x13 = 13;
+  *x14 = 14;
+
+  swap(x14, x13);
+  swap(x13, x12);
+  swap(x12, x11);
+  swap(x11, x10);
+  swap(x10, x9);
+  swap(x9, x8);
+  swap(x8, x7);
+  swap(x7, x6);
+  swap(x6, x5);
+  swap(x5, x4);
+  swap(x4, x3);
+  swap(x3, x2);
+  swap(x2, x1);
+  swap(x1, x0);
+
+  return *x0;
+}

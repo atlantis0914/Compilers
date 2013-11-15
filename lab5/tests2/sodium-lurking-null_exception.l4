@@ -1,0 +1,20 @@
+//test exception 11
+// NULL in the middle of the array.
+
+int main() {
+  int len = 100;
+  int*[] A = alloc_array(int*, len);
+
+  for (int i = 0; i < len; i++) {
+    A[i] = alloc(int);
+    *A[i] = i;
+  }
+
+  A[75] = NULL;
+
+  for (int i = 0; i < len; i++) {
+    assert(*A[i] == i);
+  }
+
+  return -1;
+}

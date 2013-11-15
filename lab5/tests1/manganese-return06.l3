@@ -1,0 +1,21 @@
+//test return 0
+//recursion test. it's like picking petals. except the computer does it for you.
+
+int love_me_not(int a);
+
+int love_me (int a) {
+    if(a == 0)
+        return 1;
+    return love_me_not(a-1);
+}
+
+int love_me_not (int a) {
+    if(a == 0)
+        return 0;
+    return love_me((a << 2) / 7);
+}
+
+int main() {
+    return love_me_not(349210858);
+}
+

@@ -1,0 +1,10 @@
+//test error
+// Test double declaration
+
+int main() {
+   int x = 3;
+   int y = 4;
+   
+   int x = x + y;
+   return x;
+}

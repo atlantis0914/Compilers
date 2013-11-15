@@ -1,0 +1,12 @@
+//test return 0
+
+int index(int[] a) {
+  a[0]++;
+  return 1;
+}
+
+int main() {
+  int[] a = alloc_array(int, 2);
+  a[index(a)] += 1;
+  return a[0] == a[1] && a[0] == 1 ? 0 : 1;
+}

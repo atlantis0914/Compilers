@@ -1,0 +1,22 @@
+//test return 6
+
+int bin_search (int[] a, int k, int low, int high) {
+    assert(low <= high);
+    if(low == high)
+        return low;
+    int mid = low + (high - low)/2;
+    if (a[mid] == k) return mid;
+    else if(a[mid] < k) return bin_search(a, k, mid+1, high);
+    else return bin_search(a, k, low, mid-1);
+}
+
+int main() {
+    int[] a = alloc_array(int, 10);
+    for(int i = 0; i < 10; i++) {
+        a[i] = i;
+    }
+
+    return bin_search(a, 6, 0, 9);
+}
+
+

@@ -1,0 +1,12 @@
+//test error
+
+struct Node_t {
+    Node* left;
+    Node* right;
+    int value;
+};
+
+int main(){
+    struct Node_t foo;
+    return 0;
+}

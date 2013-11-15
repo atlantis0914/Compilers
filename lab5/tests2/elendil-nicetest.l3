@@ -1,0 +1,12 @@
+//test error
+
+int easy();
+
+int main() {
+  return easy();
+}
+
+int easy() {
+  int easy = 4;
+  return easy(easy);
+}

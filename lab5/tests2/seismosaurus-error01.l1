@@ -1,0 +1,8 @@
+//test error
+//undefined variable
+int main()
+{
+  int x;
+
+  return x;
+}

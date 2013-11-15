@@ -1,0 +1,21 @@
+//test return 1
+// Sanity
+int a()
+{
+  return 1/0;
+}
+
+int b()
+{
+  return 7 + 8;
+}
+
+int c()
+{
+  return b();
+}
+
+int main()
+{
+  return (b() == c() || b() == a()) ? 1 : 0;
+}

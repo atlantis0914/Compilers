@@ -1,0 +1,9 @@
+//test error
+// simple typecheck failure.
+int main()
+{
+  int i = (1 << 42);
+  return i;
+  bool j = i;
+  bool k = 0;
+}

@@ -1,0 +1,17 @@
+//test return 42
+
+int main()
+{
+  int x;
+  int result = 0;
+  for(x = 24; x > 0; x--)
+  {
+    int y = x;
+    while(y > 0)
+    {
+      y >>= 1;
+      result += y & 0x1;
+    }
+  }
+  return result;
+}

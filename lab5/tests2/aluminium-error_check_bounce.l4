@@ -1,0 +1,12 @@
+//test error
+
+int main{
+  int[] a;
+  a = alloc_array(int, 4004);
+  int b = 200;
+  int c;
+
+  c = (1 + a) + b * 5 << 2; // 4004
+  return a[c];
+
+}

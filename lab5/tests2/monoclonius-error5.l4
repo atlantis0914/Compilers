@@ -1,0 +1,16 @@
+//test error
+
+struct A {
+    int a;
+    int b;
+};
+struct B {
+    int a;
+    int b;
+};
+
+int main(){
+    struct A *foo = alloc(A*);
+    struct B *bar = alloc(B*);
+    return foo == bar ? 1:0;
+}

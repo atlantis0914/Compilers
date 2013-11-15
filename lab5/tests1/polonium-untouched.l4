@@ -1,0 +1,14 @@
+//test return 0
+
+struct a{};
+
+int foo(struct a* a, struct b* b){
+    return 0;
+}
+
+int main(){
+    struct a* a = alloc(struct a);
+    struct b* b = NULL;
+    foo(a, b);
+    return 0;
+}

@@ -1,0 +1,17 @@
+//test return 3
+
+int main ()
+{
+  int x;
+  int y;
+  int z;
+  int u;
+
+  x = 1;
+  if (x != 0)
+    return x+2;
+  else
+    return x-2;
+  x = y / z;		
+  return u + z;	
+}

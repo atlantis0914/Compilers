@@ -1,0 +1,8 @@
+//test error
+// variable declaration out of control flow
+
+int main() {
+   int x = 2;
+   return x;
+   x += y;
+}

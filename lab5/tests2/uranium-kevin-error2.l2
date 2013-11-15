@@ -1,0 +1,7 @@
+//test error
+//can't have just a semicolon after a loop statement in l2
+
+int main() {
+  while(true);
+  return 10;
+}

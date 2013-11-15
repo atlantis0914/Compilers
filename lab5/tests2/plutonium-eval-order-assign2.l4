@@ -1,0 +1,25 @@
+//test exception 11
+/* erstwhile of brie's "Dr. H**bl's Compile Along Blog */
+/* evaluation order, sideeffects, etc */
+
+int* test(int ** i)
+{
+        int * x;
+        x = *i;
+        *i = NULL;
+        return x;
+}
+
+int main()
+{
+        int[] lol;
+        int** i;
+
+        lol = alloc_array(int, 1);
+	i = alloc (int *);
+        *i = alloc (int);
+
+        lol[*test(i)] = **i;
+
+	return 0;
+}

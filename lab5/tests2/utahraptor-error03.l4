@@ -1,0 +1,22 @@
+//test error
+
+struct s{
+    int [] i;
+    int [] j;
+};
+
+struct t{
+    struct s s;
+    struct t* t;
+};
+
+struct w{
+    int x;
+};
+
+int main()
+{
+    // struct w is not small type
+    struct w w;
+    return 0;
+}

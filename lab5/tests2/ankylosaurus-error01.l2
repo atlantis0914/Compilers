@@ -1,0 +1,9 @@
+//test error
+// assigns wrong type
+int main(){
+    int a = 0xffff0000;
+    int b = 0x0000ffff;
+    bool x = a | b;
+
+    return a;
+}

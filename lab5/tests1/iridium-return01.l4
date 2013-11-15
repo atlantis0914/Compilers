@@ -1,0 +1,8 @@
+//test return 20
+
+int main () {
+  int foo = 4;
+  int * bar = alloc(int);
+  * bar = 5;
+  return foo * * bar;
+}

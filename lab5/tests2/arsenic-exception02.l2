@@ -1,0 +1,12 @@
+//test exception 8
+int main()
+{
+  int a;
+  int b;
+
+  a = 1;
+  b = 0;
+  while (b>=0)
+    a = a/b;
+  return a;
+}

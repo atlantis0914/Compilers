@@ -1,0 +1,14 @@
+//test error
+
+int func(bool b);
+int func(int t);
+
+int func(int t)
+{
+  return t;
+}
+
+int main()
+{
+  return func(10);
+}

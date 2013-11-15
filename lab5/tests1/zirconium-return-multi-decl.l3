@@ -1,0 +1,14 @@
+//test return 176
+//Multiple declaration of functions
+
+int foo(int a, int b);
+
+int main() {
+  return foo(79, 97);
+}
+
+int foo(int a, int b);
+
+int foo(int a, int b) {
+    return a + b;
+}

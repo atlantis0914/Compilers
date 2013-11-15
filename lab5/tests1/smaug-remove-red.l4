@@ -1,0 +1,29 @@
+//test return 0
+// Taken from 15-122 Homework. Just check if we can succesfully compile without crashing.
+
+/* make pixel a type alias for int */
+typedef int pixel;
+
+pixel[] remove_red (pixel[] A, int width, int height)
+{
+  int i;
+  int j;
+  pixel[] B = alloc_array(pixel, width*height);
+
+  for (j = 0; j < height; j++)
+  {
+      for (i = 0; i < width; i++)
+      {
+        // Clear the bits corresponding to the red component
+        B[j*width+i] = A[j*width+i] & 0xFF00FFFF;
+      }
+  }
+
+  return B;
+}
+
+int main()
+{
+  return 0;
+}
+

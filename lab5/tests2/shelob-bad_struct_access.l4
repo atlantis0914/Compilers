@@ -1,0 +1,13 @@
+//test error
+//Tests that particular incorrect struct access syntax fails
+
+struct vals{
+  int v1;
+  int v2;
+  int v3;
+};
+
+int main(){
+  struct vals* x = alloc(struct vals);
+  return x.v1;
+}

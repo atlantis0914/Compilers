@@ -1,0 +1,7 @@
+//test return 4
+// allow empty arr
+
+int main() {
+  int[] arr = alloc_array(int, 0);
+  return 4;
+}

@@ -1,0 +1,31 @@
+//test return 5
+
+//Positive test for if statements
+
+int main ()
+{
+  int a = 1;
+  if (a > 0)
+    a = 2;
+  else
+    a = 99;
+
+  if (a < 3)
+    a = 3;
+  else
+    a = 98;
+
+  if (a >= 3) {
+    a = 4;
+  } else {
+    a = 97;
+  }
+
+  if (a != 4) {
+    a = 96;
+  } else {
+    a = 5;
+  }
+
+  return a;
+}

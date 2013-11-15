@@ -1,0 +1,7 @@
+//test error
+struct s { int x;};
+int main() {
+	struct s* st = alloc(struct s);
+	st -> x = true;
+	return 1;
+}

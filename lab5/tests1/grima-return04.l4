@@ -1,0 +1,32 @@
+//test return 24
+
+int sum( int *[]***** x)
+{
+   int *[]* a = (****x);
+
+   return  *(*a)[0] + *(*a)[1];
+}
+
+int main()
+{
+    int *[] a = alloc_array(int *,2);
+
+    int *[]* p1 = alloc(int *[]);
+    *p1 = a;
+    int *[]** p2 = alloc(int *[]*);
+    *p2 = p1;
+    int *[]*** p3 = alloc(int *[]**);
+    *p3 = p2;
+    int *[]**** p4 = alloc(int *[]***);
+    *p4 = p3;
+    int *[]***** p5 = alloc(int *[]****);
+    *p5 = p4;
+
+    a[0] = alloc(int);
+    a[1] = a[0];
+
+    *a[0] = 11;
+    *a[1] = 12;
+
+    return sum(p5);
+}

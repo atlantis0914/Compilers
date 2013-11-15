@@ -1,0 +1,8 @@
+//test exception
+
+int main() {
+	int** lists;
+	lists = alloc(int*);
+	*lists = NULL;
+	return **lists;
+}

@@ -1,0 +1,10 @@
+//test error
+int main()
+{
+  int a = 0;
+  for(a; a; !a)
+  {
+    int b = 3;
+    return b/(b^b);
+  }
+}

@@ -1,0 +1,34 @@
+//test exception 11
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+typedef struct node node;
+typedef struct node list;
+
+list *nil() {
+    return NULL;
+}
+
+list *cons(list *l, int data) {
+    list *head = alloc(list);
+    head->next = l;
+    head->data = data;
+
+    return head;
+}
+
+int car(list *l) {
+    return l->data;
+}
+
+list *cdr(list *l) {
+    return l->next;
+}
+
+int main() {
+    return car(nil());
+}
+

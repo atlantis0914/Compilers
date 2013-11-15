@@ -1,0 +1,8 @@
+//test error
+// reserved symbol
+int main() {
+  int x = 15--150;
+  
+  return x;
+
+}

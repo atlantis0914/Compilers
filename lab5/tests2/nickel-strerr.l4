@@ -1,0 +1,9 @@
+//test error
+
+typedef char[] string;
+
+int main()
+{
+	string a = "fsakdfja";
+	return 42;
+}

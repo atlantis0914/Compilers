@@ -1,0 +1,9 @@
+//test error
+// trying to set a constant
+int main()
+{
+    int x = 4;
+    x += x;
+    5 /= x;
+    return 0;
+}

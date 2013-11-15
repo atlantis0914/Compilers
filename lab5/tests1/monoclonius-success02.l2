@@ -1,0 +1,6 @@
+//test return 5
+
+int main()
+{
+    return true || 1 / 0 == 0 ? 5 : 4;
+}

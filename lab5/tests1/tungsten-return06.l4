@@ -1,0 +1,15 @@
+//test return 10
+// shadow function name with struct
+
+struct func {
+    int a;
+};
+
+int func () {
+    return 10;
+}
+
+int main() {
+    struct func *a = alloc(struct func);
+    return func();
+}

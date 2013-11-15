@@ -1,0 +1,19 @@
+//test error
+/* struct are large types, need to use alloc */
+
+struct position;
+
+struct position {
+    int x; 
+    int y;
+    struct position parent; // no way !
+};
+
+int main () {
+  struct position * p = alloc(struct position);
+  p->x = 0;
+  p->y = 0;
+  p->parent.x = 0;
+  p->parent.y = 5;
+  return p->parent.x;
+}

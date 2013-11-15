@@ -1,0 +1,10 @@
+//test error
+struct s {
+    int a;
+};
+
+int main()
+{
+    struct s* stru = alloc(struct s);
+    return stru.a;
+}

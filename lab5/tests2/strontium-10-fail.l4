@@ -1,0 +1,13 @@
+//test error
+// dat semicolon doe
+
+struct blob
+{
+    int x;
+    int y;
+}
+
+int main()
+{
+    return 0;
+}

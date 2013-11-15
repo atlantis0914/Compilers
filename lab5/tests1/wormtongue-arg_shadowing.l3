@@ -1,0 +1,22 @@
+//test return 6
+// Tests to make sure local variables can shadow function
+// names.
+
+int foo() {
+	return 1;
+}
+
+int bar() {
+	return 2;
+}
+
+int baz(int i) {
+	int foo = i + 1;
+	int bar = foo + 1;
+	return bar;
+}
+
+int main() {
+	return baz(4);
+}
+

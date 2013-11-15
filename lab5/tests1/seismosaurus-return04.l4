@@ -1,0 +1,30 @@
+//test return 6
+//count number of factors divisible by 15 in a list
+
+int[]* initialize(int len){
+	int i;
+	int[]* arr = alloc(int[]);
+	*arr = alloc_array(int, len);
+
+	for(i = 0; i < len; i ++)
+		(*arr)[i]= i+1;
+		
+	return arr;
+}
+
+bool is_divisible(int n, int p){
+	return n % p == 0;
+}
+
+int main(){
+	int i;
+	int num=0;
+	int[]* arr = alloc(int[]);
+	arr = initialize(100);
+	
+	for(i = 0; i < 100; i++)
+		if( is_divisible((*arr)[i], 15)){
+			num++;
+		}
+	return num;
+}

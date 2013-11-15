@@ -1,0 +1,19 @@
+//test return 6
+// not 5
+
+void inc_pair(int *x, int *y, int *z)
+{
+  *x += *z;
+  *y += *z;
+}
+
+int main()
+{
+  int *x = alloc(int);
+  int *y = alloc(int);
+  *x = 1;
+  *y = 2;
+  inc_pair(x, y, x);
+
+  return *x + *y;
+}

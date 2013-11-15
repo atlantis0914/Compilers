@@ -1,0 +1,11 @@
+//test error
+//struct without termination semicolon
+
+struct a {
+    int b;
+}
+
+int main() {
+    struct a *c = alloc(struct a);
+    return c->b;
+}

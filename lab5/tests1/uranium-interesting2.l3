@@ -1,0 +1,24 @@
+//test return 19
+// hostfstader figure-figure sequence
+
+int r(int n);
+int s(int n);
+
+int s(int n) {
+    if (n == 1) return 2;
+    int last = s(n-1);
+    int i = 1;
+    while (r(i) < last) {
+        i++;
+    }
+    return (r(i-1) + 1);
+}
+
+int r(int n) {
+    if (n == 1) return 1;
+    return r(n-1) + s(n-1);
+}
+
+int main () {
+    return r(10);
+}

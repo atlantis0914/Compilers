@@ -1,0 +1,41 @@
+//test return 1048575
+// how many leaves are there in a tree?
+
+typedef struct Foo Foo;
+
+struct Foo{
+       Foo* l;
+       Foo* r;
+       int v;
+       int[] A;
+       int[] B;
+       int[] C;
+       bool d;
+       int[] E;
+};
+
+Foo* concat(Foo* l, Foo* r, int val)
+{
+	Foo* a = alloc(Foo);
+	a->l = l;
+	a->r = r;
+	a->v = val;
+	return a;
+}
+
+Foo* tree(int depth)
+{
+	return depth == 0 ? NULL : concat(tree(depth-1), tree(depth-1), 1);
+}
+
+int sum_tree(Foo* l)
+{
+	if (l == NULL) return 0;
+	return l->v + sum_tree(l->l) + sum_tree(l->r);
+}
+
+int main()
+{
+	Foo* f = tree(20);
+	return sum_tree(f);
+}

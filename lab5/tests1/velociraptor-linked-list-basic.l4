@@ -1,0 +1,24 @@
+//test return 4
+
+struct node;
+
+struct node {
+	int val;
+	struct node* next;
+};
+
+int main() {
+	struct node* head;
+	struct node* cur;
+	struct node* next;
+	int i = 0;
+	head = alloc(struct node);
+	cur = head;
+	for ( ; i < 10; i++) {
+		cur->val = i;
+		next = alloc(struct node);
+		cur->next = next;
+		cur = cur->next;
+	}
+	return head->next->next->next->next->val;
+}

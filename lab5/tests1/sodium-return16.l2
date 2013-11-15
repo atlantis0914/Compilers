@@ -1,0 +1,14 @@
+//test return 16
+int main() {
+    int x = 1;
+    int i = 0;
+    while (i < 5) {
+        if (i % 2 == 0) {
+            x <<= 2;
+        } else {
+            x >>= 1;
+        }
+        i++;
+    }
+    return x;
+}

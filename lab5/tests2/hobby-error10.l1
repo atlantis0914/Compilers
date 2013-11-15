@@ -1,0 +1,15 @@
+//test error
+
+// check use of uninitialized vars that are initialized later
+
+int main() {
+    int x;
+
+    x = 5;
+
+    x = 6 + y;
+
+    int y = 0;
+
+    return x - y;
+}

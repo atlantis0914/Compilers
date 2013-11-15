@@ -1,0 +1,11 @@
+//test error
+// uses variable that wasn't declared
+
+int main()
+{
+  int x;
+
+  x = 5;
+  z = 7;
+  return z;
+}

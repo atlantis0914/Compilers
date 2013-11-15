@@ -1,0 +1,71 @@
+//test return 25
+
+/* testing bit-level operations and shift; from 213 datalab */
+
+/* test logical shift and bit operations */
+/* howManyBits - return the minimum number of bits required to represent x in
+ *             two's complement
+ *  Examples: howManyBits(12) = 5
+ *            howManyBits(298) = 10
+ *            howManyBits(-5) = 4
+ *            howManyBits(0)  = 1
+ *            howManyBits(-1) = 1
+ *            howManyBits(0x80000000) = 32
+ *  Legal ops: ! ~ & ^ | + << >>
+ *  Max ops: 90
+ *  Rating: 4
+ */
+int howManyBits(int x) {
+
+  int sign = x >> 31;
+  int y = sign ^ x;
+
+  /* if 0 or -1 return 1 */
+  /* otherwise return log2(x)+2 for x > 0 and log2(~x)+2 for x < 0 */
+  int isZero = y==0?1:0;
+  int isNotZero = ((y==0?0:1)<<31)>>31; /* all bits 1 if not 0, 0 if 0 */
+
+  /* Calculate log2(y) representation bitwise: */
+  /*   Test if top half of word is 0..0 */
+  /*   If yes, answer bit is 0, and we leave word unchanged */
+  /*   If not, answer bit is 1, and we shift top half to bottom half */
+  /*   Continue with bottom half of word */
+  int b16 = ((y >> 16)!=0?1:0) << 4; /* b16 = 16 or 0 */
+  int y16 = y >> b16;
+  int b8 = ((y16 >> 8)!=0?1:0) << 3; /* b8 = 8 or 0 */
+  int y8 = y16 >> b8;
+  int b4 = ((y8 >> 4)!=0?1:0) << 2;  /* b4 = 4 or 0 */
+  int y4 = y8 >> b4;
+  int b2 = ((y4 >> 2)!=0?1:0) << 1;  /* b2 = 2 or 0 */
+  int y2 = y4 >> b2;
+  int b1 = (y2 >> 1)!=0?1:0;         /* b1 = 1 or 0 */
+  int logyPlus2 = b16+b8+b4+b2+b1+2;
+  return (isZero | (logyPlus2 & isNotZero));
+}
+
+/* Cycle counting interface */
+
+int* init (int n) {
+  return alloc(int);
+}
+
+void prepare(int* r, int n) {
+  *r = 0;
+  return;
+}
+
+void run (int* r, int n) {
+  int limit = 2*n;
+  for (int i = 0; i < limit; i+=1) {
+    *r += howManyBits(n);
+  }
+  return;
+}
+
+int checksum(int* r, int n) {
+  return *r;
+}
+
+int main () {
+  return howManyBits(0xc0ffee);
+}

@@ -1,0 +1,14 @@
+//test error
+//Compare equality of arrays of different types
+
+int main()
+{
+    int[] arr1 = alloc_array(int, 1);
+
+    bool[] arr2 = alloc_array(bool, 1);
+
+    if (arr1 == arr2)
+        return -1;
+    else
+        return 0;
+}

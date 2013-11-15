@@ -1,0 +1,10 @@
+//test return 0
+
+int main()
+{
+  int[] a;
+  int[] b;
+  a = alloc_array(int, 1);
+  b = alloc_array(int, 1);
+  return a == b ? 1 : 0;
+}

@@ -1,0 +1,32 @@
+//test return 2147450880
+// lots of allocation... that is all
+
+struct s {
+  int val;
+};
+
+int sum(struct s*[] a, int n) {
+  int i = 0;
+  int sum = 0;
+  for (; i < n; i++)
+    sum += a[i]->val;
+
+  return sum;
+}
+
+struct s* init(int v) {
+  struct s* n = alloc(struct s);
+  n->val = v;
+  return n;
+}
+
+int main() {
+  int n = 65535;
+  struct s*[] a = alloc_array(struct s*, n);
+  int i = 0;
+
+  for (; i < n; i++)
+    a[i] = init(i+1);
+
+  return sum(a, n);
+}

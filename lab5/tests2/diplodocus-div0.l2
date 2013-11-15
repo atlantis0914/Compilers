@@ -1,0 +1,7 @@
+//test exception 8
+int main()
+{
+    int a = 1;
+    int b = a+a-a*a/a&a|a^~a;
+    return b/(a%a);
+}

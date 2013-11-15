@@ -1,0 +1,16 @@
+//test return 6543
+
+int count_down(int n, int c, int e) {
+	if (e == 0) {
+		return n;
+	}
+	
+	n *= 10;
+	n += c;
+
+	return count_down(n, c - 1, e - 1);
+}
+
+int main() {
+	return count_down(0, 6, 4);	
+}

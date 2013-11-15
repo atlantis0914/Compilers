@@ -1,0 +1,12 @@
+//test error
+/* Simple pointers only ! */
+
+typedef int * Int;
+
+int main () {
+  Int x = alloc(int);
+  int c = 0;
+  for(; c < 100; c++)
+    x--; // no pointer arythmetic !
+  return *x;
+}

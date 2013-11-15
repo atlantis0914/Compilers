@@ -1,0 +1,15 @@
+//test error
+/* decl def conflict */ 
+
+int test( int z );
+
+
+int test( int z , int x)
+{
+    return z * x;
+}
+
+int main()
+{
+    return test(3,2);
+}

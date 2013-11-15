@@ -1,0 +1,22 @@
+//test return 240
+/* Simple function call to sum up numbers */
+
+int yourParserIsBroken(int for22) {
+  int for0 = 15;
+  int arrayFun = 1;
+  for (for22; for22 < for0; for22++) {
+    for22 >> arrayFun;
+  }
+  for(int return0 = 0; return0 < arrayFun; return0++) {
+    int hexadecimal0xLOLCATS = 2220;
+    for0 += for0;
+    for0 += for0;
+    for0 += for0;
+    for0 += for0;
+  }
+  return for0;
+}
+
+int main () {
+  return yourParserIsBroken(2);
+}

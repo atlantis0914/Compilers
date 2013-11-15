@@ -1,0 +1,22 @@
+//test return -2
+/* Rundown of all the operators. The chances of this working right w/o all
+ * operators properly implemented is pretty slim.
+ */
+int main()
+{
+  int x;
+  int y;
+  x = 0;
+  x += 2;
+  x *= 4;
+  y = -x;
+  y /= 2;
+  y -= 5;
+  x = x + 7;
+  x = x * 10;
+  y = y / 13;
+  y = y - 20;
+  x %= 18;
+  y = y % x;
+  return y;
+}

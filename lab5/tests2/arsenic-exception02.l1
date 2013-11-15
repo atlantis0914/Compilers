@@ -1,0 +1,10 @@
+//test exception 8
+int main()
+{
+  int a;
+  int b;
+
+  a = 0;
+  b = 4;
+  return b%a;
+}

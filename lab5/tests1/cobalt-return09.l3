@@ -1,0 +1,13 @@
+//test return 0
+
+typedef int iint;
+typedef iint iiint;
+typedef iiint iiiint;
+typedef iiiint iiiiint;
+
+int main() {
+  iiint x;
+  x = 0;
+
+  return x;
+}

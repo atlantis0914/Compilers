@@ -1,0 +1,91 @@
+//test return 20
+
+void isort(int[] a, int length) {
+	if(length <= 1) {return;}
+	int maxI = 0;
+	for(int i = 1; i < length; i++) {
+		if(a[i] >= a[maxI]) {maxI = i;}
+	}
+	if(a[length - 1] != a[maxI]) {
+		a[length - 1] ^= a[maxI];
+		a[maxI] ^= a[length - 1];
+		a[length - 1] ^= a[maxI];
+	}
+	isort(a, length - 1);
+}
+
+bool isSorted(int[] a, int length) {
+	for(int i = 1; i < length; i++) {
+		if(a[i] < a[i - 1]) {return false;}
+	}
+	return true;
+}
+
+int[] copy(int[] a, int length) {
+	int[] b = alloc_array(int, length);
+	for(int i = 0; i < length; i++) {
+		b[i] = a[i];
+	}
+	return b;
+}
+
+int num_duplicates(int[] a, int length) {
+	a = copy(a, length);
+	isort(a, length);
+	bool seenDup = false;
+	int count = 0;
+	for(int i = 1; i < length; i++) {
+		if(a[i] != a[i - 1]) {
+			count += (seenDup ? 1 : 0);
+			seenDup = false;
+		}
+		seenDup = seenDup || a[i] == a[i - 1];
+	}
+	count += (seenDup ? 1 : 0);
+	return count;
+}
+
+int main() {
+	int length = 9;
+	int[] a = alloc_array(int, length);
+	a[0] = 42;
+	a[1] = 5;
+	a[2] = 13;
+	a[3] = 2;
+	a[4] = -9;
+	a[5] = 22;
+	a[6] = 58;
+	a[7] = 2;
+	a[8] = 1;
+	isort(a, length);
+	if(!isSorted(a, length)) {return 0;}
+	if(a[0] != -9) {return 1;}
+	if(a[1] != 1) {return 2;}
+	if(a[2] != 2) {return 3;}
+	if(a[3] != 2) {return 4;}
+	if(a[4] != 5) {return 5;}
+	if(a[5] != 13) {return 6;}
+	if(a[6] != 22) {return 7;}
+	if(a[7] != 42) {return 8;}
+	if(a[8] != 58) {return 9;}
+	a[0] = 42;
+	a[1] = 5;
+	a[2] = 42;
+	a[3] = 2;
+	a[4] = -9;
+	a[5] = 7;
+	a[6] = 58;
+	a[7] = 2;
+	a[8] = 42;
+	if(num_duplicates(a, length) != 2) {return 10;}
+	if(a[0] != 42) {return 11;}
+	if(a[1] != 5) {return 12;}
+	if(a[2] != 42) {return 13;}
+	if(a[3] != 2) {return 14;}
+	if(a[4] != -9) {return 15;}
+	if(a[5] != 7) {return 16;}
+	if(a[6] != 58) {return 17;}
+	if(a[7] != 2) {return 18;}
+	if(a[8] != 42) {return 19;}
+	return 20;
+}

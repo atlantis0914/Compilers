@@ -1,0 +1,9 @@
+//test error
+// Red test 04 - test double declarations of variables
+
+int main()
+{
+ int a = 4;
+ int a = 5;
+ return a;
+}

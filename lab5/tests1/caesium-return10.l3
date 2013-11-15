@@ -1,0 +1,13 @@
+//test return 2
+// tests argument expressions
+
+int foo(int a, int b)
+{
+  return a+b;
+}
+
+int main()
+{
+  int res = foo(1+1, 2-2);
+  return res;
+}

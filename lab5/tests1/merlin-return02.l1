@@ -1,0 +1,9 @@
+//test return -2
+// test negative mod
+int main()
+{
+  int a = -8;
+  int b = 3;
+  int c = a % b;
+  return c;
+}

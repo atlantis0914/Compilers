@@ -1,0 +1,302 @@
+//test return 42
+
+// trees with ints ////////////////////////////////////////////////////////////
+
+typedef int elem;
+
+int elem_compare(elem e1, elem e2)
+{
+  if(e1 < e2) return -1;
+  else if(e2 == e1) return 0;
+  else return 1;
+}
+
+typedef struct tree_node node;
+typedef struct tree_header *tree;
+typedef struct tree_header[] forest;
+
+struct tree_node{
+  elem data;
+  node *left;
+  node *right;
+};
+
+struct tree_header{
+  node *root;
+  int size;
+};
+
+// library ////////////////////////////////////////////////////////////////////
+
+tree bst_new()
+{
+  return alloc(struct tree_header);
+}
+
+bool bst_insert(tree T, int i)
+{
+  node *pp = NULL;
+  node *p = T->root;
+  while(p != NULL)
+    {
+      int ord = elem_compare(i, p->data);
+      if(ord == -1)
+	{
+	  pp = p;
+	  p = p->left;
+	}
+      else if(ord == 1)
+	{
+	  pp = p;
+	  p = p->right;
+	}
+      else return true;
+    }
+
+  // p is NULL,
+  // pp is NULL for empty tree, else parent
+
+  node *new = alloc(node);
+  new->data = i;
+
+  T->size++;
+
+  if(pp == NULL){
+    T->root = new;
+  }
+  else{
+    int ord = elem_compare(i, pp->data);
+    if(ord == -1)
+      pp->left = new;
+    else
+      pp->right = new;
+
+  }
+  
+  return false;
+}
+
+bool bst_lookup(tree T, int i)
+{
+  node *p = T->root;
+  
+  while(p != NULL)
+    {
+      int ord = elem_compare(i, p->data);
+      if(ord == -1)
+	{
+	  p = p->left;
+	}
+      else if(ord == 1)
+	{
+	  p = p->right;
+	}
+      else return true;
+    }
+
+  return false;
+}
+
+int bst_size(tree T)
+{
+  return T->size;
+}
+
+elem[] bst_toarray(tree T)
+{
+  // hmmm, arrays as stacks
+  node *[] trace = alloc_array(node *, T->size);
+  int s = 0;
+  node *pp = NULL;
+  node *p = T->root;
+
+  elem[] A = alloc_array(elem, T->size);
+  int i = 0;
+
+  while(i < T->size)
+    {
+      // came from above, go left if we can
+      if((pp == NULL || (s > 0 && pp == trace[s-1])) && (/*p != NULL &&*/ p->left != NULL)) 
+	{
+	  pp = p;
+
+	  // push
+	  trace[s] = p;
+	  s++;
+
+	  p = p->left;
+	}
+      // leaf or came from right, go back up
+      else if(/*p == NULL ||*/ pp != NULL && pp == p->right) 
+	{
+	  pp = p;
+	  
+	  // pop
+	  s--;
+	  p = trace[s];
+	}
+      // must have come from left, record and go right or up
+      else 
+	{
+	  // record element
+	  A[i] = p->data;
+	  i++;
+	  
+	  pp = p;
+	  
+	  // go right if we can
+	  if(p->right != NULL)
+	    {
+	      // push
+	      trace[s] = p;
+	      s++;
+	  
+	      p = p->right;
+	    }
+	  // go up if we can
+	  else if (s > 0)
+	    {
+	      //pop
+	      s--;
+	      p = trace[s];
+	    }
+	  // otherwise we must be done, the loop will exit
+	}
+    }
+  
+  return A;
+}
+
+// radnom nbumesr /////////////////////////////////////////////////////////////
+
+typedef int *rand;
+
+rand rand_init(int seed)
+{
+  rand r = alloc(int);
+  *r = seed;
+  return r;
+}
+
+int rand_next(rand r)
+{
+  *r = *r * 1664525 + 1013904223;
+  return *r;
+}
+
+// go! ////////////////////////////////////////////////////////////////////////
+
+/*
+int ps(int c)
+{
+  //printchar(char_chr(c));
+  printchar(c);
+  return 0;
+}
+*/
+
+int printarray(int[] A, int k)
+{
+  for(int i = 0; i < k; i++)
+    {
+      print_int(A[i]);
+    }
+  return 0;
+}
+
+bool is_sorted(elem[] A, int length)
+{
+  for(int i = 1; i < length; i++)
+    if(elem_compare(A[i-1], A[i]) > 0)
+      return false;
+
+  return true;
+}
+
+int main()
+{
+  tree t1 = bst_new();
+
+  bst_insert(t1, -112);
+  bst_insert(t1, 257);
+  bst_insert(t1, 3);
+
+  for(int i = 0; i < 100; i++)
+    bst_insert(t1, (100-i)%17);
+
+  bst_insert(t1, 99);
+
+  //print("t1:\n");
+  // ps(116); ps(49); ps(58); ps(10);
+  int[] t1_trav = bst_toarray(t1);
+  printarray(t1_trav, bst_size(t1));
+  //print("--\n");
+  // ps(45); ps(45); ps(10);
+
+  tree t2 = bst_new();
+
+  //print("t2 / 0:\n");
+  // ps(116); ps(50); ps(32); ps(47); ps(32); ps(48); ps(58); ps(10);
+  int[] t2_trav0 = bst_toarray(t2);
+  printarray(t2_trav0, bst_size(t2));
+  //print("--\n");
+  // ps(45); ps(45); ps(10);
+
+  bst_insert(t2, 42);
+
+  //print("t2 / 1:\n");
+  //ps(116); ps(50); ps(32); ps(47); ps(32); ps(49); ps(58); ps(10);
+  int[] t2_trav1 = bst_toarray(t2);
+  printarray(t2_trav1, bst_size(t2));
+  //print("--\n");
+  //ps(45); ps(45); ps(10);
+
+  bst_insert(t2, 45);
+
+  //print("t2 / 2:\n");
+  // ps(116); ps(50); ps(32); ps(47); ps(32); ps(50); ps(58); ps(10);
+  int[] t2_trav2 = bst_toarray(t2);
+  printarray(t2_trav2, bst_size(t2));
+  //print("--\n");
+  //ps(45); ps(45); ps(10);
+
+  bst_insert(t2, 11);
+
+  //print("t2 / 3:\n");
+  //ps(116); ps(50); ps(32); ps(47); ps(32); ps(51); ps(58); ps(10);
+  int[] t2_trav3 = bst_toarray(t2);
+  printarray(t2_trav3, bst_size(t2));
+  //print("--\n");
+  //ps(45); ps(45); ps(10);
+
+  bst_insert(t2, 43);
+
+  //print("t2 / 4:\n");
+  //ps(116); ps(50); ps(32); ps(47); ps(32); ps(52); ps(58); ps(10);
+  int[] t2_trav4 = bst_toarray(t2);
+  //printarray(t2_trav4, bst_size(t2));
+  //print("--\n");
+  //ps(45); ps(45); ps(10);
+
+
+  tree t3 = bst_new();
+  rand r = rand_init(0xdeadbabe);
+
+  for(int i = 0; i < 2957; i++)
+    {
+      int next = rand_next(r);
+      bst_insert(t3, next);
+      int[] t3_trav = bst_toarray(t3);
+      if(!is_sorted(t3_trav, bst_size(t3)))
+	return -42;
+    }
+
+  //print("t3:\n");
+  //ps(116); ps(51); ps(58); ps(10);
+  int[] t3_trav = bst_toarray(t3);
+  printarray(t3_trav, bst_size(t3));
+  //print("--\n");
+  //ps(45); ps(45); ps(10);
+
+  return 42;
+}

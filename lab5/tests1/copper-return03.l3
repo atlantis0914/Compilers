@@ -1,0 +1,18 @@
+//test return 18
+
+int foo (int x){
+    return 2*x;
+}
+
+int foo2(int x) {
+    return foo(x+1);
+}
+
+int foo3(int x) {
+    return 3*foo2(x);
+}
+
+int main() {
+    return foo3(2);
+}
+

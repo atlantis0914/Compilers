@@ -1,0 +1,14 @@
+//test return 3
+
+int main() {
+   int a=1;
+   int b=2;
+   int c=3;
+   int d=3;
+   
+   c=c^d;
+   d=c;
+   b>>=d;
+   
+   return a|b;
+}

@@ -1,0 +1,147 @@
+//test return 0
+
+struct Node_s {
+  int value;
+  struct Node_s* left;
+  struct Node_s* right;
+};
+
+typedef struct Node_s Node;
+
+Node* insertBST(Node* bst, int val);
+Node* searchBST(Node* bst, int target);
+Node* deleteBST(Node* bst, int val);
+Node* deleteMinBST(Node* bst);
+Node* getMinBST(Node* bst);
+int printInOrderBST(Node* bst);
+int myassert(bool res);
+
+int main() {
+  Node* bst = NULL;
+
+  bst = insertBST(bst, 2);
+  bst = insertBST(bst, 1);
+  bst = insertBST(bst, 8);
+  bst = insertBST(bst, 8);
+  bst = insertBST(bst, 5);
+  bst = insertBST(bst, 9);
+  bst = insertBST(bst, 3);
+  printInOrderBST(bst);
+  // printchar(10);
+
+  myassert(searchBST(bst, 0) == NULL);
+  myassert(searchBST(bst, 4) == NULL);
+  myassert(searchBST(bst, 2)->value == 2);
+  myassert(searchBST(bst, 1)->value == 1);
+  myassert(searchBST(bst, 8)->value == 8);
+  myassert(searchBST(bst, 5)->value == 5);
+  myassert(searchBST(bst, 9)->value == 9);
+  myassert(searchBST(bst, 3)->value == 3);
+
+  bst = deleteBST(bst, 2);
+  myassert(searchBST(bst, 2) == NULL);
+  bst = deleteBST(bst, 1);
+  myassert(searchBST(bst, 1) == NULL);
+  bst = insertBST(bst, 3);
+  myassert(searchBST(bst, 3)->value == 3);
+  bst = deleteBST(bst, 5);
+  myassert(searchBST(bst, 5) == NULL);
+  bst = deleteBST(bst, 8);
+  myassert(searchBST(bst, 8)->value == 8);
+  bst = deleteBST(bst, 3);
+  myassert(searchBST(bst, 3)->value == 3);
+  bst = deleteBST(bst, 8);
+  bst = deleteBST(bst, 9);
+  bst = deleteBST(bst, 3);
+  myassert(NULL == bst);
+  printInOrderBST(bst);
+  // printchar(10);
+
+  return 0;
+}
+
+Node* insertBST(Node* bst, int val) {
+  if ( bst == NULL ) {
+    Node* newNode = alloc(Node);
+    newNode->value = val;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+  }
+
+  if ( val >= bst->value )
+    bst->right = insertBST(bst->right, val);
+  else
+    bst->left = insertBST(bst->left, val);
+
+  return bst;
+}
+
+int printInOrderBST(Node* bst) {
+  if ( bst == NULL )
+    return 0;
+
+  printInOrderBST(bst->left);
+  print_int(bst->value);
+  // printchar(32);
+  printInOrderBST(bst->right);
+
+  return 0;
+}
+
+Node* searchBST(Node* bst, int target) {
+  if ( bst == NULL )
+    return NULL;
+
+  if ( bst->value == target )
+    return bst;
+  else if ( target > bst->value )
+    return searchBST(bst->right, target);
+  else
+    return searchBST(bst->left, target);
+}
+
+Node* deleteBST(Node* bst, int val) {
+  if ( bst == NULL )
+    return NULL;
+
+  if ( val == bst->value ) {
+    // Found target node
+    if ( bst->left == NULL && bst->right == NULL )
+      return NULL;
+    else if ( bst->left == NULL )
+      return bst->right;
+    else if ( bst->right == NULL )
+      return bst->left;
+    else { // has left and right subtree
+      Node* minRight = getMinBST(bst->right);
+      minRight->right = deleteBST(bst->right, minRight->value);
+      minRight->left = bst->left;
+      return minRight;
+    }
+  } else if ( val > bst->value ) {
+    bst->right = deleteBST(bst->right, val);
+    return bst;
+  } else {
+    bst->left = deleteBST(bst->left, val);
+    return bst;
+  }
+}
+
+// Returns the min node
+Node* getMinBST(Node* bst) {
+  if ( bst == NULL )
+    return NULL;
+
+  if ( bst->left == NULL )
+    return bst;
+  else
+    return getMinBST(bst->left);
+}
+
+int myassert(bool res) {
+  if ( !res ) 
+    return 1/0;
+
+  return 0;
+}

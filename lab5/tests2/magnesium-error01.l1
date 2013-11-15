@@ -1,0 +1,9 @@
+//test error 
+
+/* syntax error */
+int main()
+{
+  int x;
+  x = 3;
+  return x;
+}*/

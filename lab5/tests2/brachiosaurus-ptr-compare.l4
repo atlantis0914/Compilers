@@ -1,0 +1,13 @@
+//test error
+
+int main()
+{
+	int *p = alloc(int);
+	int *q = alloc(int);
+	*p = 98;
+	*q = 89;
+	if (p < q)
+		return *p;
+	else
+		return *q;
+}

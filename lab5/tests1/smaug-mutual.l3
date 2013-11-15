@@ -1,0 +1,21 @@
+//test return 0
+
+int bar(int x);
+
+int foo(int x)
+{
+  if (x == 0)
+    return 0;
+  else
+    return bar(x);
+}
+
+int bar(int x)
+{
+  return foo(x - 1);
+}
+
+int main()
+{
+  return foo(100);
+}

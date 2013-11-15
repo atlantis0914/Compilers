@@ -1,0 +1,13 @@
+//test error
+//test doulble decl inside block
+
+int main() {
+  int x = 0;
+
+  for (int x = 0; x < 10; x++){
+    int y = x;
+    y = y + 2;
+  }
+
+  return x;
+}

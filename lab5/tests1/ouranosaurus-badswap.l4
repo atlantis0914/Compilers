@@ -1,0 +1,17 @@
+//test return 0
+
+int badswap(int * p, int * q) 
+{
+  *p ^= (*q);
+  *q ^= *p;
+  *p ^= *q;
+  return 1;
+}
+
+int main () {
+  int * p;
+  p = alloc(int);
+  *p = 5;
+  badswap(p,p);
+  return (*p);
+}

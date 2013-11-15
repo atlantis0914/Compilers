@@ -1,0 +1,9 @@
+//test error
+
+struct container {
+  struct container c;
+};
+
+int main() {
+  return 0;
+}

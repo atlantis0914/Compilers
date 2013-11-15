@@ -1,0 +1,8 @@
+//test return 1
+
+//checks that "NULL == NULL" is allowed
+
+int main()
+{
+  return NULL == NULL ? 1 : 0;
+}

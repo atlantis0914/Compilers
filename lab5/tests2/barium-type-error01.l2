@@ -1,0 +1,9 @@
+//test error
+
+// Same variable name with different type is not allowed.
+int main()
+{
+  int x = 0;
+  bool x = true;
+  return 1;
+}

@@ -1,0 +1,26 @@
+//test exception 8
+int main()
+{
+    bool a = true;
+    int x = a ? 1 : -1;
+    int y;
+    int z;
+    if (x == -1) {
+        y = -1;
+        z = -1;
+        int w = 5;
+    } else if (x == 0) {
+        y = 0;
+        z = 0;
+        int w = 5;
+    } else if (x == 1) {
+        y = 1;
+        z = 1;
+        int w = 5;
+    } else {
+        y = 0xDEADD00D;
+        z = 0xDEADD00D;
+        int w = 0xDEADD00D;
+    }
+    return z / (x - y);
+}

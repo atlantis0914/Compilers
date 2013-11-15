@@ -1,0 +1,66 @@
+//test return 50027000
+struct node {
+    int val;
+    struct node* n;
+};
+
+typedef struct node* any_lisp_programmer_would_be_shaking_his_or_her_head_at_my_function_names;
+typedef any_lisp_programmer_would_be_shaking_his_or_her_head_at_my_function_names t;
+
+any_lisp_programmer_would_be_shaking_his_or_her_head_at_my_function_names new(int val) {
+    any_lisp_programmer_would_be_shaking_his_or_her_head_at_my_function_names n = alloc(struct node);
+    n->val = val;
+    n->n = NULL;
+
+    return n;
+}
+
+any_lisp_programmer_would_be_shaking_his_or_her_head_at_my_function_names prepend(t l, int val) {
+    any_lisp_programmer_would_be_shaking_his_or_her_head_at_my_function_names n = new(val);
+    n->n = l;
+    
+    return n;
+}
+
+any_lisp_programmer_would_be_shaking_his_or_her_head_at_my_function_names append(t l, int val) {
+    any_lisp_programmer_would_be_shaking_his_or_her_head_at_my_function_names cur = l;
+    any_lisp_programmer_would_be_shaking_his_or_her_head_at_my_function_names n = new(val);
+
+    n->val = val;
+    n->n = NULL;
+
+    while(cur->n != NULL) {
+        cur = cur->n;
+    }
+
+    cur->n = n;
+    
+    return n;
+}
+
+int sum_list(any_lisp_programmer_would_be_shaking_his_or_her_head_at_my_function_names l) {
+    int sum = 0;
+    any_lisp_programmer_would_be_shaking_his_or_her_head_at_my_function_names cur = l;
+
+    while(cur != NULL) {
+        sum += cur->val;
+        cur = cur->n;
+    }
+
+    return sum;
+}
+
+int main() {
+    int i;
+    any_lisp_programmer_would_be_shaking_his_or_her_head_at_my_function_names l = new(0);
+
+    for(i = 0; i <= 10000; i++) {
+        append(l, i);
+    }
+
+    for(i = 0; i < 22000; i++) {
+        l = prepend(l, 1);
+    }
+
+    return sum_list(l);
+}

@@ -1,0 +1,5 @@
+//test error
+//alloc_array can't take void
+int main() {
+    alloc_array(void, 10);
+}

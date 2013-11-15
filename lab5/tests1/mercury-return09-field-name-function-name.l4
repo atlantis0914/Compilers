@@ -1,0 +1,13 @@
+//test return 0
+
+int foo();
+
+struct s1 { int foo; };
+
+int foo() {
+  return 0;
+}
+
+int main() {
+    return foo();
+}

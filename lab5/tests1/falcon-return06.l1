@@ -1,0 +1,11 @@
+//test return 2147483647
+// Test int wrap around
+
+int main() {
+
+    int max =  -2147483648;
+
+    max -= 1;
+
+    return max;
+}

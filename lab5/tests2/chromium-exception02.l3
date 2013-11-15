@@ -1,0 +1,10 @@
+//test exception
+
+int apple(int d) {
+  return 100/d;
+}
+
+int main()
+{
+  return apple(0);
+}

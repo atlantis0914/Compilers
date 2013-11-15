@@ -1,0 +1,15 @@
+//test return 10
+//ensure name scoping works
+
+struct a {
+    int b;
+};
+
+int a() {
+    struct a *a = alloc(struct a);
+    return 10;
+}
+
+int main() {
+    return a();
+}

@@ -1,0 +1,8 @@
+//test error
+/* bad pointer syntax */
+
+int main () {
+  int x*;
+
+  return 0;
+}

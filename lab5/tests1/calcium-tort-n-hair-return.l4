@@ -1,0 +1,39 @@
+//test return 0
+// find cycles?
+struct link;
+typedef struct link link;
+struct link {
+  link *next;
+};
+
+bool cyclic(link *tort) {
+  link *hair = tort;
+  while (true) {
+    if (hair == NULL || hair->next == NULL) {
+      return false;
+    }
+    hair = hair->next->next;
+    tort = tort->next;
+    if (hair == tort) {
+      return true;
+    }
+  }
+  assert(false);
+  return false;
+}
+
+int main() {
+  for (int numnodes = 1; numnodes < 5000; numnodes++) {
+    link *[] nodes = alloc_array(link*, numnodes);
+    for (int i=0; i<numnodes; i++) {
+      nodes[i] = alloc(link);
+    }
+    for (int i=0; i<numnodes-1; i++) {
+      nodes[i]->next = nodes[i+1];
+    }
+    assert(!cyclic(nodes[0]));
+    (*nodes[numnodes-1]).next = nodes[0];
+    assert(cyclic(nodes[0]));
+  }
+  return 0;
+}

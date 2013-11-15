@@ -1,0 +1,10 @@
+//test return 8
+
+int main() {
+  int i;
+  int j = 6;
+
+  i = (j < 5 ? (j > 2 ? 5 : 3) : (j >= 6 ? 8 : 1));
+
+  return i;
+}

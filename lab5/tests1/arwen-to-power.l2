@@ -1,0 +1,27 @@
+//test return 1024
+// Tests if/else pairs, and loops nested within conditionals and other loops.
+int main () {
+    int base = 4;
+    int power = 5;
+    int result = 1;
+
+    if (power == 0) {
+        return result;
+    } else {
+
+        int newbase = 1;
+
+        while (power > 0) {
+            result = 0;
+            int mul = base;
+            while (mul > 0) {
+                result += newbase;
+                mul--;
+            }
+            newbase = result;
+            power--;
+        }
+
+        return result;
+    }
+}

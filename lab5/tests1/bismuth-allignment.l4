@@ -1,0 +1,33 @@
+//test return 45
+
+struct a {
+  int *p1;
+  int *p2;
+  int *p3;
+};
+
+struct allign {
+  bool b;
+  int  i;
+  int[] a;
+  struct fake *s2;
+  struct a s1;
+};
+
+int main()
+{
+  struct allign[] a = alloc_array(struct allign, 10);
+  int i; int sum = 0;
+
+  for (i = 0; i < 10; i++)
+  {
+    a[i].i = i;
+  }
+
+  for (i = 9; i >= 0; i--)
+  {
+    sum += a[i].i;
+  }
+
+  return sum;
+}

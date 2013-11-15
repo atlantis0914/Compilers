@@ -1,0 +1,10 @@
+//test error
+int foo(int n) {
+  return n + 3;
+}
+int main() {
+  return foo(5);
+}
+int foo(int n) {
+  return foo(n+1);
+}

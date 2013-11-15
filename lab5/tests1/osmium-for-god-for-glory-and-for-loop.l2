@@ -1,0 +1,29 @@
+//test return 38
+//for god, for glory, and for loop
+
+int main()
+{
+	int x = 0;
+	
+	for(x; x != 0; x) {
+		return x;
+	}
+	
+	for(; x != 0;) {
+		return x;
+	}
+	
+	for(x++; x < 2; x++) {
+		x++;
+	} // x = 3
+	
+	for(x += 10; x < 2; x++) {
+		x++;
+	} // x = 13
+	
+	for(x++; x < 15; x += 10) {
+		x *= 2;
+	} // x = 38
+	
+	return x;
+}

@@ -1,0 +1,15 @@
+//test error
+//mix up paramlist definition and field list
+
+struct a {
+    int d;
+    int f;
+};
+
+int a (struct a *b; int c){
+    return 10;
+}
+
+int main(){
+    return a();
+}

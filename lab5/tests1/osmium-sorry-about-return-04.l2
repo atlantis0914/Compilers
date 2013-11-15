@@ -1,0 +1,11 @@
+//test return 4
+//lol get it???
+
+int main() {
+    int x;
+    int y = 5;
+    y   --;
+    x = 0;
+    ((((((((x)))))))) += y;
+    return x;
+}

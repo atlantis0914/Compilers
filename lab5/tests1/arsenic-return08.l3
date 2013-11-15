@@ -1,0 +1,21 @@
+//test return 20
+ 
+int sumev(int x) {
+    int s = 0; 
+    int sum = 0;   
+    if (x%2 ==0)
+       s = x;
+    else 
+       s = x - 1;
+   
+    while(s>=0) {
+      sum+=s;
+      s=s-2;
+    }
+    return sum;
+}
+
+int main() {
+    return sumev(8);
+}
+     

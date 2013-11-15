@@ -1,0 +1,13 @@
+//test exception 11
+//Dereferences null pointer from calloced memory
+
+struct s {
+  struct s* next;
+  int val;
+};
+typedef struct s t;
+int main() {
+  struct s* b = alloc(t);
+  b = b->next;
+  return b->val;
+}

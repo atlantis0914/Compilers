@@ -1,0 +1,11 @@
+//test exception
+//test infinite loop 
+
+int main() {
+  int x = 0;
+  while(true){
+    x++;
+  }
+
+  return 1;
+}

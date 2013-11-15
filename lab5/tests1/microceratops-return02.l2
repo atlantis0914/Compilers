@@ -1,0 +1,20 @@
+//test return 233168
+// Solution to problem 1 of Project Euler
+
+int main ()
+{
+  int sum;
+	int i;
+	int sum2;
+
+	sum = 0;
+	sum2 = 0;
+
+	for ( i = 0; i < 1000; i++ ) {
+		if ( (i%3 == 0) || (i%5 == 0) ) {
+			sum += i;
+		}
+	}
+
+	return sum;
+}

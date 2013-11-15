@@ -1,0 +1,24 @@
+//test return 24
+
+
+int main () {
+
+  {
+    int x = 17;
+    int* y = alloc(int);
+
+    x = x * 5;
+    *y = *y * 5;
+  }
+
+
+  int* x = alloc(int);
+  int y = 24;
+
+  *x = *x * 4;
+  y = y * 1;
+
+  return *x + y;
+
+
+}

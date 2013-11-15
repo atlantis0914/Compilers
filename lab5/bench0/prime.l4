@@ -1,0 +1,60 @@
+//test return 96
+
+/* Naive computation of the number of primes within a given range */
+
+int isqrt(int n)
+//@requires n >= 0;
+//@ensures 0 <= \result*\result && \result*\result <= n;
+//@ensures n < (\result+1)*(\result+1) || (\result+1)*(\result+1) < 0;
+//@ensures \result >= 0;
+{ int i = 0; int k = 0;
+  while (0 <= k && k <= n)
+    //@loop_invariant k == i * i;
+    //@loop_invariant i == 0 || (i > 0 && (i-1)*(i-1) <= n);
+    {
+      k = k + 2*i + 1;
+      i = i + 1;
+    }
+  return i-1;
+}
+
+bool is_prime(int n)
+//@requires n >= 0;
+{
+  int sqrt = isqrt(n);
+  for (int i = 2; i <= sqrt; i++) {
+    if (n % i == 0)
+      return false;
+  }
+  return true;
+}
+
+/* Cycle testing interface */
+
+int* init(int param) {
+  return alloc(int);
+}
+
+void prepare(int* p, int param) {
+  *p = 0;
+}
+
+void run(int* p, int param) {
+  int n = param/2;
+  int sum = 0;
+  for (int i = 1; i <= n; i += 1) {
+    sum += is_prime(i) ? 1 : 0;
+  }
+  *p = sum;
+}
+
+int checksum(int* p, int param) {
+  return *p;
+}
+
+int main() {
+  int* p = init(1000);
+  prepare(p,1000);
+  run(p,1000);
+  return checksum(p,1000);
+}

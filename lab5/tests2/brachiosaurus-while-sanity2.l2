@@ -1,0 +1,9 @@
+//test exception
+// basic sanity
+
+int main() {
+    int i = 0;
+    int j = 0;
+    while (i < 3) while (j < 3) j++;
+    return j;
+}

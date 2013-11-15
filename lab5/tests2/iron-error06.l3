@@ -1,0 +1,7 @@
+//test error
+// assert an integer
+
+int main() {
+    assert(1);
+}
+

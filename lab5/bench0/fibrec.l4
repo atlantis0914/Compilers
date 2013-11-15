@@ -1,0 +1,53 @@
+//test return 89
+
+/* Computing Fibonacci numbers recursively */ 
+
+int fib (int n) {
+  if (n == 0)
+    return 0;
+  else if (n == 1)
+    return 1;
+  else
+    return fib(n-1) + fib(n-2);
+}
+
+/* Cycle counting interface */
+
+struct io {
+  int n;
+  int result;
+};
+typedef struct io data;
+
+int log2(int n)
+//@requires n > 0;
+{
+  int r = 0;
+  while (n > 1) {
+    n /= 2;
+    r += 1;
+  }
+  return r;
+}
+
+data* init(int param) {
+  data* io = alloc(data);
+  io->n = log2(param)+11;
+  return io;
+}
+
+void prepare(data* io, int param) {
+  io->result = 0;
+}
+
+void run(data* io, int param) {
+  io->result = fib(io->n);
+}
+
+int checksum(data* io, int param) {
+  return io->result;
+}
+
+int main() {
+  return fib(11);
+}

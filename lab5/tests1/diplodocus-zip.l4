@@ -1,0 +1,59 @@
+//test return 220
+//zips two lists together
+// a (1,2,3...10) b(10,9,8...1)
+// z = (1,10),(2,9)...(10,1)
+
+
+struct p
+{
+    int first;
+    int second;
+};
+typedef struct p pair;
+
+typedef pair*[] pairarray;
+
+pairarray zip(int[] a, int[] b)
+{
+int i;
+pairarray zipped = alloc_array(pair*,10);
+
+for(i=0;i<10;i++)
+    {
+    zipped[i] = alloc(pair);
+    zipped[i]->first = a[i];
+    zipped[i]->second = b[i];
+    }
+
+return zipped;
+}
+
+
+int main()
+{
+int i;
+int sum=0;
+pairarray z;
+int[] a = alloc_array(int,10);
+int[] b = alloc_array(int,10);
+
+
+for(i=0;i<10;i++)
+{
+    a[i] = i+1;
+    b[i] = 10-i;
+}
+
+z = zip(a,b);
+
+for(i=0;i<10;i++)
+{
+    sum += ((z[i]->first) * (z[i]->second));
+}
+return sum;
+
+}
+
+
+
+

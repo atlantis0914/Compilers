@@ -1,0 +1,19 @@
+//test return 42
+
+struct s;
+
+struct s {
+    int x;
+    int y;
+    int z;
+};
+
+struct s;
+
+typedef struct s s;
+
+int main() {
+    s *x = alloc(s);
+    return (x->x * 100) + 42;
+}
+

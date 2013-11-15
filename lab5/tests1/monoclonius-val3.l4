@@ -1,0 +1,13 @@
+//test return 5
+
+struct foo{
+    int a;
+    int b;
+};
+
+int main(){
+    struct foo* f = alloc(struct foo);
+    f->a = 2;
+    f->b = 3;
+    return f->a+f->b;
+}

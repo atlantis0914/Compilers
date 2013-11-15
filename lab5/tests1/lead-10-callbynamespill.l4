@@ -1,0 +1,26 @@
+//test return 28
+/* call by name with spill args */
+
+void spilled_milk2(int *a, int *b, int *c, int *d, int *e, int *f, int *g) {
+  *g = *a + *b + *c + *d + *e + *f + *g;
+}
+
+int main () {
+  int *a;
+  int *b;
+  int *c;
+  int *d;
+  int *e;
+  int *f;
+  int *g;
+  a = alloc(int); *a = 1;
+  b = alloc(int); *b = 2;
+  c = alloc(int); *c = 3;
+  d = alloc(int); *d = 4;
+  e = alloc(int); *e = 5;
+  f = alloc(int); *f = 6;
+  g = alloc(int); *g = 7;
+  spilled_milk2(a, b, c, d, e, f, g);
+
+  return *g;
+}

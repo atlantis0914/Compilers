@@ -1,0 +1,7 @@
+//test exception 8
+
+int main() {
+  int* foo = NULL;
+  *foo = 1/0; // Dereferences NULL before evaluating 1/0 so segfault
+  return 0;
+}

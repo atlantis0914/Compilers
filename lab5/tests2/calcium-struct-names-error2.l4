@@ -1,0 +1,11 @@
+//test error
+// typedef'd recursive poops are still no good
+struct poop;
+typedef struct poop pooper;
+struct poop {
+  pooper poop;
+};
+
+int main() {
+  return 0;
+}

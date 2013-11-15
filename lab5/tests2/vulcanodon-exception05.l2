@@ -1,0 +1,23 @@
+//test exception 8
+
+int main()
+{
+	int i = 100;
+	int sum = 100000;
+
+	while(false)
+	{
+		return 0;
+	}
+
+	while(true)
+	{
+		i--;
+		sum/=i;
+	}
+
+	return 1;
+}
+
+	
+	

@@ -1,0 +1,103 @@
+//test exception 11
+
+/* kern/fork.c */
+
+typedef int some;
+struct redacted {
+	some stuff;
+};
+typedef struct redacted whatever;
+typedef whatever vold;
+typedef whatever* tcb_q_head_t;
+typedef whatever* tcb_q_link_t;
+typedef whatever* pcb_t;
+typedef whatever* mutex_t;
+typedef whatever* cond_t;
+
+struct tcb;
+typedef struct tcb tcb_t;
+
+struct tcb {
+	tcb_q_link_t redacted1;
+	tcb_q_link_t redacted2;
+	tcb_q_link_t redacted3;
+	tcb_q_link_t redacted4;
+	tcb_q_link_t redacted5;
+	tcb_q_head_t redacted6;
+	pcb_t* redacted7;
+	int redacted8;
+	int redacted9;
+	vold* redacted10;
+	vold* redacted11;
+	vold* redacted12;
+	int redacted13;
+	int redacted14;
+	int redacted15;
+	int redacted16;
+	mutex_t* redacted17;
+	int redacted18;
+	int redacted19;
+	int redacted20;
+	int redacted21;
+	int redacted22;
+	int redacted23;
+	cond_t* redacted24;
+	mutex_t* redacted25;
+	tcb_q_head_t* redacted26;
+	cond_t redacted27;
+	int redacted28;
+	mutex_t redacted29;
+};
+
+int schedule()
+{
+	/* lol */
+	return 0;
+}
+
+whatever *schedule_thread(tcb_t* tcb)
+{
+	/* Where is my context */
+	whatever **ptr = NULL;
+	if (tcb->redacted1 != NULL) 1/0;
+	if (tcb->redacted2 != NULL) 1/0;
+	if (tcb->redacted3 != NULL) 1/0;
+	if (tcb->redacted4 != NULL) 1/0;
+	if (tcb->redacted5 != NULL) 1/0;
+	if (tcb->redacted6 != NULL) 1/0;
+	if (tcb->redacted7 != NULL) 1/0;
+	if (tcb->redacted8 != 0) 1/0;
+	if (tcb->redacted9 != 0) 1/0;
+	if (tcb->redacted10 != NULL) 1/0;
+	if (tcb->redacted11 != NULL) 1/0;
+	if (tcb->redacted12 != NULL) 1/0;
+	if (tcb->redacted13 != 0) 1/0;
+	if (tcb->redacted14 != 0) 1/0;
+	if (tcb->redacted15 != 0) 1/0;
+	if (tcb->redacted16 != 0) 1/0;
+	if (tcb->redacted17 != NULL) 1/0;
+	if (tcb->redacted18 != 0) 1/0;
+	if (tcb->redacted19 != 0) 1/0;
+	if (tcb->redacted20 != 0) 1/0;
+	if (tcb->redacted21 != 0) 1/0;
+	if (tcb->redacted22 != 0) 1/0;
+	if (tcb->redacted23 != 0) 1/0;
+	if (tcb->redacted24 != NULL) 1/0;
+	if (tcb->redacted25 != NULL) 1/0;
+	if (tcb->redacted26 != NULL) 1/0;
+	if (tcb->redacted27 != NULL) 1/0;
+	if (tcb->redacted28 != 0) 1/0;
+	if (tcb->redacted29 != NULL) 1/0;
+	return *ptr;
+}
+
+whatever *thread_fork()
+{
+	tcb_t *new_thread = alloc(tcb_t);
+	return schedule_thread(new_thread);
+}
+
+int main() {
+	thread_fork();
+	return 0;
+}

@@ -1,0 +1,5 @@
+//test return 0
+
+int main () {
+    return (NULL == NULL ? 0 : 1);
+}

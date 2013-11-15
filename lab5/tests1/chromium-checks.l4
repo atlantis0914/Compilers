@@ -1,0 +1,12 @@
+//test return 0
+// Do some tests on arrays, pointers
+
+int main () {
+    int []d = alloc_array(int, 50);
+    for(int i = 0; i < 50; i++)
+        assert(d[i] == 0);
+
+    int *b = alloc(int);
+    assert(*b == 0);
+    return 0;
+}

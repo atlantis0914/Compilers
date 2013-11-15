@@ -1,0 +1,15 @@
+//test return 17
+
+int main() {
+    int *[]*p;
+    p = alloc(int *[]);
+    *p = alloc_array(int *, 100);
+
+    for (int i = 0; i < 100; i++) {
+        (*p)[i] = alloc(int);
+        *((*p)[i]) = 17;
+    }
+
+    return *((*p)[42]);
+}
+

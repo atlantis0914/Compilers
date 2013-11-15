@@ -1,0 +1,17 @@
+//test return 0
+// attempt at an interesting test
+int main()
+{
+    int a = 0x0000000F;
+    int b = 0x000000F0;
+    int c = 0x00000F00;
+    int d = 0x0000F000;
+    int e = 0x000F0000;
+    int f = 0x00F00000;
+    int g = 0x0F000000;
+    int h = 0xF0000000;
+
+    int i = a | b | c | d | e | f | g | h;
+
+    return ~i;
+}

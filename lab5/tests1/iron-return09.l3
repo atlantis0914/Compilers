@@ -1,0 +1,17 @@
+//test return 2
+// sqrtmod(n) is a function I made up that finds the minimum x such 
+// n-x is a perfect square
+// i.e. sqrtmod(n) = n % floor(sqrt(n))^2
+
+int sqrtmod(int n) {
+    int mod = n;
+    for(int i = 2; i < n; i++) {
+        if(n - i*i < mod && n > i*i) mod = n % i*i;       
+    }
+    return mod;
+}
+
+int main() {
+    return sqrtmod(27);
+}
+

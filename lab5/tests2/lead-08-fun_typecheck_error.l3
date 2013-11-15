@@ -1,0 +1,17 @@
+//test error
+//typechecking must work across function calls
+
+// void function that takes an int then a bool
+void divideMeMaybe(int a, bool b) {
+  if(b) {
+    a /= 0;
+  }
+  return;
+}
+
+int main ()
+{
+  // but it's called with a bool then int !!!
+  divideMeMaybe(false, 3);
+  return 0;
+}

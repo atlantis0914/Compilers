@@ -1,0 +1,18 @@
+//test return 0
+//tests having function definition
+
+int main () {
+  return 0;
+}
+
+int foo () {
+  return 1;
+}
+
+bool bar () {
+  return false;
+}
+
+void baz () {
+  return;
+}

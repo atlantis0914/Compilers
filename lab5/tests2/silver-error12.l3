@@ -1,0 +1,8 @@
+//test error
+// No function body.
+
+int f();
+
+int main() {
+    return f();
+}

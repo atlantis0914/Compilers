@@ -1,0 +1,9 @@
+//test error
+/*              ---- Story part 7 ----
+   And quoth toads of Roanoke, some mightly finn folk
+   Thought u mimsy make as a CS major, quite funny JOKE */
+
+int main() {
+  return NULL;
+}
+

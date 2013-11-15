@@ -1,0 +1,8 @@
+//test exception 8
+
+int main()
+{
+    for (int i = 10; true; i--)
+        int b = (10 % i);
+    return 5;
+}

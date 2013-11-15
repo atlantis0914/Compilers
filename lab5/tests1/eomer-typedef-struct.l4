@@ -1,0 +1,15 @@
+//test return 100
+
+typedef int s;
+
+struct s {
+    int x;
+};
+
+int main() {
+    struct s[] a = alloc_array(struct s, 10);
+    a[0].x = 100;
+    
+    return a[0].x;
+}
+

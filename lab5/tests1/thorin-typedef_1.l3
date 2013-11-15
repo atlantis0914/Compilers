@@ -1,0 +1,14 @@
+//test return 0
+/* Simple typedef test */
+
+typedef int foo;
+
+int main()
+{
+  foo x = 0;
+  return x;
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

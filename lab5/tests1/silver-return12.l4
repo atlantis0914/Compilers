@@ -1,0 +1,14 @@
+//test return 0
+
+struct nums {
+    int field;
+};
+
+int main() {
+    struct nums* ptr = alloc(struct nums);
+    (*ptr).field = 666;
+    if (ptr->field != 666) {
+        return 1;
+    }
+    return 0;
+}

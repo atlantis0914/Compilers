@@ -1,0 +1,18 @@
+//test return 1
+// Test stack usage
+
+int foo(int i, int j)
+{
+
+int var00 = j;int var01 = 1/var00;int var02 = 1/var01;int var03 = 1/var02;int var04 = 1/var03;int var05 = 1/var04;int var06 = 1/var05;int var07 = 1/var06;int var08 = 1/var07;int var09 = 1/var08;int var10 = 1/var09;int var11 = 1/var10;int var12 = 1/var11;int var13 = 1/var12;int var14 = 1/var13;int var15 = 1/var14;int var16 = 1/var15;int var17 = 1/var16;int var18 = 1/var17;int var19 = 1/var18;int var20 = 1/var19;int var21 = 1/var20;int var22 = 1/var21;int var23 = 1/var22;int var24 = 1/var23;int var25 = 1/var24;int var26 = 1/var25;int var27 = 1/var26;int var28 = 1/var27;int var29 = 1/var28;int var30 = 1/var29;int var31 = 1/var30;int var32 = 1/var31;int var33 = 1/var32;int var34 = 1/var33;int var35 = 1/var34;int var36 = 1/var35;int var37 = 1/var36;int var38 = 1/var37;int var39 = 1/var38;int var40 = 1/var39;int var41 = 1/var40;int var42 = 1/var41;int var43 = 1/var42;int var44 = 1/var43;int var45 = 1/var44;int var46 = 1/var45;int var47 = 1/var46;int var48 = 1/var47;int var49 = 1/var48;int var50 = 1/var49;int var51 = 1/var50;int var52 = 1/var51;int var53 = 1/var52;int var54 = 1/var53;int var55 = 1/var54;int var56 = 1/var55;int var57 = 1/var56;int var58 = 1/var57;int var59 = 1/var58;int var60 = 1/var59;int var61 = 1/var60;int var62 = 1/var61;int var63 = 1/var62;int var64 = 1/var63;int var65 = 1/var64;int var66 = 1/var65;int var67 = 1/var66;int var68 = 1/var67;int var69 = 1/var68;int var70 = 1/var69;int var71 = 1/var70;int var72 = 1/var71;int var73 = 1/var72;int var74 = 1/var73;int var75 = 1/var74;int var76 = 1/var75;int var77 = 1/var76;int var78 = 1/var77;int var79 = 1/var78;int var80 = 1/var79;int var81 = 1/var80;int var82 = 1/var81;int var83 = 1/var82;int var84 = 1/var83;int var85 = 1/var84;int var86 = 1/var85;int var87 = 1/var86;int var88 = 1/var87;int var89 = 1/var88;int var90 = 1/var89;int var91 = 1/var90;int var92 = 1/var91;int var93 = 1/var92;int var94 = 1/var93;int var95 = 1/var94;int var96 = 1/var95;int var97 = 1/var96;int var98 = 1/var97;int var99 = 1/var98;
+
+  i += 1;
+
+  if (i >= 15000) return var99;
+  else return foo(i,j);
+}
+
+int main ()
+{
+  return foo(0,1);
+}

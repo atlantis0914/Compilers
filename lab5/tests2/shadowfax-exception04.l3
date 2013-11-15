@@ -1,0 +1,13 @@
+//test error
+// should fail to compile because g undeclared
+int f(int x) {
+  return g(x-1);
+}
+
+int g(int x) {
+  return f(x+2);
+}
+
+int main() {
+  return f(10);
+}

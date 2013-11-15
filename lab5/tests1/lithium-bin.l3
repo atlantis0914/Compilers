@@ -1,0 +1,13 @@
+//test return 87
+
+int one(int acc) {
+	return acc*2+1;
+}
+
+int zero(int acc) {
+	return acc*2;
+}
+
+int main() {
+	return one(one(one(zero(one(zero(one(0)))))));
+}

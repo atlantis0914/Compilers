@@ -1,0 +1,19 @@
+//test return 20
+// test Pre-colored registers
+int main()
+{
+  int a; 
+  int b;
+  int c;
+
+  b = 8;
+  c = 4;
+  
+  a = b / c;
+  a = b + c;
+  c = b + a;
+  b = b + c;
+  a = b / c;
+
+  return c;
+}

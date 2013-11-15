@@ -1,0 +1,22 @@
+//test return 396
+
+struct foo {
+	int a;
+	int b;
+	int c;
+	int d;
+};
+
+
+int main() {
+	struct foo[] foos = alloc_array(struct foo, 100);
+	int i = 0;
+
+	for (; i < 100; i++) {
+		foos[i].a = i;
+		foos[i].b = 2 * i;
+		foos[i].c = 3 * i;
+		foos[i].d = 4 * i;
+	}
+	return foos[99].d;
+}

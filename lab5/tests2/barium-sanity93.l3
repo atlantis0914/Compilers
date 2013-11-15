@@ -1,0 +1,11 @@
+//test error
+
+fpt fadd(fpt x, fpt y)
+{
+  return itof(0xdeadbeef);
+}
+
+int main()
+{
+  assert(fless(itof(1), fadd(itof(1), itof(2))));
+}

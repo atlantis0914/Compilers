@@ -1,0 +1,14 @@
+//test return 9
+// basic array test
+
+int main()
+{
+    int[] r = alloc_array(int, 10);
+
+    for(int i = 0; i < 10; i++)
+    {
+        r[i] = i;
+    }
+
+    return r[0] + r[9];
+}

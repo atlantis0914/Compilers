@@ -1,0 +1,11 @@
+//test return -19
+// test order of operations.
+int main()
+{
+  int var0 = 8;
+  int var1 = 3;
+  int var2 = -1;
+  int var3 = 14;
+  int var4 = var1 + var2 * var3 + -var0;
+  return var4;
+}

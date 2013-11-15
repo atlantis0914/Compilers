@@ -1,0 +1,6 @@
+//test exception 
+//stack overflow
+
+int main () {
+    return main();
+}

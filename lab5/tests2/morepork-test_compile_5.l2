@@ -1,0 +1,18 @@
+//test error
+
+/* 
+ * This is my test program
+ * The while has wrong type
+ */
+int main () {
+  int x;
+  int y = 15;
+  ( x ) = 0;
+  while(x)
+  {
+    y = y - 1;
+  }
+  x += 1;
+  //should return 4
+  return 0;
+}

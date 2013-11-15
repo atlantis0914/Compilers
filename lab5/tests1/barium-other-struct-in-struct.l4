@@ -1,0 +1,31 @@
+//test return 7
+
+struct struct1
+{
+  int s1;
+};
+
+struct struct2
+{
+  struct struct1 s1;
+  int s2;
+};
+
+struct struct3
+{
+  struct struct1 s1;
+  struct struct2 s2;
+  int s3;
+};
+
+int main()
+{
+  struct struct3 *s3 = alloc(struct struct3);
+
+  s3->s3 = 3;
+  s3->s2.s2 = 2;
+  s3->s2.s1.s1 = 1;
+  s3->s1.s1 = 1;
+
+  return s3->s3 + s3->s2.s2 + s3->s2.s1.s1 + s3->s1.s1;
+}

@@ -1,0 +1,13 @@
+//test error
+
+//sometimes I just want to indirectly use main :(
+
+int * main () {
+    int * fail = alloc(int);
+
+    *fail = 100;
+
+    *fail += 100;
+
+    return fail;
+}

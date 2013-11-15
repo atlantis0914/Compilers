@@ -1,0 +1,16 @@
+//test return 5
+// typedefs are equal to their type
+
+typedef int poop;
+
+int poops();
+
+int poops() {
+  return 5;
+}
+
+int main () {
+  poop x = 3;
+  x = poops();
+  return 5;
+}

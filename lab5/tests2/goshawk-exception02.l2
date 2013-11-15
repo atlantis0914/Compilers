@@ -1,0 +1,14 @@
+//test exception 8
+// test exception in a loop
+
+int main() {
+    int x = 10;
+    int y = 123456789;
+
+    while (x >= 0) {
+        y /= x;
+        x--;
+    }
+
+    return y;
+}

@@ -1,0 +1,10 @@
+//test return 1
+
+/* Ensures for loops are ordered appropriately */
+
+int main() {
+	for(int y = 100; y > 0; y--) {
+		if (y == 0) return 0;
+	}
+	return 1;
+}

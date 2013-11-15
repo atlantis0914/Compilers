@@ -1,0 +1,9 @@
+//test error
+
+struct Hey {  // test that structs parse correctly.
+   int cat;
+};
+int main () {
+      
+   return Hey.cat;
+}

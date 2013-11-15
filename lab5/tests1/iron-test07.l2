@@ -1,0 +1,14 @@
+//test return 3
+// if
+
+int main ()
+{
+  int x = 2;
+  int y;
+
+  if (x == 2) y = 3; else {
+    y = 4;
+  }
+
+  return y;
+}

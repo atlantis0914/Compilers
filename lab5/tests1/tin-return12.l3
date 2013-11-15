@@ -1,0 +1,21 @@
+//test return 12
+// computes the position of the lowest set bit
+
+int lowbit(int n) {
+  if (n == 0) {
+    return -1;
+  }
+  if (n % 2 == 1) {
+    return 0;
+  } else {
+    return 1 + lowbit(n >> 1);
+  }
+}
+
+int main() {
+  assert(lowbit(0) == -1);
+  assert(lowbit(10) == 1);
+  assert(lowbit(24) == 3);
+  assert(lowbit(4791) == 0);
+  return 12;
+}

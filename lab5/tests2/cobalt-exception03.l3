@@ -1,0 +1,16 @@
+//test exception
+int f(int a);
+int g(int b);
+
+int f(int a){
+  return g(a);
+}
+
+int g(int b){
+  return f(b);
+}
+
+int main() {
+  return f(1);
+}
+

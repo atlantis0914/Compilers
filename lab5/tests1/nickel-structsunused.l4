@@ -1,0 +1,16 @@
+//test return 0
+// no pointer arith
+
+struct foo
+{
+	int a;
+	int b;
+	int c;
+	int*[][][][][][][] afds;
+};
+
+int main()
+{
+	struct foo* a = alloc(struct foo);
+	return a->a;
+}

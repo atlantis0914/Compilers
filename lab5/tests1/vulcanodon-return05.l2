@@ -1,0 +1,17 @@
+//test return 385
+
+int main()
+{
+	//simply computes the sum of the squares of 1 through 10
+
+	int sum = 0;
+
+	int i;
+
+	for(i = 1; i <=10; i++)
+	{
+		sum+=i*i;
+	}
+	
+	return sum;
+}

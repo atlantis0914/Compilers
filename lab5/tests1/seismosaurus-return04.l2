@@ -1,0 +1,75 @@
+//test return 12345
+/*
+ * Stress control loops 
+ */
+
+int main()
+{
+	int x;
+	x = 0;
+
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+	if (true) {
+		x = 12345;
+	}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+
+	return x;
+}

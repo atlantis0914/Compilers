@@ -1,0 +1,13 @@
+//test exception
+
+int f(int a, int b) {
+  return 0;
+}
+
+int infinite() {
+  return infinite();
+}
+
+int main() {
+  return f(infinite(), 1 / 0);
+}

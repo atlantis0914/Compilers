@@ -1,0 +1,6 @@
+//test error
+// shouldn't compile, since int is a keyword
+int main() {
+    int int = 4;
+    return (int);
+}

@@ -1,0 +1,90 @@
+//test return 42
+// tests embedded structs and arrays
+
+struct region_t {
+    bool has_treasure;
+    int other_data;
+};
+
+typedef struct region_t region;
+
+struct country_t {
+    int num_regions;
+    region[] regions;
+};
+
+typedef struct country_t country;
+
+struct continent_t {
+    int num_countries;
+    country[] countries;
+};
+
+typedef struct continent_t continent;
+
+struct ocean_t {
+    int volume;
+    int max_depth;
+};
+
+typedef struct ocean_t ocean;
+
+struct earth_t {
+    continent *africa;
+    continent *antarctica;
+    continent *asia;
+    continent *australia;
+    continent *europe;
+    continent *north_america;
+    continent *south_america;
+
+    ocean *arctic;
+    ocean *atlantic;
+    ocean *indian;
+    ocean *pacific;
+};
+
+typedef struct earth_t earth;
+
+earth *setup(int location)
+{
+    earth *e = alloc(earth);
+
+    e->north_america = alloc(continent);
+
+    e->north_america->num_countries = 6;
+    e->north_america->countries = alloc_array(country,
+        e->north_america->num_countries);
+
+    for (int i = 0; i < e->north_america->num_countries; i++) {
+
+        e->north_america->countries[i].num_regions = i*10;
+        e->north_america->countries[i].regions = alloc_array(region,
+            e->north_america->countries[i].num_regions);
+
+        for (int j = 0; j < e->north_america->countries[i].num_regions; j++) {
+            e->north_america->countries[i].regions[j].has_treasure =
+                location == j ? true : false;
+        }
+    }
+
+    return e;
+}
+
+int locate_treasure(earth *e)
+{
+    for (int i = 0; i < e->north_america->num_countries; i++) {
+        for (int j = 0; j < e->north_america->countries[i].num_regions; j++) {
+            if (e->north_america->countries[i].regions[j].has_treasure)
+                return j;
+        }
+    }
+
+    return -1;
+}
+
+int main()
+{
+    earth *e = setup(42);
+    return locate_treasure(e);
+}

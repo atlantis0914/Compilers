@@ -1,0 +1,10 @@
+//test error
+//no assignments in if conditions
+int main()
+{	
+  bool a;
+
+  if ((a = true))
+  
+  return b;
+}

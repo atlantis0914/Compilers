@@ -1,0 +1,9 @@
+//test error
+
+
+
+int main(){
+int x;
+x = 0;
+int z;
+}

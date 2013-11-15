@@ -1,0 +1,13 @@
+//test return 9
+// no initialization checking after return statement
+
+int main()
+{
+  int x;
+  int y;
+  int z;
+  x = 5;
+  y = x + 4;
+  return y;
+  y = z + 3;
+}

@@ -1,0 +1,26 @@
+//test return 131071
+
+struct bar {
+	int baz;
+	int quux;
+};
+
+struct foo {
+	struct bar bar1;
+	struct bar bar2;
+};
+
+int main()
+{
+	int arr_size = 64;
+	int i;
+	struct foo[] foo = alloc_array(struct foo, arr_size);
+	
+	foo[0].bar1.baz = 0;
+	foo[0].bar2.quux = 1;
+	for (i = 1; i < arr_size; i++) {
+		foo[i].bar1.baz = 2 * foo[i-1].bar2.quux;
+		foo[i].bar2.quux = 1 + foo[i-1].bar1.baz;
+	}
+	return foo[arr_size/2].bar2.quux;
+}

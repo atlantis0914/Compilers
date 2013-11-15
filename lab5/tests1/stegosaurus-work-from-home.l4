@@ -1,0 +1,14 @@
+//test return 12
+
+/* Don't commute. */
+
+int frobulate(int* a) {
+	*a = 10;
+	return 0;
+}
+
+int main() {
+	int* a = alloc(int);
+	*a = 1;
+	return 2**a + frobulate(a) + *a;
+}

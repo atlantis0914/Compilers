@@ -1,0 +1,33 @@
+//test return 27648
+int k(int a) {
+        return a / 32 / 32 % 32;
+}
+
+int j(int a) {
+        return a / 32 % 32;
+}
+
+int h(int a) {
+        return a % 32;
+}
+
+int g(int f, int i) {
+        return (f >> (i & 0x1F)) & 1;
+}
+
+bool c(int f, int a) {
+        int K = k(a);
+        int J = j(a);
+        int H = h(a);
+        return ((g(f, K) & g(f, J)) & g(f, H)) == 1;
+}
+
+int main() {
+int filter = 0xDEADBEEF;
+int count = 0;
+int i;
+for (i = 0xDEADBEEF; i < 0xDEAEBEEF; i++) {
+        count = count + (c(filter, i) ? 1 : 0);
+}
+return count;
+}

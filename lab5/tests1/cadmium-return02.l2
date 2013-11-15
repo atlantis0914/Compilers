@@ -1,0 +1,6 @@
+//test return 0
+int main() {
+  int x = 10000;
+  for (x = 100000; x > 0; x--) { }
+  return x;
+}

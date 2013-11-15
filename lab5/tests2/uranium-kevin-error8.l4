@@ -1,0 +1,12 @@
+//test error
+//struct initialization
+struct NIKOLAI_MUSHEGIAN_WATCHES_WIZARDS_OF_WAVERLY {int a; bool b;};
+int main() {
+    struct NIKOLAI_MUSHEGIAN_WATCHES_WIZARDS_OF_WAVERLY *me;
+
+    if (true) 2;
+    else me->a = 1;
+
+    return me->a;
+}
+

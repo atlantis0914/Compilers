@@ -1,0 +1,13 @@
+//test return 4096
+int main() {
+  bool cond = false;
+  int x = 2;
+  while (!cond) {
+    x <<= 1;
+    if (x > 4000)
+      cond = cond || !cond;
+    else
+      cond = cond && !cond;
+  }
+  return x;
+}

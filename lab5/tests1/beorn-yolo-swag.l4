@@ -1,0 +1,36 @@
+//test return 7
+
+struct s1 {
+    int *x;
+};
+
+struct s2 {
+    int *x;
+};
+
+// This shouldn't work!
+int
+xor_swap(int *x, int *y)
+{
+    *x ^= *y;
+    *y ^= *x;
+    *x ^= *y;
+    return 0;
+}
+
+int
+main()
+{
+    struct s1 *x = alloc(struct s1);
+    struct s2 *y = alloc(struct s2);
+
+    x->x = alloc(int);
+    *(x->x) = 14;
+    y->x = x->x;
+    xor_swap(x->x, y->x);
+
+    if (*(y->x) == 14)
+        return 0xdead;
+    return 7;
+
+}

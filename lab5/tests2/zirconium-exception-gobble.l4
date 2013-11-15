@@ -1,0 +1,8 @@
+//test exception 11
+// this program gobbles the memory
+
+int main() {
+  while (true)
+    alloc_array(int,0x7fffffff);
+  return 0;
+}

@@ -1,0 +1,101 @@
+//test return 1243846963
+
+/* Matrix multiplication */
+
+void mmult (int[] A, int[] B, int[] C, int n) {
+  for (int i = 0; i < n; i += 1) {
+    for (int j = 0; j < n; j += 1) {
+      int sum = 0;
+      for (int k = 0; k < n; k += 1)
+	sum += A[k+j*n] * B[i+k*n];
+      C[i+j*n] = sum;
+    }
+  }
+}
+
+/* Cycle counting interface */
+
+struct rand {
+  int seed;
+};
+typedef struct rand* rand_t;
+
+rand_t init_rand (int seed) {
+  rand_t gen = alloc(struct rand);
+  gen->seed = seed;
+  return gen;
+}
+
+int rand(rand_t gen) {
+  gen->seed = gen->seed * 1664525 + 1013904223;
+  return gen->seed;
+}
+
+struct io {
+  int n;
+  int[] A;
+  int[] B;
+  int[] C;
+};
+typedef struct io data;
+
+int init_array (int[] A, int n) {
+  rand_t gen = init_rand(0xc0c0ffee);
+  for (int i = 0; i < n*n; i += 1)
+    A[i] = rand(gen);
+  return 0;
+}
+
+int isqrt (int k)
+//@requires k >= 0;
+{
+  if (k == 0) return 0;
+  int n = k/2 + 1;
+  int n1 = (n + k/n) / 2;
+  while (n1 < n) {
+    n = n1;
+    n1 = (n + k/n) / 2;
+  }
+  return n;
+}
+
+data* init (int param) {
+  int n = isqrt(param);
+  int[] A = alloc_array(int, n*n);
+  int[] B = alloc_array(int, n*n);
+  int[] C = alloc_array(int, n*n);
+  init_array(A, n);
+  init_array(B, n);
+  data* io = alloc(data);
+  io->n = n;
+  io->A = A;
+  io->B = B;
+  io->C = C;
+  return io;
+}
+
+void prepare (data* io, int param) {
+  int n = io->n;
+  for (int i = 0; i < n*n; i += 1)
+    io->C[i] = 0;
+}
+
+void run (data* io, int param) {
+  int n = io->n;
+  mmult(io->A, io->B, io->C, n);
+}
+
+int checksum (data* io, int param) {
+  int n = io->n;
+  int sum = 0;
+  for (int i = 0; i < n*n; i += 1)
+    sum += io->C[i];
+  return sum;
+}
+
+int main () {
+  data* io = init(29*29);
+  prepare(io, 29*29);
+  run(io, 29*29);
+  return checksum(io, 29*29);
+}

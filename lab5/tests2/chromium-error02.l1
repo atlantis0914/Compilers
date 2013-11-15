@@ -1,0 +1,14 @@
+//test error
+// for loop not supported
+
+int main()
+{
+  int a = 10000;
+  int b = 23;
+
+  return function(int a, int b);
+}
+
+int function(int a, int b) {
+    return a * b;
+}

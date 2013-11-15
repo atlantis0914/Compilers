@@ -1,0 +1,19 @@
+//test return 35
+// stress funtion register allocation
+int somefun(int x1,int x2,int x3,int x4) {
+int a = 1;
+int b = 2;
+int c = 3;
+int d = 4;
+int e = 5;
+int f = a*x1;
+int g = b*x2;
+int h = c*x3;
+int i = d*x4; //23 + 12
+return (a+b+c+d+e+f+g+h+i);
+}
+
+int main()
+{
+  return somefun(0,1,2,3);
+}

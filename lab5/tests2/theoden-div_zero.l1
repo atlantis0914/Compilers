@@ -1,0 +1,12 @@
+//test exception 
+
+// division by zero
+
+int main()
+{
+  int x = -2147483648;
+  x *= 2;
+  int y = 1;
+  int z = x + y / x + y;
+  return z;
+}

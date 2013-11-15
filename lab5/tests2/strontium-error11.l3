@@ -1,0 +1,10 @@
+//test error
+// special case for typedef
+
+typedef bool maintype;
+
+maintype main()
+{
+    return 0;
+}
+

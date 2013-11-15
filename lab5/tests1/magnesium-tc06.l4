@@ -1,0 +1,14 @@
+//test return 1
+
+struct foo {
+  int x;
+  int *y;
+  int[] z;
+};
+
+int main() {
+  struct foo *fp = alloc(struct foo);
+  fp->z = alloc_array(int, 5);
+  fp->z[1] = 1;
+  return fp->z[1];
+}

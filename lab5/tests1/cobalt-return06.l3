@@ -1,0 +1,17 @@
+//test return 15251
+//simple test to test function definitions and declarations and function calls
+
+int omgwtfbbq(int a, int b, int c);
+
+int main(){
+  return omgwtfbbq(101, 151, 1);
+}
+
+void helloworld();
+void helloworld(){
+  int x  = 1;
+}
+
+int omgwtfbbq(int a, int b, int c){
+  return a*b*c;
+}

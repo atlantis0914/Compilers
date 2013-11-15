@@ -1,0 +1,5 @@
+//test return 12
+
+int main(){
+  return 1+2<<6/3; // should be evaluated as (1+2)<<(6/3) = 3 << 2 = 12
+}

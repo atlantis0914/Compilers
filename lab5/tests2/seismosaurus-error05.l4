@@ -1,0 +1,11 @@
+//test error
+
+// Can't use a struct directly until it's been defined
+
+struct foo;
+
+int main() {
+	struct foo a;
+	return 100;
+}
+

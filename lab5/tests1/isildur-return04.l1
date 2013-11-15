@@ -1,0 +1,10 @@
+//test return -1
+int main() {
+  int a = 0x10;
+  int b = 0x15;
+  int c = 0x25;
+  int d = a+b+c; // 4a
+  int e = 0;
+  e += 1;
+  return d % 0x4a - e;
+}

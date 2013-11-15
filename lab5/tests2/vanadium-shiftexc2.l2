@@ -1,0 +1,9 @@
+//test exception
+
+int main() {
+	int k = 1;
+	while (k > -35) {
+		k -= 3;
+	}
+	return 1 << k;
+}

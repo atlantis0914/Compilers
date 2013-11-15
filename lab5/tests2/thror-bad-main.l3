@@ -1,0 +1,7 @@
+//test error
+//bad main
+
+bool main()
+{
+  return true;
+}

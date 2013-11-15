@@ -1,0 +1,10 @@
+//test error
+
+// tests else without if
+
+int main() {
+    else if (true) {
+        return 0;
+    }
+    return -1;
+}

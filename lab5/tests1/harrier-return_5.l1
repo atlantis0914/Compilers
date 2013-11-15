@@ -1,0 +1,16 @@
+//test return 546255
+
+int main()
+{
+    int meowmix1;
+    int meowmix2;
+    int meowmix3;
+    int meowmix4;
+    int meowmix5;
+    meowmix1 = 43;
+    meowmix2 = 2;
+    meowmix3 = 34;
+    meowmix4 = 999999;
+    meowmix5 = -453823;
+    return (meowmix1 + meowmix2 + meowmix3 + meowmix4 + meowmix5);
+}

@@ -1,0 +1,173 @@
+//test return 134209536
+// A linked list
+
+struct _node
+{
+  int data;
+  struct _node * prev;
+  struct _node * next;
+};
+
+typedef struct _node node_t;
+
+struct _list
+{
+  node_t * head;
+  node_t * tail;
+  int length;
+};
+
+typedef struct _list list_t;
+
+node_t * make_node (int data)
+{
+  node_t * n = alloc (node_t);
+  assert (n != NULL);
+
+  n->data = data;
+  n->prev = NULL;
+  n->next = NULL;
+
+  return n;
+}
+
+void link_node (node_t * c, node_t * p, node_t * n)
+{
+  assert (c != NULL);
+  c->prev = p;
+  c->next = n;
+
+  if (p != NULL)
+  {
+    p->next = c;
+  }
+
+  if (n != NULL)
+  {
+    n->prev = c;
+  }
+}
+
+list_t * make_list ()
+{
+  list_t * l = alloc (list_t);
+  assert (l != NULL);
+
+  l->head = NULL;
+  l->tail = NULL;
+  l->length = 0;
+
+  return l;
+}
+
+void insert_tail (list_t * l, int data)
+{
+  assert (l != NULL);
+
+  node_t * n = make_node (data);
+
+  if (l->length == 0)
+  {
+    assert (l->head == NULL);
+    assert (l->tail == NULL);
+    link_node (n, l->head, l->tail);
+    l->head = n;
+    l->tail = n;
+  }
+  else
+  {
+    link_node (n, l->tail, NULL);
+    l->tail = n;
+  }
+  l->length++;
+}
+
+void remove_nth (list_t * l, int index)
+{
+  assert (l != NULL);
+  assert (index >= 0);
+  assert (index < l->length);
+
+  if (l->length == 0)
+    return;
+
+  if (l->length == 1)
+  {
+    l->head = NULL;
+    l->tail = NULL;
+    l->length = 0;
+    return;
+  }
+
+  node_t * t = l->head;
+  for (int i = 0; i < index; i++)
+  {
+    assert (t != NULL);
+    t = t->next;
+  }
+
+  if (t->prev == NULL)
+  {
+    l->head = t->next;
+    assert (t->next != NULL);
+    l->head->prev = NULL;
+  }
+  else
+  {
+    t->prev->next = t->next;
+    if (t->next != NULL)
+    {
+      t->next->prev = t->prev;
+    }
+  }
+  l->length--;
+}
+
+int look_nth (list_t * l, int index)
+{
+  assert (l != NULL);
+  assert (index >= 0);
+  assert (index < l->length);
+
+  if (l->length == 0)
+    return -1;
+
+  node_t * t = l->head;
+  for (int i = 0; i < index; i++)
+  {
+    assert (t != NULL);
+    t = t->next;
+  }
+
+  assert (t != NULL);
+  return t->data;
+}
+
+int main()
+{
+  int x = 128;
+  int y = 128;
+  list_t * l = make_list ();
+  for (int i = 0; i < x*y; i++)
+  {
+    insert_tail (l, i);
+  }
+
+  int sum = 0;
+  for (int i = x*y-1; i >= 0; i--)
+  {
+    sum += look_nth (l, i);
+  }
+
+  for (int i = 0; i < x; i++)
+  {
+    for (int j = 0; j < y; j++)
+    {
+      remove_nth (l, l->length-1);
+    }
+  }
+
+  int a = l->length;
+
+  return sum+a;
+}

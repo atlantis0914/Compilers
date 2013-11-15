@@ -1,0 +1,40 @@
+//test return 4
+//tests simple alloc and alloc_array
+
+struct node{
+  int val;
+};
+
+typedef struct node * N;
+
+int main()
+{
+  N npt = NULL;
+
+  if (npt == NULL){
+    npt = alloc(struct node);
+
+    // alloc initializes fields in struct so this is valid
+    int init_val = npt -> val;
+    
+    int length = 10;
+    N[] narr = alloc_array(N, length);
+
+    for(int i = 0; i < length; i++)
+    {
+      // don't forget to alloc each arr item
+      narr[i] = alloc(struct node);
+      narr[i] -> val = i;
+    }
+
+    int sum = 0;
+    for(int i = 0; i < length; i++)
+    {
+      sum += narr[i] -> val;
+    }
+
+    return ftoi(fdiv(sum, 10));
+  }
+
+  return 1;
+}

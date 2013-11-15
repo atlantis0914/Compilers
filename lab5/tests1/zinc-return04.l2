@@ -1,0 +1,11 @@
+//test return 3
+int main() {
+  int a = 1;
+  ((a))++;
+  1;2;3;4;5;6;7;8;
+  while (a > 1) {
+    (((a)))++;
+    return a;
+  }
+  return 0;
+}

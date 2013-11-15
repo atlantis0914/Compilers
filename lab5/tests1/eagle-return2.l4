@@ -1,0 +1,14 @@
+//test return 499500
+int main() {
+  int size = 1000;
+
+  int[] arr = alloc_array(int, size);
+  for (int i = 0; i < size; i++) {
+    arr[i] = i;
+  }
+  int sum = 0;
+  for (int i = 0; i < size; i++) {
+    sum += arr[i];
+  }
+  return sum;
+}

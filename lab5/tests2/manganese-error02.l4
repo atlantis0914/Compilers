@@ -1,0 +1,7 @@
+//test error
+
+int main() {
+    int * a = alloc(int);
+    int * b = alloc(int);
+    return a < b ? 0 : 1;
+}

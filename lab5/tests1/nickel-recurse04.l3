@@ -1,0 +1,19 @@
+//test return 42
+// short circuit or infinite loop / segmentation fault...
+
+bool foo()
+{
+	return foo(); // woo.
+}
+
+int bar(int a)
+{
+	if (a == 0) return 0;
+	else return 1 + bar(a-1);
+}
+
+int main()
+{
+	if (true || foo()) return bar(42);
+	else return 5;
+}

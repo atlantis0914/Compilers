@@ -1,0 +1,7 @@
+//test return 0
+/* Test array syntax */
+
+int main () {
+  int[] a = alloc_array(int, 1);
+  return 0;
+}

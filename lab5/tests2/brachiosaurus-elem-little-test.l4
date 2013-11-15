@@ -1,0 +1,25 @@
+//test error
+
+struct bar {
+	int baq;
+	int bar;
+	int bas;
+	int bat;
+};
+
+struct foo {
+	int foo;
+	struct bar bar;
+};
+
+int sum(int *a, int *b)
+{
+	return *a + *b;
+}
+
+int main()
+{
+	struct foo *foo = alloc(struct foo);
+	struct bar *bar = alloc(struct bar);
+	return sum(bar->bar, foo->bar);
+}

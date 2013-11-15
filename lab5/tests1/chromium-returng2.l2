@@ -1,0 +1,14 @@
+//test return 13
+
+int main() {
+    int a = 0;
+    int b = 1;
+    int c;
+    while (b < 12) {
+        c = b;
+        b = a + b;
+        a = c;
+    }
+    return b;
+}
+ 

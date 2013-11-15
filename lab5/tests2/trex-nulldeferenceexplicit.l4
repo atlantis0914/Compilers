@@ -1,0 +1,11 @@
+//test error
+
+//checks that "*NULL" isn't allowed
+
+int main()
+{
+  int n;
+  n = 42;
+  n = *NULL;
+  return 42;
+}

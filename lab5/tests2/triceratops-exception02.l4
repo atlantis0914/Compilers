@@ -1,0 +1,16 @@
+//test exception 8
+
+int a(int* arr);
+
+int a(int* arr) {
+    int* null_arr;
+    null_arr = NULL;
+    return 1/0;
+    return *null_arr;
+}
+
+int main () {
+  int* A;
+  A = NULL;
+  return a(A);
+}

@@ -1,0 +1,8 @@
+//test return 10000
+// simple terminating loop without nested declarations.
+int main()
+{
+  int i = 0;
+  while (i < 10000) i++;
+  return i;
+}

@@ -1,0 +1,7 @@
+//test return 1
+
+// The compiler shouldn't think this is valid as per the spec
+
+int main(/*chicken*/) {
+	return 1;
+}

@@ -1,0 +1,14 @@
+//test return -2147483648
+// test Overflow
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+
+
+  a = 2147483647 + 1;
+
+  return a;
+}

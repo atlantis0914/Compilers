@@ -1,0 +1,9 @@
+//test error
+
+bool f(int k) {
+	return (k+3 == 5);
+}
+
+int main() {
+	return f(2);
+}

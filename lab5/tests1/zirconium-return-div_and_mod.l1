@@ -1,0 +1,13 @@
+//test return 244
+// Test div and mod on same arguments
+int main()
+{
+  int a = 112;
+  int b = 358;
+  int c = 132;
+  int d = 134;
+  int x = a / b; // 0
+  int y = a % b; // 112
+  int z = (c / d) + (c % d); // 0 + 132 = 132
+  return x + y + z; // 244
+}

@@ -1,0 +1,15 @@
+//test return 277
+struct level7 { int exclamation_point; };
+struct level6 { struct level7 o; };
+struct level5 { struct level6 k; };
+struct level4 { struct level5 c; };
+struct level3 { struct level4 e; }; 
+struct level2 { struct level3 e; };
+struct level1 { struct level2 r; };
+struct pokemon { struct level1 t; };
+int main()
+{
+    struct pokemon *go = alloc(struct pokemon);
+    go->t.r.e.e.c.k.o.exclamation_point = 277;
+    return go->t.r.e.e.c.k.o.exclamation_point;
+}

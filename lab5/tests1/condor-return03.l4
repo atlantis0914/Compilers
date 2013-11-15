@@ -1,0 +1,27 @@
+//test return 15
+
+struct IntList {
+    int hour;
+    struct IntList * st;
+};
+
+int sumList( struct IntList* il) {
+    if (il == NULL) return 0;
+    return il->hour + sumList(il->st);
+}
+
+int addHead(int a, struct IntList* il) {
+    struct IntList * next = alloc( struct IntList );
+    next->hour = il->hour;
+    next->st = il->st;
+    il->st = next;
+    il->hour = a;
+    return 0;
+}
+
+int main () {
+   struct IntList * boop = alloc( struct IntList );
+   
+   for (int i = 1; i <= 5; i ++ ) addHead(i,boop);
+   return sumList(boop);
+}

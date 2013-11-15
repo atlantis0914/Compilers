@@ -1,0 +1,18 @@
+//test return 90
+// Basic while and for loops
+int main() {
+  int a;
+  int b = 10;
+  int acc = 0;
+
+  for(a = 0; a < b; a++) {
+    acc += 2;
+  }
+
+  while(a > 0) {
+    acc += 7;
+    a--;
+  }
+
+  return acc;
+}

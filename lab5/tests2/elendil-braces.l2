@@ -1,0 +1,7 @@
+//test error
+//  no pointers yet
+int main() {
+  int dea*fbeef = 0xcafebabe;
+
+  return deadbeef;
+}

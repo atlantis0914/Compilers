@@ -1,0 +1,19 @@
+//test return 1978
+//this is possibly stupid, but might as well...
+
+typedef int one;
+typedef int two;
+typedef int three;
+typedef int four;
+typedef int five;
+
+one f_one() {return 1;}
+two f_two() {return f_one() + f_one();}
+three f_three() {return f_two() + f_one();}
+four f_four() {return f_one() + f_two() + f_one();}
+five f_five() {return f_three() + f_four() - f_two();}
+
+int main() {
+    int result = f_one() + f_two() + f_three() + f_four() + f_five();
+    return (result == 15 ? 1978 : 125);
+}

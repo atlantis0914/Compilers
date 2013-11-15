@@ -1,0 +1,29 @@
+//test return -1124341444
+// Calling external function
+
+typedef int float;
+
+float add(float a1, float a2, float a3, float a4, float a5, float a6, float a7, float a8, float a9,
+        float a10)
+{
+    float result = fadd(a1, a2) + fadd(a3, a4) + fadd(a5, a6) - fadd(a7, a8) - fadd(a9, a10);
+
+    return result;
+}
+
+float main()
+{
+    float [] array = alloc_array(float, 1000); 
+    float counter;
+    float result = 100;
+
+    for(counter = 0; counter < 1000; counter++)
+        array[counter] = (counter + 0x88888888) * 18484;
+
+    for(counter = 0; counter < 1000; counter += 10)
+        result += add(array[counter], array[counter + 1], array[counter + 2], array[counter + 3],
+                      array[counter + 4], array[counter + 5], array[counter + 6], array[counter + 7],
+                      array[counter + 8], array[counter + 9]);
+
+    return result;
+}

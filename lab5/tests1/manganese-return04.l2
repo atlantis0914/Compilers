@@ -1,0 +1,13 @@
+//test return 6
+// attempt at an interesting test
+int main()
+{
+    bool b = true;
+    int x = 5;
+    if (b) {
+        x = 6;
+    } else if (!!b) {
+        return 1 / 0;
+    }
+    return x;
+}

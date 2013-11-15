@@ -1,0 +1,19 @@
+//test return 45
+
+typedef int asdf;
+
+asdf do(asdf x){
+    for(asdf i = 0; i < 1000; i++){
+        assert(i >= 0 && i <= 1000);
+	if(x > 1000)
+	    return i;
+	x += i;
+    }
+    return 1000;
+}
+
+asdf main(){
+    asdf x = 5;
+    x = do(do(do(x)));
+    return x;
+}

@@ -1,0 +1,37 @@
+//test return 55
+// Linked list
+
+struct node
+{
+    int x;
+    struct node * next;
+};
+
+int main()
+{
+    struct node * head = alloc(struct node);
+    struct node * curr = head;
+    int counter;
+
+    head->x = 1;
+
+    for(counter = 2; counter <= 10; counter++)
+    {
+        curr->next = alloc(struct node);
+        curr = curr->next;
+        curr->x = counter;
+    }
+
+    curr->next = NULL;
+
+    curr = head;
+    counter = 0;
+
+    while(curr != NULL)
+    {
+        counter += curr->x;
+        curr = curr->next;
+    }
+
+    return counter;
+}

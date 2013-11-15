@@ -1,0 +1,21 @@
+//test exception 8
+
+typedef int FLAMe;
+typedef FLAMe FLAme;
+typedef FLAme FLame;
+typedef FLame Flame;
+typedef Flame flame;
+
+int _flame(flame __flame) {
+  flame _flame;
+  flame ____flame;
+  return 1;
+}
+
+// That case sensitivity
+typedef flame MAIN;
+
+int main() {
+  MAIN man = 22;  
+  return (man/0);
+}

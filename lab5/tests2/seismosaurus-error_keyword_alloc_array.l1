@@ -1,0 +1,9 @@
+//test error
+// Test compiler error for reserved keywords
+// keyword: alloc_array
+int main() {
+    int alloc_array;
+
+    alloc_array=1;
+    return alloc_array;
+}

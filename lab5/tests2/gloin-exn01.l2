@@ -1,0 +1,7 @@
+//test exception 8
+int main(){
+    for(int y = 0; y<27; y++){
+        int z = y/(26-y);
+    }
+    return 7;
+}

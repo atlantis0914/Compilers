@@ -1,0 +1,26 @@
+//test return 6
+// The aliquot sum of a number is the sum of its proper divisors
+// Perfect numbers are numbers where the aliquot sum of n = n
+// The main of this program finds the first perfect number
+
+int aliquot(int n) {
+    int sum = 0;
+    for(int i = 1; i < n; i++) {
+        if(n%i == 0) sum += i;
+    }
+    return sum;
+}
+
+bool isperfect(int n) {
+    return aliquot(n) == n;
+}
+
+int main() {
+    int i = 2;
+    while(true) {
+        if(isperfect(i)) return i;
+	i++;
+    }
+    return 100;
+}
+

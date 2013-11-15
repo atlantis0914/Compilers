@@ -1,0 +1,16 @@
+//test return 0
+int main()
+{
+	int********** n;
+	n = alloc(int*********);
+	*n = alloc(int********);
+	**n = alloc(int*******);
+	***n = alloc(int******);
+	****n = alloc(int*****);
+	*****n = alloc(int****);
+	******n = alloc(int***);
+	*******n = alloc(int**);
+	********n = alloc(int*);
+	*********n = alloc(int);
+	return **********n;
+}

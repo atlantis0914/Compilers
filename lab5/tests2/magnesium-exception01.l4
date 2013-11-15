@@ -1,0 +1,6 @@
+//test exception
+//cannot alloc negative size
+int main() {
+  int[] intarr = alloc_array(int, 1-5*4);
+  return 0;
+}

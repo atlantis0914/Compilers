@@ -1,0 +1,9 @@
+//test return 1
+//Positive test for expression as statement.
+
+int main ()
+{
+  int y = 1;
+  y << 1 + 1 * y;
+  return y;
+}

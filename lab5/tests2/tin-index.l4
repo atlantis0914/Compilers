@@ -1,0 +1,7 @@
+//test exception 11
+// no negative indices
+int main() {
+  int[] A = alloc_array(int, -1);
+  A[-1] = 10;
+  return A[-1];
+}

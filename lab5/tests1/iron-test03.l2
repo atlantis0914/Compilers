@@ -1,0 +1,13 @@
+//test return 0
+//boolean operators
+
+int main ()
+{
+  bool x = false;
+
+  x = x && x;
+  x = x || x;
+  x = !x;
+
+  return 0;
+}

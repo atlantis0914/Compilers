@@ -1,0 +1,26 @@
+//test return 45
+// sum the prime factors of n
+
+int main ()
+{
+	int sum;
+	int n;
+	int s;
+
+	sum = 0;
+	n = 1023;
+	s = 2;
+
+	while ( s <= n ) {
+
+		if ( n % s == 0 ) { 
+			n /= s;
+			sum += s;
+		}	else {
+			if ( s == 2) s++;
+			else s += 2;
+		}
+	}
+
+	return sum;
+}

@@ -1,0 +1,10 @@
+//test error
+
+struct rec {
+	int a;
+	struct rec r;
+};
+
+int main() {
+	return 0;
+}

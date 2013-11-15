@@ -1,0 +1,11 @@
+//test error
+
+int vessel(int blood) {
+    return blood;
+}
+
+int main() {
+    // Do function parameters bleed between declarations in the context?
+    return blood;
+}
+

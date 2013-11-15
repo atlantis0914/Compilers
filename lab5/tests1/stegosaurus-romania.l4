@@ -1,0 +1,459 @@
+//test return 0
+
+/* Arad to Bucharest */
+
+void printchar(int c) {
+  return;
+}
+
+struct node;
+
+struct edge {
+	struct node * neighbor;
+	int weight;
+};
+
+struct node {
+	struct edge [] neighbors;
+	int x;
+	int y;
+	int [] name;
+};
+
+struct problem {
+	struct node * start;
+	struct node * finish;
+};
+
+typedef struct edge edge;
+typedef struct node node;
+typedef struct problem problem;
+
+problem *init();
+int print_node(node* n);
+
+/* Dumb DFS is dumb, not even close to optimal route */
+int dfs(node* targ, node* curr, node*[] hist) {
+	int i;
+	int j;
+	int res;
+	node* next;
+
+	if (curr == targ) return 0;
+
+	i = 0;
+        bool done = false;
+	while (!done) {
+		next = curr->neighbors[i].neighbor;
+
+		if (next == NULL) done = true;
+                else {
+
+		j = 0;
+                bool finished = false;
+		while (!finished && hist[j] != NULL) {
+			if (next == hist[j])
+                          finished = true;
+                        else
+                          j++;
+		}
+		if (next == hist[j]) {
+			i++;
+			// continue;
+		} else {
+
+		hist[j] = next;
+		res = dfs(targ, next, hist);
+		if (res != -1) return res + curr->neighbors[i].weight;
+
+		hist[j] = NULL;
+		i++;
+                }
+                }
+	}
+
+	return -1;
+}
+
+int main() {
+	int ret;
+	problem* prob = init();
+	node*[] hist = alloc_array(node*, 100); /* 100 is plenty */
+	hist[0] = prob->start;
+
+	ret = dfs(prob->finish, prob->start, hist);
+	if (ret != 762) return -1;
+
+	return 0;
+}
+
+int print_node(node* n) {
+	int i = 0;
+	while (n->name[i] != 0) {
+		printchar(n->name[i]);
+		i++;
+	}
+	printchar(10);
+	return 0;
+}
+
+problem *init() {
+	problem * prob = alloc(problem);
+	edge * e;
+
+	node * Arad = alloc(node);
+	node * Bucharest = alloc(node);
+	node * Craiova = alloc(node);
+	node * Dobreta = alloc(node);
+	node * Eforie = alloc(node);
+	node * Fagaras = alloc(node);
+	node * Giurgiu = alloc(node);
+	node * Hirsova = alloc(node);
+	node * Iasi = alloc(node);
+	node * Lugoj = alloc(node);
+	node * Mehadia = alloc(node);
+	node * Neamt = alloc(node);
+	node * Oradea = alloc(node);
+	node * Pitesti = alloc(node);
+	node * Rimnicu_Vilcea = alloc(node);
+	node * Sibiu = alloc(node);
+	node * Timisoara = alloc(node);
+	node * Urziceni = alloc(node);
+	node * Vaslui = alloc(node);
+	node * Zerind = alloc(node);
+
+	prob->start = Arad;
+	prob->finish = Bucharest;
+
+	Arad->x = 91;
+	Arad->y = 492;
+	Arad->name = alloc_array(int, 5);
+	Arad->name[0] = 65;
+	Arad->name[1] = 114;
+	Arad->name[2] = 97;
+	Arad->name[3] = 100;
+	Arad->name[4] = 0;
+	Bucharest->x = 400;
+	Bucharest->y = 327;
+	Bucharest->name = alloc_array(int, 10);
+	Bucharest->name[0] = 66;
+	Bucharest->name[1] = 117;
+	Bucharest->name[2] = 99;
+	Bucharest->name[3] = 104;
+	Bucharest->name[4] = 97;
+	Bucharest->name[5] = 114;
+	Bucharest->name[6] = 101;
+	Bucharest->name[7] = 115;
+	Bucharest->name[8] = 116;
+	Bucharest->name[9] = 0;
+	Craiova->x = 253;
+	Craiova->y = 288;
+	Craiova->name = alloc_array(int, 8);
+	Craiova->name[0] = 67;
+	Craiova->name[1] = 114;
+	Craiova->name[2] = 97;
+	Craiova->name[3] = 105;
+	Craiova->name[4] = 111;
+	Craiova->name[5] = 118;
+	Craiova->name[6] = 97;
+	Craiova->name[7] = 0;
+	Dobreta->x = 165;
+	Dobreta->y = 299;
+	Dobreta->name = alloc_array(int, 8);
+	Dobreta->name[0] = 68;
+	Dobreta->name[1] = 111;
+	Dobreta->name[2] = 98;
+	Dobreta->name[3] = 114;
+	Dobreta->name[4] = 101;
+	Dobreta->name[5] = 116;
+	Dobreta->name[6] = 97;
+	Dobreta->name[7] = 0;
+	Eforie->x = 562;
+	Eforie->y = 293;
+	Eforie->name = alloc_array(int, 7);
+	Eforie->name[0] = 69;
+	Eforie->name[1] = 102;
+	Eforie->name[2] = 111;
+	Eforie->name[3] = 114;
+	Eforie->name[4] = 105;
+	Eforie->name[5] = 101;
+	Eforie->name[6] = 0;
+	Fagaras->x = 305;
+	Fagaras->y = 449;
+	Fagaras->name = alloc_array(int, 8);
+	Fagaras->name[0] = 70;
+	Fagaras->name[1] = 97;
+	Fagaras->name[2] = 103;
+	Fagaras->name[3] = 97;
+	Fagaras->name[4] = 114;
+	Fagaras->name[5] = 97;
+	Fagaras->name[6] = 115;
+	Fagaras->name[7] = 0;
+	Giurgiu->x = 375;
+	Giurgiu->y = 270;
+	Giurgiu->name = alloc_array(int, 8);
+	Giurgiu->name[0] = 71;
+	Giurgiu->name[1] = 105;
+	Giurgiu->name[2] = 117;
+	Giurgiu->name[3] = 114;
+	Giurgiu->name[4] = 103;
+	Giurgiu->name[5] = 105;
+	Giurgiu->name[6] = 117;
+	Giurgiu->name[7] = 0;
+	Hirsova->x = 534;
+	Hirsova->y = 350;
+	Hirsova->name = alloc_array(int, 8);
+	Hirsova->name[0] = 72;
+	Hirsova->name[1] = 105;
+	Hirsova->name[2] = 114;
+	Hirsova->name[3] = 115;
+	Hirsova->name[4] = 111;
+	Hirsova->name[5] = 118;
+	Hirsova->name[6] = 97;
+	Hirsova->name[7] = 0;
+	Iasi->x = 473;
+	Iasi->y = 506;
+	Iasi->name = alloc_array(int, 5);
+	Iasi->name[0] = 73;
+	Iasi->name[1] = 97;
+	Iasi->name[2] = 115;
+	Iasi->name[3] = 105;
+	Iasi->name[4] = 0;
+	Lugoj->x = 165;
+	Lugoj->y = 379;
+	Lugoj->name = alloc_array(int, 6);
+	Lugoj->name[0] = 76;
+	Lugoj->name[1] = 117;
+	Lugoj->name[2] = 103;
+	Lugoj->name[3] = 111;
+	Lugoj->name[4] = 106;
+	Lugoj->name[5] = 0;
+	Mehadia->x = 168;
+	Mehadia->y = 339;
+	Mehadia->name = alloc_array(int, 8);
+	Mehadia->name[0] = 77;
+	Mehadia->name[1] = 101;
+	Mehadia->name[2] = 104;
+	Mehadia->name[3] = 97;
+	Mehadia->name[4] = 100;
+	Mehadia->name[5] = 105;
+	Mehadia->name[6] = 97;
+	Mehadia->name[7] = 0;
+	Neamt->x = 406;
+	Neamt->y = 537;
+	Neamt->name = alloc_array(int, 6);
+	Neamt->name[0] = 78;
+	Neamt->name[1] = 101;
+	Neamt->name[2] = 97;
+	Neamt->name[3] = 109;
+	Neamt->name[4] = 116;
+	Neamt->name[5] = 0;
+	Oradea->x = 131;
+	Oradea->y = 571;
+	Oradea->name = alloc_array(int, 7);
+	Oradea->name[0] = 79;
+	Oradea->name[1] = 114;
+	Oradea->name[2] = 97;
+	Oradea->name[3] = 100;
+	Oradea->name[4] = 101;
+	Oradea->name[5] = 97;
+	Oradea->name[6] = 0;
+	Pitesti->x = 320;
+	Pitesti->y = 368;
+	Pitesti->name = alloc_array(int, 8);
+	Pitesti->name[0] = 80;
+	Pitesti->name[1] = 105;
+	Pitesti->name[2] = 116;
+	Pitesti->name[3] = 101;
+	Pitesti->name[4] = 115;
+	Pitesti->name[5] = 116;
+	Pitesti->name[6] = 105;
+	Pitesti->name[7] = 0;
+	Rimnicu_Vilcea->x = 233;
+	Rimnicu_Vilcea->y = 410;
+	Rimnicu_Vilcea->name = alloc_array(int, 15);
+	Rimnicu_Vilcea->name[0] = 82;
+	Rimnicu_Vilcea->name[1] = 105;
+	Rimnicu_Vilcea->name[2] = 109;
+	Rimnicu_Vilcea->name[3] = 110;
+	Rimnicu_Vilcea->name[4] = 105;
+	Rimnicu_Vilcea->name[5] = 99;
+	Rimnicu_Vilcea->name[6] = 117;
+	Rimnicu_Vilcea->name[7] = 95;
+	Rimnicu_Vilcea->name[8] = 86;
+	Rimnicu_Vilcea->name[9] = 105;
+	Rimnicu_Vilcea->name[10] = 108;
+	Rimnicu_Vilcea->name[11] = 99;
+	Rimnicu_Vilcea->name[12] = 101;
+	Rimnicu_Vilcea->name[13] = 97;
+	Rimnicu_Vilcea->name[14] = 0;
+	Sibiu->x = 207;
+	Sibiu->y = 457;
+	Sibiu->name = alloc_array(int, 6);
+	Sibiu->name[0] = 83;
+	Sibiu->name[1] = 105;
+	Sibiu->name[2] = 98;
+	Sibiu->name[3] = 105;
+	Sibiu->name[4] = 117;
+	Sibiu->name[5] = 0;
+	Timisoara->x = 94;
+	Timisoara->y = 410;
+	Timisoara->name = alloc_array(int, 10);
+	Timisoara->name[0] = 84;
+	Timisoara->name[1] = 105;
+	Timisoara->name[2] = 109;
+	Timisoara->name[3] = 105;
+	Timisoara->name[4] = 115;
+	Timisoara->name[5] = 111;
+	Timisoara->name[6] = 97;
+	Timisoara->name[7] = 114;
+	Timisoara->name[8] = 97;
+	Timisoara->name[9] = 0;
+	Urziceni->x = 456;
+	Urziceni->y = 350;
+	Urziceni->name = alloc_array(int, 9);
+	Urziceni->name[0] = 85;
+	Urziceni->name[1] = 114;
+	Urziceni->name[2] = 122;
+	Urziceni->name[3] = 105;
+	Urziceni->name[4] = 99;
+	Urziceni->name[5] = 101;
+	Urziceni->name[6] = 110;
+	Urziceni->name[7] = 105;
+	Urziceni->name[8] = 0;
+	Vaslui->x = 509;
+	Vaslui->y = 444;
+	Vaslui->name = alloc_array(int, 7);
+	Vaslui->name[0] = 86;
+	Vaslui->name[1] = 97;
+	Vaslui->name[2] = 115;
+	Vaslui->name[3] = 108;
+	Vaslui->name[4] = 117;
+	Vaslui->name[5] = 105;
+	Vaslui->name[6] = 0;
+	Zerind->x = 108;
+	Zerind->y = 531;
+	Zerind->name = alloc_array(int, 7);
+	Zerind->name[0] = 90;
+	Zerind->name[1] = 101;
+	Zerind->name[2] = 114;
+	Zerind->name[3] = 105;
+	Zerind->name[4] = 110;
+	Zerind->name[5] = 100;
+	Zerind->name[6] = 0;
+
+	Timisoara->neighbors = alloc_array(edge, 3);
+	Timisoara->neighbors[0].neighbor = Arad;
+	Timisoara->neighbors[0].weight = 118;
+	Timisoara->neighbors[1].neighbor = Lugoj;
+	Timisoara->neighbors[1].weight = 111;
+	Bucharest->neighbors = alloc_array(edge, 5);
+	Bucharest->neighbors[0].neighbor = Fagaras;
+	Bucharest->neighbors[0].weight = 211;
+	Bucharest->neighbors[1].neighbor = Pitesti;
+	Bucharest->neighbors[1].weight = 101;
+	Bucharest->neighbors[2].neighbor = Giurgiu;
+	Bucharest->neighbors[2].weight = 90;
+	Bucharest->neighbors[3].neighbor = Urziceni;
+	Bucharest->neighbors[3].weight = 85;
+	Arad->neighbors = alloc_array(edge, 4);
+	Arad->neighbors[0].neighbor = Zerind;
+	Arad->neighbors[0].weight = 75;
+	Arad->neighbors[1].neighbor = Timisoara;
+	Arad->neighbors[1].weight = 118;
+	Arad->neighbors[2].neighbor = Sibiu;
+	Arad->neighbors[2].weight = 140;
+	Dobreta->neighbors = alloc_array(edge, 3);
+	Dobreta->neighbors[0].neighbor = Mehadia;
+	Dobreta->neighbors[0].weight = 75;
+	Dobreta->neighbors[1].neighbor = Craiova;
+	Dobreta->neighbors[1].weight = 120;
+	Pitesti->neighbors = alloc_array(edge, 4);
+	Pitesti->neighbors[0].neighbor = Rimnicu_Vilcea;
+	Pitesti->neighbors[0].weight = 97;
+	Pitesti->neighbors[1].neighbor = Craiova;
+	Pitesti->neighbors[1].weight = 138;
+	Pitesti->neighbors[2].neighbor = Bucharest;
+	Pitesti->neighbors[2].weight = 101;
+	Craiova->neighbors = alloc_array(edge, 4);
+	Craiova->neighbors[0].neighbor = Dobreta;
+	Craiova->neighbors[0].weight = 120;
+	Craiova->neighbors[1].neighbor = Rimnicu_Vilcea;
+	Craiova->neighbors[1].weight = 146;
+	Craiova->neighbors[2].neighbor = Pitesti;
+	Craiova->neighbors[2].weight = 138;
+	Eforie->neighbors = alloc_array(edge, 2);
+	Eforie->neighbors[0].neighbor = Hirsova;
+	Eforie->neighbors[0].weight = 86;
+	Hirsova->neighbors = alloc_array(edge, 3);
+	Hirsova->neighbors[0].neighbor = Urziceni;
+	Hirsova->neighbors[0].weight = 98;
+	Hirsova->neighbors[1].neighbor = Eforie;
+	Hirsova->neighbors[1].weight = 86;
+	Fagaras->neighbors = alloc_array(edge, 3);
+	Fagaras->neighbors[0].neighbor = Sibiu;
+	Fagaras->neighbors[0].weight = 99;
+	Fagaras->neighbors[1].neighbor = Bucharest;
+	Fagaras->neighbors[1].weight = 211;
+	Sibiu->neighbors = alloc_array(edge, 5);
+	Sibiu->neighbors[0].neighbor = Rimnicu_Vilcea;
+	Sibiu->neighbors[0].weight = 80;
+	Sibiu->neighbors[1].neighbor = Arad;
+	Sibiu->neighbors[1].weight = 140;
+	Sibiu->neighbors[2].neighbor = Oradea;
+	Sibiu->neighbors[2].weight = 151;
+	Sibiu->neighbors[3].neighbor = Fagaras;
+	Sibiu->neighbors[3].weight = 99;
+	Vaslui->neighbors = alloc_array(edge, 3);
+	Vaslui->neighbors[0].neighbor = Urziceni;
+	Vaslui->neighbors[0].weight = 142;
+	Vaslui->neighbors[1].neighbor = Iasi;
+	Vaslui->neighbors[1].weight = 92;
+	Rimnicu_Vilcea->neighbors = alloc_array(edge, 4);
+	Rimnicu_Vilcea->neighbors[0].neighbor = Craiova;
+	Rimnicu_Vilcea->neighbors[0].weight = 146;
+	Rimnicu_Vilcea->neighbors[1].neighbor = Sibiu;
+	Rimnicu_Vilcea->neighbors[1].weight = 80;
+	Rimnicu_Vilcea->neighbors[2].neighbor = Pitesti;
+	Rimnicu_Vilcea->neighbors[2].weight = 97;
+	Zerind->neighbors = alloc_array(edge, 3);
+	Zerind->neighbors[0].neighbor = Oradea;
+	Zerind->neighbors[0].weight = 71;
+	Zerind->neighbors[1].neighbor = Arad;
+	Zerind->neighbors[1].weight = 75;
+	Mehadia->neighbors = alloc_array(edge, 3);
+	Mehadia->neighbors[0].neighbor = Lugoj;
+	Mehadia->neighbors[0].weight = 70;
+	Mehadia->neighbors[1].neighbor = Dobreta;
+	Mehadia->neighbors[1].weight = 75;
+	Lugoj->neighbors = alloc_array(edge, 3);
+	Lugoj->neighbors[0].neighbor = Timisoara;
+	Lugoj->neighbors[0].weight = 111;
+	Lugoj->neighbors[1].neighbor = Mehadia;
+	Lugoj->neighbors[1].weight = 70;
+	Oradea->neighbors = alloc_array(edge, 3);
+	Oradea->neighbors[0].neighbor = Zerind;
+	Oradea->neighbors[0].weight = 71;
+	Oradea->neighbors[1].neighbor = Sibiu;
+	Oradea->neighbors[1].weight = 151;
+	Neamt->neighbors = alloc_array(edge, 2);
+	Neamt->neighbors[0].neighbor = Iasi;
+	Neamt->neighbors[0].weight = 87;
+	Urziceni->neighbors = alloc_array(edge, 4);
+	Urziceni->neighbors[0].neighbor = Bucharest;
+	Urziceni->neighbors[0].weight = 85;
+	Urziceni->neighbors[1].neighbor = Hirsova;
+	Urziceni->neighbors[1].weight = 98;
+	Urziceni->neighbors[2].neighbor = Vaslui;
+	Urziceni->neighbors[2].weight = 142;
+	Giurgiu->neighbors = alloc_array(edge, 2);
+	Giurgiu->neighbors[0].neighbor = Bucharest;
+	Giurgiu->neighbors[0].weight = 90;
+	Iasi->neighbors = alloc_array(edge, 3);
+	Iasi->neighbors[0].neighbor = Vaslui;
+	Iasi->neighbors[0].weight = 92;
+	Iasi->neighbors[1].neighbor = Neamt;
+	Iasi->neighbors[1].weight = 87;
+
+	return prob;
+}

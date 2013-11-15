@@ -1,0 +1,9 @@
+//test error
+
+int main()
+{
+  int foo;
+
+  while(foo == 15) foo = 411;
+  return foo;
+}

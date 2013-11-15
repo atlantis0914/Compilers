@@ -1,0 +1,10 @@
+//test return 2147483647
+// Test loop signed overflow conditional.
+
+int main() {
+    int t = 0;
+    for (int x = 2147483647; x > 0; x++) {
+        t += x;
+    }
+    return t;
+}

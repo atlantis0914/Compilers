@@ -1,0 +1,10 @@
+//test error
+
+struct cat {
+  int meow;
+  int whiskers;
+}
+
+int main () {
+  return 1;
+}

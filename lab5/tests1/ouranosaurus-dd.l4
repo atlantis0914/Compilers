@@ -1,0 +1,15 @@
+//test return 5
+/* dereference inside struct*/
+
+struct ip 
+{
+  int *p;
+};
+
+int main () 
+{
+  struct ip* p = alloc(struct ip);
+  p->p = alloc(int);
+  *(p->p) = 5;
+  return *(p->p);
+}

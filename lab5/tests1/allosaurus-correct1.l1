@@ -1,0 +1,23 @@
+//test return 14
+/*
+  tests:
+	expression/operators : *, +, *=, +=, -
+	declarations
+	return
+	main
+	syntax (whitespace, comments)
+*/
+int main(){
+int x;
+int sum;
+int product;
+// this program takes the product of the first 4 positive ints and returns the difference of that and the sum of the first 4 positive ints
+	x = 4;
+product = x * 3;
+sum = x + 3;
+product *= 2;
+sum += 2;
+product *= 1;
+sum += 1;
+return product - sum;
+}

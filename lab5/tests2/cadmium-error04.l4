@@ -1,0 +1,10 @@
+//test error
+
+struct list_node {
+  int elem;
+  struct list_node next;
+};
+
+int main() {
+  return 0;
+}

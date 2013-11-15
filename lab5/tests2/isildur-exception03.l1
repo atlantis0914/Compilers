@@ -1,0 +1,8 @@
+//test exception 8
+/* */
+int main() {
+  int x = 5;
+  int y = 1;
+  int z = 15;
+  return x*x / (y-1) * (y-1) / z;
+}

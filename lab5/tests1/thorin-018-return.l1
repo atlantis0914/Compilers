@@ -1,0 +1,12 @@
+//test return 15
+/* Divide by zero never happens test */
+int main()
+{
+    int a = 15;
+    return a;
+    return 15 / 0;
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

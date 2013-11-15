@@ -1,0 +1,10 @@
+//test exception 11
+/*              ---- Story part 6 ----
+   And just when the compilers situation was dire
+   Mid semester grades came in and I have a C in orgo!?! */
+
+int main() {
+  int[] a = alloc_array(int, 10);
+  return a[0xDEADBABE];
+}
+

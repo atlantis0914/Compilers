@@ -1,0 +1,20 @@
+//test return 37
+
+int main()
+{
+    bool a = 4 > 3;
+    int y = 4;
+
+    int x = a ? y * (y+2) : y * (y-2);
+    
+    if ( y > 10 ? false : true) {
+        int z = 33;
+        y += z;
+    }
+
+    else {
+        int z = 24;
+        y += z;
+    }
+    return y;
+}

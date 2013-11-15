@@ -1,0 +1,9 @@
+//test return 3
+//tests annoying comments
+
+int main() {
+   /* int x = 0; */
+   int x = 1;
+   x = /* x + 1 */ 2 + 4 /* - /*1*/ */ - 3;
+   return x;
+}

@@ -1,0 +1,12 @@
+//test error
+// tests that structs can not be on the stack
+
+struct Large {
+  struct Large* large1;
+  struct Large* large2;
+};
+
+int main() {
+  struct Large large = *alloc(struct Large);
+  return 0;
+}

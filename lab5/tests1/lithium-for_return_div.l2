@@ -1,0 +1,10 @@
+//test return 0
+int main() 
+{
+	int x = 0;
+	int y = 11;
+	for (; y > 0; y--) {
+		x = (11-y)%2;
+	}
+	return x;
+}

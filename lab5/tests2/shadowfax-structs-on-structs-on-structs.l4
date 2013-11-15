@@ -1,0 +1,8 @@
+//test error
+// what the fuck.
+
+struct x {
+  struct x y;
+};
+
+int main () { return 0; }

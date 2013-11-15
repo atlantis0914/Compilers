@@ -1,0 +1,9 @@
+//test return 18
+int main() {
+  int i;
+  int j = 7;
+  for (i = 0; 3*j > i; j--) {
+    i += j;
+  }
+  return i;
+}

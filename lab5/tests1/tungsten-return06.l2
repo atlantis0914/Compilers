@@ -1,0 +1,15 @@
+//test return 15
+//nested loops
+
+int main() {
+  int a = 10;
+  int b = 0;
+  int c = 5;
+
+  while (b <= a){
+    for(int i = 0; i < c; i++){
+      b++;
+    }
+  }
+  return b;
+}

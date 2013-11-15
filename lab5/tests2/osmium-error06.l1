@@ -1,0 +1,6 @@
+//test error
+//Tests one case of bad parentheses
+
+int main() {
+	return ()0;
+}

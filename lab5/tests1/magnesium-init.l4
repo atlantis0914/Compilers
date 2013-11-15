@@ -1,0 +1,19 @@
+//test return 0
+
+int main()
+{
+  int*[] A = alloc_array(int*, 1000);
+  /* assert(A != NULL); */
+  int *a = alloc(int);
+
+  int i;
+  for(i = 0;i < 1000; i++){
+    A[i] = alloc(int);
+    assert(A[i] != NULL);
+  }
+  
+  for(i = 0; i < 1000; i++){
+    assert(*A[i] == 0);
+  }
+  return 0;
+}

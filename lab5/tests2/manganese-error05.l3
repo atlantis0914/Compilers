@@ -1,0 +1,11 @@
+//test error
+//check to ensure function declarations & typedefs collide
+
+void an_int();
+
+typedef int an_int;
+
+int main() {
+    return 0;
+}
+

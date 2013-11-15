@@ -1,0 +1,7 @@
+//test return 0
+// Don't calculate the road not taken
+
+int main ()
+{
+  return true ? 0 : (1/0);
+}

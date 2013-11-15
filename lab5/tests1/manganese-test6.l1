@@ -1,0 +1,16 @@
+//test return -2147483646
+
+/*
+ * Tests overflow and uninitialized variable use after return
+ */
+
+int main()
+{
+    int x = 0x1;
+    int y = 0x7FfFfFfF;
+    int z; //undeclared variable
+
+    int t = y + x + x + x;
+    return t;
+    t += z; // use of uninitialized variable but this is not an error
+}

@@ -1,0 +1,38 @@
+//test error
+
+struct s1;
+
+struct s2;
+
+typedef struct s2 t2;
+typedef struct s1 t1;
+
+struct s1 {
+  int id1;
+  int id2;
+  bool id3;
+  t1 *id4;
+  t1 *id5;
+};
+
+typedef struct s1 t4;
+
+typedef t1 t3;
+
+typedef t4 a;
+
+struct s3 {
+  struct s3 *id1;
+  t2 *id2;
+};
+
+int main() {
+  int a = 3;
+  a * 5;
+  5 * a;
+  t3 * b = alloc(t3);
+  b->id4 = b;
+  b->id1 = 3;
+  return b->id4->id1;
+}
+

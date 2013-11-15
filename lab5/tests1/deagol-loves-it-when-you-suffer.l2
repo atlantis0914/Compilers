@@ -1,0 +1,14 @@
+//test return 655360
+
+// this test isn't hard enough
+
+int main() {
+  int extra = 0;
+  // don't do it wrong
+  for (int d = extra; d < 100000000; extra = d) {
+    if (d%4 == 1) d+=10000;
+    d++;
+  }
+  return ((1==1)?5:0) << 5 << 5 << 5 << (((extra==extra)?extra:1)%32);
+}
+

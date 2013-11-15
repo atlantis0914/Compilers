@@ -1,0 +1,10 @@
+//test return 3628800
+//10! but with a forloop this time
+int main()
+{
+    int x;
+    int y = 1;
+    for(x = 1; x<11;x++)
+        y*=x;
+    return y;
+}

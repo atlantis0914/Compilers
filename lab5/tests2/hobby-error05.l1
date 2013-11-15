@@ -1,0 +1,9 @@
+//test error
+
+// no main method
+
+{
+    int x = 5;
+    x += 4;
+    return x + 1;
+}

@@ -1,0 +1,188 @@
+//test return 55
+
+//DYNAMICALLY TYPED LANGUAGES ARE TYPESAFE
+//----------------------------------------
+//Progress : Either you reach a value or you divide by 0!
+
+//introducing the wondrous dynamically typed c0 program!
+//really really true type theorist edition
+
+//screw inductive types, I HAVE STRUCTS
+struct dyn {int i; bool b; struct dyn* p; struct dyn*[] a; int class;};
+typedef struct dyn dyn_t;
+
+dyn_t * equals (dyn_t * i, dyn_t * j) {
+    dyn_t * d = alloc(dyn_t);
+    if (i->class == j->class) {
+        if(i->class == 0) {
+            d->b = i->i == j->i;
+            d->class = 1;
+            return d;
+        } 
+        if(i->class == 1) {
+            d->b = i->b == j->b;
+            d->class = 1;
+            return d;
+        }
+        if(i->class == 2) {
+            d->b = i->p == j->p;
+            d->class = 1;
+            return d;
+        }
+        if(i->class == 3) {
+            d->b = i->a == j->a;
+            d->class = 1;
+            return d;
+        }
+    } 
+    d->b = false;
+    d->class = 1;
+    return d;
+}
+
+// only ints and bools are comparable
+dyn_t * leq (dyn_t * i, dyn_t * j) {
+    dyn_t * d = alloc(dyn_t);
+    if (i->class == j->class) {
+        if(i->class == 0) {
+            d->b = i->i <= j->i;
+            d->class = 1;
+            return d;
+        } 
+        if (i->class == 1){
+            d->b = i->b ? j->b : true;
+            d->class = 1;
+            return d;
+        }
+    }
+    d->b = false;
+    d->class = 1;
+    return d;
+}
+
+dyn_t * gt (dyn_t * i, dyn_t * j) {
+    dyn_t * d = alloc(dyn_t);
+    if (i->class == j->class) {
+        if(i->class == 0) {
+            d->b = i->i > j->i;
+            d->class = 1;
+            return d;
+        }
+        if(i->class == 1){
+            d->b = i->b ? !(j->b) : false;
+            d->class = 1;
+            return d;
+        }
+    }
+    d->b = false;
+    d->class = 1;
+    return d;
+}
+
+// 0 = int, 1 = bool, 2 = point, 3 = array 
+int type_of (dyn_t * class) {
+    return class->class;
+}
+
+dyn_t * fromInt (int i) {
+    dyn_t * d = alloc(dyn_t);
+    d->i = i;
+    d->class = 0;
+    return d;
+}
+
+dyn_t * fromBool (bool b) {
+    dyn_t * d = alloc(dyn_t);
+    d->b = b;
+    d->class = 1;
+    return d;
+}
+
+// WHAT ARE YOU DOING?!?!?!
+dyn_t * fromPointer (dyn_t * p) {
+    dyn_t * d = alloc(dyn_t);
+    d->p = p;
+    d->class = 2;
+    return d;
+}
+
+dyn_t * fromArray (dyn_t*[] a) {
+    dyn_t * d = alloc(dyn_t);
+    d->a = a;
+    d->class = 3;
+    return d;
+}
+
+// A "typesafe" way of exposing primitives from dyn_t*
+int toInt (dyn_t * i) {
+    if(i->class == 0) return i->i;
+    else return 1/0;
+}
+
+bool toBool (dyn_t * b) {
+    if(b->class == 1) return b->b;
+    else {1/0; return false;}
+}
+
+dyn_t * toPointer (dyn_t * p) {
+    if(p->class == 2) return p->p;
+    else {1/0; return NULL;}
+}
+
+dyn_t*[] toArray (dyn_t * a) {
+    if(a->class == 3) return a->a;
+    else {1/0; return a->a;}
+}
+
+dyn_t* copy(dyn_t* x) {
+    dyn_t* y = alloc(dyn_t);
+    y->i = x->i;
+    y->b = x->b;
+    y->p = x->p;
+    y->a = x->a;
+    y->class = x->class;
+    return y;
+}
+
+dyn_t * sum (dyn_t * x, int len) {
+    dyn_t*[] xs = toArray(x);
+    
+    dyn_t * i;
+    dyn_t * s = fromInt(0);
+
+    for(i = fromInt(0); toInt(i) < len; i->i += 1) {
+        s->i += toInt(xs[toInt(i)]);
+    }
+
+    return s;
+}
+
+// BURN THE EXPOSED PRIMITIVE TYPE!
+int main() {
+    dyn_t * x = alloc(dyn_t);
+    x->a = alloc_array(dyn_t*, 10);
+    x->class = 3;
+
+    int y = 0;
+    /*
+    for(int i = 0; i < 10; i++) {
+        (x->a)[i] = fromInt(readint());
+    }
+    */
+    (x->a)[0] = fromInt(5);
+    (x->a)[1] = fromInt(9);
+    (x->a)[2] = fromInt(8);
+    (x->a)[3] = fromInt(4);
+    (x->a)[4] = fromInt(6);
+    (x->a)[5] = fromInt(2);
+    (x->a)[6] = fromInt(1);
+    (x->a)[7] = fromInt(3);
+    (x->a)[8] = fromInt(7);
+    (x->a)[9] = fromInt(10);
+ 
+     // if(!eof()) { return 1/0; }
+
+    dyn_t * sum = sum(x, 10);
+
+    return toInt(sum);
+}

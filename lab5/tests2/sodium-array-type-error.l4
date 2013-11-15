@@ -1,0 +1,5 @@
+//test error
+int main() {
+	int[] arr = NULL;
+	return 5;
+}

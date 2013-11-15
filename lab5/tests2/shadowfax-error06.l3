@@ -1,0 +1,9 @@
+//test error
+// lol function inside another function what
+int main() {
+  int f(int x) {
+    return 0;
+  }
+
+  return f(4);
+}

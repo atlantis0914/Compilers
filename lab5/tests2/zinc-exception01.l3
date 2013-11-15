@@ -1,0 +1,21 @@
+//test exception 8
+
+int f(int x);
+int g(int y);
+
+int main() {
+  if (f(100) == 0) 
+    return 1;
+  else
+    return 0;
+}
+
+int f(int x) {
+  if (x == 0) return 0;
+  else return 100 / g(x-1);
+}
+
+int g(int x) {
+  if (x == 0) return 0;
+  else return 100 / f(x-1);
+}

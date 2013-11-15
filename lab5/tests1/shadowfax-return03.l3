@@ -1,0 +1,13 @@
+//test return 600
+// comparing chickens and returning lols
+
+typedef int lol;
+typedef bool chicken;
+
+lol main () {
+    chicken little = true;
+    chicken orEgg = false;
+    lol kthxbai = (little || orEgg) && !(little) ? 100 : 200;
+    lol hokay = 3;
+    return hokay*kthxbai;
+}

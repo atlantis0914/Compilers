@@ -1,0 +1,7 @@
+//test exception 8
+//division overflow
+
+int main(){
+  int MIN = -2147483648;
+  return MIN / -1;
+}

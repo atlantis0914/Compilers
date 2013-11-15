@@ -1,0 +1,19 @@
+//test error
+int main() { return 1/0; }
+/*              ---- Story part 8 ----
+   Now it's getting late, but before deagol retires
+   Surely I shall describe the events that transpire */
+
+struct a {
+  int a;
+};
+
+int main() {
+  struct* a = alloc(a);
+  a->a = 8;
+
+  /* can you see why it 8? */
+  return a->a;
+}
+
+

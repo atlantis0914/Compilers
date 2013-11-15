@@ -1,0 +1,12 @@
+//test error
+// nested struct definition
+struct a {
+    int a;
+    int b;
+    struct a c;
+};
+
+int main()
+{
+    return 0;
+}

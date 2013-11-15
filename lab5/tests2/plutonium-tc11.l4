@@ -1,0 +1,9 @@
+//test error
+/* not array */
+
+int main () {
+  int *p;
+  p = alloc(int);
+  p[0] = 3;
+  return -1;
+}

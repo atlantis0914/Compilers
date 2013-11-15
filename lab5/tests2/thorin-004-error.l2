@@ -1,0 +1,9 @@
+//test error
+int main()
+{
+  int i = 1;
+  return i++;
+}
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

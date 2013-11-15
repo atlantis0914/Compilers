@@ -1,0 +1,9 @@
+//test error
+// assignment in for loop
+int main()
+{
+  int b = 42;
+  for(int a = 0; b = a; a++)
+    return 0xbeefeeee / 0x00000000;
+  return 0;
+}

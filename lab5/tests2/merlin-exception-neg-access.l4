@@ -1,0 +1,25 @@
+//test exception 11 
+//raises a to the power of b
+int pow(int a1, int b)
+{
+  int a2 = 1;
+  for(int i = 0; i < b;i++)
+    a2 *= a1;
+  return a2;
+}
+
+int main()
+{
+  int size = 1000;
+  int[] a = alloc_array(int,1000);
+
+  for(int i = size; i >= 0; i--)
+  {
+    for(int j = size; j >= 0; j--)
+    {
+      a[pow(i,j)] = i+j;
+    }
+  }
+  return a[0];
+
+}

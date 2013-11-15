@@ -1,0 +1,32 @@
+//test return 1
+//selection sort
+
+int main()
+{
+int[] arr = alloc_array(int,2000);
+int i;
+int j;
+int temp;
+
+for(i=0;i<2000;i++)
+{
+arr[i] = 2000-i;
+}
+
+for(i=0;i<2000;i++)
+{
+    int min = arr[i];
+    for(j=i+1;j<2000;j++)
+        {
+        if(arr[j]<arr[i])
+        min = j;
+        }
+     temp = arr[i];
+    arr[i] = arr[min];
+    arr[min] = temp;
+    
+
+}
+return arr[0];
+
+}

@@ -1,0 +1,10 @@
+//test error
+// comparing pointers that refer to different types
+struct foo {};
+struct bar {};
+int main() {
+  struct foo *f = alloc(struct foo);
+  struct bar *b = alloc(struct bar);
+  if (f == b) return 0;
+  else return 1;
+}

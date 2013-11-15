@@ -1,0 +1,111 @@
+//test return 0
+// Fun with UBAs!
+
+typedef int elem;
+
+/* Interface of unbounded arrays */
+
+typedef struct uba_header* uba;
+
+uba uba_new(int initial_limit);
+
+int uba_size(uba L);
+
+elem uba_get(uba L, int index);
+
+void uba_set(uba L, int index, elem e);
+
+void uba_add(uba L, elem e);
+
+elem uba_remove(uba L);
+
+/* Implementation of unbounded arrays */
+
+struct uba_header {
+  int limit;
+  int size;
+  elem[] data;
+};
+
+uba uba_new(int initial_limit) {
+  uba res = alloc(struct uba_header);
+  res->limit = initial_limit;
+  res->size = 0;
+  res->data = alloc_array(elem, initial_limit);
+  return res;
+}
+
+int uba_size(uba L) {
+  return L->size;
+}
+
+elem uba_get(uba L, int index) {
+  return L->data[index];
+}
+
+void uba_set(uba L, int index, elem e) {
+  L->data[index] = e;
+}
+
+void uba_resize(uba L, int new_limit) {
+  elem[] new = alloc_array(elem, new_limit);
+  for (int i = 0; i < L->size; i++) {
+    new[i] = L->data[i];
+  }
+  L->data = new;
+  L->limit = new_limit;
+}
+
+void uba_add(uba L, elem e) {
+  if (L->size == L->limit) {
+    uba_resize(L, 2 * L->limit);
+  }
+
+  L->data[L->size] = e;
+  L->size++;
+}
+
+elem uba_remove(uba L) {
+  if (L->size < L->limit / 4) {
+    uba_resize(L, L->limit / 2);
+  }
+
+  L->size--;
+  return L->data[L->size];
+}
+
+int main() {
+  uba L = uba_new(100);
+
+  // Put some stuff in, no resize.
+  for (int i = 0; i < 100; i++) {
+    uba_add(L, i);
+  }
+  assert(uba_size(L) == 100);
+
+  // Take half of it out, checking the values.
+  for (int i = 99; i >= 50; i--) {
+    assert(uba_remove(L) == i);
+  }
+  assert(uba_size(L) == 50);
+
+  // Put a lot more in, with several resizes.
+  for (int i = 50; i < 1000; i++) {
+    uba_add(L, i);
+  }
+  assert(uba_size(L) == 1000);
+
+  // Double everything.
+  for (int i = 0; i < 1000; i++) {
+    uba_set(L, i, 2 * uba_get(L, i));
+  }
+  assert(uba_size(L) == 1000);
+
+  // Pull it all out and make sure we didn't break anything.
+  for (int i = 999; i >= 0; i--) {
+    assert(uba_remove(L) == 2 * i);
+  }
+  assert(uba_size(L) == 0);
+
+  return 0;
+}

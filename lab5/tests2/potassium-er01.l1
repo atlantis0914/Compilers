@@ -1,0 +1,13 @@
+//test error
+// test should raise an error as int x is declared twice
+
+int main() {
+
+  int x = 5;
+  int y;
+  y =  x + 5;
+  int x;
+
+  return x;
+
+}

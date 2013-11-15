@@ -1,0 +1,11 @@
+//test return 0
+
+bool f (int x) {
+  return (x == 0);
+}
+
+int main () {
+  f (0);
+
+  return 0;
+}

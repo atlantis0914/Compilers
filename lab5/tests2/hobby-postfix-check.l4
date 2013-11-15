@@ -1,0 +1,11 @@
+//test error
+
+int main() {
+    int *exp = alloc(int);
+
+    exp = 5;
+
+    *exp++;
+
+    return 7;
+}

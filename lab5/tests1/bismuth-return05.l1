@@ -1,0 +1,11 @@
+//test return 3
+// test in line initialization
+int main()
+{
+  int a = 0x0a0 + 1;
+  int b = a - 12;
+  int c = b * 3;
+  int d = c / 2;
+  
+  return d % 10;
+}

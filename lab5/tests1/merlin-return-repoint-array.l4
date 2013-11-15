@@ -1,0 +1,11 @@
+//test return 15411
+int main()
+{
+  int[] original = alloc_array(int,10);
+  int[] temp = alloc_array(int,15);
+  temp[0] = 15411;
+  original = temp;
+
+  return original[0];
+
+}

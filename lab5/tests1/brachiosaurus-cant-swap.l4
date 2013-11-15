@@ -1,0 +1,65 @@
+//test return 10945
+/* Tests memory-to-memory operations when base operands must be spilled */
+
+int main()
+{
+	int *rax = alloc(int);
+	int *rbx = alloc(int);
+	int *rcx = alloc(int);
+	int *rdx = alloc(int);
+	int *rsi = alloc(int);
+	int *rdi = alloc(int);
+	int *rbp = alloc(int);
+	int *r8 = alloc(int);
+	int *r9 = alloc(int);
+	int *r10 = alloc(int);
+	int *r11 = alloc(int);
+	int *r12 = alloc(int);
+	int *r13 = alloc(int);
+	int *r14 = alloc(int);
+	int *r15 = alloc(int);
+	int *m1 = alloc(int);
+	int *m2 = alloc(int);
+	int *m3 = alloc(int);
+	int *m4 = alloc(int);
+	
+	*rax = 1; // 1
+	*rbx = *rax; // 1
+	*rcx = *rbx;
+	*rcx += *rax; // 2
+	*rdx = *rcx;
+	*rdx += *rbx; // 3
+	*rsi = *rdx;
+	*rsi += *rcx; // 5
+	*rdi = *rsi;
+	*rdi += *rdx; // 8
+	*rbp = *rdi;
+	*rbp += *rsi; // 13
+	*r8 = *rbp;
+	*r8 += *rdi; // 21
+	*r9 = *r8;
+	*r9 += *rbp; // 34
+	*r10 = *r9;
+	*r10 += *r8; // 55
+	*r11 = *r10;
+	*r11 += *r9; // 89
+	*r12 = *r11;
+	*r12 += *r10; // 144
+	*r13 = *r12;
+	*r13 += *r11; // 233
+	*r14 = *r13;
+	*r14 += *r12; // 377
+	*r15 = *r14;
+	*r15 += *r13; // 610
+	*m1 = *r15;
+	*m1 += *r14; // 987
+	*m2 = *m1;
+	*m2 += *r15; // 1597
+	*m3 = *m2;
+	*m3 += *m1; // 2584
+	*m4 = *m3;
+	*m4 += *m2; // 4181
+
+	return *rax+*rbx+*rcx+*rdx+*rsi+*rdi+*rbp+*r8+*r9+
+	       *r10+*r11+*r12+*r13+*r14+*r15+*m1+*m2+*m3+*m4;
+}

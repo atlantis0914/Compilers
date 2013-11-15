@@ -1,0 +1,12 @@
+//test error
+//mismatched parameter types
+
+int do(int x);
+
+int main(){
+    return 0;
+}
+
+int do(int x, int y, int z){
+    return x + y + z;
+}

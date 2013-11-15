@@ -1,0 +1,12 @@
+//test error
+
+// Can't compare two pointers to different types. 
+
+int main() {
+	int* a = NULL;
+	bool* b = NULL;
+
+	if (a == b) return 10;
+	return 12341;
+}
+

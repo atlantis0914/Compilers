@@ -1,0 +1,42 @@
+//test return 12
+
+int a(int[] arr);
+int b(int[] arr);
+int c(int[] arr);
+int d(int[] arr);
+
+int a(int[] arr) {
+    arr[0] = 0;
+    arr[1] = 1;
+    arr[2] = 2;
+    arr[3] = 3;
+    b(arr);
+    return 0;
+}
+
+int b(int[] arr) {
+    arr[1]++;
+    arr[2]++;
+    arr[3]++;
+    c(arr);
+    return 0;
+}
+
+int c(int[] arr) {
+    arr[2]++;
+    arr[3]++;
+    d(arr);
+    return 0;
+}
+
+int d(int[] arr) {
+    arr[3]++;
+    return 0;
+}
+
+int main () {
+  int[] A;
+  A = alloc_array(int, 4);
+  a(A);
+  return A[0] + A[1] + A[2] + A[3];
+}

@@ -1,0 +1,10 @@
+//test exception 8
+
+int main() {
+    int i = 1;
+
+    int j = ((i << 31) >> 31);
+    int k = (i << 31);
+
+    return (k * j) / j;
+}

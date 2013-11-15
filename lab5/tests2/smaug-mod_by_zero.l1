@@ -1,0 +1,8 @@
+//test exception
+// Attempts to mod a number by 0
+
+int main()
+{
+  return 1 % 0;
+}
+

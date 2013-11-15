@@ -1,0 +1,27 @@
+//test return 896
+
+typedef int     i0;
+typedef int*    i1;
+typedef int**   i2;
+typedef int***  i3;
+
+int main() {
+    i0 x0 = 2;
+    i1 x1 = alloc(i0);
+    i2 x2 = alloc(i1);
+    i3 x3 = alloc(i2);
+
+    *x1 = x0;
+    *x2 = x1;
+    *x3 = x2;
+
+    i0 y0 = ***x3 * **x2 * *x1 * x0 * *x1 * **x2 * ***x3;
+    i0 y1 = ***x3***x2**x1*x0**x1***x2****x3;
+    i0 y2 = * * * x3 * * * x2 * * x1 * x0 * * x1 * * * x2 * * * * x3;
+    i0 y3 = *** x3 *** x2 ** x1 * x0 ** x1 *** x2 **** x3;
+    i0 y4 = *** x3*** x2** x1* x0** x1*** x2**** x3;
+    i0 y5 = x0 *** *x3* * *x2* *x1* *x1* * *x2* ** *x3* x0;
+
+    return y0 + y1 + y2 + y3 + y4 + y5;
+}
+

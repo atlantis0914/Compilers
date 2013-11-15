@@ -1,0 +1,16 @@
+//test error
+
+struct Foo {
+  int x;
+};
+
+// Function params must be small types
+int func(struct Foo bar) {
+  bar.x = 3;
+  return 0;
+}
+
+int main() {
+  struct Foo* bar = alloc(struct Foo);
+  return bar->x;
+}

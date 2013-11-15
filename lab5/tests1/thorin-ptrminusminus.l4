@@ -1,0 +1,12 @@
+//test return 4
+
+int main ()
+{
+  int *a = alloc(int);
+  int **b = alloc(int*);
+  int ***c = alloc(int**);
+  *c = b;
+  *b = a;
+  *a = 4;
+  return ***c ;
+}

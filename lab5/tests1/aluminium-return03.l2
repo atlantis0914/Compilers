@@ -1,0 +1,10 @@
+//test return -4
+// test assignment in declaration; test assign operation with arithmetic
+int main()
+{
+  int a = 10;
+  int b = a-1;
+  int c = 5;
+  c -= b;
+  return -4;
+}

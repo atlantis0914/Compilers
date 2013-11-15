@@ -1,0 +1,14 @@
+//test return 10
+/* array typedef should work fine */
+
+typedef int[] manyints;
+
+int main() {
+  manyints mi = alloc_array(int, 10);
+  for (int i = 0; i < 10; i++) 
+    mi[i] = 1;
+  int sum = 0;
+  for (int i = 0; i < 10; i++)
+    sum += mi[i];
+  return sum;
+}

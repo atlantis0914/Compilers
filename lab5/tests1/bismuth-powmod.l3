@@ -1,0 +1,25 @@
+//test return 71
+/* Computes the modular power
+ * such that powmod(b, e, m) = b^e mod m
+ */
+
+int powmod(int b, int e, int mod)
+{
+    if (e == 0)
+        return 1;
+        
+    int c = 1;
+    int e_prime = 0;
+        
+    while (e_prime < e) {
+        e_prime++;
+        c = ((b*c) % mod);
+    }
+        
+    return c;
+}
+
+int main ()
+{
+  return powmod(56354331, 22332423, 100);
+}

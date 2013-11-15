@@ -1,0 +1,10 @@
+//test return 43
+
+int main() {
+	int[] arr = alloc_array(int, 3000);
+	int ptr = 0;
+
+	int[] code = alloc_array(int, 10000);
+	code[0] = 43;
+	return code[0];
+}

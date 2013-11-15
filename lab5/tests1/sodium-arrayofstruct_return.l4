@@ -1,0 +1,27 @@
+//test return 0
+// Arrays containing structs.
+
+struct derp {
+  int x;
+  int y;
+};
+typedef struct derp derp;
+
+int main() {
+  int len = 100;
+  derp[] A = alloc_array(derp, len);
+
+  for (int i = 0; i < len; i++) {
+    A[i].x = i;
+    A[i].y = i * i;
+  }
+
+  // Make sure we didn't break anything along the way...
+  for (int i = 0; i < len; i++) {
+    assert(A[i].x == i);
+    assert(A[i].y == i * i);
+  }
+
+  return 0;
+}
+

@@ -1,0 +1,13 @@
+//test error
+//so about those void pointers...
+
+int foo(int* p) {
+	return (*p) + 1;
+}
+
+int main() {
+	int* p = alloc(int);
+	*p = 2;
+	void* badP = alloc(void);
+	return foo(p);
+}

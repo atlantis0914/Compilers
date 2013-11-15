@@ -1,0 +1,15 @@
+//test error
+struct s;
+typedef struct s S;
+S {
+	int f;
+};
+void foo(S* sp){
+	sp->f=3;
+}
+
+int main(){
+	S* sp=alloc(S);
+	foo(sp);
+	return sp->f;
+}

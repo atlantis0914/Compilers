@@ -1,0 +1,11 @@
+//test return 4
+// Messes with bool operations a bunch
+// Did you know that you can construct all boolean operations
+// from ! and ||?
+int main() {
+	bool a = true;
+	bool b = false;
+	bool and = !(!a || !b);
+	bool xor = !(a || !b) || !(!a || b);
+	return 4;
+}

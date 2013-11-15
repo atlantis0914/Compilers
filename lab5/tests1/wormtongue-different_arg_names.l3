@@ -1,0 +1,12 @@
+//test return 0
+//Tests to make sure a function's declaration can have
+//different argument names than the definition.
+
+int foo(int a, int b, bool c);
+int foo(int x, int y, bool z) {
+	return z ? x : y;
+}
+
+int main() {
+	return foo(0, 1, true);
+}

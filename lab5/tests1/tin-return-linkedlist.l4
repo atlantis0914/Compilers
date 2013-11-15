@@ -1,0 +1,33 @@
+//test return 75
+// Linked list structure with dumb reduce
+
+struct list {
+  bool empty;
+  int elem;
+  struct list *next;
+};
+
+typedef struct list list;
+
+list *empty() {
+  list *new_list = alloc(list);
+  new_list->empty = true;
+  return new_list;
+}
+
+list *cons(int value, list *tail) {
+  list *new_list = alloc(list);
+  new_list->empty = false;
+  new_list->elem = value;
+  new_list->next = tail;
+  return new_list;
+}
+
+int reduce(list *things) {
+  if(things->empty) return 1;
+  else return (things->elem) - reduce(things->next);
+}
+
+int main() {
+  return reduce(cons(2, cons(3, cons(5, cons(7, cons(11, cons(13, cons(17, cons(19, cons(23, cons(29, cons(31, cons(37, cons(41, cons(43, cons(47, cons(47, cons(53, cons(59, cons(61, cons(67, cons(71, cons(73, cons(79, cons(83, cons(89, cons(97, cons(101, cons(103, cons(107, cons (109, cons(113, cons(127, cons(131, cons(137, cons(139, cons(149, cons(151, cons(157, cons(163, empty()))))))))))))))))))))))))))))))))))))))));
+}

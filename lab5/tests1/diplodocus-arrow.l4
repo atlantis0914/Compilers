@@ -1,0 +1,41 @@
+//test return 555
+
+struct j
+{
+int b;
+};
+typedef struct j jstruct;
+
+struct k
+{
+jstruct* jp; 
+};
+typedef struct k kstruct;
+
+struct i
+{
+kstruct* kp;
+};
+typedef struct i istruct;
+
+
+int main()
+{
+jstruct* js; 
+kstruct* ks; 
+istruct* is;
+
+js = alloc(jstruct);
+ks = alloc(kstruct);
+is = alloc(istruct);
+
+js->b = 555;
+ks->jp = js;
+is->kp = ks;
+
+return is->kp->jp->b;
+
+
+
+return 0;
+}

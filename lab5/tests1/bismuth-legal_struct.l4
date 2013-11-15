@@ -1,0 +1,12 @@
+//test return 0
+
+int main() {
+  struct s *foo;
+
+  return 0;
+}
+
+struct s {
+  int a;
+};
+

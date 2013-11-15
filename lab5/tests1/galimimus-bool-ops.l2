@@ -1,0 +1,10 @@
+//test return 42
+int main() {
+  bool x = true;
+  bool y = false;
+  bool z = (x && !y) || (!x && y);
+  if (z)
+    return 42;
+  else
+    return 0;
+}

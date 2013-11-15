@@ -1,0 +1,7 @@
+//test error
+//return unalloced pointer
+
+int main() {
+    int* ret;
+    return *ret;
+}

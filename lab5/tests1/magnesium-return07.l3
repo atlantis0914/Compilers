@@ -1,0 +1,10 @@
+//test return 0
+//test typedef
+
+int main ();
+
+typedef int t;
+
+t main () {
+  return 0;
+}

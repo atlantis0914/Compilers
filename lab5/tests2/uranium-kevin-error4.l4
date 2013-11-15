@@ -1,0 +1,6 @@
+//test error
+
+int main() {
+    alloc(1);
+    return 1;
+}

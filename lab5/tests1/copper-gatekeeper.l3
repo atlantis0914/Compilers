@@ -1,0 +1,56 @@
+//test return 137
+
+int digitCount(int n) {
+    return (n <= 0 ? 0 : 1 + digitCount(n / 10));
+}
+
+int lookup(int n, int i) {
+    return (i <= 0 ? n % 10 : lookup(n / 10, i - 1));
+}
+
+int setDigit(int n, int i, int newVal /* should only be 0-9 */) {
+    return (i <= 0 ? n - (n % 10) + newVal : setDigit(n / 10, i - 1, newVal) * 10 + n % 10);
+}
+
+int swapDigits(int n, int i1, int i2) {
+    int d1 = lookup(n, i1);
+    int d2 = lookup(n, i2);
+    n = setDigit(n, i1, d2);
+    n = setDigit(n, i2, d1);
+    return n;
+}
+
+int quicksort_rec(int n, int lo, int hi) {
+    if(hi - lo <= 1) {return n;}
+    int delta = -1;
+    int pivot = lo;
+    int movingI = hi - 1;
+    while(pivot != movingI) {
+        int d1 = lookup(n, pivot);
+        int d2 = lookup(n, movingI);
+        if((d1 - d2) * delta > 0) {
+            n = swapDigits(n, pivot, movingI);
+            delta *= -1;
+            int temp = pivot;
+            pivot = movingI;
+            movingI = temp;
+        }
+        movingI += delta;
+    }
+    n = quicksort_rec(n, lo, pivot);
+    n = quicksort_rec(n, pivot + 1, hi);
+    return n;
+}
+
+int quicksort(int n) {return quicksort_rec(n, 0, digitCount(n));}
+
+bool checkSort() {
+    if(quicksort(948371625) != 123456789) {return false;}
+    if(quicksort(483716295) != 123456789) {return false;}
+    if(quicksort(123) != 123) {return false;}
+    return true;
+}
+
+int main() {
+    return (checkSort() ? 137 : 1994);
+}

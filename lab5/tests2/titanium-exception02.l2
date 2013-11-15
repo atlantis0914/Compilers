@@ -1,0 +1,14 @@
+//test exception 
+// dubious looking perf test
+
+int main ()
+{
+  int x = 0;
+  while (true) {
+    x++;
+    if ((x % 1073741823) == 0) {
+      return 3 / 0;
+    }
+  }
+  return 0;
+}

@@ -1,0 +1,19 @@
+//test error
+
+int main()
+{
+  int********** p;
+  p = alloc(int*********);
+  *p = alloc(int********);
+  **p = alloc(int*******);
+  ***p = alloc(int******);
+  ****p = alloc(int*****);
+  *****p = alloc(int****);
+  ******p = alloc(int***);
+  *******p = alloc(int**);
+  ********p = alloc(int*);
+  *********p = alloc(int);
+  
+  **********p = 1;
+  return *********p; //type error - this is a int*
+}

@@ -1,0 +1,10 @@
+//test error
+// can't make functions with the same name as a type
+typedef int banana;
+
+void banana() {
+}
+
+int main() {
+    return 0;
+}

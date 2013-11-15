@@ -1,0 +1,10 @@
+//test error
+
+
+int main(){ 
+    int *p1 = alloc(int);
+    int *p2 = alloc(int);
+
+    return *p1 + *(p2+4);
+}
+

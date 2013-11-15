@@ -1,0 +1,17 @@
+//test error
+// Function param must be of small type
+
+struct test
+{
+    int a;
+};
+
+int func(struct test testing)
+{
+    return 1;
+}
+
+int main()
+{
+    return 0;
+}

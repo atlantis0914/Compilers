@@ -1,0 +1,10 @@
+//test return 3
+int main()
+{
+	int *n;
+	int *r;
+	n = alloc(int);
+	r = n;
+	*n = 3;
+	return *r;
+}

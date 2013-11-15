@@ -1,0 +1,8 @@
+//test error
+struct s {int x;};
+struct b { struct s q;};
+int main() {
+	struct b* lol = alloc(struct b);
+	struct s lol2 =  lol->q;
+	return 1;
+}

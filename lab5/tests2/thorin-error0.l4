@@ -1,0 +1,8 @@
+//test error
+
+int main()
+{
+  struct foo {int a;};
+  struct foo * a = alloc(struct foo);
+  return a->a;
+}

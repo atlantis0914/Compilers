@@ -1,0 +1,331 @@
+//test exception 11
+
+// moar memory
+
+struct s2_4{
+  int *p1;
+  int *p2;
+};
+
+struct s2_5{
+struct s2_4 s1;
+struct s2_4 s2;
+};
+
+struct s2_6{
+struct s2_5 s1;
+struct s2_5 s2;
+};
+
+struct s2_7{
+struct s2_6 s1;
+struct s2_6 s2;
+};
+
+struct s2_8{
+struct s2_7 s1;
+struct s2_7 s2;
+};
+
+struct s2_9{
+struct s2_8 s1;
+struct s2_8 s2;
+};
+
+struct s2_10{
+struct s2_9 s1;
+struct s2_9 s2;
+};
+
+struct s2_11{
+struct s2_10 s1;
+struct s2_10 s2;
+};
+
+struct s2_12{
+struct s2_11 s1;
+struct s2_11 s2;
+};
+
+struct s2_13{
+struct s2_12 s1;
+struct s2_12 s2;
+};
+
+struct s2_14{
+struct s2_13 s1;
+struct s2_13 s2;
+};
+
+struct s2_15{
+struct s2_14 s1;
+struct s2_14 s2;
+};
+
+struct s2_16{
+struct s2_15 s1;
+struct s2_15 s2;
+};
+
+struct s2_17{
+struct s2_16 s1;
+struct s2_16 s2;
+};
+
+struct s2_18{
+struct s2_17 s1;
+struct s2_17 s2;
+};
+
+struct s2_19{
+struct s2_18 s1;
+struct s2_18 s2;
+};
+
+struct s2_20{
+struct s2_19 s1;
+struct s2_19 s2;
+};
+
+struct s2_21{
+struct s2_20 s1;
+struct s2_20 s2;
+};
+
+struct s2_22{
+struct s2_21 s1;
+struct s2_21 s2;
+};
+
+struct s2_23{
+struct s2_22 s1;
+struct s2_22 s2;
+};
+
+struct s2_24{
+struct s2_23 s1;
+struct s2_23 s2;
+};
+
+struct s2_25{
+struct s2_24 s1;
+struct s2_24 s2;
+};
+
+struct s2_26{
+struct s2_25 s1;
+struct s2_25 s2;
+};
+
+struct s2_27{
+struct s2_26 s1;
+struct s2_26 s2;
+};
+
+struct s2_28{
+struct s2_27 s1;
+struct s2_27 s2;
+};
+
+struct s2_29{
+struct s2_28 s1;
+struct s2_28 s2;
+};
+
+struct s2_30{
+struct s2_29 s1;
+struct s2_29 s2;
+};
+
+struct s2_31{
+struct s2_30 s1;
+struct s2_30 s2;
+};
+
+struct s2_32{
+struct s2_31 s1;
+struct s2_31 s2;
+};
+
+struct s2_33{
+struct s2_32 s1;
+struct s2_32 s2;
+};
+
+struct s2_34{
+struct s2_33 s1;
+struct s2_33 s2;
+};
+
+struct s2_35{
+struct s2_34 s1;
+struct s2_34 s2;
+};
+
+struct s2_36{
+struct s2_35 s1;
+struct s2_35 s2;
+};
+
+struct s2_37{
+struct s2_36 s1;
+struct s2_36 s2;
+};
+
+struct s2_38{
+struct s2_37 s1;
+struct s2_37 s2;
+};
+
+struct s2_39{
+struct s2_38 s1;
+struct s2_38 s2;
+};
+
+struct s2_40{
+struct s2_39 s1;
+struct s2_39 s2;
+};
+
+struct s2_41{
+struct s2_40 s1;
+struct s2_40 s2;
+};
+
+struct s2_42{
+struct s2_41 s1;
+struct s2_41 s2;
+};
+
+struct s2_43{
+struct s2_42 s1;
+struct s2_42 s2;
+};
+
+struct s2_44{
+struct s2_43 s1;
+struct s2_43 s2;
+};
+
+struct s2_45{
+struct s2_44 s1;
+struct s2_44 s2;
+};
+
+struct s2_46{
+struct s2_45 s1;
+struct s2_45 s2;
+};
+
+struct s2_47{
+struct s2_46 s1;
+struct s2_46 s2;
+};
+
+struct s2_48{
+struct s2_47 s1;
+struct s2_47 s2;
+};
+
+struct s2_49{
+struct s2_48 s1;
+struct s2_48 s2;
+};
+
+struct s2_50{
+struct s2_49 s1;
+struct s2_49 s2;
+};
+
+struct s2_51{
+struct s2_50 s1;
+struct s2_50 s2;
+};
+
+struct s2_52{
+struct s2_51 s1;
+struct s2_51 s2;
+};
+
+struct s2_53{
+struct s2_52 s1;
+struct s2_52 s2;
+};
+
+struct s2_54{
+struct s2_53 s1;
+struct s2_53 s2;
+};
+
+struct s2_55{
+struct s2_54 s1;
+struct s2_54 s2;
+};
+
+struct s2_56{
+struct s2_55 s1;
+struct s2_55 s2;
+};
+
+struct s2_57{
+struct s2_56 s1;
+struct s2_56 s2;
+};
+
+struct s2_58{
+struct s2_57 s1;
+struct s2_57 s2;
+};
+
+struct s2_59{
+struct s2_58 s1;
+struct s2_58 s2;
+};
+
+struct s2_60{
+struct s2_59 s1;
+struct s2_59 s2;
+};
+
+struct s2_61{
+struct s2_60 s1;
+struct s2_60 s2;
+};
+
+struct s2_62{
+struct s2_61 s1;
+struct s2_61 s2;
+};
+
+struct s2_63{
+struct s2_62 s1;
+struct s2_62 s2;
+};
+
+struct s2_64{
+struct s2_63 s1;
+struct s2_63 s2;
+};
+
+struct s2_65{
+struct s2_64 s1;
+struct s2_64 s2;
+};
+
+struct s2_66{
+struct s2_65 s1;
+struct s2_65 s2;
+};
+
+// my other computer is an ideal computer
+
+struct null_wrapper{
+  struct s2_66[] A;
+};
+
+int main()
+{  
+  struct null_wrapper *U = alloc(struct null_wrapper);
+  
+  return *U->A[2109478822].s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.p1;
+}

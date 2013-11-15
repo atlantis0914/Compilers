@@ -1,0 +1,16 @@
+//test return -95
+
+// gibberish statement
+int main()
+{
+  int ixCQKIyI = 1;
+  int YCZLHums = 2;
+  int qyEAqkNW = 3;
+  int DrkuPGKS = 4;
+  int arsaKcbm = 5;
+  int bUByvpMv = 6;
+  int LhoBtVAZ = 7;
+  int pvLeASBy = 8;
+
+  return true ? ~91 ^ ixCQKIyI - YCZLHums - ~5 : true ? qyEAqkNW : YCZLHums % ~91 >> DrkuPGKS & arsaKcbm | 40 - ixCQKIyI / ~5 / 40 >> arsaKcbm - qyEAqkNW & 1 % (true ? bUByvpMv : LhoBtVAZ << 40 * pvLeASBy);
+}

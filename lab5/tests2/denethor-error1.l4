@@ -1,0 +1,14 @@
+//test error
+
+struct mys {
+ int x;
+}
+
+struct mys {
+ int x;  
+}
+
+int main() {
+   int x = 128;
+   return x;
+}

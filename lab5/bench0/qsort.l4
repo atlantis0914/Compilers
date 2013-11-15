@@ -1,0 +1,171 @@
+//test return 1614389295
+
+/* Quicksort
+ * 15-122 Principles of Imperative Computation, Spring 2011
+ * Frank Pfenning
+ */
+
+bool is_sorted(int[] A, int lower, int upper)
+//@requires 0 <= lower && lower <= upper && upper <= \length(A);
+{
+  for (int i = lower; i < upper-1; i++)
+    //@loop_invariant lower == upper || (lower <= i && i <= upper-1);
+    if (!(A[i] <= A[i+1])) return false;
+  return true;
+}
+
+bool leq(int x, int[] A, int lower, int upper)
+//@requires 0 <= lower && lower <= upper && upper <= \length(A);
+{ 
+  for (int i = lower; i < upper; i++)
+    //@loop_invariant lower <= i && i <= upper;
+    if (!(x <= A[i])) return false;
+  return true;
+}
+
+bool geq(int x, int[] A, int lower, int upper)
+//@requires 0 <= lower && lower <= upper && upper <= \length(A);
+{ 
+  for (int i = lower; i < upper; i++)
+    //@loop_invariant lower <= i && i <= upper;
+    if (!(x >= A[i])) return false;
+  return true;
+}
+
+bool gt(int x, int[] A, int lower, int upper)
+//@requires 0 <= lower && lower <= upper && upper <= \length(A);
+{ 
+  for (int i = lower; i < upper; i++)
+    //@loop_invariant lower <= i && i <= upper;
+    if (!(x > A[i])) return false;
+  return true;
+}
+
+bool lt(int x, int[] A, int lower, int upper)
+//@requires 0 <= lower && lower <= upper && upper <= \length(A);
+{ 
+  for (int i = lower; i < upper; i++)
+    //@loop_invariant lower <= i && i <= upper;
+    if (!(x < A[i])) return false;
+  return true;
+}
+
+void swap(int[] A, int i, int j)
+//@requires 0 <= i && i < \length(A);
+//@requires 0 <= j && j < \length(A);
+//@ensures A[i] == \old(A[j]) && A[j] == \old(A[i]);
+{ int tmp = A[i];
+  A[i] = A[j];
+  A[j] = tmp;
+}
+
+int partition(int[] A, int lower, int upper)
+//@requires 0 <= lower && lower < upper && upper <= \length(A);
+//@ensures lower <= \result && \result < upper;
+//@ensures gt(A[\result], A, lower, \result);
+//@ensures leq(A[\result], A, \result+1, upper);
+{
+  int pivot_index = lower+(upper-lower)/2;
+  int pivot = A[pivot_index];
+  swap(A, pivot_index, upper-1);
+  int left = lower;
+  int right = lower;
+  while (right < upper-1)
+    //@loop_invariant lower <= left && left <= right && right < upper;
+    //@loop_invariant gt(pivot, A, lower, left);
+    //@loop_invariant leq(pivot, A, left, right);
+    //@loop_invariant pivot == A[upper-1];
+    {
+      if (pivot <= A[right]) {
+	right++;
+      } else {
+	swap(A, left, right);
+	left++;
+	right++;
+      }
+    }
+  swap(A, left, upper-1);
+  return left;
+}
+
+void qsort(int[] A, int lower, int upper)
+//@requires 0 <= lower && lower <= upper && upper <= \length(A);
+//@ensures is_sorted(A, lower, upper);
+{
+  if (upper-lower <= 1) return;
+  int i = partition(A, lower, upper);
+  qsort(A, lower, i);
+  qsort(A, i+1, upper);
+  return;
+}
+
+/* Cycle counting interface */
+
+struct rand {
+  int seed;
+};
+
+typedef struct rand* rand_t;
+
+rand_t init_rand (int seed) {
+  rand_t gen = alloc(struct rand);
+  gen->seed = seed;
+  return gen;
+}
+
+int rand(rand_t gen) {
+  gen->seed = gen->seed * 1664525 + 1013904223;
+  return gen->seed;
+}
+
+struct io {
+  int size;
+  int[] in;
+  int[] out;
+};
+typedef struct io data;
+
+data* init (int param) {
+  rand_t gen = init_rand(0xdeadbeef);
+  int n = param;
+  int[] in = alloc_array(int, n);
+  int[] out = alloc_array(int, n);
+  for (int i = 0; i < n; i++)
+    in[i] = rand(gen);
+  data* io = alloc(data);
+  io->size = param;
+  io->in = in;
+  io->out = out;
+  return io;
+}
+
+void prepare (data* io, int param) {
+  int n = io->size;
+  for (int i = 0; i < n; i++)
+    io->out[i] = io->in[i];
+}
+
+void run (data* io, int param) {
+  qsort(io->out, 0, io->size);
+}
+
+int sum(int[] A, int lower, int upper) {
+  int r = 0;
+  for (int i = lower; i < upper; i++)
+    r = r + A[i];
+  return r;
+}
+
+int checksum (data* io, int param) {
+  int n = io->size;
+  int b = is_sorted(io->out, 0, n) ? 1 : 0;
+  int sum = sum(io->out, 0, n);
+  return b+sum;
+}
+
+int main () {
+  data* io = init(937);
+  prepare(io, 937);
+  run(io, 937);
+  return checksum(io, 937);
+}

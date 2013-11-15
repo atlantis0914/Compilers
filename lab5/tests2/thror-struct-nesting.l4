@@ -1,0 +1,13 @@
+//test error
+
+struct s;
+typedef struct s s;
+struct s {
+  int a;
+  int b;
+  s f;
+};
+
+int main() {
+  return 0;
+}

@@ -1,0 +1,10 @@
+//test return 1
+// simple bool test
+int main()
+{
+  int i = 0;
+  bool b = true;
+  b = false && true;
+  i = b ? 0 : 1;
+  return i;
+}

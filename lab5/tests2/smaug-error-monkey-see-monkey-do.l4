@@ -1,0 +1,14 @@
+//test error
+// Check that illegal struct field lookups are disallowed even if they aren't reachable.
+
+struct monkey {
+  bool see;
+};
+
+int main()
+{
+  return 0;
+  struct monkey* monkey = alloc(struct monkey);
+  if (monkey->see) monkey->do;
+}
+

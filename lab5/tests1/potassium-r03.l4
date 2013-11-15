@@ -1,0 +1,15 @@
+//test return 0
+
+
+int* mymalloc() {
+  return alloc(int);
+}
+
+int main() {
+  int * y = mymalloc();
+  int * x = mymalloc();
+  *y = 1;
+  *x = 2;
+  assert(*x != *y);
+  return 0;
+}

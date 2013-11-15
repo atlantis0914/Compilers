@@ -1,0 +1,10 @@
+//test error
+//Can't declare a function that collides with alloc
+
+bool alloc(int counter);
+
+int main(){
+	int* a = alloc(int);
+	*a = 138;
+	return *a;
+}

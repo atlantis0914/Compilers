@@ -1,0 +1,31 @@
+//test return 48
+
+int foo(int baz);
+
+bool bar(int foo)
+{
+	return (foo & 0xF) != 0;
+}
+
+int main()
+{
+	int arg = 35;
+	int returned = foo(arg);
+
+	if(returned == 48 && arg == 35) {
+		return returned;
+	}
+
+	return -1;
+}
+
+int foo(int baz)
+{
+	if(baz == 0)
+		return 0;
+	if(bar(baz)) {
+		baz--;
+		return foo(baz);
+	}
+	return baz + foo(baz - 1);
+}	

@@ -1,0 +1,15 @@
+//test error
+
+struct Node_t;
+
+struct Node_t {
+    Node* left;
+    Node* right;
+    int value;
+};
+
+typedef struct Node_t Node;
+
+int main(){
+    return 0;
+}

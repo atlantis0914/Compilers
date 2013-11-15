@@ -1,0 +1,6 @@
+//test return 40
+int main() {
+	int k = 0x75;
+	int z = (5 + k)/(0x3);
+	return z;
+}

@@ -1,0 +1,35 @@
+//test return 654321
+// Tests that a function can be used if it is defined on a line after it is
+// called but declared before that line
+
+int invert_number(int x);
+
+int main() {
+    int invrtd = invert_number(123456);
+
+    return invrtd;
+}
+
+int invert_number(int x) {
+    bool pos = true;
+
+    // Avoid annoying issues where numbers like -4 / 10 = -1, not 0
+    if (x < 0) {
+        pos = false;
+        x = -x;
+    }
+
+    int inverted = 0;
+
+    while (x > 0) {
+        inverted *= 10;
+        int digit = x % 10;
+        inverted += digit;
+        x /= 10;
+    }
+
+    if (!pos) {
+        inverted = -inverted;
+    }
+    return inverted;
+}

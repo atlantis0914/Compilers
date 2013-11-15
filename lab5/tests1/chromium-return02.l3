@@ -1,0 +1,13 @@
+//test return 24
+// Sanity Test
+
+int apple (int pie) {
+    if (pie == 0) 
+        return 1;
+    else 
+        return pie*apple(pie-1);
+}
+
+int main () {
+    return apple (4);
+}

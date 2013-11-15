@@ -1,0 +1,22 @@
+//test exception 8
+
+int sum_array(int[] A, int length){
+  int i = 0;
+  int sum = 0;
+
+  while (i < length)
+  {
+    sum += A[i];
+    i++;
+  }
+
+  return sum;
+}
+
+int main()
+{
+  int[] arr = alloc_array(int, 5);
+  int sum = sum_array (arr, 5);
+  return (1/sum);
+}
+

@@ -1,0 +1,16 @@
+//test return 0
+
+typedef int[] int_arr;
+typedef int * int_p;
+typedef int* int_type;
+
+int test(int_arr a, int_p b, int_type c) {
+    return 0;
+}
+
+int main () {
+  int[] A;
+  A = alloc_array(int, 4);
+  test(A, NULL, NULL);
+  return A[0] + A[1] + A[2] + A[3];
+}

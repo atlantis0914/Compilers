@@ -1,0 +1,15 @@
+//test return 0
+
+int a(int* arr);
+
+int a(int* arr) {
+    int* null_arr;
+    null_arr = NULL;
+    return (NULL == NULL) ? 0 : 1;
+}
+
+int main () {
+  int* A;
+  A = NULL;
+  return a(A);
+}

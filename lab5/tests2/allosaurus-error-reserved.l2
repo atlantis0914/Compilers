@@ -1,0 +1,8 @@
+//test error
+
+/* can't use a reserved word as an identifier */
+
+int main(){
+  int typedef = 1;
+  return typedef;
+}

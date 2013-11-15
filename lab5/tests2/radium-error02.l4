@@ -1,0 +1,28 @@
+//test error
+
+typedef int foo;
+
+struct foo;
+
+struct bar;
+
+struct foo;
+
+typedef int foo; //can't shadow struct def
+
+struct bar
+{
+  int a;
+};
+
+struct foo
+{
+  int a;
+};
+
+int main()
+{
+  int x = 5;
+  struct foo* b = alloc(struct foo);
+  return x;
+}

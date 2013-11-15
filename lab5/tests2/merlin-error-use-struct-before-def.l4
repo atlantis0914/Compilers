@@ -1,0 +1,12 @@
+//test error
+
+struct foo;
+typedef struct foo foo;
+
+int main()
+{
+  foo[] a = alloc_array(foo,15411);
+  return foo[15410].bar;
+}
+
+struct foo{int bar; int baz;};

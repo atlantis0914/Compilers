@@ -1,0 +1,36 @@
+//test return 0
+// trees!
+
+struct tree
+{
+    int data;
+    struct tree * left;
+    struct tree * right;
+};
+
+typedef struct tree* T;
+
+void fill_tree(int level, T t)
+{
+    t->data = level;
+
+    if(level == 0)
+    {
+        t->left = NULL;
+        t->right = NULL;
+        return;
+    }
+
+    t->left = alloc(struct tree);
+    t->right = alloc(struct tree);
+    fill_tree(level - 1, t->left);
+    fill_tree(level - 1, t->right);
+}
+
+int main()
+{
+    T t = alloc(struct tree);
+    fill_tree(20, t);
+
+    return 0;
+}

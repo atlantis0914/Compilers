@@ -1,0 +1,7 @@
+//test error
+// uninitialized
+int main()
+{
+	for (int i; i > 489; i = 0) i;
+	return 42;
+}

@@ -1,0 +1,11 @@
+//test exception 6
+
+void raise() {
+  assert(false);
+}
+
+int main() {
+  if (true || (1/0 == 0))
+    raise();
+  return 0;
+}

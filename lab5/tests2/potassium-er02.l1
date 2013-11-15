@@ -1,0 +1,8 @@
+//test error
+// unbound variable x
+
+int main() {
+
+  return x;
+
+}

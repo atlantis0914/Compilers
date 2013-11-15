@@ -1,0 +1,12 @@
+//test return -1
+
+int valid(struct s *a) {
+    if(a == NULL)
+        return -1;
+    else
+        return 0;
+}
+
+int main() {
+	return valid(NULL);
+}

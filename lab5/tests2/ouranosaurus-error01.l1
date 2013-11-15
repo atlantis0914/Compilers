@@ -1,0 +1,10 @@
+//test error
+// reserved keyword as var name
+
+int main()
+{
+  int NULL;
+  
+  NULL = 12;
+  return NULL;
+}

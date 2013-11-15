@@ -1,0 +1,10 @@
+//test error
+//same size, but still very very different oh im sorry
+int main() {
+    int nikolai = 100;
+    int *nikolaisfriends = alloc(int);
+    int **ifuckinglovenikolai = alloc(int*);
+    int ***nikolaiissohot = alloc(int*);
+    return 1;
+
+}

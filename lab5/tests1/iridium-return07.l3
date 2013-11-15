@@ -1,0 +1,21 @@
+//test return 456403
+
+bool isPrime (int x) {
+  for(int n = x - 1; n > 1; n--) {
+    if((x / n) * n == x) return false;
+  }
+  return true;
+}
+
+int nextLargestPrime (int x) {
+  int n = x;
+  while(true) {
+    if(isPrime(n)) return n;
+    else n++;
+  }
+  return 0;
+}
+
+int main () {
+  return nextLargestPrime(456380);
+}

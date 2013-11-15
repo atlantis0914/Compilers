@@ -1,0 +1,9 @@
+//test return 2
+
+int main() {
+
+  for(;false;)
+    return 0;
+  return 2;
+
+}

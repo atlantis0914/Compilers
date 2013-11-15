@@ -1,0 +1,41 @@
+//test return 64
+/* spill city */
+
+void spilled_milk3(int *a, int *b, int *c, int *d, int *e, int *f, int *g) {
+  int s = -1;
+  int t = -2;
+  int u = -3;
+  int v = -4;
+  int w = -5;
+  int x = -6;
+  int y = -7;
+  int z = -8;
+  int S1 = *a + *b + *c + *d + *e + *f + *g; // 28
+  int S2 = s + t + u + v + w + x + y + z; // -36
+  *g = S1 + S2; // -8
+}
+
+int main () {
+  int x1 = 1; int x2 = 2; int x3 = 3; int x4 = 4;
+  int x5 = 5; int x6 = 6; int x7 = 7;
+
+  int *a;
+  int *b;
+  int *c;
+  int *d;
+  int *e;
+  int *f;
+  int *g;
+  a = alloc(int); *a = 1;
+  b = alloc(int); *b = 2;
+  c = alloc(int); *c = 3;
+  d = alloc(int); *d = 4;
+  e = alloc(int); *e = 5;
+  f = alloc(int); *f = 6;
+  g = alloc(int); *g = 7;
+  spilled_milk3(a, b, c, d, e, f, g);
+
+  int n8 = (x1 + x2 + x7) - (x3 + x4 + x5 + x6); // -8
+
+  return *g * n8; // (-8) * (-8) = 64
+}

@@ -1,0 +1,114 @@
+//test return 0 
+//make a binary search tree.
+
+struct node;
+
+typedef struct node node_t;
+
+struct node {
+    int value;
+    node_t *left;
+    node_t *right;
+};
+
+node_t *insert_value(node_t *tree, int val) {
+    if (tree == NULL) {
+        tree = alloc(node_t);
+        tree->value = val;
+        return tree;
+    }
+    if ( val == tree->value ) {
+        return tree;
+    } else if ( val <= tree->value ) {
+        tree->left = insert_value(tree->left, val);
+        return tree;
+    } else {
+        tree->right = insert_value(tree->right, val);
+        return tree;
+    }
+}
+
+int [] get_values(int *n_val) {
+    *n_val = 43;
+    int [] val_array = alloc_array(int, *n_val);
+    val_array[0] = 0;
+    val_array[1] = 20;
+    val_array[2] = 10;
+    val_array[3] = 30;
+    val_array[4] = 5;
+    val_array[5] = 15;
+    val_array[6] = 25;
+    val_array[7] = 35;
+    val_array[8] = 1;
+    val_array[9] = 2;
+    val_array[10] = 3;
+    val_array[11] = 4;
+    val_array[12] = 6;
+    val_array[13] = 7;
+    val_array[14] = 8;
+    val_array[15] = 9;
+    val_array[16] = 10;
+    val_array[17] = 11;
+    val_array[18] = 12;
+    val_array[19] = 13;
+    val_array[20] = 14;
+    val_array[21] = 16;
+    val_array[22] = 17;
+    val_array[23] = 18;
+    val_array[24] = 19;
+    val_array[25] = 22;
+    val_array[26] = 23;
+    val_array[27] = 24;
+    val_array[28] = 25;
+    val_array[29] = 26;
+    val_array[30] = 27;
+    val_array[31] = 28;
+    val_array[32] = 29;
+    val_array[33] = 31;
+    val_array[34] = 32;
+    val_array[35] = 33;
+    val_array[36] = 34;
+    val_array[37] = 35;
+    val_array[38] = 36;
+    val_array[39] = 37;
+    val_array[40] = 38;
+    val_array[41] = 39;
+    val_array[42] = 40;
+
+    return val_array;
+}
+
+node_t *insert_values(int [] values, int n) {
+    node_t *tree = NULL;
+    for (int i = 0; i < n; i++) {
+        tree = insert_value(tree, values[i]);
+    }
+    return tree;
+}
+
+bool in_tree(node_t *tree, int val) {
+    if (tree == NULL) {
+        return false;
+    }
+    if ( val == tree->value ) {
+        return true;
+    } else if ( val <= tree->value ) {
+        return in_tree(tree->left, val);
+    } else {
+        return in_tree(tree->right, val);
+    }
+}
+
+void all_in_tree(node_t *tree, int[] values, int n) {
+    for (int i = 0; i < n; i++) {
+        assert(in_tree(tree, values[i]));
+    }
+}
+
+int main() {
+    int* n_val = alloc(int);
+    int[] values = get_values(n_val);
+    node_t *tree = insert_values(values, *n_val);
+    all_in_tree(tree, values,* n_val);
+    return 0;
+}

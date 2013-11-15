@@ -1,0 +1,22 @@
+//test error
+/* large type need allocation */
+
+struct position {
+    int x; 
+    int y;
+};
+typedef struct position pos;
+
+int product (pos p1, pos p2) {
+  return p1.x * p2.x + p1.y * p2.y;
+}
+
+int main () {
+  pos p1 = *alloc(pos);
+  pos p2 = *alloc(pos);
+  p1.x = 5;
+  p2.x = 4;
+  p1.y = 4;
+  p2.y = 3;
+  return product(p1, p2);
+}

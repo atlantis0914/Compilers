@@ -1,0 +1,10 @@
+//test return 11
+int main() {
+    int x = 1 - - 1 * - 2 / 4 % 3 + 2 - - 3;
+    int y = - 3 * 4 / 3 * 5 / 9 % 11 + 21;
+    int z = 2;
+    int w = 4;
+    z += - w;
+    w %= x;
+    return z + y + z + (- w);
+}

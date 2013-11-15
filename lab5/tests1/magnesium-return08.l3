@@ -1,0 +1,12 @@
+//test return 0
+// implementation can have different variable names than decls
+int foo (int y, bool z);
+
+int foo (int x, bool y) { 
+  if (y) return x; 
+  else return 10; 
+}
+
+int main () {
+  return foo (0, true);
+}

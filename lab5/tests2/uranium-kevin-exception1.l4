@@ -1,0 +1,6 @@
+//test exception 11
+
+int main() {
+    bool **i = alloc(bool*);
+    return (**i)? 1: 0;
+}

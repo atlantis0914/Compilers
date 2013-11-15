@@ -1,0 +1,11 @@
+//test error
+
+void jizz() {
+  int i = 1;
+  return;
+  i + 2;
+}
+
+int main() {
+  return jizz() + 1;
+}

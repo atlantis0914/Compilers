@@ -1,0 +1,535 @@
+//test return 648087765
+int getTestWord(int i) {
+    if(i == 1) { return 0xbe9b3858; }
+    if(i == 2) { return 0x446f5cb5; }
+    if(i == 3) { return 0xdf55f23d; }
+    if(i == 4) { return 0xff308875; }
+    if(i == 5) { return 0xa800028d; }
+    if(i == 6) { return 0x4f6d9c80; }
+    if(i == 7) { return 0x969d856b; }
+    if(i == 8) { return 0x33a83680; }
+    if(i == 9) { return 0x9f800a1c; }
+    if(i == 10) { return 0x781b21f8; }
+    if(i == 11) { return 0xd1a3cb16; }
+    if(i == 12) { return 0xb367078c; }
+    if(i == 13) { return 0xe7b57467; }
+    if(i == 14) { return 0xa99a19e7; }
+    if(i == 15) { return 0xd1ae4ef9; }
+    if(i == 16) { return 0xb0815314; }
+    if(i == 17) { return 0x9016f3fb; }
+    if(i == 18) { return 0xfeaa7fb7; }
+    if(i == 19) { return 0x53c801e6; }
+    if(i == 20) { return 0x74b2d558; }
+    if(i == 21) { return 0x1d393de6; }
+    if(i == 22) { return 0x197c286e; }
+    if(i == 23) { return 0x68599cc5; }
+    if(i == 24) { return 0x92f28b07; }
+    if(i == 25) { return 0x6aed8095; }
+    if(i == 26) { return 0xe0d085b3; }
+    if(i == 27) { return 0x8477f9d; }
+    if(i == 28) { return 0x55934cdc; }
+    if(i == 29) { return 0xe70620; }
+    if(i == 30) { return 0xd26f1b70; }
+    if(i == 31) { return 0x4928458d; }
+    if(i == 32) { return 0x8e9cb82a; }
+    if(i == 33) { return 0x7bedde68; }
+    if(i == 34) { return 0x78d9730b; }
+    if(i == 35) { return 0xbef978df; }
+    if(i == 36) { return 0xf1fc9137; }
+    if(i == 37) { return 0xbae0b83f; }
+    if(i == 38) { return 0xbc127e93; }
+    if(i == 39) { return 0xd2517582; }
+    if(i == 40) { return 0x8d453a2b; }
+    if(i == 41) { return 0xf02a2ae8; }
+    if(i == 42) { return 0x9da90845; }
+    if(i == 43) { return 0x66182314; }
+    if(i == 44) { return 0x394eb279; }
+    if(i == 45) { return 0x2a31136c; }
+    if(i == 46) { return 0xd80f66f2; }
+    if(i == 47) { return 0x6ebd04e; }
+    if(i == 48) { return 0xd5fccb25; }
+    if(i == 49) { return 0xabf9c116; }
+    if(i == 50) { return 0x8583273b; }
+    if(i == 51) { return 0x807b588a; }
+    if(i == 52) { return 0xbb0d0b90; }
+    if(i == 53) { return 0xab6a83b3; }
+    if(i == 54) { return 0x3ef867b7; }
+    if(i == 55) { return 0x6d2095a3; }
+    if(i == 56) { return 0xf4685f35; }
+    if(i == 57) { return 0x87509630; }
+    if(i == 58) { return 0xcee55a40; }
+    if(i == 59) { return 0xe59b3180; }
+    if(i == 60) { return 0xcbb97231; }
+    if(i == 61) { return 0xb552d4c9; }
+    if(i == 62) { return 0x7b88a726; }
+    if(i == 63) { return 0xa4f24653; }
+    if(i == 64) { return 0xfc838e0d; }
+    if(i == 65) { return 0xa8ca66be; }
+    if(i == 66) { return 0x75abd620; }
+    if(i == 67) { return 0x991428cb; }
+    if(i == 68) { return 0x9a66a12f; }
+    if(i == 69) { return 0x2a91164a; }
+    if(i == 70) { return 0x74d66f69; }
+    if(i == 71) { return 0xc0b63900; }
+    if(i == 72) { return 0xb0c3f5ba; }
+    if(i == 73) { return 0x4761223a; }
+    if(i == 74) { return 0xd5f903d5; }
+    if(i == 75) { return 0x8075fff0; }
+    if(i == 76) { return 0x667a3314; }
+    if(i == 77) { return 0x9dbf3efc; }
+    if(i == 78) { return 0xddf86d70; }
+    if(i == 79) { return 0x13e7dcae; }
+    if(i == 80) { return 0xd4af8828; }
+    if(i == 81) { return 0x1407e553; }
+    if(i == 82) { return 0x12f2382e; }
+    if(i == 83) { return 0xf12981db; }
+    if(i == 84) { return 0x52ac01b1; }
+    if(i == 85) { return 0x4771844f; }
+    if(i == 86) { return 0x9e366de0; }
+    if(i == 87) { return 0x1b260765; }
+    if(i == 88) { return 0xb823169d; }
+    if(i == 89) { return 0xd5555a98; }
+    if(i == 90) { return 0xd8c522ea; }
+    if(i == 91) { return 0xd2440f29; }
+    if(i == 92) { return 0xb8dfdb6e; }
+    if(i == 93) { return 0x9cdf7b93; }
+    if(i == 94) { return 0x1e9121d2; }
+    if(i == 95) { return 0xca337e4c; }
+    if(i == 96) { return 0xca042b2b; }
+    if(i == 97) { return 0x158dbfde; }
+    if(i == 98) { return 0xb851f607; }
+    if(i == 99) { return 0x67ea54bf; }
+    if(i == 100) { return 0x2c2d2b1f; }
+    if(i == 101) { return 0xba03c82c; }
+    if(i == 102) { return 0x7d6e150e; }
+    if(i == 103) { return 0xadf19917; }
+    if(i == 104) { return 0x4ebf3641; }
+    if(i == 105) { return 0x720eb496; }
+    if(i == 106) { return 0x3f11b14b; }
+    if(i == 107) { return 0x6404537d; }
+    if(i == 108) { return 0x990719ce; }
+    if(i == 109) { return 0x783792c6; }
+    if(i == 110) { return 0x654fa2d2; }
+    if(i == 111) { return 0x78fb5728; }
+    if(i == 112) { return 0xe6b5949c; }
+    if(i == 113) { return 0xc8f23d55; }
+    if(i == 114) { return 0xbb07c33; }
+    if(i == 115) { return 0xd813fec7; }
+    if(i == 116) { return 0x75699ff0; }
+    if(i == 117) { return 0xb29b301e; }
+    if(i == 118) { return 0xcc919afc; }
+    if(i == 119) { return 0xdfc64e9; }
+    if(i == 120) { return 0x98c9b074; }
+    if(i == 121) { return 0xed18b73a; }
+    if(i == 122) { return 0x808f30; }
+    if(i == 123) { return 0x328743ee; }
+    if(i == 124) { return 0x22882b59; }
+    if(i == 125) { return 0xc74c3a36; }
+    if(i == 126) { return 0xaf598965; }
+    if(i == 127) { return 0x9ccdfdb5; }
+    if(i == 128) { return 0x313e0206; }
+    if(i == 129) { return 0xdeeae915; }
+    if(i == 130) { return 0x1d8ff046; }
+    if(i == 131) { return 0xdd26aa19; }
+    if(i == 132) { return 0x282088f5; }
+    if(i == 133) { return 0xa0b0e258; }
+    if(i == 134) { return 0xbdf690d8; }
+    if(i == 135) { return 0x49cf9c83; }
+    if(i == 136) { return 0xc48d0565; }
+    if(i == 137) { return 0x8d9b89d3; }
+    if(i == 138) { return 0xa4ce0770; }
+    if(i == 139) { return 0x4268fef8; }
+    if(i == 140) { return 0x73859393; }
+    if(i == 141) { return 0x9cfc8bc; }
+    if(i == 142) { return 0xee12b7db; }
+    if(i == 143) { return 0xa05ec820; }
+    if(i == 144) { return 0x310cc91d; }
+    if(i == 145) { return 0x5ab81e8f; }
+    if(i == 146) { return 0x5c64c264; }
+    if(i == 147) { return 0xe682bdec; }
+    if(i == 148) { return 0x75a3f9a0; }
+    if(i == 149) { return 0xeb876ea5; }
+    if(i == 150) { return 0xcea869d5; }
+    if(i == 151) { return 0xfc2dd1d9; }
+    if(i == 152) { return 0xe9aa20a9; }
+    if(i == 153) { return 0xd721d31e; }
+    if(i == 154) { return 0xdf8cb054; }
+    if(i == 155) { return 0xa2dd0812; }
+    if(i == 156) { return 0x93d210b3; }
+    if(i == 157) { return 0x86eb96b; }
+    if(i == 158) { return 0xf73c9efc; }
+    if(i == 159) { return 0xc9421f52; }
+    if(i == 160) { return 0x18b8034f; }
+    if(i == 161) { return 0x30c5fa19; }
+    if(i == 162) { return 0x487a1af9; }
+    if(i == 163) { return 0x53210603; }
+    if(i == 164) { return 0xfc453687; }
+    if(i == 165) { return 0x6e1eddad; }
+    if(i == 166) { return 0x3d11e320; }
+    if(i == 167) { return 0x31d447b5; }
+    if(i == 168) { return 0xdf90f95f; }
+    if(i == 169) { return 0x5e94259e; }
+    if(i == 170) { return 0xd07c9135; }
+    if(i == 171) { return 0x99bee4e5; }
+    if(i == 172) { return 0x5c6db07c; }
+    if(i == 173) { return 0x9238ef92; }
+    if(i == 174) { return 0x45389a65; }
+    if(i == 175) { return 0xf0f8ec6; }
+    if(i == 176) { return 0x262e045d; }
+    if(i == 177) { return 0x3fe280e0; }
+    if(i == 178) { return 0x4156a69b; }
+    if(i == 179) { return 0xdb154ded; }
+    if(i == 180) { return 0xe07c860f; }
+    if(i == 181) { return 0xae12fc9a; }
+    if(i == 182) { return 0xe657d384; }
+    if(i == 183) { return 0x5afebab0; }
+    if(i == 184) { return 0xf48cf80b; }
+    if(i == 185) { return 0x38326e80; }
+    if(i == 186) { return 0xecf231e0; }
+    if(i == 187) { return 0xa170ec21; }
+    if(i == 188) { return 0x2e010672; }
+    if(i == 189) { return 0xa5335a97; }
+    if(i == 190) { return 0x2c02ec99; }
+    if(i == 191) { return 0x1629dfa; }
+    if(i == 192) { return 0x6d692c6c; }
+    if(i == 193) { return 0x54c6740a; }
+    if(i == 194) { return 0x771a0831; }
+    if(i == 195) { return 0x95bcc3c6; }
+    if(i == 196) { return 0x96ff1ce9; }
+    if(i == 197) { return 0x6150b5d6; }
+    if(i == 198) { return 0xe02007c9; }
+    if(i == 199) { return 0xdd19eccd; }
+    if(i == 200) { return 0x60db7301; }
+    if(i == 201) { return 0xf4ffea66; }
+    if(i == 202) { return 0x9aec18bd; }
+    if(i == 203) { return 0xfdc00b27; }
+    if(i == 204) { return 0x65dfed3e; }
+    if(i == 205) { return 0xd3ebba49; }
+    if(i == 206) { return 0xe5aea9b2; }
+    if(i == 207) { return 0xadf0e35e; }
+    if(i == 208) { return 0xd2f1bd95; }
+    if(i == 209) { return 0xb8ac7d35; }
+    if(i == 210) { return 0xb18114e4; }
+    if(i == 211) { return 0x20214409; }
+    if(i == 212) { return 0x659e06b3; }
+    if(i == 213) { return 0x77369814; }
+    if(i == 214) { return 0x36d1cbc6; }
+    if(i == 215) { return 0xa2e20e4e; }
+    if(i == 216) { return 0x47269604; }
+    if(i == 217) { return 0xa6ba267c; }
+    if(i == 218) { return 0xe2918918; }
+    if(i == 219) { return 0xf0066448; }
+    if(i == 220) { return 0xf866b3b7; }
+    if(i == 221) { return 0x9c09ccc5; }
+    if(i == 222) { return 0x9886f3c4; }
+    if(i == 223) { return 0x524882a; }
+    if(i == 224) { return 0xc365035e; }
+    if(i == 225) { return 0x78df6b25; }
+    if(i == 226) { return 0x3b7e839b; }
+    if(i == 227) { return 0x97ab2565; }
+    if(i == 228) { return 0x265b2f5f; }
+    if(i == 229) { return 0x9d87976d; }
+    if(i == 230) { return 0xf3c7882; }
+    if(i == 231) { return 0x5ff416b6; }
+    if(i == 232) { return 0xee37bf6a; }
+    if(i == 233) { return 0x12a60ef4; }
+    if(i == 234) { return 0xec012a70; }
+    if(i == 235) { return 0xdaf09e6; }
+    if(i == 236) { return 0xd05dfc00; }
+    if(i == 237) { return 0xce53ae2c; }
+    if(i == 238) { return 0xec50ea0e; }
+    if(i == 239) { return 0x50c974a8; }
+    if(i == 240) { return 0xa2c17c1a; }
+    if(i == 241) { return 0x82ef9f50; }
+    if(i == 242) { return 0x1e186ce9; }
+    if(i == 243) { return 0xe62d3b0c; }
+    if(i == 244) { return 0x666eeb67; }
+    if(i == 245) { return 0xfdaa3893; }
+    if(i == 246) { return 0xea7c0ea9; }
+    if(i == 247) { return 0xd41507a8; }
+    if(i == 248) { return 0x8685c782; }
+    if(i == 249) { return 0x7ec1c97c; }
+    if(i == 250) { return 0x30ea79e6; }
+    if(i == 251) { return 0xd313b9ea; }
+    if(i == 252) { return 0x21483c84; }
+    if(i == 253) { return 0x19472b9b; }
+    if(i == 254) { return 0x2fc733c9; }
+    if(i == 255) { return 0x3fe6d266; }
+    if(i == 256) { return 0x206ae69e; }
+
+    return -1;
+}
+
+
+int getCRC32Const(int x) {
+    if (x == 1) { return 0x00000000; }
+    if (x == 2) { return 0x77073096; }
+    if (x == 3) { return 0xEE0E612C; }
+    if (x == 4) { return 0x990951BA; }
+    if (x == 5) { return 0x076DC419; }
+    if (x == 6) { return 0x706AF48F; }
+    if (x == 7) { return 0xE963A535; }
+    if (x == 8) { return 0x9E6495A3; }
+    if (x == 9) { return 0x0EDB8832; }
+    if (x == 10) { return 0x79DCB8A4; }
+    if (x == 11) { return 0xE0D5E91E; }
+    if (x == 12) { return 0x97D2D988; }
+    if (x == 13) { return 0x09B64C2B; }
+    if (x == 14) { return 0x7EB17CBD; }
+    if (x == 15) { return 0xE7B82D07; }
+    if (x == 16) { return 0x90BF1D91; }
+    if (x == 17) { return 0x1DB71064; }
+    if (x == 18) { return 0x6AB020F2; }
+    if (x == 19) { return 0xF3B97148; }
+    if (x == 20) { return 0x84BE41DE; }
+    if (x == 21) { return 0x1ADAD47D; }
+    if (x == 22) { return 0x6DDDE4EB; }
+    if (x == 23) { return 0xF4D4B551; }
+    if (x == 24) { return 0x83D385C7; }
+    if (x == 25) { return 0x136C9856; }
+    if (x == 26) { return 0x646BA8C0; }
+    if (x == 27) { return 0xFD62F97A; }
+    if (x == 28) { return 0x8A65C9EC; }
+    if (x == 29) { return 0x14015C4F; }
+    if (x == 30) { return 0x63066CD9; }
+    if (x == 31) { return 0xFA0F3D63; }
+    if (x == 32) { return 0x8D080DF5; }
+    if (x == 33) { return 0x3B6E20C8; }
+    if (x == 34) { return 0x4C69105E; }
+    if (x == 35) { return 0xD56041E4; }
+    if (x == 36) { return 0xA2677172; }
+    if (x == 37) { return 0x3C03E4D1; }
+    if (x == 38) { return 0x4B04D447; }
+    if (x == 39) { return 0xD20D85FD; }
+    if (x == 40) { return 0xA50AB56B; }
+    if (x == 41) { return 0x35B5A8FA; }
+    if (x == 42) { return 0x42B2986C; }
+    if (x == 43) { return 0xDBBBC9D6; }
+    if (x == 44) { return 0xACBCF940; }
+    if (x == 45) { return 0x32D86CE3; }
+    if (x == 46) { return 0x45DF5C75; }
+    if (x == 47) { return 0xDCD60DCF; }
+    if (x == 48) { return 0xABD13D59; }
+    if (x == 49) { return 0x26D930AC; }
+    if (x == 50) { return 0x51DE003A; }
+    if (x == 51) { return 0xC8D75180; }
+    if (x == 52) { return 0xBFD06116; }
+    if (x == 53) { return 0x21B4F4B5; }
+    if (x == 54) { return 0x56B3C423; }
+    if (x == 55) { return 0xCFBA9599; }
+    if (x == 56) { return 0xB8BDA50F; }
+    if (x == 57) { return 0x2802B89E; }
+    if (x == 58) { return 0x5F058808; }
+    if (x == 59) { return 0xC60CD9B2; }
+    if (x == 60) { return 0xB10BE924; }
+    if (x == 61) { return 0x2F6F7C87; }
+    if (x == 62) { return 0x58684C11; }
+    if (x == 63) { return 0xC1611DAB; }
+    if (x == 64) { return 0xB6662D3D; }
+    if (x == 65) { return 0x76DC4190; }
+    if (x == 66) { return 0x01DB7106; }
+    if (x == 67) { return 0x98D220BC; }
+    if (x == 68) { return 0xEFD5102A; }
+    if (x == 69) { return 0x71B18589; }
+    if (x == 70) { return 0x06B6B51F; }
+    if (x == 71) { return 0x9FBFE4A5; }
+    if (x == 72) { return 0xE8B8D433; }
+    if (x == 73) { return 0x7807C9A2; }
+    if (x == 74) { return 0x0F00F934; }
+    if (x == 75) { return 0x9609A88E; }
+    if (x == 76) { return 0xE10E9818; }
+    if (x == 77) { return 0x7F6A0DBB; }
+    if (x == 78) { return 0x086D3D2D; }
+    if (x == 79) { return 0x91646C97; }
+    if (x == 80) { return 0xE6635C01; }
+    if (x == 81) { return 0x6B6B51F4; }
+    if (x == 82) { return 0x1C6C6162; }
+    if (x == 83) { return 0x856530D8; }
+    if (x == 84) { return 0xF262004E; }
+    if (x == 85) { return 0x6C0695ED; }
+    if (x == 86) { return 0x1B01A57B; }
+    if (x == 87) { return 0x8208F4C1; }
+    if (x == 88) { return 0xF50FC457; }
+    if (x == 89) { return 0x65B0D9C6; }
+    if (x == 90) { return 0x12B7E950; }
+    if (x == 91) { return 0x8BBEB8EA; }
+    if (x == 92) { return 0xFCB9887C; }
+    if (x == 93) { return 0x62DD1DDF; }
+    if (x == 94) { return 0x15DA2D49; }
+    if (x == 95) { return 0x8CD37CF3; }
+    if (x == 96) { return 0xFBD44C65; }
+    if (x == 97) { return 0x4DB26158; }
+    if (x == 98) { return 0x3AB551CE; }
+    if (x == 99) { return 0xA3BC0074; }
+    if (x == 100) { return 0xD4BB30E2; }
+    if (x == 101) { return 0x4ADFA541; }
+    if (x == 102) { return 0x3DD895D7; }
+    if (x == 103) { return 0xA4D1C46D; }
+    if (x == 104) { return 0xD3D6F4FB; }
+    if (x == 105) { return 0x4369E96A; }
+    if (x == 106) { return 0x346ED9FC; }
+    if (x == 107) { return 0xAD678846; }
+    if (x == 108) { return 0xDA60B8D0; }
+    if (x == 109) { return 0x44042D73; }
+    if (x == 110) { return 0x33031DE5; }
+    if (x == 111) { return 0xAA0A4C5F; }
+    if (x == 112) { return 0xDD0D7CC9; }
+    if (x == 113) { return 0x5005713C; }
+    if (x == 114) { return 0x270241AA; }
+    if (x == 115) { return 0xBE0B1010; }
+    if (x == 116) { return 0xC90C2086; }
+    if (x == 117) { return 0x5768B525; }
+    if (x == 118) { return 0x206F85B3; }
+    if (x == 119) { return 0xB966D409; }
+    if (x == 120) { return 0xCE61E49F; }
+    if (x == 121) { return 0x5EDEF90E; }
+    if (x == 122) { return 0x29D9C998; }
+    if (x == 123) { return 0xB0D09822; }
+    if (x == 124) { return 0xC7D7A8B4; }
+    if (x == 125) { return 0x59B33D17; }
+    if (x == 126) { return 0x2EB40D81; }
+    if (x == 127) { return 0xB7BD5C3B; }
+    if (x == 128) { return 0xC0BA6CAD; }
+    if (x == 129) { return 0xEDB88320; }
+    if (x == 130) { return 0x9ABFB3B6; }
+    if (x == 131) { return 0x03B6E20C; }
+    if (x == 132) { return 0x74B1D29A; }
+    if (x == 133) { return 0xEAD54739; }
+    if (x == 134) { return 0x9DD277AF; }
+    if (x == 135) { return 0x04DB2615; }
+    if (x == 136) { return 0x73DC1683; }
+    if (x == 137) { return 0xE3630B12; }
+    if (x == 138) { return 0x94643B84; }
+    if (x == 139) { return 0x0D6D6A3E; }
+    if (x == 140) { return 0x7A6A5AA8; }
+    if (x == 141) { return 0xE40ECF0B; }
+    if (x == 142) { return 0x9309FF9D; }
+    if (x == 143) { return 0x0A00AE27; }
+    if (x == 144) { return 0x7D079EB1; }
+    if (x == 145) { return 0xF00F9344; }
+    if (x == 146) { return 0x8708A3D2; }
+    if (x == 147) { return 0x1E01F268; }
+    if (x == 148) { return 0x6906C2FE; }
+    if (x == 149) { return 0xF762575D; }
+    if (x == 150) { return 0x806567CB; }
+    if (x == 151) { return 0x196C3671; }
+    if (x == 152) { return 0x6E6B06E7; }
+    if (x == 153) { return 0xFED41B76; }
+    if (x == 154) { return 0x89D32BE0; }
+    if (x == 155) { return 0x10DA7A5A; }
+    if (x == 156) { return 0x67DD4ACC; }
+    if (x == 157) { return 0xF9B9DF6F; }
+    if (x == 158) { return 0x8EBEEFF9; }
+    if (x == 159) { return 0x17B7BE43; }
+    if (x == 160) { return 0x60B08ED5; }
+    if (x == 161) { return 0xD6D6A3E8; }
+    if (x == 162) { return 0xA1D1937E; }
+    if (x == 163) { return 0x38D8C2C4; }
+    if (x == 164) { return 0x4FDFF252; }
+    if (x == 165) { return 0xD1BB67F1; }
+    if (x == 166) { return 0xA6BC5767; }
+    if (x == 167) { return 0x3FB506DD; }
+    if (x == 168) { return 0x48B2364B; }
+    if (x == 169) { return 0xD80D2BDA; }
+    if (x == 170) { return 0xAF0A1B4C; }
+    if (x == 171) { return 0x36034AF6; }
+    if (x == 172) { return 0x41047A60; }
+    if (x == 173) { return 0xDF60EFC3; }
+    if (x == 174) { return 0xA867DF55; }
+    if (x == 175) { return 0x316E8EEF; }
+    if (x == 176) { return 0x4669BE79; }
+    if (x == 177) { return 0xCB61B38C; }
+    if (x == 178) { return 0xBC66831A; }
+    if (x == 179) { return 0x256FD2A0; }
+    if (x == 180) { return 0x5268E236; }
+    if (x == 181) { return 0xCC0C7795; }
+    if (x == 182) { return 0xBB0B4703; }
+    if (x == 183) { return 0x220216B9; }
+    if (x == 184) { return 0x5505262F; }
+    if (x == 185) { return 0xC5BA3BBE; }
+    if (x == 186) { return 0xB2BD0B28; }
+    if (x == 187) { return 0x2BB45A92; }
+    if (x == 188) { return 0x5CB36A04; }
+    if (x == 189) { return 0xC2D7FFA7; }
+    if (x == 190) { return 0xB5D0CF31; }
+    if (x == 191) { return 0x2CD99E8B; }
+    if (x == 192) { return 0x5BDEAE1D; }
+    if (x == 193) { return 0x9B64C2B0; }
+    if (x == 194) { return 0xEC63F226; }
+    if (x == 195) { return 0x756AA39C; }
+    if (x == 196) { return 0x026D930A; }
+    if (x == 197) { return 0x9C0906A9; }
+    if (x == 198) { return 0xEB0E363F; }
+    if (x == 199) { return 0x72076785; }
+    if (x == 200) { return 0x05005713; }
+    if (x == 201) { return 0x95BF4A82; }
+    if (x == 202) { return 0xE2B87A14; }
+    if (x == 203) { return 0x7BB12BAE; }
+    if (x == 204) { return 0x0CB61B38; }
+    if (x == 205) { return 0x92D28E9B; }
+    if (x == 206) { return 0xE5D5BE0D; }
+    if (x == 207) { return 0x7CDCEFB7; }
+    if (x == 208) { return 0x0BDBDF21; }
+    if (x == 209) { return 0x86D3D2D4; }
+    if (x == 210) { return 0xF1D4E242; }
+    if (x == 211) { return 0x68DDB3F8; }
+    if (x == 212) { return 0x1FDA836E; }
+    if (x == 213) { return 0x81BE16CD; }
+    if (x == 214) { return 0xF6B9265B; }
+    if (x == 215) { return 0x6FB077E1; }
+    if (x == 216) { return 0x18B74777; }
+    if (x == 217) { return 0x88085AE6; }
+    if (x == 218) { return 0xFF0F6A70; }
+    if (x == 219) { return 0x66063BCA; }
+    if (x == 220) { return 0x11010B5C; }
+    if (x == 221) { return 0x8F659EFF; }
+    if (x == 222) { return 0xF862AE69; }
+    if (x == 223) { return 0x616BFFD3; }
+    if (x == 224) { return 0x166CCF45; }
+    if (x == 225) { return 0xA00AE278; }
+    if (x == 226) { return 0xD70DD2EE; }
+    if (x == 227) { return 0x4E048354; }
+    if (x == 228) { return 0x3903B3C2; }
+    if (x == 229) { return 0xA7672661; }
+    if (x == 230) { return 0xD06016F7; }
+    if (x == 231) { return 0x4969474D; }
+    if (x == 232) { return 0x3E6E77DB; }
+    if (x == 233) { return 0xAED16A4A; }
+    if (x == 234) { return 0xD9D65ADC; }
+    if (x == 235) { return 0x40DF0B66; }
+    if (x == 236) { return 0x37D83BF0; }
+    if (x == 237) { return 0xA9BCAE53; }
+    if (x == 238) { return 0xDEBB9EC5; }
+    if (x == 239) { return 0x47B2CF7F; }
+    if (x == 240) { return 0x30B5FFE9; }
+    if (x == 241) { return 0xBDBDF21C; }
+    if (x == 242) { return 0xCABAC28A; }
+    if (x == 243) { return 0x53B39330; }
+    if (x == 244) { return 0x24B4A3A6; }
+    if (x == 245) { return 0xBAD03605; }
+    if (x == 246) { return 0xCDD70693; }
+    if (x == 247) { return 0x54DE5729; }
+    if (x == 248) { return 0x23D967BF; }
+    if (x == 249) { return 0xB3667A2E; }
+    if (x == 250) { return 0xC4614AB8; }
+    if (x == 251) { return 0x5D681B02; }
+    if (x == 252) { return 0x2A6F2B94; }
+    if (x == 253) { return 0xB40BBE37; }
+    if (x == 254) { return 0xC30C8EA1; }
+    if (x == 255) { return 0x5A05DF1B; }
+    if (x == 256) { return 0x2D02EF8D; }
+
+    return -1;
+}
+
+
+int main() {
+    int i;
+    int crc = 0xFFFFFFFF;
+
+    for(i = 0; i < 256; i++) {
+        crc = ((crc >> 8) & 0x00FFFFFF) ^ getCRC32Const((crc ^ getTestWord(i)) & 0xFF);
+    }
+    
+    return crc;
+}

@@ -1,0 +1,34 @@
+//test return 42
+
+//many typedefs
+
+typedef int foo;
+typedef foo bar;
+typedef bar hotel;
+typedef hotel motel;
+typedef motel house;
+typedef house mouse;
+typedef mouse cheese;
+typedef cheese food;
+
+motel main()
+{
+  foo cat;
+  mouse mouse1;
+
+  mouse1 = 0;
+
+  cheese cc = 3;
+  house the_house = 17;
+  for(cat = 1; cat < the_house; cat++)
+    {
+      mouse1 = 2;
+      cc ++;
+    }
+
+  food brie = cc;
+  bar larrys = 10;
+  hotel Marriot = 11;
+
+  return brie + larrys + Marriot + mouse1;
+}

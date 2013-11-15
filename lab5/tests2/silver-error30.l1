@@ -1,0 +1,10 @@
+//test error
+// Mismatch parens
+
+int main() {
+    int x = 1;
+    int y = 2;
+    int z = 3;
+    x = (z+(x-y)/(12;
+    return 0;
+}

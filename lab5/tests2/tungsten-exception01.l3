@@ -1,0 +1,8 @@
+//test exception 6
+//test assert
+
+int main() {
+  int a = 10;
+  assert(a == 9);
+  return a;
+}

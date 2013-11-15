@@ -1,0 +1,25 @@
+//test return 3
+// testing if-else association
+// would return 3 if outer assocation is chosen
+
+// will return passes because there is a return
+// in each branch of condition
+int will_return (int n) {
+  if (n == 0)
+    { return 1; }
+  else
+    {
+      return 2;
+    }
+}
+
+int main () {
+  int n; // initialize to 0
+  n = -1;
+  if (n + 0 != 0)
+    if (n + 1 != 0)
+      return 2;
+    else
+      return 3;
+  return 4;
+}

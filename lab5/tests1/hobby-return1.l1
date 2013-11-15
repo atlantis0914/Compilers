@@ -1,0 +1,19 @@
+//test return 17
+
+// test mixed decls and stmts
+
+int main() {
+    int a;
+    a = 5;
+
+    int b;
+    b = 3;
+
+    int c;
+    c = 2;
+
+    int d;
+    d = 0;
+
+    return a * b + c - d;
+}

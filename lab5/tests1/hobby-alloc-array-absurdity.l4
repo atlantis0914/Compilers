@@ -1,0 +1,15 @@
+//test return 5
+
+int main() {
+    int[] a = alloc_array(int, 10);
+    int[][] b = alloc_array(int[], 10);
+    int[][][] c = alloc_array(int[][], 10);
+    int[][][][] d = alloc_array(int[][][], 10);
+
+    a[1] = 5;
+    b[2] = a;
+    c[3] = b;
+    d[4] = c;
+
+    return d[4][3][2][1];
+}

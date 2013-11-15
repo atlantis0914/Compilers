@@ -1,0 +1,10 @@
+//test error
+// declarations must be in same scope as usage
+
+int main ()
+{
+  {
+    int x = 5;
+  }
+  return x;
+}

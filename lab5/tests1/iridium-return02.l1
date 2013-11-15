@@ -1,0 +1,8 @@
+//test return 0
+// return constant with unused variable declared
+
+int main()
+{
+  int x;
+  return 0;
+}

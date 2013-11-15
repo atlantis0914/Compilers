@@ -1,0 +1,11 @@
+//test error
+// Assigning wrong type when allocing array
+
+int main()
+{
+    int [] array = alloc_array(bool, 99);
+
+    array[0] = 99;
+
+    return array[0];
+}

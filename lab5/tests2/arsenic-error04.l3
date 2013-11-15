@@ -1,0 +1,6 @@
+//test error
+typedef int INT;
+int main(){
+INT i = "4";
+return i;
+}

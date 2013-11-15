@@ -1,0 +1,18 @@
+//test error
+
+int main()
+{
+	/* tests scope of variables */
+
+	int x;
+
+	for(int i = -1; i<5; i+=2;)
+	{
+		int y = 3;
+		y*=2;
+		y++;
+		y-=i;
+	}
+
+	return y;
+}

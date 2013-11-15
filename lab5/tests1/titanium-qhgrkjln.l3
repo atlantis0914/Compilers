@@ -1,0 +1,39 @@
+//test return 78
+
+int qwn(int q) {
+  if (q == 0)
+    return 0;
+  int x1 = 1 * (q / q);
+  int x2 = x1 * 1 * (q/q);
+  int x3 = x2 * 1 * (q/q);
+  int x4 = x3 * 1 * (q/q);
+  int x5 = x4 * 1 * (q/q);
+  int x6 = x5 * (q/q);
+  int x7 = x6 * (q/q);
+  int x8 = x7 * (q/q);
+  int x9 = x8 * (q/q);
+  int x10 = x9 * (q/q);
+  int x11 = x10 * (q/q);
+  int x12 = x11 * (q/q);
+  int x13 = x12 * (q/q);
+  int x14 = x13 *(q/q);
+  int x15 = x14;
+  int z = x15 + 5;
+  int x16 = 1;
+  int x17 = x1;
+  int x18 = x5;
+  int x19 = x4;
+  int x20 = x1;
+  int x21 = x2;
+  int x22 = 1;
+  int x23 = 1;
+  int x24 = 1;
+  int x25 = x20;
+  int x26 = 1;
+  int s = x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11 + x12 + x13 + x14 + x15 + x16 + x17 +x18 + x19 + x20 + x21 + x22 +x23 + x24  + x25 +     x26;
+  return s + qwn(q - 1);
+}
+
+int main() {
+  return qwn(3);
+}

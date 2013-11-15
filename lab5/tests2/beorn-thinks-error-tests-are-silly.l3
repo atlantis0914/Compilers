@@ -1,0 +1,10 @@
+//test error
+
+int funfunc2() { continue; return 6;}
+
+int main() {
+    return funfunc2();
+    return funfunc3();
+}
+
+int funfunc3() {return 7;}

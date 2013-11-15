@@ -1,0 +1,17 @@
+//test return 5
+typedef int hello;
+
+int main(){
+	int fool = 2;
+	int *** cool;
+	cool = alloc(int **);
+	*cool = alloc(int *);
+	**cool = alloc(int);
+
+	***cool = 5;
+	{
+		fool****cool;
+		hello * tool;
+	}
+	return ***cool;
+}

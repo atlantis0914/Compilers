@@ -1,0 +1,6 @@
+//test error
+int main(){
+    /* Don't need the size to know that 0 * 0 = 0. */
+    struct s[] s = alloc_array(struct s, 0);
+    return 0;
+}

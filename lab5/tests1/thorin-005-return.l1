@@ -1,0 +1,12 @@
+//test return 0
+/* 2^31 == -2^31 */
+int main()
+{
+    int a = -2147483648;
+    int b = 2147483648;
+    return a - b;
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

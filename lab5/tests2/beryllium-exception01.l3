@@ -1,0 +1,9 @@
+//test exception 6
+void foo( int a){
+	assert(a<2);
+}
+int main(){
+	int a=3;
+	foo(a);
+	return a;
+}

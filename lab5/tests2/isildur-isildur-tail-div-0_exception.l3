@@ -1,0 +1,13 @@
+//test exception 8
+int dothing(int n) {
+  if (n == -1) {
+    return 0;
+  } else {
+    int i = 5 / n;
+    return dothing(n-1);
+  }
+}
+
+int main() {
+  return dothing(50000);
+}

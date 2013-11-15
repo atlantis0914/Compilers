@@ -1,0 +1,12 @@
+//test error
+
+typedef int aaa;
+
+void plus (aaa x, aaa y) {
+  return;
+}
+
+aaa main () {
+  void x = ( plus(1, 1) );
+  return 2;
+}

@@ -1,0 +1,12 @@
+//test return 256
+// while
+
+int main ()
+{
+  int x = 2;
+
+  while(x < 100)
+    x = x * x;
+
+  return x;
+}

@@ -1,0 +1,12 @@
+//test error
+// can int be overwritten?
+struct point {int x; int y;};
+typedef struct point int;
+
+int main () {
+  int *aPoint;
+  aPoint = alloc(int);
+  aPoint-> x = 1;
+  aPoint-> y = 2;
+  return(aPoint->x + aPoint->y);
+}

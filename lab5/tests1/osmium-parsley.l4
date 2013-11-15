@@ -1,0 +1,27 @@
+//test return 0
+//test some parsing
+
+typedef int fooooo;
+
+struct data {
+    int a;
+    bool b;
+};
+
+int* f(){return alloc(int);}
+
+int main() {
+    NULL;NULL;NULL;
+	*alloc(int);
+	*((alloc(int)));
+	(((alloc(fooooo[][][]****[][]*[]*))));
+	alloc_array(int[], 10)[0];
+	
+	int*****************a = alloc(int****************);
+	struct data* d = alloc(struct data);
+	((d))->a;
+	
+	*f();
+	*(f());
+	return (*(f()));
+}

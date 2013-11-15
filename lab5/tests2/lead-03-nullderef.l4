@@ -1,0 +1,8 @@
+//test error
+/* simple null dereference */
+
+int main () {
+  int *x;
+
+  return *x;
+}

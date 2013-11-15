@@ -1,0 +1,13 @@
+//test error
+// According to the elaboration rules in the handout, a declaration
+// in the source file doesn't add to the three contexts.  That
+// seems to be a mistake.
+
+int foo();
+
+typedef foo bool;
+
+int main() {
+    return 0;
+}
+

@@ -1,0 +1,11 @@
+//test return 10
+// This program tests basic arithmetic operators
+int main() {
+    int x = 0;
+    int y = 5;
+    int z = x + y;
+    int w = z - 1;
+    int k = w / 2;
+    w = x * 5;
+    return 10;
+}

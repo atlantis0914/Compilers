@@ -1,0 +1,11 @@
+//test return 3
+
+// test operator precedence
+
+
+int main() {
+	int y = 6;
+	int x = 3;
+	int z = 2;
+	return y+4/4*2-1+z*24/2/3/4-x*2;
+}

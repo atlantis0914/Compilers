@@ -1,0 +1,16 @@
+//test error
+/* testing assignment operator with effect */
+
+int * inc (int *p) {
+  *p += 1;
+  return p;
+}
+
+int main () {
+  int * p;
+  p = alloc(int);
+  *p = 0; /* lvalue */
+  inc(p);
+  *inc(p) += 7; /* not an lvalue */
+  return *p;
+}

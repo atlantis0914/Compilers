@@ -1,0 +1,28 @@
+//test return 3
+
+int sort(int[] xs, int len) {
+  for (int j = 0; j < len; j++) {
+    int min = 1000000;
+    int mini = -1;
+    for (int i = j; i < len; i++) {
+      if (xs[i] < min) {
+        min = xs[i];
+        mini = i;
+      }
+    }
+    int t = xs[mini];
+    xs[mini] = xs[j];
+    xs[j] = t;
+  }
+  return 0;
+}
+
+int main() {
+  int len = 15;
+  int[] xs = alloc_array(int, len);
+  for (int i = len-1; i >= 0; i--) {
+    xs[len-1-i] = i;
+  }
+  sort(xs, len);
+  return xs[3];
+}

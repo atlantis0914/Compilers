@@ -1,0 +1,21 @@
+//test return 1
+
+int main(){
+  int return9;
+  int ifelse;
+  bool __while = true;
+  
+  return9 = 10;
+  ifelse = 2;
+  while (return9 > 1){
+    if (return9 % 2 == 0)
+      return9 /= 2;
+    else
+      return9 -= 1;
+  }
+
+  if (__while) 
+    return return9;
+  else
+    return 213456789;
+}

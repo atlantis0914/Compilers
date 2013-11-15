@@ -1,0 +1,48 @@
+//test exception 14
+/* This test ensures proper struct alignment. */
+
+struct bar {
+	int *ptr;
+	int some_poor_noob;
+};
+
+/* foo layout in 4B chunks: |_bystander_|_padding_|_ptr1_|_ptr2_|_noob_|
+ * If *(((int *)foo) + 3) were overwritten, it sure would be a shame if some
+ * poor noob were to get clobbered. */
+struct foo {
+	int innocent_bystander;
+	struct bar bar;
+};
+
+/* Abusing ref compiler timeouts to get away with exploiting language unsafety.
+ * This test makes no pretentions because its intentions are as pure as gold. */
+int spin(struct foo *foo)
+{
+	int i;
+	for (i = 1; i != (253<<21); i++) {}
+	return 0;
+}
+
+/* Should time anybody out. */
+int spin2(struct foo *foo)
+{
+	int i;
+	for (i = 1; i != 0; i++) {}
+	return 0;
+}
+
+int main()
+{
+	int[] coolface = alloc_array(int, 1);
+	struct foo *foo = alloc(struct foo);
+	foo->innocent_bystander = 0xbeef;
+	foo->bar.some_poor_noob = 32767;
+	spin(foo);
+	/* coolface[12] should point to the noob. */
+	coolface[10] = 0;
+	coolface[11] = 0;
+	coolface[13] = 0;
+	foo->innocent_bystander = 1 / foo->bar.some_poor_noob;
+	spin2(foo);
+	return foo->innocent_bystander;
+}

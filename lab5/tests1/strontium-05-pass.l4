@@ -1,0 +1,16 @@
+//test return 0
+// tests pointers to structs
+
+struct blob
+{
+    int x;
+    int y;
+};
+
+int main()
+{
+    struct blob * b = alloc(struct blob);
+    struct blob * c = b;
+    b->x = 0;
+    return c->x;
+}

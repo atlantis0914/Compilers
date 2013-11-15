@@ -1,0 +1,33 @@
+//test return 405
+// counts in circles
+
+struct Node {
+  struct Node* next;
+  int data;
+};
+
+int sum(int n, struct Node* start) {
+  if (n == 0 || start == NULL) {
+    return 0;
+  } else {
+    return start->data + sum(n - 1, start->next);
+  }
+}
+
+int main() {
+  int length = 10;
+
+  struct Node* current = alloc(struct Node);
+  struct Node* start = current;
+
+  for (int i = 0; i < length; i++) {
+    struct Node* next = alloc(struct Node);
+    next->data = i;
+    current->next = next;
+    current = next;
+  }
+
+  current->next = start;
+
+  return sum(100, start);
+}

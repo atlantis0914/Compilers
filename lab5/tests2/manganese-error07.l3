@@ -1,0 +1,9 @@
+//test error
+// typedef in a function?
+
+int main() {
+    typedef int sometype;
+    sometype a = 0;
+    return a + 1;
+}
+

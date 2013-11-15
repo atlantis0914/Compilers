@@ -1,0 +1,35 @@
+//test return 0
+
+int sum(int[] arr, int length) {
+  int i = 0;
+  int total = 0;
+  while(i < length) {
+    total += arr[i];
+    i++;
+  }
+  return total;
+}
+
+void swap(int i, int j, int[] arr) {
+  int temp = arr[i];
+  arr[i] = arr[j];
+  arr[j] = temp;
+  return;
+}
+
+void reverse(int[] arr, int length) {
+  for(int i = 0; i < length / 2; i++) {
+    swap(i, length - i - 1, arr);
+  }
+}
+
+int main () {
+  int[] A = alloc_array(int, 15);
+  for(int i = 0; i < 15; i++) {
+    A[i] = i * 1234;
+  }
+  int sum1 = sum(A, 15);
+  sum(A, 15);
+  int sum2 = sum(A, 15);
+  return sum1 - sum2;
+}

@@ -1,0 +1,8 @@
+//test return 2147483643
+
+int main()
+{
+    int meowmix;
+    meowmix = 2147483643;
+    return meowmix;
+}

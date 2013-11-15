@@ -1,0 +1,24 @@
+//test return 2196
+
+int main() {
+   int a; int b; int c; int d; int e; int f; int g; int h; int i; int j; int k; int l; int m; int n; int o; int p;
+   
+   a=1;
+   b=a;
+   c=a+b+b;
+   d=a+b+c+c;
+   e=a+b+c+d+d;
+   f=a+b+c+d+e+e;
+   g=a+b+c+d+e+f+f;
+   h=a+b+c+d+e+f+g+g;
+   i=a+b+c+d+e+f+g+h+h;
+   j=a+b+c+d+e+f+g+h+i+i;
+   k=a+b+c+d+e+f+g+h+i+j+j;
+   l=a+b+c+d+e+f+g+h+i+j+k+k;
+   m=a+b+c+d+e+f+g+h+i+j+k+l+l;
+   n=a+b+c+d+e+f+g+h+i+j+k+l+m+m;
+   o=a+b+c+d+e+f+g+h+i+j+k+l+m+n+n;
+   p=a+b+c+d+e+f+g+h+i+j+k+l+m+n+o+o;
+   
+   return (a+b-c+d-e+f-g+h-i+j-k+l-m+n)%((p*p)/o);
+}

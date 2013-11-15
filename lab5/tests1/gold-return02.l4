@@ -1,0 +1,24 @@
+//test return 6
+
+struct t1 {
+	int a;
+	int b;
+};
+
+struct t2 {
+	int a;
+	struct t1 b;
+};
+
+int main() {
+	struct t2* ptr = alloc(struct t2);
+	ptr->a = 1;
+	ptr->b.a = 2;
+	ptr->b.b = 3;
+	
+	int i = 0;
+	i += ptr->a;
+	i += ptr->b.a;
+	i += ptr->b.b;
+	return i;
+}

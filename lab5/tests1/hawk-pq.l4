@@ -1,0 +1,73 @@
+//test return 6
+
+struct node {
+    int val;
+    struct node* next;
+};
+
+struct prique {
+    struct node* first;
+};
+
+//add a val to the priority queue, return 0
+//if pq is null, do nothing
+int insert (struct prique* pq, int x) {
+    struct node* new = alloc(struct node);
+    new->val = x;
+
+    if (pq == NULL)
+       return 0;
+
+    if (pq->first == NULL){
+       new->next = NULL;
+       pq->first = new;
+       return 0;
+    }
+
+    struct node* cur = pq->first;
+    if (cur->val > x){
+       new->next = cur;
+       pq->first = new;
+       return 0;
+    }
+
+    struct node* nex = cur->next;
+    for(; nex != NULL; nex = cur->next){
+       if (nex->val > x){
+       	   new->next = nex;
+	   cur->next = new;
+	   return 0;
+       }
+       cur = nex;
+    }
+
+    //nex is null now
+    new->next = NULL;
+    cur->next = new;
+    return 0;
+}
+
+//pop the smallest val from the priority queue and return it
+//if empty or null, return 0
+int pop (struct prique* pq) {
+    if (pq == NULL || pq->first == NULL)
+       return 0;
+    struct node* n = pq->first;
+    pq->first = n->next;
+    return n->val;
+}
+
+//build a pq and return the third largest
+int main () {
+    struct prique* pq = alloc(struct prique);
+
+    insert(pq, 6);
+    insert(pq, 3);
+    insert(pq, 9);
+    insert(pq, 27);
+    insert(pq, 5);
+
+    pop(pq);
+    pop(pq);
+    return pop(pq);
+}

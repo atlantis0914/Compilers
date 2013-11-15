@@ -1,0 +1,26 @@
+//test return 5
+
+int main()
+{
+    int x;
+    int y;
+    int z;
+    bool a;
+    bool b;
+
+    a = true;
+    b = a;
+    x = 5;
+    y = 15;
+    z = 0;
+
+    while(b)
+    {
+        z = y - x;
+        if (z == x)
+            b = !b;
+        y--;
+    }
+
+    return z;
+}

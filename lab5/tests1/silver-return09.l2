@@ -1,0 +1,9 @@
+//test return 1
+// Test short-circuit.
+
+int main() {
+    if (true || 1/0 == 0) {
+       return 1;
+    }
+    return 0;
+}

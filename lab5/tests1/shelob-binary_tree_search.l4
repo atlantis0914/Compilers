@@ -1,0 +1,60 @@
+//test return 0
+//binary tree creation and traversal
+//Tests structs and recursive data structures
+struct node;
+struct node{
+  int val;
+  struct node* left;
+  struct node* right;
+};
+
+bool insert(struct node* root, int v){
+  if(v < root->val){
+    if(root->left == NULL){
+      root->left = alloc(struct node);
+      root->left->val = v;
+      return true;
+    } else {
+      return insert(root->left, v);
+    }
+  } else {
+    if(v > root->val){
+      if(root->right == NULL){
+        root->right = alloc(struct node);
+        root->right->val = v;
+        return true;
+      } else {
+        return insert(root->right, v);
+      }
+    }
+  }
+  return false;
+}
+
+struct node* find(struct node* root, int v){
+  if(root == NULL){
+    return NULL;
+  }
+  if(v < root->val){
+    // printchar(0x4c);
+    return find(root->left, v);
+  }
+  if(v > root->val){
+    // printchar(0x52);
+    return find(root->right, v);
+  }
+  return root;
+}
+
+int main(){
+  struct node* root = alloc(struct node);
+  int val = -1;
+  root->val = 4;
+  insert(root, 2);
+  insert(root, 6);
+  insert(root, 1);
+  insert(root, 3);
+  insert(root, 7);
+  insert(root, 5);
+  return find(root, val) != NULL ? 1 : 0;
+}

@@ -1,0 +1,9 @@
+//test error
+// tests some illegal for loops
+
+int main()
+{
+    for(int a = 0, int b = 5; a < b; a++)
+
+    return a;
+}

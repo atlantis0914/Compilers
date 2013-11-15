@@ -1,0 +1,9 @@
+//test return 123456
+
+int main() {
+    int* ptr = alloc(int);
+    int* p = alloc(int);
+    *ptr = 123456;
+    *p = *ptr;
+    return *p;
+}

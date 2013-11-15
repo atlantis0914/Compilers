@@ -1,0 +1,34 @@
+//test return 1000
+
+struct s {
+       int foo;
+       int whatever;
+       int[] a;
+       int[] c;
+       int[] d;
+       int* b;
+       int len_c;
+       int len_d;
+       int len_a;
+};
+
+int main () {
+    struct s *big_s;
+    big_s = alloc(struct s);
+    big_s -> whatever = 0;
+    big_s -> len_c = 2000;
+    big_s -> len_d = 2000;
+    big_s -> len_a = 1000;
+    int i;
+    big_s -> a = alloc_array (int, 1000);
+    big_s -> c = alloc_array (int, 2000);
+    big_s -> d = alloc_array (int, 2000);
+    for (i = 0; i < big_s -> len_a; i++){
+      big_s -> c[i] = i;
+      big_s -> c[i * 2] = i * 2;
+      big_s -> d[i] = i;
+      big_s -> d[i * 2] = big_s -> c[i * 2] + 1;
+      big_s -> a[i] = i;
+    }
+    return big_s -> c[1000];
+}

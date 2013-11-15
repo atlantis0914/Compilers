@@ -1,0 +1,28 @@
+//test return 77076
+
+// if we had 64-bit integers, this would sort-of-be rsa!
+int me(int b, int e, int m) {
+    int c = 1;
+    int p = 0;
+    b = b % m;
+    while (p < e) {
+        p++;
+        c = c % m;
+        c = (b * c) % m;
+        if (c < 0) c = c + m;
+    }
+    return c;
+}
+
+int main() {
+    int p = 359;
+    int q = 347;
+    int n = p * q;
+    int phi = (p - 1)*(q - 1);
+    int e = 5;
+    int d = 74321;
+    int m = 0xBABE;
+    int c = me(m, e, n);
+    m = me(c, d, n);
+    return m;
+}

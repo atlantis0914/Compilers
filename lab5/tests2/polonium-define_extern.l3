@@ -1,0 +1,9 @@
+//test error
+
+void print_int(int n){
+    return;
+}
+
+int main(){
+    return 0;
+}

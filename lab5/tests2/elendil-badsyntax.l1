@@ -1,0 +1,8 @@
+//test error
+// test that an error occurs on bad syntax.
+int main()
+{
+  int a = 5;
+  int b == 6;
+  return a + b;
+}

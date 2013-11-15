@@ -1,0 +1,9 @@
+//test return 1
+
+struct x { int x; };
+struct y { int x; };
+
+int main() {
+  struct x* x = alloc(struct x);
+  return 1;
+}

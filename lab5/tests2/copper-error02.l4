@@ -1,0 +1,16 @@
+//test error
+
+
+struct list {
+    int value;
+    int max;
+    struct list next; 
+};
+
+int main(){
+    struct list *head = alloc(struct list);
+    head->value = 3;
+    head->max = 4;
+    head->next = NULL;
+    return 42;
+}

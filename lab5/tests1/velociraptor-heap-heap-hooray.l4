@@ -1,0 +1,116 @@
+//test return 1
+// good old min heaps
+
+struct heap {
+  int[] array;
+  int size;
+};
+typedef struct heap* pq;
+
+bool percup(pq p, int pos) {
+  int parpos;
+
+  if (pos == 1) return true;
+
+  parpos = pos/2;
+  if (p->array[parpos] > p->array[pos]) {
+    int temp = p->array[parpos];
+    p->array[parpos] = p->array[pos];
+    p->array[pos] = temp;
+
+    return percup(p, parpos);
+  }
+
+  return true;
+}
+
+bool percdown(pq p, int pos) {
+  int left = 2*pos;
+  int right;
+  int temp;
+
+  if (left > p->size) return true;
+
+  right = left+1;
+
+  if (p->array[pos] < p->array[left]) {
+    if (right >= p->size || p->array[pos] < p->array[right])
+      return true;
+
+    temp = p->array[pos];
+    p->array[pos] = p->array[right];
+    p->array[right] = temp;
+
+    return percdown(p, right);
+  }
+
+  if (right > p->size || p->array[left] < p->array[right]) {
+    temp = p->array[pos];
+    p->array[pos] = p->array[left];
+    p->array[left] = temp;
+
+    return percdown(p, left);
+  }
+
+  temp = p->array[pos];
+  p->array[pos] = p->array[right];
+  p->array[right] = temp;
+
+  return percdown(p, right);
+}
+
+bool insert(pq p, int val) {
+  p->size++;
+  p->array[p->size] = val;
+  return percup(p, p->size);
+}
+
+int removemin(pq p) {
+  int min = p->array[1];
+  p->array[1] = p->array[p->size];
+  p->size--;
+  percdown(p, 1);
+
+  return min;
+}
+
+int main() {
+  pq p = alloc(struct heap);
+  int i = 1;
+
+  p->array = alloc_array(int, 21);
+  p->size = 0;
+
+  insert(p, 5);
+  insert(p, 19);
+  insert(p, 10);
+  insert(p, 3);
+  insert(p, 1);
+  insert(p, 15);
+  insert(p, 17);
+  insert(p, 9);
+  insert(p, 13);
+  insert(p, 14);
+  insert(p, 20);
+  insert(p, 18);
+  insert(p, 16);
+  insert(p, 12);
+  insert(p, 11);
+  insert(p, 8);
+  insert(p, 7);
+  insert(p, 6);
+  insert(p, 4);
+  insert(p, 2);
+
+  for (; i <= 20; i++) {
+    int m = removemin(p);
+    print_int(m);
+    // printchar(32);
+
+    if (m != i)
+      return -1;
+  }
+  // printchar(10);
+
+  return 1;
+}

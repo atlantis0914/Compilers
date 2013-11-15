@@ -1,0 +1,35 @@
+//test return 42
+
+struct a { int x;};
+struct b { struct a a;};
+struct c { struct b b;};
+struct d { struct c c;};
+struct e { struct d d;};
+struct f { struct e e;};
+struct g { struct f f;};
+struct h { struct g g;};
+struct i { struct h h;};
+struct j { struct i i;};
+struct k { struct j j;};
+struct l { struct k k;};
+struct m { struct l l;};
+struct n { struct m m;};
+struct o { struct n n;};
+struct p { struct o o;};
+struct q { struct p p;};
+struct r { struct q q;};
+struct s { struct r r;};
+struct t { struct s s;};
+struct u { struct t t;};
+struct v { struct u u;};
+struct w { struct v v;};
+struct x { struct w w;};
+struct y { struct x x;};
+struct z { struct y y;};
+
+int main()
+{
+	struct z * z = alloc(struct z);
+	z->y.x.w.v.u.t.s.r.q.p.o.n.m.l.k.j.i.h.g.f.e.d.c.b.a.x = 42;
+	return z->y.x.w.v.u.t.s.r.q.p.o.n.m.l.k.j.i.h.g.f.e.d.c.b.a.x;
+}

@@ -1,0 +1,52 @@
+//test return 77031
+//find the longest collatz chain with a starting number under MAX
+
+
+int dp(int n, int MAX, int[] length); 
+int collatz(int n); 
+
+int main()
+{
+  int MAX = 100000;
+    int maxn = 0;
+    int max = 0;
+
+    int[] length = alloc_array(int, MAX);
+
+    for (int i = 1; i < MAX; i++) {
+        int len = dp(i, MAX, length);
+        if (len > max) {
+            max = len;
+            maxn = i;
+        }
+    }
+
+    return maxn;
+}
+
+int dp(int n, int MAX, int[] length)
+{
+    int ret;
+
+    if (n < MAX && length[n] != 0)
+        return length[n];
+
+    if (n == 1)
+        return 1;
+
+
+    ret  = 1 + dp(collatz(n), MAX, length);
+
+    if (n < MAX)
+        length[n] = ret;
+
+    return ret;
+}
+
+int collatz(int n)
+{
+    if (n % 2 == 0)
+        return n / 2;
+    else
+        return 3*n + 1;
+}

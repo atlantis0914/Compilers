@@ -1,0 +1,30 @@
+//test error
+// not an array
+
+typedef bool[] b1;
+typedef b1[] b2;
+typedef b2[] b3;
+typedef b3[] b4;
+typedef b4[] b5;
+typedef b5[] b6;
+
+int main() {
+
+b6 a1 = alloc_array(b5,1);
+b5 a2 = alloc_array(b4,1);
+b4 a3 = alloc_array(b3,1);
+b3 a4 = alloc_array(b2,1);
+b2 a5 = alloc_array(b1,1);
+b1 a6 = alloc_array(bool,1);
+
+a1[0] = a2;
+a2[0] = a3;
+a3[0] = a4;
+a4[0] = a5;
+a5[0] = a6;
+a6[0] = false;
+
+if(a1[0][0][0][0][0][0][0])
+  return 1;
+return 0;
+}

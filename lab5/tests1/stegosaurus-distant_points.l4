@@ -1,0 +1,55 @@
+//test return 7595994
+// Paints points starting at 0,0 and then at maximum Euclidean distance to painted points,
+// then returns the kth point painted. TopCoder solution for DistantPoints.
+
+int paint(int[][] id, int x, int y, int curId) {
+  if (id[x][y] == 0) {
+    id[x][y] = curId;
+    curId++;
+  }
+  return curId;
+}
+
+int main() {
+  int dim = (1 << 12) + 1;
+  int k = 3048952;
+  int[][] id = alloc_array(int[], dim);
+  int i;
+  int j;
+  int curId = 0;
+  int step = dim-1;
+  
+  for (i = 0; i < dim; i++) {
+    id[i] = alloc_array(int, dim);
+  }
+  
+  curId = paint(id, 0, 0, curId);
+  curId = paint(id, dim-1, dim-1, curId);
+  curId = paint(id, 0, dim-1, curId);
+  curId = paint(id, dim-1, 0, curId);
+  
+  while (step >= 2) {
+    for (i = 0; i + step < dim; i += step) {
+      for (j = 0; j + step < dim; j += step) {
+        curId = paint(id, i + step/2, j + step/2, curId);
+      }
+    }
+    step /= 2;
+    
+    for (i = 0; i < dim; i += step) {
+      for (j = 0; j < dim; j += step) {
+        curId = paint(id, i, j, curId);
+      }
+    }
+  }
+  
+  for (i = 0; i < dim; i++) {
+    for (j = 0; j < dim; j++) {
+      if (id[i][j] == k) {
+        return i*dim+j;
+      }
+    }
+  }
+  
+  return -1;
+}

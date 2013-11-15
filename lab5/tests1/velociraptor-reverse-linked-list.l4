@@ -1,0 +1,43 @@
+//test return 5
+
+struct node;
+
+struct node {
+	int val;
+	struct node* next;
+	struct node* prev;
+};
+
+struct node* reverse(struct node* n) {
+	struct node* next = n->next;
+	struct node* prev = n->prev;
+	n->next = prev;
+	n->prev = next;
+	if (next == NULL) {
+		return n;
+	}
+	else {
+		return reverse(next);
+	}
+}
+
+int main() {
+	struct node* head;
+	struct node* cur;
+	struct node* next;
+	int i = 0;
+	head = alloc(struct node);
+	cur = head;
+	head->prev = NULL;
+	for ( ; i < 10; i++) {
+		cur->val = i;
+		next = alloc(struct node);
+		cur->next = next;
+		next->prev = cur;
+		cur = cur->next;
+	}
+	cur->val = i;
+	cur->next = NULL;
+	cur = reverse(head);
+	return cur->next->next->next->next->next->val;
+}

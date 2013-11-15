@@ -1,0 +1,22 @@
+//test return 4950
+
+int sum_array(int []a, int len) {
+   int result = 0;
+   
+   for(int i=0; i<len; i++) {
+      result+=a[i];
+   }
+   return result;
+}
+
+int[] *aarray(int len) {
+   int[] *a = alloc(int[]);
+   *a=alloc_array(int, len);
+   for(int i=0; i<len; i++)
+      (*a)[i]=i;
+   return a;
+}
+
+int main() {
+   return sum_array(*aarray(100), 100);
+}

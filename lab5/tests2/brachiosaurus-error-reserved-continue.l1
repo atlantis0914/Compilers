@@ -1,0 +1,8 @@
+//test error
+// reserved keyword: continue
+
+int main()
+{
+    int continue;
+    return continue;
+}

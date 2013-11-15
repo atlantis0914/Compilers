@@ -1,0 +1,9 @@
+//test error
+// use of reserved name
+
+int main() {
+    int alloc;
+
+    alloc = 2 * 3;
+    return alloc;
+}

@@ -1,0 +1,37 @@
+//test return -536870912
+
+struct mat {
+int a00;
+int a01;
+int a10;
+int a11;
+};
+typedef struct mat mat;
+
+mat *matmult(mat *m, mat *n) {
+    mat *d = alloc(mat);
+    d->a00 = (m->a00 * n->a00) + (m->a01 * n->a10);
+    d->a01 = (m->a00 * n->a01) + (m->a01 * n->a11);
+    d->a10 = (m->a10 * n->a00) + (m->a11 * n->a10);
+    d->a11 = (m->a10 * n->a01) + (m->a11 * n->a11);
+    return d;
+}
+
+mat *matpow(mat *m, int p) {
+    if (p == 1) return m;
+    return matmult(m, matpow(m, p - 1));
+}
+
+int main() {
+    int a = 0xCAFEBABE;
+    int b = 0xDEADBEEF;
+    int c = 0x12345678;
+    int d = 0xABCDEF12;
+    mat *m = alloc(mat);
+    m->a00 = a;
+    m->a01 = b;
+    m->a10 = c;
+    m->a11 = d;
+    m = matpow(m, 29);
+    return m->a00;
+}

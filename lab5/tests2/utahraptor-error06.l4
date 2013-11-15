@@ -1,0 +1,49 @@
+//test error
+
+struct f{
+    int x;
+};
+
+struct f* get_f(int x)
+{
+    struct f* fp;
+    if (x > 0)
+        fp = alloc(struct f);
+    else
+        fp = NULL;
+
+    return fp;
+}
+
+struct f* get_g(int y)
+{
+    return NULL;
+}
+
+int main()
+{
+    struct f* fp = get_f(10);
+    struct f* fpp = get_f(-9);
+    struct g* gp = get_g(10);
+
+    if (fp == fpp)
+    {
+        return 10;
+    } else if (NULL == NULL)
+    {
+        return -9;
+    } else if (fpp == NULL)
+    {
+        return 0;
+    }
+
+    if (gp == NULL)
+    {
+        return 2;
+    } else if (gp == fpp)
+    {
+        return 3;
+    }
+
+    return 1;
+}

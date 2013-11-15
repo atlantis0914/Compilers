@@ -1,0 +1,18 @@
+//test error
+
+struct A;
+
+int compute(){
+    struct A *foo = alloc(A*);
+    struct A *bar = alloc(A*);
+    return foo == bar ? 1:0;
+}
+
+struct A {
+    int a;
+    int b;
+};
+
+int main(){
+    return compute()+5;
+}

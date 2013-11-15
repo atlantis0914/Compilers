@@ -1,0 +1,65 @@
+//test return 96
+//caesar cipher
+
+typedef int chr;
+
+chr[] encrypt(chr[] plaintext, int len, int shift) {
+  chr[] supersecretmsg = alloc_array(chr, len);
+  for(int letter = 0; letter < len; letter++) {
+    plaintext[letter] = (plaintext[letter] + shift) % 26;
+    supersecretmsg[letter] = plaintext[letter];
+  }
+  return plaintext;
+}
+
+int main() {
+  chr a = 0;
+  chr b = 1;
+  chr c = 2;
+  chr d = 3;
+  chr e = 4;
+  chr f = 5;
+  chr g = 6;
+  chr h = 7;
+  chr i = 8;
+  chr j = 9;
+  chr k = 10;
+  chr l = 11;
+  chr m = 12;
+  chr n = 13;
+  chr o = 14;
+  chr p = 15;
+  chr q = 16;
+  chr r = 17;
+  chr s = 18;
+  chr t = 19;
+  chr u = 20;
+  chr v = 21;
+  chr w = 22;
+  chr x = 23;
+  chr y = 24;
+  chr z = 25;
+
+  chr[] msg;
+  msg = alloc_array(chr, 10);
+
+  msg[0] = h;
+  msg[1] = e;
+  msg[2] = l;
+  msg[3] = l;
+  msg[4] = o;
+
+  msg[5] = w;
+  msg[6] = o;
+  msg[7] = r;
+  msg[8] = l;
+  msg[9] = d;
+
+  msg = encrypt(msg, 10, 19);
+  int checksum = 0;
+  for(int letter = 0; letter < 10; letter++) {
+    checksum += msg[letter];
+  }
+  return checksum;
+}
+

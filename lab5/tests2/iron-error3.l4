@@ -1,0 +1,19 @@
+//test error
+// same struct called different things
+
+struct s1 {
+			 int x;			 
+};
+
+struct s2 {
+			 int x;
+};
+
+int main() {
+		struct s1 * a = alloc(struct s1);
+		struct s2 * b = alloc(struct s2);
+		a->x = 5;
+		b->x = 1;
+		a = b;
+		return a->x;
+}

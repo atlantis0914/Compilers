@@ -1,0 +1,19 @@
+//test return 4
+
+// check if/else pairing
+int main()
+{
+  bool b1 = false;
+  bool b2 = true;
+  bool b3 = false;
+
+  if(b1)
+    if(b2)
+      return 1;
+    else
+      return 2;
+  if(b3)
+    return 3;
+  else
+    return 4;
+}

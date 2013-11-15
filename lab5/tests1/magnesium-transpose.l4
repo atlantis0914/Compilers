@@ -1,0 +1,46 @@
+//test return 0
+
+void transpose(int[][] arr1, int[][] arr2) {
+  int t1 = 0;
+  for (int bi = 0; bi < 8; bi++) {
+    for (int bj = 0; bj < 8; bj++) {
+      for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+           if(i != j || bi != bj)
+            arr2[bi*8+i][bj*8+j] = arr1[bj*8+j][bi*8+i];
+           else
+            t1 = arr1[bj*8+j][bi*8+i];
+        }
+        if(bi == bj)
+          arr2[bi*8+i][bj*8+i] = t1;
+      }
+    }
+  }
+}
+
+bool is_transpose(int[][] arr1, int[][] arr2) {
+  for (int i = 0; i < 64; i++) {
+    for (int j = 0; j < 64; j++) {
+      if (arr1[i][j] != arr2[j][i]) return false;
+    }
+  }
+  return true;
+}
+
+int main() {
+  int[][] arr1 = alloc_array(int[], 64);
+  int[][] arr2 = alloc_array(int[], 64);
+  for (int i = 0; i < 64; i++) {
+    arr1[i] = alloc_array(int, 64);
+    arr2[i] = alloc_array(int, 64);
+  }
+  for (int i = 0; i < 64; i++) {
+    for (int j = 0; j < 64; j++) {
+      arr1[i][j] = i * 64 + j;
+    }
+  }
+  transpose(arr1, arr2);
+  assert(is_transpose(arr1, arr2));
+  return 0;
+}
+    

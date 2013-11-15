@@ -1,0 +1,16 @@
+//test error
+// All paths must return
+
+int main()
+{
+    bool b = false;
+
+    if( b )
+    {
+        b = true;
+    }
+    else
+    {
+        return 0;
+    }
+}

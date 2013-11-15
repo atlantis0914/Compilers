@@ -1,0 +1,9 @@
+//test error
+// recursive poops are no good
+struct poop {
+  struct poop poop;
+};
+
+int main() {
+  return 0;
+}

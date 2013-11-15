@@ -1,0 +1,14 @@
+//test return 42
+
+struct Foo
+{
+	int a;
+};
+
+int main()
+{
+	struct Foo* a = alloc(struct Foo);
+	a->a += 21;
+	(*a).a += 21;
+	return a->a;
+}

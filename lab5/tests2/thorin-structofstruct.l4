@@ -1,0 +1,25 @@
+//test error
+
+struct b;
+
+struct a {
+    int a;
+    int b;
+    struct b c;
+};
+
+struct b {
+    int a;
+    int b;
+    struct a c;
+};
+
+int main()
+{
+    return 0
+}
+
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

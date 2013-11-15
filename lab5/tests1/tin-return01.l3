@@ -1,0 +1,13 @@
+//test return 4
+//different type aliases to refer to ints
+
+typedef int type1;
+typedef type1 type2;
+
+type1 funct1(type2 arg) {
+  return arg + 1;
+}
+
+int main() {
+  return funct1(3);
+}

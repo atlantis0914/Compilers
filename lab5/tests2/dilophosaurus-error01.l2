@@ -1,0 +1,25 @@
+//test error
+
+int main ()
+{
+  int n;
+  int f1;
+  int f2;
+  int i;
+  int t;
+
+  n = 9;
+  f1 = 1;
+  f2 = 1;
+  if(n == 9)
+    t = 0;
+  for (i = 3; i <= n; i+=1) {
+    t = f2 + f1;
+    f1 = f2;
+    f2 = t;
+  }
+  if (i > 0)
+    return t;  /* f2 here would be correct */
+  else
+    return 0;
+}
