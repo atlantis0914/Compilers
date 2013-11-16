@@ -71,14 +71,13 @@ inlineAAsm asm = do
 
 generateInline :: Alloc -> AAsm -> ILState ()
 generateInline al@(sc, vMap, n, l, aasms) a@(AFnCall fName dest args lives) = do
-  (fnAlc, proc, fin) <- get
-  put (fnAlc, proc, fin ++ [a])
+  (fnAlc, ourAl@(ourSc,ourVMap,ourN,ourL,ourAasms), fin) <- get
   let aasms' = drop (length args) aasms
   let aasms'' = init aasms'
   -- We've dropped the argument moves, and the ret.
   -- arguments are 0 -> (length args) - 1
-  finishInlining al aasms'' args dest 
-  Trace.trace (fName ++ "\n" ++ show aasms ++ "\n" ++ show args) $ (return ())
+  finishInlining ourAl aasms'' args dest 
+  return ()
 
 finishInlining :: Alloc -> [AAsm] -> [ALoc] -> ALoc -> ILState ()
 finishInlining (sc,vm,n,l,am) aasms args dest = do
@@ -95,7 +94,12 @@ mapInd f l = zipWith f l [0..]
 
 genArgMoves :: Int -> [ALoc] -> [AAsm]
 genArgMoves n alist = 
-  mapInd (\arg -> \i -> AAsm [ATemp (n + i) False] Nop [ALoc $ arg]) alist
+  mapInd (\arg -> \i -> AAsm [ATemp (n + i) (extractSizeForArg arg)] Nop [ALoc $ arg]) alist
+
+extractSizeForArg :: ALoc -> Bool
+extractSizeForArg (AReg _ b) = b
+extractSizeForArg (ATemp _ b) = b
+extractSizeForArg (AArg _ b) = b
 
 incrSt :: Int -> Int -> ALoc -> AAsm -> AAsm
 incrSt n l d (AAsm asgn o args) = 
@@ -109,6 +113,9 @@ incrSt n l d (AFnCall _ _ _ _) = error ("shouldn't hit fn call")
 incrStALoc :: Int -> Int -> ALoc -> ALoc -> ALoc
 incrStALoc n l d (AReg 0 b) = d
 incrStALoc n l d (ATemp i b) = (ATemp (n + i) b)
+incrStALoc n l d (APtr (l1) Nothing i1 i2 b) = APtr (incrStALoc n l d l1) Nothing i1 i2 b
+incrStALoc n l d (APtr (l1) (Just l2) i1 i2 b) = APtr (incrStALoc n l d l1) 
+                                                (Just (incrStALoc n l d l2)) i1 i2 b
 incrStALoc n l d a = a
 
 incrStAVal :: Int -> Int -> ALoc -> AVal -> AVal
@@ -125,8 +132,10 @@ shouldInlineAlloc (sc, varMap, n, l, aasms) =
     c1 = ((length aasms < tuningThreshold) && (length aasms > 0))
     c2 = (singleReturn aasms)
     c3 = (lastReturn aasms) -- examples of different inline preds
+    c4 = (fnCallFree aasms)
+    c5 = (labelFree aasms)
   in
-    c1 && c2
+    c1 && c2 && c3 && c4 && c5 
 
 singleReturn :: [AAsm] -> Bool
 singleReturn asm = res
@@ -143,3 +152,22 @@ lastReturn asm = res
     res = case (last asm) of
             ACtrl (ARet _) -> True
             _ -> False
+
+fnCallFree :: [AAsm] -> Bool
+fnCallFree asm = res 
+  where
+    fin = foldl (\i -> \x ->
+                   case (x) of 
+                     AFnCall _ _ _ _ -> i+1
+                     _ -> i) 0 asm
+    res = (fin == 0)
+
+labelFree :: [AAsm] -> Bool
+labelFree asm = res 
+  where 
+    fin = foldl (\i -> \x ->
+                   case (x) of 
+                     (ACtrl (ALabel _)) -> i+1
+                     _ -> i) 0 asm
+    res = (fin == 0)
+
