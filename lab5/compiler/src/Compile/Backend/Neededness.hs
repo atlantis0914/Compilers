@@ -38,7 +38,7 @@ neededness aasms =
     (labelMap, initial) = Seq.foldlWithIndex (addLabel) (Map.empty, Map.empty) aasmsSeq
     needMap = neededness' aasmsSeq labelMap initial
   in
-    Map.elems needMap
+    []
 
 neededness' :: Seq.Seq AAsm -> LabelMap -> NeedMap -> NeedMap
 neededness' aasmsSeq labelMap needMap =
