@@ -24,10 +24,8 @@ genFIR :: IRFnList -> FnMap -> [FnAAsm]
 genFIR (IRFnList gdecls) fnMap =
   let
     initIR = Maybe.mapMaybe (genFnAAsm fnMap) gdecls
---    coalIR = coalesceLabel initIR
   in
     initIR
---    coalIR
 
 addArg :: [Int] -> Alloc -> String -> Alloc
 addArg argSizes alloc@(varMap, n, l, aasms) arg =
@@ -262,7 +260,7 @@ genExp f map (IRExpRelOp op e1 e2) dest = genBinOp f map (op,e1,e2) dest
 genExp f map (IRExpLogOp op e1 e2) dest = genBinOp f map (op,e1,e2) dest
 genExp f map (IRExpPolyEq op e1 e2) dest = genBinOp f map (op,e1,e2) dest
 
-genExp f alloc@(varMap,n,l,aasm) (IRExpTernary e1 e2 e3) dest = let
+genExp f (varMap,n,l,aasm) (IRExpTernary e1 e2 e3) dest = let
   (_,n1,e1l,e1Aasm) = genExp f (varMap,n+1,l,[]) e1 (ATemp n False)
   (_,n2,e2l,e2Aasm) = genExp f (varMap,n1,e1l,[]) e2 dest
   (_,n3,e3l,e3Aasm) = genExp f (varMap,n2,e2l,[]) e3 dest
@@ -301,7 +299,7 @@ genExp f alloc@(varMap,n,l,aasm) e@(IRExpAlloc t s) dest =
   genRealFn f alloc (IRExpFnCall "calloc" [IRExpInt (fromIntegral s) Dec,
                                            IRExpInt 1 Dec] 8) dest
 
-genExp f alloc@(varMap,n,l,aasm) e@(IRExpAllocArray t expr s) dest = let
+genExp f (varMap,n,l,aasm) e@(IRExpAllocArray t expr s) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr $ ATemp n False
   locs = [ATemp n' False, ATemp n False]
   aasm'' = aasm' ++ genArrayAllocCheck (ATemp n False) s ++
@@ -312,21 +310,21 @@ genExp f alloc@(varMap,n,l,aasm) e@(IRExpAllocArray t expr s) dest = let
                      AFnCall "calloc" dest locs []]
   in (varMap',n'+2,l',aasm'' ++ [AAsm [APtr dest Nothing 0 0 False] Nop [ALoc $ ATemp n False]])
 
-genExp f alloc@(varMap,n,l,aasm) e@(IRExpDereference (IRIdent s _) t _) dest =
+genExp f (varMap,n,l,aasm) e@(IRExpDereference (IRIdent s _) t _) dest =
   (varMap,n,l,aasm ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp (varMap Map.! s) True) Nothing 0 0 (getSize e)]])
 
-genExp f alloc@(varMap,n,l,aasm) e@(IRExpDereference expr _ _) dest = let
+genExp f (varMap,n,l,aasm) e@(IRExpDereference expr _ _) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) expr (ATemp n True)
   in (varMap',n'+1,l',aasm' ++ [AAsm [dest] Nop [ALoc $ APtr (ATemp n True) Nothing 0 0 (getSize e)]])
 
-genExp f alloc@(varMap,n,l,aasm) e@(IRExpFieldSelect base field t size _) dest = let
+genExp f (varMap,n,l,aasm) e@(IRExpFieldSelect base field t size _) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) base (ATemp n (getSize base))
   (tNum, ind, off, additive) = getPtrFromLastOp aasm'
   c = case ind of Just _ -> [AAsm [dest] Nop [ALoc $ APtr (ATemp tNum True) ind (off) (additive + size) (getSize e)]]
                   Nothing -> [AAsm [dest] Nop [ALoc $ APtr (ATemp tNum True) ind (off + size) 0 (getSize e)]]
   in (varMap',n'+1,l',aasm' ++ c)
 
-genExp f alloc@(varMap,n,l,aasm) e@(IRExpArraySubscript base index t size) dest = let
+genExp f (varMap,n,l,aasm) e@(IRExpArraySubscript base index t size) dest = let
   (varMap',n',l',aasm') = genExp f (varMap,n+1,l,aasm) base (ATemp n True)
   (varMap'',n'',l'',aasm'') = genExp f (varMap',n'+1,l',aasm') index (ATemp n' False)
   in (varMap'',n'',l'',aasm'' ++  (genArrayCheck (ATemp n True) (ATemp n' False)) ++
@@ -385,13 +383,9 @@ genExpAcc f (varMap,n,l,aasm) exp =
   genExp f (varMap,n+1,l,aasm) exp (ATemp n (getSize exp))
 
 genBinOp f (varMap,n,l,aasm) (op,e1,e2) dest = let
-  -- AAsm for left and right operand
-  -- TODO: Make this more SSL friendly
   (_,n1,l',aasm') = genExp f (varMap, n + 1,l, []) e1 (ATemp n (getSize e1))
   (_,n2,l'',aasm'') = genExp f (varMap, n1 + 1,l', []) e2 (ATemp n1 (getSize e2))
-  -- AAsm for the operation
   c  = [AAsm [dest] op [ALoc $ ATemp n (getSize e1), ALoc $ ATemp n1 (getSize e2)]]
-  -- Questionable variable indexing here
   in (varMap, n2, l'', aasm ++ aasm' ++ aasm'' ++ c)
 
 getPtrFromLastOp aasm =
