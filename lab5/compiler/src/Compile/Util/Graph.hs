@@ -19,8 +19,15 @@ isEdge (Graph m) src target =
 getNeighborsAsSet :: (Ord a) => Graph a -> a -> Set.Set a
 getNeighborsAsSet (Graph m) src = 
   case (Data.Map.lookup src m) of 
-    Nothing -> Trace.trace ("Set empty") $ Set.empty
-    Just srcV -> Trace.trace ("Set notempty") $ keysSet (vertexAdjacencies srcV) 
+    Nothing -> Set.empty
+    Just srcV -> keysSet (vertexAdjacencies srcV) 
+
+updateVertexPtrs :: (Ord a) => Graph a -> a -> a -> Graph a
+updateVertexPtrs (Graph m) old new = 
+  Graph $ Data.Map.map (\(v@(Vertex {vertexAdjacencies = adj})) ->   
+            if (Data.Map.member old adj) 
+              then v {vertexAdjacencies = (Data.Map.insert new () (Data.Map.delete old adj))}
+              else v) m
 
 -- Creates a new Graph 
 newGraph :: (Graph a)
@@ -72,6 +79,9 @@ addEdgeSafe (Graph m) src target =
     srcV' = srcV {vertexAdjacencies = adjacencies'}
   in
     Graph (insert src srcV' m')
+
+addEdgeFoldPat :: ALoc -> (Graph ALoc) -> ALoc -> (Graph ALoc)
+addEdgeFoldPat l1 g l2 = addEdgeSafe g l1 l2
 
 -- Sets this vertex's live value to the specified boolean
 setVertexLiveTo :: (Ord a) => Graph a -> a -> Bool -> Graph a
