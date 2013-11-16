@@ -23,7 +23,7 @@ genAsm aasms fnContext =
 
 cmpAsm :: ALoc -> AVal -> String
 cmpAsm loc val =
-  if getLocSize loc 
+  if getLocSize loc
     then "cmpq " ++ (avalToString val) ++ ", " ++ (alocToString loc)
     else "cmpl " ++ (avalToString val) ++ ", " ++ (alocToString loc)
 
@@ -44,6 +44,9 @@ aasmToString _ AAsm {aAssign = [loc], aOp = Gt, aArgs = [arg]} =
 aasmToString _ AAsm {aAssign = [loc], aOp = Gte, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setge " ++ (alocByteToString loc) ++ "\n"
 
+aasmToString _ AAsm {aAssign = [loc], aOp = Ae, aArgs = [arg]} =
+  "  " ++ (cmpAsm loc arg) ++ "\n  setae " ++ (alocByteToString loc) ++ "\n"
+
 aasmToString _ AAsm {aAssign = [loc], aOp = Equ, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  sete " ++ (alocByteToString loc) ++ "\n"
 
@@ -57,21 +60,21 @@ aasmToString _ AAsm {aAssign = [loc], aOp = Div, aArgs = [snd]} = divModToString
 aasmToString _ AAsm {aAssign = [loc], aOp = Mod, aArgs = [snd]} = divModToString loc snd Mod
 
 aasmToString _ AAsm {aAssign = [loc], aOp = LShift, aArgs = [snd]} =
-  (checkLt32 snd) ++ (checkGte0 snd) ++
+  (checkLt32 snd) ++
   "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString LShift loc) ++ " %cl, " ++ (alocToString loc) ++ "\n"
 
 aasmToString _ AAsm {aAssign = [loc], aOp = RShift, aArgs = [snd]} =
-  (checkLt32 snd) ++ (checkGte0 snd) ++
+  (checkLt32 snd) ++
   "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString RShift loc) ++ " %cl, " ++ (alocToString loc) ++ "\n"
 
 aasmToString _ AAsm {aAssign = [loc], aOp = BitwiseNot, aArgs = [arg]} =
   "  " ++ (opToString BitwiseNot loc) ++ " " ++ (alocToString loc) ++ "\n"
 
-aasmToString _ AAsm {aAssign = [loc], aOp = Add, aArgs = [arg]} = 
-  if (isZero arg) 
+aasmToString _ AAsm {aAssign = [loc], aOp = Add, aArgs = [arg]} =
+  if (isZero arg)
     then ""
     else "  " ++ (opToString Add loc) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
-  where 
+  where
     isZero (AImm 0) = True
     isZero _ = False
 
@@ -107,15 +110,15 @@ aasmToString (_, size, numArgs, m) (ACtrl (ARet _)) =
 
 aasmToString (_, size, numArgs, m) (AFnCall fnName loc locs lives) =
     prologue ++ "  call " ++ fnName ++ "\n  " ++ (opToString Nop loc) ++ " " ++
-    alocToString (AReg 0 (getLocSize loc)) ++ ", " ++ 
-    (alocToString (ASpill (getLocSize loc))) ++ 
-    "\n" ++ addSize ++ (genEpilogues loc m lives) ++ "  " ++ 
+    alocToString (AReg 0 (getLocSize loc)) ++ ", " ++
+    (alocToString (ASpill (getLocSize loc))) ++
+    "\n" ++ addSize ++ (genEpilogues loc m lives) ++ "  " ++
     (opToString Nop loc) ++ " " ++ (alocToString (ASpill (getLocSize loc))) ++
     ", " ++ (alocToString loc) ++ "\n"
-  where 
+  where
     (prologue, size) = genProlugues loc locs m lives
-    addSize = if (size > 0) 
-                then "  addq $" ++ show (size * 8) ++ ", %rsp\n" 
+    addSize = if (size > 0)
+                then "  addq $" ++ show (size * 8) ++ ", %rsp\n"
                 else ""
 
 genArgPrologue' :: Int -> ALoc -> (String, Int, Int) -> (String, Int, Int)
@@ -246,7 +249,7 @@ divEpilogue fst op
 
 opToString :: Op -> ALoc -> String
 opToString op loc =
-  if getLocSize loc 
+  if getLocSize loc
     then case op of Mul -> "imulq"
                     Add -> "addq"
                     Sub -> "subq"
@@ -286,4 +289,4 @@ checkGte0 aval =
 
 checkLt32 :: AVal -> String
 checkLt32 aval =
-  "  cmpl $32, " ++ (avalToString aval) ++ "\n  jge error\n"
+  "  cmpl $32, " ++ (avalToString aval) ++ "\n  jae error\n"

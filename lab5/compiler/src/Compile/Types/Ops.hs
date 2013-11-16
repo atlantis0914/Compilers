@@ -19,6 +19,7 @@ data Op = Mul
         | LogicalNot
         | BitwiseNot
         | Lt
+        | Ae
         | Lte
         | Gt
         | Gte
