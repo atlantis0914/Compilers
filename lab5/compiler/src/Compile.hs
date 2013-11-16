@@ -24,13 +24,14 @@ import Compile.Frontend.Elaborate
 import Compile.Frontend.TypeCheck
 import Compile.Frontend.CheckAST
 import Compile.Frontend.RenameFn
--- import Compile.Frontend.ConstantFold
 import Compile.Frontend.RemVoid
+import Compile.Frontend.ConstantPropagate
+import Compile.Frontend.Minimize
 import Compile.IR.GenIR
 import Compile.IR.GenIRAST
-import Compile.Frontend.Minimize
 import Compile.Backend.CodeGen
-import Compile.Frontend.ConstantPropagate
+
+import Compile.Util.Job
 
 import qualified Debug.Trace as Trace
 
@@ -64,7 +65,9 @@ compile job = do
                           else remFn elabFnList')
     minFnList <- liftEIO $ minimize elabFnList''
     let irFnList = toIRFnList fnMap structMap minFnList
-    let irFnList' = constantFold irFnList
+    let irFnList' = if (optLevelMet job constantPropOptLevel)
+                      then constantProp irFnList
+                      else Trace.trace ("Opt level is : " ++ show (jobOptimization job)) $ irFnList
 --    writer (jobOut job) irFnList'
     if jobOutFormat job == C0
       then writer (jobOut job) minFnList

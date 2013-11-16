@@ -13,8 +13,8 @@ type InnerState = (Set.Set String, Set.Set String, Map.Map String Integer)
 
 type CFState = State InnerState
 
-constantFold :: IRFnList -> IRFnList 
-constantFold (IRFnList l) = IRFnList $ map processIRDecl l
+constantProp :: IRFnList -> IRFnList 
+constantProp (IRFnList l) = IRFnList $ map processIRDecl l
 
 processIRDecl :: IRDecl -> IRDecl
 processIRDecl d@(IRSDefn s) = d

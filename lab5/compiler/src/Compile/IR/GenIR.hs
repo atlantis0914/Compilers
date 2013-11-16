@@ -8,6 +8,7 @@ import Compile.Backend.Registers
 import qualified Text.Parsec.Pos as P
 
 import Compile.Util.IRUtil
+import Compile.Util.Job 
 
 import Compile.IR.CoalesceLabel
 
@@ -19,10 +20,10 @@ sourcePos = P.initialPos "garbage"
 type FnMap = Map.Map String ([IdentType], IdentType, Bool, Bool, Maybe Integer) -- Map of global fn defines
 
 -- Bool defines whether or not to do safe/unsafe compilation
-genFIR :: IRFnList -> FnMap -> Bool -> [FnAAsm]
-genFIR (IRFnList gdecls) fnMap safeCompile =
+genFIR :: Job -> IRFnList -> FnMap -> Bool -> [FnAAsm]
+genFIR job (IRFnList gdecls) fnMap safeCompile =
   let
-    initIR = Maybe.mapMaybe (genFnAAsm fnMap safeCompile) gdecls
+    initIR = Maybe.mapMaybe (genFnAAsm job fnMap safeCompile) gdecls
 --    coalIR = coalesceLabel initIR
   in
     initIR
@@ -49,25 +50,26 @@ addArgInline argSizes alloc@(sc, varMap, n, l, aasms) arg =
   in
     (sc,varMap', n+1, l, aasms')
 
-genFnAAsm :: FnMap -> Bool -> IRDecl -> Maybe FnAAsm
-genFnAAsm fnMap safeCompile (IRFDefn (IRFuncDef name args _ _ ast argSizes)) =
-    Just $ AAFPreInline (genIR fnMap ast alloc') name (length args)
---    Just $ AAFDefn (genIR fnMap ast alloc') name (length args)
+genFnAAsm :: Job -> FnMap -> Bool -> IRDecl -> Maybe FnAAsm
+genFnAAsm job fnMap safeCompile (IRFDefn (IRFuncDef name args _ _ ast argSizes)) =
+  if (optLevelMet job inliningOptLevel)
+    then Just $ AAFPreInline (genInlineIR fnMap ast alloc') name (length args)
+    else Just $ AAFDefn (genIR fnMap ast alloc') name (length args)
   where
     alloc = (safeCompile, Map.empty, 0, 0, [])
     alloc' = foldl (addArg argSizes) alloc args
 
-genFnAAsm _ _ _ = Nothing
+genFnAAsm _ _ _ _ = Nothing
 
-genIR :: FnMap -> IRAST -> Alloc -> Alloc
-genIR fnMap (IRAST (IRBlock stmts)) alloc = foldl (genStmt fnMap) alloc stmts
+genInlineIR :: FnMap -> IRAST -> Alloc -> Alloc
+genInlineIR fnMap (IRAST (IRBlock stmts)) alloc = foldl (genStmt fnMap) alloc stmts
 
--- genIR :: FnMap -> IRAST -> Alloc -> [AAsm]
--- genIR fnMap (IRAST (IRBlock stmts)) alloc =
---   let
---     (sc,vm,tn,l,aasm) = foldl (genStmt fnMap) alloc stmts
---   in
---     aasm
+genIR :: FnMap -> IRAST -> Alloc -> [AAsm]
+genIR fnMap (IRAST (IRBlock stmts)) alloc =
+  let
+    (sc,vm,tn,l,aasm) = foldl (genStmt fnMap) alloc stmts
+  in
+    aasm
 
 genStmt :: FnMap -> Alloc -> IRStmt -> Alloc
 genStmt fm alloc IRNop = alloc

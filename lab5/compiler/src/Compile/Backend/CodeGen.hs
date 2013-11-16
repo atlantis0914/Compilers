@@ -25,6 +25,8 @@ import Compile.Backend.Registers
 import Compile.Backend.Neededness
 import Compile.Backend.RegisterCoal
 
+import Compile.Util.Job
+
 import Compile.Frontend.ConstantPropagate
 
 import qualified Debug.Trace as Trace
@@ -39,10 +41,11 @@ maxTempsBeforeSpilling = 1000
 fnListCodeGen job fnList fnMap =
   let
     safeCompilation = jobSafeCompilation job
-    fnAasms = genFIR fnList fnMap safeCompilation
-    fnAasms' = inlineFns fnMap fnAasms
+    fnAasms = genFIR job fnList fnMap safeCompilation
+    fnAasms' = if (optLevelMet job inliningOptLevel)
+                 then inlineFns fnMap fnAasms
+                 else fnAasms
     asm = concatMap fnAAsmCodeGen fnAasms'
---    asm = concatMap fnAAsmCodeGen fnAasms
     epilogue = concat ["error:\n", "  movw $1, %ax\n", "  movw $0, %bx\n", "  divw %bx\n", "mem_error:\n", "  jmp 0\n"]
     asm' = asm ++ epilogue
   in
