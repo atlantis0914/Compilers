@@ -15,10 +15,7 @@ import qualified Debug.Trace as Trace
 
 sourcePos = P.initialPos "garbage"
 
--- Boolean indicates whether or not we're compiling in safe mode
-type Alloc = (Bool, Map.Map String Int, Int, Int, [AAsm])
 -- (Map from idents -> tempNum, curTempNum)
-
 type FnMap = Map.Map String ([IdentType], IdentType, Bool, Bool, Maybe Integer) -- Map of global fn defines
 
 -- Bool defines whether or not to do safe/unsafe compilation
@@ -54,19 +51,23 @@ addArgInline argSizes alloc@(sc, varMap, n, l, aasms) arg =
 
 genFnAAsm :: FnMap -> Bool -> IRDecl -> Maybe FnAAsm
 genFnAAsm fnMap safeCompile (IRFDefn (IRFuncDef name args _ _ ast argSizes)) =
-    Just $ AAFDefn (genIR fnMap ast alloc') name (length args)
+    Just $ AAFPreInline (genIR fnMap ast alloc') name (length args)
+--    Just $ AAFDefn (genIR fnMap ast alloc') name (length args)
   where
     alloc = (safeCompile, Map.empty, 0, 0, [])
     alloc' = foldl (addArg argSizes) alloc args
 
 genFnAAsm _ _ _ = Nothing
 
-genIR :: FnMap -> IRAST -> Alloc -> [AAsm]
-genIR fnMap (IRAST (IRBlock stmts)) alloc =
-  let
-    (_,_,_,_,aasm) = foldl (genStmt fnMap) alloc stmts
-  in
-    aasm
+genIR :: FnMap -> IRAST -> Alloc -> Alloc
+genIR fnMap (IRAST (IRBlock stmts)) alloc = foldl (genStmt fnMap) alloc stmts
+
+-- genIR :: FnMap -> IRAST -> Alloc -> [AAsm]
+-- genIR fnMap (IRAST (IRBlock stmts)) alloc =
+--   let
+--     (sc,vm,tn,l,aasm) = foldl (genStmt fnMap) alloc stmts
+--   in
+--     aasm
 
 genStmt :: FnMap -> Alloc -> IRStmt -> Alloc
 genStmt fm alloc IRNop = alloc
@@ -367,7 +368,7 @@ genInlineFn f alloc@(sc,varMap, n, l, aasm) (IRExpFnCall fnName exprs _) dest re
     (aasm'', _) = foldl moveArgs (aasm', 0) locs
     newAasm = AAsm {aAssign = [dest], aOp = Nop, aArgs = [AImm (fromIntegral ret)]}
   in
-    (sc,varMap', n', l', aasm'' ++ [newAasm])
+    (sc, varMap', n', l', aasm'' ++ [newAasm])
 
 genRealFn f alloc@(sc,varMap, n, l, aasm) (IRExpFnCall fnName exprs _) dest =
   let

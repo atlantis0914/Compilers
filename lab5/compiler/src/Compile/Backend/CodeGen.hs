@@ -10,6 +10,7 @@ import Compile.Types
 import qualified Data.Map as Map
 
 import Compile.IR.GenIR
+import Compile.IR.InlineFn
 import Compile.Backend.Liveness
 import Compile.Backend.Interference
 import Compile.Backend.Coloring
@@ -22,6 +23,9 @@ import Compile.Backend.Spill
 import Compile.Backend.BackendUtils
 import Compile.Backend.Registers
 import Compile.Backend.Neededness
+import Compile.Backend.RegisterCoal
+
+import Compile.Frontend.ConstantPropagate
 
 import qualified Debug.Trace as Trace
 
@@ -36,7 +40,9 @@ fnListCodeGen job fnList fnMap =
   let
     safeCompilation = jobSafeCompilation job
     fnAasms = genFIR fnList fnMap safeCompilation
-    asm = concatMap fnAAsmCodeGen fnAasms
+    fnAasms' = inlineFns fnMap fnAasms
+    asm = concatMap fnAAsmCodeGen fnAasms'
+--    asm = concatMap fnAAsmCodeGen fnAasms
     epilogue = concat ["error:\n", "  movw $1, %ax\n", "  movw $0, %bx\n", "  divw %bx\n", "mem_error:\n", "  jmp 0\n"]
     asm' = asm ++ epilogue
   in
@@ -102,10 +108,11 @@ codeGen aasmList fnName numArgs = let
               coloring = greedyColor interference_graph simp_ordering
               liveVars' = map (\l -> map (replaceAssigns coloring) l) liveVars
               twoOpAasmList' = map mergeAAsm (zip twoOpAasmList liveVars')
-              m = maxColor coloring
+              (twoOpAasmList'', coloring') = registerCoalesce twoOpAasmList' coloring interference_graph
+              m = maxColor coloring'
               m' = (max 0 (m - max_color_num)) * 8
               m'' = roundUp m'
-              coloredAasmList = colorTemps twoOpAasmList' coloring
+              coloredAasmList = colorTemps twoOpAasmList'' coloring'
               asm = genAsm coloredAasmList (fnName, m'', numArgs, m)
             in
               if (debugFlag)

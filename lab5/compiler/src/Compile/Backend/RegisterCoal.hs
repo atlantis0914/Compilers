@@ -28,7 +28,7 @@ prohibList = [Color 0, Color 1, Color 2]
 registerCoalesce :: [AAsm] -> ColoringMap -> Graph ALoc -> ([AAsm], ColoringMap)
 registerCoalesce aasm cmap ig = 
   let
-    (ig', cmap', rem, aasm') = execState coalesceAAsm(ig, cmap, aasm, [])
+    (ig', cmap', rem, aasm') = execState coalesceAAsm (ig, cmap, aasm, [])
   in
     (aasm', cmap')
 

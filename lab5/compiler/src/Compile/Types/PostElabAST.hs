@@ -113,6 +113,7 @@ instance Show Stmt where
   show (Ctrl c) = "\t" ++ show c
   show (Block stmts) = "{\n" ++ (unlines (map show stmts)) ++ "};" ++ "\n"
   show (Expr expr) = show expr ++ "\n"
+  show (SNop) = "N-n-n-nope\n"
 
 instance Show Ctrl where
   show (If e1 s1 s2 _) = "if(" ++ show e1 ++ ") " ++ show s1 ++ "else" ++ show s2 ++ "\n"

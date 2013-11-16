@@ -7,10 +7,14 @@
 module Compile.Types.AbstractAssembly where
 
 import Compile.Types.Ops
+import qualified Data.Map as Map
 
+-- Boolean indicates whether or not we're compiling in safe mode
+type Alloc = (Bool, Map.Map String Int, Int, Int, [AAsm])
 
-data FnAAsm = AAFDefn [AAsm] String Int
-            | AAFDecl String deriving Show
+data FnAAsm = AAFDefn [AAsm] String Int 
+            | AAFDecl String 
+            | AAFPreInline Alloc String Int 
 
 data AAsm = AAsm {aAssign :: [ALoc]
                  ,aOp     :: Op
@@ -37,6 +41,13 @@ data ACtrl = ARet AVal
            | ALabel Int
            | AIf AVal Int (Maybe String)
            | AGoto Int deriving (Show, Eq)
+
+instance Show FnAAsm where 
+  show (AAFDefn alist name i) = name ++ "\n" ++ 
+    (concatMap (\x -> "\t" ++ show x ++ "\n") alist)
+  show (AAFDecl _) = ""
+  show (AAFPreInline _ _ _) = ""
+
 
 instance Ord ALoc where
   (AReg _ _) `compare` (ATemp _ _) = GT
