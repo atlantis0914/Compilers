@@ -21,6 +21,7 @@ import Compile.Backend.GenAsm
 import Compile.Backend.Spill
 import Compile.Backend.BackendUtils
 import Compile.Backend.Registers
+import Compile.Backend.Neededness
 
 import qualified Debug.Trace as Trace
 
@@ -79,7 +80,8 @@ mergeAAsm (aasm, _) = aasm
 
 -- Generates the AAsm from an AST
 codeGen aasmList fnName numArgs = let
-    twoOpAasmList =  genTwoOperand aasmList
+    aasmList' =  removeDead aasmList
+    twoOpAasmList =  genTwoOperand aasmList'
     allLocs = getLocs aasmList
   in
     if (length (aasmList) > maxTempsBeforeSpilling)
