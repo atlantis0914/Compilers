@@ -17,9 +17,9 @@ getLocSize (AArg _ b) = b
 getLocSize (APtr _ _ _ _ b) = b
 getLocSize (AMem _ b) = b
 
-genAsm :: [AAsm] -> (String, Int, Int, Int) -> [String]
-genAsm aasms fnContext =
-  map (aasmToString fnContext) aasms
+genAsm :: [AAsm] -> (String, Int, Int, Int) -> Job -> [String]
+genAsm aasms fnContext job =
+  map (aasmToString fnContext job) aasms
 
 cmpAsm :: ALoc -> AVal -> String
 cmpAsm loc val =
@@ -27,50 +27,54 @@ cmpAsm loc val =
     then "cmpq " ++ (avalToString val) ++ ", " ++ (alocToString loc)
     else "cmpl " ++ (avalToString val) ++ ", " ++ (alocToString loc)
 
-aasmToString :: (String, Int, Int, Int) -> AAsm -> String
+aasmToString :: (String, Int, Int, Int) -> Job -> AAsm -> String
 
-aasmToString _ (AAsm [loc] LogicalNot [arg]) =
+aasmToString _ _ (AAsm [loc] LogicalNot [arg]) =
   "  " ++ (opToString Nop loc) ++ " " ++ (avalToString arg) ++ ", " ++ (alocToString loc) ++ "\n  not " ++ (alocToString loc) ++ "\n  and $1, " ++ (alocToString loc) ++ "\n"
 
-aasmToString _ AAsm {aAssign = [loc], aOp = Lt, aArgs = [arg]} =
+aasmToString _ _ AAsm {aAssign = [loc], aOp = Lt, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setl " ++ (alocByteToString loc) ++ "\n"
 
-aasmToString _ AAsm {aAssign = [loc], aOp = Lte, aArgs = [arg]} =
+aasmToString _ _ AAsm {aAssign = [loc], aOp = Lte, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setle " ++ (alocByteToString loc) ++ "\n"
 
-aasmToString _ AAsm {aAssign = [loc], aOp = Gt, aArgs = [arg]} =
+aasmToString _ _ AAsm {aAssign = [loc], aOp = Gt, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setg " ++ (alocByteToString loc) ++ "\n"
 
-aasmToString _ AAsm {aAssign = [loc], aOp = Gte, aArgs = [arg]} =
+aasmToString _ _ AAsm {aAssign = [loc], aOp = Gte, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setge " ++ (alocByteToString loc) ++ "\n"
 
-aasmToString _ AAsm {aAssign = [loc], aOp = Ae, aArgs = [arg]} =
+aasmToString _ _ AAsm {aAssign = [loc], aOp = Ae, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setae " ++ (alocByteToString loc) ++ "\n"
 
-aasmToString _ AAsm {aAssign = [loc], aOp = Equ, aArgs = [arg]} =
+aasmToString _ _ AAsm {aAssign = [loc], aOp = Equ, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  sete " ++ (alocByteToString loc) ++ "\n"
 
-aasmToString _ AAsm {aAssign = [loc], aOp = Neq, aArgs = [arg]} =
+aasmToString _ _ AAsm {aAssign = [loc], aOp = Neq, aArgs = [arg]} =
   "  " ++ (cmpAsm loc arg) ++ "\n  setne " ++ (alocByteToString loc) ++ "\n"
 
-aasmToString _ AAsm {aAssign = [loc], aOp = Neg, aArgs = [arg]} =
-  (aasmToString ("", 0, 0, 0) (AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]}) ++ "  " ++ (opToString Neg loc) ++ " " ++ (alocToString loc) ++ "\n")
+aasmToString _ j AAsm {aAssign = [loc], aOp = Neg, aArgs = [arg]} =
+  (aasmToString ("", 0, 0, 0) j (AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]}) ++ "  " ++ (opToString Neg loc) ++ " " ++ (alocToString loc) ++ "\n")
 
-aasmToString _ AAsm {aAssign = [loc], aOp = Div, aArgs = [snd]} = divModToString loc snd Div
-aasmToString _ AAsm {aAssign = [loc], aOp = Mod, aArgs = [snd]} = divModToString loc snd Mod
+aasmToString _ _ AAsm {aAssign = [loc], aOp = Div, aArgs = [snd]} = divModToString loc snd Div
+aasmToString _ _ AAsm {aAssign = [loc], aOp = Mod, aArgs = [snd]} = divModToString loc snd Mod
 
-aasmToString _ AAsm {aAssign = [loc], aOp = LShift, aArgs = [snd]} =
-  (checkLt32 snd) ++
-  "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString LShift loc) ++ " %cl, " ++ (alocToString loc) ++ "\n"
+aasmToString _ j AAsm {aAssign = [loc], aOp = LShift, aArgs = [snd]} =
+  let
+    chk = if isSafe j then checkLt32 snd
+                      else ""
+  in chk ++ "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString LShift loc) ++ " %cl, " ++ (alocToString loc) ++ "\n"
 
-aasmToString _ AAsm {aAssign = [loc], aOp = RShift, aArgs = [snd]} =
-  (checkLt32 snd) ++
-  "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString RShift loc) ++ " %cl, " ++ (alocToString loc) ++ "\n"
+aasmToString _ j AAsm {aAssign = [loc], aOp = RShift, aArgs = [snd]} =
+  let
+    chk = if isSafe j then checkLt32 snd
+                      else ""
+  in chk ++ "  movb " ++ (avalByteToString snd) ++ ", %cl\n  " ++ (opToString RShift loc) ++ " %cl, " ++ (alocToString loc) ++ "\n"
 
-aasmToString _ AAsm {aAssign = [loc], aOp = BitwiseNot, aArgs = [arg]} =
+aasmToString _ _ AAsm {aAssign = [loc], aOp = BitwiseNot, aArgs = [arg]} =
   "  " ++ (opToString BitwiseNot loc) ++ " " ++ (alocToString loc) ++ "\n"
 
-aasmToString _ AAsm {aAssign = [loc], aOp = Add, aArgs = [arg]} =
+aasmToString _ _ AAsm {aAssign = [loc], aOp = Add, aArgs = [arg]} =
   if (isZero arg)
     then ""
     else "  " ++ (opToString Add loc) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
@@ -78,7 +82,7 @@ aasmToString _ AAsm {aAssign = [loc], aOp = Add, aArgs = [arg]} =
     isZero (AImm 0) = True
     isZero _ = False
 
-aasmToString _ AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]} =
+aasmToString _ _ AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]} =
   if (argEq loc arg)
     then ""
     else "  " ++ (opToString Nop loc) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
@@ -86,29 +90,29 @@ aasmToString _ AAsm {aAssign = [loc], aOp = Nop, aArgs = [arg]} =
     argEq loc (ALoc loc') = loc == loc'
     argEq _ _ = False
 
-aasmToString _ AAsm {aAssign = [loc], aOp = op, aArgs = [arg]} =
+aasmToString _ _ AAsm {aAssign = [loc], aOp = op, aArgs = [arg]} =
   "  " ++ (opToString op loc) ++ " " ++ (avalToString arg) ++ ", "  ++ (alocToString loc) ++ "\n"
 
-aasmToString (fnName, _, _ ,_) (ACtrl (ALabel i)) =
+aasmToString (fnName, _, _ ,_) _ (ACtrl (ALabel i)) =
   "\n" ++ fnName ++ "label" ++ show i ++ ":\n"
 
-aasmToString (fnName, _, _, _) (ACtrl (AGoto i)) =
+aasmToString (fnName, _, _, _) _ (ACtrl (AGoto i)) =
   "  jmp " ++ fnName ++ "label" ++ show i ++ "\n"
 
-aasmToString (fnName, _, _, _) (ACtrl (AIf aval label (Just l))) =
+aasmToString (fnName, _, _, _) _ (ACtrl (AIf aval label (Just l))) =
   "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz " ++ l ++ "\n"
 
-aasmToString (fnName, _, _, _) (ACtrl (AIf aval label Nothing)) =
+aasmToString (fnName, _, _, _) _ (ACtrl (AIf aval label Nothing)) =
   "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz " ++ fnName ++ "label" ++ (show label) ++ "\n"
 
-aasmToString (_, size, numArgs, m) (ACtrl (ARet _)) =
+aasmToString (_, size, numArgs, m) _ (ACtrl (ARet _)) =
   concat [addStr, genFnEpilogues numArgs m, "  ret\n"]
   where
     addStr = if (size > 0)
                then "  addq $" ++ show size ++ ", %rsp\n"
                else ""
 
-aasmToString (_, size, numArgs, m) (AFnCall fnName loc locs lives) =
+aasmToString (_, size, numArgs, m) _ (AFnCall fnName loc locs lives) =
     prologue ++ "  call " ++ fnName ++ "\n  " ++ (opToString Nop loc) ++ " " ++
     alocToString (AReg 0 (getLocSize loc)) ++ ", " ++
     (alocToString (ASpill (getLocSize loc))) ++
@@ -290,3 +294,5 @@ checkGte0 aval =
 checkLt32 :: AVal -> String
 checkLt32 aval =
   "  cmpl $32, " ++ (avalToString aval) ++ "\n  jae error\n"
+
+isSafe (Job _ _ _ _ _ sf) = sf
