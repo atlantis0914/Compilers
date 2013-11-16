@@ -80,12 +80,11 @@ mergeAAsm (aasm, _) = aasm
 
 -- Generates the AAsm from an AST
 codeGen aasmList fnName numArgs = let
-    aasmList' =  removeDead aasmList
-    twoOpAasmList =  genTwoOperand aasmList'
     allLocs = getLocs aasmList
   in
     if (length (aasmList) > maxTempsBeforeSpilling)
       then (let
+             twoOpAasmList =  genTwoOperand aasmList
              coloring = naiveColor allLocs
              m = maxColor coloring
              m' = (max 0 (m - max_color_num)) * 8
@@ -95,6 +94,8 @@ codeGen aasmList fnName numArgs = let
            in
              (concat asm, m'', m))
       else (let
+              aasmList' =  removeDead aasmList
+              twoOpAasmList =  genTwoOperand aasmList'
               liveVars = liveness twoOpAasmList
               interference_graph@(Graph gmap) = buildInterferenceGraph twoOpAasmList liveVars
               simp_ordering = maximumCardinalitySearch interference_graph -- now a [Vertex ALoc]
