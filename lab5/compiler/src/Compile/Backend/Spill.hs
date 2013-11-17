@@ -99,10 +99,10 @@ spillAAsm spillArgs (AAsm [APtr (AReg i True) index scale off b] op [arg]) =
             AAsm [APtr (ASpill True) index scale off b] op [ALoc $ AUtil b]]
       else aasm'
 
-spillAAsm _ aasm@(ACtrl (AIf (ALoc (AReg i b)) label err)) =
+spillAAsm _ aasm@(ACtrl (AIf (ALoc (AReg i b)) label err opt)) =
   if i > max_color_num
     then [AAsm [ASpill b] Nop [ALoc $ AMem (i - max_color_num) b],
-          ACtrl (AIf (ALoc (ASpill b)) label err)]
+          ACtrl (AIf (ALoc (ASpill b)) label err opt)]
     else [aasm]
 
 spillAAsm _ aasm@(ACtrl c) = [aasm]

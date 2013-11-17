@@ -99,10 +99,13 @@ aasmToString (fnName, _, _ ,_) _ (ACtrl (ALabel i)) =
 aasmToString (fnName, _, _, _) _ (ACtrl (AGoto i)) =
   "  jmp " ++ fnName ++ "label" ++ show i ++ "\n"
 
-aasmToString (fnName, _, _, _) _ (ACtrl (AIf aval label (Just l))) =
+aasmToString (fnName, _, _, _) _ (ACtrl (AIf aval label _ (Just trueL))) =
+  "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  je " ++ fnName ++ "label" ++ (show trueL) ++ "\n"
+
+aasmToString (fnName, _, _, _) _ (ACtrl (AIf aval label (Just l) Nothing)) =
   "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz " ++ l ++ "\n"
 
-aasmToString (fnName, _, _, _) _ (ACtrl (AIf aval label Nothing)) =
+aasmToString (fnName, _, _, _) _ (ACtrl (AIf aval label Nothing Nothing)) =
   "  testb " ++ (avalByteToString aval) ++ ", " ++ (avalByteToString aval) ++ "\n  jnz " ++ fnName ++ "label" ++ (show label) ++ "\n"
 
 aasmToString (_, size, numArgs, m) _ (ACtrl (ARet _)) =
@@ -124,6 +127,8 @@ aasmToString (_, size, numArgs, m) _ (AFnCall fnName loc locs lives) =
     addSize = if (size > 0)
                 then "  addq $" ++ show (size * 8) ++ ", %rsp\n"
                 else ""
+
+aasmToString _ _ (s) = error ("s : " ++ show s)
 
 genArgPrologue' :: Int -> ALoc -> (String, Int, Int) -> (String, Int, Int)
 genArgPrologue' shift loc (prolog, i, j) =

@@ -111,8 +111,8 @@ replaceLocs old new (AFnCall s l1 l2list l3list) =
 replaceLocs old new (ACtrl (ARet (ALoc loc))) = 
   ACtrl (ARet (ALoc (lookupLoc old new loc)))
 
-replaceLocs old new (ACtrl (AIf (ALoc loc) i s)) = 
-  ACtrl (AIf (ALoc $ lookupLoc old new loc) i s)
+replaceLocs old new (ACtrl (AIf (ALoc loc) i s opt)) = 
+  ACtrl (AIf (ALoc $ lookupLoc old new loc) i s opt)
 
 replaceLocs _ _ a = a
 

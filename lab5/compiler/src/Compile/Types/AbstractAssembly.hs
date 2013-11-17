@@ -39,7 +39,7 @@ data ALoc = AReg Int Bool
 
 data ACtrl = ARet AVal
            | ALabel Int
-           | AIf AVal Int (Maybe String)
+           | AIf AVal Int (Maybe String) (Maybe Int)
            | AGoto Int deriving (Show, Eq)
 
 instance Show FnAAsm where 

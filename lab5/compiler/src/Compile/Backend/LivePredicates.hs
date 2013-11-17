@@ -58,7 +58,7 @@ runPredicate _ i (ACtrl (ALabel _)) (liveMap, isNew) =
   in
     addLocs i (liveMap, isNew) locs
 
-runPredicate labelMap i (ACtrl (AIf aval label Nothing)) (liveMap, isNew) = let
+runPredicate labelMap i (ACtrl (AIf aval label Nothing _)) (liveMap, isNew) = let
     locs = getLocs (i+1) liveMap
     locs' = locs `union` (labelLocs labelMap liveMap label)
     locs'' = case aval of ALoc loc -> locs' `union` [loc]
@@ -66,7 +66,7 @@ runPredicate labelMap i (ACtrl (AIf aval label Nothing)) (liveMap, isNew) = let
   in
     addLocs i (liveMap, isNew) locs''
 
-runPredicate labelMap i (ACtrl (AIf aval label (Just e))) (liveMap, isNew) =
+runPredicate labelMap i (ACtrl (AIf aval label (Just e) _)) (liveMap, isNew) =
   let
     locs = getLocs (i+1) liveMap
   in

@@ -38,11 +38,11 @@ replaceAsm coloring aasm@(AAsm {aAssign = assigns, aOp = op, aArgs = args}) =
   in
     spillAAsm True aasm
 
-replaceAsm coloring aasm@(ACtrl (AIf aval label err)) =
+replaceAsm coloring aasm@(ACtrl (AIf aval label err opt)) =
   let
     aval' = replaceArgs coloring aval
   in
-    spillAAsm True $ ACtrl (AIf aval' label err)
+    spillAAsm True $ ACtrl (AIf aval' label err opt)
 
 replaceAsm coloring aasm@(ACtrl a) = spillAAsm True aasm
 

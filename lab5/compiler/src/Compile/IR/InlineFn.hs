@@ -106,7 +106,7 @@ incrSt n l d (AAsm asgn o args) =
   (AAsm (map (incrStALoc n l d) asgn) o (map (incrStAVal n l d) args))
 incrSt n l d (ACtrl (ARet _)) = error ("shouldn't hit ctrl")
 incrSt n l d (ACtrl (ALabel i)) = (ACtrl (ALabel (i + l)))
-incrSt n l d (ACtrl (AIf v i s)) = ACtrl $ AIf (incrStAVal n l d v) i s
+incrSt n l d (ACtrl (AIf v i s o)) = ACtrl $ AIf (incrStAVal n l d v) i s o
 incrSt n l d (ACtrl (AGoto i)) = ACtrl $ AGoto (i + l)
 incrSt n l d (AFnCall _ _ _ _) = error ("shouldn't hit fn call")
 

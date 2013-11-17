@@ -150,7 +150,7 @@ runNeedPred _ i (ACtrl (ALabel _)) (needMap, isNew) =
   in
     addLocs i (needMap, isNew) locs
 
-runNeedPred labelMap i (ACtrl (AIf aval label Nothing)) (needMap, isNew) = let
+runNeedPred labelMap i (ACtrl (AIf aval label Nothing opt)) (needMap, isNew) = let
     locs = getPredLocs (i+1) needMap
     locs' = locs `union` (labelLocs labelMap needMap label)
     locs'' = case aval of ALoc loc -> locs' `union` [loc]
@@ -158,7 +158,7 @@ runNeedPred labelMap i (ACtrl (AIf aval label Nothing)) (needMap, isNew) = let
   in
     addLocs i (needMap, isNew) locs''
 
-runNeedPred labelMap i (ACtrl (AIf aval label (Just e))) (needMap, isNew) =
+runNeedPred labelMap i (ACtrl (AIf aval label (Just e) opt)) (needMap, isNew) =
   let
     locs = getPredLocs (i+1) needMap
   in

@@ -183,7 +183,7 @@ genCtrl fm (sc,m,i,l,aasm) (Assert e _) = let
   abortAasm = [ACtrl $ ALabel abortLabel] ++ [AFnCall "abort" (ATemp i (getSize e)) [] []]
   outputAasm =
     eAasm
-    ++ [ACtrl $ AIf (ALoc $ ATemp i (getSize e)) endLabel Nothing,
+    ++ [ACtrl $ AIf (ALoc $ ATemp i (getSize e)) endLabel Nothing Nothing,
         ACtrl $ AGoto abortLabel]
     ++ abortAasm
     ++ [ACtrl $ ALabel endLabel]
@@ -202,8 +202,8 @@ genCtrl fm (sc,m,i,l,aasm) (If e s1 s2 _) = let
   s2Aasm' = (ACtrl $ ALabel s2Label):s2Aasm ++ [ACtrl $ AGoto endLabel]
   outputAasm =
     eAasm ++ -- assembly for e
-    [ACtrl $ AIf (ALoc $ ATemp i (getSize e)) s1Label Nothing,
-     ACtrl $ AGoto s2Label] -- Assembly for conditional jmp to s1 or s2
+    [ACtrl $ AIf (ALoc $ ATemp i (getSize e)) s2Label Nothing (Just s2Label)]
+--     ACtrl $ AGoto s2Label] -- Assembly for conditional jmp to s1 or s2
     ++ s1Aasm' -- Assembly for s1, including goto endLabel.
     ++ s2Aasm' -- Assembly for s2, including goto endLabel.
     ++ [ACtrl $ ALabel endLabel] -- Assembly for endLabel.
@@ -240,7 +240,7 @@ genCtrl fm (sc,m,i,l,aasm) (While e s1 _) = let
   outputAasm =
     [ACtrl $ ALabel startLabel] ++
     eAasm ++
-    [ACtrl $ AIf (ALoc $ ATemp i False) loopLabel Nothing,
+    [ACtrl $ AIf (ALoc $ ATemp i False) loopLabel Nothing Nothing,
      ACtrl $ AGoto endLabel] ++
     s1Aasm' ++
     [ACtrl $ ALabel endLabel]
@@ -261,16 +261,16 @@ genCtrl fm (sc,m,i,l,aasm) (Return Nothing _) =
 genArrayCheck :: Bool -> ALoc -> ALoc -> [AAsm]
 genArrayCheck True base index =
   [AAsm [ASpill False] Ae [ALoc index, ALoc $ APtr base Nothing 0 0 False],
-   ACtrl $ AIf (ALoc $ ASpill False) 0 (Just "mem_error")]
+   ACtrl $ AIf (ALoc $ ASpill False) 0 (Just "mem_error") Nothing]
 genArrayCheck _ _ _ = []
 
 genArrayAllocCheck :: Bool -> ALoc -> Int -> [AAsm]
 genArrayAllocCheck True size s =
   [AAsm [ASpill False] Lt [ALoc size, AImm 0],
-   ACtrl $ AIf (ALoc $ ASpill False) 0 (Just "mem_error"),
+   ACtrl $ AIf (ALoc $ ASpill False) 0 (Just "mem_error") Nothing,
    AAsm [ASpill False] Mul [ALoc size, AImm s],
    AAsm [ASpill False] Lt [ALoc $ ASpill False, AImm 0],
-   ACtrl $ AIf (ALoc $ ASpill False) 0 (Just "mem_error")]
+   ACtrl $ AIf (ALoc $ ASpill False) 0 (Just "mem_error") Nothing]
 
 genArrayAllocCheck _ _ _ = []
 
@@ -298,7 +298,7 @@ genExp f alloc@(sc,varMap,n,l,aasm) (IRExpTernary e1 e2 e3) dest = let
   e3Aasm' = (ACtrl $ ALabel e3Label):e3Aasm ++ [ACtrl $ AGoto endLabel]
   outputAasm =
     e1Aasm ++
-    [ACtrl $ AIf (ALoc $ ATemp n False) e2Label Nothing,
+    [ACtrl $ AIf (ALoc $ ATemp n False) e2Label Nothing Nothing,
      ACtrl $ AGoto e3Label]
     ++ e2Aasm'
     ++ e3Aasm'
