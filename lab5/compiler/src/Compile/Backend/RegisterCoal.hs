@@ -13,7 +13,6 @@ import Control.Monad.State
 
 import qualified Debug.Trace as Trace
 
--- State magic. Questions? Magic. 
 type CoalesceState = (Graph ALoc, ColoringMap, [AAsm], [AAsm])
 -- Nah jk, the first [AAsm] is the stuff left to greedily process
 -- the second one is what we've already consumned. We keep this around
@@ -90,7 +89,7 @@ coalesceMove aasm@(AAsm [dest] o [(ALoc src)]) col = do
   put (ig''', cmap'', proc, fin ++ [aasm'])
   updateProcFin src dest 
   coalesceAAsm
-  return ()
+  Trace.trace ("Coalesceeeed") $ return ()
 
 updateProcFin :: ALoc -> ALoc -> RCState ()
 updateProcFin old new = do
