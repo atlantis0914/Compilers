@@ -46,10 +46,10 @@ to register coalescing. Specifically, we picked the following four optimizations
 on : 
 
 \begin{itemize}
-  \item[1] Dead Code Elimination
-  \item[2] Function Inlining
-  \item[3] Constant Folding and Propagation
-  \item[4] Register Coalescing
+  \item[1.] Dead Code Elimination
+  \item[2.] Function Inlining
+  \item[3.] Constant Folding and Propagation
+  \item[4.] Register Coalescing
 \end{itemize}
 
 In the following sections, we will describe in detail the implementation and evaluation of 
@@ -58,6 +58,27 @@ each optimization.
 \section{Dead Code Elimination}
 
 \section{Function Inlining}
+The goal when performing function inlining is to inline only functions where the cost of 
+invoking the function (the \verb+call+ instruction, and the subsequent \verb+ret+ is very 
+costly). Specifically, we focus our inlining on functions which consist of a single basic 
+block. Examples of such functions are simple sum functions, such as 
+\begin{verbatim}
+int sum(int x, int y){
+  return x + y;
+}
+\end{verbatim}
+or even longer functions which have no loops, and have a single return. While it's possible to inline
+functions which have multiple returns, this involves replacing returns with gotos, and is 
+significantly less clean to implement and evaluate. Furthermore, the control flow graph of 
+the function we inline into becomes significantly distorted. \\
+\\
+We perform our inlining after we have converted our AST to an IR tree. The advantage of this is that
+we have a clear idea of `code length', and can inline with a heuristic based on code length. We maintain
+several properties about functions which makes inlining relatively clean. \\
+\\
+Firstly, for a function with $n$ arguments, the first $n$ abstract assembly instructions in our IR will 
+be moves from argument registers into temps. Secondly, the last instruction for a function which returns a 
+value will always be 
 
 \section{Constant Folding and Propagation}
 
