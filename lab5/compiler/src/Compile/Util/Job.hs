@@ -20,3 +20,6 @@ deadCodeOptLevel = 2
 
 regCoalesceOptLevel :: Int
 regCoalesceOptLevel = 2
+
+labelCoalesceOptLevel :: Int
+labelCoalesceOptLevel = 2

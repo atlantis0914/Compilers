@@ -11,6 +11,7 @@ import qualified Data.Map as Map
 
 import Compile.IR.GenIR
 import Compile.IR.InlineFn
+import Compile.IR.CoalesceLabel
 import Compile.Backend.Liveness
 import Compile.Backend.Interference
 import Compile.Backend.Coloring
@@ -45,7 +46,10 @@ fnListCodeGen job fnList fnMap =
     fnAasms' = if (optLevelMet job inliningOptLevel)
                  then inlineFns fnMap fnAasms
                  else fnAasms
-    asm = concatMap (fnAAsmCodeGen job) fnAasms'
+    fnAasms'' = if (optLevelMet job labelCoalesceOptLevel) 
+                  then coalesceLabel fnAasms'
+                  else fnAasms'
+    asm = concatMap (fnAAsmCodeGen job) fnAasms''
     epilogue = concat ["error:\n", "  movw $1, %ax\n", "  movw $0, %bx\n", "  divw %bx\n", "mem_error:\n", "  jmp 0\n"]
     asm' = asm ++ epilogue
   in
