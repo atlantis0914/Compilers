@@ -430,7 +430,7 @@ checkExprForFuckery (ExpBinMem PArrayRef e1 _ _) = do
   if (res) 
     then Trace.trace ("returning") $ do return ()
     else do fail "What is a goshawk anyway"
-checkExprForFuckery _ = Trace.trace ("fuck") $ do return ()
+checkExprForFuckery _ = do return ()
 
 probeArr :: Map.Map String IdentType -> Expr -> Int -> Bool
 probeArr m (ExpBinMem PArrayRef e1 e2 _) cnt = probeArr m e1 (cnt + 1)
