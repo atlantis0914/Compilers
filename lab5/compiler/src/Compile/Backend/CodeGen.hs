@@ -25,6 +25,7 @@ import Compile.Backend.BackendUtils
 import Compile.Backend.Registers
 import Compile.Backend.Neededness
 import Compile.Backend.RegisterCoal
+import Compile.Backend.Squash
 
 import Compile.Util.Job
 
@@ -53,7 +54,9 @@ fnListCodeGen job fnList fnMap =
     epilogue = concat ["error:\n", "  movw $1, %ax\n", "  movw $0, %bx\n", "  divw %bx\n", "mem_error:\n", "  jmp 0\n"]
     asm' = asm ++ epilogue
   in
-    asm'
+    if (optLevelMet job squashOptLevel)
+      then squash asm'
+      else asm'
 
 genFnProlugues :: Int -> Int -> String
 genFnProlugues numArgs m =

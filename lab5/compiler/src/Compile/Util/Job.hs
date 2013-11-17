@@ -23,3 +23,6 @@ regCoalesceOptLevel = 2
 
 labelCoalesceOptLevel :: Int
 labelCoalesceOptLevel = 2
+
+squashOptLevel :: Int
+squashOptLevel = 2

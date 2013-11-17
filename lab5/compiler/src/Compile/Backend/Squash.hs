@@ -13,27 +13,29 @@ trim :: String -> String
 trim = f . f
    where f = reverse . dropWhile isSpace
 
-squash l = l
---  let
---    l' = Split.splitOn ("\n") l
---    (_, l'') = foldl squashList ("", []) l'
---  in
---    foldl (++) "" (map (\x -> x ++ "\n") l'')
+squash l = -- l
+  let
+    l' = Split.splitOn ("\n") l
+    (_, l'') = foldl squashList ("", []) l'
+  in
+    if (length l' > 1000)
+      then l
+      else foldl (++) "" (map (\x -> x ++ "\n") l'')
 
 squashList :: (String, [String]) -> String -> (String, [String])
 squashList (pS, prev) cur = 
   if (not $ obliterate pS cur)
     then (cur, prev ++ [cur])
-    else (cur, prev) -- squash that shit
+    else Trace.trace ("squashed : " ++ show cur ++ "," ++ show pS) $ (cur, prev) -- squash that shit
 
 obliterate :: String -> String -> Bool
-obliterate s1 s2 = pred1 || pred2
+obliterate s1 s2 = pred2
   where
-    pred1 = (s1 == s2)
+--    pred1 = (s1 == s2)
     pred2 = (bothMoves s1 s2) && (dupMoves s1 s2)
 
 bothMoves :: String -> String -> Bool
-bothMoves s1 s2 = (isInfixOf "movl" s1) && (isInfixOf "movl" s2)
+bothMoves s1 s2 = ((isInfixOf "movl" s1) && (isInfixOf "movl" s2)) 
 
 getMoves :: String -> (String, String)
 getMoves s = 
