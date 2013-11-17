@@ -103,7 +103,9 @@ codeGen aasmList fnName numArgs job = let
            in
              (concat asm, m'', m))
       else (let
-              aasmList' =  removeDead aasmList
+              aasmList' = if (optLevelMet job deadCodeOptLevel) 
+                            then removeDead aasmList
+                            else aasmList
               twoOpAasmList =  genTwoOperand aasmList'
               liveVars = liveness twoOpAasmList
               interference_graph@(Graph gmap) = buildInterferenceGraph twoOpAasmList liveVars
@@ -111,7 +113,9 @@ codeGen aasmList fnName numArgs job = let
               coloring = greedyColor interference_graph simp_ordering
               liveVars' = map (\l -> map (replaceAssigns coloring) l) liveVars
               twoOpAasmList' = map mergeAAsm (zip twoOpAasmList liveVars')
-              (twoOpAasmList'', coloring') = registerCoalesce twoOpAasmList' coloring interference_graph
+              (twoOpAasmList'', coloring') = if (optLevelMet job regCoalesceOptLevel)
+                                               then registerCoalesce twoOpAasmList' coloring interference_graph
+                                               else (twoOpAasmList', coloring)
               m = maxColor coloring'
               m' = (max 0 (m - max_color_num)) * 8
               m'' = roundUp m'

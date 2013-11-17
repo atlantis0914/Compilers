@@ -14,3 +14,9 @@ inliningOptLevel = 2
 
 constantPropOptLevel :: Int
 constantPropOptLevel = 1
+
+deadCodeOptLevel :: Int
+deadCodeOptLevel = 2
+
+regCoalesceOptLevel :: Int
+regCoalesceOptLevel = 2
