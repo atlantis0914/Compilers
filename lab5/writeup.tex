@@ -1,0 +1,66 @@
+% You should title the file with a .tex extension (hw1.tex, for example)
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+
+
+\oddsidemargin0cm
+\topmargin-1.5cm     %I recommend adding these three lines to increase the
+\textwidth16.5cm   %amount of usable space on the page (and save trees)
+\textheight23.5cm
+
+\newcommand{\question}[2] {\vspace{.25in} \hrule\vspace{0.5em}
+\noindent{\bf #1: #2} \vspace{0.5em}
+\hrule \vspace{.10in}}
+\renewcommand{\part}[1] {\vspace{.10in} {\bf (#1)}}
+
+\newcommand{\myname}{Laxman Dhulipala, Peter Xiao}
+\newcommand{\myandrew}{ldhulipa, phx}
+\newcommand{\myhwnum}{5}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+
+\pagestyle{fancyplain}
+
+
+\begin{document}
+
+\medskip                        % Skip a "medium" amount of space
+                                % (latex determines what medium is)
+                                % Also try: \bigskip, \littleskip
+
+\thispagestyle{plain}
+\begin{center}                  % Center the following lines
+{\Large Lab 5 Writeup} \\
+ \vspace{2 mm}
+\myname \\
+\myandrew
+\end{center}
+
+For this lab we implemented several optimizations that range from function inlining
+to register coalescing. Specifically, we picked the following four optimizations to focus
+on : 
+
+\begin{itemize}
+  \item[1] Dead Code Elimination
+  \item[2] Function Inlining
+  \item[3] Constant Folding and Propagation
+  \item[4] Register Coalescing
+\end{itemize}
+
+In the following sections, we will describe in detail the implementation and evaluation of 
+each optimization. 
+
+\section{Dead Code Elimination}
+
+\section{Function Inlining}
+
+\section{Constant Folding and Propagation}
+
+\section{Register Coalescing}
+
+\end{document}
