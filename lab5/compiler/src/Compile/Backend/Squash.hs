@@ -31,7 +31,7 @@ squashList (pS, prev) cur =
 obliterate :: String -> String -> Bool
 obliterate s1 s2 = pred1 || pred2
   where
-    pred1 = (s1 == s2) && (not $ isInfixOf "movq" s1)
+    pred1 = (s1 == s2) && (not $ isInfixOf "movq" s1) && (not $ isInfixOf "neg" s1)
     pred2 = (bothMoves s1 s2) && (dupMoves s1 s2)
 
 bothMoves :: String -> String -> Bool
