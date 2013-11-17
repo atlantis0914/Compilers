@@ -190,7 +190,29 @@ genCtrl fm (sc,m,i,l,aasm) (Assert e _) = let
   in
     (sc, m, i', el + 2, aasm ++ outputAasm)
 
-genCtrl fm (sc,m,i,l,aasm) (If e s1 s2 _) = let
+genCtrl fm (sc@(True),m,i,l,aasm) (If e s1 s2 _) = let
+  -- store aasm for e in Temp(i)
+  (_, _,i',el,eAasm) = genExp fm (sc,m,i+1,l,[]) e (ATemp i (getSize e))
+  (_,m',i'',l',s1Aasm) = genStmt fm (sc,m,i',el,[]) s1
+  (_,m'',i''', l'',s2Aasm) = genStmt fm (sc,m',i'',l',[]) s2
+  s1Label = l''
+  s2Label = l''+1
+  endLabel = l''+2
+  s1Aasm' = (ACtrl $ ALabel s1Label):s1Aasm ++ [ACtrl $ AGoto endLabel]
+  s2Aasm' = (ACtrl $ ALabel s2Label):s2Aasm ++ [ACtrl $ AGoto endLabel]
+  outputAasm =
+    eAasm ++ -- assembly for e
+    [ACtrl $ AIf (ALoc $ ATemp i (getSize e)) s1Label Nothing Nothing,
+     ACtrl $ AGoto s2Label] -- Assembly for conditional jmp to s1 or s2
+    ++ s1Aasm' -- Assembly for s1, including goto endLabel.
+    ++ s2Aasm' -- Assembly for s2, including goto endLabel.
+    ++ [ACtrl $ ALabel endLabel] -- Assembly for endLabel.
+  in
+    (sc,m'',i''',l''+3, aasm ++ outputAasm)
+
+-- 
+-- Eliminates a few gotos, for unsafe mode. 
+genCtrl fm (sc@(False),m,i,l,aasm) (If e s1 s2 _) = let
   -- store aasm for e in Temp(i)
   (_, _,i',el,eAasm) = genExp fm (sc,m,i+1,l,[]) e (ATemp i (getSize e))
   (_,m',i'',l',s1Aasm) = genStmt fm (sc,m,i',el,[]) s1
@@ -209,28 +231,8 @@ genCtrl fm (sc,m,i,l,aasm) (If e s1 s2 _) = let
     ++ [ACtrl $ ALabel endLabel] -- Assembly for endLabel.
   in
     (sc,m'',i''',l''+3, aasm ++ outputAasm)
--- 
--- -- Eliminates a few gotos, for unsafe mode. 
--- genCtrl fm (False,m,i,l,aasm) (If e s1 s2 _) = let
---   -- store aasm for e in Temp(i)
---   (_, _,i',el,eAasm) = genExp fm (False,m,i+1,l,[]) (IRExpUnOp LogicalNot e) (ATemp i (getSize e))
---   (_,m',i'',l',s1Aasm) = genStmt fm (False,m,i',el,[]) s1
---   (_,m'',i''', l'',s2Aasm) = genStmt fm (False,m',i'',l',[]) s2
---   s1Label = l''
---   s2Label = l''+1
---   endLabel = l''+2
---   s1Aasm' = (ACtrl $ ALabel s1Label):s1Aasm ++ [ACtrl $ AGoto endLabel]
---   s2Aasm' = (ACtrl $ ALabel s2Label):s2Aasm 
---   outputAasm =
---     eAasm ++ -- assembly for e
---     [ACtrl $ AIf (ALoc $ ATemp i (getSize e)) s2Label Nothing]
---     ++ s1Aasm' -- Assembly for s1, including goto endLabel.
---     ++ s2Aasm' -- Assembly for s2, including goto endLabel.
---     ++ [ACtrl $ ALabel endLabel] -- Assembly for endLabel.
---   in
---     (False,m'',i''',l''+3, aasm ++ outputAasm)
 
-genCtrl fm (sc,m,i,l,aasm) (While e s1 _) = let
+genCtrl fm (sc@(True),m,i,l,aasm) (While e s1 _) = let
   (_,_,i',el,eAasm) = genExp fm (sc,m,i+1,l,[]) e (ATemp i False)
   (_,m',i'',l',s1Aasm) = genStmt fm (sc,m,i',el,[]) s1
   startLabel = l'
@@ -246,6 +248,25 @@ genCtrl fm (sc,m,i,l,aasm) (While e s1 _) = let
     [ACtrl $ ALabel endLabel]
   in
     (sc,m',i'',l' + 3, aasm ++ outputAasm)
+
+genCtrl fm (sc@(False),m,i,l,aasm) (While e s1 _) = let
+  (_,_,i',el,eAasm) = genExp fm (sc,m,i+1,l,[]) e (ATemp i False)
+  (_,m',i'',l',s1Aasm) = genStmt fm (sc,m,i',el,[]) s1
+  startLabel = l'
+  loopLabel = l' + 1
+  endLabel = l' + 2
+  s1Aasm' = (ACtrl $ ALabel loopLabel):s1Aasm ++ [ACtrl $ AGoto startLabel]
+  outputAasm =
+    [ACtrl $ ALabel startLabel] ++
+    eAasm ++
+    [ACtrl $ AIf (ALoc $ ATemp i False) endLabel Nothing (Just endLabel)] ++
+--     ACtrl $ AGoto endLabel] ++
+    s1Aasm' ++
+    [ACtrl $ ALabel endLabel]
+  in
+    (sc,m',i'',l' + 3, aasm ++ outputAasm)
+
+
 
 -- GenExps the expression into AReg 0 and then returns on AReg0
 genCtrl fm (sc,m,i,l,aasm) (Return (Just expr) _) =
