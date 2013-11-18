@@ -57,7 +57,7 @@ consumeAAsm aasm@(AAsm [dest] _ [(ALoc src)]) = do
   let nghs = Set.union nh1 nh2
   let colors = map (\s -> cmap Map.! s) (Set.toList nghs)
   let lowest@(Color low) = getLowestColor $ nub (colors ++ prohibList)
-  let c4 = (low < max_color_num)
+  let c4 = ((low < 7) || (low > 10)) -- coalesce into callee save only atm
   if (c1 || c2 || c3 || c4) 
     then (do 
       put (ig, cmap, proc, fin ++ [aasm])
@@ -89,7 +89,7 @@ coalesceMove aasm@(AAsm [dest] o [(ALoc src)]) col = do
   put (ig''', cmap'', proc, fin ++ [aasm'])
   updateProcFin src dest 
   coalesceAAsm
-  Trace.trace ("Coalesceeeed") $ return ()
+  return ()
 
 updateProcFin :: ALoc -> ALoc -> RCState ()
 updateProcFin old new = do
