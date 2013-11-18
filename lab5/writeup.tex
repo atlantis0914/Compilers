@@ -160,5 +160,18 @@ and causes the test to take over 10 seconds to run.
 
 \section{Register Coalescing}
 
+\section{Safety}
+
+Compiling in unsafe mode gave noticable speed ups to all tests that used a lot
+of shifts or array accesses. For instance, in the shift benchmark, with no
+optimizations, the number of cycles drops from 134676 to 129217 in one particular
+run of the benchmarks. In qsort, the number of cycles drops from 447185 to
+377448.
+
+This speed up was reduced because we optimized these checks to only one size
+check, rather than two. Originally, our code would check if size of the shift is less than zero, and
+greater than 31. Now, we make a single unsigned comparison with 31, and throw
+an exception if it exceeds 31, exploiting the fact that any negative number is
+above 31.
 
 \end{document}
