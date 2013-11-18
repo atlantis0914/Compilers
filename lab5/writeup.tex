@@ -78,10 +78,66 @@ several properties about functions which makes inlining relatively clean. \\
 \\
 Firstly, for a function with $n$ arguments, the first $n$ abstract assembly instructions in our IR will 
 be moves from argument registers into temps. Secondly, the last instruction for a function which returns a 
-value will always be 
+value will always be \verb+ret+ of the register 0, which by convention is known to be \verb+eax+. Furthermore,
+at a function call, we maintain information about which $n$ temps in the calling program are the argument 
+temps. This allows us to remove the first $n$ lines of abstract assembly, and replace them with moves from 
+temps in the calling function, to new temps in the inlined function.\\
+\\
+To ensure that temps do not conflict, we preserve information about the maximum temp number in the calling
+function. Let this be $t_{max}$. To ensure no conflicts, for all temps that remain in the function we're 
+inlining, we increment their temp num by $t_{max}$, and then set $t_{max}$ to be the new maximum temp num. 
+This computation is done within a monad, so this getting and setting of state is straightforward.\\
+\\
+Finally,
+we map the argument temps (temps from the calling function) to the argument temps in the inlined function,
+and also make sure to move the result value (a temp inside of the inlined function) to the destination temp
+in the calling function. \\
+\\
+Evaluating this optimization was straightforward : we compiled all of tests1, and emitted output whenever 
+a function was inlined. With our admissibility heuristic being that a function to be inlined must have :
+less than 50 lines of abstract assembly, no labels, and a single return, we found that a large portion
+of the tested cases allowed functions to be inlined.\\
+\\
+Unfortunately, the inlining optimization did not do much good on the benchmarks (bench0, bench1). A few
+functions were inlined, but the tests were focused primarily on single large functions that had fairly
+complex behavior (such as mmult). Optimizing for these benchmarks meant focusing on optimizing memory 
+usage, and loop behavior, which we will describe at the end of the document. 
 
 \section{Constant Folding and Propagation}
+For this optimization, we perform constant folding and propagation on the AST. This 
+was an optimization that we struggled to get working in previous labs - most probably because
+of a stoic view that monads were scary. In this lab, we conquered our fear and marched boldly 
+where neither of us had really gone before and wrote some state monads from scratch. \\
+\\
+Constant propagation was implemented this way - the basic idea is to keep a map from named
+variables to constants. Every time we run into an assignment of a constant to this named 
+variable, we insert it into the map. Every time we pass over a control flow block, we pass
+in a clean state to the block - only assignments declared within that block will be propagated. \\
+\\
+Similarly, when we exit from a control flow block, we abandon its state, and restore the state 
+before entering the control flow block. We then remove all variables that were mutated within that 
+control flow block from our map - as it may no longer be correct to replace occurences of such 
+variables with the constant. \\
+\\
+Constant folding is very straight-forward. We perform an AST-based constant folding, specifically
+on expressions. The use case appeared in an earlier lab when a test tested our ability to cope with
+many nested unary ops (such as bitwise negate). Observing that two bitwise negates can simply be
+cancelled in the front-end, we implemented a simple constant folder to pass such tests. \\
+\\
+We expanded the constant folder to then take into account adding, multiplying and other simple 
+arithmetic operations of constants. We were also careful to avoid over-optimizing - leaving 
+divisions for the runtime to perform.\\
+\\
+In previous labs we had some trouble passing one test, namely \verb+eowyn-jpaulson-loop-stress1+. 
+This lab, after implementing the constant propagater, we passed it very quickly. Without
+constant folding and constnat propagation, this test would be almost impossible, as it computes
+a rather large constant value as a loop-termination check. Furthermore, the variables used
+within the loop must be allocated to registers - if you don't constant propagate and perform
+some sort of dead-code removal and register allocate naively, the first temps declared will 
+greedily put into registers, which then causes the loop variables to be stack-allocated,
+and causes the test to take over 10 seconds to run. 
 
 \section{Register Coalescing}
+
 
 \end{document}
