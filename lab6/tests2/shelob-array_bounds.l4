@@ -1,0 +1,11 @@
+//test exception 11
+//Tests that array access past upper bound segfaults
+
+int main(){
+  int[] array = alloc_array(int, 10);
+  int i;
+  for(i=0; i<=10; i++){
+    array[i] = i;
+  }
+  return 0;
+}   

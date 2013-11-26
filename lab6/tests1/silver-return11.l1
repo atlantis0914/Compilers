@@ -1,0 +1,7 @@
+//test return 0
+// Test incorrect case valid keyword
+
+int main() {
+    int If = 0;
+    return If;
+}

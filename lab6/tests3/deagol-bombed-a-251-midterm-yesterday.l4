@@ -1,0 +1,58 @@
+//test return 1154919650 
+/*              ---- Story part 2 ----
+   He studied and studied, and tried and he tried
+   But didn't get generating functions and cried */
+
+// my solution to
+// http://www.link.cs.cmu.edu/contest/120919/problems/D.pdf
+
+// get it, generating functions
+
+typedef int ll;
+
+ll makeN(ll N, int coinindex, int coinssize, ll[] coins, ll[][] die) {
+  if (coinindex == coinssize) return 0;
+  //cout << "called with " << N << " and " << coins[coinindex] << endl;
+  if (N == 0) return 1;
+
+  if (die[N][coinindex] != -1)
+    return die[N][coinindex];
+
+  ll ret = 0;
+  for (ll i = 0; i <= N; i+=coins[coinindex]) {
+    if (N-i == 0) ret += 1;
+    else ret += makeN(N-i, coinindex+1, coinssize, coins, die);
+  }
+
+  die[N][coinindex] = ret;
+  //cout << ret << " ways to make " << N << endl;
+  return ret;
+}
+
+int main() {
+  ll V;
+  ll N;
+  V = 16; // V = readint();
+  N = 6999; // N = readint();
+  ll[][] die;
+  die = alloc_array(ll[], N+1);
+  for (int i = 0; i < N+1; i++) {
+    die[i] = alloc_array(ll, V+1);
+    for (int j = 0; j < V+1; j++) {
+      die[i][j] = -1;
+    }
+  }
+  ll[] coins = alloc_array(ll, V);
+  /*
+  for (int i = 0; i < V; i++) {
+    coins[i] = readint();
+  }
+  */
+  coins[0] = 200; coins[1] = 100; coins[2] = 50; coins[3] = 40;
+  coins[4] = 30;  coins[5] = 25;  coins[6] = 10; coins[7] = 9;
+  coins[8] = 8;   coins[9] = 7;   coins[10] = 6; coins[11] = 5;
+  coins[12] = 4;  coins[13] = 3;  coins[14] = 2; coins[15] = 1;
+  
+  return makeN(N, 0, V, coins, die);
+}
+

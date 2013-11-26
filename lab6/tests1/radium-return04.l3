@@ -1,0 +1,24 @@
+//test return 9
+//Check typedefs
+
+typedef int i;
+typedef bool b;
+
+b bothOdd(i i1, i i2)
+{
+  return ( !(i1 % 2 == 0 ) && !(i2 % 2 == 0));
+}
+
+i main()
+{
+  i j = 3;
+  i n = 5;
+  b ans = bothOdd(3,5);
+  if (ans) 
+  {
+    return 9;
+  }
+  return 7;
+}
+
+

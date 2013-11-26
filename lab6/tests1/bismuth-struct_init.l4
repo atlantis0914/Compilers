@@ -1,0 +1,12 @@
+//test return 0
+
+struct s {
+    int a;
+};
+
+int main ()
+{
+    struct s *a = alloc(struct s);
+    
+    return a->a;
+}

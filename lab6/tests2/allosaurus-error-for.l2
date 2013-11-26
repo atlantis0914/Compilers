@@ -1,0 +1,11 @@
+//test error
+
+/* body of for statement must contain 2 semicolons */
+
+int main(){
+  int i;
+  for (i=1;i<10){
+    i++;
+  }
+  return i;
+}

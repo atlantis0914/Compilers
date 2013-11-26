@@ -1,0 +1,37 @@
+//test return 1
+
+struct link1;
+struct link2;
+struct link3;
+
+struct link1
+{
+	int a;
+	struct link2 *link2;
+};
+struct link2
+{
+	int b;
+	struct link3 *link3;
+};
+struct link3 
+{
+    int c;
+    struct link1 *link1;
+};
+
+int main()
+{
+	struct link1 *l1 = alloc(struct link1);
+	struct link2 *l2 = alloc(struct link2);
+	struct link3 *l3 = alloc(struct link3);
+	l1->a = 1;
+	l2->b = 2;
+	l3->c = 3;
+	l1->link2 = l2;
+	l2->link3 = l3;
+	l3->link1 = l1;
+
+	return((((l1->link2)->link3)->link1)->a);
+	
+}

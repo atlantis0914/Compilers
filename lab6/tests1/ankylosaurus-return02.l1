@@ -1,0 +1,59 @@
+//test return 17
+// Returns 17. Uses too many live variables to cause spilling
+int main()
+{
+    int a;
+    int b;
+    int c;
+    int d;
+    int e;
+    int f;
+    int g;
+    int h;
+    int i;
+    int j;
+    int k;
+    int l;
+    int m;
+    int n;
+    int o;
+    int p;
+    int q;
+
+    a = 1;
+    b = 1;
+    c = 1;
+    d = 1;
+    e = 1;
+    f = 1;
+    g = 1;
+    h = 1;
+    i = 1;
+    j = 1;
+    k = 1;
+    l = 1;
+    m = 1;
+    n = 1;
+    o = 1;
+    p = 1;
+    q = 1;
+    
+    q += a;
+    q += b;
+    q += c;
+    q += d;
+    q += e;
+    q += f;
+    q += g;
+    q += h;
+    q += i;
+    q += j;
+    q += k;
+    q += l;
+    q += m;
+    q += n;
+    q += o;
+    q += p;
+
+    return q;
+}

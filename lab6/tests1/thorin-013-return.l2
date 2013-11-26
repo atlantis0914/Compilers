@@ -1,0 +1,22 @@
+//test return -1
+
+int main() {
+  int a;
+  {
+    int main;
+    {
+    }
+    {{
+	main = 1;
+      }
+      main+=1;
+    }
+    a=main-3;
+  }
+  a >>= 16;
+  return a;
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

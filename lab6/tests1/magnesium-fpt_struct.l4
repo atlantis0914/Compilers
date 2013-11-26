@@ -1,0 +1,12 @@
+//test return 0
+
+struct foo {
+  fpt f;
+};
+
+int main() {
+  struct foo *fp = alloc(struct foo);
+  fp->f = itof(0);
+  if (fless(fp->f, itof(0)) || fless(itof(0), fp->f)) return 1;
+  else return 0;
+}

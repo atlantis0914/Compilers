@@ -1,0 +1,16 @@
+//test return 0
+//Compare equality of arrays of same typedef'd types
+
+typedef int bol;
+
+int main()
+{
+    int[] arr1 = alloc_array(int, 1);
+
+    bol[] arr2 = alloc_array(bol, 1);
+
+    if (arr1 == arr2)
+        return -1;
+    else
+        return 0;
+}

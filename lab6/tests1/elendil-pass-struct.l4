@@ -1,0 +1,17 @@
+//test return 45
+
+struct B {
+       int c;
+       int d;
+};
+
+int help(int a, int b, int c, int d, int e, int f, int g, struct B *s) {
+    return a + b + c + d + e + f + g + s->c + s->d;
+}
+
+int main() {
+    struct B *b = alloc(struct B);
+    b->c = 8;
+    b->d = 9;
+    return help(1,2,3,4,5,6,7,b);
+}

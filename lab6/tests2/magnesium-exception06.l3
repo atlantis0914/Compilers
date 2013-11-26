@@ -1,0 +1,17 @@
+//test exception 14
+
+int f(int a, int b, int c, int d, int e)
+{
+    return a+b+c+d+e;
+}
+
+int the_void()
+{
+  while (true) {}
+  return 0;
+}
+
+int main()
+{
+  return f(7 + 4, 6, the_void(), 1 / 0, 15);
+}

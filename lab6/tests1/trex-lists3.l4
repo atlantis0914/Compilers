@@ -1,0 +1,38 @@
+//test return 6
+
+struct list_rep {
+  int head;
+  struct list_rep* tail;
+};
+
+typedef struct list_rep list;
+
+int f(int x, int y)
+{
+  return x + y;
+}
+
+int fold(list* L, int n)
+{
+  if (L == NULL) 
+    return n;
+  else
+    return fold(L->tail, f(L->head, n));
+}
+
+int main()
+{
+  list* L1;
+  list* L2;
+  list* L3;
+  L1 = alloc(list);
+  L2 = alloc(list);
+  L3 = alloc(list);
+  L1->head = 1;
+  L1->tail = L2;
+  L2->head = 2;
+  L2->tail = L3;
+  L3->head = 3;
+  L3->tail = NULL;
+  return fold(L1, 0);
+}

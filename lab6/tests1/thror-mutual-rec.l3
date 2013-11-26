@@ -1,0 +1,20 @@
+//test return 0
+
+bool even(int i);
+bool odd(int i);
+
+bool even(int i) {
+  if (i == 0) return true;
+  else return odd(i-1);
+}
+
+bool odd(int i) {
+  if (i == 0) return false;
+  else return even(i - 1);
+}
+
+int main() {
+  if (odd(3) && (!odd(18)) && (!even(3)) && even(10))
+    return 0;
+  return 1;
+}

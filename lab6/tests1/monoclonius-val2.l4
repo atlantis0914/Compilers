@@ -1,0 +1,24 @@
+//test return 2126189612
+
+int catlan(int num, int[] dp){
+    int total;
+    int i;
+    if(num == 0){
+        return 1;
+    }
+    if(dp[num] != -1)
+        return dp[num];
+    total = 0;
+    for(i = 0; i < num; i++)
+        total += catlan(i, dp)*catlan(num-i-1, dp);
+    dp[num] = total;
+    return total;
+}
+
+int main(){
+    int[] dp = alloc_array(int, 100);
+    int i;
+    for(i = 0; i < 100; i++)
+        dp[i] = -1;
+    return catlan(99, dp);
+}

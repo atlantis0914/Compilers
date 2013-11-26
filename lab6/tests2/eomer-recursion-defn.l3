@@ -1,0 +1,12 @@
+//test error
+
+// Definition of recursion:
+// recursion (noun) - see recursion
+int recursion(int recursion) {
+    return recursion(recursion);
+}
+
+int main() {
+    return recursion(100);
+}
+

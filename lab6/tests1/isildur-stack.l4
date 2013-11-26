@@ -1,0 +1,69 @@
+//test return 1555770811
+
+struct st {
+    int val;
+    struct st *next;
+};
+
+typedef struct st stack;
+
+stack *makestack(int k, stack *s) {
+    stack *s1 = alloc(stack);
+    s1->next = s;
+    s1->val = k;
+    return s1;
+}
+
+stack *push(int k, stack *s) {
+    return makestack(k, s);
+}
+
+int peek(stack *s) {
+    return s->val;
+}
+
+stack *pop(stack *s) {
+    return s->next;
+}
+
+bool empty(stack *s) {
+    return s == NULL;
+}
+
+int d(int i) {
+    return i * ((i == 1) ? i : d(i-2));
+}
+
+stack *mm(stack *s) {
+    stack *p = NULL;
+    while (!empty(s)) {
+        int k = peek(s);
+        s = pop(s);
+        p = push(d(k),p);
+    }
+    stack *beta = NULL;
+    while (!empty(p)) {
+        int k = peek(p);
+        p = pop(p);
+        beta = push(k, beta);
+    }
+    return beta;
+}
+
+int sum(stack *s) {
+    int a = 0;
+    while (!empty(s)) {
+        a += peek(s);
+        s = pop(s);
+    }
+    return a;
+}
+
+int main() {
+    stack *s = NULL;
+    for (int i = 0; i < 11; i++) {
+        s = push(2*i+1,s);
+    }
+    s = mm(s);
+    return sum(s);
+}

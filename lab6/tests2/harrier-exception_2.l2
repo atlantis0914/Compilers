@@ -1,0 +1,9 @@
+//test exception 8
+
+int main()
+{
+    int i = 10;
+    while ((123 / i) > 0)
+        i--;
+    return 0;
+}

@@ -1,0 +1,13 @@
+//test exception
+// exhaust stack space or fail to terminate
+//exception SEGFAULT, stack build all the way
+
+int foo()
+{
+  return foo();
+}
+
+int main () {
+  int res = foo();			/* should be unreachable */
+  return res;
+}

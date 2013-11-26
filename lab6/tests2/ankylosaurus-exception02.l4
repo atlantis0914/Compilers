@@ -1,0 +1,21 @@
+//test exception 11
+// out of heap space => null pointer for array
+struct lol{
+       int* a;
+       int* b;
+       int* c;
+       int* d;
+       int* e;
+       int* f;
+
+};
+
+int main(){
+    struct lol[] array = alloc_array(struct lol, 0x7f);
+    int i;
+
+    array[0].a = NULL; 
+    i = *(array[0].a);
+    return 0;
+}
+

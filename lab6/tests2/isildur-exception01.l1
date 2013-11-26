@@ -1,0 +1,3 @@
+//test exception
+// division by 0
+int main(){int b;b=(37*32);int c;c=b/300;c/=1000;return b/c;}

@@ -1,0 +1,9 @@
+//test return 0
+//typedefs work
+
+typedef int blarg;
+
+int main () {
+  blarg x = 0;
+  return x;
+}

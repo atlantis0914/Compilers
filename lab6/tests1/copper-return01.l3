@@ -1,0 +1,15 @@
+//test return 560
+
+int foo(bool a, int x) {
+    if (a) {
+        return 4 * x;
+    }
+    else {
+        return 7 * x * x;
+    }
+}
+
+
+int main() {
+    return foo(true, (foo(false, 4) + foo(true, 7)));     
+}

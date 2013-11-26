@@ -1,0 +1,32 @@
+//test return 0 
+
+typedef int[] p;
+typedef p[] pp;
+typedef pp[] ppp;
+typedef ppp[] pppp;
+
+int main() {
+    int len4 = 16;
+    int len3 = 16;
+    int len2 = 16;
+    int len1 = 16;
+    int i;
+    int j;
+    int k;
+    int l;
+    pppp array = alloc_array(ppp, len4);
+
+    for(i = 0; i < len4; i++) {
+        array[i] = alloc_array(pp, len3);
+        for(j = 0; j < len3; j++) {
+            array[i][j] = alloc_array(p, len2);
+            for(k = 0; k < len2; k++) {
+                array[i][j][k] = alloc_array(int, len1);
+                for(l = 0; l < len1; l++) {
+                    array[i][j][k][l] = l;
+                }
+            }
+        }
+    }
+    return 0;
+}

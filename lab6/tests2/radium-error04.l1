@@ -1,0 +1,12 @@
+//test error
+//Defining a variable twice
+
+int main(){
+  int a = 3;
+  int b = 2;
+  int c = a + b;
+  int c = 5;
+
+  return c;
+}
+

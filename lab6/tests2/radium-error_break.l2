@@ -1,0 +1,12 @@
+//test error
+//break is not supported
+
+int main(){
+  int break = 10;
+  int a = 2;
+  while (a > 0){
+    a--;
+    break++;
+  }
+  return a;
+}

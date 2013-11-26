@@ -1,0 +1,62 @@
+//test return 704982704
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+typedef struct node node;
+typedef struct node list;
+
+list *nil();
+bool isnil(list *l);
+list *cons(list *l, int data);
+int car(list *l);
+list *cdr(list *l);
+int sum(list *l);
+
+int main() {
+    list *l = nil();
+
+    for (int i = 0; i < 100000; i++) {
+        l = cons(l, i);
+    }
+
+    return sum(l);
+}
+
+list *nil() {
+    return NULL;
+}
+
+bool isnil(list *l) {
+    return l == NULL;
+}
+
+list *cons(list *l, int data) {
+    list *head = alloc(list);
+    head->next = l;
+    head->data = data;
+
+    return head;
+}
+
+int car(list *l) {
+    return l->data;
+}
+
+list *cdr(list *l) {
+    return l->next;
+}
+
+int sum_tr(list *l, int sum) {
+    if (isnil(l))
+        return sum;
+
+    return sum_tr(cdr(l), sum + car(l));
+}
+
+int sum(list *l) {
+    return sum_tr(l, 0);
+}
+

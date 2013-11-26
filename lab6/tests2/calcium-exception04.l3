@@ -1,0 +1,16 @@
+//test exception 8
+// defined order of execution
+
+int f(int x, int y) {
+  return 2;
+}
+
+int g() {
+  while(true){}
+  return 0;
+}
+
+int main () {
+  f(1/0, g());
+  return 0;
+}

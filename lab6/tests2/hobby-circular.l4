@@ -1,0 +1,29 @@
+//test exception
+
+struct list {
+    int data;
+    struct list *next;
+};
+
+struct list *tail(struct list *this) {
+    if (this == NULL)
+        return NULL;
+
+    if (this->next == NULL)
+        return this;
+
+    return tail(this->next);
+}
+
+int main() {
+    struct list *circle = alloc(struct list);
+    int forever = 0;
+    struct list *end = NULL;
+
+    circle->data = 0;
+    circle->next = circle;
+
+    end = tail(circle);
+
+    return end->data;
+}

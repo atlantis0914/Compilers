@@ -1,0 +1,228 @@
+//test return 42
+
+// radnom nbumesr /////////////////////////////////////////////////////////////
+
+typedef int *rand;
+
+rand rand_init(int seed)
+{
+  rand r = alloc(int);
+  *r = seed;
+  return r;
+}
+
+int rand_next(rand r)
+{
+  *r = *r * 1664525 + 1013904223;
+  return *r;
+}
+
+// library ////////////////////////////////////////////////////////////////////
+
+bool is_sorted(int[] A, int length)
+{
+  for(int i = 1; i < length; i++)
+    if(A[i-1] > A[i])
+      return false;
+  
+  return true;
+}
+
+int[] rand_array(rand r, int length)
+{
+  int[] A = alloc_array(int, length);
+
+  for(int i = 0; i < length; i++)
+    A[i] = rand_next(r);
+
+  return A;
+}
+
+int closed_abs(int x){
+  int abs_x = x;
+  if(x < 0)
+    abs_x = -x;
+  if(abs_x < 0) 
+    return 0;
+  else
+    return abs_x;
+}
+
+int randomize_array(int[] A, rand r, int length)
+{
+  for(int i = 0; i < length; i++)
+    {
+      int next = rand_next(r);
+      int index = closed_abs(next) % length;
+      if(i != index)
+	{
+	  A[i] ^= A[index];
+	  A[index] ^= A[i];
+	  A[i] ^= A[index];
+	}
+    }
+
+  return 0;
+}
+
+// phase one: blub blub blub //////////////////////////////////////////////////
+
+int blubble_sort(int[] A, int length)
+{
+  bool swopped = true;
+
+  while(swopped)
+    {
+      swopped = false;
+      for(int i = 1; i < length; i++)
+	{
+	  if(A[i-1] > A[i])
+	    {
+	      A[i-1] ^= A[i];
+	      A[i] ^= A[i-1];
+	      A[i-1] ^= A[i];
+	      swopped = true;
+	    }
+	}
+    }
+  
+  return 0;
+}
+
+// phase two: slap! ///////////////////////////////////////////////////////////
+
+int really_stoog_sort(int[] A, int i, int j)
+{
+  if(A[i] > A[j-1])
+    {
+      A[i] ^= A[j-1];
+      A[j-1] ^= A[i];
+      A[i] ^= A[j-1];
+    }
+  
+  if(j-i > 2)
+    {
+      int t = (j-i)/3;
+      really_stoog_sort(A, i, j-t);
+      really_stoog_sort(A, i+t, j);
+      really_stoog_sort(A, i, j-t);
+    }
+  
+  return 0;
+}
+
+int stoog_sort(int[] A, int length)
+{
+  return really_stoog_sort(A, 0, length);
+}
+
+// phase three: wheeeeee //////////////////////////////////////////////////////
+
+int bogbro_sort(int[] A, int length)
+{
+  rand r = rand_init((length-14832722) * (length-427488822));
+
+  while(!is_sorted(A, length))
+    {
+      randomize_array(A, r, length);
+    }
+
+  return 0;
+}
+
+// go! ////////////////////////////////////////////////////////////////////////
+
+/*
+int ps(int c)
+{
+  //printchar(char_chr(c));
+  printchar(c);
+  return 0;
+}
+*/
+
+int printarray(int[] A, int k)
+{
+  for(int i = 0; i < k; i++)
+    {
+      print_int(A[i]);
+      // ps(10);
+    }
+  return 0;
+}
+
+int main()
+{
+  rand r = rand_init(0xf00b47);
+
+  int arr1_length = 1245;
+  int[] arr1 = rand_array(r, arr1_length);
+
+  printarray(arr1, arr1_length);
+
+  blubble_sort(arr1, arr1_length);
+
+  if(!is_sorted(arr1, arr1_length))
+    return -42;
+  
+  printarray(arr1, arr1_length);
+
+  int arr2_length = 171;
+  int[] arr2 = rand_array(r, arr2_length);
+
+  printarray(arr2, arr2_length);
+
+  blubble_sort(arr2, arr2_length);
+ 
+  if(!is_sorted(arr2, arr2_length))
+    return -42;
+
+  printarray(arr2, arr2_length);
+
+  randomize_array(arr2, r, arr2_length);
+
+  printarray(arr2, arr2_length);
+
+  stoog_sort(arr2, arr2_length);
+ 
+  if(!is_sorted(arr2, arr2_length))
+    return -42;
+
+  printarray(arr2, arr2_length);
+
+  int arr3_length = 6;
+  int[] arr3 = rand_array(r, arr3_length);
+
+  printarray(arr3, arr3_length);
+
+  blubble_sort(arr3, arr3_length);
+ 
+  if(!is_sorted(arr3, arr3_length))
+    return -42;
+
+  printarray(arr3, arr3_length);
+
+  randomize_array(arr3, r, arr3_length);
+
+  printarray(arr3, arr3_length);
+
+  stoog_sort(arr3, arr3_length);
+ 
+  if(!is_sorted(arr3, arr3_length))
+    return -42;
+
+  printarray(arr3, arr3_length);
+
+  randomize_array(arr3, r, arr3_length);
+
+  printarray(arr3, arr3_length);
+
+  bogbro_sort(arr3, arr3_length);
+ 
+  if(!is_sorted(arr3, arr3_length))
+    return -42;
+
+  printarray(arr3, arr3_length);
+
+  return 42;
+}

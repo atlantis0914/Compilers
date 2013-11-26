@@ -1,0 +1,10 @@
+//test exception 6
+
+int plus (int x, int y) {
+  assert ( x != 0 );
+  return plus(x - 1, y - 1);
+}
+
+int main () {
+  return plus(100, 100);
+}

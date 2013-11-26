@@ -1,0 +1,25 @@
+//test return 106880000
+// I'm not sure I want to submit this...
+
+struct pair {
+  int i1;
+  int i2;
+  int* i3;
+};
+
+typedef struct pair pair;
+
+int main() {
+  int len = 53421000;
+  pair*[] arr = alloc_array(pair*, len);
+  int res = 0;
+  for(int i = 0; i < len; i += 10000) {
+    arr[i] = alloc(pair);
+    arr[i]->i1 = i;
+    arr[i]->i2 = -i;
+    res += arr[i]->i2;
+    res += res >> (arr[i]->i1 % 8);
+  }
+  return res;
+}
+

@@ -1,0 +1,7 @@
+//test return 5
+
+// simple check
+
+int main() {
+    return 5;
+}

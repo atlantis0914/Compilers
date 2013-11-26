@@ -1,0 +1,17 @@
+//test error
+int main() {
+  if (true) {
+    if (true) {
+      if (true) {
+        return 1;
+      }
+      else {
+        //no return
+      }
+    } else {
+      return 2;
+    }
+  } else {
+    return 3;
+  }
+}

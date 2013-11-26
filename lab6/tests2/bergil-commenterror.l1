@@ -1,0 +1,12 @@
+//test error
+// incorrect comments
+
+int main() {
+    int x;
+
+    x = 4;
+
+    /* this is a malformed comment /* test /*/
+
+    return x;
+}

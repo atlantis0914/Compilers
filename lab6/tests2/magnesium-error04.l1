@@ -1,0 +1,11 @@
+//test error
+
+/* not a variable on left */
+int main()
+{
+  int x;
+  
+  x = 5;
+  -x = -5;
+  return x;
+}

@@ -1,0 +1,14 @@
+//test return 1
+// Test undoing of * by /
+int main()
+{
+  int a = 1;
+  a *= 2;
+  a *= 2;
+  a *= 2;
+  a *= 2;
+  a *= 2;
+  a *= 2;
+  a /= 64;
+  return a;
+}

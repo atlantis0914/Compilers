@@ -1,0 +1,17 @@
+//test return 0
+
+/* 
+ * This is my test program
+ * Nothing should go wrong
+ */
+int main () {
+  int x = 8;
+  int y = 15;
+  while( x > 0)
+  {
+    x = x - 2;
+    y = x + y;
+  }
+  //should return 0
+  return 0;
+}

@@ -1,0 +1,19 @@
+//test error
+
+// Functions can't return large types
+
+struct bar{
+	int f;
+};
+
+struct foo(){
+	struct bar* the_struct = alloc(struct bar);
+	bar->f = 10000;
+	return bar;
+};
+
+int main() {
+	struct bar b = foo();
+	return b->f;
+}
+

@@ -1,0 +1,28 @@
+//test return 35
+//edit structs via pointers and functions
+
+struct str {
+    int z;
+    int a;
+    bool b;
+};
+
+int edit(struct str *p)
+{
+    p->z = 10;
+    p->a = 10;
+    p->b = true;
+    return 0;
+}
+
+int main () {
+    struct str *p = alloc(struct str);
+
+    p->z = 25;
+    p->a = -25;
+    p->b = false;   
+
+    edit(p);
+
+    return p->a+p->z+(p->b ? 15 : 10);
+}

@@ -1,0 +1,27 @@
+//test return -16384
+// Can you navigate a bit of a nested mess?
+int main() {
+  int n = 100;
+  int r = 0;
+  for (int i = 0; i < n; i+= 2) {
+    if (i % 3 == 0) {
+      r++;
+    } else {
+      for (int j = 100; i < j; j--) {
+        if (j + i > 100) {
+          int k = j + i;
+          while (k > 2) {
+            r *= 2;
+            k /= 2;
+          }
+        }
+        if (r > 0) {
+          r *= -1;
+        } else {
+          r >> 1;
+        }
+      }
+    }
+  }
+  return r >> 1 << 1;
+}

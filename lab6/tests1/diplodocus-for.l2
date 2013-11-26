@@ -1,0 +1,11 @@
+//test return 18
+int main()
+{
+    int a = 2;
+    int i;
+    for (i = 0; i < 8; i++)
+    {
+        a += 2;
+    }
+    return a;
+}

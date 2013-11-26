@@ -1,0 +1,105 @@
+//test return 38
+
+struct heap {
+    int size;
+    int[] heap;
+};
+
+typedef struct heap heap;
+
+bool insert(heap *h, int val)
+{
+    int loc = h->size;
+    while (loc > 0 && h->heap[(loc-1) >> 1] > val) {
+        h->heap[loc] = h->heap[(loc-1) >> 1];
+        loc = (loc-1) >> 1;
+    }
+    h->heap[loc] = val;
+    h->size++;
+    return true;
+}
+
+int remove(heap *h)
+{
+    int retval = h->heap[0];
+    h->size--;
+    int val = h->heap[h->size];
+    int loc = 0;
+    bool done = false;
+    while (loc * 2 + 1 < h->size && !done) {
+        int a = loc * 2 + 1;
+        if (a + 1 < h->size && h->heap[a] > h->heap[a+1]) {
+            a++;
+        }
+        if (h->heap[a] >= val) {
+            done = true;        /* break */
+        } else {
+          h->heap[loc] = h->heap[a];
+          loc = a;
+        }
+    }
+    h->heap[loc] = val;
+    return retval;
+}
+
+
+int main()
+{
+    heap *h = alloc(heap);
+    int num_entries = 38;
+    h->heap = alloc_array(int, num_entries);
+
+    /*
+    for (int i = 0; i < num_entries; i++) {
+        insert(h, readint());
+    }
+    */
+    insert(h,123);
+    insert(h,786);
+    insert(h,261);
+    insert(h,963);
+    insert(h,269);
+    insert(h,262);
+    insert(h,844);
+    insert(h,692);
+    insert(h,555);
+    insert(h,72);
+    insert(h,964);
+    insert(h,524);
+    insert(h,212);
+    insert(h,844);
+    insert(h,283);
+    insert(h,157);
+    insert(h,863);
+    insert(h,657);
+    insert(h,968);
+    insert(h,735);
+    insert(h,191);
+    insert(h,351);
+    insert(h,783);
+    insert(h,894);
+    insert(h,765);
+    insert(h,492);
+    insert(h,882);
+    insert(h,711);
+    insert(h,264);
+    insert(h,812);
+    insert(h,73);
+    insert(h,172);
+    insert(h,595);
+    insert(h,262);
+    insert(h,484);
+    insert(h,251);
+    insert(h,395);
+    insert(h,262);
+
+    for (int i = 0; i < num_entries; i++) {
+        print_int(remove(h));
+    }
+    return num_entries;
+}
+
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

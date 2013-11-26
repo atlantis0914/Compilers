@@ -1,0 +1,35 @@
+//test error
+/* function argumenrs cannot be large types */ 
+
+struct pair
+{
+  int a;
+  int b;
+};
+
+typedef struct pair pair;
+
+struct apair{
+ pair *p;
+};
+
+int apair(struct apair ap)
+{
+  ap.p->a = 10;
+  ap.p->p->b = ap->p->a * 3;
+  
+  return 0;
+}
+
+int main()
+{
+  pair *p = alloc(pair);
+
+  struct apair *ap = alloc(struct apair);
+
+  ap->p = p;
+
+  apair(*ap);
+
+  return p->b + p->a;
+}

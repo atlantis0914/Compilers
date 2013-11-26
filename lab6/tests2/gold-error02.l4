@@ -1,0 +1,8 @@
+//test error
+
+struct t1;
+
+int main () {
+	struct t1 *ptr = alloc(struct t1);
+	return 3;
+}

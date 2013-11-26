@@ -1,0 +1,11 @@
+//test error
+// void function returning int
+
+void returnone() {
+    return 1;
+}
+
+int main() {
+    return 0;
+}
+

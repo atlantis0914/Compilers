@@ -1,0 +1,22 @@
+//test return 12
+
+// tests memory accesses
+
+struct Foo
+{
+	int f;
+	int k;
+};
+
+int main()
+{
+	int n = 60000000;
+	int x = 0;
+	struct Foo[] a = alloc_array(struct Foo, 100);
+	for (int i = 0; i < n; i++)
+	{
+		(a[3]).f = 12;
+		x += a[3].f;
+	}
+	return x/n;
+}

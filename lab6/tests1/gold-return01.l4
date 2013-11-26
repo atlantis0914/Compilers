@@ -1,0 +1,22 @@
+//test return 111
+
+struct test {
+	int a;
+	int b;
+	int c; 
+};
+
+int main() {
+	int i = 0;
+	struct test* ptr = alloc(struct test);
+	
+	ptr->a = 100;
+	ptr->b = 10;
+	ptr->c = 1;
+
+	i += ptr->a;
+	i += ptr->b;
+	i += ptr->c;
+
+	return i;
+}

@@ -1,0 +1,8 @@
+//test error
+// can't use type name as var name
+typedef int banana;
+
+int main() {
+        int banana = 5;
+        return banana;
+}

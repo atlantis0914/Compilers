@@ -1,0 +1,15 @@
+//test error
+// incomplete type. sizes are only available within lexical scope.
+struct foo;
+
+struct bar {
+       struct foo lol;
+};
+
+struct foo {
+       int lol;
+};
+
+int main () {
+    return alloc(struct bar)->lol.lol;
+}

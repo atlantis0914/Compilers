@@ -1,0 +1,15 @@
+//test error
+//Checking to make sure *var++ fails.
+int main()
+{
+	int *y;
+
+	y = alloc(int);
+      
+	*y = 0;
+
+	for (int i = 0; i < 100; i++)
+		*y++;
+
+	return *y;
+}

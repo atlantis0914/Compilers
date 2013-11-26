@@ -1,0 +1,19 @@
+//test exception 11
+
+int compute(int **a, int **b){
+    *a = NULL;
+    *b = NULL;
+    return 1;
+}
+
+int main(){
+    int** a = alloc(int*);
+    int** b = alloc(int*);
+
+    *a = alloc(int);
+    *b = alloc(int);
+
+    compute(a, b);
+
+    return **a+**b;
+}

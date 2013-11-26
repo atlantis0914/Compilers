@@ -1,0 +1,14 @@
+//test return 9
+
+int three_fib(int n) {
+	if (n == 1 || n == 2 || n == 3) {
+		return 1;
+	}
+	else {
+		return three_fib(n - 1) + three_fib(n - 2) + three_fib(n - 3);
+	}
+}
+
+int main () {
+	return three_fib(6);
+}

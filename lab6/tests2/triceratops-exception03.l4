@@ -1,0 +1,36 @@
+//test exception 8
+
+struct s
+{
+    int one;
+    int two;
+    int three;
+    int four;
+};
+
+int main()
+{
+    int i;
+    int j;
+    int sum = 0;
+    struct s[] a;
+    a = alloc_array(struct s, 2000);
+
+    for (i = 0; i < 2000; i++) {
+        for (j = 0; j < 2000; j++) {
+            a[i * j % 4].one = i * j;
+        }
+    }
+    for (i = 0; i < 2000; i++) {
+        for (j = 0; j < 2000; j++) {
+            sum += a[i * j % 4].one;
+        }
+    }
+    for (i = 0; i < 2000; i++) {
+        for (j = 0; j < 2000; j++) {
+            sum += a[i * j % 4].one / a[i * j % 10].one;
+        }
+    }
+
+    return sum;
+}

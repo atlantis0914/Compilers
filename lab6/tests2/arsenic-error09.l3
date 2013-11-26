@@ -1,0 +1,10 @@
+//test exception 8
+
+int div(int a, int b) {
+   return a/b;
+}
+
+int main() {
+   int a=3;int  b=0;
+   return a/b;
+}

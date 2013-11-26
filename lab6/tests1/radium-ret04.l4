@@ -1,0 +1,44 @@
+//test return 10
+
+struct a
+{
+  int a;
+};
+
+struct b
+{
+  struct a a;
+  int b;
+};
+
+struct c
+{
+  struct a a;
+  struct b b;
+  int c;
+};
+
+struct d
+{
+  struct a a;
+  struct b b;
+  struct c c;
+  int d;
+};
+
+struct e
+{
+  struct a a;
+  struct b b;
+  struct c c;
+  struct d d;
+  int e;
+};
+int main()
+{
+  struct e[] a = alloc_array(struct e, 20);
+  struct e[] b = alloc_array(struct e, 20);
+  b[4].d.c.b.a.a = 10;
+  a[1].d.c.b.a.a = 5;
+  return (true ? b : a)[4].d.c.b.a.a;
+}

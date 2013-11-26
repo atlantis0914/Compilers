@@ -1,0 +1,25 @@
+//test exception
+// may run out of stack or fail to terminate
+//what happens if god runs out of stack space?
+
+int reconstruct(int a) {
+    a++;
+    return a;
+}
+
+int destroy(int a) {
+    a--;
+    return a;
+}
+
+int play_god(int a, int t) {
+    if(t == 0)
+        return a;
+    a = reconstruct(a);
+    a = destroy(a);
+    return play_god(a, t-1);
+}
+
+int main() {
+    return play_god(0, 2147483647);
+}

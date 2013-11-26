@@ -1,0 +1,18 @@
+//test return 2
+/* Test basic stack spilling: a, b, e all need to be in %rax */
+
+int main () {
+  int a;
+  int b;
+  int c;
+  int d;
+  int e;
+
+  a = 4;
+  b = 6;
+
+  c = a/b; // 0
+  d = b%a; // 2
+  e = c * 8 + d; // 2
+  return e;
+}

@@ -1,0 +1,23 @@
+//test error
+
+int [] get_arr(int x)
+{
+    if (x > 0)
+        return alloc_array(int, x);
+    else
+        return alloc_array(int, -x);
+}
+
+int main()
+{
+    int [] k = get_arr(10);
+    int [] t = get_arr(-10);
+    int * p = NULL;
+
+    k[9] = 10;
+    // i'm surprised negative index is not checked
+    // well, for general purposes, impossible to check anyway
+    t[-21] = -10;
+
+    return p[10];
+}

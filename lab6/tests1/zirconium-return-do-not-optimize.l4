@@ -1,0 +1,29 @@
+//test return 100
+
+void sum_place(int* x, int* y) {
+  *x += *y;
+}
+
+int main() {
+  int* a = alloc(int);
+  int* b = alloc(int);
+  int* c = alloc(int);
+  int* d = alloc(int);
+  int* e = alloc(int);
+  int* f = alloc(int);
+  *a = 1;
+  sum_place(b,a);
+  sum_place(b,a);
+  sum_place(b,b);
+  sum_place(b,a);
+  sum_place(c,b);
+  sum_place(d,b);
+  sum_place(d,c);
+  sum_place(d,d);
+  sum_place(e,d);
+  sum_place(e,c);
+  sum_place(f,e);
+  sum_place(f,e);
+  sum_place(f,f);
+  return *f;
+}

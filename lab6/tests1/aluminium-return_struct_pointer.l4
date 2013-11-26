@@ -1,0 +1,16 @@
+//test return 2
+/* undefined struct type */
+
+struct s{
+  int IDoNotCare;
+};
+typedef struct s s;
+int f (s[] x) {
+  return 2;
+}
+
+int main () {
+  s[] y;
+  y = alloc_array(s, 10);
+  return(f(y));
+}

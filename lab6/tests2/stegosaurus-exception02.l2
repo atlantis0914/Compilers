@@ -1,0 +1,20 @@
+//test exception 8
+/* Basic modulo by zero. */
+
+int main () {
+  int a = 6;
+  int b;
+  
+  if (true) {
+    b = 1;
+  } else {
+    b = 0;
+  }
+  
+  while (a > 0) {
+    a--;
+    b += a;
+  }
+  
+  return b % a;
+}

@@ -1,0 +1,31 @@
+//test return 1234
+int chain(int* n, int a)
+{
+	if (a <= 0)
+	{
+		*n = 1234;
+	}
+	else
+	{
+		int* b = alloc(int);
+		chain(b, a - 1);
+		chain(n, a - 1);
+		//Assert that this does the same thing
+		if (*b != *n)
+		{
+			return 1/0;
+		}
+		//Assert that the pointers aren't aliasing
+		if (b == n)
+		{
+			return 1/0;
+		}
+	}
+	return 0;
+}
+int main()
+{
+	int *n = alloc(int);
+	chain(n, 23);
+	return *n;
+}

@@ -1,0 +1,10 @@
+//test error
+// main function has wrong number of arguments
+
+int plus (int x, int y) {
+  return x + y;
+}
+
+int main (int x) {
+  return x + x;
+}

@@ -1,0 +1,8 @@
+//test return 3
+// main can be poop too!
+typedef int poop;
+
+poop main () {
+  poop x = 3;
+  return x;
+}

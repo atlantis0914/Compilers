@@ -1,0 +1,10 @@
+//test return 1
+
+int main()
+{
+  bool x = true;
+  while (x || false) {
+    x = !x;
+  }
+  return 1;
+}

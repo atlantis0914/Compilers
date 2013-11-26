@@ -1,0 +1,16 @@
+//test error
+
+int main ()
+{
+	int i;
+	int j;
+	int z;
+
+	i = 10;
+	j = 100;
+	z = 50;
+
+	if ( ( j = i++ ) & z ) 
+
+	return 0;
+} 

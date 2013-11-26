@@ -1,0 +1,12 @@
+//test exception
+// division overflow using hex constants
+int main()
+{
+    int TMIN;
+    int overflow;
+
+    TMIN = -2147483648;
+    overflow = TMIN / 0xffffffff;
+
+    return overflow;
+}

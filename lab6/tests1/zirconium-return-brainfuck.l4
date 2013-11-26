@@ -1,0 +1,160 @@
+//test return 10
+// Brainfuck interpreter
+
+// #use <15411>
+
+void copy_array(int[] src, int[] dest, int len) {
+  for (int i = 0; i<len; i++) {
+    dest[i] = src[i];
+  }
+}
+
+struct buffer {
+  int[] buf;
+  int idx;
+  int len;
+  int cap;
+};
+
+struct buffer* buffer_init() {
+  struct buffer* b = alloc(struct buffer);
+  b->buf = alloc_array(int, 16);
+  b->idx = 0;
+  b->len = 16;
+  b->cap = 16;
+  return b;
+}
+
+void buffer_next(struct buffer* b) {
+  b->idx++;
+  if (b->idx >= b->len) {
+    // need to extend len
+    b->len++;
+    if (b->len >= b->cap) {
+      // need to expand array
+      int newcap = b->cap * 2;
+      int[] newbuf = alloc_array(int,newcap);
+      copy_array(b->buf, newbuf, b->cap);
+      b->buf = newbuf;
+      b->cap = newcap;
+    }
+  }
+}
+
+void buffer_prev(struct buffer* b) {
+  if ((b->buf[b->idx] == 0) && (b->idx == b->len-1)) {
+    // might as well compress it
+    b->len--;
+  }
+  if ((b->len > 16) && (b->len < (b->cap/4))) {
+    // worth shrinking buffer
+    int newcap = b->cap/2;
+    int[] newbuf = alloc_array(int,newcap);
+    copy_array(b->buf, newbuf, newcap);
+    b->buf = newbuf;
+    b->cap = newcap;
+  }
+  b->idx--;
+}
+
+int buffer_get(struct buffer* b) {
+  return b->buf[b->idx];
+}
+
+void buffer_set(struct buffer* b, int v) {
+  b->buf[b->idx] = v;
+}
+
+int[] hw_source(int* size);
+
+int main() {
+  int* size = alloc(int);
+  *size = -1;
+  int[] src = hw_source(size);
+  struct buffer* mem = buffer_init();
+
+  for (int ptr = 0; ptr<*size; ptr++) {
+    int instr = src[ptr];
+    if (instr == 0) { // forward
+      buffer_next(mem);
+    } else if (instr == 1) { // backward
+      buffer_prev(mem);
+    } else if (instr == 2) { // increment
+      int tmp = buffer_get(mem);
+      buffer_set(mem, tmp+1);
+    } else if (instr == 3) { // decrement
+      int tmp = buffer_get(mem);
+      buffer_set(mem, tmp-1);
+    } else if (instr == 4) { // write
+      print_int(buffer_get(mem) & 0xff);
+    } else if (instr == 5) { // read
+      buffer_set(mem, 0); // Sorry not interactive
+    } else if (instr == 6) { // begin loop
+      if (buffer_get(mem) == 0) {
+        int depth = -1;
+        while ((src[ptr] != 7) || (depth != 0)) {
+          if (src[ptr] == 6) depth++;
+          if (src[ptr] == 7) depth--;
+          ptr++;
+        }
+      }
+    } else if (instr == 7) { // end loop
+      if (buffer_get(mem) != 0) {
+        int depth = -1;
+        while ((src[ptr] != 6) || (depth != 0)) {
+          if (src[ptr] == 7) depth++;
+          if (src[ptr] == 6) depth--;
+          ptr--;
+        }
+      }
+    }
+  }
+
+  return buffer_get(mem);
+}
+
+// hello world from WP:Brainfuck
+int[] hw_source(int* size) {
+  *size = 111;
+  int[] src = alloc_array(int, 111);
+
+  // > = 0; < = 1; + = 2; - = 3; . = 4; , = 5; [ = 6; ] = 7;
+  // "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..++"
+  // "+.>++.<<+++++++++++++++.>.+++.------.--------.>+.>."
+  // ++++++++++
+  src[0] = 2;  src[1] = 2;  src[2] = 2;  src[3] = 2;  src[4] = 2;
+  src[5] = 2;  src[6] = 2;  src[7] = 2;  src[8] = 2;  src[9] = 2;
+  // [>+++++++>
+  src[10] = 6;  src[11] = 0;  src[12] = 2;  src[13] = 2;  src[14] = 2;
+  src[15] = 2;  src[16] = 2;  src[17] = 2;  src[18] = 2;  src[19] = 0;
+  // ++++++++++
+  src[20] = 2;  src[21] = 2;  src[22] = 2;  src[23] = 2;  src[24] = 2;
+  src[25] = 2;  src[26] = 2;  src[27] = 2;  src[28] = 2;  src[29] = 2;
+  // >+++>+<<<<
+  src[30] = 0;  src[31] = 2;  src[32] = 2;  src[33] = 2;  src[34] = 0;
+  src[35] = 2;  src[36] = 1;  src[37] = 1;  src[38] = 1;  src[39] = 1;
+  // -]>++.>+.+
+  src[40] = 3;  src[41] = 7;  src[42] = 0;  src[43] = 2;  src[44] = 2;
+  src[45] = 4;  src[46] = 0;  src[47] = 2;  src[48] = 4;  src[49] = 2;
+  // ++++++..++
+  src[50] = 2;  src[51] = 2;  src[52] = 2;  src[53] = 2;  src[54] = 2;
+  src[55] = 2;  src[56] = 4;  src[57] = 4;  src[58] = 2;  src[59] = 2;
+  // +.>++.<<++
+  src[60] = 2;  src[61] = 4;  src[62] = 0;  src[63] = 2;  src[64] = 2;
+  src[65] = 4;  src[66] = 1;  src[67] = 1;  src[68] = 2;  src[69] = 2;
+  // ++++++++++
+  src[70] = 2;  src[71] = 2;  src[72] = 2;  src[73] = 2;  src[74] = 2;
+  src[75] = 2;  src[76] = 2;  src[77] = 2;  src[78] = 2;  src[79] = 2;
+  // +++.>.+++.
+  src[80] = 2;  src[81] = 2;  src[82] = 2;  src[83] = 4;  src[84] = 0;
+  src[85] = 4;  src[86] = 2;  src[87] = 2;  src[88] = 2;  src[89] = 4;
+  // ------.---
+  src[90] = 3;  src[91] = 3;  src[92] = 3;  src[93] = 3;  src[94] = 3;
+  src[95] = 3;  src[96] = 4;  src[97] = 3;  src[98] = 3;  src[99] = 3;
+  // -----.>+.>.
+  src[100] = 3;  src[101] = 3;  src[102] = 3;  src[103] = 3;  src[104] = 3;
+  src[105] = 4;  src[106] = 0;  src[107] = 2;  src[108] = 4;  src[109] = 0;
+  src[110] = 4;
+
+  return src;
+}

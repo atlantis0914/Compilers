@@ -1,0 +1,9 @@
+//test return 5
+
+struct aww_yissss { int x; bool y; };
+
+int main() {
+    struct aww_yissss* breadcrumbs = alloc(struct aww_yissss);
+    breadcrumbs->x = 5;
+    return (*breadcrumbs).x;
+}

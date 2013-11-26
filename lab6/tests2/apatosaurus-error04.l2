@@ -1,0 +1,45 @@
+//test error
+//Make sure scope is kept even if something is nested 10 blocks in
+int main(){
+   int x = 100000;
+    {
+      x+=1000;
+        {  
+            x+=1000;
+            {
+                x+=1000;
+                {  
+                    x+=1000;
+                    {
+                        x+=1000;
+                        {
+                            x+=1000;
+                            {
+                                x+=1000;
+                                {
+                                    x+=1000;
+                                    {
+                                        x+=1000;
+                                        {
+                                           int x =10;
+                                        }
+                                        x+=1000;
+                                    }
+                                    x+=1000;
+                                }
+                                x+=1000;
+                            }
+                            x+=1000;
+                        }
+                        x+=1000;
+                    }
+                    x+=1000;
+                {
+                x+=1000;
+            }
+            x+=1000;
+        }
+        x+=1000;
+    }
+return x;
+}

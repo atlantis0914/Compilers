@@ -1,0 +1,10 @@
+//test return 0
+// don't throw error on non-initalized variable after return
+
+int main()
+{
+  int x = 0;
+  int y;
+  return x;
+  x = y;
+}

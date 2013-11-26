@@ -1,0 +1,13 @@
+//test error
+
+struct test {
+	int x;
+	int y;
+};
+
+bool main() {
+	struct test *t;
+    bool ret;
+	t = alloc(struct test);
+	return (ret = t->x);
+}

@@ -1,0 +1,17 @@
+//test return 0
+/* Make sure main and _c0_main can co-exist. */
+
+int _c0_main ()
+{
+  return 1;
+}
+
+int main ()
+{
+    int x = _c0_main();
+    return x - x;
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

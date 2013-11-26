@@ -1,0 +1,44 @@
+//test return 402
+// finds the length of the largest monotonically increasing subsequence of the orbit lengths of the collatz sequence up to 1092
+
+int max(int x, int y) {
+  return x > y ? x : y;
+}
+
+int mono(int s, int[] memo, int[] A, int m, int p) {
+  if (p == s) return 0;
+  if (memo[m + p * s] != -1) return memo[m + p * s];
+
+  int wo = mono(s, memo, A, m, p + 1);
+  int wi;
+  if (m == 0 || A[m - 1] < A[p]) {
+    wi = 1 + mono(s, memo, A, p, p + 1);
+  } else {
+    wi = 0;
+  }
+
+  memo[m + p * s] = max(wo, wi);
+
+  return max(wo, wi);
+}
+
+int collatz(int x) {
+  if (x == 1) return 0;
+  if (x % 2 == 0) return 1 + collatz(x / 2);
+  return 1 + collatz(3 * x + 1);
+}
+
+int main() {
+  int size = 1092;
+
+  int[] A = alloc_array(int, size);
+  for (int i = 0; i < size; i++) {
+    A[i] = collatz(i + 1);
+  }
+  int[] memo = alloc_array(int, size * (size + 1));
+  for (int i = 0; i < size * (size + 1); i++) {
+    memo[i] = -1;
+  }
+
+  return mono(size, memo, A, 0, 0);
+}

@@ -1,0 +1,10 @@
+//test exception 11
+/* runtime null dereference */
+
+int *f () {
+  return NULL;
+}
+
+int main () {
+  return *(f ());
+}

@@ -1,0 +1,29 @@
+//test return 25
+
+struct point {
+  int x;
+  int y;
+};
+
+struct line {
+  struct point p1;
+  struct point p2;
+};
+
+/* returns the square of the distance of the line
+ * I'm way too lazy to write square root */
+int dist_squared(struct line *l) {
+  int dx = l->p2.x - l->p1.x;
+  int dy = l->p2.y - l->p1.y;
+  return dx*dx + dy*dy;
+}
+
+int main() {
+  struct line *l = alloc(struct line);
+  l->p1.x = 2;
+  l->p1.y = -1;
+  (*l).p2.x = 5;
+  (*l).p2.y = 3;
+
+  return dist_squared(l);
+}

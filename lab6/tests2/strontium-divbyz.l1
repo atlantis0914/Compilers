@@ -1,0 +1,8 @@
+//test exception
+int main()
+{
+    int x = 4;
+    x += 3;
+    x -= 7;
+    return 8 / x;
+}

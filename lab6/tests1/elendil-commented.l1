@@ -1,0 +1,7 @@
+//test return -3
+// test that we can put comments wherever we want.
+int/**/ main(/**/) {/**/ //so many comments!
+  int /**/a = /**/ 5/**/; // comment
+  /**/int b = /*I'm a /* nested /*comment*/*/*/ 8; // comment
+  return /**/ a - b; //done
+}

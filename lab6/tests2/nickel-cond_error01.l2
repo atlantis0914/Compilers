@@ -1,0 +1,7 @@
+//test error
+// no return
+int main()
+{
+  if (true) return 4;
+  else 4;
+}

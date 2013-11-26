@@ -1,0 +1,10 @@
+//test return 38
+
+int main()
+{
+    int x = 38;
+    int y;
+    return x;
+
+    x = y + 1;
+}

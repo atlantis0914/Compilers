@@ -1,0 +1,18 @@
+//test exception
+
+struct Node{
+	int val;
+	struct Node * next;
+};
+
+int length(struct Node * root){
+	return 1+length(root->next);
+}
+
+int main(){
+	struct Node * head = alloc (struct Node);
+	struct Node * tail = alloc (struct Node);
+	head->next = tail;
+	tail->next = head;
+	return length(head);
+}

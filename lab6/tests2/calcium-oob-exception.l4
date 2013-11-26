@@ -1,0 +1,6 @@
+//test exception 11
+// not enough poops
+int main() {
+  int[] poops = alloc_array(int, 5);
+  return poops[5];
+}

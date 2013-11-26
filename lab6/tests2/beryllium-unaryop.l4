@@ -1,0 +1,6 @@
+//test error
+int main(){
+	int[] a=alloc_array(int,4);
+	(*a)++;
+	return a[0];
+}

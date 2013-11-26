@@ -1,0 +1,12 @@
+//test return 32
+
+int main ()
+{
+  int x = 23;
+  int y = 32;
+
+  if (x < y && y > 0)
+    return y;
+  else
+    return x;
+}

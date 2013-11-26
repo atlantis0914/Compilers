@@ -1,0 +1,27 @@
+//test return 50653
+// using functions in loop conditions
+
+
+bool isFive(int x) {
+     return x == 5;
+}
+
+bool check(int x) {
+     return x > 5;
+}
+
+int doFunStuff(int x) {
+    return x - 6;
+}
+
+int main () {
+    int x = 0;
+    while(!isFive(x)) {
+      x++;
+    }
+    for (int y = 100; check(y); y = doFunStuff(y)) {
+     x += 2;
+    }
+
+    return x*x*x;
+}

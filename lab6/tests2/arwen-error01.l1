@@ -1,0 +1,10 @@
+//test error
+// Uses reserved identifiers
+
+int main()
+{
+  int true;
+  
+  true = 1;
+  return true;
+}

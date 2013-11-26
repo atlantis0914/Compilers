@@ -1,0 +1,14 @@
+//test error
+
+int fail(int the_real_x);
+
+int main() {
+    int fail = fail(5);
+    return fail;
+}
+
+int fail(int x) {
+    int x = 0;
+    x = x;
+    return x;
+}

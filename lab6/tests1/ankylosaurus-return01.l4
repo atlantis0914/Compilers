@@ -1,0 +1,34 @@
+//test return 42
+// Binary search
+
+bool bin_search(int [] array, int x, int len);
+
+int main()
+{
+    int [] array = alloc_array(int, 1000);
+    int i;
+
+    for(i = 0; i < 1000; i++)
+    {
+        array[i] = i + 2000;
+    }
+
+    if(bin_search(array, 2222, 1000) == true)
+        return 42;
+    else
+        return 0;
+}
+
+bool abin_search(int [] array, int x, int a, int b)
+{
+    int c = (a + b) / 2;
+    if(a>b) return false;
+    if(array[c] == x) return true;
+    else if (array[c] > x) return abin_search(array, x, a, c - 1);
+    else return abin_search(array, x, c + 1, b);
+}
+
+bool bin_search(int [] array, int x, int len)
+{
+    return abin_search(array, x, 0, len - 1);
+}

@@ -1,0 +1,6 @@
+//test exception
+// oh shit a wild null pointer
+int main() {
+  int* x = NULL;
+  return *x;
+}

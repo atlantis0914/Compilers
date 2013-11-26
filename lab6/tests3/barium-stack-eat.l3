@@ -1,0 +1,33 @@
+//test return 120
+
+//Save your stack
+
+int func(int loop)
+{
+  int a = 10;
+  int b = 10;
+  int c = 10;
+  int d = a + b + c;
+  int e = 10;
+  int f = 10;
+  int g = 10;
+  int h = e + f + g;
+  int i = 10;
+  int j = 10;
+  int k = 10;
+  int l = i + j + k;
+  int m = 10;
+  int n = 10;
+  int o = 10;
+  int p = m + n + o;
+  int q = d + h + l + p;
+  if (loop == 0)
+    return q;
+  else
+    return func(loop - 1);
+}
+
+int main()
+{
+  return func(110 * 1000);
+}

@@ -1,0 +1,51 @@
+//test return 190
+
+typedef int elem;
+
+struct node
+{
+  struct node* next;
+  elem data;
+  struct node* head;
+};
+
+struct llist
+{
+  struct node head;
+};
+
+struct llist* create_linked_list ()
+{
+  struct llist* ll = alloc(struct llist);
+  ll -> head.data = 0;
+  struct node* n = alloc(struct node);
+  ll -> head.next = n;
+  ll -> head.head = n;
+  for (int i = 1; i < 20; i++)
+  {
+    assert(n != NULL);
+    n -> data = i;
+    n -> next = alloc(struct node);
+    n -> head = ll -> head.head;
+    n = n -> next;
+  }
+  return ll;
+}
+
+int main ()
+{
+  int sum = 0;
+  struct llist* ll = create_linked_list();
+  struct node* curr = ll -> head.next;
+  assert (curr != NULL);
+  for (int j = 1; j < 20; j++)
+  {
+    for (int i = 1; i < 20 && curr != NULL; i++)
+    {
+      sum += curr -> data;
+      curr = curr -> next;
+    }
+    if (curr != NULL) curr = curr -> head;
+  }
+  return sum;
+}

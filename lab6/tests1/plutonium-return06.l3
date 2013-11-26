@@ -1,0 +1,26 @@
+//test return 128
+
+// testing void return
+
+void nop() {
+}
+
+void raise() {
+  1/0;
+}
+
+void abort() {
+  assert(false);
+  return;
+}
+
+void okay() {
+  assert(true);
+  return;
+}
+
+int main() {
+  nop();
+  if (true) okay();
+  return 128;
+}

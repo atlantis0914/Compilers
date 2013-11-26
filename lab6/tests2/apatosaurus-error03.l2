@@ -1,0 +1,24 @@
+//test error
+// lots of nested blocks but they dont match just right
+int main()
+{
+    int y =0;
+    {
+        {
+        y--;
+            {   
+                y++;
+            }
+        y++;
+        }
+        {
+            y++;
+            {
+               // mising brace here 
+                }
+            }
+            y++;
+        }
+    }
+    return y;
+}

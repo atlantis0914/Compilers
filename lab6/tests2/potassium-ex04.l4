@@ -1,0 +1,15 @@
+//test exception 11
+
+
+int main() {
+  int[] A = alloc_array(int,10);
+
+  int i;
+  for(i = 0; i < 10; i++) {
+    A[i] = i*i;
+  }
+
+  assert(A[-1] != 10);
+  return 0;
+ 
+}

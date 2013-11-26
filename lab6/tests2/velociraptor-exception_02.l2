@@ -1,0 +1,11 @@
+//test exception
+// correspondent of return_14- this one DOES throw an exception
+int main() {
+	int s = 5;
+	int d = 0;
+	bool b = true;
+	int z = 1;
+	if (b)
+		z = s / d;
+	return z;
+}

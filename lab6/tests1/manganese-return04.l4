@@ -1,0 +1,8 @@
+//test return 0
+//See if the compiler is using bad _c0_ prepending
+
+typedef int _c0_tester;
+void tester();
+int main() {
+    return 0;
+}

@@ -1,0 +1,47 @@
+//test return 155661
+// lots of registers
+
+
+int main() {
+    
+    int a;
+    int b;
+    int c;
+    int d;
+    int e;
+    int f;
+    int g;
+    int h;
+    int i;
+    int j;
+    int k;
+    int l;
+
+    a = 1;
+    b = 2;
+    c = 3;
+    d = 4;
+    e = 5;
+    f = 6;
+    g = 7;
+    h = 8;
+    i = 9;
+    j = 10;
+    k = 11;
+    l = 12;
+
+    a = a + b + c + d + e + f + g + h + i + j + k + l;
+    b = a + b + c + d + e + f + g + h + i + j + k + l;
+    c = a + b + c + d + e + f + g + h + i + j + k + l;
+    d = a + b + c + d + e + f + g + h + i + j + k + l;
+    e = a + b + c + d + e + f + g + h + i + j + k + l;
+    f = a + b + c + d + e + f + g + h + i + j + k + l;
+    g = a + b + c + d + e + f + g + h + i + j + k + l;
+    h = a + b + c + d + e + f + g + h + i + j + k + l;
+    i = a + b + c + d + e + f + g + h + i + j + k + l;
+    j = a + b + c + d + e + f + g + h + i + j + k + l;
+    k = a + b + c + d + e + f + g + h + i + j + k + l;
+    l = a + b + c + d + e + f + g + h + i + j + k + l;
+
+    return l; // 155661 by inspection
+}

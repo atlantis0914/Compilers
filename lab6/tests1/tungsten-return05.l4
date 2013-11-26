@@ -1,0 +1,9 @@
+//test return 10
+//typedef with undeclared struct
+
+typedef struct a* mydef;
+
+int main() {
+    mydef c;
+    return 10;
+}

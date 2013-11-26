@@ -1,0 +1,19 @@
+//test exception
+
+int myfun(int i);
+int mysad(int i);
+
+int myfun(int i)
+{
+    return mysad(i * 25 % 44 - i);
+}
+
+int mysad(int i)
+{
+    return myfun(i - 2 * 55);
+}
+
+int main()
+{
+    return mysad(97);
+}

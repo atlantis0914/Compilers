@@ -1,0 +1,16 @@
+//test exception
+// SIGSEGV - runs out of stack
+
+int foo(int x, bool b) {
+    if (b) {
+        return foo(x + 1, b) + foo(x/2, !b);
+    }
+    else {
+        return x*x;
+    }
+}
+
+int main() {
+    return foo(3, false) + foo(5, true); 
+}
+

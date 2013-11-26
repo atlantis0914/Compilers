@@ -1,0 +1,19 @@
+//test return 5
+// super pointer!
+
+int main() {
+		int ********** ptr;
+		ptr = alloc(int*********);
+		*ptr = alloc(int********);
+		**ptr = alloc(int*******);
+		***ptr = alloc(int******);
+		****ptr = alloc(int*****);
+		*****ptr = alloc(int****);
+		******ptr = alloc(int***);
+		*******ptr = alloc(int**);
+		********ptr = alloc(int*);
+		*********ptr = alloc(int);
+		**********ptr = 5;
+		return **********ptr;
+}
+

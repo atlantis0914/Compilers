@@ -1,0 +1,240 @@
+//test return 0
+
+/* Hash tables (fixed size)
+ * 15-122 Principles of Imperative Computation, Fall 2012
+ * Frank Pfenning
+ */
+
+// #use <string>
+// #use <conio>
+// #use "hash-string.c0"
+
+int hash_array(int[] s, int limit)
+//@requires limit > 1;
+//@ensures 0 <= \result && \result < limit;
+{
+  int a = 1664525; int b = 1013904223; /* inlined random number generator */
+  int len = 4; // string_length(s);
+  int h = 0;                                   /* empty string maps to 0 */
+  for (int i = 0; i < len; i++)
+    //@loop_invariant 0 <= i;
+    {
+      h = h + s[i]; // char_ord(string_charat(s, i));
+      h = h*a + b;  /* mod 2^32, linear congruential random no */
+    }
+
+  /* reduce to range */
+  h = h % limit;
+
+  //@assert -limit < h && h < limit;
+  if (h < 0) h = h + limit;
+  return h;
+}
+
+
+/******************************/
+/* client-side implementation */
+/******************************/
+
+struct wcount {
+  int[] word;
+  int count;
+};
+
+int hash(int[] s, int m) {
+  return hash_array(s, m);     /* from hash-string.c0 */
+}
+
+bool key_equal(int[] s1, int[] s2) {
+  int len = 4;
+  for (int i = 0; i < len; i++)
+    if (s1[i] != s2[i]) return false;
+  return true;
+}
+
+int[] elem_key(struct wcount* wc)
+//@requires wc != NULL;
+{
+  return wc->word;
+}
+
+/*************************/
+/* client-side interface */
+/*************************/
+typedef struct wcount* elem;
+typedef int[] key;
+
+int hash(key k, int m)
+//@requires m > 0;
+//@ensures 0 <= \result && \result < m;
+  ;
+
+bool key_equal(key k1, key k2);
+
+key elem_key(elem e)
+//@requires e != NULL;
+  ;
+
+/**************************/
+/* library side interface */
+/**************************/
+struct ht_header;
+typedef struct ht_header* ht;
+
+ht ht_new(int capacity)
+//@requires capacity > 0;
+  ;
+elem ht_lookup(ht H, key k);    /* O(1) avg. */
+void ht_insert(ht H, elem e)    /* O(1) avg. */
+//@requires e != NULL;
+  ;
+
+/*******************************/
+/* library-side implementation */
+/*******************************/
+struct list_node {
+  elem data;                    /* data != NULL */
+  struct list_node* next;
+};
+typedef struct list_node list;
+
+struct ht_header {
+  int size;                     /* size >= 0 */
+  int capacity;                 /* capacity > 0 */
+  list*[] table;                /* \length(table) == capacity */
+};
+
+/* to be filled in */
+/*
+bool is_chain(...);
+*/
+
+bool is_ht(ht H) {
+  if (H == NULL) return false;
+  if (!(H->size >= 0)) return false;
+  if (!(H->capacity > 0)) return false;
+  //@assert \length(H->table) == H->capacity;
+  /* check that each element of table is a valid chain */
+  /* includes checking that all elements are non-null */
+  return true;
+}
+
+ht ht_new(int capacity)
+//@requires capacity > 0;
+//@ensures is_ht(\result);
+{
+  ht H = alloc(struct ht_header);
+  H->size = 0;
+  H->capacity = capacity;
+  H->table = alloc_array(list*, capacity);
+  /* initialized to NULL */
+  return H;
+}
+
+/* ht_lookup(H, k) returns NULL if key k not present in H */
+elem ht_lookup(ht H, key k)
+//@requires is_ht(H);
+{
+  int i = hash(k, H->capacity);
+  list* p = H->table[i];
+  while (p != NULL)
+    // loop invariant: p points to chain
+    {
+      //@assert p->data != NULL;
+      if (key_equal(elem_key(p->data), k))
+        return p->data;
+      else
+        p = p->next;
+    }
+  /* not in list */
+  return NULL;
+}
+
+void ht_insert(ht H, elem e)
+//@requires is_ht(H);
+//@requires e != NULL;
+//@ensures is_ht(H);
+//@ensures ht_lookup(H, elem_key(e)) != NULL;
+{
+  key k = elem_key(e);
+  int i = hash(k, H->capacity);
+
+  list* p = H->table[i];
+  while (p != NULL)
+    // loop invariant: p points to chain
+    {
+      //@assert p->data != NULL;
+      if (key_equal(elem_key(p->data), k))
+        {
+          /* overwrite existing element */
+          p->data = e;
+          return;
+        } else {
+        p = p->next;
+      }
+    }
+  //@assert p == NULL;
+  /* prepend new element */
+  list* q = alloc(struct list_node);
+  q->data = e;
+  q->next = H->table[i];
+  H->table[i] = q;
+  (H->size)++;
+  return;
+}
+
+// Debugging: get the length of a chain
+int ht_chain_length(list* C) {
+  int i = 0;
+  while (C != NULL) {
+    i++;
+    C = C->next;
+  }
+  return i;
+}
+
+/* Cycle counting interface */
+
+int[] init_word(int i, int j, int n) {
+  int[] A = alloc_array(int, 4);
+  A[0] = j*n+i; A[1] = i*j+n; A[2] = n*i+j; A[3] = i*i+j*j;
+  return A;
+}
+
+ht init(int param) {
+  return NULL;
+}
+
+void prepare(ht H, int param) {
+}  
+
+void run(ht _H, int param) {
+  // int n = (1<<15)+1;
+  int n = param;
+  int j = 37;
+  ht H = ht_new(n/5);         /* table will end up with load factor 5 */
+  for (int i = 0; i < n; i++) {
+    elem e = alloc(struct wcount);
+    e->word = init_word(i,j,n);
+    e->count = j*n+i;
+    ht_insert(H, e);
+  }
+  for (int i = 0; i < n; i++) {
+    /* missing existing element? */
+    assert(ht_lookup(H, init_word(i,j,n))->count == j*n+i);
+  }
+  for (int i = 0; i < n; i++) {
+    /* finding nonexistent element? */
+    assert(ht_lookup(H, init_word(i+1,j+1,n)) == NULL);
+  }
+  // ht_stats(H);
+}
+
+int checksum(ht H, int param) {
+  return 0;
+}
+
+int main() {
+  run(NULL, 1000);
+  return 0;
+}

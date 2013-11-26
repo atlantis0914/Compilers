@@ -1,0 +1,6 @@
+//test error
+
+int main() {
+	void[] arr = alloc_array(void, 100);
+	return 0;
+}

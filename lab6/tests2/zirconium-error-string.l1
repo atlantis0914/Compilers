@@ -1,0 +1,7 @@
+//test error
+// error by use of string type
+int main()
+{
+  string baz = "fooasdfbar";
+  return baz;
+}

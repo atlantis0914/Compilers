@@ -1,0 +1,19 @@
+//test exception 11
+// order of evaluation checking
+
+int nullify(int** p) {
+  int t = **p;
+  *p = NULL;
+  return t;
+}
+
+int deref(int t, int** p) {
+  return t + **p;
+}
+
+int main() {
+  int** p = alloc(int*);
+  **p = 7;
+
+  return deref(nullify(p), p);
+}

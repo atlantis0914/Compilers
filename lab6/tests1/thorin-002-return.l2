@@ -1,0 +1,13 @@
+//test return 2
+
+/* Test ternary */
+int main()
+{
+    int a = 1;
+    int b = 0;
+
+    int c = b == 0 ? 0 : a / b;
+    int d = b == 0 ? a + a : b / a;
+
+    return c + d;
+}

@@ -1,0 +1,12 @@
+//test exception 11
+
+struct B{
+    int n;
+    bool b;
+};
+
+int main() {
+    struct B[] barray = alloc_array(struct B, 15);
+    barray[16].n = 10;
+    return 15;
+}

@@ -1,0 +1,18 @@
+//test return 19
+// test Order of operations
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+  int result;
+
+  a = 1;
+  b = 2;
+  c = 3;
+  d = 4;
+  result = d * (b + c) - a;
+
+  return result;
+}

@@ -1,0 +1,52 @@
+//test return 14200
+
+bool isValidPosition(int row, int col, int[] qRows, int n)
+{
+	for (int i = 0; i < col; i++)
+				if (qRows[i] == row)
+					return false;
+	for (int qCol = 0; qCol < col; qCol++)
+	{
+		int qRow = qRows[qCol];
+		if (qRow == row || qRow+qCol == row+col || qRow-qCol == row-col)
+			return false;
+	}
+	return true;
+}
+
+int solve(int qCol, int[] qRows, int n)
+{
+	if (qCol == n)
+		return 1;
+	else
+	{
+		int count = 0;
+		for (int qRow = 0; qRow < n; qRow++)
+		{
+			if (isValidPosition(qRow, qCol, qRows, n))
+			{
+				qRows[qCol] = qRow;
+				count += solve(qCol+1, qRows, n);
+			}
+		}
+		return count;
+	}
+}
+
+int nQueens(int n)
+{
+	int[] A = alloc_array(int, n);
+	return solve(0, A, n);
+}
+
+int main()
+{
+	int n = 13;
+	int[] A = alloc_array(int, n);
+	for (int i = 0; i < n; i++)
+	{
+		A[i] = nQueens(i);
+		//printint(A[i]);
+	}
+	return A[n-1];
+}

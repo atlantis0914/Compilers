@@ -1,0 +1,38 @@
+//test return 7
+//Test nested structs
+struct a {
+  bool align_me;
+};
+
+struct b {
+  int x;
+  struct a a1;
+  bool b;
+  struct a a2;
+};
+
+struct c {
+  struct b cur;
+  struct a a1;
+  struct b *next;
+  struct c *next_c;
+  struct a a2;
+  int x;
+  int y;
+  bool z;
+};
+
+struct d {
+  struct a a;
+  struct b b;
+  struct c c;
+  struct d *d;
+};
+
+int main () {
+  struct d *node = alloc(struct d);
+  if(node->c.cur.b || node->c.cur.a2.align_me) {
+    return 0;
+  }
+  return 7;
+}

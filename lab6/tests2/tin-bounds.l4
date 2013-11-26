@@ -1,0 +1,14 @@
+//test exception 11
+// out of bounds on array of structs
+
+struct Foo {
+  int x;
+  struct Foo* f;
+};
+
+int main() {
+  struct Foo[] A = alloc_array(struct Foo, 10);
+  A[10].x = 1;
+  A[-1].x = 2;
+  return A[10].x + A[-1].x;
+}

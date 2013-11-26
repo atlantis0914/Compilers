@@ -1,0 +1,6 @@
+//test error
+int main() {
+  for (;3;)
+    return 9;
+  return -1;
+}

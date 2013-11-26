@@ -1,0 +1,15 @@
+//test error
+// function declared after its use
+
+int otherfunction() {
+    return firstfunction();
+}
+
+int firstfunction() {
+    return 0;
+}
+
+int main() {
+    return 0;
+}
+

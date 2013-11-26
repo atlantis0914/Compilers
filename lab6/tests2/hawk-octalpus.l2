@@ -1,0 +1,8 @@
+//test error
+// the default parsec natural combinator treats this as octal - it is invalid per
+// c0 spec
+int main ()
+{
+	int octalpus = 0o10;
+	return octalpus;
+}

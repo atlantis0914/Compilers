@@ -1,0 +1,21 @@
+//test exception
+
+bool stupid(int n)
+{
+    return (n + 289 / n - 22 == 3);
+}
+
+int halla(int i)
+{
+    if (stupid(i))
+        halla(44 / i);
+    else
+        halla(197 / i);
+    
+    return 66;
+}
+
+int main()
+{
+    return halla(75);
+}

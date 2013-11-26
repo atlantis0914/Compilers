@@ -1,0 +1,11 @@
+//test error
+int* f()
+{
+	int* n = alloc(int);
+	return n;
+}
+int main()
+{
+	*f() = 0;
+	return 0;
+}

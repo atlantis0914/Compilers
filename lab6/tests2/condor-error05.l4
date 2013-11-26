@@ -1,0 +1,12 @@
+//test error
+
+struct HelloStruct {
+    int hour;
+    struct HelloStruct * st;
+};
+
+int main () {
+   struct HelloStruct * hi = alloc( struct HelloStruct );
+   hi->hour = hi->st;
+   return hi->st == NULL ? hi->hour : 1;
+}

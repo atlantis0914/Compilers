@@ -1,0 +1,29 @@
+//test error
+int
+main()
+{
+    int x = 3;
+    int y = 14;
+    int z = 19;
+    int a = 12;
+    if (a != x)
+        if (x == 9)
+            3;
+        else 9;
+        if (y == 14)
+            if (z != 19)
+                x = 14;
+            else if (z > 12) z = 9;
+            else {
+                if (x != 2) x >>= 4;
+                while(true) {
+                    int y;
+                    break;
+                    a++;
+                }
+            }
+        else return 4;
+
+    return 17 + x + y + z;
+
+}

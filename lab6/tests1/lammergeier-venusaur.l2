@@ -1,0 +1,4 @@
+//test return 20
+int main() {
+	return true ? 20 : 1 / 0;
+}

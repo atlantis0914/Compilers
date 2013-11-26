@@ -1,0 +1,25 @@
+//test return 1
+
+typedef int FLAME;
+typedef FLAME PRINCESS;
+
+int main () {
+  FLAME arealhumanbean = 257; //  > Can't be represented.... by a byte
+  for (FLAME princess = 1; princess < arealhumanbean; princess += 7) {
+    princess << 1;    
+  }
+  return 1;
+}
+
+typedef int FLAMe;
+typedef FLAMe FLAme;
+typedef FLAme FLame;
+typedef FLame Flame;
+typedef Flame flame;
+
+int _flame(flame __flame) {
+  PRINCESS ___flame = 1;
+  flame _flame;
+  flame ____flame;
+  return ___flame;
+}

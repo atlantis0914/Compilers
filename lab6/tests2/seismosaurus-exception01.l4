@@ -1,0 +1,12 @@
+//test exception 11
+
+//ensure proper order of argument evaluation. 
+
+int foo(int i, int j) {
+	return j;
+}
+
+int main() {
+	int* a = NULL;
+	return foo(*a, 1/0);
+}

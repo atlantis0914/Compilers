@@ -1,0 +1,10 @@
+//test error
+// dis rong
+
+void poop();
+
+int main () {
+  poop();
+  return 0;
+}
+

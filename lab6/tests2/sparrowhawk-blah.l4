@@ -1,0 +1,15 @@
+//test error
+
+struct b;
+
+struct a{
+	struct b x;
+};
+struct b{
+	struct a y;
+};
+
+int main(){
+	struct a * ptr = alloc (struct a);
+	return 0;
+}

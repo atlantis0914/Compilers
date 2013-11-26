@@ -1,0 +1,9 @@
+//test error
+
+// can't use a scoped variable outside of the block
+int main()
+{
+  {int x;}
+  x = 3; 
+  return x;
+}

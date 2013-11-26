@@ -1,0 +1,6 @@
+//test exception
+//array index out of bound
+int main() {
+  int[] intarr = alloc_array(int, 5);
+  return intarr[-1];
+}

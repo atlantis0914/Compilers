@@ -1,0 +1,13 @@
+//test exception 8
+//divide by 0
+
+struct c {
+    int *b;
+};
+
+int main() {
+    int *a = alloc(int);
+    struct c *d = alloc(struct c);
+    d->b = a;
+    return 10 / *(d->b);
+}

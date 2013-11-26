@@ -1,0 +1,7 @@
+//test exception 14
+
+int main () {
+  int x;
+  while(true) { x = 0; }
+  return 4;
+}

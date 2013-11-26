@@ -1,0 +1,11 @@
+//test return 3
+
+int func(int *x) {
+   return *x-5;
+}
+
+int main() {
+  int *x=alloc(int);
+  *x=8; 
+  return func(x);
+}

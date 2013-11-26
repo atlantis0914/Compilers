@@ -1,0 +1,13 @@
+//test return 333
+
+struct haha {
+       bool wowo;
+};
+
+typedef struct haha haha;
+
+int main () {
+	haha* ptr = alloc(haha);
+	ptr->wowo = (1 < 2);
+	return (ptr->wowo? 333 : 222);
+}

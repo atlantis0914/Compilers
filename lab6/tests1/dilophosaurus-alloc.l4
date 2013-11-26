@@ -1,0 +1,14 @@
+//test return 0
+/* non-convertible type */
+
+int boo(bool b){
+    return b ? 1 : 0;
+   }
+
+int main () {
+  int* x = alloc(int);
+  int* y = alloc(int);
+  *x = 100;
+  *y = *x;
+  return boo(x == y); // same content, but not the same address !
+}

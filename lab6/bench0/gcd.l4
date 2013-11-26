@@ -1,0 +1,51 @@
+//test return 3351
+
+/* gcd by repeated subtraction */
+
+int gcd (int x, int y)
+//@requires x > 0 && y > 0;
+//@ensures \result == GCD(x,y);
+{ int a = x;
+  int b = y;
+  while (a != b)
+    //@loop_invariant a > 0 && b > 0;
+    //@loop_invariant GCD(a,b) == GCD(x,y);
+    {
+      if (a > b) {
+	a = a - b;
+      } else {
+	b = b - a;
+      }
+    }
+  return a;
+}
+
+/* Cycle testing interface */
+
+int* init(int n) {
+  return alloc(int);
+}
+
+void prepare(int* p, int n) {
+  *p = 0;
+}
+
+void run(int* p, int n) {
+  int limit = n/3;
+  int sum = 0;
+  for (int i = 0; i < limit; i++)
+    sum += gcd(123456+i, 654321+i);
+
+  *p = sum;
+}
+
+int checksum(int* p) {
+  return *p;
+}
+
+int main() {
+  int* p = init(1000);
+  prepare(p, 1000);
+  run(p, 1000);
+  return checksum(p);
+}

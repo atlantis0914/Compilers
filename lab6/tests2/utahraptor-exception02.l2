@@ -1,0 +1,12 @@
+//test exception 8
+// mod by zero
+int main()
+{
+	int i = 0;
+	int y = 10;
+
+	for (i = 0; i < 10; i++)
+		y = y % i;
+	
+	return y;
+}

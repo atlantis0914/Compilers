@@ -1,0 +1,6 @@
+//test return 2
+/* Test minimal whitespace */
+int main(){int b;b=1;int c=b+b;c*=2;int a;a=c/2;return a;}
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

@@ -1,0 +1,8 @@
+//test error
+// Different types in tenery operator
+int main() {
+    bool a = false;
+	int b = 1;
+	bool c = true;
+	return  a ? b : c;
+}

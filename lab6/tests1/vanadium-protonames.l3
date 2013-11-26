@@ -1,0 +1,14 @@
+//test return 10
+
+int rawr(int different, bool names);
+
+int main() {
+	return rawr(5,true);
+}
+
+int rawr(int n,bool c) {
+	if (c) {
+		return n * 2;
+	}
+	else return -1;
+}

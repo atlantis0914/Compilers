@@ -1,0 +1,9 @@
+//test error
+/* Ran into this one while coding up milli-max. How dumb. */
+
+int main()
+{
+	int *a = alloc(int);
+	*a++;
+	return *a;
+}

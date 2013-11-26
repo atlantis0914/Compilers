@@ -1,0 +1,8 @@
+//test exception
+// Checks if div is being used properly by causing a division by zero
+int main()
+{
+	int x;
+	x = 0;
+	return 5 % x;  
+}

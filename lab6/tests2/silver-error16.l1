@@ -1,0 +1,7 @@
+//test error
+// Test invalid reserved word use.
+
+int main() {
+    int assert = 1;
+    return assert;
+}

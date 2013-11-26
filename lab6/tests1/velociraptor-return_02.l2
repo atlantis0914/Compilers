@@ -1,0 +1,18 @@
+//test return 1
+// I am very confused now
+
+int main() {
+  int x = 0;
+  int y = 1;
+  int z = 2;
+  bool huh;
+  bool wha;
+  bool eh;
+
+  huh = x < y ? y < z ? z < z : z < x : x < z; // false?
+  wha = huh? y < x : x < z; // true?
+  eh = wha? z > x : z > y; // true?
+  huh = eh? huh : wha; // false?
+
+  return huh? x : wha? y : eh? z : x + y + z;
+}

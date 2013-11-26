@@ -1,0 +1,14 @@
+//test exception 11
+struct s{
+	int* p;
+	int[] a;
+	int[] b;
+};
+typedef struct s* Sp;
+int main(){
+	Sp s=alloc(struct s);
+	if(s->b==s->a){
+		return *(s->p);
+	}
+	return 1;
+}

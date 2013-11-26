@@ -1,0 +1,14 @@
+//test return 0 
+//stupid struct behavior test.
+
+int check_ptr(struct s *s_ptr) {
+    if (s_ptr == NULL)
+        return 0;
+    else
+        return 1;
+}
+
+int main() {
+    struct s *s_ptr = NULL;
+    return check_ptr(s_ptr);
+}

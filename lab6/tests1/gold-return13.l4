@@ -1,0 +1,18 @@
+//test return 0
+
+struct point {
+	int x;
+	int y;
+};
+
+typedef struct point p;
+
+int main () {
+	p* p1 = alloc(p);
+	p* p2 = alloc(p);
+	p1->x = 3;
+	p1->y = 4;
+	p2->x = 3;
+	p2->y = 4;
+	return (p1 == p2? 1 : 0);
+}

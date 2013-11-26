@@ -1,0 +1,9 @@
+//test error
+
+void assert (bool) {
+  return;
+}
+
+int main () {
+  return 0;
+}

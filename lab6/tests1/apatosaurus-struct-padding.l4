@@ -1,0 +1,37 @@
+//test return 10
+// make sure padding is ok 
+
+struct test{
+    int a;
+    int aa;
+    int aaa;
+    int *b;
+    int aaaa;
+    int aaaaa;
+    int aaaaaa;
+    int *bb;
+    int aaaaaaaa;
+    int *bbb;
+    int *bbbb;
+    bool[] c;
+    bool[] cc;
+    bool[] ccc;
+    int aaaaaaaaa;
+    int aaaaaaaaaa;
+
+};
+
+
+typedef struct test balloon;
+
+bool getit(balloon *burrito)
+{
+    return burrito->c[0];
+}
+
+int main(){
+    balloon *taco = alloc(balloon);
+    taco->c = alloc_array(bool,1);
+    taco->c[0] = true;
+    return getit(taco) ? 10 : -1;
+}

@@ -1,0 +1,13 @@
+//test error
+//multiple prototypes
+
+int a();
+bool a();
+
+int main(){
+  return a();
+}
+
+int a(){
+  return 1;
+}

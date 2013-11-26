@@ -1,0 +1,28 @@
+//test return 20
+//try calling a few levels down or something idk
+
+int a (int in);
+int b (int in);
+int c (int in);
+int d (int in);
+
+int main() {
+  int n = 10;
+  return a(n);
+}
+
+int a (int in) {
+  return b(in + 1);
+}
+
+int b (int in) {
+  return c(in + 2);
+}
+
+int c (int in) {
+  return d(in + 3);
+}
+
+int d (int in) {
+  return in + 4;
+}

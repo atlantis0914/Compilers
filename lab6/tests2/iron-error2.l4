@@ -1,0 +1,8 @@
+//test error
+// null used as type
+
+int main() {
+		int ptr;
+		ptr = NULL;
+		return ptr;
+}

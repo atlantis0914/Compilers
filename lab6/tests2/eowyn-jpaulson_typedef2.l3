@@ -1,0 +1,3 @@
+//test error
+typedef a a;
+int main() { return 0; }

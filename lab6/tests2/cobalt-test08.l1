@@ -1,0 +1,7 @@
+//test exception 8
+//test div by 0
+int main() {
+	int x = 1;
+	x /= 0;
+	return x;
+}

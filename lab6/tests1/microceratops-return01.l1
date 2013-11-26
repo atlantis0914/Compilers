@@ -1,0 +1,31 @@
+//test return 1
+// test register allocation, division, and no statements after first return
+
+int main()
+{
+	int a;
+	int b;
+	int c;
+	int d;
+	int e;
+	int f;
+	int g;
+	int h;
+	int i;
+
+
+	a = 1;
+	b = a;
+	c = 1;
+	d = a;
+	d = c;
+	e = d;
+	f = a / e;
+	g = f;
+	h = g;
+	i = b;
+
+	return e;
+	return 5;
+	return a + b;
+}

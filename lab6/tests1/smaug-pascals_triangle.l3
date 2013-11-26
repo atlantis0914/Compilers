@@ -1,0 +1,14 @@
+//test return 6435
+
+int pascalsTriangle(int n, int k) {
+  if (k == 0)
+    return 1;
+  if (n == k)
+    return 1;
+
+  return pascalsTriangle(n-1, k) + pascalsTriangle(n-1,k-1);
+}
+
+int main() {
+  return pascalsTriangle(15, 8);
+}

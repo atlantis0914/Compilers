@@ -1,0 +1,12 @@
+//test exception 8
+
+typedef int foo;
+
+int main() {
+    foo * x;
+    x = alloc(foo);
+    *x = 0;
+
+    return * x / * x;
+}
+

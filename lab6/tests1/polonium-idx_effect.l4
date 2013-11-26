@@ -1,0 +1,21 @@
+//test return 1
+
+int effect(int *cnt){
+    (*cnt)--;
+    return *cnt;
+}
+
+int affect(int[] a, int d){
+    a[1] -= d;
+    return a[1];
+}
+
+int main(){
+    int *cnt = alloc(int);
+    *cnt = 2;
+    int[] arr = alloc_array(int, 2);
+    arr[1] = 1;
+    arr[0] = 1;
+    arr[effect(cnt)] = effect(cnt);
+    return arr[0];
+}

@@ -1,0 +1,11 @@
+//test error
+
+struct Foo {
+  int bar;
+  int baz;
+  bool bar;
+};
+
+int main() {
+  return 0;
+}

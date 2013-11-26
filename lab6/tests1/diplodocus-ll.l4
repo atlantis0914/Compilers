@@ -1,0 +1,70 @@
+//test return 1337
+
+struct n
+{
+    int value;
+    struct n *next;
+};
+
+typedef struct n node_t;
+struct ll
+{
+    node_t *front;
+};
+
+typedef struct ll list_t;
+
+bool insert_front(list_t *list, node_t *front)
+{
+    front->next = list->front;
+    list->front = front;
+    return true;
+}
+
+node_t *new_node(int val)
+{
+    node_t *temp = alloc(node_t);
+    temp->value = val;
+    return temp;
+}
+
+list_t *new_list()
+{
+    list_t *temp = alloc(list_t);
+    temp->front = NULL;
+    return temp;
+}
+
+node_t *remove_front(list_t *list)
+{
+    if (list->front == NULL)
+    {
+        return NULL;
+    }
+    else
+    {
+        node_t *temp = list->front;
+        list->front = list->front->next;
+        return temp;
+    }
+    return NULL;
+}
+
+int main()
+{
+    list_t *lol = new_list();
+    int i = 0;
+    int max = 1000;
+    for(i=0; i<max; i++)
+    {
+        insert_front(lol, new_node(i));
+    }
+    for(i=0; i<max; i++)
+    {
+        node_t *temp = remove_front(lol);
+        if (temp->value != max-1-i)
+            return 1/0;
+        print_int(temp->value);
+    }
+    return 1337;
+}

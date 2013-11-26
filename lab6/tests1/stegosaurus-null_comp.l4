@@ -1,0 +1,15 @@
+//test return 4
+
+struct ints {
+  int a;
+};
+
+int main() {
+  int foo = 4;
+  struct ints *bar = alloc(struct ints);
+  if (NULL == NULL) {
+    return foo;
+  } else {
+    return bar->a;
+  }
+}

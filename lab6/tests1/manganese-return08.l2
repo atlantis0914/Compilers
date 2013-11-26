@@ -1,0 +1,19 @@
+//test return 2
+// It's a buggy race without catch-all return at end.
+int main()
+{
+    int sdc = 0;
+    int aepi = 0;
+    int finish;
+    for( finish = 100;
+	 sdc < finish && aepi < finish;) {
+	 sdc += 7;
+	 aepi += 6;
+    }
+
+
+    if (sdc < aepi)
+	return 1;
+    else
+	return 2;
+}

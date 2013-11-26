@@ -1,0 +1,18 @@
+//test return 0
+// test handling of the maximum and minimum int values
+int main()
+{
+    int a;
+    int b;
+    int c;
+    int d;
+
+    // All four of these will be equal to -2147483648
+    a = 2147483648;
+    b = -2147483648;
+    c = -1 * a;
+    d = -a;
+
+    return (a - b) + (c - d);
+}
+

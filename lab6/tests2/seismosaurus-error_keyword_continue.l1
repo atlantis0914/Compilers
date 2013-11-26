@@ -1,0 +1,9 @@
+//test error
+// Test compiler error for reserved keywords
+// keyword: continue
+int main() {
+    int continue;
+
+    continue=1;
+    return continue;
+}

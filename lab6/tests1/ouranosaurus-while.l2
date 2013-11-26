@@ -1,0 +1,12 @@
+//test return 0
+// simple while loop test
+
+int main() {
+    int i = 10;
+
+    while (i >= 0) {
+        i--;
+    }
+
+    return 0;
+}

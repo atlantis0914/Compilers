@@ -1,0 +1,9 @@
+//test return 746819845
+// Test hex numbers and negation
+
+int main()
+{
+  int x = 0xdeadbeef + 0xf4ceb00c;
+  return -x;
+}
+

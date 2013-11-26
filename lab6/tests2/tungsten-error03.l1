@@ -1,0 +1,10 @@
+//test error
+// Red test 03 - Tests undeclared variables and missing return
+
+int main()
+{
+ int a = 10;
+ int b = 11;
+ c = a + b;
+ a = a;
+}

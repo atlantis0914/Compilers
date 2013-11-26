@@ -1,0 +1,8 @@
+//test return 172
+
+int main() {
+  int x = 100;
+  int y = 200;
+  int z = 300;
+  return ((x ^ y) % (y | z));
+}

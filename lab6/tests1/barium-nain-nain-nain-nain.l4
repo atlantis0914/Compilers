@@ -1,0 +1,12 @@
+//test return 0
+// NEIN NEIN NEIN NAIN?! NEIN NEIN
+
+struct main {
+  int main;
+};
+
+int main()
+{
+  struct main *main = alloc(struct main);
+  return main->main;
+}

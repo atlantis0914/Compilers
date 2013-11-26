@@ -1,0 +1,10 @@
+//test error
+
+int[] get_array() {
+    return alloc_array(int, 1);
+}
+
+int main() {
+    get_array()[0] = 0;
+    return 0;
+}

@@ -1,0 +1,19 @@
+//test return 42
+// Calculates the n-th Catalan number
+// Note that it only works for n<=6 because of integer overflow.
+int main() {
+  int n = 5;
+  int i;
+  int den = 1;
+  int num = den;
+
+  for (i=1; i<=n; i++) {
+    num *= i;
+    den *= i*i;
+  }
+  den *= n+1;
+  for (i=n+1; i<=2*n; i++)
+    num *= i;
+
+  return num / den;
+}

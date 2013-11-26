@@ -1,0 +1,6 @@
+//test return 1
+int main(){
+    int []arr = alloc_array(int, 1);
+    arr[-2147483648 * 2] = 1;
+    return arr[0];
+}

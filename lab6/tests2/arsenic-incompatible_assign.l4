@@ -1,0 +1,11 @@
+//test error
+/* incompatible assignment of pointers */
+
+int main() {
+	int *x = alloc(int);
+	bool *b = alloc(bool);
+	*x = 1;
+	*b = false;
+	x = b;
+	return *x;
+}

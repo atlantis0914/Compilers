@@ -1,0 +1,9 @@
+//test error
+//typedefs don't let the variable be any type.
+
+typedef int blarg;
+
+int main () {
+  blarg x = false;
+  return 0;
+}

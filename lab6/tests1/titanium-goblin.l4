@@ -1,0 +1,57 @@
+//test return 2000
+// goblins like structs too
+
+struct g;
+
+typedef int goblin;
+typedef int nilbog;
+
+struct n {
+  // a real goblin
+  struct g *oblin;
+};
+
+struct i {
+  struct n *goblin;
+};
+
+struct l {
+  struct i *goblin;
+};
+
+struct b {
+  struct l *goblin;
+  nilbog goblins;
+};
+
+struct o {
+  struct b *goblin;
+};
+
+struct g {
+  struct o *goblin;
+};
+
+
+int main() {
+  int _g = 1;
+  int _0 = 144;
+  int _b = 395;
+  int _l = 222;
+  int _i = 1592;
+  int _n = 1999;
+  struct g[] goblins;
+  goblins = alloc_array(struct g, 2000);
+  goblins[_g].goblin = alloc(struct o);
+  goblins[_0].goblin = alloc(struct o);
+  goblins[_b].goblin = alloc(struct o);
+  goblins[_l].goblin = alloc(struct o);
+  goblins[_i].goblin = alloc(struct o);
+  goblins[_n].goblin = alloc(struct o);
+  for (goblin i=0; i<2000; i++) {
+    goblins[i].goblin = alloc(struct o);
+    goblins[i].goblin->goblin = alloc(struct b);
+    goblins[i].goblin->goblin->goblins = (_g + i);
+  }
+  return goblins[2000 - _g].goblin->goblin->goblins;
+}

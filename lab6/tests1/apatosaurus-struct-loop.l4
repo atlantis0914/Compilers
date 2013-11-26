@@ -1,0 +1,25 @@
+//test return 500
+// struct loop and make sure it works correctly
+ 
+struct looper {
+    int value;
+};
+
+int main () {
+    int z = 500;
+    struct looper[] a = alloc_array(struct looper, z);
+    int i;
+    bool b = true;
+
+    for (i = 0; i < z; i++)
+    {
+        a[i].value = i*2;
+    }
+
+    for (i = 0; i < z; i++)
+    {
+        b = b && i*2 == a[i].value;
+    }
+
+    return b ? 500 : -1;
+}

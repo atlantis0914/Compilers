@@ -1,0 +1,20 @@
+//test exception
+
+// test two infinitely recurring mutually recursive functions
+
+int f1(int x);
+int f2(int y);
+
+int f1 (int x) {
+  x *=2;
+  return f2(x);
+}
+
+int f2(int y){
+  y += 3;
+  return f1(y);
+}
+
+int main(){
+  return f1(1);
+}

@@ -1,0 +1,15 @@
+//test exception 11
+
+int main()
+{
+    int[] a = alloc_array(int,10);
+    int i = 0;
+
+    while( true )
+    {
+        a[i] = 1;
+        i++;
+    }
+
+    return a[7];
+}

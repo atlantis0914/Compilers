@@ -1,0 +1,7 @@
+//test error
+//tests undefined type
+int main() {
+  unsigned a;
+  return a;
+}
+

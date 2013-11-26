@@ -1,0 +1,9 @@
+//test error
+
+struct s{
+    struct s;
+};
+
+int main(){
+    return 0;
+}

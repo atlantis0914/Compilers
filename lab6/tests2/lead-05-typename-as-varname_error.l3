@@ -1,0 +1,9 @@
+//test error
+//tests having type name the same as variable name
+
+typedef int foo;
+
+int main () {
+  int foo = 0;
+  return foo;
+}

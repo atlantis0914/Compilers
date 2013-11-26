@@ -1,0 +1,11 @@
+//test return 1
+
+int main() {
+	bool[] bs = alloc_array(bool,1);
+	bs[0] = true;
+	if (bs[0]) {
+		return 1;
+	} else {
+		return 0;
+	}
+}

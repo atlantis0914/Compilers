@@ -1,0 +1,328 @@
+//test error
+
+/* MD5 algorithm lifted from Wikipedia, and incorrectly translated somewhere along the line */
+
+struct md5sum {
+	int a;
+	int b;
+	int c;
+	int d;
+};
+
+struct md5sum *md5(int[] input, int len);
+int[] init_input();
+
+int main()
+{
+	int[] input = init_input();
+	struct md5sum *s = md5(input, 44);
+	return s->a ^ s->b ^ s->c ^ s->d;
+}
+
+int[] init_r();
+int[] init_k();
+
+/* y >>> k, taken from 122 resource code */
+int unsigned_shr(int y, int k) {
+	return (y>>k)&~(-1<<(32-k));
+}
+
+int leftrotate(int x, int c) {
+	return (x << c) | unsigned_shr(x, 32-c);
+}
+
+int printhexnibble(int y) {
+	if (y < 10) printchar(0x30 + y);
+	else printchar(0x61+(y-10));
+	return 0;
+}
+
+int myprinthex(int y) {
+	int i;
+	for (i = 32-4; i>=0; i-=4) {
+		printhexnibble((y>>i)&0xf);
+	}
+	return 0;
+}
+
+/* input required to have enough extra space for padding */
+struct md5sum *md5(int[] input, int len)
+{
+	int[] r = init_r();
+	int[] k = init_k();
+	int[] w = alloc_array(int, 16);
+	int msglen = len;
+	int index;
+	int h0 = 0x67452301;
+	int h1 = 0xEFCDAB89;
+	int h2 = 0x98BADCFE;
+	int h3 = 0x10325476;
+	struct md5sum *res = alloc(struct md5sum);
+
+	input[len] = 0x70000000;
+	len++;
+	while (len % 16 != 14) {
+		input[len] = 0;
+		len++;
+	}
+	input[len] = 0;
+	len++;
+	input[len] = msglen * 8;
+	len++;
+
+	for (index = 0; index < len; index+=16) {
+		int i;
+		int f;
+		int g;
+		int temp;
+		int a;
+		int b;
+		int c;
+		int d;
+
+		for (i = 0; i < 16; i++) {
+			w[i] = input[index+i];
+		}
+
+		a = h0;
+		b = h1;
+		c = h2;
+		d = h3;
+
+		for (i = 0; i < 63; i++) {
+			if (i < 16) {
+				f = (b&c)|(~b&d);
+				g = i;
+			}
+			else if (i < 32) {
+				f = (d&b)|(~d&c);
+				g = (5*i+1)%16;
+			}
+			else if (i < 48) {
+				f = b ^ c ^ d;
+				g = (3*i+5)%16;
+			}
+			else {
+				f = c ^ (b|~d);
+				g = (7*i)%16;
+			}
+
+			temp = d;
+			d = c;
+			c = b;
+			b = b + leftrotate(a+f+k[i]+w[g], r[i]);
+			a = temp;
+		}
+
+		h0 = h0 + a;
+		h1 = h1 + b;
+		h2 = h2 + c;
+		h3 = h3 + d;
+	}
+
+	myprinthex(h0); myprinthex(h1); myprinthex(h2); myprinthex(h3);
+	printchar(10);
+
+	res->a = h0;
+	res->b = h1;
+	res->c = h2;
+	res->d = h3;
+
+	return res;
+}
+
+int[] init_input()
+{
+	int[] input = alloc_array(int, 100);
+	input[0] = 1181709682;
+	input[1] = 1935896434;
+	input[2] = 1696620910;
+	input[3] = 1679848293;
+	input[4] = 1986358816;
+	input[5] = 2036687218;
+	input[6] = 1931501927;
+	input[7] = 1864396661;
+	input[8] = 1914725985;
+	input[9] = 1952998770;
+	input[10] = 1931502194;
+	input[11] = 1869965160;
+	input[12] = 1948280431;
+	input[13] = 1920231456;
+	input[14] = 1869488244;
+	input[15] = 1751741216;
+	input[16] = 1668247156;
+	input[17] = 1768842606;
+	input[18] = 1948279072;
+	input[19] = 1852143392;
+	input[20] = 1851880553;
+	input[21] = 1869491232;
+	input[22] = 1668247139;
+	input[23] = 1701410405;
+	input[24] = 1679845742;
+	input[25] = 543975778;
+	input[26] = 1701999737;
+	input[27] = 740319598;
+	input[28] = 1679844453;
+	input[29] = 1684628321;
+	input[30] = 1952801824;
+	input[31] = 1953439860;
+	input[32] = 1751457904;
+	input[33] = 1919905903;
+	input[34] = 1936290921;
+	input[35] = 1869488244;
+	input[36] = 1751217184;
+	input[37] = 1634495520;
+	input[38] = 1835363872;
+	input[39] = 1634886944;
+	input[40] = 1668441441;
+	input[41] = 1952801824;
+	input[42] = 1701934433;
+	input[43] = 1814956544;
+	return input;
+}
+
+int[] init_r()
+{
+	int[] r = alloc_array(int, 64);
+	r[0] = 7;
+	r[1] =  12;
+	r[2] =  17;
+	r[3] =  22;
+	r[4] =   7;
+	r[5] =  12;
+	r[6] =  17;
+	r[7] =  22;
+	r[8] =   7;
+	r[9] =  12;
+	r[10] =  17;
+	r[11] =  22;
+	r[12] =   7;
+	r[13] =  12;
+	r[14] =  17;
+	r[15] =  22;
+	r[16] = 5;
+	r[17] =   9;
+	r[18] =  14;
+	r[19] =  20;
+	r[20] =   5;
+	r[21] =   9;
+	r[22] =  14;
+	r[23] =  20;
+	r[24] =   5;
+	r[25] =   9;
+	r[26] =  14;
+	r[27] =  20;
+	r[28] =   5;
+	r[29] =   9;
+	r[30] =  14;
+	r[31] =  20;
+	r[32] = 4;
+	r[33] =  11;
+	r[34] =  16;
+	r[35] =  23;
+	r[36] =   4;
+	r[37] =  11;
+	r[38] =  16;
+	r[39] =  23;
+	r[40] =   4;
+	r[41] =  11;
+	r[42] =  16;
+	r[43] =  23;
+	r[44] =   4;
+	r[45] =  11;
+	r[46] =  16;
+	r[47] =  23;
+	r[48] = 6;
+	r[49] =  10;
+	r[50] =  15;
+	r[51] =  21;
+	r[52] =   6;
+	r[53] =  10;
+	r[54] =  15;
+	r[55] =  21;
+	r[56] =   6;
+	r[57] =  10;
+	r[58] =  15;
+	r[59] =  21;
+	r[60] =   6;
+	r[61] =  10;
+	r[62] =  15;
+	r[63] =  21;
+
+	return r;
+}
+
+int[] init_k()
+{
+	int[] k = alloc_array(int, 64);
+
+	k[0] = 3614090360;
+	k[1] = 3905402710;
+	k[2] =  606105819;
+	k[3] = 3250441966;
+	k[4] = 4118548399;
+	k[5] = 1200080426;
+	k[6] = 2821735955;
+	k[7] = 4249261313;
+	k[8] = 1770035416;
+	k[9] = 2336552879;
+	k[10] = 4294925233;
+	k[11] = 2304563134;
+	k[12] = 1804603682;
+	k[13] = 4254626195;
+	k[14] = 2792965006;
+	k[15] = 1236535329;
+
+	k[16] = 4129170786;
+	k[17] = 3225465664;
+	k[18] =  643717713;
+	k[19] = 3921069994;
+	k[20] = 3593408605;
+	k[21] =   38016083;
+	k[22] = 3634488961;
+	k[23] = 3889429448;
+	k[24] =  568446438;
+	k[25] = 3275163606;
+	k[26] = 4107603335;
+	k[27] = 1163531501;
+	k[28] = 2850285829;
+	k[29] = 4243563512;
+	k[30] = 1735328473;
+	k[31] = 2368359562;
+
+	k[32] = 4294588738;
+	k[33] = 2272392833;
+	k[34] = 1839030562;
+	k[35] = 4259657740;
+	k[36] = 2763975236;
+	k[37] = 1272893353;
+	k[38] = 4139469664;
+	k[39] = 3200236656;
+	k[40] =  681279174;
+	k[41] = 3936430074;
+	k[42] = 3572445317;
+	k[43] =   76029189;
+	k[44] = 3654602809;
+	k[45] = 3873151461;
+	k[46] =  530742520;
+	k[47] = 3299628645;
+
+	k[48] = 4096336452;
+	k[49] = 1126891415;
+	k[50] = 2878612391;
+	k[51] = 4237533241;
+	k[52] = 1700485571;
+	k[53] = 2399980690;
+	k[54] = 4293915773;
+	k[55] = 2240044497;
+	k[56] = 1873313359;
+	k[57] = 4264355552;
+	k[58] = 2734768916;
+	k[59] = 1309151649;
+	k[60] = 4149444226;
+	k[61] = 3174756917;
+	k[62] =  718787259;
+	k[63] = 3951481745;
+
+	return k;
+}

@@ -1,0 +1,17 @@
+//test return 0
+//lots of brackets!
+
+int main()
+{
+    {
+        {
+            {
+                {
+                    {
+                        return 0;
+                    }
+                }
+            }
+        }
+    }
+}

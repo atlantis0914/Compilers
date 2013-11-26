@@ -1,0 +1,13 @@
+//test return 10
+//function identifier does not conflict with variable name if function is not called
+
+void func();
+
+int main() {
+  int func = 10;
+  return func;
+}
+
+void func() {
+  assert(true);
+}

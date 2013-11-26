@@ -1,0 +1,14 @@
+//test exception 8
+
+int main() {
+    int x = 45;
+    int y = 12345678;
+
+    while (x >= 0) {
+        y /= x;
+        x
+        --;
+    }
+
+    return y;
+}

@@ -1,0 +1,15 @@
+//test return 0
+// test nested lvalue, overflow via addition/subtraction/multiplication should
+// not fail
+
+int main () {
+    int a = 0x12345678;
+
+    (((((a))))) *= 0;
+    a = 0x80000000;
+    a -= 1; // a = 0x7fffffff;
+    a += 1; // a = 0x80000000;
+    a *= 2;
+
+    return 0;
+}

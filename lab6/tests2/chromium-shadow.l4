@@ -1,0 +1,9 @@
+//test exception
+// Dereferencing a null pointer
+
+int main () {
+    int *p = NULL;
+    *p; //haha
+    return 0;
+}
+

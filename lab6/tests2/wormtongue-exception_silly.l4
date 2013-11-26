@@ -1,0 +1,48 @@
+//test exception
+// I actually have no idea why this throws an exception..
+
+struct A{
+    int q;
+    struct B* b;
+};
+
+struct B{
+    int q;
+    struct A* a;
+};
+
+struct B* lackofnames(int n) {
+    int odds = 0;
+    struct B* head = alloc(struct B);
+    (*head).q = odds;
+    struct B* nextB = head;
+    struct A* nextA = head->a;
+    while (odds < n) {
+        odds+=1;
+        if (odds % 2 == 0) {
+            nextA = alloc(struct A);
+            nextA->q = odds;
+            nextB->a = nextA;
+        } else {
+            nextB = alloc(struct B);
+            nextB->q = odds;
+            nextA->b = nextB;
+        }
+    }
+    return head;
+}
+
+int main() {
+    struct B* head = lackofnames(21);
+    struct A* bleh = NULL;
+    int i = 0;
+    while(i < 10) {
+        if (i % 2 == 0) {
+            bleh = head->a;
+        } else {
+            head = bleh->b;
+        }
+        i++;
+    }
+    return bleh->q;
+}

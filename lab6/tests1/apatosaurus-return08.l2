@@ -1,0 +1,8 @@
+//test return 15
+// math
+int main(){
+
+    int x = 0xa;
+    int z = 0x5;
+    return x+z;
+}

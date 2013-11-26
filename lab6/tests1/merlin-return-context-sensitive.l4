@@ -1,0 +1,15 @@
+//test return 0
+typedef int foo;
+
+
+int main()
+{
+  bool[] a = alloc_array(bool,42);
+  int bar = 3;
+  foo*baz = alloc(foo);
+  *baz = 9;
+  a[*baz*bar] = true;
+ if(a[27])
+    return 0;
+  return 1;
+}

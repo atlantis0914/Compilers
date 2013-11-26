@@ -1,0 +1,11 @@
+//test return 9
+// tests mixed declarations and uses
+
+int main()
+{
+  int x;
+  x = 7;
+  int y;
+  y = 2 + x;
+  return y;
+}

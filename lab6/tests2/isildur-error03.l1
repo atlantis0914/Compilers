@@ -1,0 +1,4 @@
+//test error
+int main () {
+  /* there is no return statement here */
+}

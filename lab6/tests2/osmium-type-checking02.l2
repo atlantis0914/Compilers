@@ -1,0 +1,10 @@
+//test error
+// assign wrong type
+int main()
+{
+	int x = 1;
+	if(false) {
+		x = x == x;
+	}
+	return x;
+}

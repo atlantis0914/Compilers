@@ -1,0 +1,314 @@
+//test return 0
+// Solve a sudoku board, dammit
+
+bool check_sudoku_cell(int row, int col, bool zeros, int[] board){
+  int val;
+  int compval;
+  int i;
+  int j;
+  int dim = 9;
+
+  val = board[dim*row + col];
+  if(val < 1 || val > 9)
+    return false;
+
+  //check row and column constaints simultaneously
+  for(i = 0; i < dim; i++){
+    //check column constraint
+    if(i != row){
+      compval = board[dim*i + col];
+      if(compval == val)
+        return false;
+      if(zeros && compval == 0)
+        return false;
+    }
+
+    //check row constraint
+    if(i != col){
+      compval = board[dim*row + i];
+      if(compval == val)
+        return false;
+      if(zeros && compval == 0) {
+        return false;
+      }
+    }
+  }
+
+  //check box constraints
+  for(i = (row/3)*3; i < 3; i++){
+    for(j = (col/3)*3; j < 3; j++){
+      if (!(i == row && j == col)) {
+        compval = board[dim*i+j];
+
+        if(compval == val || (zeros && compval == 0))
+         return false;
+      }
+    }
+  }
+  
+  return true;
+}
+
+bool check_sudoku_board(int[] board){
+  int i;
+  int j;
+  for(i = 0; i < 9; i++){
+    for(j = 0; j < 9; j++){
+      if(!check_sudoku_cell(i,j,true, board))
+        return false;
+    }
+  }
+  return true;
+}
+
+bool solve_sudoku(int[] board, bool[] const){
+  //views the board as a single row of length 9*9
+  int i = 0;
+  int dim = 9;
+  int current_val;
+  bool cell_success;
+
+  while(i < dim * dim){
+    //don't mess with constant board values
+    if(const[i]) {
+      i++;
+    } else {
+      current_val = board[i];
+
+      //try each value until we get a good one
+      cell_success = false;
+      while(!cell_success && current_val < dim) {
+        current_val++;
+        board[i] = current_val;
+        //for check_sudoku_cell(), zeros are OK as we have not filled out those
+        //parts yet
+        if(check_sudoku_cell(i/dim, i%dim, false, board)) {
+          cell_success = true;
+        }
+      }
+
+      //no value works, so backtrack
+      if(!cell_success) {
+        if(i > 0) {
+
+          //reset the board value to zero and backtrack to a not-constant number
+          board[i] = 0;
+          i--;
+          while(const[i]) {
+              i--;
+              assert(i >= 0);
+          }
+        } else {
+          return false;
+        }
+      } else {
+        //move on to the next cell
+        i++;
+      }
+    }
+  }
+  //make sure...
+  return check_sudoku_board(board);
+}
+
+bool[] populate_const() {
+    int dim = 9;
+    bool[] sudoku_board = alloc_array(bool, dim*dim);
+
+    sudoku_board[0] = true;
+    sudoku_board[1] = false;
+    sudoku_board[2] = false;
+    sudoku_board[3] = true;
+    sudoku_board[4] = false;
+    sudoku_board[5] = true;
+    sudoku_board[6] = false;
+    sudoku_board[7] = false;
+    sudoku_board[8] = true;
+
+    sudoku_board[dim+0] = false;
+    sudoku_board[dim+1] = true;
+    sudoku_board[dim+2] = true;
+    sudoku_board[dim+3] = true;
+    sudoku_board[dim+4] = false;
+    sudoku_board[dim+5] = false;
+    sudoku_board[dim+6] = true;
+    sudoku_board[dim+7] = false;
+    sudoku_board[dim+8] = false;
+
+    sudoku_board[2*dim+0] = true;
+    sudoku_board[2*dim+1] = true;
+    sudoku_board[2*dim+2] = true;
+    sudoku_board[2*dim+3] = true;
+    sudoku_board[2*dim+4] = false;
+    sudoku_board[2*dim+5] = true;
+    sudoku_board[2*dim+6] = false;
+    sudoku_board[2*dim+7] = true;
+    sudoku_board[2*dim+8] = true;
+
+    sudoku_board[3*dim+0] = true;
+    sudoku_board[3*dim+1] = true;
+    sudoku_board[3*dim+2] = true;
+    sudoku_board[3*dim+3] = true;
+    sudoku_board[3*dim+4] = true;
+    sudoku_board[3*dim+5] = true;
+    sudoku_board[3*dim+6] = true;
+    sudoku_board[3*dim+7] = false;
+    sudoku_board[3*dim+8] = true;
+
+    sudoku_board[4*dim+0] = true;
+    sudoku_board[4*dim+1] = true;
+    sudoku_board[4*dim+2] = true;
+    sudoku_board[4*dim+3] = true;
+    sudoku_board[4*dim+4] = true;
+    sudoku_board[4*dim+5] = true;
+    sudoku_board[4*dim+6] = true;
+    sudoku_board[4*dim+7] = true;
+    sudoku_board[4*dim+8] = true;
+
+    sudoku_board[5*dim+0] = true;
+    sudoku_board[5*dim+1] = true;
+    sudoku_board[5*dim+2] = false;
+    sudoku_board[5*dim+3] = true;
+    sudoku_board[5*dim+4] = true;
+    sudoku_board[5*dim+5] = true;
+    sudoku_board[5*dim+6] = true;
+    sudoku_board[5*dim+7] = false;
+    sudoku_board[5*dim+8] = false;
+
+    sudoku_board[6*dim+0] = true;
+    sudoku_board[6*dim+1] = false;
+    sudoku_board[6*dim+2] = true;
+    sudoku_board[6*dim+3] = false;
+    sudoku_board[6*dim+4] = false;
+    sudoku_board[6*dim+5] = true;
+    sudoku_board[6*dim+6] = true;
+    sudoku_board[6*dim+7] = true;
+    sudoku_board[6*dim+8] = true;
+
+    sudoku_board[7*dim+0] = true;
+    sudoku_board[7*dim+1] = true;
+    sudoku_board[7*dim+2] = true;
+    sudoku_board[7*dim+3] = false;
+    sudoku_board[7*dim+4] = false;
+    sudoku_board[7*dim+5] = false;
+    sudoku_board[7*dim+6] = false;
+    sudoku_board[7*dim+7] = true;
+    sudoku_board[7*dim+8] = true;
+
+    sudoku_board[8*dim+0] = true;
+    sudoku_board[8*dim+1] = false;
+    sudoku_board[8*dim+2] = true;
+    sudoku_board[8*dim+3] = true;
+    sudoku_board[8*dim+4] = false;
+    sudoku_board[8*dim+5] = true;
+    sudoku_board[8*dim+6] = false;
+    sudoku_board[8*dim+7] = true;
+    sudoku_board[8*dim+8] = true;
+
+    return sudoku_board;
+}
+
+int[] populate_board() {
+    int dim = 9;
+    int[] sudoku_board = alloc_array(int, dim*dim);
+
+    sudoku_board[0] = 5;
+    sudoku_board[1] = 0;
+    sudoku_board[2] = 0;
+    sudoku_board[3] = 4;
+    sudoku_board[4] = 0;
+    sudoku_board[5] = 6;
+    sudoku_board[6] = 0;
+    sudoku_board[7] = 0;
+    sudoku_board[8] = 7;
+
+    sudoku_board[dim+0] = 0;
+    sudoku_board[dim+1] = 4;
+    sudoku_board[dim+2] = 6;
+    sudoku_board[dim+3] = 1;
+    sudoku_board[dim+4] = 0;
+    sudoku_board[dim+5] = 0;
+    sudoku_board[dim+6] = 3;
+    sudoku_board[dim+7] = 0;
+    sudoku_board[dim+8] = 0;
+
+    sudoku_board[2*dim+0] = 1;
+    sudoku_board[2*dim+1] = 7;
+    sudoku_board[2*dim+2] = 3;
+    sudoku_board[2*dim+3] = 2;
+    sudoku_board[2*dim+4] = 0;
+    sudoku_board[2*dim+5] = 8;
+    sudoku_board[2*dim+6] = 0;
+    sudoku_board[2*dim+7] = 4;
+    sudoku_board[2*dim+8] = 9;
+
+    sudoku_board[3*dim+0] = 7;
+    sudoku_board[3*dim+1] = 1;
+    sudoku_board[3*dim+2] = 2;
+    sudoku_board[3*dim+3] = 6;
+    sudoku_board[3*dim+4] = 8;
+    sudoku_board[3*dim+5] = 5;
+    sudoku_board[3*dim+6] = 9;
+    sudoku_board[3*dim+7] = 0;
+    sudoku_board[3*dim+8] = 4;
+
+    sudoku_board[4*dim+0] = 9;
+    sudoku_board[4*dim+1] = 6;
+    sudoku_board[4*dim+2] = 4;
+    sudoku_board[4*dim+3] = 7;
+    sudoku_board[4*dim+4] = 1;
+    sudoku_board[4*dim+5] = 3;
+    sudoku_board[4*dim+6] = 5;
+    sudoku_board[4*dim+7] = 8;
+    sudoku_board[4*dim+8] = 2;
+
+    sudoku_board[5*dim+0] = 8;
+    sudoku_board[5*dim+1] = 3;
+    sudoku_board[5*dim+2] = 0;
+    sudoku_board[5*dim+3] = 9;
+    sudoku_board[5*dim+4] = 2;
+    sudoku_board[5*dim+5] = 4;
+    sudoku_board[5*dim+6] = 7;
+    sudoku_board[5*dim+7] = 0;
+    sudoku_board[5*dim+8] = 0;
+
+    sudoku_board[6*dim+0] = 6;
+    sudoku_board[6*dim+1] = 0;
+    sudoku_board[6*dim+2] = 1;
+    sudoku_board[6*dim+3] = 0;
+    sudoku_board[6*dim+4] = 0;
+    sudoku_board[6*dim+5] = 7;
+    sudoku_board[6*dim+6] = 2;
+    sudoku_board[6*dim+7] = 9;
+    sudoku_board[6*dim+8] = 3;
+
+    sudoku_board[7*dim+0] = 3;
+    sudoku_board[7*dim+1] = 5;
+    sudoku_board[7*dim+2] = 7;
+    sudoku_board[7*dim+3] = 0;
+    sudoku_board[7*dim+4] = 0;
+    sudoku_board[7*dim+5] = 0;
+    sudoku_board[7*dim+6] = 0;
+    sudoku_board[7*dim+7] = 1;
+    sudoku_board[7*dim+8] = 6;
+
+    sudoku_board[8*dim+0] = 4;
+    sudoku_board[8*dim+1] = 0;
+    sudoku_board[8*dim+2] = 9;
+    sudoku_board[8*dim+3] = 3;
+    sudoku_board[8*dim+4] = 0;
+    sudoku_board[8*dim+5] = 1;
+    sudoku_board[8*dim+6] = 0;
+    sudoku_board[8*dim+7] = 7;
+    sudoku_board[8*dim+8] = 5;
+
+    return sudoku_board;
+}
+
+int main() {
+    int[] board = populate_board();
+    bool[] board_const = populate_const();
+    assert(!check_sudoku_board(board));
+    assert(solve_sudoku(board, board_const));
+    return 0;
+}

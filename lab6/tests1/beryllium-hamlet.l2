@@ -1,0 +1,16 @@
+//test return 1
+
+int main() {
+  int b = 1;
+
+  if (2 * b == 2 || ! (2 * b == 2))
+    {
+      int that = true ? 1 : 0;
+      return that;
+    }
+  else
+    {
+      int fail = 1/0;
+	  return fail;
+    }
+}

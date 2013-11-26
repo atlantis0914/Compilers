@@ -1,0 +1,11 @@
+//test error
+// y uninitialized before use 
+int main()
+{
+  int x;
+  int y;
+
+  x = 15;
+  return y;
+  y = x % -6;
+}

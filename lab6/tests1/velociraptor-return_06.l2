@@ -1,0 +1,23 @@
+//test return 64
+// some nesting
+
+int main() {
+  int x = 1;
+  int i = 1;
+
+  for (; i<33; i*=2) {
+    while (x < 10) {
+      int j;
+      for (j = 0; j < 2; j++) {
+        int y = 5;
+        while (y > 0) {
+          x *= y;
+          y--;
+        }
+      }
+    }
+    x /= i;
+  }
+
+  return i; // yes I know this is stupid
+}

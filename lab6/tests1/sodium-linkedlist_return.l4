@@ -1,0 +1,25 @@
+//test return 0
+// Fun with linked lists!
+
+struct list_node {
+  int data;
+  struct list_node *next;
+};
+typedef struct list_node list;
+
+int main() {
+  list *start = alloc(list);
+  list *pos = start;
+  int len = 10;
+  for (int i = 0; i < len; i++) {
+    list *new = alloc(list);
+    new->data = i;
+    pos->next = new;
+    pos = pos->next;
+  }
+
+  assert(start->data == 0);
+  assert(pos->data == len-1);
+
+  return 0;
+}

@@ -1,0 +1,9 @@
+//test error
+
+struct aww_yissss { int x; bool y; };
+
+int main() {
+    struct aww_yissss* breadcrumbs = alloc(struct aww_yissss);
+    struct aww_yissss x = *breadcrumbs;
+    return 0; //(*breadcrumbs).x;
+}

@@ -1,0 +1,12 @@
+//test return 0
+
+int main() {
+    int* x = alloc(int);
+	assert(*x == 0);
+	bool* b = alloc(bool);
+	assert(!*b);
+	int** y = alloc(int*);
+	assert(*y == NULL);
+	int[] xs = alloc_array(int, 1);
+	return xs[0];
+}

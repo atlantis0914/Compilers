@@ -1,0 +1,17 @@
+//test return 1010
+
+struct fake_int {
+	int first_two;
+	int second_two;
+};
+
+int get_val(struct fake_int *ptr) {
+	return ptr->first_two * 100 + ptr->second_two;
+}
+
+int main () {
+	struct fake_int* ptr = alloc(struct fake_int);
+	ptr->first_two = 10;
+	ptr->second_two = 10;
+	return get_val(ptr);
+}

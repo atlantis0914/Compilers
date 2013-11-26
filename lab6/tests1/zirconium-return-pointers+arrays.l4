@@ -1,0 +1,22 @@
+//test return 370
+
+int main() {
+  int[]*[] apa = alloc_array(int[]*, 10);
+  for(int i = 0; i < 10; i++) {
+    apa[i] = alloc(int[]);
+    *apa[i] = alloc_array(int, 10);
+    for(int j = 0; j < 10; j++) {
+      (*apa[i])[j] = i;
+    }
+  }
+  for(int j = 0; j < 10; j++) {
+    (*apa[9])[j] = 1;
+  }
+  int sum = 0;
+  for(int i = 0; i < 10; i++) {
+    for(int j = 0; j < 10; j++) {
+      sum += (*apa[i])[j];
+    }
+  }
+  return sum;
+}

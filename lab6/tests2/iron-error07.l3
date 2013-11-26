@@ -1,0 +1,15 @@
+//test error
+// Redefine a type as void
+
+typedef void nulltype;
+
+nulltype checkzero(int a) {
+    assert(a == 0);
+    return;
+}
+
+int main() {
+    checkzero(0);
+    return 0;
+}
+

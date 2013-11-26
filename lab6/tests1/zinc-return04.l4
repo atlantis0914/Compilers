@@ -1,0 +1,15 @@
+//test return -1
+
+int main() {
+  int***** x1 = alloc(int****);
+  int****  x2 = alloc(int***);
+  int***   x3 = alloc(int**);
+  int**    x4 = alloc(int*);
+  int*     x5 = alloc(int);
+  *x5 = -1;
+  *x4 = x5;
+  *x3 = x4;
+  *x2 = x3;
+  *x1 = x2;
+  return *****x1;
+}

@@ -1,0 +1,15 @@
+//test error
+
+//can we call bools and ints both bar?
+
+typedef int foo;
+typedef bool bar;
+
+int main()
+{
+  foo food = 3;
+  bar barn = true;
+  if(barn){return food;}else{barn?1/0:0/1;return-42;}
+}
+
+typedef foo bar;

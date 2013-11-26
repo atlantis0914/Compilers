@@ -1,0 +1,14 @@
+//test return 3
+
+int main() {
+  int ret = 0;
+  {
+    int x = 1;
+    ret += x;
+  }
+  {
+    int x = 2;
+    ret += x;
+  }
+  return ret;
+}

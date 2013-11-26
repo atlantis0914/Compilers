@@ -1,0 +1,70 @@
+//test return 9969
+
+
+struct node {
+  struct node *left;
+  struct node *right;
+  int value;
+};
+
+
+int insert(struct node *root, int value) {
+  if (root->value == value) {
+    return 0;
+  } else if (root->value < value) {
+    if (NULL != root->left) {
+      return insert(root->left, value);
+    } else {
+      struct node *new;
+      new = alloc(struct node);
+      new->left = NULL; new->right = NULL;
+      root->left = new;
+      return 1;
+    }
+  } else  {
+    if (NULL != root->right) {
+      return insert(root->right, value);
+    } else {
+      struct node *new;
+      new = alloc(struct node);
+      new->left = NULL; new->right = NULL;
+      root->right = new;
+      return 1;
+    }
+  }
+}
+
+int max(int a, int b) { return (a > b) ? a : b; }
+
+int height(struct node *root) {
+  if (NULL == root) return 0;
+  return 1 + max(height(root->left), height(root->right));
+}
+
+int sum(struct node *root) {
+  if (NULL == root) return 0;
+  return root->value + sum(root->left) + sum(root->right);
+}
+
+int main() {
+  
+  struct node *tree;
+
+  tree = alloc(struct node);
+  
+  tree->value = 5;
+
+  tree->left = NULL;
+  tree->right = NULL;
+  
+  int count=0;
+  while (count < 10000) {
+    int num = (count * 101) % 113;
+    insert(tree, num);
+    count++;
+  }
+
+  return 100 * sum(tree) + height(tree);
+
+
+}

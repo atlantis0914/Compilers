@@ -1,0 +1,22 @@
+//test return 42
+
+int index(int* x) {
+  int res = *x;
+  *x = *x + 1;
+  return res;
+}
+
+int main() {
+  int *x = alloc(int); // *x = 0
+  int[] arr = alloc_array(int, 3);
+
+  // arr[0] = 0
+  arr[1] = 33;
+  arr[2] = 9;
+
+  // same as saying arr[0] = arr[1] + arr[2]
+  // yay for side effects
+  arr[index(x)] = arr[index(x)] + arr[index(x)];
+
+  return arr[0];
+}

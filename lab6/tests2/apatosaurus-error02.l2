@@ -1,0 +1,8 @@
+//test error
+int main()
+{
+	int x = 0;
+    if(while(true) x++;)
+        x--;
+	return x;
+}

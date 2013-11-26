@@ -1,0 +1,24 @@
+//test return 5
+struct n{
+	int x;
+	struct n * next;
+};
+
+struct n * createList (int n){
+	if(n == 0){
+		return NULL;
+	}
+	struct n * head = alloc(struct n);
+	head->next = createList(n-1);
+	return head;
+}
+
+int length (struct n * head){
+	if (head == NULL) return 0;
+	return 1 + length (head->next);
+}
+int main(){
+	struct n * newList = createList(5);
+	int len = length (newList);
+	return len;
+} 

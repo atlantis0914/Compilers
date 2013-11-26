@@ -1,0 +1,13 @@
+//test return 1
+
+int main()
+{
+  int[][] array = alloc_array(int[], 1024);
+  for (int i = 0; i < 1024; i++) {
+    array[i] = alloc_array(int, 128*1024);
+    for (int j = 0; j < 128; j++) {
+      array[i][j * 1024] = 1;
+    }
+  }
+  return 1;
+}

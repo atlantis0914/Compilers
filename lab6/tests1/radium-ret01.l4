@@ -1,0 +1,33 @@
+//test return 2
+struct bar
+{
+  int a;
+  int b;
+  int c;
+  struct bar* next;
+};
+
+struct foo
+{
+  struct bar b;
+  int x;
+  int y;
+  struct foo* next;
+};
+
+int main()
+{
+  struct foo* f = alloc(struct foo);
+  f -> next = alloc(struct foo);
+  f -> next -> next = alloc(struct foo);
+  f -> next -> next -> next = alloc(struct foo);
+  f -> next -> next -> next -> next = alloc(struct foo);
+  f -> next -> next -> next -> next -> next = alloc(struct foo);
+  f -> next -> next -> next -> next -> next -> next = alloc(struct foo);
+  struct foo* g = f -> next -> next -> next;
+  f -> next -> x++;
+  f -> next -> x++;
+  g -> b.next = alloc(struct bar);
+  g -> b.next -> a = f -> next -> x;
+  return g -> b.next -> a;
+}

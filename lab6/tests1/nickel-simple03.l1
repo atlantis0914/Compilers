@@ -1,0 +1,7 @@
+//test return 38
+// test sadfsaf
+int main()
+{
+  int a = -2 + 0x4*10;
+  return a;
+}

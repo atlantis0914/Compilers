@@ -1,0 +1,113 @@
+//test return 1
+
+/* A Turing Machine simulator loaded with palindrome recognition */
+
+struct decision {
+	int state;
+	int val;
+	int newstate;
+	int newval;
+	bool toright;
+	bool accept;
+};
+struct tm {
+	struct decision[] edge;
+	int nedges;
+};
+
+bool run(struct tm* tm, int[] tape) {
+	int index = 30;
+	int state = 0;
+	while (true) {
+		int i;
+		/*
+		printchar(10);
+		printint(state); printchar(10);
+		printint(index); printchar(10);
+		printint(tape[index]); printchar(10);
+		*/
+                bool done = false;
+		for (i = 0; !done && i < tm->nedges; i++) {
+			if (tm->edge[i].state == state &&
+			    tm->edge[i].val == tape[index]) {
+				state = tm->edge[i].newstate;
+				tape[index] = tm->edge[i].newval;
+				index += tm->edge[i].toright ? 1 : -1;
+				//printint(tape[index]); printchar(10);
+				if (tm->edge[i].accept)
+					return true;
+				done = true;
+			}
+		}
+		if (i == tm->nedges) {
+			return false;
+		}
+	}
+	return false;
+}
+
+int addrow(struct decision[] s, int n, int state, int val, int newstate, int newval, bool toright, bool accept)
+{
+	s[n].state = state;
+	s[n].val = val;
+	s[n].newstate = newstate;
+	s[n].newval = newval;
+	s[n].toright = toright;
+	s[n].accept = accept;
+	return n+1;
+}
+
+int main() {
+	int tapelen = 100;
+	int[] tape = alloc_array(int, 100);
+	struct tm* tm = alloc(struct tm);
+	int n = 0;
+	int e = -1;
+	int x = 0;
+	bool right = true;
+	bool left = false;
+	int i;
+	tm->edge = alloc_array(struct decision, 100);
+	n = addrow(tm->edge, n, 0, 0, 1, e, right, false);
+	n = addrow(tm->edge, n, 0, 1, 2, e, right, false);
+	n = addrow(tm->edge, n, 0, e, x, e, right, true);
+	n = addrow(tm->edge, n, 1, 0, 1, 0, right, false);
+	n = addrow(tm->edge, n, 1, 1, 1, 1, right, false);
+	n = addrow(tm->edge, n, 1, e, 3, e, left, false);
+	n = addrow(tm->edge, n, 2, 0, 2, 0, right, false);
+	n = addrow(tm->edge, n, 2, 1, 2, 1, right, false);
+	n = addrow(tm->edge, n, 2, e, 4, e, left, false);
+	n = addrow(tm->edge, n, 3, 0, 5, e, left, false);
+	n = addrow(tm->edge, n, 3, e, x, e, left, true);
+	n = addrow(tm->edge, n, 4, 1, 5, e, left, false);
+	n = addrow(tm->edge, n, 4, e, x, e, left, true);
+	n = addrow(tm->edge, n, 5, 0, 5, 0, left, false);
+	n = addrow(tm->edge, n, 5, 1, 5, 1, left, false);
+	n = addrow(tm->edge, n, 5, e, 0, e, right, false);
+	tm->nedges = n;
+
+	for (i = 0; i < tapelen; i++) {
+		tape[i] = e;
+	}
+	tape[30] = 1;
+	tape[31] = 0;
+	tape[32] = 0;
+	tape[33] = 1;
+	tape[34] = 0;
+	tape[35] = 1;
+	tape[36] = 1;
+	tape[37] = 1;
+	tape[38] = 1;
+	tape[39] = 0;
+	tape[40] = 1;
+	tape[41] = 1;
+	tape[42] = 1;
+	tape[43] = 1;
+	tape[44] = 0;
+	tape[45] = 1;
+	tape[46] = 0;
+	tape[47] = 0;
+	tape[48] = 1;
+	
+	return run(tm, tape) ? 0 : 1;
+}

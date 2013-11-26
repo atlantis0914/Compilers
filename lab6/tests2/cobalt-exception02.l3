@@ -1,0 +1,18 @@
+//test exception
+//test SIGSEGV
+
+int g( int p){
+  return p + 1;
+}
+
+int f( int a, int b){
+  int k = f(a, b);
+  return g(k);
+}
+
+int main() {
+  int x = 1;
+  int y = 2;
+
+  return f(x, y);
+}

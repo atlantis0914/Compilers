@@ -1,0 +1,24 @@
+//test return 747
+
+int setItAndForgetIt(int * x, int * y) {
+
+  x = y;  
+  *y = 0;
+  return *x;
+
+}
+
+
+int main() {
+  int* x = alloc(int);
+  int* y = alloc(int);
+  
+  *x = 15;
+  *y = 150;
+  setItAndForgetIt(x,y);
+  if(*x == *y) 
+    return *y;
+  else
+    return 747;
+}
+

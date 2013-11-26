@@ -1,0 +1,58 @@
+//test return 1337
+
+// implementing a set as a bit vector, performs some set operations
+// that results in a bit pattern 00000000 00000000 00000101 00111001
+// which is 1337 in decimal
+int main()
+{
+  // we want set = {0, 3, 4, 5, 8, 10}
+
+  int set = 0;
+  int v;
+
+  // inserts v into the set
+  v = 0;
+  set |= (1<<v);
+
+  // inserts v into the set
+  v = 3;
+  set |= (1<<v);
+
+  // inserts v into the set
+  v = 4;
+  set |= (1<<v);
+
+  // inserts v into the set
+  v = 5;
+  set |= (1<<v);
+
+  // inserts v into the set
+  v = 8;
+  set |= (1<<v);
+
+  // inserts v into the set
+  v = 10;
+  set |= (1<<v);
+
+  // inserts v into the set
+  v = 0;
+  set |= (1<<v);
+
+  // inserts v into the set
+  v = 1;
+  set |= (1<<v);
+
+  // inserts v into the set
+  v = 17;
+  set |= (1<<v);
+
+  // removes v from the set
+  v = 1;
+  set &= ~(1<<v);
+
+  // removes v from the set
+  v = 17;
+  set &= ~(1<<v);
+
+  return set;
+}

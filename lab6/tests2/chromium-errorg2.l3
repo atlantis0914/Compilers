@@ -1,0 +1,8 @@
+//test error
+
+void five() { int x = 5; }
+
+int main (
+    return five();
+}
+

@@ -1,0 +1,130 @@
+//test return -6
+
+typedef int float;
+typedef float[][] matrix;
+typedef float[]   vector;
+
+void printchar(int c) {
+  return;
+}
+
+matrix * allocate_matrix()
+{
+	matrix * retval;
+	retval = alloc(matrix);
+	*retval = alloc_array(vector, 3);
+	(*retval)[0] = alloc_array(float, 3);
+	(*retval)[1] = alloc_array(float, 3);
+	(*retval)[2] = alloc_array(float, 3);
+
+	return retval;
+}
+
+vector * allocate_vector()
+{
+	vector * retval;
+	retval = alloc(vector);
+	*retval = alloc_array(float, 3);
+
+	return retval;
+}
+
+matrix * m_multiply(matrix m1, matrix m2)
+{
+	matrix * retval = allocate_matrix();
+	int i;
+	int j;
+	int k;
+
+	for(i=0; i<3; i++)
+		for(j=0; j<3; j++)
+			for(k=0; k<3; k++)
+				(*retval)[i][j] = fadd((*retval)[i][j], fmul(m1[i][k], m2[k][j]));
+
+	return retval;
+}
+
+vector * v_multiply(matrix m, vector v)
+{
+	vector * retval = allocate_vector();
+	int i;
+	int j;
+
+	for(i=0; i<3; i++)
+		for(j=0; j<3; j++)
+			(*retval)[i] = fadd((*retval)[i], fmul(m[i][j], v[i]));
+
+	//Normalize homogeneous coords
+	(*retval)[0] = fdiv((*retval)[0], (*retval)[2]);
+	(*retval)[1] = fdiv((*retval)[1], (*retval)[2]);
+	(*retval)[2] = fdiv((*retval)[2], (*retval)[2]);
+
+	return retval;
+}
+
+int printpoint(vector v)
+{
+	int empty = 46; // decimal point
+	int point = 48; // zero
+	int i;
+	int j;
+	int x = ftoi(v[0]);
+	int y = ftoi(v[1]);
+
+	for(i=10; i>-10; i--)
+	{
+		for(j=-10; j<10; j++)
+		{
+			if(i==x && j==y)
+				printchar(point);
+			else
+				printchar(empty);
+		}
+		printchar(10); //newline
+	}
+
+	return 0;
+}
+
+
+
+
+
+int main()
+{
+	matrix * m1 = allocate_matrix();
+	matrix * m2 = allocate_matrix();
+	vector * v  = allocate_vector();
+	matrix * transform;
+
+	//Point 2 2
+	(*v)[0] = itof(2);
+	(*v)[1] = itof(2);
+	(*v)[2] = itof(1);
+
+	printpoint(*v);
+
+	printchar(10);
+	printchar(10);
+	printchar(10);
+
+	//translate by -4, -3
+	(*m1)[0][0] = itof(1); (*m1)[0][1] = itof(0); (*m1)[0][2] = itof(-4);	// 1   0  -4
+	(*m1)[1][0] = itof(0); (*m1)[1][1] = itof(1); (*m1)[1][2] = itof(-3);	// 0   1  -3
+	(*m1)[2][0] = itof(0); (*m1)[2][1] = itof(0); (*m1)[2][2] = itof(1);	// 0   0   1
+
+	//Scale by 2, 2
+	(*m2)[0][0] = itof(2); (*m2)[0][1] = itof(0); (*m2)[0][2] = itof(0);   // 2   0   0
+	(*m2)[1][0] = itof(0); (*m2)[1][1] = itof(2); (*m2)[1][2] = itof(0);   // 0   2   0
+	(*m2)[2][0] = itof(0); (*m2)[2][1] = itof(0); (*m2)[2][2] = itof(1);   // 0   0   1
+
+	//Compose transformations
+	transform = m_multiply(*m1, *m2);
+	//Apply transformations
+	v = v_multiply(*transform, *v);
+
+	//Result should be point -4 -2
+	printpoint(*v);	
+
+	return ftoi(  fadd((*v)[0], (*v)[1])  );
+}

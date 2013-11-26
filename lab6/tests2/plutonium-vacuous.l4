@@ -1,0 +1,16 @@
+//test exception 11
+/* erstwhile of gorgonzola's test suite */
+
+struct s {
+  int a;
+};
+
+int main() {
+    struct s* s;
+
+    s = NULL;
+    s->a;
+
+    return 0;
+}
+

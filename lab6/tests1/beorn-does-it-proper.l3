@@ -1,0 +1,12 @@
+//test return 2421100
+
+/* Idk, this might cause some people to die */
+int notfib(int i) {
+    if (i == 0)
+        return 0;
+    return i + notfib(i - 1);
+}
+
+int main() {
+    return notfib(2200);
+}

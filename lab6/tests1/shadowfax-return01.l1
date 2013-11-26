@@ -1,0 +1,7 @@
+//test return 0
+// tests declaration and initialization in one step
+int main()
+{
+  int a = 0;
+  return a;
+}

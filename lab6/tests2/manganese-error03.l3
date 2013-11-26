@@ -1,0 +1,16 @@
+//test error
+
+typedef bool some_typedef;
+typedef int other_typedef;
+
+int main() {
+    other_typedef x = 5;
+    other_typedef y = 6;
+    some_typedef t = true;
+    bool f = false;
+    assert(x < y);
+    assert(x < y == f);
+    assert(t);
+    assert(!f);
+    assert(x);
+}

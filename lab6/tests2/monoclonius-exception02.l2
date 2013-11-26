@@ -1,0 +1,11 @@
+//test exception
+
+int main()
+{
+    int y = 0;
+    int x;
+    for (x = 5; true; x--)
+        y /= x;
+    return 0;
+}
+

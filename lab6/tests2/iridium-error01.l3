@@ -1,0 +1,13 @@
+//test error
+
+int first (int a, int b) {
+  return a;
+}
+
+int first (int a, int b, int c) {
+  return a;
+}
+
+int main () {
+  return 0;
+}

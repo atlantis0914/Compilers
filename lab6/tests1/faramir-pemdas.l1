@@ -1,0 +1,5 @@
+//test return 58
+// order of operations test
+int main() {
+    return 9 * 8 / 2 + 10 - -6 % 3 * -4 + 12;
+}

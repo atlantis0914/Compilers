@@ -1,0 +1,12 @@
+//test error
+// wrong types in calls to alloc and alloc_array
+
+int main() {
+  int*[] a;
+  int** b;
+
+  a = alloc_array(bool*, 1);
+  b = alloc(bool*);
+
+  return 0;
+}

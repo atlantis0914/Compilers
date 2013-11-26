@@ -1,0 +1,24 @@
+//test return 1
+
+int modulo(int a, int b, int c) {
+	int result = 1;
+	for (int i = 0; i < b; i++) {
+		result *=a;
+		result %=c;
+	}
+	return result%c;
+}
+bool fermat(int integer, int seed) {
+	if (integer == 1) return false;
+	for (int i = 0; i < 7500; i++) {
+		int j = seed%(integer-1)+1;
+		if(modulo(j, integer-1, integer) != 1) {
+			return false;
+		}
+	}
+	return true;
+}
+
+int main() {
+	return fermat(4139, 512)? 1 : 0;
+}

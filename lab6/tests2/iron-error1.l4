@@ -1,0 +1,9 @@
+//test error
+// bool used as index
+
+int main() {
+		bool b = false;
+		int [] arr = alloc_array(int, 10);
+		arr[b] = 0;
+		return arr[0];
+}

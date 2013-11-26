@@ -1,0 +1,176 @@
+//test return 362844
+
+// howabout some godawful struct?
+
+typedef struct sock sock;
+
+struct sock{
+  int c0;
+  sock[] s0;
+  int c1;
+  sock[] s1;
+  int c2;
+  sock[] s2;
+  int c3;
+  sock[] s3;
+  int c4;
+  sock[] s4;
+  int c5;
+  sock[] s5;
+  int c6;
+  sock[] s6;
+  int c7;
+  sock[] s7;
+};
+
+// that's how my socks work, how about yours?
+
+int set_sock_array(sock[] A, int k)
+{
+  //print("setting array\n");
+
+  for(int i = 0; i < k; i++)
+    {
+      if(k-1 > 0) {
+	A[i].c0 = k-1;
+	A[i].s0 = alloc_array(sock, k-1);
+	set_sock_array(A[i].s0, k-1);
+      }
+      if(k-2 > 0) {
+	A[i].c1 = k-2;
+	A[i].s1 = alloc_array(sock, k-2);
+	set_sock_array(A[i].s1, k-2);
+      }
+      if(k-3 > 0) {
+	A[i].c2 = k-3;
+	A[i].s2 = alloc_array(sock, k-3);
+	set_sock_array(A[i].s2, k-3);
+      }
+      if(k-4 > 0) {
+	A[i].c3 = k-4;
+	A[i].s3 = alloc_array(sock, k-4);
+	set_sock_array(A[i].s3, k-4);
+      }
+      if(k-5 > 0) {
+	A[i].c4 = k-5;
+	A[i].s4 = alloc_array(sock, k-5);
+	set_sock_array(A[i].s4, k-5);
+      }
+      if(k-6 > 0) {
+	A[i].c5 = k-6;
+	A[i].s5 = alloc_array(sock, k-6);
+	set_sock_array(A[i].s5, k-6);
+      }
+      if(k-7 > 0) {
+	A[i].c6 = k-7;
+	A[i].s6 = alloc_array(sock, k-7);
+	set_sock_array(A[i].s6, k-7);
+      }
+      if(k-8 > 0) {
+	A[i].c7 = k-8;
+	A[i].s7 = alloc_array(sock, k-8);
+	set_sock_array(A[i].s7, k-8);
+      }
+    }
+
+  return 0;
+}
+
+sock *sock_new(int k)
+{
+  sock *p = alloc(sock);
+
+  if(k-1 > 0) {
+    p->c0 = k-1;
+    p->s0 = alloc_array(sock, k-1);
+    set_sock_array(p->s0, k-1);
+  }
+  if(k-2 > 0) {
+    p->c1 = k-2;
+    p->s1 = alloc_array(sock, k-2);
+    set_sock_array(p->s1, k-2);
+  }
+  if(k-3 > 0) {
+    p->c2 = k-3;
+    p->s2 = alloc_array(sock, k-3);
+    set_sock_array(p->s2, k-3);
+  }
+  if(k-4 > 0) {
+    p->c3 = k-4;
+    p->s3 = alloc_array(sock, k-4);
+    set_sock_array(p->s3, k-4);
+  }
+  if(k-5 > 0) {
+    p->c4 = k-5;
+    p->s4 = alloc_array(sock, k-5);
+    set_sock_array(p->s4, k-5);
+  }
+  if(k-6 > 0) {
+    p->c5 = k-6;
+    p->s5 = alloc_array(sock, k-6);
+    set_sock_array(p->s5, k-6);
+  }
+  if(k-7 > 0) {
+    p->c6 = k-7;
+    p->s6 = alloc_array(sock, k-7);
+    set_sock_array(p->s6, k-7);
+  }
+  if(k-8 > 0) {
+    p->c7 = k-8;
+    p->s7 = alloc_array(sock, k-8);
+    set_sock_array(p->s7, k-8);
+  }
+
+  return p;
+}
+
+// now, the most important thing about socks is figuring out how many there are
+
+int count_sock_array(sock[] A, int len)
+{
+  int count = 0;
+
+  for(int i = 0; i < len; i++)
+    {
+      count += A[i].c0;
+      count += count_sock_array(A[i].s0, A[i].c0);
+      count += A[i].c1;
+      count += count_sock_array(A[i].s1, A[i].c1);
+      count += A[i].c2;
+      count += count_sock_array(A[i].s2, A[i].c2);
+      count += A[i].c3;
+      count += count_sock_array(A[i].s3, A[i].c3);
+      count += A[i].c4;
+      count += count_sock_array(A[i].s4, A[i].c4);
+      count += A[i].c5;
+      count += count_sock_array(A[i].s5, A[i].c5);
+      count += A[i].c6;
+      count += count_sock_array(A[i].s6, A[i].c6);
+      count += A[i].c7;
+      count += count_sock_array(A[i].s7, A[i].c7);
+    }
+
+  return count;
+}
+
+int count_socks(sock *p){
+  return 
+    count_sock_array(p->s0, p->c0) +
+    count_sock_array(p->s1, p->c1) +
+    count_sock_array(p->s2, p->c2) +
+    count_sock_array(p->s3, p->c3) +
+    count_sock_array(p->s4, p->c4) +
+    count_sock_array(p->s5, p->c5) +
+    count_sock_array(p->s6, p->c6) +
+    count_sock_array(p->s7, p->c7) + 
+    1;
+}
+
+// go!
+
+int main()
+{
+  sock *p = sock_new(9);
+
+  return count_socks(p);
+}

@@ -1,0 +1,8 @@
+//test error
+// reserved keyword: void
+
+int main()
+{
+    int void;
+    return void;
+}

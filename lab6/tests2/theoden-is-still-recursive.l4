@@ -1,0 +1,22 @@
+//test error
+
+typedef struct rec1 r1;
+typedef struct rec2 r2;
+typedef struct rec3 r3;
+
+struct rec1{
+  r3 r;
+};
+
+struct rec2{
+  r1 r;
+};
+
+struct rec3{
+  r2 r;
+};
+
+int main()
+{
+  return -42;
+}

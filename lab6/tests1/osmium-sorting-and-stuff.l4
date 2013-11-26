@@ -1,0 +1,37 @@
+//test return 1
+
+
+bool is_sorted(int[] arr, int len) {
+    for (int i = 1; i < len; i++) {
+        if (arr[i-1] > arr[i]) return false;
+    }
+
+    return true;
+}
+
+void sort(int[] arr, int len) {
+    for(int i = 0; i < len; i++) {
+        int min_index_so_far = i;
+        for (int j = i; j < len; j++) {
+            if (arr[j] < arr[min_index_so_far]) {
+                min_index_so_far = j;
+            }
+        }
+
+        int temp = arr[min_index_so_far];
+        arr[min_index_so_far] = arr[i];
+        arr[i] = temp;
+    }
+}
+
+int main() {
+    int[] sort_this = alloc_array(int, 10);
+
+    for(int i = 0; i < 10; i++) {
+        sort_this[i] = 10-i;
+    }
+
+    sort(sort_this, 10);
+    assert(is_sorted(sort_this, 10));
+    return sort_this[0];
+}

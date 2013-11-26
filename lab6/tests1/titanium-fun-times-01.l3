@@ -1,0 +1,11 @@
+//test return 0
+/* Simple function call to sum up numbers */
+
+int fun(int i, int j) {
+  int fun = 0;
+  return fun;
+}
+
+int main () {
+  return fun(2,3);
+}

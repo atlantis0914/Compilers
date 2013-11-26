@@ -1,0 +1,19 @@
+//test error
+
+// return "big" type
+
+struct ima_struct{
+	int ima_field;
+};
+
+typedef struct ima_struct s;
+
+s foo() {
+	s instance;
+	return s;
+}
+
+int main() {
+	s a = foo();
+	return 1;
+}

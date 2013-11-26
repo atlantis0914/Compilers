@@ -1,0 +1,8 @@
+//test error
+// reserved keyword: int
+
+int main()
+{
+    int int;
+    return int;
+}

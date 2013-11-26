@@ -1,0 +1,10 @@
+//test error
+// tests duplicate decls, but of different forms.
+
+int main()
+{
+  int x;
+  x = 4 + 5;
+  int x = 7;
+  return x;
+}

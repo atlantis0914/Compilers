@@ -1,0 +1,155 @@
+//test return 5
+
+// Be happy this isn't done using C++ metaprogramming
+// O(log n) AMORTIZED EVERYTHING
+// ZIG-ZIG-ZAG-ZIG-ZAG-ZIG-ZAG-ZIG
+
+struct tree {
+    int v;
+    struct tree* left;
+    struct tree* right;
+};
+
+typedef struct tree tree_t;
+tree_t * splay (tree_t * root, int key);
+tree_t * insert (tree_t * root, int key);
+tree_t * remove (tree_t * root, int key);
+tree_t * find (tree_t * root, int key);
+tree_t * findMin (tree_t * root);
+tree_t * findMax (tree_t * root);
+
+
+tree_t * splay (tree_t * root, int key) {
+    tree_t * l;
+    tree_t * r;
+    tree_t * t;
+    tree_t * y;
+
+    tree_t* header = alloc(tree_t);
+    l = header;
+    r = header;
+    t = root;
+    
+    header->left = NULL;
+    header->right = NULL;
+
+    if(root == NULL) return NULL;
+
+    bool done = false;
+
+    while(!done) {
+        if(key < t->v) {
+          if(t->left == NULL) {
+            done = true; // break;
+          } else {
+            r->left = t;
+            r = t;
+            t = t->left;
+          }
+        } else {
+            if(key > t->v) {
+              if(t->right == NULL) {
+                done = true; // break;
+              } else {
+                l->right = t;
+                l = t;
+                t = t->right;
+              }
+            } else {
+              done = true;
+            }
+        }
+    }
+
+    l->right = t->left;
+    r->left  = t->right;
+    t->left  = header->right;
+    t->right = header->left;
+    root = t;
+    return root;
+}
+
+tree_t * insert (tree_t * root, int key) {
+    tree_t * n;
+    if (root == NULL) {
+        root = alloc(tree_t);
+        root->v = key;
+        root->left = NULL;
+        root->right = NULL;
+        return root;
+    }
+    root = splay(root, key);
+    if(root->v == key) {
+        return root;
+    } 
+    
+    n = alloc(tree_t);
+    n->v = key;
+
+    if(root->v < key) {
+        n->left = root->left;
+        n->right = root;
+        root->left = NULL;
+    } else {
+        if(root->v > key) {
+            n->right = root->right;
+            n->left = root;
+            root->right = NULL;
+        }
+    }
+
+    root = n;
+    return root;
+}
+            
+tree_t * remove (tree_t * root, int key) {
+    tree_t * x = alloc(tree_t);
+    root = splay(root, key);
+    if(root->v != key) {
+        return root;
+    }
+
+    if(root->left == NULL) {
+        root = root->right;
+    } else {
+        x = root->right;
+        root = root->left;
+        root = splay(root, key);
+        root->right = x;
+    }
+
+    return root;
+}
+
+tree_t * find (tree_t * root, int key) {
+    if (root == NULL) return root;
+    return splay(root, key);
+}
+
+tree_t * findMin (tree_t * root) {
+    tree_t * x = root;
+    if (root == NULL) return root;
+    while (x->left != NULL) x = x->left;
+    return splay(root, x->v);
+}
+
+tree_t * findMax (tree_t * root) {
+    tree_t * x = root;
+    if (root == NULL) return root;
+    while (x->right != NULL) x = x->right;
+    return splay(root, x->v);
+}
+
+int main() {
+    tree_t * t = NULL;
+    int i = 0;
+    for(i = 0; i < 50; i++) {
+        t = insert(t, i);
+    }
+    t = findMin(t);
+    t = findMax(t);
+    t = find(t, 5);
+    return (t->v);
+}
+
+

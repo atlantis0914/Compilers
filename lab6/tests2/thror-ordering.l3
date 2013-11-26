@@ -1,0 +1,25 @@
+//test exception 14
+
+int loop()
+{
+  int i = 0;
+  while(i != 1)
+  {
+    i += 2;
+  }
+  return i;
+}
+
+int die()
+{
+  return 4/0;
+}
+
+int add(int x, int y) {
+  return x + y;
+}
+
+int main()
+{
+  return add(loop(), die());
+}

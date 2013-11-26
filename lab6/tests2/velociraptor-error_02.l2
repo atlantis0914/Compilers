@@ -1,0 +1,11 @@
+//test error
+// tests block with loop
+int main() {
+	int x = true;
+	{
+		int y = false;
+	}
+	while (x == y)
+		y = x;
+	return 1;
+}

@@ -1,0 +1,16 @@
+//test error
+// Local variable not of small type
+
+struct test
+{
+    int x;
+    int y;
+    int [] z;
+};
+
+int main()
+{
+    struct test testing;
+
+    return testing->z[0];
+}

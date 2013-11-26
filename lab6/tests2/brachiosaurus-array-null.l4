@@ -1,0 +1,9 @@
+//test error
+
+int main() {
+	int[] i;
+	i = alloc_array(int, 4);
+	if (i == NULL)
+		return 0;
+	return 1;
+}

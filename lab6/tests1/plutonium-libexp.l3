@@ -1,0 +1,37 @@
+//test return 2
+
+// #use <15411>
+
+fpt fabs(fpt x) {
+  if (fless(x,itof(0)))
+    return fsub(itof(0),x);
+  else
+    return x;
+}
+
+/* e = 1+x/1!+x^2/2!+...+x^i/i!+... */
+
+fpt fexp(fpt x) {
+  int max_iter = 100000;
+  fpt epsilon = fdiv(itof(1),itof(100000));
+  fpt result = itof(1);
+  fpt summand = itof(1);
+  int i = 1;
+  while (!fless(fabs(summand),epsilon) && i <= max_iter) {
+    summand = fdiv(fmul(summand,x),itof(i));
+    result = fadd(result,summand);
+    i = i+1;
+  }
+  return result;
+}
+
+int main () {
+  fpt epsilon = fdiv(itof(1),itof(100000));
+  /* e^0 < epsilon */
+  assert(fless(fabs(fsub(fexp(itof(0)), itof(1))), epsilon));
+
+  /* (int)e^1 = 2 */
+  fpt e = fexp(itof(1));
+  assert(ftoi(e) == 2);
+  return ftoi(e);
+}

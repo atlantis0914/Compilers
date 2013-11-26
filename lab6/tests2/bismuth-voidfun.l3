@@ -1,0 +1,12 @@
+//test error
+// Guess we're not following C that close
+
+int foo(void)
+{
+  return 0;
+}
+
+int main()
+{
+  return 0;
+}

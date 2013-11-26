@@ -1,0 +1,9 @@
+//test error
+
+int f1();
+
+int main () {
+	return f1();
+}
+
+int f1(bool x); //redeclaration doesn't match

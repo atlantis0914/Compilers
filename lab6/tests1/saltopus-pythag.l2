@@ -1,0 +1,21 @@
+//test return 31875000
+int main()
+{
+	int a;
+	int b;
+	int c;
+	for (a=1; a<=1000; a++)
+	{
+		for (b=1; b<=1000-a; b++)
+		{
+			c=1000-(a+b);
+			if ((a*a+b*b)==c*c)
+			{
+				if (a < b) {
+					return a*b*c;
+				}
+			}
+		}
+	}
+	return -1;
+}

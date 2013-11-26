@@ -1,0 +1,10 @@
+//test exception
+int main() {
+  int a = 0;
+  int b = 1;
+
+  if (true)
+    return b/a;
+  else
+    return a/b;
+}

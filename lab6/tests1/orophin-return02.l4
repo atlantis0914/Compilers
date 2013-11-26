@@ -1,0 +1,6 @@
+//test return 42
+//  dereference pointer
+int main() {
+  int *x = alloc(int);
+  return 42+*x;
+}

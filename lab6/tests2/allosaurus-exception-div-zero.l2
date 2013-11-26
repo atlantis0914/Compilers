@@ -1,0 +1,7 @@
+//test exception
+
+/* divide by zero will raise an exception */
+
+int main(){
+  return 42/0;
+}

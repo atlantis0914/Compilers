@@ -1,0 +1,11 @@
+//test return 15
+// operator precedence check, also human unreadable garbage
+
+int main() {
+  int x = 3;
+  int y = 5;
+  int z = 7;
+  int w = 11;
+
+  return x < w && y < x || z < w ? x & y | z << x * y - x >> w : x;
+}

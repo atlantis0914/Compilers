@@ -1,0 +1,8 @@
+//test error
+
+typdef struct s* blah;
+
+int main() {
+
+  return 0;
+}

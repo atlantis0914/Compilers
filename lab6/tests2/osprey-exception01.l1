@@ -1,0 +1,14 @@
+//test exception
+// divide by 0 error
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+  a = 3 + 4;
+  b = 7 - 0;
+  c = 18 / 4;
+  d = 6 * 2;
+  return (d + c) / (a - b);
+}

@@ -1,0 +1,19 @@
+//test return 42
+// check to see if variable definition works properly.
+int main()
+{
+    int this_universe;
+    int b = 0;
+
+    for (int a = 0; a < 0xDEADD00D; a++) {
+	b+=7;
+	b %= 173;
+    }
+
+    if (b % 2 == 0)
+	this_universe = 42;
+    else
+	this_universe = -42;
+
+    return this_universe;
+}

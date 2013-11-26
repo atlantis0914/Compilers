@@ -1,0 +1,13 @@
+//test return 0
+/* Make sure main() is allowed to call main() */
+int main ()
+{
+  if (false) {
+    main();
+  }
+  return 0;
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

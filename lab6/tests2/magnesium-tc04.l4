@@ -1,0 +1,8 @@
+//test error
+//dereference null pointer
+int main() {
+  int *ip;
+  *ip;
+  return 0;
+}
+

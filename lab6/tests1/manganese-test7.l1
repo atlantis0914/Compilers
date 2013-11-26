@@ -1,0 +1,28 @@
+//test return 42
+
+/*
+ * Test uninitialized variable use after return
+ * The compiler is not supposed to care about uninitializzed variable use after
+ * return
+ */
+
+int main()
+{
+    int t;
+    int x = 2;
+    int y = 3;
+    int z = 7;
+    // now make the answer to the life, universe, and everything with 2, 3 and 7
+    int answer;
+    answer = 1;
+    answer *= 2;
+    answer *= 3;
+    answer *= 7;
+
+    return answer;
+
+    answer *= t;
+    // this is a better answer...because it's undefined! or something like
+    // that. 
+    return answer;
+}

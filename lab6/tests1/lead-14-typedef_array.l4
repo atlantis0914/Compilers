@@ -1,0 +1,9 @@
+//test return 0
+/* No void arrays */
+
+typedef int foo;
+
+int main () {
+  int[] a = alloc_array(foo, 1);
+  return a[0];
+}

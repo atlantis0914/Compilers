@@ -1,0 +1,8 @@
+//test error
+//can't use -> on non-struct
+int main() {
+    int* x = alloc(int);
+	x->x;
+	
+    return 0;
+}

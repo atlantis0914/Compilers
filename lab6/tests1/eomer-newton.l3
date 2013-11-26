@@ -1,0 +1,37 @@
+//test return 137
+// Computes square roots using Newton's method
+
+typedef int float;
+
+int sqrt(int n);
+
+int main() {
+    return sqrt(300) + sqrt(400) + sqrt(10000);
+}
+
+int sqrt(int n) {
+    if (n == 0)
+        return 0;
+    if (n < 0)
+        1 / 0; // Blow up the world
+
+    float floatn = itof(n);
+    float two = itof(2);
+
+    float prev = floatn;
+    float guess = floatn;
+
+    // Simulate a do-while loop
+    for (int unused = 0; unused == 0; unused) {
+        guess = fdiv(fadd(prev, fdiv(floatn, prev)), two);
+
+        int delta = ftoi(fsub(guess, prev));
+        if (delta >= -1 && delta <= 1)
+            unused = 1;
+
+        prev = guess;
+    }
+
+    return ftoi(guess);
+}
+

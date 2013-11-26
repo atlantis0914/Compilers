@@ -1,0 +1,17 @@
+//test error
+
+/* 
+ * This is my test program
+ * No type when declaring x
+ */
+int main () {
+  x;
+  int y = 15;
+  ( x ) = 0;
+  x = 2 + 7;
+  y = y - ( x );
+  y = -y;
+  x += 1;
+  //should return 4
+  return ( x + y);
+}

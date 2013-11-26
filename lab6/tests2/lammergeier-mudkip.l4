@@ -1,0 +1,113 @@
+//test exception
+//test return MUDKIP
+// _|      _|  _|    _|  _|_|_|    _|    _|  _|_|_|  _|_|_|    
+// _|_|  _|_|  _|    _|  _|    _|  _|  _|      _|    _|    _|  
+// _|  _|  _|  _|    _|  _|    _|  _|_|        _|    _|_|_|    
+// _|      _|  _|    _|  _|    _|  _|  _|      _|    _|        
+// _|      _|    _|_|    _|_|_|    _|    _|  _|_|_|  _|        
+typedef int mud;
+typedef int kip;
+mud kip_();
+kip mud_() {
+/*
+                                  MMMM                      
+                               MM8M    MM                   
+                             +M8 MM     OM                  
+                            MM   M      MMM                 
+                           MM    M      M M                 
+                           M     M     M  M                 
+                          M     M      M  M                 
+                         MM     M     M   M                 
+                         M      M     M   M                 
+                         M     MM    M,  M                  
+                        MM     M     M   M                  
+                        M      M    M   M                   
+                        M     MM   NM  MM                   
+                        M     M    M  MM                    
+                        M     M   M   M                     
+                        M    M    M  M                      
+                       8M    M      MO                      
+                       MM   IM     MM                       
+                   MMMMM          MM                        
+               MMM     M           MM                       
+             MN        M             MM             MMMMM   
+     M8    MM          =               M         ,MO     M  
+     M :MMM M                           MO      M~       M  
+     M   M  M   MMN                      M    MM         M  
+    MM  M   M  MMMM         ,             M  MM          M  
+ ,MD    M   M  M $D        MMMM        MUDKIP           MM  
+M      $    M  N:M        DM M      :M     M        +MI  I  
+ MM         M             M  M     M       MMMOM =MO    M   
+   MM       MMM            MM     M     M     MMM       M   
+     M  M  =M  MMM               M           ~M         M   
+    MD MMN M M   MUDKIPMMM   MMMMM           MM        M    
+    MM   MM=  M M               M             M        M    
+          MM   M                M              N      M8    
+            M8  M              OM   $           M     M     
+             DM, 7M           MMM   M           M,   M7     
+              MMMM  MM     MM,  MMMM M  M M          M      
+            MN     MMMM      MMMM     MM   M      MMM       
+         MM        M=       ,M        M     M      M        
+       MM           M        M              M    ,M         
+       MM           MMM      M      M  M     8   M          
+         OMUDKIPMMO    MM    M      M M      M MM           
+                       8M$MMMM      MMM      MM             
+                        MI  MM     M7 MM     8              
+                         MMM M     M   M,   M               
+                             NMMMMM     MM MM               
+                              MMM         M        
+*/kip_();
+    return 0;
+}
+mud kip_() {
+/*
+                              MMM         M      
+                             NMMMMM     MM MM               
+                         MMM M     M   M,   M               
+                        MI  MM     M7 MM     8              
+                       8M$MMMM      MMM      MM             
+         OMUDKIPMMO    MM    M      M M      M MM           
+       MM           MMM      M      M  M     8   M          
+       MM           M        M              M    ,M         
+         MM        M=       ,M        M     M      M        
+            MN     MMMM      MMMM     MM   M      MMM       
+              MMMM  MM     MM,  MMMM M  M M          M      
+             DM, 7M           MMM   M           M,   M7     
+            M8  M              OM   $           M     M     
+          MM   M                M              N      M8    
+    MM   MM=  M M               M             M        M    
+    MD MMN M M   MUDKIPMMM   MMMMM           MM        M    
+     M  M  =M  MMM               M           ~M         M   
+   MM       MMM            MM     M     M     MMM       M   
+ MM         M             M  M     M       MMMOM =MO    M   
+M      $    M  N:M        DM M      :M     M        +MI  I  
+ ,MD    M   M  M $D        MMMM        MUDKIP           MM  
+    MM  M   M  MMMM         ,             M  MM          M  
+     M   M  M   MMN                      M    MM         M  
+     M :MMM M                           MO      M~       M  
+     M8    MM          =               M         ,MO     M  
+             MN        M             MM             MMMMM   
+               MMM     M           MM                       
+                   MMMMM          MM                        
+                       MM   IM     MM                       
+                       8M    M      MO                      
+                        M    M    M  M                      
+                        M     M   M   M                     
+                        M     M    M  MM                    
+                        M     MM   NM  MM                   
+                        M      M    M   M                   
+                        MM     M     M   M                  
+                         M     MM    M,  M                  
+                         M      M     M   M                 
+                         MM     M     M   M                 
+                          M     M      M  M                 
+                           M     M     M  M                 
+                           MM    M      M M                 
+                            MM   M      MMM                 
+                             +M8 MM     OM                  
+                               MM8M    MM                   
+                                  MMMM                      
+*/mud_();
+    return 0;
+}
+int main() { return mud_(); /* I wish main could be called mudkip. */ }

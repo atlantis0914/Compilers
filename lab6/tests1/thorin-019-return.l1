@@ -1,0 +1,28 @@
+//test return 869
+/* Register spill test */
+int main()
+{
+    int a = 1;                  /* 1 */
+    int b = 2;                  /* 2 */
+    int c = 3;                  /* 3 */
+    int d = 4;                  /* 4 */
+    int e = a + b + c + d;      /* 10 */
+    int f = a + b + c;          /* 6 */
+    int g = a + b;              /* 3 */
+    int h = a + c + e + g;      /* 17 */
+    int i = h * 2 + b * 3;      /* 40 */
+    int j = (i + h) / 2;        /* 28 */
+    int k = b + g;              /* 5 */
+    int l = b + i;              /* 42 */
+    int m = l * 2;              /* 84 */
+    int n = m * a;              /* 84 */
+    int o = j + n;              /* 112 */
+    int p = a + b + d + e + f + k + l + o; /* 182 */
+    int q = g + h + l + o + a;             /* 175 */
+    int r = p + q + a + b + d + f + g + h + i + j + k + l + m + n + o; /* 785 */
+    return r + m;               /* 869 */
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

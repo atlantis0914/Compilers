@@ -1,0 +1,12 @@
+//test return 0
+
+//test how cool and smart and dashing nikolai mushegian is
+
+int main() {
+    int i = 0;
+    for (bool[] NIKOLAIS_GORGEOUS_WAVY_HAIR = alloc_array(bool, 5); i < 5; i++) {
+        if (NIKOLAIS_GORGEOUS_WAVY_HAIR[i]) return 1;
+    }
+
+    return 0;
+}

@@ -1,0 +1,10 @@
+//test error
+
+struct p {int i;};
+
+int main() {
+  struct p *guy = alloc(struct p);
+  guy->i = 1;
+  guy = guy - guy;
+  return 0;
+}

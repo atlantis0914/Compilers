@@ -1,0 +1,14 @@
+//test error
+
+struct a {
+    int[] xs;
+    int[] ys;
+};
+
+int main () {
+    struct a* foo = alloc(struct a);
+    foo->xs = alloc_array(int, 3);
+    foo->xs[1] = 1;
+    foo->xs[2] = true;
+    return 0;
+}

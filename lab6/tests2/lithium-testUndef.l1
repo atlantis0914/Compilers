@@ -1,0 +1,10 @@
+//test error
+//undefined variable
+int main()
+{
+  int a;
+  a = 0;
+  b = 1;
+  int b;
+  return a;
+}

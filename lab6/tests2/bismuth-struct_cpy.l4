@@ -1,0 +1,13 @@
+//test error
+
+struct s {
+    int a;
+};
+
+int main ()
+{
+    struct s *a = alloc(struct s);
+    struct s *b = alloc(struct s);
+    
+    *a = *b;
+}

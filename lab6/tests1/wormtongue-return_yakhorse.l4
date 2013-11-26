@@ -1,0 +1,35 @@
+//test return 9
+
+int[] addArray(int[] a1, int[] a2, int a1l, int a2l) {
+    int c1 = a1l-1;
+    int c2 = a2l-1;
+    int c3 = (c1 > c2? c1 : c2);
+    int[] a3 = alloc_array(int, c3+1);
+    int carry = 0;
+    while(c3 > -1) {
+        if (c1 >= 0) {
+            carry += a1[c1];
+            c1--;
+        }
+        if (c2 >= 0) {
+            carry += a2[c2];
+            c2--;
+        }
+        a3[c3] = carry % 10;
+        carry /= 10;
+        c3--;
+    }
+    return a3;
+}
+
+int main() {
+    int[] a = alloc_array(int, 4);
+    int[] b = alloc_array(int, 4);
+    for (int i = 0; i < 4; i++) {
+        a[i] = i;
+        b[i] = i+4;
+    }
+    int[] c = addArray(a, b, 4, 4);
+    return c[2];
+}
+

@@ -1,0 +1,11 @@
+//test exception
+//divide by zero error caused by mod 1 denominator
+int main()
+{
+  int a = 1;
+  int b = 10;
+  int c = b / a;
+  int d = -(c+a);
+  int e = d / (d % a);
+  return e;
+}

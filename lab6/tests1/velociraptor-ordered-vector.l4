@@ -1,0 +1,82 @@
+//test return 1
+// sorted lists:  bad idea, or the worst idea?
+
+struct s {
+  int[] array;
+  int pos;
+  int size;
+};
+typedef struct s* vec;
+
+vec double(vec v);
+
+vec insert(vec v, int val) {
+  int i;
+  if (v->pos >= v->size)
+    return insert(double(v), val);
+
+  i = v->pos;
+  while (i > 0 && v->array[i-1] > val) {
+    i--;
+    v->array[i+1] = v->array[i];
+  }
+
+  v->array[i] = val;
+  v->pos++;
+  return v;
+}
+
+vec init() {
+  vec v = alloc(struct s);
+  v->size = 2;
+  v->array = alloc_array(int, v->size);
+  v->pos = 0;
+  return v;
+}
+
+vec double(vec v) {
+  int[] n = alloc_array(int, 2 * v->size);
+  int i = 0;
+  for (; i < v->size; i++) {
+    n[i] = v->array[i];
+  }
+
+  v->array = n;
+  v->size *= 2;
+  return v;
+}
+
+int main() {
+  vec v = init();
+  int i = 0;
+
+  insert(v, 5);
+  insert(v, 10);
+  insert(v, 3);
+  insert(v, 12);
+  insert(v, 7);
+  insert(v, 1);
+  insert(v, 8);
+  insert(v, 14);
+  insert(v, 19);
+  insert(v, 11);
+  insert(v, 20);
+  insert(v, 18);
+  insert(v, 6);
+  insert(v, 13);
+  insert(v, 4);
+  insert(v, 2);
+  insert(v, 17);
+  insert(v, 9);
+  insert(v, 15);
+  insert(v, 16);
+
+  for (; i < 20; i++) {
+    print_int(v->array[i]);
+    // printchar(32);
+    if (v->array[i] != i+1) return -1;
+  }
+  // printchar(10);
+
+  return 1;
+}

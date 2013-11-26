@@ -1,0 +1,9 @@
+//test return 0
+//comparing to NULL
+struct foo {};
+
+int main() {
+  struct foo *f = alloc(struct foo);
+  if (f == NULL) return 1;
+  else return 0;
+}

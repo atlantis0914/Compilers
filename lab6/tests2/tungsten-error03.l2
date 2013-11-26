@@ -1,0 +1,11 @@
+//test error
+//variable not declared
+
+int main() {
+  int a = 5;
+
+  if (a >> 10 == 0) int b = 10;
+  else int c = 5;
+
+  return c;
+}

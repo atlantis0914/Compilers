@@ -1,0 +1,26 @@
+//test return 10
+//two structs referencing each other
+
+struct a {
+    struct b *ap;
+    int d;
+};
+
+struct b {
+    struct a *bp;
+    int d;
+};
+
+int main() {
+    struct a *e;
+    struct b *f;
+    e = alloc(struct a);
+    f = alloc(struct b);
+    e->ap = f;
+    f->bp = e;
+
+    e->ap->bp->ap->bp->ap->bp->ap->d = 5;
+    f->bp->ap->bp->ap->bp->ap->bp->d = 10;
+
+    return e->d;
+}

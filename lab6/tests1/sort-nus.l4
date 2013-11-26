@@ -1,0 +1,61 @@
+//test return 42
+// Sorts a list of ints
+
+bool sort(int [] array, int size);
+
+int main()
+{
+    int [] array = alloc_array(int, 50);
+    int counter;
+
+    for(counter = 0; counter < 50; counter++)
+        array[counter] = 50 - counter;
+
+    sort(array, 50);
+
+    return array[41];
+}
+
+bool sort(int [] array, int size)
+{
+    int [] s1 = alloc_array(int, size);
+    int [] s2 = alloc_array(int, size);
+    int s1p = 0;
+    int s2p = 0;
+    bool left = true;
+
+    s1[s1p] = 0;
+    s2[s2p] = size - 1;
+    s1p++; s2p++;
+
+    while(s1p != 0 && s2p != 0)
+    {
+        int currs1p = s1[s1p - 1];
+        int currs2p = s2[s2p - 1];
+        int olds1p = currs1p;
+        int olds2p = currs2p;
+
+        s1p--; s2p--;
+
+        while(currs1p != currs2p)
+        {
+            if(array[currs1p] > array[currs2p])
+            {
+                int temp = array[currs1p];
+                array[currs1p] = array[currs2p];
+                array[currs2p] = temp;
+            }
+            else if(left) currs1p++;
+            else currs2p--;
+        }
+
+        if(currs1p != olds1p)
+        {
+            s1[s1p] = olds1p;
+            s2[s2p] = currs1p - 1;
+            s1p++; s2p++;
+        }
+    }
+
+    return true;
+}

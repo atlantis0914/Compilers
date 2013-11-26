@@ -1,0 +1,17 @@
+//test error
+
+int main ()
+{
+    int a;
+    int b;
+
+    bool res;
+
+    for (a = 0; a < 10; a += 1) {
+        res = !res;
+        while (!res) {
+            res != a;
+        }
+    }
+    return 0;
+}

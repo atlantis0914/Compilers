@@ -1,0 +1,19 @@
+//test return 1
+
+int main()
+{
+  int********** p;
+  p = alloc(int*********);
+  *p = alloc(int********);
+  **p = alloc(int*******);
+  ***p = alloc(int******);
+  ****p = alloc(int*****);
+  *****p = alloc(int****);
+  ******p = alloc(int***);
+  *******p = alloc(int**);
+  ********p = alloc(int*);
+  *********p = alloc(int);
+  
+  **********p = 1;
+  return **********p;
+}

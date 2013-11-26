@@ -1,0 +1,6 @@
+//test error
+
+int main () {
+   int k = 5;
+   return *k; // should be a type error
+}

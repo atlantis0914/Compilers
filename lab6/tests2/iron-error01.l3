@@ -1,0 +1,15 @@
+//test error
+// redefining a function
+
+int returnone() {
+    return 1;
+}
+
+int returnone() {
+    return 2;
+}
+
+int main() {
+    return 0;
+}
+

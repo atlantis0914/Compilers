@@ -1,0 +1,17 @@
+//test return 42
+//
+
+typedef int*[]**[][][]* complex;
+
+int main() {
+    complex t = alloc(int*[]**[][][]);
+    *t = alloc_array(int*[]**[][], 1);
+    (*t)[0] = alloc_array(int*[]**[], 2);
+    (*t)[0][1] = alloc_array(int*[]**, 3);
+    (*t)[0][1][2] = alloc(int*[]*);
+    *(*t)[0][1][2] = alloc(int*[]);
+    **(*t)[0][1][2] = alloc_array(int*, 4);
+    (**(*t)[0][1][2])[3] = alloc(int);
+    *(**(*t)[0][1][2])[3] = 42;
+    return *(**(*t)[0][1][2])[3];
+}

@@ -1,0 +1,5 @@
+//test error
+// Tests no return
+
+int main() {
+}

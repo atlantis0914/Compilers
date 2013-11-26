@@ -1,0 +1,19 @@
+//test return 6
+struct point
+{
+	int x;
+	int y;
+};
+
+int main()
+{
+	struct point *p;
+	struct point *q;
+	p = alloc(struct point);
+	q = alloc(struct point);
+	p->x = 1;
+	p->y = 1;
+	q->x = 2;
+	q->y = 2;
+	return (p->x + q->x + p->y + q->y);
+}

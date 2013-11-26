@@ -1,0 +1,17 @@
+//test return 256
+// Function calls that look like dead code, but have side effects.
+// Can't optimize these.
+
+void foo(int *p) {
+  (*p)++;
+}
+
+int main() {
+  int *p = alloc(int);
+  *p = 0;
+
+  for (int i = 0; i < 256; i++)
+    foo(p);
+
+  return *p;
+}

@@ -1,0 +1,21 @@
+//test return 1736
+
+int mutualRec2(int x, int y);
+
+int mutualRec1(int x, int y) {
+	if (x < y) {
+		return 2 * mutualRec2(y - 1, x - 1);
+	}
+	else if (x == 0) return y;
+	return mutualRec1(x-1, y);
+}
+
+int mutualRec2(int x, int y) {
+	if (x / 2 == y) return mutualRec1(x, y - 1);
+	if (2 * x < y) return mutualRec1(x, y - 1);
+	return x + y;
+}
+
+int main () {
+  return mutualRec1(300, 570);
+}

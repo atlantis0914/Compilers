@@ -1,0 +1,9 @@
+//test exception 8
+// number overflow
+
+int main()
+{
+  int TMax = 2147483647;
+  int overflow = (TMax + 1) / -1;
+  return overflow;
+}

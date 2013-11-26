@@ -1,0 +1,13 @@
+//test error
+// function order
+
+int main () {
+    return apple (4);
+}
+
+int apple (int pie) {
+    if (pie == 0) 
+        return 1;
+    else 
+        return pie*apple(pie-1);
+}

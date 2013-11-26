@@ -1,0 +1,19 @@
+//test error
+
+struct ints;
+
+struct ints {
+  int a;
+};
+
+typedef int ints;
+
+struct ints {
+  int b;
+};
+
+int main() {
+  ints foo = 4;
+  struct ints bar;
+  return foo;
+}

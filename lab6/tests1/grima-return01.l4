@@ -1,0 +1,31 @@
+//test return 18
+/* structs should have their own name space */ 
+
+
+struct pair
+{
+  int a;
+  int b;
+};
+
+typedef struct pair pair;
+
+struct apair{
+ pair *p;
+};
+
+int main()
+{
+  int apair = 3;
+
+  pair *p = alloc(pair);
+
+  struct apair *ap = alloc(struct apair);
+
+  ap->p = p;
+
+  ap->p->a = apair * 2;
+  ap->p->b = apair * 4;
+
+  return p->a + p->b;
+}

@@ -1,0 +1,11 @@
+//test return 0
+
+int recursor(int r) {
+  if (r==0)
+    return 0;
+  return recursor(r-1);
+}
+
+int main() {
+  return recursor(10000);
+}

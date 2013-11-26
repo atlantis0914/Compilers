@@ -1,0 +1,18 @@
+//test error
+
+struct class {
+  int course_number;
+  int num_units;
+};
+
+
+int main()
+{
+  return 0;
+}
+
+struct class {
+  int course_number;
+  int num_units;
+};
+

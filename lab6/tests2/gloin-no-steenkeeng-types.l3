@@ -1,0 +1,12 @@
+//test error
+typedef int hi;
+typedef bool b;
+typedef int main;
+typedef int hello;
+typedef b my;
+
+hi main(){
+    hello world = 3;
+    my name = false;
+    return world;
+}

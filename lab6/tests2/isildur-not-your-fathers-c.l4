@@ -1,0 +1,12 @@
+//test error
+int main() {
+  int[] blar = alloc_array(int, 5);
+
+  blar[0] = 0;
+  blar[1] = 1;
+  blar[2] = 2;
+  blar[3] = 3;
+  blar[4] = 4;
+
+  return 4[blar];
+}

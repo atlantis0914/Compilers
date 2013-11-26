@@ -1,0 +1,29 @@
+//test return 16384
+
+void stack(int x){
+    if(x <= 0)
+        return;
+    stack(x-1);
+}
+
+int time(int x){
+    int i = 0;
+    bool b = false;
+    while(x > 0){
+        if(b){
+            i += 1;
+        }
+        b = !b;
+        x--;
+    }
+    return i;
+}
+
+int main(){
+    int x = (1<<16);
+    //stack waster
+    stack((1<<8));
+    int y = time(x);
+    int z = time(y);
+    return z;
+}

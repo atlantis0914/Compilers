@@ -1,0 +1,12 @@
+//test return 17895695
+int main() {
+  int a = 0x000000001;
+  int b = 0x000000010;
+  int c = 0x000000100;
+  int d = 0x000001000;
+  int e = 0x000010000;
+  int f = 0x000100000;
+  int g = 0x001000000;
+
+  return (((((((((( f ^ 8) ^ a ) ^ b ) ^ 2) ^ 20) ^ c) | d) & 0xFFFFFFFF) ^ e) ^  g);
+}

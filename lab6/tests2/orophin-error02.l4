@@ -1,0 +1,8 @@
+//test error
+// type mismatch -- int * and int[]
+
+int main () {
+  int *p = alloc_array(int, 10);
+  *p = 42;
+  return *p;
+}

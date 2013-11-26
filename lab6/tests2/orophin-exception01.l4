@@ -1,0 +1,22 @@
+//test exception
+//  exhaust dynamic memory or time
+
+
+int generator_function(int x) {
+  int retval = 0;
+  while (x > 0) {
+    retval = (retval * 337033877) + 181;
+    x--;
+  }
+  return retval;
+}
+
+int sum_to_infinity(int current) {
+  int base = generator_function(current);
+  int retval = base + sum_to_infinity(current + 1);
+  return retval;
+}
+
+int main() {
+  return sum_to_infinity(0);
+}

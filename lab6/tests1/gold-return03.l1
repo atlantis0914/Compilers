@@ -1,0 +1,9 @@
+//test return 10
+
+int main()
+{
+  int x = 30;
+  int y = -20;
+  int z = x % y;
+  return z;
+}

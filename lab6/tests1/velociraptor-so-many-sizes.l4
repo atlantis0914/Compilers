@@ -1,0 +1,48 @@
+//test return 4
+// Creates many structs of different sizes with different things inside
+struct small;
+struct medium;
+struct large;
+struct overall;
+
+struct small {
+	int oh;
+	bool hey;
+};
+
+struct medium {
+	int** many;
+	struct small* th;
+	bool how;
+};
+
+// it isn't large by brachiosaurus standards, but...
+struct large {
+	int* vals;
+	struct medium* whats;
+	int huh;
+	bool* tests;
+	bool a;
+	bool b;
+	bool c;
+	int* ohnoes;
+};
+
+struct overall {
+	int num;
+	struct small* one;
+	struct medium* two;
+	struct large* three;
+};
+
+int main() {
+	struct overall* o;
+	o = alloc(struct overall);
+	o->num = 5;
+	o->one = alloc(struct small);
+	o->two = alloc(struct medium);
+	o->three = alloc(struct large);
+	o->two->th = o->one;
+	o->one->oh = 4;
+	return o->two->th->oh;
+}

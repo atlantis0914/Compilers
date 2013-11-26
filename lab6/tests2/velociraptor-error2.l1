@@ -1,0 +1,8 @@
+//test error
+// uses a number > 2^32 as a constant
+
+int main() {
+  int x;
+  x = 5000000000;
+  return x;
+}

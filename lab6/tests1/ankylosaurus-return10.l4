@@ -1,0 +1,19 @@
+//test return 4
+int root(int n){
+    int n_float = itof(n);
+    int i = 0;	
+    int guess = itof(3);
+    int temp;
+    for(i = 0; i < 1000; i++){
+    	 guess  = fdiv(fadd(guess, fdiv(n_float,guess)), itof(2));
+
+    }
+    return ftoi(guess);
+
+
+}
+
+int main(){
+    return root(16);
+
+}

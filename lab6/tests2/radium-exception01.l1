@@ -1,0 +1,13 @@
+//test exception
+//Divide by Zero
+
+int main(){
+   int a;
+   int n;
+
+   a = 1107;
+   n = 0;
+   a = a/n;
+
+   return a;
+}

@@ -1,0 +1,7 @@
+//test return 0
+//Positive test for multiple shifts.
+
+int main ()
+{
+  return 1 >> 32 - 1 - 1;
+}

@@ -1,0 +1,135 @@
+//test return 1107260621
+
+/* Mergesort
+ * 15-122 Principles of Imperative Computation, Fall 2010
+ * Frank Pfenning
+ */
+
+bool is_sorted(int[] A, int lower, int upper)
+//@requires 0 <= lower && lower <= upper && upper <= \length(A);
+{
+  for (int i = lower; i < upper-1; i++)
+    //@loop_invariant lower == upper || (lower <= i && i <= upper-1);
+    if (!(A[i] <= A[i+1])) return false;
+  return true;
+}
+
+/* merge(A, lower, mid, upper) merges two adjacent sorted
+ * segments A[lower..mid) and A[mid..upper) into A[lower..upper)
+ */
+void merge(int[] A, int lower, int mid, int upper)
+//@requires 0 <= lower && lower < mid && mid < upper && upper <= \length(A);
+//@requires is_sorted(A, lower, mid) && is_sorted(A, mid, upper);
+//@ensures is_sorted(A, lower, upper);
+{ 
+  int[] B = alloc_array(int, upper-lower);
+  int i = lower; int j = mid; int k = 0;
+  while (i < mid && j < upper)
+    //@loop_invariant lower <= i && i <= mid;
+    //@loop_invariant mid <= j && j <= upper;
+    //@loop_invariant k == (i-lower)+(j-mid);
+    {
+      if (A[i] <= A[j]) {
+	B[k] = A[i]; i++;
+      } else {
+	B[k] = A[j]; j++;
+      }
+      k++;
+    }
+  //@assert i == mid || j == upper;
+  while (i < mid)
+    //@loop_invariant lower <= i && i <= mid;
+    //@loop_invariant k == (i-lower)+(j-mid);
+    { B[k] = A[i]; i++; k++; }
+  while (j < upper)
+    //@loop_invariant mid <= j && j <= upper;
+    //@loop_invariant k == (i-lower)+(j-mid);
+    { B[k] = A[j]; j++; k++; }
+  for (k = 0; k < upper-lower; k++)
+    //@loop_invariant lower <= lower+k && lower+k <= upper;
+    A[lower+k] = B[k];
+}
+
+void mergesort (int[] A, int lower, int upper)
+//@requires 0 <= lower && lower <= upper && upper <= \length(A);
+//@ensures is_sorted(A, lower, upper);
+{
+  if (upper-lower <= 1) return;
+  else {
+    int mid = lower + (upper-lower)/2;
+    mergesort(A, lower, mid); //@assert is_sorted(A, lower, mid);
+    mergesort(A, mid, upper); //@assert is_sorted(A, mid, upper);
+    merge(A, lower, mid, upper);
+  }
+}
+
+/* Cycle counting interface */
+
+struct rand {
+  int seed;
+};
+
+typedef struct rand* rand_t;
+
+rand_t init_rand (int seed) {
+  rand_t gen = alloc(struct rand);
+  gen->seed = seed;
+  return gen;
+}
+
+int rand(rand_t gen) {
+  gen->seed = gen->seed * 1664525 + 1013904223;
+  return gen->seed;
+}
+
+struct io {
+  int size;
+  int[] in;
+  int[] out;
+};
+typedef struct io data;
+
+data* init (int param) {
+  int n = param/3;
+  rand_t gen = init_rand(0xdeadbeef);
+  int[] in = alloc_array(int, n);
+  int[] out = alloc_array(int, n);
+  for (int i = 0; i < n; i++)
+    in[i] = rand(gen);
+  data* io = alloc(data);
+  io->size = n;
+  io->in = in;
+  io->out = out;
+  return io;
+}
+
+void prepare (data* io, int param) {
+  int n = io->size;
+  for (int i = 0; i < n; i++)
+    io->out[i] = io->in[i];
+}
+
+void run (data* io, int param) {
+  mergesort(io->out, 0, io->size);
+}
+
+int sum(int[] A, int lower, int upper) {
+  int r = 0;
+  for (int i = lower; i < upper; i++)
+    r = r + A[i];
+  return r;
+}
+
+int checksum (data* io, int param) {
+  int n = io->size;
+  int b = is_sorted(io->out, 0, n) ? 1 : 0;
+  int sum = sum(io->out, 0, n);
+  return b+sum;
+}
+
+int main () {
+  data* io = init(937);
+  prepare(io, 937);
+  run(io, 937);
+  return checksum(io, 937);
+}

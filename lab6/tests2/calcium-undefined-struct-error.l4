@@ -1,0 +1,8 @@
+//test error
+// you can just use poop lying around
+struct poop;
+
+int main() {
+  struct poop *poo = alloc(struct poop);
+  return 0;
+}

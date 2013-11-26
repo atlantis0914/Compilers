@@ -1,0 +1,19 @@
+//test error
+
+// see: theoden-is-recursive.l4
+
+typedef struct rec1 r1;
+typedef struct rec2 r2;
+
+struct rec1{
+  r2 r;
+};
+
+struct rec2{
+  r1 r;
+};
+
+int main()
+{
+  return -42;
+}

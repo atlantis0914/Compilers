@@ -1,0 +1,23 @@
+//test return 0
+// do ALL the divisions/mods
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+  int e;
+  int f;
+  int g;
+
+  a = 3;
+  b = 999;
+  c = b / a;
+  d = a / b;
+  e = c + d;
+  f = c % e;
+  g = f / 123456;
+  f = g % a;
+  g = f + 1 / 23;
+  return g;
+}

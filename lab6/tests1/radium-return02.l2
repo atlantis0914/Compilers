@@ -1,0 +1,19 @@
+//test return 123
+int main ()
+{
+  int x = 0;
+  for (; x <= 10 || x < 10; x++)
+  {
+    {
+      {
+      int z;
+        {
+          {
+          z = 5;
+            {
+              {
+                z = x + 5;
+              }
+            }
+          }
+        }}}}return 123;}

@@ -1,0 +1,40 @@
+//test return 42
+
+// This tests a variety of cases of struct namespacing
+
+struct foo {
+  int x;
+};
+
+// structs and function are in different namespaces
+int foo() {
+  return 42;
+}
+
+struct bar {
+  int y;
+};
+
+// structs and types are in different namespaces
+typedef int bar;
+
+struct baz {
+  int z;
+  bar bar; // fields in structs are in their own namespace
+};
+
+// even this is allowed since structs and types are in different namespaces
+typedef struct baz baz;
+
+struct bam {
+  int a;
+};
+
+int main() {
+  baz* bam = alloc(baz);
+
+  // local variable does not shadow struct
+  struct bam* foolala = alloc(struct bam);
+
+  return foo();
+}

@@ -1,0 +1,13 @@
+//test error
+
+struct A;
+struct B;
+struct C;
+
+struct A{struct B b;};
+struct B {struct C c;};
+struct C {struct A a;};
+
+int main() {
+    return 0;
+}

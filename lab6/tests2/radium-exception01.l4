@@ -1,0 +1,13 @@
+//test exception 11
+
+int[] foo()
+{
+  int[] a = alloc_array(int, 10);
+  return a;
+}
+
+int main()
+{
+  int[] a = foo();
+  return a[10];
+}

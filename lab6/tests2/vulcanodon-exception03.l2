@@ -1,0 +1,29 @@
+//test exception 8
+
+int main()
+{
+	/* tests variable scope and then throws a divide by 0 exception */
+	int y = 10;
+	int i;
+
+	for(i = 0; i<5; i++)
+	{
+		int j = 3;
+		y++;
+		while(j<5)
+		{
+			y--;
+			j++;
+		}
+	}
+
+	if(y!=5)
+	{
+		int j = 20;
+		return 0;
+	}
+	else
+	{
+		return 0/0;
+	}
+}

@@ -1,0 +1,7 @@
+//test exception
+//Exception due to shift overflow.
+
+int main ()
+{
+  return 0 >> -1;
+}

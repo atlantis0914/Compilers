@@ -1,0 +1,22 @@
+//test exception 11
+
+struct bar {
+  int hi;
+};
+
+
+int main () {
+  int x = 5;
+  struct bar* m;
+
+  while( x < 10) { x++; }
+  if(x >= 10)
+    m = NULL;
+  else
+    m = alloc(struct bar);
+
+  m->hi = 0 / 0;
+
+  return 1;
+
+}

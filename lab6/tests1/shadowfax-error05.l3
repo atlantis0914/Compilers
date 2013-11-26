@@ -1,0 +1,11 @@
+//test return 64
+// typedefing a typedef is k
+
+typedef int lol;
+typedef lol rofl;
+
+lol main () {
+    rofl x = 4;
+
+    return x*x*x;
+}

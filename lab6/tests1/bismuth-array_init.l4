@@ -1,0 +1,8 @@
+//test return 0
+
+int main ()
+{
+    int[] a = alloc_array(int, 5000);
+    
+    return a[2343];
+}

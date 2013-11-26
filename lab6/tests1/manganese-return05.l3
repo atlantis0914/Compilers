@@ -1,0 +1,26 @@
+//test return 0
+//test to ensure stack frame movement is correct
+
+int callable(int a, int b, int c, int d, int e) {
+    assert(a == 1);
+    assert(b == 2);
+    assert(c == 3);
+    assert(d == 4);
+    assert(e == 5);
+    return 6;
+}
+
+int main() {
+    int a = 1;
+    int b = 2;
+    int c = 3;
+    int d = 4;
+    int e = 5;
+
+    for(int i = 0; i < 10000; i++) {
+        assert(callable(a,b,c,d,e) == 6);
+    }
+
+    return 0;
+}
+

@@ -1,0 +1,29 @@
+//test return 1
+// testing void return. Function won't be evaluated if not called
+
+void nop() {
+}
+
+void raise() {
+  1/0;
+}
+
+void abort() {
+  assert(false);
+  return;
+}
+
+void okay() {
+  assert(true);
+  return;
+}
+
+int main() {
+  nop();
+  okay();
+  if (false) {
+    raise();
+    abort();
+  }
+  return 1;
+}

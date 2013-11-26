@@ -1,0 +1,9 @@
+//test error
+// can't typedef existing types
+
+typedef bool int;
+
+int main () {
+  return 0;
+}
+

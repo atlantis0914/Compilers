@@ -1,0 +1,21 @@
+//test return 0
+//tests having function call
+
+int foo () {
+  return 0;
+}
+
+bool bar () {
+  return false;
+}
+
+void baz () {
+  return;
+}
+
+int main () {
+  int f = foo ();
+  bool b = bar ();
+  baz ();
+  return 0;
+}

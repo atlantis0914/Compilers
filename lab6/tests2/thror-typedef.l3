@@ -1,0 +1,19 @@
+//test error
+
+typedef int bool;
+
+bool baz(int i)
+{
+  return i + 3;
+}
+
+int f(int i) {
+  if(baz(i) > 4)
+    then baz(i - 3);
+  else i + 3;
+}
+
+int main()
+{
+  return f(34);
+}

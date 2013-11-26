@@ -1,0 +1,6 @@
+//test return 57
+
+int main()
+{
+    return 57;
+}

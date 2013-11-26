@@ -1,0 +1,44 @@
+//test return 7
+
+struct ll {
+  struct ll *next;
+  int data;
+};
+
+struct ll *ll_find(struct ll *head, int data)
+{
+  struct ll *node = head;
+
+  while (node != NULL && node->data != data) {
+    node = node->next;
+  }
+
+  return node;
+}
+
+struct ll *ll_add(struct ll *head, int data)
+{
+  struct ll *new = alloc(struct ll);
+  new->data = data;
+
+  new->next = head;
+
+  return new;
+}
+
+int main()
+{
+  struct ll *head = alloc(struct ll);
+  head->next = NULL;
+  int i;
+
+  for (i = 0; i < 10; i++) {
+    head = ll_add(head, i);
+  }
+
+  struct ll *result = ll_find(head, 7);
+  if (result == NULL) return -1;
+
+  return result->data;
+}
+

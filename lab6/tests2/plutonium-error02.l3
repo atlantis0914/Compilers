@@ -1,0 +1,8 @@
+//test error
+// correctly handle function name shadowing
+int foo (int x, int y);
+int foo (int x, int y) {return x;}
+int main () {
+    int foo;
+    return foo (0, 0);
+}

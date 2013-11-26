@@ -1,0 +1,152 @@
+//test return 123456789
+// strand sort, runs in O(n sqrt n) on average, O(n) best, and O(n^2) worst
+
+struct node;
+typedef struct node* list;
+struct node {
+  int value;
+  list next;
+};
+
+struct pair {
+  list a;
+  list b;
+};
+
+list insert(list l, int val) {
+  list n = alloc(struct node);
+  n->value = val;
+  n->next = l;
+  return n;
+}
+
+struct pair* pullstrand(list l) {
+  list a = NULL;
+  list b = insert(NULL, l->value);
+  struct pair* p = alloc(struct pair);
+  list traverse = l->next;
+
+  while(traverse != NULL) {
+    if (traverse->value > b->value)
+      b = insert(b, traverse->value);
+    else
+      a = insert(a, traverse->value);
+
+    traverse = traverse->next;
+  }
+
+  p->a = a;
+  p->b = b;
+
+  return p;
+}
+
+list merge(list a, list b) {
+  if (a == NULL)
+    return b;
+  if (b == NULL)
+    return a;
+
+  if (a->value > b->value)
+    return insert(merge(a->next, b), a->value);
+  else
+    return insert(merge(a, b->next), b->value);
+}
+
+list reverse(list a, list b) {
+  if (a == NULL) return b;
+  return reverse(a->next, insert(b, a->value));
+}
+
+list strandsort(list l) {
+  struct pair* p;
+  list backsorted = NULL;
+  if (l == NULL)
+    return l;
+
+  p = pullstrand(l);
+  while (p->a != NULL) {
+    backsorted = merge(backsorted, p->b);
+    p = pullstrand(p->a);
+  }
+  backsorted = merge(backsorted, p->b);
+
+  return reverse(backsorted, NULL);
+}
+
+int main() {
+  list vals = insert(NULL, 75);
+  list toReturn = insert(NULL, 7);
+  int sum = 0;
+  int i = 0;
+  int last;
+  list traverse;
+
+  vals = insert(vals, 82);
+  vals = insert(vals, 92);
+  vals = insert(vals, 96);
+  vals = insert(vals, 77);
+  vals = insert(vals, 48);
+  vals = insert(vals, 49);
+  vals = insert(vals, 28);
+  vals = insert(vals, 14);
+  vals = insert(vals, 30);
+  vals = insert(vals, 40);
+
+  traverse = vals;
+  last = 75;
+  for (; i < 10; i++) {
+    print_int(traverse->value);
+    // printchar(32);
+    traverse = traverse->next;
+  }
+  // printchar(10);
+
+  vals = strandsort(vals);
+
+  traverse = vals;
+  for (i = 1; i <= 10; i++) {
+    print_int(traverse->value);
+    if (i > 1 && last > traverse->value)
+      return -1;
+    // printchar(32);
+
+    last = traverse->value;
+    traverse = traverse->next;
+  }
+  //printchar(10);
+  
+  toReturn = insert(toReturn, 2);
+  toReturn = insert(toReturn, 5);
+  toReturn = insert(toReturn, 9);
+  toReturn = insert(toReturn, 3);
+  toReturn = insert(toReturn, 6);
+  toReturn = insert(toReturn, 8);
+  toReturn = insert(toReturn, 1);
+  toReturn = insert(toReturn, 4);
+
+  traverse = toReturn;
+  for (i = 1; i <= 9; i++) {
+    print_int(traverse->value);
+    //printchar(32);
+    traverse = traverse->next;
+  }
+  // printchar(10);
+
+  toReturn = strandsort(toReturn);
+
+  traverse = toReturn;
+  for (i = 1; i <= 9; i++) {
+    print_int(traverse->value);
+    if (traverse->value != i)
+      return -1;
+    // printchar(32);
+    sum = 10*sum + traverse->value;
+
+    last = traverse->value;
+    traverse = traverse->next;
+  }
+  //printchar(10);
+
+  return sum;
+}

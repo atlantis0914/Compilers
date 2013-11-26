@@ -1,0 +1,17 @@
+//test return 4
+
+/* 
+ * This is my test program
+ * Nothing should go wrong
+ */
+int main () {
+  int x;
+  int y = 15;
+  ( x ) = 0;
+  x = 2 + 7;
+  y = y - ( x );
+  y = -y;
+  x += 1;
+  //should return 4
+  return ( x + y);
+}

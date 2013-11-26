@@ -1,0 +1,9 @@
+//test exception
+
+int main() {
+  if ((1/0) == 0) {
+    return 2;
+  } else {
+    return 7;
+  }
+}

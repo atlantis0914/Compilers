@@ -1,0 +1,15 @@
+//test return 0
+
+int f(int a){
+    return a;
+}
+
+typedef int tni;
+
+tni f1(tni a){
+    return a;
+}
+
+int main(){
+    return f(0);
+}

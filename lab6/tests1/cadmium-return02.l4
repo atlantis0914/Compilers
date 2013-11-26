@@ -1,0 +1,23 @@
+//test return 50
+
+struct vector {
+    int x;
+    int y;
+};
+
+typedef struct vector vec_t;
+
+void vec_set(vec_t *u, int x, int y) {
+    u->x = x;
+    u->y = y;
+}
+
+int dot(vec_t *u, vec_t *v) {
+    return (u->x * v->x) + (u->y * v->y);
+}
+
+int main() {
+    vec_t *u = alloc(vec_t);
+    vec_set(u, 5, 5);
+    return dot(u, u);
+}

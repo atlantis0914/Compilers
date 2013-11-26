@@ -1,0 +1,6 @@
+//test return 17
+struct foo {
+    struct foo *circle;
+};
+
+int main() { return 17; }

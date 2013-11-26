@@ -1,0 +1,19 @@
+//test return 10
+//shadow names in struct ops, but still work
+
+typedef struct a b;
+
+struct a {
+    bool a;
+};
+
+int a (bool c) {
+    struct a *a = alloc(b);
+    a->a = c;
+    return 10;
+}
+
+int main() {
+    return a(true);
+}
+

@@ -1,0 +1,12 @@
+//test exception 6
+
+int sum(int n)
+{
+  assert(n > 0);
+  return (n * (n + 1))/2;
+}
+
+int main()
+{
+  return sum(-1);
+}

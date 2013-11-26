@@ -1,0 +1,9 @@
+//test error
+// *a++ is an invalid statement
+
+int main () {
+    int *d = alloc(int);
+    *d++;
+    return *d;
+}
+

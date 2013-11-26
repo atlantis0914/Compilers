@@ -1,0 +1,7 @@
+//test exception 11
+// Bounds checking
+int main() {
+    int[] a = alloc_array(int, 4);
+    a[100] = 1;
+    return 0;
+}

@@ -1,0 +1,49 @@
+//test return 55
+
+// Peano arithmetic
+
+
+
+int z()
+{
+  return 0;
+}
+
+int succ(int n)
+{
+  return (n + 1);
+}
+
+int add(int x, int y)
+{
+  if(x == 0) return y;
+  else return add(x - 1, succ(y));
+}
+
+
+int main()
+{
+  int n0 = z();
+  int n1 = succ(n0);
+  int n2 = succ(n1);
+  int n3 = succ(n2);
+  int n4 = succ(n3);
+  int n5 = succ(n4);
+  int n6 = succ(n5);
+  int n7 = succ(n6);
+  int n8 = succ(n7);
+  int n9 = succ(n8);
+  int n10 = succ(n9);
+
+  return add(n0, 
+	     add(n1, 
+		 add(n2, 
+		     add(n3, 
+			 add(n4, 
+			     add(n5, 
+				 add(n6, 
+				     add(n7, 
+					 add(n8, 
+					     add(n9, n10))))))))));
+						     
+}

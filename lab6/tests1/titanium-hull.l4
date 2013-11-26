@@ -1,0 +1,27 @@
+//test return 0
+
+// I wonder what the l1 norm tastes like
+
+struct point {
+  int x;
+  int y;
+};
+
+typedef struct point point;
+
+int ccw(point *p1, point *p2, point *p3) {
+  return (p2->x - p1->x)*(p3->y - p1->y) - (p2->y - p1->y)*(p3->x - p1->x);
+}
+
+// this was a lazy programmer. Quickhull? More like quicknull. 
+int *hull(point[] points, int npoints, point** outHull) {
+  NULL;
+  return NULL;
+}
+
+int main() {
+  int *s = hull(alloc_array(struct point, 2), 2, NULL);
+  return ccw(alloc(struct point), alloc(struct point), alloc(struct point));
+  *s;
+}
+

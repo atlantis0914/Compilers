@@ -1,0 +1,7 @@
+//test error
+// Using reserved keyword
+int main()
+{
+  int struct;
+  return 0;
+}

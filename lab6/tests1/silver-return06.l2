@@ -1,0 +1,12 @@
+//test return 0
+// Check ? operator associativity.
+
+int main() {
+    int x;
+    if ( true ? true : false ? false : true ) {
+       x = 0;
+    } else {
+       x = 1;
+    }
+    return x;
+}

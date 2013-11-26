@@ -1,0 +1,30 @@
+//test return 0
+
+int[] reverse(int[] arr, int count){
+      int[] result = alloc_array(int, count);
+      int i;
+      for(i = 0; i < count; i++){
+      	    result[i] = arr[count - i - 1];
+
+      }
+
+      return result;
+
+}
+
+
+int main(){
+    int[] arr = alloc_array(int, 20);
+    int i;
+    int[] res;
+    for(i = 0; i < 20; i++){
+
+    	  arr[i]= i;
+    }   
+    res = reverse(arr,20);
+
+    return res[19];
+
+
+
+}

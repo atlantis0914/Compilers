@@ -1,0 +1,19 @@
+//test return 30
+
+typedef int a;
+typedef int b;
+typedef int c;
+typedef int d;
+
+int main() {
+    int f = 4;
+    d * e;
+    d z;
+    z = 3;
+    z * f;
+    e = alloc(int);
+    *e = 5;
+    f = 1 +* e;
+    d g = *e*f;
+    return g;
+}

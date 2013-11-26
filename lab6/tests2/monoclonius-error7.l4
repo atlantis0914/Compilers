@@ -1,0 +1,11 @@
+//test error
+
+struct foo{
+    int a;
+    int b;
+}
+
+int main(){
+    int foo = 5;
+    return 5;
+}

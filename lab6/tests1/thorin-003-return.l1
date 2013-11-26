@@ -1,0 +1,15 @@
+//test return 2
+/* Test comment handling */
+int                             /* Comment */
+main                            // Comment
+/***/(/*)*/)
+{///*
+    /**/return/*/*/5*/8*/2/*
+//; */;
+//*
+///*
+/* /* blah // and blah
+*/*/}
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

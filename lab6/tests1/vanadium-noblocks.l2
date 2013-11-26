@@ -1,0 +1,11 @@
+//test return 368704
+
+int main() {
+	int n = 20;
+	int k = 0;
+	for (int x = 0; x < n; x++)
+		for (int y = 0; y < n; y++)
+			for (int z = 0; z< n; z++)
+				k += z+x*y >> (z % 4);
+	return k;
+}

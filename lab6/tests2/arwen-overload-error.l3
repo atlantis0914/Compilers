@@ -1,0 +1,16 @@
+//test error
+//Functions can't be overloaded on type
+
+int intval(int x) {
+  return x;
+}
+
+int intval(bool x) {
+  return x ? 1 : 0;
+}
+
+int main() {
+  int x = 10;
+  bool b = true;
+  return intval(x) + intval(b);
+}

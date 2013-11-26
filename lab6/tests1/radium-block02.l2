@@ -1,0 +1,25 @@
+//test return 9
+
+int main(){
+  int n;
+  int i;
+  int k;
+
+  n = 100;
+  i = -1;
+  k = 0;
+
+  while (n > 0){
+    i += 1;
+    n -= 10;
+  }
+
+  if (k == 0) {
+    return i;
+  }
+
+  else {
+    return 42;
+  }
+}
+

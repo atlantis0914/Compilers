@@ -1,0 +1,11 @@
+//test return 0
+// define your poops
+struct poop;
+
+int main() {
+  return 0;
+}
+
+struct poop {
+  int poo;
+};

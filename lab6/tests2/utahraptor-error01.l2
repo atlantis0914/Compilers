@@ -1,0 +1,11 @@
+//test error
+/* Invalid shift operand
+ */
+
+int main()
+{
+    bool x = false;
+    int  y = x << 33;
+
+    return y;
+}

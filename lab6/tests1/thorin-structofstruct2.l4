@@ -1,0 +1,42 @@
+//test return 10
+
+struct b;
+
+struct a {
+    int a;
+    int b;
+    struct b *c;
+};
+
+struct b {
+    int a;
+    int b;
+    struct a *c;
+};
+
+bool assertx(bool x)
+{
+    if (x) {
+        return true;
+    }
+    1/0;
+    return false;
+}
+
+int main()
+{
+    struct a *a = alloc(struct a);
+    a->a = 10;
+    a->b--;
+    a->c = alloc(struct b);
+    a->c->c = alloc(struct a);
+    assertx(a->c->c->c == NULL);
+    assertx(a->c->c->a != 5);
+    a->c->c->a = 20;
+    return a->c->c->a - a->a;
+}
+
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

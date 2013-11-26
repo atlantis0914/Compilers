@@ -1,0 +1,13 @@
+//test error
+// use before definition
+
+
+int main()
+{
+    return func(500);
+}
+
+int func(int a)
+{
+    return a;
+}

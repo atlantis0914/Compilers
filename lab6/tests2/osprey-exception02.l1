@@ -1,0 +1,6 @@
+//test exception
+// divide by 0
+int main()
+{
+  return (5 / 2) / (8 % 1);
+}

@@ -1,0 +1,13 @@
+//test error
+
+//*exp++ is not allowed
+
+int main()
+{
+  int *n;
+  n = alloc(int);
+  *n = 0;
+  *n++;
+  *n--;
+  return *n;
+}

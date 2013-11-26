@@ -1,0 +1,8 @@
+//test exception 6
+
+int main () {
+    int *i = alloc(int);
+    *i = 100;
+    assert(*i != 100);
+    return 0;
+}

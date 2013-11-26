@@ -1,0 +1,7 @@
+//test error
+// missing decalation
+int main()
+{
+  x = 4;
+  return x;
+}

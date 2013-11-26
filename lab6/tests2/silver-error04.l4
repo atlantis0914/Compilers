@@ -1,0 +1,16 @@
+//test error
+//
+
+typedef struct x* y;
+
+struct x {
+       int[] z;
+};
+
+int f(y z) {
+    return z->z;
+}
+
+int main() {
+    return 0;
+}

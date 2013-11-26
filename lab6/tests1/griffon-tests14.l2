@@ -1,0 +1,19 @@
+//test return 5
+
+int main()
+{
+   int x = 0;
+   {
+	int y = 1;
+	x = x+y;
+   }
+   {
+	int z = 1;
+	x = x + z;
+   }
+   {
+	int z = 3;
+	x = x + z;
+   }
+   return x;
+}

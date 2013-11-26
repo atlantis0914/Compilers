@@ -1,0 +1,13 @@
+//test error
+// type identifiers needed.
+
+int foo(int, int, int);
+int foo(int a, int b, int c)
+{
+return a + b + c;
+}
+
+int main()
+{
+	return foo(40, 1, 1);
+}

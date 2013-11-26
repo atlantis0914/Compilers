@@ -1,0 +1,13 @@
+//test return 17
+/* *exp++ is not allowed but (*exp)++ is*/ 
+
+int main()
+{
+  int *x = alloc(int);
+
+  *x = 16;
+
+  (*x)++;
+
+  return *x;
+}

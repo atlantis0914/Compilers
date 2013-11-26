@@ -1,0 +1,6 @@
+//test exception 8
+int main() {
+  int y = -2147483648;
+  int z = y % -1;
+  return z * z + y;
+}

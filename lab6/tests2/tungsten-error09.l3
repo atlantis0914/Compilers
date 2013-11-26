@@ -1,0 +1,12 @@
+//test error
+//mismatch in function param
+
+int a(int in);
+
+int main(){
+  return a(false);
+}
+
+int a(int in){
+  return in;
+}

@@ -1,0 +1,6 @@
+//test error
+// Operator precedence.
+
+int main() {
+    return 1 / !true ? 0 : 1;
+}

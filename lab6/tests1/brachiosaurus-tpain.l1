@@ -1,0 +1,22 @@
+//test return -18
+//many tests catch special behaviour around tmin and tmax. this one tests for tpain.
+
+int main()
+{
+	int b; int o; int a; int t; int _____;
+	
+	b = 1;
+	o = 2;
+	a = 4;
+	t = 8;
+	_____ = 16;
+        return _____
+              /    1
+             /     1
+            /      1
+	   / _____-1
+	           +
+	o-o-o-o-o-o-o-o-o-o-o
+	 +a                /
+	  t*o*o*o*o*o*o*o*b;
+}

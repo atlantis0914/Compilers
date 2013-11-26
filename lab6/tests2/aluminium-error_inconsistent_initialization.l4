@@ -1,0 +1,15 @@
+//test error
+/* initialization is inconsisted with declaration */
+
+struct point {int x; int y;};
+struct rect {int x; int y;};
+
+int main () {
+  struct point *p;
+  struct rect *r;
+  p = alloc(struct rect);
+  p->x = 1; p->y = 2;
+  r = alloc(struct point);
+  r->x = 1; r->y = 2;
+  return 0;
+}

@@ -1,0 +1,6 @@
+//test error
+// cannot assign bool to int
+int main() {
+  int x = 1 && x == 5;
+  return x;
+}

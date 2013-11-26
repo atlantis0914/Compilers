@@ -1,0 +1,88 @@
+//test return 94274
+// discrete weighted distribution
+// RNG based on our return-mersenne.l4 file
+
+struct distribution {
+  int size; //sum of weights
+  int values; //largest possible value in [0 : values)
+  int[] weights;
+};
+
+struct distribution* init_dist(int[] weights, int n) {
+  struct distribution* out = alloc(struct distribution);
+  out->values = n;
+  out->weights = weights;
+  for(int i = 0; i < n; i++) {
+    out->size += weights[i];
+  }
+  return out;
+}
+
+int abs(int a){
+  if(a < 0) return -a;
+  else return a;
+}
+
+void initialize(int seed, int[] MT, int* idx) {
+    *idx = 0;
+    MT[0] = seed;
+    for (int i = 1; i < 624; i++) {
+        MT[i] = 0x6c078965 * (MT[i-1] ^ ((MT[i-1] >> 30) + i));
+    }
+}
+
+void generate_numbers(int[] MT) {
+    for (int i=0; i<624; i++) {
+        int y = (MT[i] & 0x80000000) + (MT[(i+1)%624] & 0x7fffffff);
+        MT[i] = MT[(i+397)%624] ^ (y >> 1);
+        if (y % 2 != 0) {
+            MT[i] = MT[i] ^ 0x9908b0df;
+        }
+    }
+}
+
+int extract_number(int[] MT, int* idx) {
+    if (*idx == 0) {
+        generate_numbers(MT);
+    }
+
+    int y =  MT[*idx];
+    y = y ^ (y >> 11);
+    y = y ^ ((y << 7) & 0x9d2c5680);
+    y = y ^ ((y << 15) & 0xefc60000);
+    y = y ^ (y >> 18);
+
+    *idx = (*idx + 1) % 624;
+    return y;
+}
+
+int sample(struct distribution* dist, int rand) {
+  int i = 0;
+  for(int r = rand % dist->size; r > 0; r -= dist->weights[i]) {
+    i++;
+  }
+  return i;
+}
+
+int main() {
+    // Create state variables
+    int[] MT = alloc_array(int, 624);
+    int* idx = alloc(int);
+
+    // Initialize the twister
+    initialize(15411, MT, idx);
+    
+    int[] dist = alloc_array(int, 15411);
+    // Get some randomness
+    for (int i = 0; i < 15411; i++) {
+        dist[i] = abs(extract_number(MT, idx)) % 127;
+    }
+    struct distribution* random = init_dist(dist, 15411);
+    
+    int sum = 0;
+    for(int i = 0; i < 10; i++) {
+      sum += sample(random, extract_number(MT, idx));
+    }
+    assert(sum < 154110);
+    return sum;
+}

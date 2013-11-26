@@ -1,0 +1,6 @@
+//test error
+//alloc with type void not allowed!
+int main() {
+    alloc(void);
+    return 0;
+}

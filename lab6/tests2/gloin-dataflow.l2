@@ -1,0 +1,13 @@
+//test error
+
+int main() {
+	int x;
+
+	if (false) {
+		int y = x / 0;
+	} else {
+		x = 15;
+	}
+
+	return x;
+}

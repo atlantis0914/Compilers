@@ -1,0 +1,10 @@
+//test return 15
+//tests combined boolean statements
+
+int main() {
+    int x = 5;
+    if (3 <= x && x <= 7) {
+        return 15;
+    }
+    return 0;
+}

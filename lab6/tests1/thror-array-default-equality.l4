@@ -1,0 +1,13 @@
+//test return 1
+
+struct s {
+  int[] arr;
+  int[] arr2;
+};
+int main()
+{
+  struct s * p = alloc(struct s);
+  
+  return p->arr == p->arr2 ? 1 : 0;
+
+}

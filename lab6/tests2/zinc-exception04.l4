@@ -1,0 +1,31 @@
+//test exception 11
+
+typedef struct list list;
+struct list{
+  int val;
+  list* prev;
+  list* next;
+};
+
+
+int main(){
+  list* head = alloc(list);
+  list* tail = alloc(list);
+  head->prev = NULL;
+  head->next = tail;
+  tail->prev = head;
+  tail->next = NULL;
+  for(int i = 0; i < 100; i++){
+    list* n = alloc(list);
+    n->val = i;
+    n->next = head->next;
+    head->next->prev = n;
+    n->prev = head;
+    head->next = n;
+  }
+  list* tmp = head->next;
+  for(int i = 0; i < 100; i++){
+    tmp = tmp->next;
+  }
+  return tmp->next->val;
+}

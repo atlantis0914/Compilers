@@ -1,0 +1,29 @@
+//test return 1
+
+bool hasThreeDigits(int x)
+{
+  int num = 0;
+  while (x > 0)
+  {
+    num += 1;
+    x = x / 10;
+  }
+
+  if (num == 3)
+  {
+    return true;
+  }
+
+  return false;
+
+}
+
+int main(){
+  int x = 123;
+  bool truth = hasThreeDigits(123);
+  if (truth){
+    return 1;
+  }
+
+  else return 0;
+}

@@ -1,0 +1,12 @@
+//test error
+
+int lols() {
+	int x = 0;
+	return 1;
+}
+
+int main() {
+	int x;
+	lols();
+	return x;
+}

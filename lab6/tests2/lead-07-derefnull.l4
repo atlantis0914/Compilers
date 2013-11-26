@@ -1,0 +1,6 @@
+//test error
+/* no deref of any* */
+
+int main () {
+  int x = *(true ? (false ? NULL : NULL) : (false ? NULL : NULL))
+}

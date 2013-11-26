@@ -1,0 +1,7 @@
+//test error
+// uninitialized in ternary 
+
+int main ()
+{
+ if (false) ? return 3 : return x; 
+}

@@ -1,0 +1,34 @@
+//test return 865
+// Floyd's algorithm for cycle-finding.
+
+struct Node {
+  struct Node* next;
+};
+
+int main() {
+  // A long transient + period
+  struct Node* current = alloc(struct Node);
+  struct Node* start = current;
+  struct Node* middle = current;
+  for (int i = 0; i < 1000; i++) {
+    if (i == 568) middle = current;
+    struct Node* next = alloc(struct Node);
+    current->next = next;
+    current = next;
+  }
+
+  // Connect the lasso
+  current->next = middle;
+
+  struct Node* slow = start;
+  struct Node* fast = start->next;
+
+  int i = 0;
+  while(slow != fast) {
+    i++;
+    slow = slow->next;
+    fast = fast->next->next;
+  }
+
+  return i;
+}

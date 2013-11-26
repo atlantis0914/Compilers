@@ -1,0 +1,13 @@
+//test return 20
+
+int re(int rem, int acc) {
+	if (rem == 0) {
+		return acc;
+	} else {
+		return re(rem-1, acc+10);
+	}
+}
+
+int main () {
+  return re(1,10);
+}

@@ -1,0 +1,12 @@
+//test return 3
+// test optimizations don't do stupid shit
+int main()
+{
+  int x;
+  int y;
+  int z;
+  x = 3;
+  y = x;
+  x = 4;
+  return y;
+}

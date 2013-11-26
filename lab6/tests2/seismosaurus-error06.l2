@@ -1,0 +1,11 @@
+//test error
+
+/*
+ * Test typechecking
+ /
+int main() 
+{
+	int a = 5;
+	bool b = true;
+	return a + b;
+}

@@ -1,0 +1,10 @@
+//test return 2
+typedef int hello;
+
+int main(){
+	int fool = 2;
+	int cool = 1;
+	fool * cool;
+	hello * tool;
+	return fool;
+}

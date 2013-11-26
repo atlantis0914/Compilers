@@ -1,0 +1,20 @@
+//test error
+
+int [] get_arr(int x)
+{
+    if (x >= 0)
+        return alloc_array(int, x);
+    // type mismatch
+    else return NULL;
+}
+
+int main()
+{
+    int [] k = get_arr(-1);
+    int [] t = get_arr(10);
+
+    t[10] = 2;
+    k[0] = 3;
+
+    return t[0];
+}

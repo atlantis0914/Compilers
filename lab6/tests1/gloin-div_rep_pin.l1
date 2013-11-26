@@ -1,0 +1,26 @@
+//test return 128
+int main(){
+    int a;
+    int b;
+    int c;
+    int d;
+    int e;
+    int f;
+    int g;
+    int h;
+    int i;
+    int j;
+    int k;
+    a = 65536;
+    b = 32768;
+    c = 16384;
+    d = 8192;
+    e = 4096;
+    f = 2048;
+    g = 1024;
+    h = 512;
+    i = 256;
+    j = 128;
+    k = 64;
+    return (a/(b/d))/(c/e)/(f/h)/(g/i)/(j/k);
+}

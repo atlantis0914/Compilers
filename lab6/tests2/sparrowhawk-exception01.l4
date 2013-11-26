@@ -1,0 +1,22 @@
+//test exception 8
+//test arrays of structs
+struct integer {
+       int d;
+};
+
+typedef struct integer integer_t;
+
+int main()
+{
+	integer_t[] x = alloc_array(integer_t, 10);
+	int sum = 0;
+
+	for (int i = 0; i < 10; i++)
+		x[i].d = i;
+
+	for (int i = 0; i < 10; i++)
+		sum += x[i].d;
+	
+
+	return sum / x[0].d;
+}

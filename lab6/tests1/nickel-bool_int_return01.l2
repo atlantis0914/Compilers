@@ -1,0 +1,12 @@
+//test return 42
+// simple conditional check.
+int main()
+{
+  int i = 43;
+  if (false) return 0;
+     if (false) return 1;
+  else return 42;
+
+  if (true)
+     return 23456;
+}

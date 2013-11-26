@@ -1,0 +1,31 @@
+//test return 0
+struct one {
+    int a;
+};
+
+struct two {
+    struct one *b;
+};
+
+struct three {
+    struct two *c;
+};
+
+struct four {
+    struct three *d;
+};
+
+int main()
+{
+    struct four *fo = alloc(struct four);
+    struct three *th = alloc(struct three);
+    struct two *tw = alloc(struct two);
+    struct one *on = alloc(struct one);
+
+    fo->d = th;
+    th->c = tw;
+    tw->b = on;
+    on->a = 0;
+
+    return fo->d->c->b->a;
+}

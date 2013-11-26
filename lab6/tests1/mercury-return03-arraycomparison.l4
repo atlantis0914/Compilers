@@ -1,0 +1,7 @@
+//test return 0
+
+int main() {
+  bool[] x = alloc_array(bool, 1);
+  bool[] y = alloc_array(bool, 1);
+  return (x == y) ? 1 : 0;
+}

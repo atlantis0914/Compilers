@@ -1,0 +1,36 @@
+//test return 0
+
+void a() {}
+void b() {}
+void c() {}
+void d() {}
+void e() {}
+void f() {}
+void g() {}
+void h() {}
+void i() {}
+void j() {}
+void k() {}
+void l() {}
+void m() {}
+void n() {}
+void o() {}
+void p() {}
+void q() {}
+void r() {}
+void s() {}
+void t() {}
+void u() {}
+void v() {}
+void w() {}
+void x() {}
+void y() {}
+void z() {}
+
+int main() {
+  for (int loop = 0; loop < 10000; loop++) {
+    a(); b(); c(); d(); e(); f(); g(); h(); i(); j(); k(); l(); m();
+    n(); o(); p(); q(); r(); s(); t(); u(); v(); w(); x(); y(); z();
+  }
+  return 0;
+}

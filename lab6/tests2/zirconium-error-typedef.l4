@@ -1,0 +1,11 @@
+//test error
+// typedefs are globals
+
+struct td {
+  typedef int magic;
+  magic number;
+};
+
+magic main() {
+  return 42;
+}

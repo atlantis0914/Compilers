@@ -1,0 +1,12 @@
+//test error
+
+// see: theoden-is-also-recursive.l4
+
+struct recursion{
+  struct recursion r;
+};
+
+int main()
+{
+  return -42;
+}

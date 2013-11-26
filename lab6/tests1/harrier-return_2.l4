@@ -1,0 +1,9 @@
+//test return -13216
+
+int main()
+{
+    int i = 0;
+    for (i = 826; i > 14; i += i)
+        i -= (9 * i);
+    return i;
+}

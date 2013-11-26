@@ -1,0 +1,65 @@
+//test return 0
+// Stress-testing array operations using a binary heap implementation.
+
+int heapify(int[] heap, int size, int idx, int holder) {
+  int slot = idx;
+  while ((2*slot+1) < size) {
+    int peek = ((2*slot+2) < size && heap[2*slot+2] > heap[2*slot+1]) ?
+               2*slot+2 : 2*slot+1;
+    heap[slot] = heap[peek];
+    slot = peek;
+  }
+  while (slot > 0 && holder > heap[(slot-1)/2]) {
+    int peek = (slot-1)/2;
+    heap[slot] = heap[peek];
+    slot = peek;
+  }
+  heap[slot] = holder;
+  return size;
+}
+
+int order(int[] heap, int size) {
+  int i;
+  for (i = size-1; i >= 0; i--) {
+    if ((2*i+1) < size && (heap[2*i+1] > heap[i] ||
+                           heap[2*i+2] > heap[i])) {
+      heapify(heap, size, i, heap[i]);
+    }
+  }
+  return size;
+}
+
+int push(int[] heap, int size, int val) {
+  heap[size] = val;
+  order(heap, size+1); 
+  return size+1;
+}
+
+int heapsort(int[] heap, int size) {
+  int max = size;
+  while (max > 0) {
+    max--;
+    heap[max + 1] = heap[0];
+    heapify(heap, max, 0, heap[max]);
+  }
+  return size;
+}
+int main() {
+  int hsize = 14000;
+  int[] heap = alloc_array(int, hsize+1);
+  int i;
+  int rsize = 0;
+  
+  for (i = 0; i < hsize; i++) {
+    rsize = push(heap, rsize, hsize - rsize);
+  }
+  order(heap, rsize);
+  heapsort(heap, rsize);
+ 
+  for (i = 1; i < hsize; i++) {
+    if (heap[i] != i) {
+      return 1;
+    }
+  }
+  return 0;
+}

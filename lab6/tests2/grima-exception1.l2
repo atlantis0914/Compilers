@@ -1,0 +1,12 @@
+//test exception 8
+// Test that stand alone experessions are not optimized away
+
+int main()
+{
+   int x = 7;
+   int y = 0;
+
+   x/y;
+
+   return 42;
+}

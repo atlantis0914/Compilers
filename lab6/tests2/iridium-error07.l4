@@ -1,0 +1,9 @@
+//test error
+
+int main() {
+  int *x;
+  int **y;
+  *y=x;
+  *x = **y;
+  return 1;
+}

@@ -1,0 +1,25 @@
+//test return 0
+// being annoying about context-free grammar
+
+int main() {
+  int********** foo;
+  foo = alloc(int*********);
+  *foo = alloc(int********);
+  **foo = alloc(int*******);
+  ***foo = alloc(int******);
+  int******* bar = ***foo;
+  *bar = alloc(int*****);
+  **bar = alloc(int****);
+  ***bar = alloc(int***);
+  int**** baz = ***bar;
+  *baz = alloc(int**);
+  **baz = alloc(int*);
+  ***baz = alloc(int);
+
+  **********foo = 23;
+  int[] A = alloc_array(int,15411);
+
+  A[*******bar * ****baz] = **********foo * 97;
+  A[****baz * A[**********foo + ****baz * *******bar]] = ****baz + A[**********foo + ****baz * *******bar];
+  return 0;
+}

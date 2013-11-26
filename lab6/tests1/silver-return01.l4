@@ -1,0 +1,10 @@
+//test return 0
+//
+
+struct x;
+
+typedef struct x*[][]*[]*[][][][]**[]*[]**** complex_type;
+
+int main() {
+  return 0;
+}

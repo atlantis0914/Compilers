@@ -1,0 +1,11 @@
+//test return 16
+
+int main()
+{
+  int h;
+  h = 1;
+  h = h + h;
+  h = h + h;
+  h = h + h;
+  return h + h;
+}

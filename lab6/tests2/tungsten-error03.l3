@@ -1,0 +1,12 @@
+//test error
+//mismatch between prototype and function decl
+
+bool isTrue();
+
+int main(){
+  return isTrue();
+}
+
+int isTrue(){
+  return 1;
+}

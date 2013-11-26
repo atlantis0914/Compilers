@@ -1,0 +1,11 @@
+//test error
+/* Stupid assign 2 */
+
+int main () {
+  int a;
+  {
+    bool a;
+    a = 2;
+  }
+  return 2;
+}

@@ -1,0 +1,21 @@
+//test return 14
+
+int main() {
+	bool p = false;
+	bool q = false;
+	bool r = false;
+	bool s = false;
+	for(int i = 0; i < 14; i++) {
+		if (p) {
+			if (q) {
+				if (r) {
+					s = !s;
+				}
+				r = !r;
+			}
+			q = !q;
+		}
+		p = !p;
+	}
+	return (p?1<<0:0)+(q?1<<1:0)+(r?1<<2:0)+(s?1<<3:0);
+}

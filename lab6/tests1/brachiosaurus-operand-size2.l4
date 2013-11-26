@@ -1,0 +1,37 @@
+//test return 5
+
+struct foo {
+	int *some_poor_noob;
+};
+
+int *arg(int *a, int *b, int *c, int *d, int *e, int *f)
+{
+	if (a == NULL || b == NULL || c == NULL || d == NULL || e == NULL || f == NULL) {
+		int *q = alloc(int);
+		*a = 7;
+		return a;
+	} else {
+		int *q = alloc(int);
+		*a = 5;
+		return a;
+	}
+}
+
+int *blarg()
+{
+	int *a = alloc(int);
+	int *b = alloc(int);
+	int *c = alloc(int);
+	int *d = alloc(int);
+	int *e = alloc(int);
+	int *f = alloc(int);
+	return arg(a,b,c,d,e,f);
+}
+
+int main()
+{
+	struct foo *a = alloc(struct foo);
+	/* A 32-bit move will make some poor noob sad. */
+	a->some_poor_noob = blarg();
+	return *a->some_poor_noob;
+}

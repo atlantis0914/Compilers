@@ -1,0 +1,19 @@
+//test return 68335852
+
+
+int main() {
+	int n = 100;
+	int*[] p = alloc_array(int*,100);
+	for (int i = 0; i < n; i++) {
+		p[i] = alloc(int);
+		*p[i] = i;
+	}
+
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++) {
+			int t = *p[i];
+			*p[i] = *p[i] + *p[j];
+			*p[j] = t - *p[j];
+		}
+	return *p[1] + *p[0];
+}

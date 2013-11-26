@@ -1,0 +1,11 @@
+//test return 2
+
+
+int forever() {
+    return forever();
+}
+
+int main() {
+    bool b = true;
+    return b ? 2 : forever();
+}

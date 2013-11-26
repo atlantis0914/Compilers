@@ -1,0 +1,15 @@
+//test error
+
+struct basically_int {
+	int i;
+};
+
+int main() {
+	struct basically_int a = alloc(struct basically_int);
+	struct basically_int b = alloc(struct basically_int);
+	
+	if(*a == *b)
+		return 0;
+	else
+		return 1;
+}

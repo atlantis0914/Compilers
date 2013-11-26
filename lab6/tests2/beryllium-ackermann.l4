@@ -1,0 +1,21 @@
+//test exception
+
+/* *Attempts* to compute the Ackermann function.
+   Will probably time the runtime out, but optimizing compilers
+   will suffer here.
+   The actually answer, unsigned mod 32, is 4294967293.
+*/
+
+int ackermann(int m, int n)
+{
+  if (m == 0)
+    return n + 1;
+  else if (m > 0 && n == 0)
+    return ackermann(m - 1, 1);
+  else return ackermann(m - 1, ackermann(m, n - 1));
+}
+
+int main()
+{
+  return ackermann(4,2);
+}

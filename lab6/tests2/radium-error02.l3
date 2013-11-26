@@ -1,0 +1,11 @@
+//test error
+
+int main ()
+{
+  return f(1, 2, 3);
+}
+
+int f (int a, int b, int c)
+{
+  return 0;
+}

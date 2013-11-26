@@ -1,0 +1,14 @@
+//test exception 
+
+struct foo {
+  int x;
+  int y;
+  int sum;
+};
+
+int main()
+{
+  struct foo[] n = alloc_array(struct foo, 10);
+  bool truth = true;
+  return (truth ? (1 / (n[1].x)) : 0);
+}

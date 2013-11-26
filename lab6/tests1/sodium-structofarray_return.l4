@@ -1,0 +1,28 @@
+//test return 0
+// Arrays inside structs. Fun.
+
+struct x {
+  int[] A;
+  bool[] B;
+};
+
+int main() {
+  int len = 1000;
+  struct x *foo = alloc(struct x);
+  foo->A = alloc_array(int, len);
+  foo->B = alloc_array(bool, len);
+
+  // Fill the arrays.
+  for (int i = 0; i < len; i++) {
+    foo->A[i] = i;
+    foo->B[i] = (i % 2 == 0);
+  }
+
+  // Validate contents.
+  for (int i = 0; i < len; i++) {
+    assert(foo->A[i] == i);
+    assert(foo->B[i] == (i % 2 == 0));
+  }
+
+  return 0;
+}

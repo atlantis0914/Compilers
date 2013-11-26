@@ -1,0 +1,8 @@
+//test return 0
+
+typedef int a;
+typedef a b;
+
+int main(){
+    return 0;
+}

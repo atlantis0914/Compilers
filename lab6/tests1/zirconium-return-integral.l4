@@ -1,0 +1,68 @@
+//test return 7
+// compute the derivative of a polynomial
+
+struct frac{
+  int numer;
+  int denom;
+};
+
+struct frac* fraction(int n, int d) {
+  struct frac* out = alloc(struct frac);
+  out -> numer = n;
+  out -> denom = d;
+  return out;
+}
+
+int defraction(struct frac* a) {
+  return a->numer/a->denom;
+}
+
+typedef struct frac*[] poly;
+
+struct frac* add(struct frac* a, struct frac* b) {
+  return fraction(b->numer * a->denom + a->numer * b->denom, b->denom * a->denom);
+}
+
+struct frac* mult(struct frac* a, struct frac* b) {
+  return fraction(a->numer * b->numer, a->denom * b->denom);
+}
+
+int pow(int base, int power) {
+  if(power == 0) return 1;
+  if(power > 0) return 1/0;
+  return base * pow(base, power-1);
+}
+
+struct frac* frac_pow(struct frac* base, int power) {
+  if(base->numer == 0) return base;
+  if(base->denom == 0) return fraction(1/0,1);
+  return fraction(pow(base->numer, power), pow(base->denom, power));
+}
+
+poly integral(poly A, int n) {
+  poly Ap = alloc_array(struct frac*, n+1);
+  Ap[0] = fraction(0,1);
+  for (int i = 0; i < n; i++) {
+    Ap[i+1] = mult(fraction(1, i+1), A[i]);
+  }
+  return Ap;
+}
+
+struct frac* val(poly A, struct frac* i, int n) {
+  struct frac* sum = fraction(0,1);
+  for(int j = 0; j < n; j++) {
+    sum = add(mult(A[j], i), sum);
+  }
+  return sum;
+}
+
+int main() {
+  poly p = alloc_array(struct frac*, 16);
+  for (int i = 0; i < 16; i++) {
+    p[i] = alloc(struct frac);
+    p[i]->numer = (1664525 * i) + 1013904223; // LCG "random" number
+    p[i]->denom = 1;
+  }
+  poly q = integral(p,16);
+  return defraction(val(q, fraction(-4,3), 17));
+}

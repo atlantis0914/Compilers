@@ -1,0 +1,62 @@
+//test return 8
+//tests lvalues 
+
+struct n
+{
+struct n* next;
+int[] value;
+};
+
+typedef struct n node;
+
+int main()
+{
+
+int i;
+int sum=0;
+node* curr;
+
+node* node1 = alloc(node);
+node* node2 = alloc(node);
+node* node3 = alloc(node);
+node* node4 = alloc(node);
+node* node5 = alloc(node);
+
+node1->value = alloc_array(int,1);
+node2->value = alloc_array(int,1);
+node3->value = alloc_array(int,1);
+node4->value = alloc_array(int,1);
+node5->value = alloc_array(int,1);
+
+node1->value[0] = 1;
+node2->value[0] = 2;
+node3->value[0] = 3;
+node4->value[0] = 4;
+(*node5).value[0] = 5;
+
+
+(*node1).next = node2;
+(*(*node1).next).next = node3;
+(*(node1->next)).next = node3;
+node3->next = node4;
+node4->next = node5;
+
+(*node1).next -> next = node5;
+//1 connected to 2 connected to 5
+
+curr = node1;
+for(i=0;i<3;i++)
+{
+sum+=(curr->value[0]);
+curr = curr->next;
+}
+
+return sum;
+
+
+
+}
+
+
+
+

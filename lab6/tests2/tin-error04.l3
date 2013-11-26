@@ -1,0 +1,11 @@
+//test error
+//function identifier conflicts with variable name
+
+int func(int x) {
+  return x + 1;
+}
+
+int main() {
+  int func = 0;
+  return func(func);
+}

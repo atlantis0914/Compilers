@@ -1,0 +1,40 @@
+//test return 1
+// Tests mutually recursive functions.
+
+bool isEven(int num);
+bool isOdd(int num);
+
+int abs(int x) {
+    if (x < 0) {
+        return -x;
+    } else {
+        return x;
+    }
+}
+
+bool isEven(int num) {
+    if (num == 0) {
+        return true;
+    } else {
+        return isOdd(abs(num) - 1);
+    }
+}
+
+bool isOdd(int num) {
+    if (num == 0) {
+        return false;
+    } else {
+        return isEven(abs(num) - 1);
+    }
+}
+
+int main() {
+    bool even = isEven(24);
+    bool odd  = isOdd(33);
+
+    if (even && odd) {
+        return 1;
+    } else {
+        return 0;
+    }
+}

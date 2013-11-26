@@ -1,0 +1,8 @@
+//test error
+
+typedef int* fpt;
+
+int main()
+{
+  return *atof(0x12345);
+}

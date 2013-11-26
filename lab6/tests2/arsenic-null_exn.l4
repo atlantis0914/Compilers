@@ -1,0 +1,9 @@
+//test exception 11
+
+int main() {
+  int *a = alloc(int);
+  int *b = NULL;
+  *a = 1;
+  *b = 3;
+  return *a + *b;
+}

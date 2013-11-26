@@ -1,0 +1,18 @@
+//test return 10
+// test successful register allocation 
+// output assembly should use 4 registers 
+int main() {
+    int a = 3;
+    int b = 4;
+    int c = 5;
+    int d = 6;
+    d = a + b + c + d;
+
+    int w = 1;
+    int x = 2 + w;
+    int y = 3 + w + x;
+    int z = 4 + w + x + y;
+    z = z - y - 2*x - 3*w;
+
+    return 10;
+}

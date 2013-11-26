@@ -1,0 +1,16 @@
+//test error
+//tests scoping
+
+
+int main() {
+
+  bool b = true;
+
+  if (b)
+    int x = 1;
+  else
+    int x = 2;
+
+  return x;
+
+}

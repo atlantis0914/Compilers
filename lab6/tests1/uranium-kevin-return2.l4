@@ -1,0 +1,16 @@
+//test return 10
+
+struct q {
+          int a;
+          int b;
+          int c;
+          int q;
+         };
+
+int main() {
+    struct q *p = alloc(struct q);
+    p->a = 0;
+    (*p).b = 1;
+    (*p).q = 7;
+    return p->a + p->b * 3 + p->q;
+}

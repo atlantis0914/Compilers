@@ -1,0 +1,6 @@
+//test error
+// Tests return boolean
+int main()
+{
+  return false;
+}

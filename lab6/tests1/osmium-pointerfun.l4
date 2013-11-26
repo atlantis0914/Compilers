@@ -1,0 +1,18 @@
+//test return 1
+
+typedef int*** p3;
+
+int main() {
+    int**** a = alloc(p3);
+	int*** b = *a;
+	assert(b == NULL);
+	
+	bool* p = alloc(bool);
+	*p = false;
+	*p = *p;
+	*p = !(*p) || *p;
+	
+	if(*p)
+		return 1;
+	return 0;
+}

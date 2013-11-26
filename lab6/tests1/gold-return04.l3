@@ -1,0 +1,9 @@
+//test return 4
+
+int l1(int x);
+int l1(int y);
+int l1(int z);
+
+int main () {
+	return 4;
+}

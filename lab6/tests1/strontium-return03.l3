@@ -1,0 +1,12 @@
+//test return 2
+// function definitions
+
+int stuff(int thing)
+{
+    return 1 + thing;
+}
+
+int main()
+{
+    return 2;
+}

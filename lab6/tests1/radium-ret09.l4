@@ -1,0 +1,33 @@
+//test return 7
+
+
+typedef struct tree* tree;
+
+struct tree{
+  tree left;
+  tree right;
+  int root;
+};
+
+int main()
+{
+  struct tree *m = alloc(struct tree);
+  struct tree *ml = alloc(struct tree);
+  struct tree *mr = alloc(struct tree);
+  ml->root = 7;
+  mr->root = 10;
+  ml->right = mr;
+  mr->left = ml;
+  m->left = ml;
+  m->right = mr;
+  
+  int ret = m->root;
+  while (m->left != NULL)
+  {
+    ret = m->left->root;
+    m = m->left;
+  }
+
+  return ret;
+}
+

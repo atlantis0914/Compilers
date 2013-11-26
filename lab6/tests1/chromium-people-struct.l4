@@ -1,0 +1,21 @@
+//test return 0
+
+struct person {
+    int name;
+    bool male;
+    int *partner;
+};
+
+typedef struct person* person;
+
+int main() {
+    person p = alloc(struct person);
+    p->name = 5;
+    (*p).male = true;
+    p->partner = NULL;
+    assert(p->name == 5);
+    assert(p->male);
+    assert(p->partner == NULL);
+    return 0;
+}
+

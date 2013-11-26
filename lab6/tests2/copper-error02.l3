@@ -1,0 +1,9 @@
+//test error
+
+typedef int x;
+
+int main() {
+    return 3;
+}
+
+typedef bool x;

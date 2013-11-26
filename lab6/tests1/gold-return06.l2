@@ -1,0 +1,13 @@
+//test return 3
+
+int main ()
+{
+  bool x;
+
+  if (1 < 2)
+    x = false;
+  else
+    x = false;
+
+  return (1 > 2) ? 1 : (x ? 2 : 3);
+}

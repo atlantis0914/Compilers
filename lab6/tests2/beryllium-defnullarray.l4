@@ -1,0 +1,8 @@
+//test exception 11
+struct s{
+	int[] a;
+};
+int main(){
+	struct s* s=alloc(struct s);
+	return s->a[2];
+}

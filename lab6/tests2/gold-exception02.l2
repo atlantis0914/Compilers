@@ -1,0 +1,12 @@
+//test exception 8
+
+int main()
+{
+  int x = -1;
+  int y = 0x80000000;
+
+  if (true)
+    return y / x;
+
+  return y % x;
+}

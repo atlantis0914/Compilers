@@ -1,0 +1,13 @@
+//test error
+
+void foo(int x) {
+  if (x > 10) {
+    return 5;
+  }
+  return;
+}
+
+int main() {
+  foo(5);
+  return 5;
+}
