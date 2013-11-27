@@ -39,7 +39,8 @@ argTable = [
   Option ['c'] ["obj"] (NoArg (setOF Obj)) "Sets the output target to be an elf intermediate object.",
   Option ['E'] ["pretty"] (NoArg (setOF C0)) "Sets the output type to be C0 (act as a pretty printer).",
   Option ['e'] ["elf"] (NoArg (setOF ELF)) "Produces a full fledged ELF executable, ready to run.",
-  Option ['l'] ["header"] (ReqArg setHeader "FILE") "Compiles against the header file specified"]
+  Option ['l'] ["header"] (ReqArg setHeader "FILE") "Compiles against the header file specified",
+  Option [] ["asmjs"] (NoArg (setOF JS)) "Sets the output type to be Asm.js, a strict subset of javascript"]
 
 setOF :: OF -> Job -> Job
 setOF outFormat j = j {jobOutFormat = outFormat}

@@ -19,6 +19,7 @@ data OF = C0
         | Asm
         | Obj
         | ELF
+        | JS
         | Header String deriving Eq
 
 defaultJob :: Job
