@@ -30,6 +30,7 @@ import Compile.Frontend.Minimize
 import Compile.IR.GenIR
 import Compile.IR.GenIRAST
 import Compile.Backend.CodeGen
+import Compile.Asm.Asm
 
 import Compile.Util.Job
 
@@ -69,14 +70,12 @@ compile job = do
                       then constantProp irFnList
                       else Trace.trace ("Opt level is : " ++ show (jobOptimization job)) $ irFnList
 --    writer (jobOut job) irFnList'
-    if jobOutFormat job == C0
-      then writer (jobOut job) minFnList
-      else let asm = fnListCodeGen job irFnList' fnMap in
-              if jobOutFormat job == Asm
-                 then stringWriter (jobOut job) asm
-                 else do writer asmFile minFnList
-                         let o = if jobOutFormat job == Obj then "-c" else ""
-                         gcc o asmFile (jobOut job)
+    case (jobOutFormat job) of 
+      C0 -> writer (jobOut job) minFnList
+      Asm -> stringWriter (jobOut job) (fnListCodeGen job irFnList' fnMap)
+      Obj -> gcc "-c" asmFile (jobOut job)
+      JS -> stringWriter (jobOut job) (toAsm job irFnList')
+      _ -> gcc "" asmFile (jobOut job)
   case res of
     Left msg -> error msg
     Right () -> return ()

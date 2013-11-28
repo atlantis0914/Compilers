@@ -55,7 +55,7 @@ setOpLevel s j = j {jobOptimization = read s}
 -- setOpt oLevel j = j {jobOptimization = oLevel}
 
 extTable :: [(String, OF)]
-extTable = [(".s", Asm), (".o", Obj), (".c", C0), ("", ELF)]
+extTable = [(".s", Asm), (".o", Obj), (".c", C0), ("", ELF),(".js", JS)]
 
 revExtTable :: [(OF, String)]
 revExtTable = map swap extTable
