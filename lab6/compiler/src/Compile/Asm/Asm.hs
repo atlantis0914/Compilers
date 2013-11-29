@@ -1,7 +1,7 @@
 module Compile.Asm.Asm where 
 
 import Compile.Types
--- import Compile.Asm.FnAsm
+import Compile.Asm.FnAsm
 -- import Compile.Asm.StructAsm
 import System.FilePath
 import qualified Data.Map as Map
@@ -50,7 +50,9 @@ genAsmEpilogue =
   "}"
 
 genAsmIRDecl :: IRDecl -> String
-genAsmIRDecl (IRFDefn (IRFuncDef name args argTypes retTypes body argSizes)) =  ""
+genAsmIRDecl (IRFDefn fdef) =  
+  genAsmFnDecl fdef
+
 genAsmIRDecl (IRSDefn (IRStructDef sName sFlds sTyps sOffs _ sSz)) = ""
 
 genStructAccessor :: String -> String -> Int -> String
