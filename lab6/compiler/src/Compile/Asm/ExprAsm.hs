@@ -27,6 +27,31 @@ processIRExpr (IRIdent id i) = do
 processIRExpr (IRExpNull) = do
   return (show 0)
 
+processIRExpr (IRExpAlloc typ i) = do
+  let ret = "(memAlloc(" ++ (show (i `div` 4)) ++ ") | 0)"
+  return ret
+
+processIRExpr (IRExpAllocArray typ e i) = do
+  eStr <- processIRExpr e
+  let ret = "(memAlloc(imul(" ++ eStr ++ " | 0," ++ (show (i `div` 4)) ++ " | 0) | 0) | 0)"
+  return ret
+
+processIRExpr (IRExpDereference e typ i) = do
+  estr <- processIRExpr e
+  let ret = "(pointerDeref(" ++ estr ++ " | 0) | 0)"
+  return ret
+
+processIRExpr (IRExpFieldSelect e f typ i1 i2) = do
+  estr <- processIRExpr e
+  let ret = "(fieldAccess(" ++ estr ++ " | 0," ++ (show (i1 `div` 4)) ++ " | 0) | 0)"
+  return ret
+
+processIRExpr (IRExpFnCall fname argList i) = do
+  argStrs <- mapM processIRExpr argList 
+  let comSep = commaSeparate argStrs
+  let ret = "(" ++ fname ++ "(" ++ comSep ++ ") | 0)"
+  return ret
+
 processIRExpr (IRExpBinOp Mul e1 e2) = do
   s1 <- processIRExpr e1
   s2 <- processIRExpr e2
@@ -79,3 +104,10 @@ processIROp Add = "+"
 processIROp Sub = "-"
 processIROp Neg = "-"
 processIROp Equ = "=="
+processIROp Lt = "<"
+processIROp Gt = ">"
+processIROp s = error ("Got op in processIROp: " ++ show s)
+
+commaSeparate [] = ""
+commaSeparate [x] = x
+commaSeparate (x:xs) = x ++ "," ++ (commaSeparate xs)

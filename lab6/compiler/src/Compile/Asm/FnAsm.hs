@@ -69,12 +69,23 @@ processStmt (IRDecl dName dTyp dScp) = do
 --  put (s, i', m')
   processStmt dScp
 
+processStmt (IRAsgn (lval@(IRIdent _ _)) o rval) = do
+  indent <- getIndentation
+  lStr <- processIRExpr lval
+  rStr <- processIRExpr rval
+  (s,i,m) <- get
+  let s' = s ++ indent ++ lStr ++ " = " ++ rStr ++ "| 0;" ++ "\n"
+  put (s',i,m)
+  -- TODO
+  return ()  
+
 processStmt (IRAsgn lval o rval) = do
   indent <- getIndentation
   lStr <- processIRExpr lval
   rStr <- processIRExpr rval
   (s,i,m) <- get
-  let s' = s ++ indent ++ lStr ++ " = " ++ rStr ++ ";" ++ "\n"
+  let s' = s ++ indent ++ "memSet(" ++ lStr ++ " | 0, " ++ rStr ++ " | 0);" ++ "\n"
+--   let s' = s ++ indent ++ lStr ++ " = " ++ rStr ++ "| 0;" ++ "\n"
   put (s',i,m)
   -- TODO
   return ()  
@@ -111,9 +122,6 @@ processCtrl (If e s1 s2 _) = do
   let ls = s'''' ++ indent ++ "}" ++ "\n"
   put (ls,i''-1,m'')
 
-processCtrl c = do 
-  return ()
-
 processCtrl (While e s1 _) = do
   indent <- getIndentation
   (s,i,m) <- get
@@ -124,6 +132,10 @@ processCtrl (While e s1 _) = do
   (s'', i', m') <- get   
   let ls = s'' ++ indent ++ "}" ++ "\n"
   put (ls,i'-1,m')
+
+processCtrl c = do 
+  return ()
+
 
 --
 --processCtrl (Assert e _) = do

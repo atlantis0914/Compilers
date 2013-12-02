@@ -38,10 +38,15 @@ genUtility =
 
 genModule :: String
 genModule =   
-  "var c0_export = c0module(this, {}, new Int32Array(4096));\n" ++ 
+  "var c0arr = new Int32Array(4096)\n" ++ 
+  "c0arr[0] = 4096;\n" ++ 
+  "var c0_export = c0module(this, {}, c0arr);\n" ++ 
   "var res = (c0_export.main())\n" ++ 
-  "var numEx = (c0_export.getNumEx())\n"
-
+  "var numEx = (c0_export.getNumEx())\n" ++
+  "var memEx = (c0_export.getMemEx())\n" ++
+  "print(\"Result: \" + res)\n" ++
+  "print(\"NumEx: \" + numEx)\n" ++
+  "print(\"MemEx: \" + memEx)\n"
 
 genAsmPrologue :: String -> String
 genAsmPrologue moduleName = 
@@ -70,7 +75,13 @@ genAsmPrologue moduleName =
   genPolyMod ++ 
   "\n\n" ++ 
   genPointerDeref ++ 
-  "\n\n" 
+  "\n\n" ++ 
+  genGenericAccessor ++ 
+  "\n\n" ++ 
+  genGenericFieldShift ++ 
+  "\n\n" ++ 
+  genGenericMemSet ++ 
+  "\n\n"
   
 
 genAsmEpilogue :: String 
@@ -98,9 +109,12 @@ genMemAllocator :: String
 genMemAllocator = 
   "  function memAlloc(size) {" ++ "\n" ++
   "    size = size | 0;" ++ "\n" ++ 
+  "    var ret = 0" ++  "\n" ++ 
   "    if ((g_heapoff | 0) < (g_stackoff | 0)) {" ++ "\n" ++ 
+  "      ret = g_heapoff | 0;" ++ "\n" ++ 
   "      g_heapoff = (g_heapoff | 0) + (size | 0) | 0;" ++ "\n" ++
   "    }" ++ "\n" ++ 
+  "   return ret | 0;" ++ "\n" ++ 
   "  }"
 
 genStackInitialization :: String
@@ -142,6 +156,31 @@ genPointerDeref =
   "    if ((loc | 0) == (0 | 0)) {\n" ++ 
   "      g_memex = 1;\n" ++ 
   "    }\n" ++ 
-  "    return H32[(loc | 0) >> 2] | 0;\n" ++ 
+  "    return loc | 0;\n" ++ 
   "  }"
 
+genGenericAccessor :: String
+genGenericAccessor = 
+  "  function fieldAccess(loc, off) {\n" ++ 
+  "    loc = loc | 0;\n" ++ 
+  "    off = off | 0;\n" ++ 
+  "    return H32[loc + off >> 2] | 0;\n" ++ 
+  "  }\n"
+
+genGenericFieldShift :: String
+genGenericFieldShift = 
+  "  function fieldShift(loc, off) {\n" ++
+  "    loc = loc | 0;\n" ++
+  "    off = off | 0;\n" ++
+  "    return (loc | 0) + (off | 0) | 0;\n" ++
+  "  }\n"
+
+ 
+genGenericMemSet :: String
+genGenericMemSet = 
+  "  function memSet(loc, val) {\n" ++ 
+  "    loc = loc | 0;\n" ++ 
+  "    val = val | 0;\n" ++ 
+  "    H32[loc >> 2] = val | 0;\n" ++ 
+  "    return;\n" ++ 
+  "  }\n"
