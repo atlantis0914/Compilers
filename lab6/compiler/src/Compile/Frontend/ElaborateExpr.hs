@@ -73,6 +73,7 @@ foldExpr e@(ExpPolyEq op e1 e2 p) = (ExpPolyEq op (foldExpr e1) (foldExpr e2) p)
 foldExpr e@(ExpLogOp op e1 e2 p) = (ExpLogOp op (foldExpr e1) (foldExpr e2) p)
 foldExpr e@(ExpTernary e1 e2 e3 p) = (ExpTernary (foldExpr e1) (foldExpr e2) (foldExpr e3) p)
 foldExpr e@(ExpUnOp BitwiseNot (ExpUnOp BitwiseNot e' p2) p1) = foldExpr e'
+foldExpr e@(ExpUnOp Neg (ExpUnOp Neg e' p2) p1) = foldExpr e'
 foldExpr e@(ExpUnOp op e1 p) = (ExpUnOp op (foldExpr e1) p)
 foldExpr e@(ExpFnCall n eList p) = (ExpFnCall n (map foldExpr eList) p)
 foldExpr e = e
