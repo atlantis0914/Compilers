@@ -4,12 +4,13 @@ import os
 import sys
 import getopt
 import re
+import glob
 import subprocess
 
 class col:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
+    HAPPYPURPLE = '\033[95m'
     WARNING = '\033[93m'
     FAIL = '\033[91m'
     ENDC = '\033[0m'
@@ -43,54 +44,81 @@ def validateTestRes(firstLine, asmTokens, fname):
     print("poop")
 
 
-def execC0File(fname):
+def execC0File(fname, quiet):
+  print("opetning " + fname)
   infile = open(fname, 'r')
   firstLine = infile.readline().split()
   testType = firstLine[1];
-  print(testType)
-  print(fname)
   compileProc = subprocess.Popen(['bin/l5c', '--asmjs', fname])
+  compileProcOut = compileProc.communicate()[0]
   compileProc.wait()
   if (compileProc.returncode != 0):
     #Pythons ternary operator is such nonsense, what a weird language
+    print(compileProcOut)
     testPass(fname,'') if (testType == 'error') else testFail(fname,"Compilation Failure")
+  if (not quiet):
+    print("CompilationMsgs: " + str(compileProcOut))
+
   jsName = os.path.splitext(fname)[0] + '.js'
-  print(jsName)
   asmProc = subprocess.Popen(['js', jsName], stdout=subprocess.PIPE)
   asmStdOut = asmProc.communicate()[0]
   asmTokens = asmStdOut.split('\n')
-  print(asmTokens)
   if (asmProc.returncode != 0):
+    print(asmStdOut)
     testFail(fname, "Error from SM shell:")
+  if (not quiet):
+    print("ExecutionMsgs: " + str(asmStdOut))
   validateTestRes(firstLine, asmTokens, fname)
 
+def execC0Dir(dname, quiet):
+  print(dname)
+  if (not os.path.isdir(dname)):
+    print("Invalid directory")
+    exit(2)
+  pth = os.path.realpath(dname)
+#  os.chdir(pth)
+  files = glob.glob(pth + '/*.l[1-4]')
+  for file in files:
+    filePath = file
+    execC0File(filePath, True)
+
+
 def testPass(fname, optMsg):
-  print col.OKGREEN + 'PASS: ' + fname + " " + optMsg + col.ENDC
-  exit(0)
+  print col.HAPPYPURPLE + 'PASS: ' + fname + " " + optMsg + col.ENDC
 
 def testFail(fname, optMsg):
   print col.FAIL + 'FAILURE: ' + fname + " " + optMsg + col.ENDC
-  exit(0)
 
 def main():
   try:
-    myopts, args = getopt.getopt(sys.argv[1:], "f:")
+    myopts, args = getopt.getopt(sys.argv[1:], "f:d:q")
   except getopt.GetoptError as e:
     print (str(e))
     print("Usage: %s -f c0file" % sys.argv[0])
     sys.exit(2)
 
   c0file = ''
+  testDir = ''
+  quiet = False
+  dirEx = False
+
   for o, a in myopts:
     if o == '-f':
       c0file = a
+    elif o == '-q':
+      quiet = True
+    elif o == '-d':
+      dirEx = True
+      testDir = a
     else:
       print("Unsupported arg : %s" % o)
   if (len(myopts) <= 0):
     print("Usage: %s -f c0file" % sys.argv[0])
     sys.exit(2)
-  execC0File(c0file)
+  if (dirEx):
+    execC0Dir(testDir, quiet)
+  else:
+    execC0File(c0file, quiet)
 
 if __name__ == "__main__":
   main()
-
