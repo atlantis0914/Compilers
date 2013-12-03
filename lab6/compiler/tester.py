@@ -48,7 +48,7 @@ def execC0File(fname, quiet):
   infile = open(fname, 'r')
   firstLine = infile.readline().split()
   testType = firstLine[1];
-  compileProc = subprocess.Popen(['bin/l5c', '--asmjs', fname])
+  compileProc = subprocess.Popen(['bin/l5c', '-l', '15411.h0','--asmjs', fname])
   compileProcOut = compileProc.communicate()[0]
   compileProc.wait()
   if (compileProc.returncode != 0):
@@ -59,7 +59,7 @@ def execC0File(fname, quiet):
     print("CompilationMsgs: " + str(compileProcOut))
 
   jsName = os.path.splitext(fname)[0] + '.js'
-  asmProc = subprocess.Popen(['js', jsName], stdout=subprocess.PIPE)
+  asmProc = subprocess.Popen(['js', '-b', '-j', jsName], stdout=subprocess.PIPE)
   asmStdOut = asmProc.communicate()[0]
   asmTokens = asmStdOut.split('\n')
   if (asmProc.returncode != 0):
