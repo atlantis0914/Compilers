@@ -45,7 +45,6 @@ def validateTestRes(firstLine, asmTokens, fname):
 
 
 def execC0File(fname, quiet):
-  print("opetning " + fname)
   infile = open(fname, 'r')
   firstLine = infile.readline().split()
   testType = firstLine[1];
@@ -80,7 +79,10 @@ def execC0Dir(dname, quiet):
   files = glob.glob(pth + '/*.l[1-4]')
   for file in files:
     filePath = file
-    execC0File(filePath, True)
+    try:
+      execC0File(filePath, True)
+    except: 
+      testFail(file, 'Unknown test failure')
 
 
 def testPass(fname, optMsg):
