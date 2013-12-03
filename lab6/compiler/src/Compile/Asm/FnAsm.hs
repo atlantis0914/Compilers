@@ -29,12 +29,12 @@ commaSep args =
   concatMap (\x -> x) $ 
   mapInd (\x -> 
           \i -> (if (i == (length args) - 1) 
-                   then x
-                   else x ++ ", ")) args
+                   then (sanitizeDeclVar x)
+                   else (sanitizeDeclVar x) ++ ", ")) args
 
 argumentCoercion :: [String] -> String
 argumentCoercion args = 
-  concatMap (\x -> "  " ++ x ++ " = " ++ x ++ " | 0;" ++ "\n") args
+  concatMap (\x -> "  " ++ (sanitizeDeclVar x) ++ " = " ++ (sanitizeDeclVar x) ++ " | 0;" ++ "\n") args
 
 processBody :: IRFuncDef -> AsmState ()
 processBody (IRFuncDef {funcBody = body}) = do
@@ -93,6 +93,12 @@ processStmt (IRAsgn lval o rval) = do
 processStmt (IRCtrl ctrl) = do
   processCtrl ctrl
 
+processStmt (IRNop) = do
+  return ()
+
+processStmt s = do
+  return (Trace.trace ("fuck : " ++ show s) $ ())
+
 processCtrl :: IRCtrl -> AsmState ()
 processCtrl (Return (Just rval) _) = do
   indent <- getIndentation
@@ -136,7 +142,6 @@ processCtrl (While e s1 _) = do
 processCtrl c = do 
   return ()
 
-
 --
 --processCtrl (Assert e _) = do
 --
@@ -155,7 +160,7 @@ processDeclVars [] = do
   return ()
 processDeclVars (x:xs) = do
   (s,i,m) <- get
-  let s' = s ++ "    var " ++ x ++ " = 0;\n"
+  let s' = s ++ "    var " ++ (sanitizeDeclVar x) ++ " = 0;\n"
   put (s',i,m)
   processDeclVars xs
 
@@ -168,6 +173,12 @@ extractIdentAST (IRAST stmt) = extractIdentStmt stmt (Set.empty)
 extractIdentStmt :: IRStmt -> Set.Set String -> Set.Set String
 extractIdentStmt (IRDecl name typ inner) s = 
   extractIdentStmt inner (Set.insert name s)
+
+extractIdentStmt (IRCtrl (If _ s1 s2 _)) s =
+  extractIdentStmt s2 (extractIdentStmt s1 s)
+
+extractIdentStmt (IRCtrl (While _ s1 _)) s = 
+  extractIdentStmt s1 s
 
 extractIdentStmt (IRBlock stmts) s = 
   extractIdentStmts stmts s

@@ -3,6 +3,7 @@ module Compile.Asm.Asm where
 import Compile.Types
 import Compile.Asm.FnAsm
 import Compile.Asm.StructAsm
+import Compile.Asm.LibraryAsm
 import System.FilePath
 import qualified Data.Map as Map
 import qualified Debug.Trace as Trace
@@ -10,14 +11,15 @@ import qualified Debug.Trace as Trace
 toAsm :: Job -> IRFnList -> String
 toAsm job (IRFnList decls) = 
   let
-    structMap = genStructMap decls
+--    structMap = genStructMap decls
+    libraryasm = generateLibraryAsm 
     moduleName = takeFileName $ jobSource job
     prologue = genAsmPrologue "c0module" 
-    structAccessors = genStructAccessorsFromMap structMap
+--    structAccessors = genStructAccessorsFromMap structMap
     fns = concatMap (\x -> (genAsmIRDecl x) ++ "\n") decls   
     epilogue = genAsmEpilogue 
   in
-    genUtility ++ prologue ++ structAccessors ++ fns ++ epilogue ++ genModule
+    libraryasm ++ genUtility ++ prologue ++ fns ++ epilogue ++ genModule
 
 polyFillMul :: String
 polyFillMul = 
@@ -40,13 +42,13 @@ genModule :: String
 genModule =   
   "var c0arr = new Int32Array(4096)\n" ++ 
   "c0arr[0] = 4096;\n" ++ 
-  "var c0_export = c0module(this, {}, c0arr);\n" ++ 
+  "var c0_export = c0module(this, foreignImports, c0arr);\n" ++ 
   "var res = (c0_export.main())\n" ++ 
   "var numEx = (c0_export.getNumEx())\n" ++
   "var memEx = (c0_export.getMemEx())\n" ++
   "print(\"Result: \" + res)\n" ++
   "print(\"NumEx: \" + numEx)\n" ++
-  "print(\"MemEx: \" + memEx)\n"
+  "print(\"MemEx: \" + memEx)"
 
 genAsmPrologue :: String -> String
 genAsmPrologue moduleName = 
@@ -65,6 +67,8 @@ genAsmPrologue moduleName =
   "  var imul = stdlib.Math.imul" ++ 
   "\n\n" ++ 
   "  // Function Declarations" ++ 
+  "\n\n" ++ 
+  genAsmBindings ++ 
   "\n\n" ++ 
   genMemAllocator ++ 
   "\n\n" ++ 
