@@ -55,6 +55,7 @@ def execC0File(fname, quiet):
     #Pythons ternary operator is such nonsense, what a weird language
     print(compileProcOut)
     testPass(fname,'') if (testType == 'error') else testFail(fname,"Compilation Failure")
+    return
   if (not quiet):
     print("CompilationMsgs: " + str(compileProcOut))
 
