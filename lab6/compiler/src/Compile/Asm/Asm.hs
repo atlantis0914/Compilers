@@ -40,8 +40,8 @@ genUtility =
 
 genModule :: String
 genModule =   
-  "var c0arr = new Int32Array(4096)\n" ++ 
-  "c0arr[0] = 4096;\n" ++ 
+  "var c0arr = new Int32Array(5000000)\n" ++ 
+  "c0arr[0] = 5000000;\n" ++ 
   "var c0_export = c0module(this, foreignImports, c0arr);\n" ++ 
   "var res = (c0_export.main())\n" ++ 
   "var numEx = (c0_export.getNumEx())\n" ++
@@ -113,7 +113,7 @@ genAsmIRDecl :: IRDecl -> String
 genAsmIRDecl (IRFDefn fdef) =  
   genAsmFnDecl fdef
 
-genAsmIRDecl (IRSDefn (IRStructDef sName sFlds sTyps sOffs _ sSz)) = ""
+genAsmIRDecl sdef@(IRSDefn (IRStructDef sName sFlds sTyps sOffs _ sSz)) = ""
 
 genMemAllocator :: String
 genMemAllocator = 

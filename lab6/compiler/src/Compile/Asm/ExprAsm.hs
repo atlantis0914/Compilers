@@ -42,15 +42,17 @@ processIRExpr (IRExpArraySubscript arrE offE typ stride) = do
   let ret = "(fieldAccess(" ++ arrStr ++ " | 0, (imul((" ++ offE ++ " | 0)," ++ (show (stride `div` 4)) ++ " | 0) | 0)) | 0)"
   return ret
 
-
 processIRExpr (IRExpDereference e typ i) = do
-  estr <- processIRExpr e
-  let ret = "((" ++ estr ++ " | 0) | 0)"
+--  estr <- processIRExpr e
+  estr <- chainDeref processIRExpr e
+  let ret = "(pointerLoad(" ++ estr ++ " | 0) | 0)"
   return ret
 
-processIRExpr (IRExpFieldSelect e f typ i1 i2) = do
-  estr <- processIRExpr e
-  let ret = "(fieldAccess(" ++ estr ++ " | 0," ++ (show (i1 `div` 4)) ++ " | 0) | 0)"
+processIRExpr ex@(IRExpFieldSelect e f typ i1 i2) = do
+--  estr <- processIRExpr e
+  estr <- producePtr processIRExpr ex
+  let ret = estr
+--  let ret = "(fieldAccess(" ++ estr ++ " | 0," ++ (show (i1 `div` 4)) ++ " | 0) | 0)"
   return ret
 
 processIRExpr (IRExpFnCall fname argList i) = do
@@ -112,22 +114,76 @@ processBinaryOperation op e1 e2 = do
   let ret = "(" ++ s1 ++ " | 0) " ++ oStr ++ " (" ++ s2 ++ " | 0)"
   return ret
 
-handleLVal (IRExpDereference inner typ i) = do
-  innerStr <- processIRExpr inner
+-- exprMem :: IRExpr -> AsmState String
+-- exprMem (IRExpDereference (IRExpDereference inner typ i) typ' i') = do
+--   innerStr <_ process
+-- exprMem (IRExpDereference inner typ i) = do
+--   innerStr <-  inner
+--   let ret = "(pointerDeref(" ++ innerStr ++ " | 0) | 0)"
+--   return ret
+
+chainDeref :: (IRExpr -> AsmState String) -> IRExpr -> AsmState String
+chainDeref f e@(IRExpDereference (IRIdent id i) typ i2) = do
+  f e
+  
+chainDeref f (IRExpDereference inner typ i) = do
+  innerStr <- chainDeref f inner
+  let ret = "(pointerLoad(" ++ innerStr ++ " | 0) | 0)"
+  return ret
+
+chainDeref f e = f e
+
+chainFieldAccess f (IRExpFieldSelect inner field typ i1 i2) = do
+  innerStr <- chainFieldAccess f inner
+  let ret = "(fieldShift((" ++ innerStr ++ " | 0)," ++ show (i1 `div` 4) ++ " | 0) | 0)"
+  return ret
+
+chainFieldAccess f e = f e 
+
+producePtr :: (IRExpr -> AsmState String) -> IRExpr -> AsmState String
+producePtr f e@(IRExpFieldSelect (IRIdent _ _) field typ i1 i2) = do
+  f e
+
+producePtr f (IRExpFieldSelect inner field typ i1 i2) = do
+  innerStr <- chainFieldAccess (producePtr f) inner
+  let ret = "(fieldAccess((" ++ innerStr ++ " | 0)," ++ show (i1 `div` 4) ++ " | 0) | 0)"
+  return ret
+
+producePtr f (IRExpDereference inner typ i) = do
+  innerStr <- chainDeref (producePtr f) inner
+  let ret = "(pointerDeref(" ++ innerStr ++ " |0) | 0)"
+  return ret
+
+producePtr f (IRIdent id i) = do
+  let ret = " " ++ (sanitizeDeclVar id) ++ " "
+  return ret
+
+handleLVal (IRIdent id i) = do
+  let ret = " " ++ (sanitizeDeclVar id) ++ " "
+  return ret
+
+handleLVal (IRExpDereference inner@(IRIdent _ _) typ i) = do
+  innerStr <- chainDeref handleLVal inner
   let ret = "(pointerDeref(" ++ innerStr ++ " | 0) | 0)"
   return ret
 
-handleLVal (IRExpFieldSelect (IRExpDereference inner intyp i)  f typ i1 i2) = do
-  innerStr <- processIRExpr inner
-  let ret = "(fieldShift((pointerDeref(" ++ innerStr ++ " | 0) | 0)," ++ (show (i1 `div` 4)) ++ " |0) | 0)"
+handleLVal (IRExpDereference inner typ i) = do
+  innerStr <- chainDeref handleLVal inner
+  let ret = "(pointerLoad(" ++ innerStr ++ " | 0) | 0)"
+  return ret
+
+handleLVal (IRExpFieldSelect inner f typ i1 i2) = do
+  innerStr <- handleLVal inner 
+  let ret = "(fieldShift((" ++ innerStr ++ " | 0)," ++ show (i1 `div` 4) ++ " | 0) | 0)"
   return ret
 
 handleLVal (IRExpArraySubscript arrE offE typ stride) = do
   arrStr <- processIRExpr arrE
   offE <- processIRExpr offE
-  let ret = "(fieldShift(" ++ arrStr ++ " | 0, (imul((" ++ offE ++ " | 0)," ++ (show (stride `div` 4)) ++ " | 0) | 0) | 0) | 0)"
+  let ret = "(fieldShift(" ++ arrStr ++ " | 0, (imul((" ++ offE ++ " | 0)," ++ (show (stride `div` 4)) ++ " | 0) | 0)))"
   return ret
-  
+
+handleLVal l = error ("err: " ++ show l) 
 
 processIROp :: Op -> String
 processIROp Mul = error ("Should be manually handling mul")

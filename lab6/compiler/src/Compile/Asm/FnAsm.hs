@@ -93,6 +93,13 @@ processStmt (IRAsgn lval o rval) = do
 processStmt (IRCtrl ctrl) = do
   processCtrl ctrl
 
+processStmt (IRExpr e) = do
+  estr <- processIRExpr e
+  (s,i,m) <- get
+  let s' = s ++ estr ++ ";\n"
+  put (s',i,m)
+  return ()
+
 processStmt (IRNop) = do
   return ()
 
