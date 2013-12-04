@@ -57,11 +57,12 @@ genAsmPrologue moduleName =
   "\n\n" ++ 
   "  // Global Declarations" ++ "\n" ++ 
   "  var H32 = new stdlib.Int32Array(heap);" ++ "\n" ++ 
-  "  var g_heapoff = 0;" ++ "\n" ++ 
+  "  var g_heapoff = 1;" ++ "\n" ++ 
   "  var g_stackoff = 0;" ++
   "\n\n" ++ 
   "  // Global Exception Catchers" ++ "\n" ++ 
   "  var g_memex = 0;" ++ "\n" ++ 
+  "  var g_oomex = 0;" ++ "\n" ++ 
   "  var g_numex = 0;" ++ "\n" ++ 
   "  var g_assertex = 0;" ++ "\n" ++ 
   "  var imul = stdlib.Math.imul" ++ 
@@ -79,6 +80,8 @@ genAsmPrologue moduleName =
   genPolyMod ++ 
   "\n\n" ++ 
   genPointerDeref ++ 
+  "\n\n" ++ 
+  genPointerLoad ++
   "\n\n" ++ 
   genGenericAccessor ++ 
   "\n\n" ++ 
@@ -100,7 +103,10 @@ genAsmEpilogue =
   "  function getMemEx() {\n" ++ 
   "    return g_memex | 0;\n" ++ 
   "  }\n" ++
-  "  return { main : main , getNumEx : getNumEx, getMemEx : getMemEx }" ++ "\n\n" ++ 
+  "  function getOomEx() {\n" ++ 
+  "    return g_oomex | 0;\n" ++ 
+  "  }\n" ++
+  "  return { main : main , getNumEx : getNumEx, getMemEx : getMemEx, getOomEx : getOomEx }" ++ "\n\n" ++ 
   "}\n"
 
 genAsmIRDecl :: IRDecl -> String
@@ -114,17 +120,19 @@ genMemAllocator =
   "  function memAlloc(size) {" ++ "\n" ++
   "    size = size | 0;" ++ "\n" ++ 
   "    var ret = 0" ++  "\n" ++ 
-  "    if ((g_heapoff | 0) < (g_stackoff | 0)) {" ++ "\n" ++ 
+  "    if ((g_heapoff | 0) < (H32[0] | 0)) {" ++ "\n" ++ 
   "      ret = g_heapoff | 0;" ++ "\n" ++ 
   "      g_heapoff = (g_heapoff | 0) + (size | 0) | 0;" ++ "\n" ++
-  "    }" ++ "\n" ++ 
+  "    } else {" ++ "\n" ++ 
+  "      g_oomex = 1 | 0;\n" ++
+  "    }\n" ++
   "   return ret | 0;" ++ "\n" ++ 
   "  }"
 
 genStackInitialization :: String
 genStackInitialization = 
   "  function stackInit() {" ++ "\n" ++
-  "    g_stackoff = (H32[0 >> 2] | 0) - 1 | 0;" ++ "\n" ++ 
+  "    g_stackoff = (H32[0] | 0) - 1 | 0;" ++ "\n" ++ 
   "  }"
 
 genPolyDiv :: String
@@ -163,12 +171,22 @@ genPointerDeref =
   "    return loc | 0;\n" ++ 
   "  }"
 
+genPointerLoad :: String
+genPointerLoad = 
+  "  function pointerLoad(loc) {\n" ++ 
+  "    loc = loc | 0;\n" ++ 
+  "    if ((loc | 0) == (0 | 0)) {\n" ++ 
+  "      g_memex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    return H32[loc] | 0;\n" ++ 
+  "  }"
+
 genGenericAccessor :: String
 genGenericAccessor = 
   "  function fieldAccess(loc, off) {\n" ++ 
   "    loc = loc | 0;\n" ++ 
   "    off = off | 0;\n" ++ 
-  "    return H32[loc + off >> 2] | 0;\n" ++ 
+  "    return H32[loc + off] | 0;\n" ++ 
   "  }\n"
 
 genGenericFieldShift :: String
@@ -185,6 +203,6 @@ genGenericMemSet =
   "  function memSet(loc, val) {\n" ++ 
   "    loc = loc | 0;\n" ++ 
   "    val = val | 0;\n" ++ 
-  "    H32[loc >> 2] = val | 0;\n" ++ 
+  "    H32[loc] = val | 0;\n" ++ 
   "    return;\n" ++ 
   "  }\n"

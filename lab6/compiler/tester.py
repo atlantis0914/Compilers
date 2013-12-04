@@ -53,8 +53,7 @@ def execC0File(fname, quiet):
   compileProc.wait()
   if (compileProc.returncode != 0):
     #Pythons ternary operator is such nonsense, what a weird language
-    print(compileProcOut)
-    testPass(fname,'') if (testType == 'error') else testFail(fname,"Compilation Failure")
+    testPass(fname,'') if (testType == 'error') else testFail(fname,compileProcOut + "Compilation Failure")
     return
   if (not quiet):
     print("CompilationMsgs: " + str(compileProcOut))

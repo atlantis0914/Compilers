@@ -81,7 +81,7 @@ processStmt (IRAsgn (lval@(IRIdent _ _)) o rval) = do
 
 processStmt (IRAsgn lval o rval) = do
   indent <- getIndentation
-  lStr <- processIRExpr lval
+  lStr <- handleLVal lval
   rStr <- processIRExpr rval
   (s,i,m) <- get
   let s' = s ++ indent ++ "memSet(" ++ lStr ++ " | 0, " ++ rStr ++ " | 0);" ++ "\n"

@@ -38,7 +38,7 @@ processIRExpr (IRExpAllocArray typ e i) = do
 
 processIRExpr (IRExpDereference e typ i) = do
   estr <- processIRExpr e
-  let ret = "(pointerDeref(" ++ estr ++ " | 0) | 0)"
+  let ret = "((" ++ estr ++ " | 0) | 0)"
   return ret
 
 processIRExpr (IRExpFieldSelect e f typ i1 i2) = do
@@ -105,6 +105,21 @@ processBinaryOperation op e1 e2 = do
   let ret = "(" ++ s1 ++ " | 0) " ++ oStr ++ " (" ++ s2 ++ " | 0)"
   return ret
 
+handleLVal (IRExpDereference inner typ i) = do
+  innerStr <- processIRExpr inner
+  let ret = "(pointerDeref(" ++ innerStr ++ " | 0) | 0)"
+  return ret
+
+handleLVal (IRExpFieldSelect (IRExpDereference inner intyp i)  f typ i1 i2) = do
+  innerStr <- processIRExpr inner
+  let ret = "(fieldShift((pointerDeref(" ++ innerStr ++ " | 0) | 0)," ++ (show (i1 `div` 4)) ++ " |0) | 0)"
+  return ret
+
+-- handleLVal (IRExpArraySubscript arrE offE typ stride) = do
+--   arrStr <- processIRExpr arrE
+--   offE <- processIRExpr offE
+  
+
 processIROp :: Op -> String
 processIROp Mul = error ("Should be manually handling mul")
 processIROp Div = error ("Should be manually handling div")
@@ -135,10 +150,4 @@ commaSeparate [x] = x
 commaSeparate (x:xs) = x ++ "," ++ (commaSeparate xs)
 
 sanitizeDeclVar :: String -> String
-sanitizeDeclVar "null" = "reserved_null_reserved" 
-sanitizeDeclVar "do" = "reserved_do_reserved" 
-sanitizeDeclVar "in" = "reserved_in_reserved" 
-sanitizeDeclVar "new" = "reserved_new_reserved" 
-sanitizeDeclVar "var" = "reserved_var_reserved" 
-sanitizeDeclVar "try" = "reserved_try_reserved" 
-sanitizeDeclVar x = x
+sanitizeDeclVar x = "c0_var_" ++ x
