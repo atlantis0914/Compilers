@@ -36,6 +36,13 @@ processIRExpr (IRExpAllocArray typ e i) = do
   let ret = "(memAlloc(imul(" ++ eStr ++ " | 0," ++ (show (i `div` 4)) ++ " | 0) | 0) | 0)"
   return ret
 
+processIRExpr (IRExpArraySubscript arrE offE typ stride) = do
+  arrStr <- processIRExpr arrE
+  offE <- processIRExpr offE
+  let ret = "(fieldAccess(" ++ arrStr ++ " | 0, (imul((" ++ offE ++ " | 0)," ++ (show (stride `div` 4)) ++ " | 0) | 0)) | 0)"
+  return ret
+
+
 processIRExpr (IRExpDereference e typ i) = do
   estr <- processIRExpr e
   let ret = "((" ++ estr ++ " | 0) | 0)"
@@ -115,9 +122,11 @@ handleLVal (IRExpFieldSelect (IRExpDereference inner intyp i)  f typ i1 i2) = do
   let ret = "(fieldShift((pointerDeref(" ++ innerStr ++ " | 0) | 0)," ++ (show (i1 `div` 4)) ++ " |0) | 0)"
   return ret
 
--- handleLVal (IRExpArraySubscript arrE offE typ stride) = do
---   arrStr <- processIRExpr arrE
---   offE <- processIRExpr offE
+handleLVal (IRExpArraySubscript arrE offE typ stride) = do
+  arrStr <- processIRExpr arrE
+  offE <- processIRExpr offE
+  let ret = "(fieldShift(" ++ arrStr ++ " | 0, (imul((" ++ offE ++ " | 0)," ++ (show (stride `div` 4)) ++ " | 0) | 0) | 0) | 0)"
+  return ret
   
 
 processIROp :: Op -> String
