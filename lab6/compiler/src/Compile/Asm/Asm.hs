@@ -73,6 +73,8 @@ genAsmPrologue moduleName =
   "\n\n" ++ 
   genMemAllocator ++ 
   "\n\n" ++ 
+  genMemArrAllocator ++ 
+  "\n\n" ++ 
   genStackInitialization ++ 
   "\n\n" ++ 
   genPolyDiv ++ 
@@ -85,7 +87,11 @@ genAsmPrologue moduleName =
   "\n\n" ++ 
   genGenericAccessor ++ 
   "\n\n" ++ 
+  genArrAccessor ++ 
+  "\n\n" ++ 
   genGenericFieldShift ++ 
+  "\n\n" ++ 
+  genGenericArrShift ++ 
   "\n\n" ++ 
   genGenericMemSet ++ 
   "\n\n"
@@ -126,6 +132,21 @@ genMemAllocator =
   "    } else {" ++ "\n" ++ 
   "      g_oomex = 1 | 0;\n" ++
   "    }\n" ++
+  "   return ret | 0;" ++ "\n" ++ 
+  "  }"
+
+genMemArrAllocator :: String
+genMemArrAllocator = 
+  "  function memArrAlloc(size, numElems) {" ++ "\n" ++
+  "    size = size | 0;" ++ "\n" ++ 
+  "    var ret = 0" ++  "\n" ++ 
+  "    if ((g_heapoff | 0) < (H32[0] | 0)) {" ++ "\n" ++ 
+  "      ret = g_heapoff | 0;" ++ "\n" ++ 
+  "      g_heapoff = (g_heapoff | 0) + (size | 0) | 0;" ++ "\n" ++
+  "    } else {" ++ "\n" ++ 
+  "      g_oomex = 1 | 0;\n" ++
+  "    }\n" ++
+  "    H32[ret | 0] = (numElems | 0);\n" ++
   "   return ret | 0;" ++ "\n" ++ 
   "  }"
 
@@ -189,6 +210,20 @@ genGenericAccessor =
   "    return H32[loc + off] | 0;\n" ++ 
   "  }\n"
 
+genArrAccessor :: String
+genArrAccessor = 
+  "  function arrAccess(loc, off) {\n" ++ 
+  "    loc = loc | 0;\n" ++ 
+  "    off = off | 0;\n" ++ 
+  "    if ((off | 0) < (0 | 0)) {\n" ++ 
+  "      g_memex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    if ((off | 0) >= H32[loc | 0]) {\n" ++ 
+  "      g_memex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    return H32[loc + off + (1 | 0)] | 0;\n" ++ 
+  "  }\n"
+
 genGenericFieldShift :: String
 genGenericFieldShift = 
   "  function fieldShift(loc, off) {\n" ++
@@ -197,6 +232,19 @@ genGenericFieldShift =
   "    return (loc | 0) + (off | 0) | 0;\n" ++
   "  }\n"
 
+genGenericArrShift :: String
+genGenericArrShift = 
+  "  function arrShift(loc, off) {\n" ++
+  "    loc = loc | 0;\n" ++
+  "    off = off | 0;\n" ++
+  "    if ((off | 0) < (0 | 0)) {\n" ++ 
+  "      g_memex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    if ((off | 0) >= H32[loc | 0]) {\n" ++ 
+  "      g_memex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    return (loc | 0) + (off | 0) + (1 | 0) | 0;\n" ++
+  "  }\n"
  
 genGenericMemSet :: String
 genGenericMemSet = 

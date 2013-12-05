@@ -33,13 +33,13 @@ processIRExpr (IRExpAlloc typ i) = do
 
 processIRExpr (IRExpAllocArray typ e i) = do
   eStr <- processIRExpr e
-  let ret = "(memAlloc(imul(" ++ eStr ++ " | 0," ++ (show (i `div` 4)) ++ " | 0) | 0) | 0)"
+  let ret = "(memArrAlloc(imul(" ++ eStr ++ " | 0," ++ (show (i `div` 4)) ++ " | 0) | 0) | 0 + (1 | 0), " ++ (show (i `div` 4)) ++ ")"
   return ret
 
 processIRExpr (IRExpArraySubscript arrE offE typ stride) = do
   arrStr <- processIRExpr arrE
   offE <- processIRExpr offE
-  let ret = "(fieldAccess(" ++ arrStr ++ " | 0, (imul((" ++ offE ++ " | 0)," ++ (show (stride `div` 4)) ++ " | 0) | 0)) | 0)"
+  let ret = "(arrAccess(" ++ arrStr ++ " | 0, (imul((" ++ offE ++ " | 0)," ++ (show (stride `div` 4)) ++ " | 0) | 0)) | 0)"
   return ret
 
 processIRExpr (IRExpDereference e typ i) = do
@@ -180,7 +180,7 @@ handleLVal (IRExpFieldSelect inner f typ i1 i2) = do
 handleLVal (IRExpArraySubscript arrE offE typ stride) = do
   arrStr <- processIRExpr arrE
   offE <- processIRExpr offE
-  let ret = "(fieldShift(" ++ arrStr ++ " | 0, (imul((" ++ offE ++ " | 0)," ++ (show (stride `div` 4)) ++ " | 0) | 0)))"
+  let ret = "(arrShift(" ++ arrStr ++ " | 0, (imul((" ++ offE ++ " | 0)," ++ (show (stride `div` 4)) ++ " | 0) | 0)))"
   return ret
 
 handleLVal l = error ("err: " ++ show l) 
