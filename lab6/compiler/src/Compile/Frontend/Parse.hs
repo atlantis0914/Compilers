@@ -428,7 +428,7 @@ checkExprForFuckery (ExpBinMem PArrayRef e1 _ _) = do
   (_,idState) <- getState
   let res = probeArr idState e1 1
   if (res) 
-    then Trace.trace ("returning") $ do return ()
+    then do return ()
     else do fail "What is a goshawk anyway"
 checkExprForFuckery _ = do return ()
 
