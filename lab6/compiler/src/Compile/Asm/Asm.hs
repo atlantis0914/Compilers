@@ -139,6 +139,9 @@ genMemArrAllocator :: String
 genMemArrAllocator = 
   "  function memArrAlloc(size, numElems) {" ++ "\n" ++
   "    size = size | 0;" ++ "\n" ++ 
+  "    numElems = numElems | 0;" ++ "\n" ++ 
+  "    size = (size | 0) + (1 | 0) | 0;" ++ "\n" ++ 
+  "    numElems = (size | 0) / (numElems | 0) | 0;" ++ "\n" ++ 
   "    var ret = 0" ++  "\n" ++ 
   "    if ((g_heapoff | 0) < (H32[0] | 0)) {" ++ "\n" ++ 
   "      ret = g_heapoff | 0;" ++ "\n" ++ 

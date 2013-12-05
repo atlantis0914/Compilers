@@ -149,6 +149,11 @@ producePtr f (IRExpFieldSelect inner field typ i1 i2) = do
   let ret = "(fieldAccess((" ++ innerStr ++ " | 0)," ++ show (i1 `div` 4) ++ " | 0) | 0)"
   return ret
 
+--producePtr f (IRExpDereference inner (IStruct _) i) = do
+--  innerStr <- chainDeref (producePtr f) inner
+--  let ret = "(pointerLoad(" ++ innerStr ++ " |0) | 0)"
+--  return ret
+
 producePtr f (IRExpDereference inner typ i) = do
   innerStr <- chainDeref (producePtr f) inner
   let ret = "(pointerDeref(" ++ innerStr ++ " |0) | 0)"
@@ -157,6 +162,13 @@ producePtr f (IRExpDereference inner typ i) = do
 producePtr f (IRIdent id i) = do
   let ret = " " ++ (sanitizeDeclVar id) ++ " "
   return ret
+
+producePtr f (IRExpArraySubscript arrE offE (IPtr (IStruct _)) stride) = do
+  arrStr <- f arrE
+  offE <- f offE
+  let ret = "(arrAccess(" ++ arrStr ++ " | 0, (imul((" ++ offE ++ " | 0)," ++ (show (stride `div` 4)) ++ " | 0) | 0)))"
+  return ret
+
 
 producePtr f (IRExpArraySubscript arrE offE typ stride) = do
   arrStr <- f arrE

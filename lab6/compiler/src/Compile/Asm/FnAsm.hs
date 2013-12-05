@@ -12,6 +12,7 @@ import Control.Monad.State
 
 -- TODO : 
 -- write struct accessor methods 
+--  Trace.trace("Fn \n" ++ show fdef) $ 
 
 genAsmFnDecl :: IRFuncDef -> String 
 genAsmFnDecl fdef@(IRFuncDef name args argTypes retType body argSizes) = 
