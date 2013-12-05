@@ -158,6 +158,14 @@ producePtr f (IRIdent id i) = do
   let ret = " " ++ (sanitizeDeclVar id) ++ " "
   return ret
 
+producePtr f (IRExpArraySubscript arrE offE typ stride) = do
+  arrStr <- f arrE
+  offE <- f offE
+  let ret = "(fieldShift(" ++ arrStr ++ " | 0, (imul((" ++ offE ++ " | 0)," ++ (show (stride `div` 4)) ++ " | 0) | 0)))"
+  return ret
+
+producePtr f e = error ("got e" ++ show e)
+
 handleLVal (IRIdent id i) = do
   let ret = " " ++ (sanitizeDeclVar id) ++ " "
   return ret
