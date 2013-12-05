@@ -33,7 +33,7 @@ processIRExpr (IRExpAlloc typ i) = do
 
 processIRExpr (IRExpAllocArray typ e i) = do
   eStr <- processIRExpr e
-  let ret = "(memArrAlloc(imul(" ++ eStr ++ " | 0," ++ (show (i `div` 4)) ++ " | 0) | 0) | 0 + (1 | 0), " ++ (show (i `div` 4)) ++ ")"
+  let ret = "(memArrAlloc(imul(" ++ eStr ++ " | 0," ++ (show (i `div` 4)) ++ " | 0) | 0 + (1 | 0), " ++ (show (i `div` 4)) ++ ") | 0)"
   return ret
 
 processIRExpr (IRExpArraySubscript arrE offE typ stride) = do
@@ -161,7 +161,7 @@ producePtr f (IRIdent id i) = do
 producePtr f (IRExpArraySubscript arrE offE typ stride) = do
   arrStr <- f arrE
   offE <- f offE
-  let ret = "(fieldShift(" ++ arrStr ++ " | 0, (imul((" ++ offE ++ " | 0)," ++ (show (stride `div` 4)) ++ " | 0) | 0)))"
+  let ret = "(arrShift(" ++ arrStr ++ " | 0, (imul((" ++ offE ++ " | 0)," ++ (show (stride `div` 4)) ++ " | 0) | 0)))"
   return ret
 
 producePtr f e = error ("got e" ++ show e)

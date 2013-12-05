@@ -212,7 +212,7 @@ genGenericAccessor =
 
 genArrAccessor :: String
 genArrAccessor = 
-  "  function arrAccess(loc, off) {\n" ++ 
+  "  function arrAccess(loc, off, s) {\n" ++ 
   "    loc = loc | 0;\n" ++ 
   "    off = off | 0;\n" ++ 
   "    if ((off | 0) < (0 | 0)) {\n" ++ 
@@ -221,7 +221,7 @@ genArrAccessor =
   "    if ((off | 0) >= H32[loc | 0]) {\n" ++ 
   "      g_memex = 1;\n" ++ 
   "    }\n" ++ 
-  "    return H32[loc + off + (1 | 0)] | 0;\n" ++ 
+  "    return H32[loc + off + (s | 0)] | 0;\n" ++ 
   "  }\n"
 
 genGenericFieldShift :: String
@@ -234,7 +234,7 @@ genGenericFieldShift =
 
 genGenericArrShift :: String
 genGenericArrShift = 
-  "  function arrShift(loc, off) {\n" ++
+  "  function arrShift(loc, off, s) {\n" ++
   "    loc = loc | 0;\n" ++
   "    off = off | 0;\n" ++
   "    if ((off | 0) < (0 | 0)) {\n" ++ 
@@ -243,7 +243,7 @@ genGenericArrShift =
   "    if ((off | 0) >= H32[loc | 0]) {\n" ++ 
   "      g_memex = 1;\n" ++ 
   "    }\n" ++ 
-  "    return (loc | 0) + (off | 0) + (1 | 0) | 0;\n" ++
+  "    return (loc | 0) + (off | 0) + (s | 0) | 0;\n" ++
   "  }\n"
  
 genGenericMemSet :: String
