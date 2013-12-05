@@ -21,8 +21,14 @@ genAsmFnDecl fdef@(IRFuncDef name args argTypes retType body argSizes) =
     "  function " ++ name ++ 
       " (" ++ (commaSep args) ++ ")" ++ " {" ++ "\n" ++ 
       (argumentCoercion args) ++ 
+      localVarDecls ++ 
       fStr ++ "\n" ++ 
     "  }\n"
+
+
+localVarDecls :: String 
+localVarDecls = 
+  "temp_ptr = 0;\n"
 
 commaSep :: [String] -> String
 commaSep args = 
@@ -69,26 +75,40 @@ processStmt (IRDecl dName dTyp dScp) = do
 --  put (s, i', m')
   processStmt dScp
 
-processStmt (IRAsgn (lval@(IRIdent _ _)) o rval) = do
+processStmt (IRAsgn (lval@(IRIdent id _)) o rval) = do
   indent <- getIndentation
   lStr <- processIRExpr lval
   rStr <- processIRExpr rval
   (s,i,m) <- get
-  let s' = s ++ indent ++ lStr ++ " = " ++ rStr ++ "| 0;" ++ "\n"
-  put (s',i,m)
-  -- TODO
-  return ()  
+  case o of 
+    Nothing -> (do
+      let s' = s ++ indent ++ lStr ++ " = " ++ rStr ++ "| 0;" ++ "\n"
+      put (s',i,m)
+      -- TODO
+      return ())
+    Just(op) -> (do
+      let s' = s ++ indent ++ lStr ++ " = (" ++ coerceForOp lStr op rStr ++ " |0) | 0;\n"
+      put (s',i,m)
+      return ())
 
 processStmt (IRAsgn lval o rval) = do
   indent <- getIndentation
   lStr <- handleLVal lval
   rStr <- processIRExpr rval
   (s,i,m) <- get
-  let s' = s ++ indent ++ "memSet(" ++ lStr ++ " | 0, " ++ rStr ++ " | 0);" ++ "\n"
---   let s' = s ++ indent ++ lStr ++ " = " ++ rStr ++ "| 0;" ++ "\n"
-  put (s',i,m)
-  -- TODO
-  return ()  
+  case o of 
+    Nothing -> (do
+      let s' = s ++ indent ++ "memSet(" ++ lStr ++ " | 0, " ++ rStr ++ " | 0);" ++ "\n"
+      put (s',i,m)
+      return ())
+    Just(op) -> (do 
+      let var = indent ++ "temp_ptr = " ++ lStr ++ " | 0;\n"
+      let s' = s ++ var ++ indent ++ "memSet(temp_ptr | 0," ++ 
+                "(" ++ (coerceForOp "(pointerLoad(temp_ptr | 0) | 0)" op rStr) ++ " | 0));" ++ "\n"
+      put (s',i,m)
+      return ())
+
+      
 
 processStmt (IRCtrl ctrl) = do
   processCtrl ctrl
@@ -202,4 +222,15 @@ getIndentation = do
   (s,i,m) <- get
   let ret = concatMap (\x -> x) $ replicate (i*2) " "
   return ret
-  
+
+coerceForOp lstr Mul rStr = 
+  "(imul(" ++ lstr ++ "," ++ rStr ++ "))"
+
+coerceForOp lstr Div rStr = 
+  "(polyDiv(" ++ lstr ++ "," ++ rStr ++ "))"
+
+coerceForOp lstr Mod rStr = 
+  "(polyMod(" ++ lstr ++ "," ++ rStr ++ "))"
+
+coerceForOp lstr op rStr =
+ lstr ++ processIROp op ++ rStr
