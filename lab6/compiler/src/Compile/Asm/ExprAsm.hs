@@ -176,7 +176,7 @@ producePtr f (IRExpArraySubscript arrE offE typ stride) = do
   let ret = "(arrShift(" ++ arrStr ++ " | 0, (imul((" ++ offE ++ " | 0)," ++ (show (stride `div` 4)) ++ " | 0) | 0)))"
   return ret
 
-producePtr f e = error ("got e" ++ show e)
+producePtr f e = f e -- error ("got e" ++ show e)
 
 handleLVal (IRIdent id i) = do
   let ret = " " ++ (sanitizeDeclVar id) ++ " "
