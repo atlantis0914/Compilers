@@ -33,7 +33,7 @@ processIRExpr (IRExpAlloc typ i) = do
 
 processIRExpr (IRExpAllocArray typ e i) = do
   eStr <- processIRExpr e
-  let ret = "(memArrAlloc(imul(" ++ eStr ++ " | 0," ++ (show (i `div` 4)) ++ " | 0) | 0 + (1 | 0), " ++ (show (i `div` 4)) ++ ") | 0)"
+  let ret = "(memArrAlloc(imul(" ++ eStr ++ " | 0," ++ (show (i `div` 4)) ++ " | 0) | 0, " ++ (show (i `div` 4)) ++ ") | 0)"
   return ret
 
 processIRExpr (IRExpArraySubscript arrE offE typ stride) = do

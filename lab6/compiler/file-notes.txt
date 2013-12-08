@@ -1,0 +1,35 @@
+HEAP TESTS:
+utahraptor-signalchain : tests ability to alloc big heap
+titanium-sprinkles.l4 : tests ability to alloc big heap
+tin-return-ohgodwhy.l4 : ""
+theoden-climbed-a-tree.l4 : "" + takes eons
+stegosaurus-distant_points.l4 : "" + takes eons
+strontium-14-trees.l4 : "" + takes eons (w/500mg heap)
+nickel-struct_test02.l4 : "" (quick)
+nickel-struct_test01.js : needs massive heap to compute correctly (500mg suffices)
+calcium-tort-n-hair-return.l4 : "" (500mg)
+barium-arrayarraystress.l4 : (500mg)
+
+RECURSION FAILURES:
+saltopus-ackermann_peano2.l4 : too much recursion
+barium-auto-cannibal-allocator.l4
+barium-qsort.l4
+bergil-tree-fun.l4
+deagol-has-a-big-stack.l4
+eomer-linked-list2.l4
+isildur-has-a-lot-of-algebra-homework.l4
+mercury-oh---you-touch-my-tralala.l4
+theoden-has-holes-in-his-socks.l4
+titanium-spooky.l4
+utahraptor-nest.l4
+
+
+FLOAT TESTS:
+barium-padding-magic.l4
+ankylosaurus-return05.l4
+bismuth-pi.l4
+
+
+ANNOYANCES: 
+l4err/denethor-ex1.l4 : 
+l4err/eomer-side-effects.l4
