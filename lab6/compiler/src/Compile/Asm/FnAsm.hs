@@ -167,8 +167,12 @@ processCtrl (While e s1 _) = do
   let ls = s'' ++ indent ++ "}" ++ "\n"
   put (ls,i'-1,m')
 
-processCtrl c = do 
-  return ()
+processCtrl (Assert e _) = do
+  indent <- getIndentation
+  (s,i,m) <- get
+  eStr <- processIRExpr e
+  let s' = s ++ indent ++ "assert(" ++ eStr ++ " | 0)" ++ "\n"
+  put(s',i,m)
 
 --
 --processCtrl (Assert e _) = do

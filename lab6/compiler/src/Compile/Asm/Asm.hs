@@ -46,9 +46,11 @@ genModule =
   "var res = (c0_export.main())\n" ++ 
   "var numEx = (c0_export.getNumEx())\n" ++
   "var memEx = (c0_export.getMemEx())\n" ++
+  "var assEx = (c0_export.getAssEx())\n" ++
   "print(\"Result: \" + res)\n" ++
   "print(\"NumEx: \" + numEx)\n" ++
-  "print(\"MemEx: \" + memEx)"
+  "print(\"MemEx: \" + memEx)\n" ++ 
+  "print(\"AssEx: \" + assEx)"
 
 genAsmPrologue :: String -> String
 genAsmPrologue moduleName = 
@@ -64,7 +66,7 @@ genAsmPrologue moduleName =
   "  var g_memex = 0;" ++ "\n" ++ 
   "  var g_oomex = 0;" ++ "\n" ++ 
   "  var g_numex = 0;" ++ "\n" ++ 
-  "  var g_assertex = 0;" ++ "\n" ++ 
+  "  var g_assex = 0;" ++ "\n" ++ 
   "  var imul = stdlib.Math.imul" ++ 
   "\n\n" ++ 
   "  // Function Declarations" ++ 
@@ -94,6 +96,8 @@ genAsmPrologue moduleName =
   genGenericArrShift ++ 
   "\n\n" ++ 
   genGenericMemSet ++ 
+  "\n\n" ++ 
+  genAssert ++ 
   "\n\n"
   
 
@@ -112,7 +116,10 @@ genAsmEpilogue =
   "  function getOomEx() {\n" ++ 
   "    return g_oomex | 0;\n" ++ 
   "  }\n" ++
-  "  return { main : main , getNumEx : getNumEx, getMemEx : getMemEx, getOomEx : getOomEx }" ++ "\n\n" ++ 
+  "  function getAssEx() {\n" ++ 
+  "    return g_assex | 0;\n" ++ 
+  "  }\n" ++
+  "  return { main : main , getNumEx : getNumEx, getMemEx : getMemEx, getOomEx : getOomEx, getAssEx : getAssEx}" ++ "\n\n" ++ 
   "}\n"
 
 genAsmIRDecl :: IRDecl -> String
@@ -149,7 +156,10 @@ genMemArrAllocator =
   "    } else {" ++ "\n" ++ 
   "      g_oomex = 1 | 0;\n" ++
   "    }\n" ++
-  "    H32[ret | 0] = (numElems | 0);\n" ++
+  "    if (((numElems | 0) - (1 | 0) | 0) < (0 | 0)) {" ++ "\n" ++ 
+  "      g_memex = 1 | 0;\n" ++
+  "    }\n" ++
+  "    H32[ret | 0] = ((numElems | 0) - (1 | 0)) | 0;\n" ++
   "   return ret | 0;" ++ "\n" ++ 
   "  }"
 
@@ -210,6 +220,9 @@ genGenericAccessor =
   "  function fieldAccess(loc, off) {\n" ++ 
   "    loc = loc | 0;\n" ++ 
   "    off = off | 0;\n" ++ 
+  "    if ((loc | 0) == (0 | 0)) {\n" ++ 
+  "      g_memex = 1;\n" ++ 
+  "    }\n" ++ 
   "    return H32[loc + off] | 0;\n" ++ 
   "  }\n"
 
@@ -224,6 +237,9 @@ genArrAccessor =
   "    if ((off | 0) >= H32[loc | 0]) {\n" ++ 
   "      g_memex = 1 | 0;\n" ++ 
   "    }\n" ++ 
+  "    if ((loc | 0) == (0 | 0)) {\n" ++ 
+  "      g_memex = 1;\n" ++ 
+  "    }\n" ++ 
   "    return H32[loc + off + (1 | 0)] | 0;\n" ++ 
   "  }\n"
 
@@ -232,6 +248,9 @@ genGenericFieldShift =
   "  function fieldShift(loc, off) {\n" ++
   "    loc = loc | 0;\n" ++
   "    off = off | 0;\n" ++
+  "    if ((loc | 0) == (0 | 0)) {\n" ++ 
+  "      g_memex = 1;\n" ++ 
+  "    }\n" ++ 
   "    return (loc | 0) + (off | 0) | 0;\n" ++
   "  }\n"
 
@@ -246,6 +265,9 @@ genGenericArrShift =
   "    if ((off | 0) >= H32[loc | 0]) {\n" ++ 
   "      g_memex = 1;\n" ++ 
   "    }\n" ++ 
+  "    if ((loc | 0) == (0 | 0)) {\n" ++ 
+  "      g_memex = 1;\n" ++ 
+  "    }\n" ++ 
   "    return (loc | 0) + (off | 0) + (1 | 0) | 0;\n" ++
   "  }\n"
  
@@ -254,6 +276,20 @@ genGenericMemSet =
   "  function memSet(loc, val) {\n" ++ 
   "    loc = loc | 0;\n" ++ 
   "    val = val | 0;\n" ++ 
+  "    if ((loc | 0) == (0 | 0)) {\n" ++ 
+  "      g_memex = 1;\n" ++ 
+  "    }\n" ++ 
   "    H32[loc] = val | 0;\n" ++ 
   "    return;\n" ++ 
   "  }\n"
+
+genAssert :: String
+genAssert = 
+  "  function assert(e) {\n" ++ 
+  "    e = e | 0\n" ++ 
+  "    if ((e | 0) != (1 | 0)) {\n" ++ 
+  "      g_assex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    return;\n" ++ 
+  "  }\n"
+  
