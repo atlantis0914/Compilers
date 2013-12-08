@@ -142,7 +142,7 @@ genMemArrAllocator =
   "    numElems = numElems | 0;" ++ "\n" ++ 
   "    size = (size | 0) + (1 | 0) | 0;" ++ "\n" ++ 
   "    numElems = (size | 0) | 0;" ++ "\n" ++ 
-  "    var ret = 0" ++  "\n" ++ 
+  "    var ret = 0;" ++  "\n" ++ 
   "    if ((g_heapoff | 0) < (H32[0] | 0)) {" ++ "\n" ++ 
   "      ret = g_heapoff | 0;" ++ "\n" ++ 
   "      g_heapoff = (g_heapoff | 0) + (size | 0) | 0;" ++ "\n" ++
@@ -222,7 +222,7 @@ genArrAccessor =
   "      g_memex = 1;\n" ++ 
   "    }\n" ++ 
   "    if ((off | 0) >= H32[loc | 0]) {\n" ++ 
-  "      g_memex = 1;\n" ++ 
+  "      g_memex = 1 | 0;\n" ++ 
   "    }\n" ++ 
   "    return H32[loc + off + (1 | 0)] | 0;\n" ++ 
   "  }\n"
