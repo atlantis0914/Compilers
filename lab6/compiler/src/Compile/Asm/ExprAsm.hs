@@ -78,6 +78,18 @@ processIRExpr (IRExpBinOp Mod e1 e2) = do
   s2 <- processIRExpr e2
   let ret = "polyMod(" ++ s1 ++ " | 0," ++ s2 ++ " | 0) | 0"
   return ret
+
+processIRExpr e@(IRExpBinOp LShift e1 e2) = do
+  s1 <- processIRExpr e1
+  s2 <- processIRExpr e2
+  let ret = "polyLShift(" ++ s1 ++ " | 0," ++ s2 ++ " | 0) | 0"
+  return ret
+
+processIRExpr e@(IRExpBinOp LShift e1 e2) = do
+  s1 <- processIRExpr e1
+  s2 <- processIRExpr e2
+  let ret = "polyRShift(" ++ s1 ++ " | 0," ++ s2 ++ " | 0) | 0"
+  return ret
   
 processIRExpr (IRExpBinOp op e1 e2) = do
   processBinaryOperation op e1 e2

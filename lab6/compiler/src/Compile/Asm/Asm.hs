@@ -67,7 +67,8 @@ genAsmPrologue moduleName =
   "  var g_oomex = 0;" ++ "\n" ++ 
   "  var g_numex = 0;" ++ "\n" ++ 
   "  var g_assex = 0;" ++ "\n" ++ 
-  "  var imul = stdlib.Math.imul" ++ 
+  "  var imul = stdlib.Math.imul;" ++ "\n" ++ 
+  "  var INTMIN = 0x80000000;" ++ 
   "\n\n" ++ 
   "  // Function Declarations" ++ 
   "\n\n" ++ 
@@ -82,6 +83,10 @@ genAsmPrologue moduleName =
   genPolyDiv ++ 
   "\n\n" ++ 
   genPolyMod ++ 
+  "\n\n" ++ 
+  genPolyRShift ++
+  "\n\n" ++ 
+  genPolyLShift ++
   "\n\n" ++ 
   genPointerDeref ++ 
   "\n\n" ++ 
@@ -179,6 +184,9 @@ genPolyDiv =
   "    if ((den | 0) == (0 | 0)) {\n" ++ 
   "      g_numex = 1;\n" ++ 
   "    }\n" ++ 
+  "    if (((num | 0) == (INTMIN | 0)) && ((den | 0) == (-1 | 0))) {\n" ++ 
+  "      g_numex = 1;\n" ++ 
+  "    }\n" ++ 
   "    return ret | 0;\n" ++ 
   "  }\n"
 
@@ -190,6 +198,41 @@ genPolyMod =
   "    var ret = 0;\n" ++ 
   "    ret = (num | 0) % (den | 0)| 0;\n" ++ 
   "    if ((den | 0) == (0 | 0)) {\n" ++ 
+  "      g_numex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    if (((num | 0) == (INTMIN | 0)) && ((den | 0) == (-1 | 0))) {\n" ++ 
+  "      g_numex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    return ret | 0;\n" ++ 
+  "  }\n"
+
+genPolyLShift :: String
+genPolyLShift = 
+  "  function polyLShift(l, r) {\n" ++ 
+  "    l = l | 0;\n" ++ 
+  "    r = r | 0;\n" ++ 
+  "    var ret = 0;\n" ++ 
+  "    ret = (l | 0) << (r | 0) | 0;\n" ++ 
+  "    if ((r | 0) >= (32 | 0)) {\n" ++ 
+  "      g_numex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    if ((r | 0) < (0 | 0)) {\n" ++ 
+  "      g_numex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    return ret | 0;\n" ++ 
+  "  }\n"
+
+genPolyRShift :: String
+genPolyRShift = 
+  "  function polyLShift(l, r) {\n" ++ 
+  "    l = l | 0;\n" ++ 
+  "    r = r | 0;\n" ++ 
+  "    var ret = 0;\n" ++ 
+  "    ret = (l | 0) >> (r | 0) | 0;\n" ++ 
+  "    if ((r | 0) >= (32 | 0)) {\n" ++ 
+  "      g_numex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    if ((r | 0) < (0 | 0)) {\n" ++ 
   "      g_numex = 1;\n" ++ 
   "    }\n" ++ 
   "    return ret | 0;\n" ++ 
