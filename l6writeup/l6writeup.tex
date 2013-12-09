@@ -62,10 +62,10 @@
 
 \begin{abstract}
 
-\noindent We evaluate an experimental compiler that translates C0 code into Asm.js, a strict 
-and highly optimizable subset of javascript. We describe the results both holistically and emperically, 
+\noindent We evaluate an experimental compiler that translates C0 code into Asm.js, a strict
+and highly optimizable subset of javascript. We describe the results both holistically and emperically,
 profiling performance using the Spidermonkey and V8 javascript engines. Importantly, in the
-translation, we preserve all dynamic semantics guaranteed by C0 and guarantee deterministic execution. 
+translation, we preserve all dynamic semantics guaranteed by C0 and guarantee deterministic execution.
 
 \end{abstract}
 
@@ -80,17 +80,17 @@ translation, we preserve all dynamic semantics guaranteed by C0 and guarantee de
 %\lettrine[nindent=0em,lines=3]{L} orem ipsum dolor sit amet, consectetur adipiscing elit.
 %\lipsum[2-3] % Dummy text
 
-Asm.js is a recent effort by Mozilla to develop a highly optimizable and performant 
+Asm.js is a recent effort by Mozilla to develop a highly optimizable and performant
 subset of javascript. The motivation behind the effort stems from a series of projects which
 compile C and C++ to javascript, most notably the Emscripten compiler. With the availability of such
-compilers, the only missing features for browsers was an engine which could run the 
+compilers, the only missing features for browsers was an engine which could run the
 translated native code at near-native speeds. Asm.js is Mozilla's solution to this problem,
-and provides a directive triggered mechanism by which the browser can defer control to a 
+and provides a directive triggered mechanism by which the browser can defer control to a
 self-contained, non-garbage collected module that runs translated C and C++ at near-native speeds. \\
 \\
-As we will shortly see, Asm.js is not a language that is `fun' or `easy' for humans to write in - 
+As we will shortly see, Asm.js is not a language that is `fun' or `easy' for humans to write in -
 its use is primarily as a compiler target. The current mechanism for compiling C, and C++ to
-javascript is as follows: 
+javascript is as follows:
 
 \begin{compactitem}
   \item C and C++ is compiled to the LLVM IR
@@ -103,49 +103,80 @@ javascript is as follows:
 
 \section{Project Specification}
 
-\begin{enumerate}
-  \item External Library
-  \item Loops and Conditionals
-  \item Functions
-  \item Pointers
-  \item Arrays
-  \item Structs
-\end{enumerate}
+At a high level, this project will retarget our L4 compiler to Asm.js. In other
+words, the following features C0 will be supported:
+
+    Memory is supported as in L4 with no garbage collection.
+
+    All of the external libraries in C0 are reimplemented in JS.
+
+As always, correctness is paramount. Our number one goal is to create a correctly
+functioning compiler.
 
 %------------------------------------------------
 
 \section{Implementation}
 
-\begin{enumerate}
-  \item External Library
-  \item Loops and Conditionals
-  \item Functions
-  \item Pointers
-  \item Arrays
-  \item Structs
-\end{enumerate}
+  \subsection{Loops and Conditionals}
+  \subsection{Functions}
+  \subsection{Memory}
+    Asm.js provides a large binary heap, in the form of an array called H32, for which we
+    wrote a simple memory allocation function for. This function takes the given
+    size and allocates size bytes from the last allocation. There is no way to
+    free this memory.
+  \subsection{Pointers}
+    Pointers are merely integers that represent the base index at which the
+    the memory is stored in the H32 array.
+
+    Since the NULL address exists in the H32 heap array, it is necessary for
+    us to check if pointer dereferences are NULL, and setting the correct
+    exception flag. We decided to create a JS function that would handle all
+    pointer dereferences that handles this.
+  \subsection{Arrays}
+  \subsection{Structs}
+  \subsection{External Library}
+  \subsection{Exceptions}
 
 %------------------------------------------------
 
 \section{Testing Methodology}
 
+\subsection{Test Selection}
+Since we are merely retargeting the L4 language to Asm.js, we used the L4 test
+files from Lab 4 to test our compiler. As was in Lab 4, these tests provide a
+wide array of various cases that ensures that our compiler is correct and
+sufficiently fast.
+
+We decided to skip a the following types of tests:
+
+\begin{enumerate}
+  \item Floating Point Library Tests
+
+    These tests strenuously check that external library functions are correct.
+    We know from our other tests that external library functions are called
+    correctly, but our library functions themselves are not 100\% correct.
+    The library functions themselves are uninteresting from the compiler's
+    aspect.
+
+  \item Deep Recursive Calls
+
+    A few tests recurse too deep for our build of SpiderMonkey to handle. These
+    tests fail because of SpiderMonkey and not from our code.
+\end{enumerate}
+
+\subsection{Testing Framework}
+
+We needed to write a new testing framework, tester.py, which takes in either a
+file or a directory of files to test.
+
+For each L4 file, tester.py will compile the file using the \texttt{--asmjs}
+directive.
+
 %------------------------------------------------
 
 \section{Analysis}
 
-%----------------------------------------------------------------------------------------
-%	REFERENCE LIST
-%----------------------------------------------------------------------------------------
 
-\begin{thebibliography}{99} % Bibliography - this is intentionally simple in this template
-
-\bibitem[Figueredo and Wolf, 2009]{Figueredo:2009dg}
-Figueredo, A.~J. and Wolf, P. S.~A. (2009).
-\newblock Assortative pairing and life history strategy - a cross-cultural
-  study.
-\newblock {\em Human Nature}, 20:317--330.
- 
-\end{thebibliography}
 
 %----------------------------------------------------------------------------------------
 
