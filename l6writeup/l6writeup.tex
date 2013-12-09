@@ -402,7 +402,7 @@ out, or 2) the code executes correctly, and produces one of the exception flags
 \section{Conforming to Asm.js}
 The spidermonkey engine we used does not check if our produced JavaScript files
 conform to the Asm.js specifications. To do this, we had to manually paste the
-outputted code into http://turtlescript.github.cscott.net/asmjs.html, one of a 
+outputted code into \emph{http://turtlescript.github.cscott.net/asmjs.html}, one of a 
 handful of Asm.js validators. 
 
 We also note that a node.js module is available for validating correctness, 
@@ -412,8 +412,32 @@ Regarding Asm.js correctness, we want to clarify that the compiler we submitted
 meets the Asm.js standard everywhere except in two areas. These areas are:
 
 \begin{enumerate}
-  \item a
+  \item Heap Access: 
+    We mentioned earlier that heap accesses in Asm.js must be `aligned'. This
+    appears to derive from some techniques used in the Emscripten and Mandril
+    compilers. The idea is that all heap accesses must be suffixed by a \texttt{>> 2}.
+    We realized that one way to meet this requirement for valid Asm.js while still
+    maintaining the overall correctness of our comppiler was to emit heap accesses
+    of the form \texttt{H32[loc << 2] >> 2}. Testing our compiler with the memory
+    accessing functions using this version of heap access produced no errors, but
+    we decided to leave it out of the final submitted version, and only mention it
+    as it felt like a way to hack around the language spec. 
+
+  \item \texttt{\&\&, ||}
+  Asm.js does not support the \texttt{\&\&} and \texttt{||} operations. Our compiler
+  therefore emits \texttt{\&} and \texttt{|} - as booleans are just ints, this 
+  works out fine, and correctness is maintained. However, in certain situations, such
+  as library functions that are called many times, we continue to use \texttt{\&\&} and
+  \texttt{||} as for backends that do not support Asm.js, replacing \texttt{\&} with 
+  \texttt{\&\&} is actually quite costly, and makes the generated code significantly slower. 
+  This is a quick fix, and can easily be fixed in the statically linked javascript to 
+  make the code entirely Asm.js compliant. 
 \end{enumerate}
+We want to emphasize that aside from these two caveats, our code is fully Asm.js 
+compliant. Our reason for not submitting these two tiny fixes with our compiler is
+that the former feels like a hacky way to get around a poorly explained feature of
+Asm.js, and that the latter causes significant performance regressions on backends
+that do not support Asm.js. 
 
 
 %------------------------------------------------
