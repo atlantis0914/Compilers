@@ -127,18 +127,19 @@ usage, and loop behavior, which we will describe at the end of the document.
 \section{Constant Folding and Propagation}
 For this optimization, we perform constant folding and propagation on the AST. This
 was an optimization that we struggled to get working in previous labs - most probably because
-of a stoic view that monads were scary. In this lab, we conquered our fear and marched boldly
-where neither of us had really gone before and wrote some state monads from scratch. \\
+of a rather misinformed view that monads were scary. In this lab, we conquered our fear 
+and marched boldly where neither of us had really gone before and wrote some state monads from scratch. \\
 \\
-Constant propagation was implemented this way - the basic idea is to keep a map from named
-variables to constants. Every time we run into an assignment of a constant to this named
-variable, we insert it into the map. Every time we pass over a control flow block, we pass
+Constant propagation was implemented in this way (using a StateT). The basic idea is to 
+keep a map from named variables to constants. Every time we run into an assignment of a constant 
+to this named variable, we insert it into the map. Every time we pass over a control flow block, we pass
 in a clean state to the block - only assignments declared within that block will be propagated. \\
 \\
-Similarly, when we exit from a control flow block, we abandon its state, and restore the state
-before entering the control flow block. We then remove all variables that were mutated within that
-control flow block from our map - as it may no longer be correct to replace occurences of such
-variables with the constant. \\
+Similarly, when we exit from a control flow block, we abandon the current state (of the control
+flow block), and restore the state that we had before entering the control flow block. 
+We then remove all variables that were mutated within that 
+control flow block from our map - as it may no longer be correct to replace occurences of such 
+variables with the constant they map to. \\
 \\
 Constant folding is very straight-forward. We perform an AST-based constant folding, specifically
 on expressions. The use case appeared in an earlier lab when a test tested our ability to cope with
@@ -159,6 +160,23 @@ greedily put into registers, which then causes the loop variables to be stack-al
 and causes the test to take over 10 seconds to run.
 
 \section{Register Coalescing}
+We implemented register coalescing using the strategy outlined in lecture 3. To summarize 
+our implementation strategy, we 
+\begin{itemize}
+  \item [1.] Consider all moves of the form $t \leftarrow s$.
+  \item [2.] If $s$,$t$ share the same color, we continue.
+  \item [3.] If $(s,t)$ is an edge in our interference graph, we continue.
+  \item [6.] If we can find a $c$ s.t. $c \notin N(t), c \notin N(s)$ and 
+       $c$ will not be a stack allocated color, then we squash $s$
+       into $t$, and update the graph so that all vertices with $s$
+       in their adjacency list now point to $t$. We update the color
+       of $t$ to now be $c$, and continue. 
+\end{itemize}
+The register coalescing module was implemented within a monad, which made things
+such as keeping a stateful interference graph and coloring map up-to-date
+very straightforward. The optimization takes place after register allocation, right before instruction
+selection.\\
+\\
 
 \section{Safety}
 

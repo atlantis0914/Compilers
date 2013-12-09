@@ -81,7 +81,7 @@ toIRExpr' fm sm tm (ExpAlloc typ _) = (IRExpAlloc typ $ getSizeForTypeMap sm typ
 --    (e',_) = toIRExpr' fm sm tm e
 toIRExpr' fm sm tm (ExpAllocArray typ e _) = (IRExpAllocArray typ e' size, IArray typ)
   where 
-    size = Trace.trace ("Looking up type for : " ++ show typ) $ (getSizeForTypeMap sm typ)
+    size = (getSizeForTypeMap sm typ)
     (e',_) = toIRExpr' fm sm tm e
 toIRExpr' fm sm tm (ExpBinOp o e1 e2 _) = (IRExpBinOp o e1' e2', t1)
   where 

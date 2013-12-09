@@ -46,9 +46,11 @@ genModule =
   "var res = (c0_export.main())\n" ++ 
   "var numEx = (c0_export.getNumEx())\n" ++
   "var memEx = (c0_export.getMemEx())\n" ++
+  "var assEx = (c0_export.getAssEx())\n" ++
   "print(\"Result: \" + res)\n" ++
   "print(\"NumEx: \" + numEx)\n" ++
-  "print(\"MemEx: \" + memEx)"
+  "print(\"MemEx: \" + memEx)\n" ++ 
+  "print(\"AssEx: \" + assEx)"
 
 genAsmPrologue :: String -> String
 genAsmPrologue moduleName = 
@@ -64,8 +66,9 @@ genAsmPrologue moduleName =
   "  var g_memex = 0;" ++ "\n" ++ 
   "  var g_oomex = 0;" ++ "\n" ++ 
   "  var g_numex = 0;" ++ "\n" ++ 
-  "  var g_assertex = 0;" ++ "\n" ++ 
-  "  var imul = stdlib.Math.imul" ++ 
+  "  var g_assex = 0;" ++ "\n" ++ 
+  "  var imul = stdlib.Math.imul;" ++ "\n" ++ 
+  "  var INTMIN = 0x80000000;" ++ 
   "\n\n" ++ 
   "  // Function Declarations" ++ 
   "\n\n" ++ 
@@ -81,6 +84,10 @@ genAsmPrologue moduleName =
   "\n\n" ++ 
   genPolyMod ++ 
   "\n\n" ++ 
+  genPolyRShift ++
+  "\n\n" ++ 
+  genPolyLShift ++
+  "\n\n" ++ 
   genPointerDeref ++ 
   "\n\n" ++ 
   genPointerLoad ++
@@ -94,6 +101,8 @@ genAsmPrologue moduleName =
   genGenericArrShift ++ 
   "\n\n" ++ 
   genGenericMemSet ++ 
+  "\n\n" ++ 
+  genAssert ++ 
   "\n\n"
   
 
@@ -112,7 +121,10 @@ genAsmEpilogue =
   "  function getOomEx() {\n" ++ 
   "    return g_oomex | 0;\n" ++ 
   "  }\n" ++
-  "  return { main : main , getNumEx : getNumEx, getMemEx : getMemEx, getOomEx : getOomEx }" ++ "\n\n" ++ 
+  "  function getAssEx() {\n" ++ 
+  "    return g_assex | 0;\n" ++ 
+  "  }\n" ++
+  "  return { main : main , getNumEx : getNumEx, getMemEx : getMemEx, getOomEx : getOomEx, getAssEx : getAssEx}" ++ "\n\n" ++ 
   "}\n"
 
 genAsmIRDecl :: IRDecl -> String
@@ -139,14 +151,20 @@ genMemArrAllocator :: String
 genMemArrAllocator = 
   "  function memArrAlloc(size, numElems) {" ++ "\n" ++
   "    size = size | 0;" ++ "\n" ++ 
-  "    var ret = 0" ++  "\n" ++ 
+  "    numElems = numElems | 0;" ++ "\n" ++ 
+  "    size = (size | 0) + (1 | 0) | 0;" ++ "\n" ++ 
+  "    numElems = (size | 0) | 0;" ++ "\n" ++ 
+  "    var ret = 0;" ++  "\n" ++ 
   "    if ((g_heapoff | 0) < (H32[0] | 0)) {" ++ "\n" ++ 
   "      ret = g_heapoff | 0;" ++ "\n" ++ 
   "      g_heapoff = (g_heapoff | 0) + (size | 0) | 0;" ++ "\n" ++
   "    } else {" ++ "\n" ++ 
   "      g_oomex = 1 | 0;\n" ++
   "    }\n" ++
-  "    H32[ret | 0] = (numElems | 0);\n" ++
+  "    if (((numElems | 0) - (1 | 0) | 0) < (0 | 0)) {" ++ "\n" ++ 
+  "      g_memex = 1 | 0;\n" ++
+  "    }\n" ++
+  "    H32[ret | 0] = ((numElems | 0) - (1 | 0)) | 0;\n" ++
   "   return ret | 0;" ++ "\n" ++ 
   "  }"
 
@@ -166,6 +184,9 @@ genPolyDiv =
   "    if ((den | 0) == (0 | 0)) {\n" ++ 
   "      g_numex = 1;\n" ++ 
   "    }\n" ++ 
+  "    if (((num | 0) == (INTMIN | 0)) && ((den | 0) == (-1 | 0))) {\n" ++ 
+  "      g_numex = 1;\n" ++ 
+  "    }\n" ++ 
   "    return ret | 0;\n" ++ 
   "  }\n"
 
@@ -177,6 +198,41 @@ genPolyMod =
   "    var ret = 0;\n" ++ 
   "    ret = (num | 0) % (den | 0)| 0;\n" ++ 
   "    if ((den | 0) == (0 | 0)) {\n" ++ 
+  "      g_numex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    if (((num | 0) == (INTMIN | 0)) && ((den | 0) == (-1 | 0))) {\n" ++ 
+  "      g_numex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    return ret | 0;\n" ++ 
+  "  }\n"
+
+genPolyLShift :: String
+genPolyLShift = 
+  "  function polyLShift(l, r) {\n" ++ 
+  "    l = l | 0;\n" ++ 
+  "    r = r | 0;\n" ++ 
+  "    var ret = 0;\n" ++ 
+  "    ret = (l | 0) << (r | 0) | 0;\n" ++ 
+  "    if ((r | 0) >= (32 | 0)) {\n" ++ 
+  "      g_numex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    if ((r | 0) < (0 | 0)) {\n" ++ 
+  "      g_numex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    return ret | 0;\n" ++ 
+  "  }\n"
+
+genPolyRShift :: String
+genPolyRShift = 
+  "  function polyLShift(l, r) {\n" ++ 
+  "    l = l | 0;\n" ++ 
+  "    r = r | 0;\n" ++ 
+  "    var ret = 0;\n" ++ 
+  "    ret = (l | 0) >> (r | 0) | 0;\n" ++ 
+  "    if ((r | 0) >= (32 | 0)) {\n" ++ 
+  "      g_numex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    if ((r | 0) < (0 | 0)) {\n" ++ 
   "      g_numex = 1;\n" ++ 
   "    }\n" ++ 
   "    return ret | 0;\n" ++ 
@@ -207,6 +263,9 @@ genGenericAccessor =
   "  function fieldAccess(loc, off) {\n" ++ 
   "    loc = loc | 0;\n" ++ 
   "    off = off | 0;\n" ++ 
+  "    if ((loc | 0) == (0 | 0)) {\n" ++ 
+  "      g_memex = 1;\n" ++ 
+  "    }\n" ++ 
   "    return H32[loc + off] | 0;\n" ++ 
   "  }\n"
 
@@ -219,6 +278,9 @@ genArrAccessor =
   "      g_memex = 1;\n" ++ 
   "    }\n" ++ 
   "    if ((off | 0) >= H32[loc | 0]) {\n" ++ 
+  "      g_memex = 1 | 0;\n" ++ 
+  "    }\n" ++ 
+  "    if ((loc | 0) == (0 | 0)) {\n" ++ 
   "      g_memex = 1;\n" ++ 
   "    }\n" ++ 
   "    return H32[loc + off + (1 | 0)] | 0;\n" ++ 
@@ -229,6 +291,9 @@ genGenericFieldShift =
   "  function fieldShift(loc, off) {\n" ++
   "    loc = loc | 0;\n" ++
   "    off = off | 0;\n" ++
+  "    if ((loc | 0) == (0 | 0)) {\n" ++ 
+  "      g_memex = 1;\n" ++ 
+  "    }\n" ++ 
   "    return (loc | 0) + (off | 0) | 0;\n" ++
   "  }\n"
 
@@ -243,6 +308,9 @@ genGenericArrShift =
   "    if ((off | 0) >= H32[loc | 0]) {\n" ++ 
   "      g_memex = 1;\n" ++ 
   "    }\n" ++ 
+  "    if ((loc | 0) == (0 | 0)) {\n" ++ 
+  "      g_memex = 1;\n" ++ 
+  "    }\n" ++ 
   "    return (loc | 0) + (off | 0) + (1 | 0) | 0;\n" ++
   "  }\n"
  
@@ -251,6 +319,20 @@ genGenericMemSet =
   "  function memSet(loc, val) {\n" ++ 
   "    loc = loc | 0;\n" ++ 
   "    val = val | 0;\n" ++ 
+  "    if ((loc | 0) == (0 | 0)) {\n" ++ 
+  "      g_memex = 1;\n" ++ 
+  "    }\n" ++ 
   "    H32[loc] = val | 0;\n" ++ 
   "    return;\n" ++ 
   "  }\n"
+
+genAssert :: String
+genAssert = 
+  "  function assert(e) {\n" ++ 
+  "    e = e | 0\n" ++ 
+  "    if ((e | 0) != (1 | 0)) {\n" ++ 
+  "      g_assex = 1;\n" ++ 
+  "    }\n" ++ 
+  "    return;\n" ++ 
+  "  }\n"
+  

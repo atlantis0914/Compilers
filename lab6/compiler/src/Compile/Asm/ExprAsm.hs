@@ -33,7 +33,7 @@ processIRExpr (IRExpAlloc typ i) = do
 
 processIRExpr (IRExpAllocArray typ e i) = do
   eStr <- processIRExpr e
-  let ret = "(memArrAlloc(imul(" ++ eStr ++ " | 0," ++ (show (i `div` 4)) ++ " | 0) | 0 + (1 | 0), " ++ (show (i `div` 4)) ++ " | 0) | 0)"
+  let ret = "(memArrAlloc(imul(" ++ eStr ++ " | 0," ++ (show (i `div` 4)) ++ " | 0) | 0, " ++ (show (i `div` 4)) ++ ") | 0)"
   return ret
 
 processIRExpr (IRExpArraySubscript arrE offE typ stride) = do
@@ -77,6 +77,18 @@ processIRExpr (IRExpBinOp Mod e1 e2) = do
   s1 <- processIRExpr e1
   s2 <- processIRExpr e2
   let ret = "polyMod(" ++ s1 ++ " | 0," ++ s2 ++ " | 0) | 0"
+  return ret
+
+processIRExpr e@(IRExpBinOp LShift e1 e2) = do
+  s1 <- processIRExpr e1
+  s2 <- processIRExpr e2
+  let ret = "polyLShift(" ++ s1 ++ " | 0," ++ s2 ++ " | 0) | 0"
+  return ret
+
+processIRExpr e@(IRExpBinOp LShift e1 e2) = do
+  s1 <- processIRExpr e1
+  s2 <- processIRExpr e2
+  let ret = "polyRShift(" ++ s1 ++ " | 0," ++ s2 ++ " | 0) | 0"
   return ret
   
 processIRExpr (IRExpBinOp op e1 e2) = do
@@ -149,6 +161,11 @@ producePtr f (IRExpFieldSelect inner field typ i1 i2) = do
   let ret = "(fieldAccess((" ++ innerStr ++ " | 0)," ++ show (i1 `div` 4) ++ " | 0) | 0)"
   return ret
 
+--producePtr f (IRExpDereference inner (IStruct _) i) = do
+--  innerStr <- chainDeref (producePtr f) inner
+--  let ret = "(pointerLoad(" ++ innerStr ++ " |0) | 0)"
+--  return ret
+
 producePtr f (IRExpDereference inner typ i) = do
   innerStr <- chainDeref (producePtr f) inner
   let ret = "(pointerDeref(" ++ innerStr ++ " |0) | 0)"
@@ -158,13 +175,20 @@ producePtr f (IRIdent id i) = do
   let ret = " " ++ (sanitizeDeclVar id) ++ " "
   return ret
 
+producePtr f (IRExpArraySubscript arrE offE (IPtr (IStruct _)) stride) = do
+  arrStr <- f arrE
+  offE <- f offE
+  let ret = "(arrAccess(" ++ arrStr ++ " | 0, (imul((" ++ offE ++ " | 0)," ++ (show (stride `div` 4)) ++ " | 0) | 0)))"
+  return ret
+
+
 producePtr f (IRExpArraySubscript arrE offE typ stride) = do
   arrStr <- f arrE
   offE <- f offE
   let ret = "(arrShift(" ++ arrStr ++ " | 0, (imul((" ++ offE ++ " | 0)," ++ (show (stride `div` 4)) ++ " | 0) | 0)))"
   return ret
 
-producePtr f e = error ("got e" ++ show e)
+producePtr f e = f e -- error ("got e" ++ show e)
 
 handleLVal (IRIdent id i) = do
   let ret = " " ++ (sanitizeDeclVar id) ++ " "

@@ -21,14 +21,14 @@ getIdentSize IBool = 4
 getIdentSize (IPtr _) = 8
 
 instance Show IdentType where
-  show IAny = "" -- "any"
-  show IInt = "" -- "int"
-  show IBool = "" -- "bool"
-  show IVoid = "" -- "void"
-  show (IPtr i) = "" -- "(" ++ show i ++ ")" ++ "*"
-  show (IArray i) = "" -- show i ++ "[]"
+  show IAny = "any" -- "any"
+  show IInt = "int" -- "int"
+  show IBool = "bool" -- "bool"
+  show IVoid = "void" -- "void"
+  show (IPtr i) = "(" ++ show i ++ ")*" -- "(" ++ show i ++ ")" ++ "*"
+  show (IArray i) = show i ++ "[]" -- show i ++ "[]"
   show (IStruct i) = "struct (" ++ show i ++ ")"
-  show (ITypeDef s) = "" -- s
+  show (ITypeDef s) = s -- s
 
 instance NFData IdentType where
   rnf IAny = ()
