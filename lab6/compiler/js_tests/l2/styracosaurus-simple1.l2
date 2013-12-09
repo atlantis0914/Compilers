@@ -1,0 +1,17 @@
+//test return 40
+
+int main()
+{
+    int x;
+    int y;
+
+    x = 3;
+    y = 5 << x;
+
+	//Xor swap
+    x ^= y;
+	y ^= x;
+    x = x ^ y;
+
+    return x;
+}

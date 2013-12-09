@@ -1,0 +1,10 @@
+//test exception 11
+// alloc_array of negative
+
+int main() {
+		int[] arr;
+		int n = -1;
+		arr = alloc_array(int, n);
+		arr[0] = 5;
+		return arr[0];
+}

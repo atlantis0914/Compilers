@@ -1,0 +1,23 @@
+//test return 100
+//tests using functions with things
+
+int doStuff(int a, bool b) {
+    if(b) return a*a;
+    else return 0;
+}
+
+bool doMore(int x, int y) {
+    if(x >> y == 0) return true;
+    else return (x == 0);
+}
+
+int main ()
+{
+  int x = 4;
+  x = doStuff(x, true);
+  bool a1 = doMore(x, 3);
+  bool a2 = doMore(x, 5);
+  assert(!a1);
+  assert(a2);
+  return 100;
+}

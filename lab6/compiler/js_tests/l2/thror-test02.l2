@@ -1,0 +1,9 @@
+//test return 0
+//test short circuiting
+int main ()
+{
+   bool a = false && (3/0 > 3);
+   bool b = true || (3/0 < 6);
+   bool c = false ? 3/0 > 4 : true;
+   return 0;
+}

@@ -1,0 +1,14 @@
+//test return 10
+/* Test multidimensional arrays */
+
+int main () {
+  int[][] a = alloc_array(int[], 2);
+  a[0] = alloc_array(int, 3);
+  a[1] = alloc_array(int, 2);
+  a[0][0] = 0;
+  a[0][1] = 1;
+  a[0][2] = 2;
+  a[1][0] = 3;
+  a[1][1] = 4;
+  return a[0][0] + a[0][1] + a[0][2] + a[1][0] + a[1][1];
+}

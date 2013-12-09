@@ -1,0 +1,18 @@
+//test exception
+//mixed test of arithmetic operations and division by 0
+int main()
+{
+  int a;
+  int b;
+  int c;
+  int d;
+  int x;
+
+  a = 1;
+  b = 2;
+  c = 3;
+  d = 4;
+  x = d/(b/(c-a)-a);
+
+  return x;
+}

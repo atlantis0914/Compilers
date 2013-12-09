@@ -1,0 +1,35 @@
+//test exception 8
+//  will throw if conditonals work
+int main() {
+  true;
+
+  false;
+
+  true;
+
+  false;
+
+  false;
+
+  false;
+
+  /////////////////////////////////
+
+
+  /***************** false true false fa
+  ffffffffffffffffffff
+  tttttttttttttttt
+  aaaaaaaaa
+  f
+  a
+  l
+  s
+  e
+  *?????? */
+  
+  bool ___________________________ = !false;
+
+  if (___________________________) return 3/0;
+
+  return 0;
+}

@@ -1,0 +1,12 @@
+//test error
+// bad struct def
+
+typedef struct foo
+{
+	int a;
+} bar;
+
+int main()
+{
+	return 42;
+}

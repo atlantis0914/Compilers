@@ -1,0 +1,17 @@
+//test exception
+int main()
+{
+  int i = 13;
+  int j = 10;
+  int a = 15;
+
+  while ((i / j) <= 411) {
+    a += i << j;
+    while (j > 0) {
+      j--;
+      j /= 2;
+    }
+  }
+
+  return a;
+}

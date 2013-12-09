@@ -1,0 +1,10 @@
+//test error
+//check to ensure function declarations can't be used as functions themselves.
+
+void fake();
+
+int main() {
+    fake();
+    return 0;
+}
+

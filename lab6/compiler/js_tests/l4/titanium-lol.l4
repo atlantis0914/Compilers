@@ -1,0 +1,28 @@
+//test return 10
+
+int[] rofl(int[] lmao, int n) {
+  int[] arr;
+  arr = alloc_array(int, n);
+  int acc = 0;
+  int i;
+  for (i = 0; i < n; i++) {
+    acc += lmao[i];
+    arr[i] = acc;
+  }
+  return arr;
+}
+
+int main() {
+  int[] lol;
+  int n = 5;
+  int i = 0;
+
+  lol = alloc_array(int, n);
+  for (i = 0; i < n; i++) {
+    lol[i] = i;
+  }
+
+  int[] q;
+  q = rofl(lol, n);
+  return q[4];
+}

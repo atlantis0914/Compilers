@@ -1,0 +1,9 @@
+//test error
+// Attempts to use "int" as variable name
+
+int main()
+{
+  int int = 0;
+  return 0;
+}
+

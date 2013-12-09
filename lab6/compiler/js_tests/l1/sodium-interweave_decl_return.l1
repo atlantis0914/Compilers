@@ -1,0 +1,8 @@
+//test return 1
+int main() {
+	int j;
+	j = 0;
+	int i;
+	int k = 1;
+	return k;
+}

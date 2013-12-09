@@ -1,0 +1,21 @@
+//test return 500
+// array loop and make sure it works correctly
+
+int main () {
+    int z = 500;
+    int[] a = alloc_array(int, z);
+    int i;
+    bool b = true;
+
+    for (i = 0; i < z; i++)
+    {
+        a[i] = i*2;
+    }
+
+    for (i = 0; i < z; i++)
+    {
+        b = b && i*2 == a[i];
+    }
+
+    return b ? 500 : -1;
+}

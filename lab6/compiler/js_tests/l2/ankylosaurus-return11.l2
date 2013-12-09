@@ -1,0 +1,12 @@
+//test return 4
+int main(){
+    int x = 2;
+    int y = 16;
+    int result = 0;
+    while(y > 0){
+    	    y /= x;
+	    result++;
+
+    }
+    return result - 1;
+}

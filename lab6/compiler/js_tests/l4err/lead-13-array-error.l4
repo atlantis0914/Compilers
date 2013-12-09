@@ -1,0 +1,7 @@
+//test error
+/* Test array syntax */
+
+int main () {
+  int[] a = alloc(int, 1);
+  return 0;
+}

@@ -1,0 +1,6 @@
+//test error
+//Checks that explicit null dereferences cause errors
+
+int main(){
+  return *NULL;
+}   

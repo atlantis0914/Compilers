@@ -1,0 +1,11 @@
+//test return 1
+int main()
+{
+    int a = 2;          // 2
+    int b = a * a;      // 4
+    int c = b + a;      // 6
+    int d = 1 << b;     // 16
+
+    d <<= a + b + c;
+    return d >> 16;
+}

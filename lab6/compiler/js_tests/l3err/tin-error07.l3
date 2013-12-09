@@ -1,0 +1,14 @@
+//test error
+//function identifier conflicts with variable name
+
+void func();
+
+int main() {
+  int func = 10;
+  func();
+  return func;
+}
+
+void func() {
+  assert(true);
+}

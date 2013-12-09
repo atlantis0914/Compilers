@@ -1,0 +1,7 @@
+//test error
+struct str {
+};
+int main() {
+    struct str x;
+    return 0;
+}

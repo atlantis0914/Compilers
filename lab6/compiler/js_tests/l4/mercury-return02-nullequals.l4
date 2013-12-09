@@ -1,0 +1,7 @@
+//test return 1
+
+int main() {
+  int* x = NULL;
+  int* y = NULL;
+  return x == y ? 1 : 0;
+}

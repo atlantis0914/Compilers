@@ -1,0 +1,16 @@
+//test return 4
+
+int main() {
+    {
+        {
+            int i;
+        }
+    }
+    {
+        int i;
+    }
+    {
+        { int i; } { int i; }
+    }
+    return 4;
+}

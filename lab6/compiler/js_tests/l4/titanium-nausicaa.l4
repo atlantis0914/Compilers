@@ -1,0 +1,13 @@
+//test return 7
+// can have struct var with its own name
+
+struct t
+{
+  int nausicaa;
+};
+
+int main()
+{
+  struct t *t;
+  return 7;
+}

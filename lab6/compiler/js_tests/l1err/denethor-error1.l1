@@ -1,0 +1,6 @@
+//test error
+
+int main() {
+   x=0xdeadbeef;
+   return x;
+}

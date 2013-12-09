@@ -1,0 +1,11 @@
+//test return 0
+
+typedef int foo;
+
+int main() {
+    foo * x;
+
+    x = alloc(foo);
+
+    return 0;
+}

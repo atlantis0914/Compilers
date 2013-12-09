@@ -1,0 +1,20 @@
+//test error
+struct s3;
+struct s2 {
+  int a;
+  int b;
+  struct s3 s;
+};
+
+struct s1 {
+  int a;
+  int b;
+  struct s2 s;
+};
+
+int main() {
+  struct s1 *s = alloc(struct s1);
+  s->a = 0;
+  s->b = 1;
+  return s->s.a;
+}

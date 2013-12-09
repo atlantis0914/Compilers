@@ -1,0 +1,12 @@
+//test exception 
+
+// causes a division overflow due to 2147483648 = -2147483648
+
+int main()
+{
+  int x = 2147483648;
+  int y = -2147483648;
+  int z = x / y;
+  z -= 2 * z;
+  return 2147483648 % z;
+}

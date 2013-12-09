@@ -1,0 +1,6 @@
+//test exception 8
+// Test correct exception thrown
+
+int main() {
+    return 1 << 100;
+}

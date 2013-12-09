@@ -1,0 +1,23 @@
+//test return 13
+
+int main ()
+{
+  int n;
+  int f1;
+  int f2;
+  int i;
+  int t;
+
+  n = 5;
+  f1 = 1;
+  f2 = 1;
+  for (i = 0; i < n; i+=1) {
+    t = f2 + f1;
+    f1 = f2;
+    f2 = t;
+  }
+  if (i > 0)
+    return f2;  /* t here would be an error */
+  else
+    return 0;
+}

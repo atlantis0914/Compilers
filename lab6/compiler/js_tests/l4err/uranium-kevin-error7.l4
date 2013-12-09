@@ -1,0 +1,9 @@
+//test error
+//im drank
+
+int alloc(int i) {
+    return 1;
+}
+int main() {
+    return alloc(1);
+}

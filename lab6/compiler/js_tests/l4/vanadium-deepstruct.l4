@@ -1,0 +1,215 @@
+//test return 4000000
+
+struct a00 {
+	int e;
+};
+
+struct a01 {
+	struct a00 e;
+};
+
+struct a02 {
+	struct a01 e;
+};
+
+struct a03 {
+	struct a02 e;
+};
+
+struct a04 {
+	struct a03 e;
+};
+
+struct a05 {
+	struct a04 e;
+};
+
+struct a06 {
+	struct a05 e;
+};
+
+struct a07 {
+	struct a06 e;
+};
+
+struct a08 {
+	struct a07 e;
+};
+
+struct a09 {
+	struct a08 e;
+};
+
+struct a10 {
+	struct a09 e;
+};
+
+struct a11 {
+	struct a10 e;
+};
+
+struct a12 {
+	struct a11 e;
+};
+
+struct a13 {
+	struct a12 e;
+};
+
+struct a14 {
+	struct a13 e;
+};
+
+struct a15 {
+	struct a14 e;
+};
+
+struct a16 {
+	struct a15 e;
+};
+
+struct a17 {
+	struct a16 e;
+};
+
+struct a18 {
+	struct a17 e;
+};
+
+struct a19 {
+	struct a18 e;
+};
+
+struct a20 {
+	struct a19 e;
+};
+
+struct a21 {
+	struct a20 e;
+};
+
+struct a22 {
+	struct a21 e;
+};
+
+struct a23 {
+	struct a22 e;
+};
+
+struct a24 {
+	struct a23 e;
+};
+
+struct a25 {
+	struct a24 e;
+};
+
+struct a26 {
+	struct a25 e;
+};
+
+struct a27 {
+	struct a26 e;
+};
+
+struct a28 {
+	struct a27 e;
+};
+
+struct a29 {
+	struct a28 e;
+};
+
+struct a30 {
+	struct a29 e;
+};
+
+struct a31 {
+	struct a30 e;
+};
+
+struct a32 {
+	struct a31 e;
+};
+
+struct a33 {
+	struct a32 e;
+};
+
+struct a34 {
+	struct a33 e;
+};
+
+struct a35 {
+	struct a34 e;
+};
+
+struct a36 {
+	struct a35 e;
+};
+
+struct a37 {
+	struct a36 e;
+};
+
+struct a38 {
+	struct a37 e;
+};
+
+struct a39 {
+	struct a38 e;
+};
+
+struct a40 {
+	struct a39 e;
+};
+
+struct a41 {
+	struct a40 e;
+};
+
+struct a42 {
+	struct a41 e;
+};
+
+struct a43 {
+	struct a42 e;
+};
+
+struct a44 {
+	struct a43 e;
+};
+
+struct a45 {
+	struct a44 e;
+};
+
+struct a46 {
+	struct a45 e;
+};
+
+struct a47 {
+	struct a46 e;
+};
+
+struct a48 {
+	struct a47 e;
+};
+
+struct a49 {
+	struct a48 e;
+};
+
+struct a50 {
+	struct a49 e;
+};
+
+int main() {
+	struct a50 *outer = alloc(struct a50);
+	
+	for(int i=0;i<4000000;i++) {
+		outer->e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e++;
+	}
+
+	return outer->e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e.e;
+}

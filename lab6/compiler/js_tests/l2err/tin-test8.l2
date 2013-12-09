@@ -1,0 +1,13 @@
+//test exception 8
+
+int main() {
+  int x = 4;
+  x += 3;
+  int y = 12;
+  y &= 5;
+  int z = 5024;
+  z /= 6;
+  int w = 4927;
+  w >>= 5;
+  return x + y * z << w;
+}

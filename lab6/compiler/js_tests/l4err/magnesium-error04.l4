@@ -1,0 +1,16 @@
+//test error
+
+struct foo {int x; int y;};
+struct bar {int x; int y;};
+
+typedef struct foo bar;
+
+int main () {
+  bar *b1;
+  struct bar *b2;
+  b1 = alloc(bar);
+  b1->x = 1; b1->y = 2;
+  b2 = alloc(struct bar);
+  b2->x = 1; b2->y = 2;
+  return (b1 == b2);
+}

@@ -1,0 +1,7 @@
+//test error
+
+int f1() { return 1; }
+
+int main () {
+	return f1(1); //wrong args
+}

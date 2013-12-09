@@ -1,0 +1,13 @@
+//test return 0
+// tests struct definiton
+
+struct blob
+{
+    int x;
+    int y;
+};
+
+int main()
+{
+    return 0;
+}

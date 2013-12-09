@@ -1,0 +1,14 @@
+//test error
+// pointers as arrays
+
+
+struct k {
+       int* game;
+       int  on;
+};
+
+int main() {
+    struct k* mygurl;
+    mygurl = alloc_array(struct k, 13);
+    return 0;
+}

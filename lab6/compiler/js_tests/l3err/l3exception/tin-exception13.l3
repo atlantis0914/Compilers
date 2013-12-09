@@ -1,0 +1,12 @@
+//test exception 14
+// tests calling external functions and a monotonicity property
+
+int main() {
+  fpt x = itof(10);
+  fpt y = fdiv(x, fadd(x, 1));
+  while (y <= x && x >= 0) {
+    x = y;
+    y = fdiv(x, fadd(x, 1));
+  }
+  return -1;
+}

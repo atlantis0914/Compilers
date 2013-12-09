@@ -1,0 +1,16 @@
+//test error
+// uninitialized variable
+
+int main() {
+  int x = 1;
+  int y;
+
+  if (x > 2) {
+    y = 3;
+    x += y;
+  }
+  else {
+    x = y + 1;
+  }
+  return x;
+}

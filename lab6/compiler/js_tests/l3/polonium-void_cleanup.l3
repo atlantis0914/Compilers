@@ -1,0 +1,44 @@
+//test return 16
+/* Bring out register trashing due to lack of cleanup after functions w/o
+   explicit returns. Jump through some hoops to make this happen despite
+   certain common optimizations. */
+
+void vdontfold(int t0, int t1, int t2, int t3, int t4, int t5, int t6,
+                 int t7, int t8, int t9, int t10, int t11, int t12, int t13,
+                 int t14, int t15)
+{
+    1 / (t0 + t1 + t2 + t3 + t4 + t5 + t6 + t7 + t8 +
+         t9 + t10 + t11 + t12 + t13 + t14 + t15);
+}
+
+int dontfold(int t0, int t1, int t2, int t3, int t4, int t5, int t6, int t7,
+               int t8, int t9, int t10, int t11, int t12, int t13, int t14,
+               int t15)
+{
+    int t0l = t0;
+    int t1l = t1;
+    int t2l = t2;
+    int t3l = t3;
+    int t4l = t4;
+    int t5l = t5;
+    int t6l = t6;
+    int t7l = t7;
+    int t8l = t8;
+    int t9l = t9;
+    int t10l = t10;
+    int t11l = t11;
+    int t12l = t12;
+    int t13l = t13;
+    int t14l = t14;
+    int t15l = t15;
+
+    vdontfold(t0l, t1l, t2l, t3l, t4l, t5l, t6l, t7l, t8l,
+              t9l, t10l, t11l, t12l, t13l, t14l, t15);
+
+    return t0 + t1 + t2 + t3 + t4 + t5 + t6 + t7 + t8 +
+        t9 + t10 + t11 + t12 + t13 + t14 + t15;
+}
+
+int main(){
+    return dontfold(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+}

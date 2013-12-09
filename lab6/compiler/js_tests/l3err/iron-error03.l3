@@ -1,0 +1,11 @@
+//test error
+// int function doesn't return
+
+int returnone() {
+    int x;
+}
+
+int main() {
+    return 0;
+}
+

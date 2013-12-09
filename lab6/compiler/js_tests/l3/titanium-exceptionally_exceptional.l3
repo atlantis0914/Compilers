@@ -1,0 +1,11 @@
+//test return 5
+
+// Types what is
+
+fpt fadd2(fpt x, fpt y) {
+  return x + y;
+}
+
+int main() {
+  return fadd2(2,3);
+}

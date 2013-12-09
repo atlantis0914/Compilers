@@ -1,0 +1,36 @@
+//test return 11
+// Testing possible alignment issues?
+// Also testing pointer comparison
+
+struct test
+{
+    int field1;
+    int field2;
+    int field3;
+    bool * field4;
+    int field5;
+};
+
+int main()
+{
+    struct test * testing = alloc(struct test);
+    bool * testbool;
+
+    ((*testing)).field1 = 1;
+    (*testing).field2 = 2;
+    (*testing).field3 = 3;
+    (*testing).field4 = alloc(bool);
+    *((*testing).field4) = true;
+    (*testing).field5 = 5;
+
+    testbool = (*testing).field4;
+
+    if((*testing).field4 == testbool)
+    {
+        return (*testing).field1 + (*testing).field2 + (*testing).field3 + (*testing).field5;
+    }
+    else if ((*testing).field4 == NULL)
+        return -2;
+    else
+        return -1;
+}

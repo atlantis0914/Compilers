@@ -1,0 +1,11 @@
+//test return 0
+// you can declare poop as much as you want
+struct poop;
+struct poop;
+struct poop;
+struct poop;
+struct poop;
+struct poop {};
+int main() {
+  return 0;
+}

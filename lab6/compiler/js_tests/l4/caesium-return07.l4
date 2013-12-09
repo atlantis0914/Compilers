@@ -1,0 +1,9 @@
+//test return 0
+struct main {
+    int a;
+};
+
+int main()
+{
+    return 0;
+}

@@ -1,0 +1,13 @@
+//test return 0
+typedef int[] vi;
+struct s {
+    vi x;
+};
+
+int main() {
+    struct s[]* st = alloc(struct s[]);
+    *st = alloc_array(struct s, 5);
+    (*st)[0].x = alloc_array(int, 5);
+    (*st)[0].x[2] = 3;
+    return (*st)[0].x[0];
+}

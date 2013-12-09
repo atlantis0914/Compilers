@@ -1,0 +1,10 @@
+//test error
+// Same variable name
+int main() {
+  int x;
+  if (true) {
+    int x;
+    x = 0;
+  }
+  return 0;
+}

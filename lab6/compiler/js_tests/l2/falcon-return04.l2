@@ -1,0 +1,17 @@
+//test return 5
+int main() {
+  int i;
+  int j;
+  int temp = 5;
+
+  for (i = (18 - 1); i > 0; i--) {
+    for (j = 1; j <= i; j++) {
+      if (j-1 > j) {
+        temp = j-1;
+        j = j;
+        j = temp;
+      }
+    }
+  }
+  return temp;
+}

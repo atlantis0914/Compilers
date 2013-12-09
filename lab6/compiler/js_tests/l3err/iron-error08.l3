@@ -1,0 +1,12 @@
+//test error
+// Function named assert
+
+void assert(bool a) {
+    return;
+}
+
+int main() {
+    assert(false);
+    return 0;
+}
+

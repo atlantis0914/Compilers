@@ -1,0 +1,17 @@
+//test return 14
+// 2 dimensional array
+
+int main() {
+		int [][] ptr;
+		int n = 10;
+		int m = 6;
+		ptr = alloc_array(int[], n);
+		for(int i = 0; i < n; i++) {
+						ptr[i] = alloc_array(int, m);
+						for(int j = 0; j < m; j++) {
+										ptr[i][j] = i*3+j;
+						}
+		}
+		return ptr[3][5];
+}
+

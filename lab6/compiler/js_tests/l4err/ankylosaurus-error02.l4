@@ -1,0 +1,22 @@
+//test error
+// Return type of function must be small
+
+struct test
+{
+    int x;
+    int y;
+    int [] z;
+};
+
+struct test func()
+{
+    struct test * nTesting = alloc(struct test);
+
+    return *nTesting;
+}
+
+int main()
+{
+    func();
+    return 0;
+}

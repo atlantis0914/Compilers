@@ -1,0 +1,28 @@
+//test error
+//struct has same field twice
+
+struct oopsy {
+
+int a;
+int aa;
+int aaa;
+int aaaa;
+int aaaaa;
+int aaaaaaa;
+int aaaaaaaaaaa;
+int aaaaaaaaaaaaa;
+int aaaaaaaaaaaaa;
+int aaaaaaaaaaaaaaaaa;
+int aaaaaaaaaaaaaaaaaa;
+int vvvvvvva;
+int adsgagddsaga;
+int adsgasgda;
+int a4;
+int aadgdag;
+int adag;
+};
+
+
+int main (){
+return -500;
+}

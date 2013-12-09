@@ -1,0 +1,8 @@
+//test exception
+// runtime exception: assertion failure.
+
+int main()
+{
+    assert(false);
+    return 0;
+}

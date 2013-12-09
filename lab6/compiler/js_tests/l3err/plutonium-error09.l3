@@ -1,0 +1,8 @@
+//test error
+
+typedef int x;
+
+int main () {
+    x x = 0;
+    return x;
+}

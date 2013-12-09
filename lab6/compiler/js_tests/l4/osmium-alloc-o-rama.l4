@@ -1,0 +1,29 @@
+//test return 0
+
+struct foo {
+    int a;
+    int b;
+    int c;
+    bool d;
+    struct foo * e;
+};
+
+typedef struct foo * bar;
+
+int main() {
+    bar a = alloc(struct foo);
+    a->a = 1;
+    a->b = 2;
+    a->c = 3;
+    a->d = false;
+
+    a-> e = alloc(struct foo);
+
+    a->e->a = 0;
+
+    if (a->d || a->e->d) {
+        return a->a;
+    } else {
+        return a->e->a;
+    }
+}

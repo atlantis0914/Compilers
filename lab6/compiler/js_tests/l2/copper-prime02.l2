@@ -1,0 +1,25 @@
+//test return 101
+
+int main ()
+{
+	int guess = 0;
+	int found = -1;
+	int n = 25;
+
+	while(found < n) {
+		guess++;
+		bool isPrime = true;
+		if(guess > 1) {
+			for(int factor = 2; isPrime && factor < guess; factor++) {
+				if(guess % factor == 0) {isPrime = false;}
+			}
+		} else {
+			isPrime = false;
+		}
+		if(isPrime) {
+			found++;
+		}
+	}
+
+	return guess;
+}

@@ -1,0 +1,13 @@
+//test error
+//mistmatch return types
+
+int do(int x);
+
+int main(){
+    int x = do(5);
+    return x;
+}
+
+void do(int x){
+     return;
+}

@@ -1,0 +1,26 @@
+//test return 5
+
+typedef int foo;
+
+struct foo;
+
+struct bar;
+
+struct foo;
+
+struct bar
+{
+  int a;
+};
+
+struct foo
+{
+  int a;
+};
+
+int main()
+{
+  int x = 5;
+  struct foo* b = alloc(struct foo);
+  return x;
+}

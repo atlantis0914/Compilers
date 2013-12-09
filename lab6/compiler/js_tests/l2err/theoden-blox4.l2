@@ -1,0 +1,16 @@
+//test error
+
+// make sure that an incorrect return statement 
+// can't exist in a later block
+int main()
+{
+  {
+    int x = 66;
+    return x;
+  }
+
+  { 
+    int y;
+    return y;
+  }
+}

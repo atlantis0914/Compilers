@@ -1,0 +1,64 @@
+//test return 22286784
+
+int main ()
+{
+  int c;
+  int h;
+  int r;
+  int o;
+  int m;
+  int i;
+  int u;
+  int n;
+
+  bool _1 = false;
+  bool _5 = false;
+  bool _4 = false;
+  bool _c = false;
+  bool _o = false;
+  bool _m = false;
+  bool _p = false;
+  bool _i = false;
+  bool _l = false;
+  bool _e = false;
+  bool _r = false;
+  bool _s = false;
+  
+
+  for (c = 0 ; _1 ; c++) {
+    if(_5){
+      for(h = 1; h < 100; h++){
+        if(_4){
+          for(r = 1; r > -100; r--){
+            if(_c){
+              for(o = 5; o > 1010; o = o * 7) {
+                _1 = !_1;
+              }
+            } if (_o) {
+              for(m = 8; m <= 15411; m = m << 3) {
+                _5 = _4 && _1;
+              }
+            } else {
+              for(i = 123213; i >= 0 ; i = i / 101) {
+                _1 = _1 && _5 || _4;
+              }
+            }
+          }
+        } else {
+          for(u = 0x15411; u < 0; u = u >> 1) {
+            u = (u << 1)/3 + u - u & u;
+          }
+        }
+      }
+    } if (_m && _p || !_i || _l) {
+      for(n = 11231231; n > 0; n = (n >> 1) + n/3) {  
+        _e = _r && _s || _e;
+      }
+      if (_e && _r || _s) {
+        _e = _e && _r;
+      }
+    }
+  }
+
+  return 0x15411C0;
+}

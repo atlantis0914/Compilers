@@ -1,0 +1,11 @@
+//test exception 14
+//infinite, not sure if the instructors will like this one. if not sorry ^_^
+
+int main () {
+  for (int i = 0; true; i++)
+  {
+    int x = i;
+  }
+
+  return 0;
+}

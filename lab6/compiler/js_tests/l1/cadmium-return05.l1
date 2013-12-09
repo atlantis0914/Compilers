@@ -1,0 +1,13 @@
+//test return -989016535
+
+int main()
+{
+  int k = 0x7FFFFFFF;
+  int x = 1234556;
+  x = x*265443561;
+  x = x*265443761;
+  x = x*265435761;
+
+  int y = 123456 % (-1234);
+  return x + y - (x * y) % 163;
+}

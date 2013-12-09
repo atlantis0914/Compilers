@@ -1,0 +1,5 @@
+//test error
+// main returns an int, not a bool
+int main() {
+  return true;
+}

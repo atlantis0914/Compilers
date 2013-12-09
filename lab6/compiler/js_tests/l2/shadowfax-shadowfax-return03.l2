@@ -1,0 +1,11 @@
+//test return 720
+// tests calculating iterative 6 factorial
+int main()
+{
+  int result = 1;
+  int n = 6;
+  for (n = 6; n > 0; n--) {
+    result *= n;
+  }
+  return result;
+}

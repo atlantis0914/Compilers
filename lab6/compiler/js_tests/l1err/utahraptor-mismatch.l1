@@ -1,0 +1,8 @@
+//test error
+// Checks parentheses balancing code
+int main()
+{
+	int x;
+	x = 1 + ((x) + (2) + 3;
+	return x;
+}

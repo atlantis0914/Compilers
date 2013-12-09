@@ -1,0 +1,11 @@
+//test error
+
+int main ()
+{
+  // int x;
+  int __;
+  
+  __ = 1;
+  while (true) x++;
+  return __;			/* ditto same */
+}

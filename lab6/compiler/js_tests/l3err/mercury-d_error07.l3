@@ -1,0 +1,9 @@
+//test error
+typedef int x;
+void x(x a, int b);
+void x(x a, x b) {
+
+}
+int main() {
+  return 0;
+}

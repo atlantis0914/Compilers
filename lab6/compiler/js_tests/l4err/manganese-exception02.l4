@@ -1,0 +1,20 @@
+//test exception 11
+
+int main() {
+    int[][][][][] five = alloc_array(int[][][][], 1);
+    int[][][][]   four = alloc_array(int[][][], 1);
+    int[][][]     three = alloc_array(int[][], 1);
+    int[][]       two = alloc_array(int[], 1);
+    int[]         one = alloc_array(int, 1);
+    five[0] = four;
+    four[0] = three;
+    three[0] = two;
+    two[0] = one;
+    one[0] = 0;
+    five[four[0][0][0][0]]
+        [three[0][0][0]]
+        [two[0][0]]
+        [one[0]]
+        [1] = 0;
+    return 0;
+}

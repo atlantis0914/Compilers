@@ -1,0 +1,16 @@
+//test return 155117520
+// go pascal
+
+int choose(int n, int k) {
+  if (k == 0) {
+    return 1;
+  } else if (n < k) {
+    return 0;
+  }
+  return choose(n-1, k-1) + choose(n-1, k);
+}
+
+int main () {
+  return choose(30,15);
+}
+

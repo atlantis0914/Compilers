@@ -1,0 +1,10 @@
+//test error
+/* type not small */
+
+struct point {int x; int y;};
+typedef struct point point_t;
+
+int main () {
+  point_t x;
+  return 0;
+}

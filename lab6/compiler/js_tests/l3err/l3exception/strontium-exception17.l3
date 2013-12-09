@@ -1,0 +1,14 @@
+//test exception
+// runtime exception : infinite mutual recursion
+
+int main();
+
+int helper()
+{
+    return main();
+}
+
+int main()
+{
+    return helper();
+}

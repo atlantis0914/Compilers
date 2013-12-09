@@ -1,0 +1,9 @@
+//test error
+
+int main()
+{
+    int meowmix1;
+    int meowmix2;
+    meowmix1 = meowmix2;
+    return 57;
+}

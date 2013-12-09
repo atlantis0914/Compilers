@@ -1,0 +1,18 @@
+//test return 50
+// do structs really have their own namespaces
+
+struct balloon {
+    int balloon;
+    bool tacosss;
+};
+
+int balloon(){ 
+    return 50;
+}
+
+int main(){
+    struct balloon *p = alloc(struct balloon);
+    p->balloon = 50;
+    p->tacosss  = true;
+    return balloon();
+}

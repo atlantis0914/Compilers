@@ -1,0 +1,26 @@
+//test return 0
+// Some sanity checks for function names/declaration.
+
+void _c0_() {
+}
+void L1() {
+}
+void Label1() {
+}
+void LABEL1() {
+}
+void Main();
+int main() {
+    bool b = (2%2==0);
+    if (b) {
+    } else {
+    }
+    _c0_();
+    L1();
+    Label1();
+    LABEL1();
+    Main();
+    return 0;
+}
+void Main() {
+}

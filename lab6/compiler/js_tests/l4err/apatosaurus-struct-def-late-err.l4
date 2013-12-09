@@ -1,0 +1,33 @@
+//test error 
+
+// struct is used before definition occurs
+
+struct late;
+
+struct ontime {
+    int time;
+    bool seymore;
+    struct late *lateness;
+};
+
+int setLateVal (struct ontime * l, int v);
+int getLateVal (struct late * l);
+
+int main(){
+    struct ontime *hi = alloc(struct ontime);
+    setLateVal(hi, 50);
+    return getLateVal(hi->lateness); 
+}
+
+int setLateVal (struct ontime * l, int v){
+    l->lateness = alloc(struct late);
+    l->lateness->val = v;
+    return 0;
+}
+struct late {
+    int val;
+};
+
+int getLateVal (struct late * l){
+    return l->val;
+}

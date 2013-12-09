@@ -1,0 +1,13 @@
+//test error
+
+//typedef not defined yet
+
+typedef foo bar;
+typedef int foo;
+
+foo main()
+{
+  bar x = 3;
+
+  return x;
+}

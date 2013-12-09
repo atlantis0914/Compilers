@@ -1,0 +1,9 @@
+//test return 0
+// nothing wrong here
+struct poop {
+};
+
+int main() {
+  struct poop *poop = alloc(struct poop);
+  return 0;
+}

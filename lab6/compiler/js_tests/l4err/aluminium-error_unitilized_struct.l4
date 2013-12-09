@@ -1,0 +1,15 @@
+//test error
+
+struct s{
+  int IDoNotCare;
+};
+typedef struct s s;
+int f (s[]* x) {
+  return 2;
+}
+
+int main () {
+  s[]* y;
+  // y must be initialized
+  return f(y);
+}

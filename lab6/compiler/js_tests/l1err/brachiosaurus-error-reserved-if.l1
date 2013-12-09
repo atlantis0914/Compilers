@@ -1,0 +1,8 @@
+//test error
+// reserved keyword: if
+
+int main()
+{
+    int if;
+    return if;
+}

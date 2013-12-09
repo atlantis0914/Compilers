@@ -1,0 +1,14 @@
+//test exception 14
+
+struct node {
+    struct node * next;
+};
+
+int main() {
+    struct node * node = alloc(struct node);
+    node->next = node;
+    while(node != NULL) {
+        node = node->next;
+    }
+    return 0;
+}

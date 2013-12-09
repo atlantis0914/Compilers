@@ -1,0 +1,9 @@
+//test return 7
+
+int main () {
+	int *p1 = alloc(int);
+	*p1 = 7;
+	int *p2 = p1;
+	int *p3 = p2;
+	return *p3;
+}

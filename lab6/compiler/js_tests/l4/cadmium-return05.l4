@@ -1,0 +1,17 @@
+//test return 5
+// Nested structs
+struct S1 {
+    int x;
+};
+
+struct S2 {
+    int y;
+    bool b;
+    struct S1 s;
+};
+
+int main() {
+    struct S2 *s = alloc(struct S2);
+    s->s.x = 5;
+    return s->s.x;
+}

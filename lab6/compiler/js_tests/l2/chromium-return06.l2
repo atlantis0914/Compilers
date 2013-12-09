@@ -1,0 +1,16 @@
+//test return 10
+
+int main ()
+{
+  int i = 0;
+
+  while (i <= 10) {
+    if (i == 10) {
+      return i;
+    } else {
+      i++;
+    }
+  }
+
+  return i;
+}

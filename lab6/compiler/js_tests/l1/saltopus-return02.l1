@@ -1,0 +1,61 @@
+//test return 842
+
+/* test spilling */
+
+int main() 
+{
+		int x1;
+		int x2;
+		int x3;
+		int x4;
+		int x5;
+		int x6;
+		int x7;
+		int x8;
+		int x9;
+		int x10;
+		int x11;
+		int x12;
+		int x13;
+		int x14;
+		int x15;
+		int x16;
+		int x17;
+		int x18;
+		int x19;
+		int x20;
+
+		int	x;
+		int z;
+		int y;
+		int lol;
+
+		x1 = 42;
+		x2 = 42;
+		x3 = 42;
+		x4 = 42;
+		x5 = 42;
+		x6 = 42;
+		x7 = 42;
+		x8 = 42;
+		x9 = 42;
+		x10 = 42;
+		x11 = 42;
+		x12 = 42;
+		x13 = 42;
+		x14 = 42;
+		x15 = 42;
+		x16 = 42;
+		x17 = 42;
+		x18 = 42;
+		x19 = 42;
+		x20 = 42;
+
+
+		x = 7;
+		z = 2 + x;
+		y = z - x;
+
+		return y + x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10
+                 + x11 + x12 + x13 + x14 + x15 + x16 + x17 + x18 + x19 + x20;
+}

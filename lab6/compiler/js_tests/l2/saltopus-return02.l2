@@ -1,0 +1,19 @@
+//test return 42
+/* Verify that if there are returns on both sides of a if-else,
+ * that counts as returning. */
+int main()
+{
+	int x = 7;
+	int y;
+	int z;
+	
+	if (x == 12) {
+		return 3423;
+	} else {
+		return x*(x-1);
+	}
+
+	x = y + z;
+	y = z+x;
+	return y+z+x+y-z-y+z/(y*x);
+}

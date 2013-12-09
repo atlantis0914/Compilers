@@ -1,0 +1,9 @@
+//test error
+//use of undefined struct
+
+struct a;
+
+int main() {
+    struct a *b = alloc(struct a);
+    return (b->d);
+}

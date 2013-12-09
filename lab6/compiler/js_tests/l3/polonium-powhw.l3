@@ -1,0 +1,15 @@
+//test return 16
+/* fp's favorite. */
+
+int powacc(int b, int e, int a){
+    if (e == 0) return a;
+    else return powacc(b, e-1, a*b);
+}
+
+int pow(int b, int e){
+    return powacc(b, e, 1);
+}
+
+int main(){
+    return pow(2, 4);
+}

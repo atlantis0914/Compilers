@@ -1,0 +1,31 @@
+//test return -400583296
+// Redeclare foo in a bunch of mildly creative ways.
+
+int foo(int x, int y, bool z);
+int foo(int a, int b, bool c);
+int foo(int m, int n, bool o);
+
+int foo(int a, int b, bool c) {
+  if (c)
+    return a * b;
+  else
+    return -1 * a * b;
+}
+
+typedef int monkey;
+typedef bool cactus;
+
+int foo(int x, int y, bool z);
+int foo(int a, int b, bool c);
+int foo(int m, int n, bool o);
+monkey foo(monkey x, monkey y, cactus z);
+monkey foo(monkey a, monkey b, cactus c);
+monkey foo(monkey m, monkey n, cactus o);
+
+int main() {
+  return foo(12000, 324532, true);
+}
+
+int foo(monkey x, int y, bool z);
+monkey foo(int a, monkey b, cactus c);
+monkey foo(monkey m, int n, bool o);

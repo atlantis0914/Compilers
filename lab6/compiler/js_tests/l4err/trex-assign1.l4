@@ -1,0 +1,9 @@
+//test error
+
+//can only assign to lvalues
+
+
+int main()
+{
+  main() = 42;
+}

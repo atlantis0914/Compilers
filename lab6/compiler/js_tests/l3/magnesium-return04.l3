@@ -1,0 +1,13 @@
+//test return 1
+// interface doesn't have to be implemented
+
+int lol ();
+int ha ();
+
+int ha() {
+  return 1;
+}
+
+int main () {
+  return ha();
+}

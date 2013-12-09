@@ -1,0 +1,141 @@
+//test return 0
+
+//introducing the wondrous dynamically typed c0 program!
+//true type theorist edition
+
+struct dyn {int i; bool b; bool class;};
+typedef struct dyn dyn_t;
+
+dyn_t * equals (dyn_t * i, dyn_t * j) {
+    dyn_t * d = alloc(dyn_t);
+    if (i->class == j->class) {
+        if(i->class) {
+            d->b = i->i == j->i;
+            d->class = false;
+            return d;
+        } else {
+            d->b = i->b == j->b;
+            d->class = false;
+            return d;
+        }
+    } else {
+        d->b = false;
+        d->class = false;
+        return d;
+    }
+}
+
+dyn_t * leq (dyn_t * i, dyn_t * j) {
+    dyn_t * d = alloc(dyn_t);
+    if (i->class == j->class) {
+        if(i->class) {
+            d->b = i->i <= j->i;
+            d->class = false;
+            return d;
+        } else {
+            d->b = i->b ? j->b : true;
+            d->class = false;
+            return d;
+        }
+    } else {
+        d->b = false;
+        d->class = false;
+        return d;
+    }
+}
+
+dyn_t * gt (dyn_t * i, dyn_t * j) {
+    dyn_t * d = alloc(dyn_t);
+    if (i->class == j->class) {
+        if(i->class) {
+            d->b = i->i > j->i;
+            d->class = false;
+            return d;
+        } else {
+            d->b = i->b ? !(j->b) : false;
+            d->class = false;
+            return d;
+        }
+    } else {
+        d->b = false;
+        d->class = false;
+        return d;
+    }
+}
+
+// true = int, false = bool
+bool type_of (dyn_t * class) {
+    return class->class;
+}
+
+// A "typesafe" way of exposing primitives from dyn_t*
+int toInt (dyn_t * i) {
+    if(i->class) return i->i;
+    else return 1/0;
+}
+
+bool toBool (dyn_t * b) {
+    if(b->class) { 1/0; return false; }
+    else return b->b;
+}
+
+dyn_t* copy(dyn_t* x) {
+    dyn_t* y = alloc(dyn_t);
+    y->i = x->i;
+    y->b = x->b;
+    y->class = x->class;
+    return y;
+}
+
+int selectionSort (dyn_t*[] arr, int len) {
+    dyn_t* min;
+    dyn_t* i = alloc(dyn_t);
+    i->i = 0;
+    i->class = true;
+
+    dyn_t* j = alloc(dyn_t);
+    j->i = 0;
+    j->class = true;
+
+    dyn_t* temp;
+
+    for(i->i = 0; toInt(i) < len; i->i += 1) {
+        min = copy(i);
+        for(j->i = toInt(i); toInt(j) < len; j->i += 1) {
+            if(toBool( leq(arr[toInt(j)], arr[toInt(min)]) )) {
+                min = copy(j);
+            }
+        }
+        temp = copy(arr[toInt(i)]);
+        arr[toInt(i)] = arr[toInt(min)];
+        arr[toInt(min)] = temp;
+    }
+    return 0;
+}
+
+dyn_t*[] toDynArr (int[] arr, int len) {
+    int i = 0;
+    dyn_t*[] a = alloc_array(dyn_t*, len);
+    dyn_t* d;
+    for(i = 0; i < len; i++) {
+        d = alloc(dyn_t);
+        d->i = i;
+        d->class = true;
+        a[i] = d;
+    }
+
+    return a;
+}
+
+// BURN THE EXPOSED PRIMITIVE TYPE!
+int main() {
+    int i;
+    int[] a = alloc_array(int, 101);
+    for(i = 100; i >= 0; i--) {
+        a[100-i] = i;
+    }
+    
+    dyn_t*[] ds = toDynArr(a, 101);
+    selectionSort(ds, 101);
+    return toInt(ds[0]);
+}

@@ -1,0 +1,45 @@
+//test return 92
+
+int abs(int a) {
+	if(a >= 0) return a;
+	return -a;
+}
+
+bool safe(int x, int y, int[] r) {
+	int i;
+        bool done = false;
+	for(i = 0; i < 8 && !done; i++) { 
+          if(i >= y) done = true;
+          else
+            if(r[i] == x || abs(r[i] - x) == abs(i - y)) return false;
+	}
+	return true;
+}
+
+int try(int n, int[] r) {
+	int i;
+	int count = 0;
+	if(n == 8) return 1; 
+	/* You are now arraying manually */
+	for(i = 0; i < 8; i++) { 
+		if(safe(i, n, r)) {
+			r[n] = i;
+			count += try(n+1, r);
+		} 
+	}
+	return count;
+}
+
+int t(int _t) {
+	int[] r = alloc_array(int, 8);
+	int i;
+	for(i = _t; i < 8; i++) {
+		r[i] = -1;
+	}
+	return try(_t, r);
+}
+
+int main() {
+	int _t = 0;
+	return t(_t);
+}

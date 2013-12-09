@@ -1,0 +1,14 @@
+//test error
+
+int main () {
+    bool a = apple (false);
+
+    return 0;
+}
+
+bool apple (int pie) {
+    if (pie == 0) 
+        return 1;
+    else 
+        return pie*apple(pie-1);
+}

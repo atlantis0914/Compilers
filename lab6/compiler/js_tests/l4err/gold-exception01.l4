@@ -1,0 +1,17 @@
+//test exception 11
+
+int main() {
+        int*[] arr = alloc_array(int*, 8);
+        
+        for (int i = 0; i < 7; i++) {
+		arr[i] = alloc(int);
+		*arr[i] = i + 1;
+	}
+
+	int sum = 0;
+	for (int i = 0; i < 8; i++) {
+		sum += *arr[i];
+	}
+
+	return sum;
+}

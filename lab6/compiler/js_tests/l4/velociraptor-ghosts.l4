@@ -1,0 +1,23 @@
+//test return 1
+// they say on a night like this, not far from here,
+// there was a struct that was declared and used...
+// but never defined...
+
+struct spooky;
+typedef struct spooky* ghost;
+
+bool swap(ghost* g1, ghost* g2) {
+  ghost t = *g1;
+  *g1 = *g2;
+  *g2 = t;
+  return true;
+}
+
+int main() {
+  ghost* a = alloc(ghost);
+  ghost* b = alloc(ghost);
+
+  swap(a, b);
+
+  return *a == NULL && *b == NULL ? 1 : -1;
+}

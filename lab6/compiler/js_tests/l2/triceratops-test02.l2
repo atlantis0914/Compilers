@@ -1,0 +1,18 @@
+//test return 11
+
+int main ()
+{
+    int a;
+    int b;
+
+    a = 0;
+    b = 10;
+
+    while (a < b) {
+        if (a == 9) {
+            a = 10;
+        }
+        a += 1;
+    }
+    return a;
+}

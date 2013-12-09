@@ -1,0 +1,17 @@
+//test exception 8
+//dead code divide by 0
+int main()
+{	
+    int y = 20;
+    int x;
+
+    for (x = 0; x < 20; x++)
+    {
+        if (x != 20)
+        {
+            x /= x;
+        }    
+    }
+
+    return y;
+}

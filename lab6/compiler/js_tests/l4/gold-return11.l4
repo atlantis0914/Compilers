@@ -1,0 +1,9 @@
+//test return 32
+
+int main () {
+	int[] arr = alloc_array(int, 3);
+	arr[0] = 8;
+	arr[1] = 16;
+	arr[2] = 32;
+	return arr[(14 % 5 * 6 - 3) / 10];
+}

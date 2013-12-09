@@ -1,0 +1,15 @@
+//test return 300
+// A for loop nested in a while loop
+int main() {
+  int i = 0;
+  int j;
+  int madness = -4;
+
+  while (i<8) {
+    for (j=i; j<10; j++)
+      madness += j;
+    i++;
+  }
+
+  return madness; // Madness? THIS IS SPARTA!
+}

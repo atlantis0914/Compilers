@@ -1,0 +1,12 @@
+//test return 1
+
+typedef int earth;
+
+int main () {
+	earth * fire;
+	fire = alloc (earth);
+	*fire = 100;
+	earth wind = *fire;
+	wind ** fire;
+	return *fire / wind;
+}

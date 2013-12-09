@@ -1,0 +1,9 @@
+//test return 42
+// simple return test
+
+int main()
+{
+  int x;
+  x = 42;
+  return x;
+}

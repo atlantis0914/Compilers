@@ -1,0 +1,13 @@
+//test error
+
+//returns the nth carmichael
+int *carm(int x)
+{
+    int[] carm = alloc_array(int, x);
+
+    return carm;
+}
+
+int main() {
+    return carm(6)[5];
+}

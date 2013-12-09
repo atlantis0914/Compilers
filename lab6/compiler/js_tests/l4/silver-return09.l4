@@ -1,0 +1,15 @@
+//test return 0
+//
+
+struct s {
+       int[] b;
+};
+
+int main() {
+    struct s* p = alloc(struct s);
+    p->b = alloc_array(int, 0);
+    struct s* p2 = alloc(struct s);
+    
+    if (p->b == p2->b) return 1;
+    else return 0;
+}

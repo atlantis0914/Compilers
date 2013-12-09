@@ -1,0 +1,20 @@
+//test return 5
+/* Does your comment parsing include 
+   
+   
+   newlines? 
+*/
+
+/**/ //How about zero length?
+
+int main()/*asdfwerlskdfksf*/ {
+	int/*asdfsdf*/ x =/*sdfasdf*/ 5;
+	/*asdfwerwer*/return x/*asdfwerwer*/; //asdfsdf
+}
+
+/* /* /* /* Comments NEST! */ */ */ */
+
+/* Greedy comment removers will pull out the first
+   block comment to this point, leaving an empty program. */
+
+//Does your comment parser allow a comment to end without a newline?

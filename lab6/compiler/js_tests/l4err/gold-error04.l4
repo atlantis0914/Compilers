@@ -1,0 +1,8 @@
+//test error
+
+int main () {
+	int* x = NULL;
+	bool* y = NULL;
+	bool z = (x == y);
+	return (z? 1 : 0);
+}

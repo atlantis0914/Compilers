@@ -1,0 +1,12 @@
+//test exception
+//shift overflow
+
+int main()
+{
+  int s = 23;
+  int h = s + 12;
+  int i = 2;
+  int t = i << h;
+
+  return t;
+}

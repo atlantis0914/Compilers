@@ -1,0 +1,8 @@
+//test exception
+
+// recursively call main
+
+int main(){
+  int x = 3;
+  return main();
+}

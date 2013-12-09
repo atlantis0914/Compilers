@@ -1,0 +1,9 @@
+//test error
+
+int main() {
+	int* k = alloc(int);
+	int* m = alloc(int);
+	*k = 20;
+	*m = 4;
+	return *k/*m;
+}

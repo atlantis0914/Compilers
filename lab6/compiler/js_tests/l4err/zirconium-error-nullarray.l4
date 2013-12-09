@@ -1,0 +1,8 @@
+//test error
+// NULL does not typematch to t[]
+
+int main() {
+  int[] A = alloc_array(int, 1);
+  NULL == A;
+  return 79;
+}

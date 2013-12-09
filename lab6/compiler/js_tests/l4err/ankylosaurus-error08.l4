@@ -1,0 +1,11 @@
+//test error
+// Trying to allocate on a struct that isn't defined
+
+struct test;
+
+int main()
+{
+    struct test * testing = alloc(struct test);
+
+    return 0;
+}

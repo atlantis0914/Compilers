@@ -1,0 +1,10 @@
+//test return 0
+// tests the fact that for loops don't execute if cond is initially false
+int main()
+{
+  for (;false;) {
+    int x = 7/0;
+    return 1;
+  }
+  return 0;
+}

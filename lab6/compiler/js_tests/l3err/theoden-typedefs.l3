@@ -1,0 +1,15 @@
+//test error
+
+typedef int herp;
+
+herp derp(int a);
+
+typedef derp foo;
+
+herp derp(int a){
+  return a;
+}
+
+int main(){
+  return derp(3);
+}

@@ -1,0 +1,15 @@
+//test error
+
+typedef int size_t;
+
+struct foo {
+    size_t * a;
+    size_t[] b;
+};
+
+int main() {
+    struct foo * foo = alloc(struct foo);
+    foo->a = alloc(size_t);
+    foo->b = foo->a;
+    return 0;
+}

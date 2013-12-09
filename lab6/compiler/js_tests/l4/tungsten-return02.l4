@@ -1,0 +1,18 @@
+//test return 10
+//are recursive assignments allowed?
+
+struct a;
+
+struct a {
+    struct a *b;
+    int d;
+};
+
+int main() {
+    struct a *c;
+    c = alloc(struct a);
+    c->b = c;
+    c->b->b->b->b->b->d = 10;
+    return c->d;
+}
+

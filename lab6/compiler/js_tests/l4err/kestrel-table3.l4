@@ -1,0 +1,87 @@
+//test exception
+//data structure that has an array and its size and maintains a failure code
+
+int arraycopy(int size, int[] a, int[] b) {
+  for (int k = 0; k < size; k++) {
+    b[k] = a[k];
+  }
+  return 1;
+}
+
+struct table_rep {
+  int numItems;
+  int[] items;
+  bool* failed;
+};
+
+typedef struct table_rep* table;
+
+int mark_failure (table t, bool failure) {
+  *(t->failed) = failure;
+  return 0;
+}
+
+int mark_failed (table t) {
+  return mark_failure(t, true);
+}
+
+int mark_succeeded (table t) {
+  return mark_failure(t, false);
+}
+
+bool failed (table t) {
+  return *(t->failed);
+}
+
+int size (table t) {
+  return t->numItems;
+}
+
+int get (table t, int k) {
+  if (k >= 0 && k < t-> numItems) {
+    mark_succeeded(t);
+    return t->items[k];
+  } else {
+    mark_failed(t);
+    return 0;
+  }
+}
+
+int set (table t, int k, int v) {
+  if (k >= 0 && k < t->numItems) {
+    t->items[k] = v;
+    mark_succeeded(t);
+    return 0;
+  } else {
+    mark_failed(t);
+    return 0;
+  }
+}
+
+table makeTable (int numItems, int[] initial_contents) {
+  struct table_rep* t = alloc(struct table_rep);
+  int[] items = alloc_array(int, numItems);
+  arraycopy(numItems, initial_contents, items);
+  t->numItems = numItems;
+  t->items = items;
+  t->failed = alloc(bool);
+  mark_succeeded(t);
+  return t;
+}
+
+int assertTrue (bool b) {
+  return b ? 0 : 0 / 0;
+}
+
+int assertFalse (bool b) {
+  return assertTrue(!b);
+}
+
+int main () {
+  int[] contents = alloc_array(int, 1);
+  contents[0] = 1111;
+  table t = makeTable (1, contents);
+  set(t, 9001, 1337);
+  assertFalse(failed(t)); // was supposed to fail, so this should error
+  return 0;
+}

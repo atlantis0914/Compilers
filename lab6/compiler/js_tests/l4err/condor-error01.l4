@@ -1,0 +1,13 @@
+//test error
+
+struct HelloStruct {
+    int hour;
+    bool is_morning;
+};
+
+int main () {
+   struct HelloStruct * hi = alloc( struct HelloStruct );
+   hi->hour = 0;
+   hi->is_morning = false;
+   return hi.hour;
+}

@@ -1,0 +1,13 @@
+//test error
+
+struct Node {
+  int value;
+  Node *next;
+}
+
+int main() {
+  Node *root = alloc(Node);
+  root->value = 1;
+  root->next = NULL;
+  return root->value;
+}

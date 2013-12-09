@@ -1,0 +1,52 @@
+//test return 36 
+
+
+bool empty(int *size){
+    return *size == 0;
+}
+
+void insert(int[] stack, int *size, int value){
+    int oldMax;
+    if (*size == 0){
+        oldMax = 0;
+    }
+    else {
+        oldMax = stack[*size-1];
+    }  
+    if (oldMax < value){
+        oldMax = value;
+    } 
+    stack[*size] = value;
+    stack[*size + 1] = oldMax;
+    *size = *size + 2;
+}
+
+int getMax(int[] stack, int size){
+    return stack[size-1];
+}
+
+void pop(int[] stack, int *size){
+    *size = *size -2;
+}
+
+//insert number, max
+int main(){
+    int[] stack = alloc_array(int, 10);
+    int *size = alloc(int);
+    *size = 0;
+
+    insert(stack, size, 5);
+    insert(stack, size, 3);
+    insert(stack, size, 8);
+    insert(stack, size, 9);
+    insert(stack, size, 2);
+
+    int maxSum = 0;
+    while(!empty(size)){
+       maxSum += getMax(stack, *size);
+       pop(stack, size);
+    }
+    return maxSum;
+}
+
+

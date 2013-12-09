@@ -1,0 +1,13 @@
+//test error
+
+int main() {
+  int******** a = alloc(int*******);
+  *a = alloc(int******);
+  **a = alloc(int*****);
+  ***a = alloc(int****);
+  ****a = alloc(int***);
+  *****a = alloc(int**);
+  ******a = alloc(int*);
+  *******a = 1000000000;
+  return *******a;
+}

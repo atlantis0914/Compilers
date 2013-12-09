@@ -1,0 +1,16 @@
+//test return 2403
+
+int main() {
+  int[][][] balls;
+  balls = alloc_array(int[][], 10);
+  for(int i = 0; i < 10; i++) {
+    balls[i] = alloc_array(int[], 10);
+    for(int j = 0; j < 10; j++) {
+      balls[i][j] = alloc_array(int, 10);
+      for(int k = 0; k < 10; k++) {
+        balls[i][j][k] = (i * 123) + (j * 456) + (k * 789);
+      }
+    }
+  }
+  return balls[1][5][0];
+}

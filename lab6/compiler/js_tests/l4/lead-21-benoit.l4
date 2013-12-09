@@ -1,0 +1,74 @@
+//test return 0
+
+// #use <15411>
+
+struct complex_number {
+  fpt xr;
+  fpt yi;
+};
+
+typedef struct complex_number complex;
+
+// magnitude of complex number z
+fpt cfmag(complex *z) {
+  return fadd(fmul(z->xr, z->xr), fmul(z->yi, z->yi));
+}
+
+int mandelbrot(complex *c) {
+  fpt zxr = itof(0);
+  fpt zyi = itof(0);
+  complex *z = alloc(complex);
+  z->xr = zxr;
+  z->yi = zyi;
+
+  int i = 0;
+  int max_iter = 1000;
+
+  while(i < max_iter && fless(cfmag(z), itof(4))) {
+    i++;
+    //zx = zx^2 - zy^2 + cx
+    zxr = fadd(fsub(fmul(zxr, zxr), fmul(zyi, zyi)), c->xr);
+    //zy = 2 zx zy + cy
+    zyi = fadd(fmul(fmul(itof(2), zxr), zyi), c->yi);
+    z->xr = zxr;
+    z->yi = zyi;
+  }
+
+  return i;
+}
+
+int main () {
+  // init a size x size table
+  int size = 5;
+  int[][] T = alloc_array(int[], size);
+  for(int i = 0 ; i < size ; i++) {
+    T[i] = alloc_array(int, size);
+  }
+  // fill table
+  for(int y = 0 ; y < size ; y++) {
+    for(int x = 0 ; x < size ; x++) {
+      fpt pctY = fdiv(itof(y), itof(size)); // percent towards side
+      fpt scaledY = fmul(pctY, itof(4)); // scaled 0 to 4
+      fpt cyi = fsub(itof(2), scaledY);  // 2 -> -2
+
+      fpt pctX = fdiv(itof(x), itof(size));
+      fpt scaledX = fmul(pctX, itof(4));
+      fpt cxr = fsub(scaledX, itof(2));  // -2 -> 2
+
+      complex *c = alloc(complex);
+      c->xr = cxr;
+      c->yi = cyi;
+
+      T[y][x] = mandelbrot(c);
+    }
+  }
+
+  // print table
+  for(int y = 0 ; y < size ; y++) {
+    for(int x = 0 ; x < size ; x++) {
+      print_int(T[y][x]); // ideally this would Not be a println
+    }
+    print_int(0); //ideally this would be just a println
+  }
+  return 0;
+}

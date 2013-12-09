@@ -1,0 +1,22 @@
+//test exception 11
+
+// all of the default values.
+
+struct foo {
+  int a;
+  bool b;
+  int *c;
+  int[] d;
+  struct foo *e;
+};
+
+int main() {
+  struct foo *bar = alloc(struct foo);
+  assert(bar->a == 0);
+  assert(!(bar->b));
+  assert(bar->c == NULL);
+  assert(bar->e == NULL);
+  // should raise mem error.
+  assert(bar->d[0] == 0);
+  return 0;
+}

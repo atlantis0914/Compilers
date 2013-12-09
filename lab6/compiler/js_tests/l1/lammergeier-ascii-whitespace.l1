@@ -1,0 +1,4 @@
+//test return 1
+int main() { // weird                multi                line                comment
+	int x = 1;	return x;
+}

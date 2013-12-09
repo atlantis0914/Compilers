@@ -1,0 +1,19 @@
+//test error
+
+int func(bool b);
+int func(bool b);
+
+int func(bool b)
+{
+  return b?1:2;
+}
+
+int func(bool b)
+{
+  return b?2:1;
+}
+
+int main()
+{
+  return func(true);
+}

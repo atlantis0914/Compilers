@@ -1,0 +1,27 @@
+//test return 42
+
+struct s1 {
+  int x;
+};
+
+struct s2 {
+  int x;
+  struct s1 y;
+};
+
+struct s3 {
+  int x;
+  struct s2 y;
+  struct s2 z;
+};
+
+struct s {
+  struct s1 x;
+  struct s2 y;
+  struct s3 z;
+};
+
+int main () {
+  struct s[] a = alloc_array(struct s, 1337);
+  return 42;
+}

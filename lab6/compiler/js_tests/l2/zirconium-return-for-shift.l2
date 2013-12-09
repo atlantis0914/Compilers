@@ -1,0 +1,14 @@
+//test return -1
+
+int main ()
+{
+  int a1;
+  int a2;
+  a1 = 1;
+  a2 = (1 << 31) >> 31;
+  for(int a3 = 0; a3 < (a1 << a3); a3++)
+  {
+    a2 >>= a1;
+  }
+  return a2;
+}

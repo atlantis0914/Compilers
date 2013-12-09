@@ -1,0 +1,10 @@
+//test return 0
+int f(int x) {
+    if(x==-1) return 0;
+    print_int(x);
+    return f(x-1);
+}
+int main() {
+    f(100);
+    return 0;
+}

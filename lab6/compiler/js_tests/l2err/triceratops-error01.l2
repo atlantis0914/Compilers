@@ -1,0 +1,12 @@
+//test error
+
+int main ()
+{
+    int a;
+    int b;
+
+    for (a = 0; a < while(1) {}; a++) {
+        return a;
+    }
+    return 0;
+}

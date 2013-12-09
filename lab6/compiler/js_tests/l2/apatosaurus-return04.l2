@@ -1,0 +1,8 @@
+//test return 1
+// complicated boolean expression
+int main ()
+{
+    if(((true || false) && 500 != 250<<1>>1) && (0xFFFFFFFF ^ 0xFFFEFFFF) == 0x00010000 && 1001 %10 == 1)
+        return 1;
+    return 0;
+}

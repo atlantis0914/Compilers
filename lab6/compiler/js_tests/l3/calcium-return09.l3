@@ -1,0 +1,18 @@
+//test return 200
+// mutual recursion!
+
+int sub(int a, int b);
+
+int add(int a, int b) {
+  if (b == 0)
+    return a;
+  return 2 + sub(a+b,2);
+}
+
+int sub(int a, int b) {
+  return 1 + add(a-b-1,0);
+}
+
+int main () {
+  return add(100,100);
+}

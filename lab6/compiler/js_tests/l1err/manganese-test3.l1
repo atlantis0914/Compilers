@@ -1,0 +1,10 @@
+//test exception 8
+// division by 0
+int main()
+{
+    int a = 1 / 1;
+    int b = 3 * 3;
+    int c = a / b;
+    c /= c;
+    return c;
+}

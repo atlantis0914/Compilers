@@ -1,0 +1,11 @@
+//test exception
+
+int rec(int n) {
+	int x = 3 / n;
+	return rec(n - 1);
+}
+
+
+int main () {
+  return rec(10);
+}

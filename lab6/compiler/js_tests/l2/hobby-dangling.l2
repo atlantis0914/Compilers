@@ -1,0 +1,13 @@
+//test return 4
+
+int main() {
+    int i = 4;
+    int j = 8;
+    int k = 0;
+
+    if (i < 3) if (i > 4) k += 1; else k += 2;
+
+    if (j > 6) if (j <= 8) k += 4; else k += 8;
+
+    return k;
+}

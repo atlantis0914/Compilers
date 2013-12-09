@@ -1,0 +1,10 @@
+//test return 10
+//check reachability analysis
+
+int main(){
+  int a = 0;
+  int b = 10;
+
+  if (b > a) return b;
+  else return (b / a);
+}

@@ -1,0 +1,8 @@
+//test return 1
+
+int main() {
+  int tricky = 1;
+  int foo = 0;
+  tricky* foo; // This should be treated as a multiplication
+  return tricky;
+}

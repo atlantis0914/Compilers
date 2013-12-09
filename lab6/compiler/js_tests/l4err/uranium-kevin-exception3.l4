@@ -1,0 +1,7 @@
+//test exception 11
+//play with nulls
+
+int main() {
+    int *NIKOLAI_IS_SO_SMART___ASK_HIM_STUFF = NULL;
+    return *NIKOLAI_IS_SO_SMART___ASK_HIM_STUFF;
+}

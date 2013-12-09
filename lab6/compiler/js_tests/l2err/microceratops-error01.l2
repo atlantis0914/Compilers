@@ -1,0 +1,16 @@
+//test error
+// uninit variable i
+
+int main ()
+{
+  int i;
+	int n;
+
+	n = 10;
+
+	if ( n == 10) {
+		i = 5;
+	}
+
+	return i;
+}

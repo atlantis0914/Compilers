@@ -1,0 +1,14 @@
+//test error
+//Must have return statement for all possible control flow paths.
+
+int main() {
+    if (true) {
+        int i;
+        for (i = 0; i < 10; i++) {
+            /* do nothing */
+        }
+    }
+    else {
+        return 0;
+    }
+}

@@ -1,0 +1,14 @@
+//test error
+//uninitialized variable y
+int main()
+{
+	int x = 0;
+    int y;
+    for (; x < 400; x++)
+	{
+		y = 40 << x;
+		y |= 40 >> x;
+	}
+
+	return y;
+}

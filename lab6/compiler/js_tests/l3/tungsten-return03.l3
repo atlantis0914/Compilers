@@ -1,0 +1,9 @@
+//test return 20
+//test successful assert
+
+int main(){
+  int a = 10;
+  int c = 10;
+  assert(a == c);
+  return a+c;
+}

@@ -1,0 +1,14 @@
+//test return 1
+
+bool thingy() {
+    return false;
+}
+
+typedef bool thingo;
+
+
+int main() {
+    thingo thingy = thingy();
+    return 1;
+}
+

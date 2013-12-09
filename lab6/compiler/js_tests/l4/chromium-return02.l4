@@ -1,0 +1,13 @@
+//test return 0
+
+int main () {
+  int[] A;
+  int[] B;
+  int[] C;
+
+  int n = 3;
+  A = alloc_array(int, n*n);
+  B = alloc_array(int, n*n);
+  C = alloc_array(int, n*n);
+  return 0;
+}

@@ -1,0 +1,15 @@
+//test return 0
+
+typedef int foo;
+
+struct bar {
+       foo foo;
+};
+
+typedef struct bar bar;
+
+int main () {
+    bar *p;
+    p = alloc(struct bar);
+    return p->foo;
+}

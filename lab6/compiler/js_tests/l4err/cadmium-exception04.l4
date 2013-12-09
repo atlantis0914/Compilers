@@ -1,0 +1,8 @@
+//test exception 8
+
+// tests left to right evalutaion on lvalues.
+
+int main() {
+  int*[] foo = alloc_array(int*, 10);
+  return *foo[1/0];
+}

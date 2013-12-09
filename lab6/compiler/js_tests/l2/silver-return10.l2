@@ -1,0 +1,7 @@
+//test return 15
+// Bitwise operator order.
+
+int main() {
+    int x = 8 | 2 & 5 ^ 7;
+    return x;
+}

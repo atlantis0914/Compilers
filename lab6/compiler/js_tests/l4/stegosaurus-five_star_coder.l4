@@ -1,0 +1,31 @@
+//test return 642
+
+typedef int foo;
+typedef int bar;
+
+int main() {
+   foo *****baz = alloc(foo ****);
+   bar ****quux = alloc(foo ***);
+   foo ***bam = alloc(bar **);
+   bar **fon = alloc(bar *);
+   
+   *baz = alloc(foo ***);
+   **baz = alloc(foo **);
+   ***baz = alloc(foo *);
+   ****baz = alloc(foo);
+   *****baz = 1;
+   
+   *quux = alloc(foo **);
+   **quux = alloc(foo *);
+   ***quux = alloc(foo);
+   ****quux = 10******baz;
+   
+   *bam = alloc(bar *);
+   **bam = alloc(bar);
+   ***bam = 10*****quux;
+   
+   *fon = alloc(bar);
+   **fon = 3****bam + 2*****quux + *****baz;
+   
+   return 2***fon;
+}

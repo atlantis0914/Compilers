@@ -1,0 +1,28 @@
+//test return 1
+
+struct a
+{
+    struct a *val;
+};
+
+typedef struct a T_T;
+
+struct b
+{
+    T_T *val;
+};
+
+typedef struct b Q_Q;
+
+
+int main()
+{
+    T_T *sa = NULL;
+    Q_Q *sb = alloc(Q_Q);
+    sb->val = NULL;
+
+    if (NULL == NULL && sb->val == sa && NULL == sb->val)
+        return 1;
+
+    return -1;
+}

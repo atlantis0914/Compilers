@@ -1,0 +1,9 @@
+//test exception
+
+int main() {
+	int y = 4;
+	int x = 6;
+	int z = 9;
+	z = z+x-y/9+8/(y/x);
+	return z;
+}

@@ -1,0 +1,10 @@
+//test error
+/* not every path can return */
+int main(){
+    int a = 4;
+
+    if (a < 5)
+       return -1;
+    else
+       a = 100;
+}

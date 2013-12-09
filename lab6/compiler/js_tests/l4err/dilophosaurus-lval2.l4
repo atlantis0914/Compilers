@@ -1,0 +1,11 @@
+//test error
+// statement / expression on l-values
+
+int main ()
+{
+    int[] is = alloc_array(int, 100);
+    int i = 0;
+    for(; i < 100;)
+        is[i++] = 100; // not possible in C-nut
+    return is[50];
+}

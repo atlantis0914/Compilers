@@ -1,0 +1,8 @@
+//test error
+// syntax error due to no semicolon at end of a line
+int main() {
+    int a = 4;
+    int b = 3
+    int c = 5;
+    return a;
+}

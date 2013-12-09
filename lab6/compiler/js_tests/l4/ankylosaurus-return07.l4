@@ -1,0 +1,20 @@
+//test return 42
+// Test variables using pointers
+
+struct test
+{
+    int * x;
+    int * y;
+};
+
+int main()
+{
+    struct test * testing = alloc(struct test);
+    testing->x = alloc(int);
+    testing->y = alloc(int);
+
+    *(testing->x) = 7;
+    *(testing->y) = 6;
+
+    return *(testing->x) * *(testing->y);
+}

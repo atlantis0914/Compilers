@@ -1,0 +1,12 @@
+//test exception 8
+int div(int a, int b) {
+    return a/b;
+}
+
+int main()
+{
+   int a=5;
+   int b=0;
+   assert(b==0);
+   return div(a,b);
+}

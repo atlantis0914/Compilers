@@ -1,0 +1,11 @@
+//test return 5
+
+int main()
+{
+    int *[]x = alloc_array(int*, 2);
+    x[1] = alloc(int);
+    if( x[1] == NULL)
+        return 1;
+    *x[1]=5;
+    return *x[1];
+}

@@ -1,0 +1,39 @@
+//test return 4
+
+int find(int[] A, int key) {
+  int imax = 10;
+  int imin = 0;
+  int imid = 0;
+  while (imax >= imin) {
+    imid = (imax + imin) / 2; 
+  
+    if (A[imid] < key)
+      imin = imid + 1;
+    else {
+      if (A[imid] > key)
+        imax = imid - 1;
+      else
+        return imid;
+    }
+  }
+  
+  return -1;
+}
+
+
+int main() {
+  
+  int[] A = alloc_array(int,10);
+  A[0] = 1;
+  A[1] = 2;
+  A[2] = 15;
+  A[3] = 122;
+  A[4] = 150;
+  A[5] = 151;
+  A[6] = 210;
+  A[7] = 251;
+  A[8] = 312;
+  A[9] = 451;
+
+  return find(A,150);
+}

@@ -1,0 +1,22 @@
+//test return 375
+
+int collatz_step(int n) {
+  if (n %2 == 0) {
+    return n/2;
+  } else {
+    return 3*n + 1;
+  }
+}
+
+int collatz_length(int n) {
+  /* Can't do this recursively, in case no tail call opt */
+  int acc;
+  for(acc = 1; n != 1; acc++) {
+    n = collatz_step(n);
+  }
+  return acc;
+}
+
+int main() {
+  return collatz_length(142587);
+}

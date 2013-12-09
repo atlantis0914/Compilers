@@ -1,0 +1,10 @@
+//test error
+// int x bool y; return main;
+// misuse of reserved keywords!
+int main()
+{
+    int bool = 5;
+    bool int = true;
+    int false = 6;
+    return 0;
+}

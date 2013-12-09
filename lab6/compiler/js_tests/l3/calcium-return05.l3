@@ -1,0 +1,23 @@
+//test return 5
+// we can repeat prototypes that are equivalent
+
+typedef int poop;
+
+int poops();
+poop poops();
+int poops();
+poop poops();
+int poops();
+poop poops();
+int poops();
+poop poops();
+
+poop poops() {
+  return 5;
+}
+
+int main () {
+  poop x = 3;
+  x = poops();
+  return 5;
+}

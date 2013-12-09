@@ -1,0 +1,17 @@
+//test return 2
+// tests division, modulus, and return
+int main()
+{
+    int a;
+    int b;
+    int c;
+    int d;
+    int e;
+    a = 1 + 0x00000001;
+    b = 6 / 3;
+    c = a % b;
+    d = (b * 10 + 3)/(10/(7 % 5));
+    e = a + b + c + d / 3;
+
+    return e%3;
+}

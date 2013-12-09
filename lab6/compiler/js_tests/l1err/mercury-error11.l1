@@ -1,0 +1,9 @@
+//test error
+// Whitespace in symbol
+int main()
+{
+  int x = 0;
+  int y = 0;
+  y + = x;
+  return y;
+}

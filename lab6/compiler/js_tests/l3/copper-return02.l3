@@ -1,0 +1,28 @@
+//test return 545040
+
+typedef bool foo;
+
+foo isPalindrome(int i) {
+    int opposite = 0;
+    int original = i;
+
+    while (i > 0) {
+        int digit = i % 10;
+        opposite = opposite * 10 + digit;
+        i /= 10;
+    }
+    return opposite == original;
+}
+
+
+// this is slightly interesting...I hope
+// sum of palindromes under 10000
+int main() {    
+    int total = 0;
+    for (int i = 0; i < 10000; i++) {
+        if (isPalindrome(i)){
+            total += i;
+        }
+    }
+    return total;
+}

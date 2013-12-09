@@ -1,0 +1,7 @@
+//test exception 8
+// Division by 0 during superfluous line of code
+int main()
+{
+  int x = 3 / 0;
+  return 5;
+}

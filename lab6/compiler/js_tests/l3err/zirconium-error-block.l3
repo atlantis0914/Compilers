@@ -1,0 +1,7 @@
+//test error
+
+int t(int s) return s;
+
+int main(){
+  return t(10);
+}

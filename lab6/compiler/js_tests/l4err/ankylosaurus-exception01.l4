@@ -1,0 +1,24 @@
+//test exception 8
+int findmin(int[] array, int count){
+    int min = array[0];
+    int i;
+    for(i = 0; i < count; i++){
+    	    if(array[i] < min)
+	    		min = array[i];
+
+    }
+    return min;
+
+}
+
+
+int main(){
+    int[] array = alloc_array(int, 10);
+    int i;
+    int min;
+    for(i = 0; i < 10; i++){
+    	  array[i] = 9 - i;
+    }
+    min = findmin(array, 10);
+    return 10/min;
+}

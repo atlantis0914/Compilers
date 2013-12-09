@@ -1,0 +1,11 @@
+//test error
+
+typedef struct haha {
+	int CStructTypeDefsShouldntWork;
+} chicken;
+
+int main() {
+	chicken* h = alloc(chicken);
+	h->CStructTypeDefsShouldntWork = 1;
+	return 1;
+}

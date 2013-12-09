@@ -1,0 +1,8 @@
+//test exception
+// stack overflow or timeout
+// stack overflow probs
+
+int main () {
+  return main();
+}
+

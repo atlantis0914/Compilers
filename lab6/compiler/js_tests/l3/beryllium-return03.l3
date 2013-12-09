@@ -1,0 +1,5 @@
+//test return 3
+int main(){
+	int a=3;	
+	return a;
+}

@@ -1,0 +1,7 @@
+//test error
+// tests returning a statement rather than an expr;
+int main()
+{
+  int x = 0;
+  return x++;
+}

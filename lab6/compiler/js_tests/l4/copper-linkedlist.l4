@@ -1,0 +1,50 @@
+//test return 9
+
+
+struct list{
+    int value;
+    struct list *next; 
+};
+
+struct list* insert(struct list *head, int value){
+    if (head == NULL){
+        head = alloc(struct list); 
+        head->value = value;
+        head->next = NULL;
+        return head;
+    }
+    struct list *curr = alloc(struct list);
+    curr = head; 
+    while(curr->next != NULL){
+        curr = curr->next; 
+    }
+    struct list *new = alloc(struct list);
+    new->value = value;
+    new->next = NULL;
+    curr->next = new;
+    return head;
+}
+
+
+int main(){
+    struct list *head;
+    head = NULL;
+
+    head = insert(head, 5);
+    head = insert(head, 3);
+    head = insert(head, 9);
+    head = insert(head, 4); 
+
+    int max = 0;
+    struct list *curr = alloc(struct list);
+    curr = head;
+
+    while(curr != NULL){
+        if (max < curr->value){
+            max = curr->value;
+        }
+        curr = curr->next;
+    }
+    return max;
+}
+

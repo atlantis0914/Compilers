@@ -1,0 +1,12 @@
+//test exception
+
+int foo(int x)
+{
+  if(x < 0) return 1/0;
+  else foo(x+1); 
+  return 0;
+}
+
+int main () {
+  return foo(-1);
+}

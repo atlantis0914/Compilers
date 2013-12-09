@@ -1,0 +1,14 @@
+//test error
+
+int do(int x);
+
+int main(){
+    int x = 5;
+    int y = 10;
+    return do(x,y);
+}
+
+
+int do(int x){
+    return x;
+}

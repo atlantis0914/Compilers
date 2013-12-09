@@ -1,0 +1,8 @@
+//test exception 8
+// divide by 0 inside an assert
+
+int main() {
+    assert(0/0 == 123);
+    return 0;
+}
+

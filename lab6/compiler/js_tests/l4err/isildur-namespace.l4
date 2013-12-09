@@ -1,0 +1,15 @@
+//test error
+struct a {
+  int alpha;
+  int beta;
+};
+
+typedef a ab;
+
+struct b {
+  ab first;
+}
+
+int main() {
+  return 0;
+}

@@ -1,0 +1,8 @@
+//test error
+//test scoping
+int main()
+{	
+    { int a = 20; }
+    { a + 1; }
+    return 1;
+}

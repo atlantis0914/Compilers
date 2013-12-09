@@ -1,0 +1,46 @@
+//test return 4
+// a stack
+
+struct set {
+		int[] items;
+		int nitems;
+};
+
+typedef struct set * pset;
+
+pset add_item(pset a, int b) {
+		 pset r = alloc(struct set);
+		 r->items = alloc_array(int, a->nitems+1);
+		 for(int i = 0; i < a->nitems; i++) {
+		     if(a->items[i] == b) return a;
+				 r->items[i] = a->items[i];
+		 }
+		 r->items[a->nitems] = b;
+		 r->nitems = a->nitems+1;
+		 return r;
+}
+
+pset union(pset a, pset b) {
+		 pset r = a;
+		 for(int i = 0; i < b->nitems; i++) {
+		     r = add_item(r, b->items[i]);
+		 } 
+		 return r;
+}
+
+int main() {
+		pset a = alloc(struct set);
+		pset b = alloc(struct set);
+		a->nitems = 3;
+		b->nitems = 2;
+		a->items = alloc_array(int, a->nitems);		
+		b->items = alloc_array(int, b->nitems);		
+		a->items[0] = 1;
+		a->items[1] = 2;
+		a->items[2] = 3;
+		b->items[0] = 4;
+		b->items[1] = 2;
+		return union(a,b)->nitems;
+
+}
+

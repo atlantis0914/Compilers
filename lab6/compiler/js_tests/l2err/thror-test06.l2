@@ -1,0 +1,9 @@
+//test error
+// no (statically guarenteed) return.
+int main()
+{
+   while (true)
+   {
+      return 1;
+   }
+}

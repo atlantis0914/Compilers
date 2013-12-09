@@ -1,0 +1,13 @@
+//test return 100
+
+int main ()
+{
+  int return8;
+  int if90;
+  int __else;
+
+  return8 = 8;
+  if90 = 90;
+  __else = 2;
+  return return8+if90+__else;
+}

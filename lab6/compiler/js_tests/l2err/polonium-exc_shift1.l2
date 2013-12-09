@@ -1,0 +1,4 @@
+//test exception 8
+int main(){
+    return 1 << 9000;
+}

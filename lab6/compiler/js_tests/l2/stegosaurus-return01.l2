@@ -1,0 +1,14 @@
+//test return 2
+/* Test successful tracing of initialization in variables across multiple control flow paths */
+
+int main () {
+  int a;
+  
+  if (true) {
+    a = 2;
+  } else {
+    a = 3;
+  }
+  
+  return a;
+}

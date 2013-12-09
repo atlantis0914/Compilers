@@ -1,0 +1,25 @@
+//test return 1
+int main ()
+{
+	int i = 2147483647; // conveniently, a prime
+	int j = 1882341361; 
+		// The least prime whose reversal is both square and triangular
+	
+	int tmp; // conveniently, a variable for temporary storage
+
+	while (j != 0)
+	{
+		tmp = i;
+		
+		while (i >= j)
+		{
+			i -= j;
+		}
+		
+		tmp = i;
+		i = j;
+		j = tmp;
+	}
+	
+	return i;
+}

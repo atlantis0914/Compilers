@@ -1,0 +1,6 @@
+//test error
+//tests having assert in expression
+
+int main () {
+  return (assert(false));
+}

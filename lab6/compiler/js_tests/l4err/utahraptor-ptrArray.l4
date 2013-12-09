@@ -1,0 +1,10 @@
+//test error
+int deref(int *n)
+{
+	return *n;
+}
+int main()
+{
+	int[] x;
+	return deref(x);
+}

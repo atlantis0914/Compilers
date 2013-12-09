@@ -1,0 +1,13 @@
+//test return 1
+
+// Scope sanity check
+int main()
+{
+  {
+    int x;
+    x = 2;
+  }
+  int x;
+  x = 1;
+  return x;
+}

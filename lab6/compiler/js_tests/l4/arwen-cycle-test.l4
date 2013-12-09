@@ -1,0 +1,83 @@
+//test return 0
+//Tests creating a lot of nested structures
+
+
+struct linked_list {
+    int v;
+    struct linked_list *next;
+};
+
+typedef struct linked_list linked;
+
+linked *make_linked(int max) {
+    int i = 0;
+
+    linked *start = alloc(linked);
+    linked *prev_linked = NULL;
+    linked *L = start;
+    while (i < max) {
+        L->v = i;
+        L->next = NULL;
+        if (prev_linked != NULL) {
+            prev_linked->next = L;
+        }
+        prev_linked = L;
+        L = alloc(linked);
+        i++;
+    }
+
+    return start;
+}
+
+
+bool noCycle(linked *list) {
+    linked *turtle = list;
+    linked *hare;
+    if (turtle == NULL || turtle->next == NULL) {
+        return true;
+    } else {
+        hare = turtle->next;
+
+        while (hare != NULL && hare->next != NULL) {
+            // one pointer looped over for them to be equal.
+            // There must be a cycle
+            if (hare == turtle) {
+                return false;
+            }
+            hare = (hare->next)->next;
+            turtle = turtle->next;
+        }
+        // The pointer reach the end. There is no cycle
+        return true;
+    }
+}
+
+
+int main () {
+    int max = 100;
+    int i = 0;
+
+    // Creating normal linked list with terminator
+    linked *normal_list = make_linked(100000);
+    linked *normal_start = normal_list;
+    bool normal_cycle = noCycle(normal_start);
+
+
+    // Create a normal linked list, then make the terminal next node cycle back
+    // to the start
+    linked *cycle_list = make_linked(100000);
+    linked *cycle_start = cycle_list;
+    linked *cycle_end = cycle_list;
+    while (cycle_list != NULL) {
+        cycle_end = cycle_list;
+        cycle_list = cycle_list->next;
+    }
+    cycle_end->next = cycle_start; // creating cycle
+    bool cycle_cycle = noCycle(cycle_start);
+
+    if (normal_cycle && !cycle_cycle) {
+        return 0;
+    } else {
+        return 1;
+    }
+}

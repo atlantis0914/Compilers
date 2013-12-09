@@ -1,0 +1,8 @@
+//test error
+// missing int before main
+
+main () {
+    int a = 1;
+    int b = 1;
+    return b;
+}

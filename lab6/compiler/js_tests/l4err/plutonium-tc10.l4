@@ -1,0 +1,13 @@
+//test error
+/* undeclared field */
+
+struct point {int x; int y;};
+
+int main () {
+  struct point* p;
+  p = alloc(struct point);
+  p->x = 0;
+  p->y = 0;
+  p->z = 0;
+  return -1;
+}

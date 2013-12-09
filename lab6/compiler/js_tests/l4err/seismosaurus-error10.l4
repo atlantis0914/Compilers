@@ -1,0 +1,21 @@
+//test error
+// unable to calc struct size
+struct bar;
+struct foo;
+
+struct foo{
+	struct bar a;
+	int b;
+	int c;
+	int d;
+	int e;
+};
+
+struct bar{
+	struct foo a;
+};
+
+int main() {
+	struct foo f;
+	return 10;
+}

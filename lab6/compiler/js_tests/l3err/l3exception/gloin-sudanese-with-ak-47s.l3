@@ -1,0 +1,16 @@
+//test exception 14
+int f(int n, int x, int y){
+    if(n==0){
+        return x+y;
+    }
+    else if(y==0){
+        return x;
+    }
+    else{
+        return f(n-1,f(n,x,y-1), f(n,x,y-1)+y);
+    }
+}
+
+int main(){
+    return f(2,3,2);
+}

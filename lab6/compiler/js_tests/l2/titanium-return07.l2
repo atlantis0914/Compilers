@@ -1,0 +1,7 @@
+//test return 48879
+// uninitialized in ternary 
+
+int main ()
+{
+  return 0XBEEF;
+}

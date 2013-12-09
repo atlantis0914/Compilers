@@ -1,0 +1,30 @@
+//test return 0
+//Bunch of live variables
+int bar(int a, int b, int c, int d, int e, int f, int g, int h, int i, int j) {
+    int alpha = a + j - c * d;
+    int beta = f * g * h;
+    b++;
+    int gamma = alpha + a + beta + b + c + d + e + f + g + h + i + j;
+    return gamma * b;
+}
+
+int main() {
+  int foo = 0;
+  int a = 4;
+  int b = -1;
+  int c = 1;
+  int d = 7;
+  int e = 285;
+  int f = -6;
+  int g = 3;
+  int h = -55;
+  int i = 0;
+  int j = 72;
+  for (int z = 0; z < 100; z++) {
+    foo += bar(a, b, c, d, e, f, g, h, i, j);
+  }
+  int p = a + b + d + g;
+  int q = c + e + i;
+  int r = f + j;
+  return p * q * r * foo;
+}

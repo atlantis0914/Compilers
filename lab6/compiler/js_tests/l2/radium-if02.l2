@@ -1,0 +1,19 @@
+//test return 12
+
+int main(){
+  int brady = 12;
+  int sanchez = 9;
+  int patriots = 18;
+  int jets = 2;
+  bool superbowl; 
+
+  if (patriots > jets)
+    superbowl = true;
+  else
+    superbowl = false;
+  
+  if (superbowl)
+    return brady;
+  else
+    return 0;
+}

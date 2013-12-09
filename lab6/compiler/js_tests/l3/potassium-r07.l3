@@ -1,0 +1,26 @@
+//test return 0
+
+int pow(int x,int y) {
+
+  if (y < 1)
+    return 1;
+
+  int p = pow(x,y/2);
+  if(y % 2 == 0)
+    return p*p;
+  else
+    return p*p*x;
+
+}
+
+bool foo(int x, int y) {
+
+  return x == y;
+
+}
+
+int main() {
+
+  return foo(pow(7,4),pow(2,pow(4,4))) ? 1 : 0;
+
+}

@@ -1,0 +1,20 @@
+//test return 42
+
+// make sure we can have blocks
+int main()
+{
+  {}
+
+  {// just a comment
+  }
+
+  {/* another comment } */}
+
+  int x = 40;
+  
+  {int y = 2;}
+
+  x++;
+  x++;
+  {return x;}
+}

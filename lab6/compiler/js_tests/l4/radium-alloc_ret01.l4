@@ -1,0 +1,25 @@
+//test return 0
+
+struct a
+{
+  int x;
+  int y;
+  int [] a;
+};
+
+struct a*[] get_array(int n)
+{
+  return alloc_array (struct a*, n);
+}
+
+struct a* get_struct()
+{
+  return alloc(struct a);
+}
+
+int main()
+{
+  struct a*[] b = get_array(5);
+  b[4] = get_struct();
+  return b[4] -> x;
+}

@@ -1,0 +1,35 @@
+//test error
+//precedence of == is higher than &,| etc
+
+// Experiments in Basic Logic
+
+
+int nand(int x, int y)
+{
+  return ~(x & y);
+}
+
+int not(int x)
+{
+  return nand(x,x);
+}
+
+int and(int x, int y)
+{
+  return not(nand(x,y));
+}
+
+int or(int x, int y)
+{
+  return not(and(not(x),not(y)));
+}
+
+
+int main()
+{
+  assert((not(3) == ~3));
+  assert((and(3,4) == (3 & 4)));
+  assert((or(3,4) == 3 | 4));
+
+  return 1;
+}

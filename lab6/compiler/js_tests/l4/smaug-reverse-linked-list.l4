@@ -1,0 +1,35 @@
+//test return 3
+
+struct node {
+  int datum;
+  struct node* next;
+};
+
+struct node* reverse(struct node* head, struct node* prev)
+{
+  struct node* temp;
+  if (head->next == NULL) {
+    head->next = prev;
+    return head;
+  } else {
+    temp = reverse(head->next, head);
+    head->next = prev;
+    return temp;
+  }
+}
+
+int main()
+{
+  struct node* first = alloc(struct node);
+  struct node* second = alloc(struct node);
+  struct node* third = alloc(struct node);
+  first->datum = 1;
+  second->datum = 2;
+  third->datum = 3;
+  first->next = second;
+  second->next = third;
+  third->next = NULL;
+  struct node* reversed = reverse(first, NULL);
+  return reversed->datum;
+}
+

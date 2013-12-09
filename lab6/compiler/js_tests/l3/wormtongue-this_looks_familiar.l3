@@ -1,0 +1,64 @@
+//test return 10
+// Taken from my datalab. Fun times.
+
+int bang(int x) {
+	int pos = x >> 31;
+	int neg = (~x + 1) >> 31;
+	return (~(pos | neg)) & 1;
+}
+
+int howManyBits(int y) {
+	int sum = 0;
+	int top = 0;
+	int shift = 0;
+	int compensator = 0;
+
+	/* First take negation and calculate the padding bit */
+	int sign_mask = y >> 31;
+	int sign = sign_mask & 1;
+	int x = (y ^ sign_mask) + sign;
+	int complement = x;
+
+	/* First run of the binary division */
+	top = bang(bang((x >> 16)));
+	shift = top << 4;
+	sum += shift;
+	x = x >> shift;
+
+	/* Second run of the binary division */
+	top = bang(bang((x >> 8)));
+	shift = top << 3;
+	sum += shift;
+	x = x >> shift;
+
+	/* Third run of the binary division */
+	top = bang(bang((x >> 4)));
+	shift = top << 2;
+	sum += shift;
+	x = x >> shift;
+
+	/* Fourth run of the binary division */
+	top = bang(bang((x >> 2)));
+	shift = top << 1;
+	sum += shift;
+	x = x >> shift;
+
+	/* Fifth run of the binary division */
+	top = bang(bang((x >> 1)));
+	shift = top;
+	sum += shift;
+
+	/* Sixth run of the binary division */
+	top = bang(bang(x));
+	shift = top;
+	sum += shift;
+
+	compensator = bang(y) + bang(bang((complement ^ (sign << (sum + ~0)))));
+	sum += compensator;
+	
+	return sum;
+}
+
+int main() {
+	return howManyBits(298);
+}

@@ -1,0 +1,15 @@
+//test return 3 
+// Tests loops do not mess up straight line code
+int main()
+{
+  int x;
+  int y;
+  int z;
+  for (int i = 0; i < 3; i++) {
+    int b = 1;
+  }
+  x = 3;
+  y = x;
+  x = 4;
+  return y;
+}

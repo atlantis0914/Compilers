@@ -1,0 +1,9 @@
+//test error
+
+int err() {
+    return true ? 1/0 : 5;
+}
+
+int main() {
+    return err()
+}

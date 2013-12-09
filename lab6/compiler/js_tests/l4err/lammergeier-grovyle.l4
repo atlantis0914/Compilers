@@ -1,0 +1,15 @@
+//test error
+struct pokemon;
+struct level7 { struct pokemon exclamation_point; };
+struct level6 { struct level7 e; };
+struct level5 { struct level6 l; };
+struct level4 { struct level5 y; };
+struct level3 { struct level4 v; }; 
+struct level2 { struct level3 o; };
+struct level1 { struct level2 r; };
+struct pokemon { struct level1 g; };
+int main()
+{
+    struct pokemon *go = alloc(struct pokemon);
+    return go->g.r.o.v.y.l.e;
+}

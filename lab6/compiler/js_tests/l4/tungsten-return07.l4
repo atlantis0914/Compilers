@@ -1,0 +1,11 @@
+//test return 0
+// reference unitialized field defaults to 0
+
+struct a {
+    int b;
+};
+
+int main() {
+    struct a *c = alloc(struct a);
+    return c->b;
+}

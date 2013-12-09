@@ -1,0 +1,45 @@
+//test return 10
+// declare it a lot but def it only once
+
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+
+struct test{
+    int a;
+};
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+struct test;
+
+
+typedef struct test balloon;
+
+int main(){
+    balloon *taco = alloc(balloon);
+    taco->a = 10;
+    return taco->a;
+}

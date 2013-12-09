@@ -1,0 +1,19 @@
+//test return 1024
+// function calls in function calls in function calls in function calls
+
+
+int rec2 (int x, int w);
+
+int rec1 (int x, int accum) {
+    int y = rec2(x-2, accum*2);
+    return y;
+}
+
+int rec2 (int y, int accum) {
+    if(y == 0) return accum;
+    return rec1(y+1, accum);
+}
+
+int main () {
+    return rec2(10, 1);
+}

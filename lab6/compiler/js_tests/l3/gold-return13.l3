@@ -1,0 +1,14 @@
+//test return 123
+
+int abs(int n) {
+	if (n < 0) {
+		return -n;
+	}
+	else {
+		return n;
+	}
+}
+
+int main () {
+	return abs(-123);
+}

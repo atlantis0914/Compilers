@@ -1,0 +1,8 @@
+//test return 101
+int main() {
+    int a; a = 4;
+    int b; b = 5;
+    int c; c = 6;
+    int d; d = 7;
+    return (a * b * c * d) / (a * c / ((b + d) / a)) - a;
+}

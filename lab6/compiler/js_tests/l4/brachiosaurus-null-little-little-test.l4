@@ -1,0 +1,10 @@
+//test return 426
+
+int main()
+{
+	int *p = alloc(int);
+	if (p == NULL)
+		return 75;
+	else
+		return 426;
+}

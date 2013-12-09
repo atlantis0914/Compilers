@@ -1,0 +1,16 @@
+//test error
+
+int main() {
+  struct s *foo;
+
+  foo->a = 10;
+
+  return 0;
+}
+
+typedef int foo;
+
+struct s {
+  int a;
+};
+

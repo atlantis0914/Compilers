@@ -1,0 +1,36 @@
+//test return 5
+// counts depth of trees...
+
+struct node {
+    struct node * left;
+    int data;
+    struct node * right;
+};
+
+int maxDepth(struct node* node) {
+    if (node == NULL) {
+        return 0;
+    }
+    int left = maxDepth(node->left);
+    int right = maxDepth(node->right);
+    if (left > right) {
+        return left;
+    }
+    return right + 1;
+}
+
+struct node* constructTree(int n) {
+    if (n <= 0) {
+        return NULL;
+    }
+    struct node* head = alloc(struct node);
+    head->data = n;
+    head->left = constructTree(n/2);
+    head->right = constructTree(n/2-1);
+    return head;
+}
+
+int main() {
+    struct node* tree = constructTree(50);
+    return maxDepth(tree);
+}

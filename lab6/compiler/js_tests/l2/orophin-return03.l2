@@ -1,0 +1,7 @@
+//test return -1
+// Test right bitshifting arithemetic
+int main() {
+	int a = -42;
+	a >>= 31;
+	return a;
+}

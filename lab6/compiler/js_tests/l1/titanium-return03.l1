@@ -1,0 +1,7 @@
+//test return -2147483648
+// tests overflow
+int main()
+{
+  int TMAX = 2147483647;
+  return TMAX + 1;
+}

@@ -1,0 +1,26 @@
+//test return 5
+
+typedef struct rec rec;
+struct rec{
+  int val;
+  rec* rec;
+};
+
+int main(){
+    rec* r1 = alloc(rec);
+    rec* r2 = alloc(rec);
+    rec* r3 = alloc(rec);
+    rec* r4 = alloc(rec);
+    rec* r5 = alloc(rec);
+    r1->rec = r2;
+    r2->rec = r3;
+    r3->rec = r4;
+    r4->rec = r5;
+    r5->rec = r1;
+    r1->val = 1;
+    r2->val = 2;
+    r3->val = 3;
+    r4->val = 4;
+    r5->val = 5;
+    return r5->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->rec->val;
+}

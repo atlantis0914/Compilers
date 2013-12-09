@@ -1,0 +1,80 @@
+//test return 2103141305
+// dynamic array of sorts
+
+void copy_array(int[] src, int[] dest, int len) {
+  for (int i = 0; i<len; i++) {
+    dest[i] = src[i];
+  }
+}
+
+struct buffer {
+  int[] buf;
+  int idx;
+  int len;
+  int cap;
+};
+
+struct buffer* buffer_init() {
+  struct buffer* b = alloc(struct buffer);
+  b->buf = alloc_array(int, 16);
+  b->idx = 0;
+  b->len = 16;
+  b->cap = 16;
+  return b;
+}
+
+void buffer_next(struct buffer* b) {
+  b->idx++;
+  if (b->idx >= b->len) {
+    // need to extend len
+    b->len++;
+    if (b->len >= b->cap) {
+      // need to expand array
+      int newcap = b->cap * 2;
+      int[] newbuf = alloc_array(int,newcap);
+      copy_array(b->buf, newbuf, b->cap);
+      b->buf = newbuf;
+      b->cap = newcap;
+    }
+  }
+}
+
+void buffer_prev(struct buffer* b) {
+  if ((b->buf[b->idx] == 0) && (b->idx == b->len-1)) {
+    // might as well compress it
+    b->len--;
+  }
+  if ((b->len > 16) && (b->len < (b->cap/4))) {
+    // worth shrinking buffer
+    int newcap = b->cap/2;
+    int[] newbuf = alloc_array(int,newcap);
+    copy_array(b->buf, newbuf, newcap);
+    b->buf = newbuf;
+    b->cap = newcap;
+  }
+  b->idx--;
+}
+
+int buffer_get(struct buffer* b) {
+  return b->buf[b->idx];
+}
+
+void buffer_set(struct buffer* b, int v) {
+  b->buf[b->idx] = v;
+}
+
+int main() {
+  struct buffer* b = buffer_init();
+  for (int i = 0; i < 314159; i++) {
+    buffer_set(b,i);
+    buffer_next(b);
+  }
+
+  int acc = 0;
+  for (int i = 314159-1; i >= 0; i--) {
+    buffer_prev(b);
+    acc += buffer_get(b);
+  }
+
+  return acc;
+}

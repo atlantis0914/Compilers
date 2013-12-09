@@ -1,0 +1,9 @@
+//test error
+// same name in struct
+
+struct q {int v; bool v;};
+
+int main() {
+  return 8;
+}
+

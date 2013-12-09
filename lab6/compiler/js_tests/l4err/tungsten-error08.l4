@@ -1,0 +1,19 @@
+//test error
+//shadow names everywhere
+
+typedef struct a a;
+
+struct a {
+    bool a;
+};
+
+int a (bool a) {
+    struct a *a = alloc(a);
+    a->a = a;
+    return 10;
+}
+
+int main() {
+    return a(true);
+}
+

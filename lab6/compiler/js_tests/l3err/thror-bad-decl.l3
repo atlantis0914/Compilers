@@ -1,0 +1,12 @@
+//test error
+
+int f();
+
+int f(int i) {
+  return i - 2;
+}
+
+int main()
+{
+  return f(4);
+}

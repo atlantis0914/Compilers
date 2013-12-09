@@ -1,0 +1,11 @@
+//test error
+//cannot have an empty loop
+
+int main () {
+  for (;;)
+  {
+    return 3
+  }
+
+  return 0;
+}

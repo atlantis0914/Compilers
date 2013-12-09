@@ -1,0 +1,16 @@
+//test exception 11
+
+int main(){
+    int* a = NULL;
+    int* b = NULL;
+
+    int math = 3*(4+7+9)-3*19;
+
+    int ans;
+    if(math % 3 == 0)
+        ans = *a;
+    else
+        ans = *b;
+
+    return ans;
+}

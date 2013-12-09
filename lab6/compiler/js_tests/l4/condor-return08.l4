@@ -1,0 +1,15 @@
+//test return 8
+
+struct IntList {
+    int hour;
+    int day;
+};
+
+int main () {
+   struct IntList * boop = alloc( struct IntList );
+   (*boop).hour = 5;
+   boop->day = 3;
+
+   
+   return (*boop).day + boop->hour;
+}

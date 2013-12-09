@@ -1,0 +1,20 @@
+//test return 73
+
+int swap (int * p, int * q) {
+  int x;
+  x = *p;
+  *p = *q;
+  *q = x;
+  return 0;
+}
+
+int main () {
+  int * p;
+  int * q;
+  p = alloc(int);
+  q = alloc(int);
+  *p = 3;
+  *q = 7;
+  swap(p,q);
+  return *p*10+*q;
+}

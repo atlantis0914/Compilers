@@ -1,0 +1,20 @@
+//test return 5
+//make sure if else works right! no braces either
+int main(){
+    if(true)
+        if(false)
+            if(10-10==0)
+                if(64>>3 == 8)
+                    return -1;
+                else
+                    return -3;
+            else
+                return 2;
+        else
+            if(100>>1 == 50 || false)
+                return 5;
+            else
+                return 1;
+    else
+        return 1337;
+}

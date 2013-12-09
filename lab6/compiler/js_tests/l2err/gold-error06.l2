@@ -1,0 +1,7 @@
+//test error
+
+int main ()
+{
+  char x = 8;
+  return 0;
+}

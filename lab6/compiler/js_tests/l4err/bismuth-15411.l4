@@ -1,0 +1,10 @@
+//test exception 14
+
+int main() {
+  int i = 0;
+  int n = 2;
+
+  for (; i != 15411; i += n) n = n*n;
+
+  return i;
+}

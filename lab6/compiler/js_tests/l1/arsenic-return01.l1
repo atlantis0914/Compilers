@@ -1,0 +1,14 @@
+//test return 7
+int main()
+{
+	int a;
+	int b;
+	int c;
+	int d;
+
+	a = 1;
+	b = a+2;
+	c = 3*b;
+	d = c-2;
+	return d;
+}

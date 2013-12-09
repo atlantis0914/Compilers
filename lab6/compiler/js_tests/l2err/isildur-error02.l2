@@ -1,0 +1,49 @@
+//test error
+int main() {
+    int i = 0;
+    int seed = 12931283;
+    int a = 1103515245;
+    int m = 0x7FFFFFFF;
+    int c = 12345;
+    int plaintext = 0xCAFEBABE;
+    int ciphertext = plaintext;
+    for (i = 0; i < 300; i++) {
+        int seed = (a * seed + c) % m;
+        ciphertext ^= seed;
+    }
+    int v0 = plaintext; int v1 = ciphertext;
+    int key0 = 0xCAFEBABE;
+    int key1 = 0x0BADF00D;
+    int key2 = 0xDEADBEEF;
+    int key3 = 0xFEEDFACE;
+    int sum = 0;
+    int delta = 0x9E3779B9;
+    int num_rounds = 4;
+    for (i = 0; i < num_rounds; i++) {
+        int keyIndex = sum & 3;
+        int key = 0;
+        if (keyIndex == 0) {
+            key = key0;
+        } else if (keyIndex == 1) {
+            key = key1;
+        } else if (keyIndex == 2) {
+            key = key2;
+        } else /* if (keyIndex == 3) */ {
+            key = key3;
+        }
+        v0 += (((v1 << 4) ^ (v1 >> 5)) + v1) ^ (sum + key);
+        sum += delta;
+        keyIndex = (sum >> 11) & 3;
+        if (keyIndex == 0) {
+            key = key0;
+        } else if (keyIndex == 1) {
+            key = key1;
+        } else if (keyIndex == 2) {
+            key = key2;
+        } else /* if (keyIndex == 3) */ {
+            key = key3;
+        }
+        v1 += (((v0 << 4) ^ (v0 >> 5)) + v0) ^ (sum + key);
+    }
+    return v0 + v1;
+}

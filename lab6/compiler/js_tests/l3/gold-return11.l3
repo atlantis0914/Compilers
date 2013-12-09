@@ -1,0 +1,19 @@
+//test return 987
+
+int rev_helper(int n, int r) {
+	if (n == 0) {
+		return r;
+	}
+	else {
+		int c = n % 10;
+		return rev_helper(n / 10, r * 10 + c);
+	}
+}
+
+int rev(int n) {
+	return rev_helper(n, 0);
+}
+
+int main () {
+	return rev(789);
+}

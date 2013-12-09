@@ -1,0 +1,6 @@
+//test error
+// invalid variable name
+int main() {
+  int 1x;
+  return 0;
+}

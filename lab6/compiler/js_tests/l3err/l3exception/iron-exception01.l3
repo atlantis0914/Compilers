@@ -1,0 +1,9 @@
+//test exception 6
+// basic assertion handling
+
+int main() {
+    bool x = false;
+    assert(x);
+    return 0;
+}
+

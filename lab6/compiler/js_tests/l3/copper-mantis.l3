@@ -1,0 +1,59 @@
+//test return 145
+
+bool hasZeroDigit(int n) {
+    while(n > 0) {
+        if(n % 10 == 0) {return true;}
+        n /= 10;
+    }
+    return false;
+}
+
+bool isPrime(int n) {
+    if(n < 2) {return false;}
+    if(n == 2) {return true;}
+    if(n % 2 == 0) {return false;}
+    for(int f = 3; f < n; f += 2) {
+        if(n % f == 0) {return false;}
+    }
+    return true;
+}
+
+int reverseDigits(int n) {
+    int result = 0;
+    while(n > 0) {
+        result = result * 10 + n % 10;
+        n /= 10;
+    }
+    return result;
+}
+
+int rotateLeft(int n) {
+    int reversed = reverseDigits(n);
+    int msd = reversed % 10;
+    return reverseDigits(reversed / 10) * 10 + msd;
+}
+
+bool isCircularPrime(int n) {
+    if(hasZeroDigit(n)) {return false;}
+    if(!isPrime(n)) {return false;}
+    int origN = n;
+    n = rotateLeft(n);
+    while(n != origN) {
+        if(!isPrime(n)) {return false;}
+        n = rotateLeft(n);
+    }
+    return true;
+}
+
+int nthCircularPrime(int n) {
+    int guess = 2; //0th one
+    while(n > 0) {
+        guess++;
+        n -= (isCircularPrime(guess) ? 1 : 0);
+    }
+    return guess;
+}
+
+int main() {
+    return (nthCircularPrime(15) == 197 && nthCircularPrime(16) == 199 && nthCircularPrime(0) == 2 ? 145 : 137);
+}

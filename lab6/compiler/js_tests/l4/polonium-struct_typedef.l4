@@ -1,0 +1,16 @@
+//test return 0
+typedef struct a a;
+
+struct a{
+    int b;
+};
+
+int f(int f){
+    a *b = alloc(a);
+    b->b = f;
+    return b->b;
+}
+
+int main(){
+    return f(0);
+}

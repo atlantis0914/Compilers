@@ -1,0 +1,12 @@
+//test return 3
+
+int main ()
+{
+    int i;
+    int j;
+    for (i = 2; i < 3; i++){
+        j = 2;
+    }
+    return i;
+
+}

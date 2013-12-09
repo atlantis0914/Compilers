@@ -1,0 +1,24 @@
+//test return 0
+// so much freedom wau
+struct poop;
+typedef struct poop * poop;
+typedef int pee;
+typedef bool pp;
+
+struct poop {
+  pee pee;
+  poop poop;
+  poop pp;
+  poop main;
+  struct poop *p;
+};
+
+int main() {
+  poop poo = alloc(struct poop);
+  poo->pee = (*poo).pee;
+  poo->poop = poo;
+  (*poo).pp = poo;
+  poo->main = NULL;
+  (*poo).p = NULL;
+  return poo->pee;
+}

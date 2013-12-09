@@ -1,0 +1,20 @@
+//test error
+//Wrong number of arguments
+
+int truth (int x, bool y)
+{
+  if (y) 
+  {
+    return x;
+  }
+
+  else 
+  {
+    return 0;
+  }
+}
+
+int main(){
+  return truth(4);
+}
+

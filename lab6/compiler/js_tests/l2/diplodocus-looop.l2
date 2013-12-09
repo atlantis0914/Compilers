@@ -1,0 +1,10 @@
+//test return 1
+int main()
+{
+    int a = 1;
+    while(a > 0)
+    {
+        a += a;
+    }
+    return 1;
+}

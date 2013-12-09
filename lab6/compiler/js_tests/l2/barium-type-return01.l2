@@ -1,0 +1,8 @@
+//test return 1
+
+// Left to right order.
+int main()
+{
+  bool r = 1 == 1 == true;
+  return 1;
+}

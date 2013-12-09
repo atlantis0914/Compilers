@@ -1,0 +1,96 @@
+//test return 7118
+// simple TSP solver
+
+int sqrth(int n, int guess, int depth)
+{
+	if (depth == 0 || guess == 0) return guess;
+	int xk = sqrth(n, guess, depth-1);
+	return (xk + n/xk)/2;
+}
+
+int sqrt(int n)
+{
+	return sqrth(n, n, 10);
+}
+
+int euclidean_dist(int x0, int y0, int x1, int y1)
+{
+	int xd = x1 - x0;
+	int yd = y1 - y0;
+	int sqdist = xd*xd + yd*yd;
+	return sqrt(sqdist);
+}
+
+bool contains(int[] path, int depth, int val)
+{
+	for (int i = 0; i < depth; i++)
+	    if (path[i] == val) return true;
+	return false;
+}
+
+int solve(int[][] costs, int n, int[] path, int[] min_path, int depth)
+{
+	if (depth == n) return 0;
+	int r_cost = (1<<31) -1;
+	int min_i = -1;
+	int start_city = path[depth-1];
+	for(int i = 0; i < n; i++)
+	{
+		if (!contains(path, depth, i))
+		{
+			path[depth] = i;
+
+
+
+			int cost = costs[start_city][i] + solve(costs, n, path, min_path, depth+1);
+
+			if (cost < r_cost)
+			{
+			for(int jj = depth; jj < n; jj++)
+				min_path[jj] = path[jj];
+		   	     r_cost = cost;
+			     min_i = i;
+			}
+		}
+	}
+	path[depth] = min_i;
+	return r_cost;
+}
+
+int[] get_coords(int n, int seed)
+{
+	int[] xs = alloc_array(int, n);
+	for (int i = 0; i < n; i++)
+	{
+	    int t = ((seed*i)*0xA7421F + 3256751) >> 20;
+	    if (t < 0) t = -t;
+	    xs[i] = t;
+	}
+	return xs;
+
+}
+
+int solve_tsp(int n)
+{
+	int[] xs = get_coords(n, 42);
+	int[] ys = get_coords(n, 151);
+
+	int[][] A = alloc_array(int[], n);
+	for (int i = 0; i < n; i++)
+	{
+		A[i] = alloc_array(int, n);
+		for (int j = 0; j < n; j++)
+		{
+		    A[i][j] = euclidean_dist(xs[i], ys[i], xs[j], ys[j]);
+		}
+	}
+	int[] path = alloc_array(int, n);
+	int[] min_path = alloc_array(int, n);
+	int dist = solve(A, n, path, min_path, 1);
+		return dist;
+}
+
+int main()
+{
+	return solve_tsp(7);
+}

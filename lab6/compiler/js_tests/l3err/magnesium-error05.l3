@@ -1,0 +1,9 @@
+//test error
+//name of functions collides with defined type name
+
+typedef bool main;
+
+int main()
+{
+  return 0;
+}

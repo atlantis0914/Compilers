@@ -1,0 +1,19 @@
+//test exception
+
+int b();
+int c();
+
+int b()
+{
+  return c();
+}
+
+int c()
+{
+  return b();
+}
+
+int main()
+{
+  return b();
+}

@@ -1,0 +1,14 @@
+//test exception 11
+
+// look before you leap off an array
+
+struct springboard{
+  int[] spring;
+};
+
+int main()
+{
+  struct springboard *s = alloc(struct springboard);
+
+  return s->spring[0x100060];
+}

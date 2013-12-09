@@ -1,0 +1,8 @@
+//test error
+
+int main() {
+  int* p1 = NULL;
+  bool* p2 = NULL;
+  p1==p2;
+  return 0;
+}

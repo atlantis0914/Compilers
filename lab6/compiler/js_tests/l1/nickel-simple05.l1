@@ -1,0 +1,8 @@
+//test return 2
+// test division, but not immediate return
+int main()
+{
+  int k = 2/2;
+  int b = k + 1;
+  return b;
+}

@@ -1,0 +1,23 @@
+//test return 3
+int main() {
+  int n = 10;
+
+    int[] p = alloc_array(int, n);
+    for (int i=0; i<n; i++) {
+      p[i] = (i+1)%10;
+    }
+
+    int[][] a = alloc_array(int[], n);
+    a[0] = p;
+    for (int i=1; i<n; i++) {
+        a[i] = a[i-1];
+    }
+
+    int x = n/2;
+    x = a[8][a[7][a[6][a[5][a[4][a[3][a[2][a[1][a[0][x]]]]]]]]];
+    for (int i=0; i<n-1; i++) {
+        x = a[x][x];
+    }
+
+    return x;
+}

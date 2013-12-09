@@ -1,0 +1,24 @@
+//test return 0
+// Green test 02 - tests binary and assignment operators in various combos
+
+int main()
+{
+ int a = 1;
+ int b = 2;
+ int c = 3;
+ int d = 4;
+ a = a - b + c;    // a = 2
+ a = a * b;        // a = 4
+ a = a % b;        // a = 0
+ a = a / d;        // a = 0
+ b = a * 10 / 5;   // b = 0
+ c += 3;           // c = 6
+ c -= 6;           // c = 0
+ c += b;           // c = 0
+ c *= 10;          // c = 0
+ d += 3 + a;       // d = 7
+ d -= 10 + b;      // d = -3
+ d *= c / 1 * 100; // d = 0
+ d %= b + 10;      // d = 0
+ return d;
+}

@@ -1,0 +1,14 @@
+//test error
+
+typedef int x;
+
+int main()
+{
+    int z = 0;
+
+    x * y = NULL;
+    x k = z * z;
+    // z*z not an lvalue
+    z * z = 10;
+    return 0;
+}

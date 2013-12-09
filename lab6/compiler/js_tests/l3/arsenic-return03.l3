@@ -1,0 +1,12 @@
+//test return 20
+int distancesq(int x, int y);
+
+int main() {
+int x = 2;
+int y = 4;
+return distancesq(x,y);
+}
+
+int distancesq(int x, int y) {
+return ((x*x) + (y*y));
+}

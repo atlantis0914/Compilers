@@ -1,0 +1,40 @@
+//test return 1234
+
+struct node;
+typedef struct node node_t;
+struct node{
+	int val;
+	node_t * next;
+};
+
+int main()
+{
+	int n = 10;
+	int i;
+	int count = 0;
+	node_t * [] buckets;
+
+	buckets = alloc_array(node_t *, n);
+
+	for(i=0; i<n; i++)
+	{
+		buckets[i] = NULL;
+	}
+
+	for(i=0; i<12345; i++)
+	{
+		int b = i % n;
+		node_t * new_node = alloc(node_t);
+
+		new_node->next = buckets[b];
+		buckets[b] = new_node;
+	}
+
+	while(buckets[9] != NULL)
+	{
+		count++;
+		buckets[9] = buckets[9]->next;
+	}
+	
+	return count;
+}

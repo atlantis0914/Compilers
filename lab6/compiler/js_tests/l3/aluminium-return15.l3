@@ -1,0 +1,16 @@
+//test return 2
+
+typedef int aaa;
+typedef aaa bbb;
+typedef bbb ccc;
+typedef ccc ddd;
+
+ddd plus (ddd x, ddd y) {
+  ddd plus = x + y;
+  return plus;
+}
+
+ddd main () {
+  ddd plus = plus(1, 1);
+  return plus;
+}

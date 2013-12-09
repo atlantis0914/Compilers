@@ -1,0 +1,15 @@
+//test exception
+
+void asser() {
+
+  assert(false);
+
+}
+
+int main () {
+
+  asser();
+  return 0;
+
+
+}

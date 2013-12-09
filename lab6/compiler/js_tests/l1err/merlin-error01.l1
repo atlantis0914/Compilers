@@ -1,0 +1,11 @@
+//test error
+//invalid use of reserved keyword alloc_array as identifier
+int main()
+{
+  int x = 1;
+  int y = 2;
+
+  int alloc_array = x + y;
+  int z = alloc_array;
+  return z;
+}

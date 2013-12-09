@@ -1,0 +1,9 @@
+//test error
+// Dereferencing NULL
+
+int main()
+{
+    int * pointer = NULL;
+
+    return *NULL;
+}

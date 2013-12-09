@@ -1,0 +1,49 @@
+//test return 0
+//
+
+
+void put(int[] f, int i, int v) {
+    while (i < 1000) {
+        f[i] += v;
+        i += (i & -i);
+    }
+}
+
+int sum(int[] f, int j) {
+    int sum = 0;
+    while (j > 0) {
+        sum += f[j];
+        j = j & (j - 1);
+    }
+    return sum;
+}
+
+int sumRange(int[] f, int i, int j) {
+    return sum(f, j - 1) - sum(f, i - 1);
+}
+
+int main() {
+    int[] f = alloc_array(int, 1000);
+    put(f, 1, 1);
+    put(f, 3, 2);
+    put(f, 4, 3);
+    put(f, 6, 4);
+    put(f, 10, 5);
+    put(f, 11, 6);
+    assert(sumRange(f, 0,1) == 0);
+    assert(sumRange(f, 1,2) == 1);
+    assert(sumRange(f, 2,3) == 0);
+    assert(sumRange(f, 3,4) == 2);
+    assert(sumRange(f, 4,5) == 3);
+    assert(sumRange(f, 5,6) == 0);
+    assert(sumRange(f, 6,7) == 4);
+    assert(sumRange(f, 7,8) == 0);
+    assert(sumRange(f, 8,9) == 0);
+    assert(sumRange(f, 9,10) == 0);
+    assert(sumRange(f, 10,11) == 5);
+    assert(sumRange(f, 11,12) == 6);
+    assert(sumRange(f, 12,13) == 0);
+    assert(sumRange(f, 13,14) == 0);
+    assert(sumRange(f, 14,15) == 0);
+    return 0;
+}

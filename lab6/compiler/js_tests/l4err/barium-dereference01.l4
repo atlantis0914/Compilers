@@ -1,0 +1,7 @@
+//test exception
+
+int main()
+{
+  int *null = NULL;
+  return *null;
+}

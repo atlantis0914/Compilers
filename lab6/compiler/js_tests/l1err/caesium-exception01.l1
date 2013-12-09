@@ -1,0 +1,9 @@
+//test exception
+//division by 0 that happens in dead code
+int main()
+{
+  int a;
+  a = 1/0;
+
+  return 0;
+}

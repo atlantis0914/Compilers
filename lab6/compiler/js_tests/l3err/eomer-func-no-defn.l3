@@ -1,0 +1,13 @@
+//test exception
+
+// Declare but don't define foo
+int foo();
+
+int bar() {
+    return bar();
+}
+
+int main() {
+    return bar();
+}
+

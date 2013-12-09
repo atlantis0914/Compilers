@@ -1,0 +1,15 @@
+//test exception 8
+
+// division error before time error
+
+int main() {
+
+    int x = 2000000000;
+    int y = 2;
+    while (x % -1 != 2) {
+    	  x++;
+    	  y += 2;
+    }
+
+    return y;    
+}

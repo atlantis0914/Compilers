@@ -1,0 +1,11 @@
+//test error
+
+struct s {
+  int n;
+};
+
+typedef struct s struct t;
+
+int main () {
+  return 42;
+}

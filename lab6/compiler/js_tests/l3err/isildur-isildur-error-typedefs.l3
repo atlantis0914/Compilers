@@ -1,0 +1,19 @@
+//test error
+typedef bool a;
+typedef int b;
+
+a beta() {
+        return 4;
+}
+
+int main() {
+        b test = 4;
+        int q = test + 3;
+        a c = test == q;
+        if (true) {
+                return 1;
+        }
+        else {
+                return beta();
+        }
+}

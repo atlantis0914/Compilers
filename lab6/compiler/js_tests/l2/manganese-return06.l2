@@ -1,0 +1,20 @@
+//test return 3
+// A test of very nested ifs
+int main()
+{
+    int Cheetah = 0;
+    int Puma = 1;
+    int Jaguar = 2;
+    int Panther = 3;
+    int Tiger = 4; 
+    int Leopard = 5;
+    int Snow_Leopard = 6;
+    int Lion = 7;
+    int Mountain_Lion = 8;
+    int Mavericks = 9;
+    int winner = -1;
+
+    if ( Puma > Cheetah ) if ( Jaguar > Puma ) if ( Panther > Jaguar ) winner = Panther; else winner = Jaguar;
+
+    return winner;
+}

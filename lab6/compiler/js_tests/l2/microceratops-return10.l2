@@ -1,0 +1,13 @@
+//test return 5120
+
+int main ()
+{
+	int i;
+
+	i = 5;
+
+	if ( (i % 5) != 0) {
+		return 0;
+	} else
+		return i << 10;
+} 

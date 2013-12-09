@@ -1,0 +1,13 @@
+//test exception 11
+
+int eToThePiI() {
+  // do math
+  // then return the answer
+  return -1;
+}
+
+int main() {
+  int[] xs = alloc_array(int, 15);
+  xs[eToThePiI()] = 10; // uh-oh
+  return 0;
+}

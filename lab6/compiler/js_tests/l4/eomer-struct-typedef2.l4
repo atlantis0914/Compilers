@@ -1,0 +1,17 @@
+//test return 0
+
+struct s;
+
+struct s {
+    int x;
+    int y;
+    int z;
+};
+
+struct s;
+
+int main() {
+    struct s *s = alloc(struct s);
+    return s->x;
+}
+

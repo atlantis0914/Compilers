@@ -1,0 +1,12 @@
+//test error
+// variable names can shadow functions but then the function's gone!
+
+int poops(int poops) {
+  if (poops == 0)
+    return 0;
+  return poops + poops(poops-1);
+}
+
+int main () {
+  return poops(99);
+}

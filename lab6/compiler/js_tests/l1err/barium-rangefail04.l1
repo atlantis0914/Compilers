@@ -1,0 +1,8 @@
+//test error
+// Constant out of range
+
+int main()
+{
+  int x = -0x1ffffffff;
+  return x;
+}

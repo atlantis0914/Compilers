@@ -1,0 +1,57 @@
+//test return 66
+
+typedef int elem;
+
+typedef struct node node;
+struct node{
+   int val;
+   node* next;
+};
+
+typedef struct stack_node stack;
+struct stack_node{
+  node* top;
+  node* bottom;
+};
+
+elem peek(stack* S);
+elem pop(stack* S);
+void push(elem x, stack* S);
+bool stack_contain(elem key, stack* S);
+
+int main(){
+  stack* s = alloc(stack);
+  s->top = NULL;
+  s->bottom = NULL;
+  for(int i = 0; i < 100; i++){
+    push(i,s);
+  }
+  pop(s); pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);pop(s);
+  return pop(s);
+}
+
+elem peek(stack* S){
+  return S->top->val;
+}
+
+elem pop(stack* S){
+  elem x = S->top->val;
+  S->top = S->top->next;
+  return x;
+}
+
+void push(elem x, stack* S){
+  node* first = alloc(node);
+  first->val = x;
+  first->next = S->top;
+  S->top = first;
+}
+
+bool contains(elem key, stack* S){
+  node* p = S->top;
+  while(p != S->bottom){
+    if(p->val == key)
+      return true;
+  }
+  return false;
+}

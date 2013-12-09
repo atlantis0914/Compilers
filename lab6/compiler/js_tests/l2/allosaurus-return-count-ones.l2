@@ -1,0 +1,17 @@
+//test return 3
+
+/* counts the number of 1s that occur in the digits of x */
+
+int main(){
+  int x = 21125491;
+  
+  int count = 0;
+  int pow10;
+  for(pow10 = 10; x / pow10 != 0; pow10 *= 10){
+    int current_digit = (x % pow10) / (pow10 / 10);
+    if(current_digit == 1)
+      count++;
+  }
+
+  return count;
+}

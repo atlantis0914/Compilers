@@ -1,0 +1,26 @@
+//test return 100
+
+int rec(int c, int accum);
+int and(int c, int accum);
+
+int main() {
+    return rec(100,0);
+}
+
+int rec(int c, int accum) {
+    if(c == 0)
+        return accum;
+
+    c--;
+    accum++;
+    return and(c,accum);
+}
+
+int and(int c, int accum) {
+    if(c == 0)
+        return accum;
+
+    c--;
+    accum++;
+    return rec(c,accum);
+}

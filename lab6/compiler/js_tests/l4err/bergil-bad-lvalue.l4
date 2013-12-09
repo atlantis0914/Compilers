@@ -1,0 +1,16 @@
+//test error
+
+struct blong {
+  int bling;
+  int bloong;
+}
+
+int main() {
+
+    // a lvalue.ident is fine
+    struct blong x;
+    struct blong y;
+    (true ? x : y).bling = 4;    
+    // but not a exp.ident!
+    return 2;
+}

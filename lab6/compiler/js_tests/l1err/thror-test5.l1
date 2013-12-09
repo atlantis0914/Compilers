@@ -1,0 +1,6 @@
+//test error
+int main()
+{
+  int x = 2147483649; // this is out of bounds (>2^31)
+  return x - 1;
+}

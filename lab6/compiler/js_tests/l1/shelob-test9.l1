@@ -1,0 +1,7 @@
+//test return 49
+int main(){
+	int v0=7;
+	v0*=v0;
+	v0=v0;
+	return 0+v0;
+}

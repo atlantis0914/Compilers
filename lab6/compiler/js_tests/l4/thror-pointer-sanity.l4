@@ -1,0 +1,23 @@
+//test return 1023
+
+int* a()
+{
+  return alloc(int);
+}
+
+int inc(int* a, int i) {
+  int v = *a;
+  *a = v + i;
+  return v;
+}
+
+int main()
+{
+  int* p = a();
+  
+  while(*p < 1000)
+  {
+    inc(p, inc(p,1));
+  }
+  return *p;
+}

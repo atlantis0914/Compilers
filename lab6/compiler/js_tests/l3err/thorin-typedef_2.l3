@@ -1,0 +1,14 @@
+//test error
+/* Typedefs must be seen before used */
+
+int main()
+{
+  foo x = 0;
+  return x;
+}
+
+typedef int foo;
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

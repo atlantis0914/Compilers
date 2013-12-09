@@ -1,0 +1,17 @@
+//test error
+//void type cannot be used as a value
+
+// some void function with an effect
+void divideSquare(int a, int b) {
+  (a * a) / (b * b);
+  return;
+}
+
+int main ()
+{
+  // ok call
+  divideSquare(3, 5);
+  // not ok
+  void x = divideSquare(2, 4);
+  return 0;
+}

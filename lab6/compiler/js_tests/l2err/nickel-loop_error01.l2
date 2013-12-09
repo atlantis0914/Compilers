@@ -1,0 +1,12 @@
+//test error
+// not simpop
+int main()
+{
+  int i = 0;
+  while (i < 10000)
+  {
+	for (int i = 0; i < 4000; return 34)
+	    return 1;
+  }
+  return i
+}

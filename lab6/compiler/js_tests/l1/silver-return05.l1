@@ -1,0 +1,9 @@
+//test return 0
+// Test initialization after control flow
+
+int main() {
+
+    return 0;
+
+    int x;
+}

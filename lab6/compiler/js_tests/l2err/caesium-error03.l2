@@ -1,0 +1,11 @@
+//test error
+//typechecking
+int main()
+{
+    bool bl = true;
+    int a = 1;
+    int b;
+
+    b = bl ? 2 : a ? 0 : 1;
+    return b;
+}

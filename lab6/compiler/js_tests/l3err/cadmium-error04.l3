@@ -1,0 +1,8 @@
+//test error
+// Can't typedef something more than twice
+typedef int myint;
+typedef int myint;
+
+int main() {
+  return 0;
+}

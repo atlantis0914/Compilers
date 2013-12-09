@@ -1,0 +1,34 @@
+//test return 1
+int [] add (int[] a, int[] b){
+  int i;
+  int len = 100;
+  int[] res;
+  res = alloc_array(int, 101);
+  // initialize
+  for(i = 0; i < 101; i++)
+    res[i] = 0;
+  // add
+  for(i = 0; i < len; i++){
+    res[i] = a[i] + b[i];
+    if (res[i] > 9){
+      res[i+1] += res[i] / 10;
+      res[i] = res[i] % 10;
+    }
+  }
+  return res;
+}
+
+
+int main(){
+  int[] a;
+  int[] b;
+  a = alloc_array(int, 100);
+  b = alloc_array(int, 100);
+
+  a[99] = 9;
+  b[99] = 1;
+  int[] res;
+  
+  res = add(a, b);
+  return res[100];
+}

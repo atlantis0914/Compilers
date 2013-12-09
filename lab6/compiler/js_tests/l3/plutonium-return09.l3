@@ -1,0 +1,10 @@
+//test return 0
+// decls can appear after defs
+
+int foo () {return 0;}
+
+int main () {
+    return foo ();
+}
+
+int foo();

@@ -1,0 +1,10 @@
+//test error
+
+
+char wrong() {
+	return 'a';
+}
+
+int main() {
+	return 0;
+}

@@ -1,0 +1,22 @@
+//test error
+/* continue outside loop */
+
+struct point {int x; int y;};
+
+struct point* newpoint () {
+  struct point * p;
+  p = alloc(struct point);
+  p->x = 0;
+  p->y = 0;
+  return p;
+}
+
+int main () {
+  int x;
+  x = 20;
+  while (x > 0)
+    x -= 1;
+    continue;
+    x -= 1;
+  return -1;
+}

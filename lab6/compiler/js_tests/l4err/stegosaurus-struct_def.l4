@@ -1,0 +1,16 @@
+//test error
+
+struct ints;
+
+struct ints {
+  int a;
+  int b;
+  int c;
+};
+
+int main() {
+  ints foo;
+  return 0;
+}
+
+typedef int ints;

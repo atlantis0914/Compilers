@@ -1,0 +1,7 @@
+//test error
+// weird while loop
+int main()
+{
+  for (int i = 0; i < 67; (while(i < 3) i++;));
+  return 4;
+}

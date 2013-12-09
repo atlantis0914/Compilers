@@ -1,0 +1,15 @@
+//test error
+//test missing field
+
+struct myStruct {
+    int my;
+    int struct;
+    bool has;
+    int fields;
+};
+
+int main() {
+    struct myStruct str = alloc(struct myStruct);
+    str.no = 0;
+    return 0;
+}

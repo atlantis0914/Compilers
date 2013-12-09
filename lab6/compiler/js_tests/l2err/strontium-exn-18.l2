@@ -1,0 +1,7 @@
+//test exception 8
+//compilcated divide by zero.
+
+int main()
+{
+    return 1/(2/3);
+}

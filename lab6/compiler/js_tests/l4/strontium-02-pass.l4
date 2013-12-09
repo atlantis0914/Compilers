@@ -1,0 +1,15 @@
+//test return 0
+// tests alternate pointer syntax
+
+struct blob
+{
+    int x;
+    int y;
+};
+
+int main()
+{
+    struct blob * b = alloc(struct blob);
+    b->x = 0;
+    return (*b).x;
+}

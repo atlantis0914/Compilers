@@ -1,0 +1,10 @@
+//test error
+void foo(int[] a){
+	a=alloc_array(int,10);
+	a[2]=3;
+}
+int main(){
+	int[] a;	
+	foo(a);
+	return a[2];
+}

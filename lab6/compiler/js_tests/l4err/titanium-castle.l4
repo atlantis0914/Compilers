@@ -1,0 +1,14 @@
+//test error
+// use pointers
+
+struct a {int v;};
+struct b {struct a a;};
+
+int main() {
+  struct a *a = alloc(struct a);
+  a->v = 5;
+  struct b *b = alloc(struct b);
+  b->a = a;
+  return b->a->v;
+}
+

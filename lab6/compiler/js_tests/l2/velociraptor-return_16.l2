@@ -1,0 +1,11 @@
+//test return 6
+// crazy variable naming
+int main() {
+	int _int = 0;
+	int int_ = 6;
+	int returns = 7;
+	bool boolt = false;
+	bool falsee = true;
+	bool truee = false;
+	return int_ - _int;
+}

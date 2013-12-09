@@ -1,0 +1,14 @@
+//test exception
+// division by zero after a few operations
+
+int main() {
+    int x;
+    int y;
+    int z;
+
+    x = 4;
+    y = 5;
+    z = 100 / (x - y + 1);
+
+    return z;
+}

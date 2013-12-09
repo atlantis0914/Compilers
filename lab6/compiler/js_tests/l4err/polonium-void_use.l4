@@ -1,0 +1,5 @@
+//test error
+int main(){
+    alloc_array(void, 0);
+    return 0;
+}

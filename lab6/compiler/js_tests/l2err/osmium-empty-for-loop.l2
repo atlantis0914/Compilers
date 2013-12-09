@@ -1,0 +1,11 @@
+//test error
+//in for loop, middle statement can't be empty
+
+int main()
+{
+	int x = 0;
+	for(;;) {
+		return x;
+	}
+	return x;
+}

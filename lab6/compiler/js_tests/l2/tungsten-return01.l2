@@ -1,0 +1,11 @@
+//test return 1
+//test of order of operations
+
+int main(){
+  int a = 1;
+  int b = a + 5 >> 2 * 2;
+  bool c = true;
+  bool d = a != b && c;
+
+  return a;
+}

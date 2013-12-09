@@ -1,0 +1,6 @@
+//test error
+// excessively large constant.
+int main() {
+  int a = 13096389173004;
+  return 8;
+}

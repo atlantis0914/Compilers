@@ -1,0 +1,26 @@
+//test error
+//lots of spaces
+   int 
+
+ main 
+
+( 
+ int c
+)
+    {
+
+  int
+y
+;
+for (
+int x
+=
+0
+; x < 5; 
+x++)
+y
+++
+;
+return 
+y;
+}

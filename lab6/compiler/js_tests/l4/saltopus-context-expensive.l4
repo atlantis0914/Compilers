@@ -1,0 +1,10 @@
+//test return 0
+
+typedef int baz;
+int main() {
+	int foo = 0;
+	int bar = 1;
+	baz * quuz;
+	foo * bar;
+	return 0;
+}

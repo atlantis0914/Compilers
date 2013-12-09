@@ -1,0 +1,7 @@
+//test exception 6
+
+int main()
+{
+  assert(5 == 6);
+  return 4;
+}

@@ -1,0 +1,5 @@
+//test return 26
+// add a hex and decimal number
+int main() {
+    return 10 + 0x10;
+}

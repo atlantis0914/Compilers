@@ -1,0 +1,10 @@
+//test return 4
+int main(){
+	int[] a;
+	a=alloc_array(int,83136);
+	int[] b;
+	b=a;
+	a[65535]=3;
+	a[65535]++;
+	return b[65535];
+}

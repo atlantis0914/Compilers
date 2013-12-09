@@ -1,0 +1,8 @@
+//test return 56
+// don't evaluate the path less traveled by...
+
+int main () {
+	int x = 56;
+	int y = false ? (x/0) : x;
+	return y;
+}	

@@ -1,0 +1,15 @@
+//test return 2067618831
+//reverses the binary representation of an int
+
+int main() {
+    int n = 0xF03ABCDE;
+    int m = 0;
+    int i;
+
+    for (i = 31; i >= 0; i--) {
+        m |= ((n & 0x1) << i);
+        n >>= 1;
+    }
+
+    return m;
+}

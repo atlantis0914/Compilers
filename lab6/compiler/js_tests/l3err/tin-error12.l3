@@ -1,0 +1,20 @@
+//test error
+// test scoping rules
+
+int foo() {
+  return 0;
+}
+
+typedef int bad;
+
+bool bad() {
+  return false;
+}
+
+typedef bool int;
+
+int main() {
+  return foo;
+  int foo = 3;
+  return foo;
+}

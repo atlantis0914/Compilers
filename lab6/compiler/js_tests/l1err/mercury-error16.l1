@@ -1,0 +1,8 @@
+//test error
+// test -- special case
+
+int main()
+{
+  int x = --4;
+  return 4;
+}

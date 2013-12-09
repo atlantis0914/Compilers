@@ -1,0 +1,118 @@
+//test return 3628800
+// Test handling of a lot of variables.
+
+int main() {
+	int test1 = 1;
+	int test2 = 2;
+	int test3 = 3;
+	int test4 = 4;
+	int test5 = 5;
+	int test6 = 6;
+	int test7 = 7;
+	int test8 = 8;
+	int test9 = 9;
+	int test10 = 10;
+	int test11 = 1;
+	int test12 = 1;
+	int test13 = 1;
+	int test14 = 1;
+	int test15 = 1;
+	int test16 = 1;
+	int test17 = 1;
+	int test18 = 1;
+	int test19 = 1;
+	int test20 = 1;
+	int test21 = 1;
+	int test22 = 1;
+	int test23 = 1;
+	int test24 = 1;
+	int test25 = 1;
+	int test26 = 1;
+	int test27 = 1;
+	int test28 = 1;
+	int test29 = 1;
+	int test30 = 1;
+	int test31 = 1;
+	int test32 = 1;
+	int test33 = 1;
+	int test34 = 1;
+	int test35 = 1;
+	int test36 = 1;
+	int test37 = 1;
+	int test38 = 1;
+	int test39 = 1;
+	int test40 = 1;
+	int test41 = 1;
+	int test42 = 1;
+	int test43 = 1;
+	int test44 = 1;
+	int test45 = 1;
+	int test46 = 1;
+	int test47 = 1;
+	int test48 = 1;
+	int test49 = 1;
+	int test50 = 1;
+	int test51 = 1;
+	int test52 = 1;
+	int test53 = 1;
+	int test54 = 1;
+	int test55 = 1;
+	int test56 = 1;
+	int test57 = 1;
+	int test58 = 1;
+	int test59 = 1;
+	int test60 = 1;
+	int test61 = 1;
+	int test62 = 1;
+	int test63 = 1;
+	int test64 = 1;
+	int test65 = 1;
+	int test66 = 1;
+	int test67 = 1;
+	int test68 = 1;
+	int test69 = 1;
+	int test70 = 1;
+	int test71 = 1;
+	int test72 = 1;
+	int test73 = 1;
+	int test74 = 1;
+	int test75 = 1;
+	int test76 = 1;
+	int test77 = 1;
+	int test78 = 1;
+	int test79 = 1;
+	int test80 = 1;
+	int test81 = 1;
+	int test82 = 1;
+	int test83 = 1;
+	int test84 = 1;
+	int test85 = 1;
+	int test86 = 1;
+	int test87 = 1;
+	int test88 = 1;
+	int test89 = 1;
+	int test90 = 1;
+	int test91 = 1;
+	int test92 = 1;
+	int test93 = 1;
+	int test94 = 1;
+	int test95 = 1;
+	int test96 = 1;
+	int test97 = 1;
+	int test98 = 1;
+	int test99 = 1;
+
+	return (test1 * test2 * test3 * test4 * test5 * test6 * test7 * test8 *
+	test9 * test10 * test11 * test12 * test13 * test14 * test15 * test16 *
+	test17 * test18 * test19 * test20 * test21 * test22 * test23 * test24 *
+	test25 * test26 * test27 * test28 * test29 * test30 * test31 * test32 *
+	test33 * test34 * test35 * test36 * test37 * test38 * test39 * test40 *
+	test41 * test42 * test43 * test44 * test45 * test46 * test47 * test48 *
+	test49 * test50 * test51 * test52 * test53 * test54 * test55 * test56 *
+	test57 * test58 * test59 * test60 * test61 * test62 * test63 * test64 *
+	test65 * test66 * test67 * test68 * test69 * test70 * test71 * test72 *
+	test73 * test74 * test75 * test76 * test77 * test78 * test79 * test80 *
+	test81 * test82 * test83 * test84 * test85 * test86 * test87 * test88 *
+	test89 * test90 * test91 * test92 * test93 * test94 * test95 * test96 *
+	test97 * test98 * test99);
+}

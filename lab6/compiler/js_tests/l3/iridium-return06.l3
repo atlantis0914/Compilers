@@ -1,0 +1,15 @@
+//test return 0
+
+bool isPrime (int x) {
+  for(int n = x - 1; n > 1; n--) {
+    if((x / n) * n == x) return false;
+  }
+  return true;
+}
+
+int main () {
+  if(isPrime(15)) return 1;
+  else if(isPrime(24)) return 2;
+  else if(isPrime(19)) return 0;
+  else return 200;
+}

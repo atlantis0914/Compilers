@@ -1,0 +1,12 @@
+//test error
+// multiple declarations
+
+int foo(int a, int b, int a)
+{
+	return a + b;
+}
+
+int main()
+{
+	return foo(52, 1, 1);
+}

@@ -1,0 +1,17 @@
+//test return 0
+/* since we can't return bools yet, return 1 it prime, 0 otherwise */
+int main(){
+    bool isPrime = true;
+    int n = 42;
+    int i;
+    
+    for(i=2; i<n; i++ ){
+      if(n % i == 0)
+        isPrime = false;
+    }
+
+    if(isPrime == true)
+      return 1;
+    else
+      return 0;
+}

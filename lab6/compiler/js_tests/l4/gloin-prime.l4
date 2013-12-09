@@ -1,0 +1,25 @@
+//test return 31397
+//returns largest prime less than floor(pi*1000)
+bool is_prime(bool []sieve, int len, int p){
+    for(int i=0;i<len;i++){
+        if(i>p/2)
+            return true;
+        else if(sieve[i] && (p % i == 0))
+            return false;
+    }
+    return true;
+}
+
+int main(){
+    bool []sieve = alloc_array(bool, 31415);
+    sieve[0] = false;
+    sieve[1] = false;
+    for(int i=2;i<31415; i++)
+        sieve[i] = is_prime(sieve, 31415, i);
+
+    for(int i = 31414; i >= 0; i--){
+        if(sieve[i])
+            return i;
+    }
+    return -1;
+}

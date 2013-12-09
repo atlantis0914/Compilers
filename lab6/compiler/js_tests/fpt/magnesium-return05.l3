@@ -1,0 +1,11 @@
+//test return 6
+/* Testing external function calls to
+ * floating point operations
+ */
+
+int main () {
+  fpt x = itof(3);
+  x = fmul(fadd(itof(1), x), fdiv(fadd(x,itof(0)),itof(2)));
+  print_fpt(x);
+  return ftoi(x);
+}

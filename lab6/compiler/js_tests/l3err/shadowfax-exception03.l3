@@ -1,0 +1,9 @@
+//test exception 8
+// test div-by-zero after function dispatch
+int div(int x, int y) {
+  return x / y;
+}
+
+int main() {
+  return div(7, 1-1);
+}

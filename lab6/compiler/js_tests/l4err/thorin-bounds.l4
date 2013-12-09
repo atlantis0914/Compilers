@@ -1,0 +1,12 @@
+//test exception 11
+
+int main()
+{
+    int[] foo = alloc_array(int, 32);
+    foo[32] = 2;
+    return foo[0];
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

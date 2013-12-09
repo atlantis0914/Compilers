@@ -1,0 +1,10 @@
+//test error
+
+// Relop should not be used between boolean values.
+int main()
+{
+  bool x = true;
+  bool y = true;
+  bool r = x > y;
+  return 1;
+}

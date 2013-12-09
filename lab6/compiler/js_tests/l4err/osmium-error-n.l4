@@ -1,0 +1,6 @@
+//test error
+
+int main() {
+    int ** hi = alloc(int);
+    return 0;
+}

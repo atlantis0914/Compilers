@@ -1,0 +1,8 @@
+//test return 0
+
+struct s;
+
+int main() {
+    struct s* foo;
+    return 0;
+}

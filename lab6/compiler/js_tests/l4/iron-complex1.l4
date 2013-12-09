@@ -1,0 +1,36 @@
+//test return 1
+// Floyd-Warshall all pairs shortest path algorithm
+
+
+int[][] apsp(int[][] edge, int n) {
+		int[][] dist = alloc_array(int[], n);
+		for(int i = 0; i < n; i++) {
+						dist[i] = alloc_array(int, n);
+						for(int j = 0; j < n; j++) {
+										dist[i][j] = edge[i][j];
+						}
+		}
+		for(int k = 0; k < n; k++) {
+				for(int i = 0; i < n; i++) {
+						for(int j = 0; j < n; j++) {
+								if(dist[i][k]+dist[k][j] < dist[i][j])
+										dist[i][j] = dist[i][k] + dist[k][j];
+						}
+				}
+		}
+		return dist;
+}
+
+int main() {
+		int n = 10;
+		int[][] dist;
+		int[][] edges = alloc_array(int[], n);
+		for(int i = 0; i < n; i++) {
+				edges[i] = alloc_array(int, n);
+				for(int j = 0; j < n; j++) {
+						edges[i][j] = (i*7 + j*13)%5;
+				}
+		}
+		dist = apsp(edges, n);
+		return dist[1][3];
+}

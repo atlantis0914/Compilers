@@ -1,0 +1,14 @@
+//test exception 8
+// division overflow
+
+int main () {
+    int b;
+    int c;
+
+    b = ((-7 % 2 + 43 - 2) / -10) + 3;
+    int a = (b / 100) * 0x80000000 - 1;
+    c = 0x80000000; // intmin
+
+    return c / a;
+}
+

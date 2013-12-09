@@ -1,0 +1,10 @@
+//test error
+
+// pointers must be of same time in equality check
+
+int main()
+{
+    int *a = NULL;
+    int ****b = NULL;
+    return a==b ? 1: 0;
+}

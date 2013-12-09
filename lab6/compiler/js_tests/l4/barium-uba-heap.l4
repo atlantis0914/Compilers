@@ -1,0 +1,185 @@
+//test return -704982702
+// An unbounded array
+
+struct _uba
+{
+  int[] buffer;
+  int size;
+  int current;
+};
+
+typedef struct _uba uba_t;
+
+uba_t * make_uba (int init)
+{
+  assert (init > 0);
+
+  uba_t * uba = alloc (uba_t);
+  assert (uba != NULL);
+
+  int[] buffer = alloc_array (int, init);
+
+  uba->buffer = buffer;
+  uba->size = init;
+  uba->current = 0;
+
+  return uba;
+}
+
+void swap (int[] b, int i, int j)
+{
+  assert (i >= 0);
+  assert (j >= 0);
+
+  b[i] ^= b[j];
+  b[j] ^= b[i];
+  b[i] ^= b[j];
+}
+
+void sift_up (int[] b, int i)
+{
+  assert (i >= 0);
+
+  while (i > 0)
+  {
+    if (b[i/2] <= b[i])
+      return;
+    else
+      swap(b, i, i/2);
+    i /= 2;
+  }
+}
+
+void sift_down (int[] b, int i, int n)
+{
+  assert (i >= 0);
+
+  while (2*i < n)
+  {
+    if (2*i+1 < n)
+    {
+      if(b[2*i+1] >= b[i] && b[2*i] >= b[i])
+        return;
+      if(b[2*i+1] >= b[i] && b[2*i] <= b[i])
+      {
+        swap (b, i, 2*i);
+        i *= 2;
+      }
+      else if (b[2*i+1] <= b[i] && b[2*i] >= b[i])
+      {
+        swap (b, i, 2*i+1);
+        i = 2*i+1;
+      }
+      else if (b[2*i+1] > b[2*i])
+      {
+        swap (b, i, 2*i);
+        i *= 2;
+      }
+      else
+      {
+        swap (b, i, 2*i+1);
+        i = 2*i+1;
+      }
+    }
+    else
+    {
+      if (b[2*i] < b[i])
+        swap (b, i, 2*i);
+      return;
+    }
+  }
+}
+
+void memcpy (int[] old, int[] new, int size)
+{
+  for (int i = 0; i < size; i++)
+  {
+    new[i] = old[i];
+  }
+}
+
+void resize (uba_t * u)
+{
+  assert (u != NULL);
+  if (u->size == u->current)
+  {
+    int[] newbuffer = alloc_array (int, 2*u->size);
+    memcpy (u->buffer, newbuffer, u->current);
+    u->size *= 2;
+    u->buffer = newbuffer;
+  }
+  else if (u->size > 4*u->current)
+  {
+    int[] newbuffer = alloc_array (int, u->size/2);
+    memcpy (u->buffer, newbuffer, u->current);
+    u->size /= 2;
+    u->buffer = newbuffer;
+  }
+  else
+  {
+    return;
+  }
+}
+
+void insert_tail (uba_t * u, int data)
+{
+  assert (u != NULL);
+  assert (u->current <= u->size);
+  assert (u->current >= 0);
+  assert (u->size > 0);
+
+  resize (u);
+
+  u->buffer[u->current] = data;
+  u->current += 1;
+}
+
+int delete_tail (uba_t * u)
+{
+  assert (u != NULL);
+  assert (u->current <= u->size);
+  assert (u->current >= 0);
+  assert (u->size > 0);
+
+  int k = u->buffer[u->current-1];
+  u->current -= 1;
+  resize (u);
+  return k;
+}
+
+void enq (uba_t * u, int data)
+{
+  assert (u != NULL);
+  assert (u->current <= u->size);
+  assert (u->current >= 0);
+  assert (u->size > 0);
+
+  insert_tail (u, data);
+
+  sift_up (u->buffer, u->current-1);
+}
+
+int deq (uba_t * u)
+{
+  swap (u->buffer, 0, u->current-1);
+  int i = delete_tail (u);
+  sift_down (u->buffer, 0, u->current);
+  return i;
+}
+
+int main()
+{
+  uba_t * h = make_uba (2);
+  int cnt = 100000;
+  for (int i = cnt; i > 0; i--)
+  {
+    enq (h, i);
+  }
+  int c = deq (h);
+  for (int i = 0; i < cnt-1; i++)
+  {
+    int k = deq (h);
+    c -= k;
+  }
+  return c;
+}

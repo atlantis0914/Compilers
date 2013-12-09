@@ -1,0 +1,45 @@
+//test return 127
+// Do not trash rax and rdx
+
+int main()
+{
+  int rax;
+  int rbx;
+  int rcx;
+  int rdx;
+  int rdi;
+  int rsi;
+  int r8;
+  rax = 1;
+  rbx = 2;
+  rcx = 4;
+  rdx = 8;
+  rdi = 16;
+  rsi = 32;
+  r8 = rsi * rbx;
+  rbx = rsi / rdi;
+  rsi = r8 / rbx;
+  rdi = rsi / rbx;
+  rdx = rdi / rbx;
+  rcx = rdx / rbx;
+  rbx = rcx / rbx;
+  rax = rbx / rbx;
+  rbx = rdx / rcx;
+  r8 = rsi * rbx;
+  rbx = rsi / rdi;
+  rsi = r8 / rbx;
+  rdi = rsi / rbx;
+  rdx = rdi / rbx;
+  rcx = rdx / rbx;
+  rbx = rcx / rbx;
+  rax = rbx / rbx;
+  r8 = rax;
+  rax = rbx;
+  rbx = rcx;
+  rcx = rdx;
+  rdx = rdi;
+  rdi = rsi;
+  rsi = rsi * rax;
+  return rax + rbx + rcx + rdx + rdi + rsi + r8;
+}
+

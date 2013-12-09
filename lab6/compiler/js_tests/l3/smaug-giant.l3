@@ -1,0 +1,356 @@
+//test return 0
+
+int a1(int  a50, bool a51, int  a52, int  a53, int  a54, bool a55, int  a56, int  a57, int  a58, bool a59, int  a60, int  a61, int  a62, int  a63, int  a64, int  a65, bool a66, int  a67, bool a68, int  a69, int  a70, int  a71, bool a72, int  a73, bool a74, bool a75, int  a76, bool a77, bool a78, bool a79, bool a80, bool a81, bool a82, bool a83, bool a84, bool a85, int  a86, int  a87, bool a88, bool a89, bool a90, bool a91, int  a92, bool a93, bool a94, int  a95, bool a96, bool a97, int  a98, bool a99, int  a100)
+{
+    int a8 = 1000;
+    bool b8 = false;
+    bool c8 = true;
+    int a1 = 1000;
+    bool b1 = false;
+    bool c1 = true;
+    int a6 = 1000;
+    bool b6 = false;
+    bool c6 = true;
+    int a10 = 1000;
+    bool b10 = false;
+    bool c10 = true;
+    int a5 = 1000;
+    bool b5 = false;
+    bool c5 = true;
+    int a2 = 1000;
+    bool b2 = false;
+    bool c2 = true;
+    int a3 = 1000;
+    bool b3 = false;
+    bool c3 = true;
+    int a9 = 1000;
+    bool b9 = false;
+    bool c9 = true;
+    int a7 = 1000;
+    bool b7 = false;
+    bool c7 = true;
+    int a4 = 1000;
+    bool b4 = false;
+    bool c4 = true;
+    return 0;
+}
+
+bool a2(int  a50, int  a51, bool a52, bool a53, int  a54, int  a55, bool a56, bool a57, bool a58, int  a59, bool a60, bool a61, bool a62, int  a63, bool a64, int  a65, bool a66, int  a67, bool a68, bool a69, int  a70, bool a71, int  a72, bool a73, bool a74, bool a75, bool a76, int  a77, bool a78, bool a79, int  a80, int  a81, bool a82, int  a83, int  a84, int  a85, bool a86, bool a87, int  a88, bool a89, int  a90, bool a91, int  a92, bool a93, bool a94, int  a95, bool a96, bool a97, int  a98, bool a99, int  a100)
+{
+    int a1 = 1000;
+    bool b1 = false;
+    bool c1 = true;
+    int a4 = 1000;
+    bool b4 = false;
+    bool c4 = true;
+    int a9 = 1000;
+    bool b9 = false;
+    bool c9 = true;
+    int a2 = 1000;
+    bool b2 = false;
+    bool c2 = true;
+    int a8 = 1000;
+    bool b8 = false;
+    bool c8 = true;
+    int a6 = 1000;
+    bool b6 = false;
+    bool c6 = true;
+    int a3 = 1000;
+    bool b3 = false;
+    bool c3 = true;
+    int a7 = 1000;
+    bool b7 = false;
+    bool c7 = true;
+    int a5 = 1000;
+    bool b5 = false;
+    bool c5 = true;
+    int a10 = 1000;
+    bool b10 = false;
+    bool c10 = true;
+    return true;
+}
+
+bool a3(int  a50, int  a51, bool a52, bool a53, int  a54, bool a55, int  a56, bool a57, int  a58, bool a59, bool a60, bool a61, bool a62, int  a63, bool a64, int  a65, int  a66, int  a67, int  a68, int  a69, int  a70, int  a71, int  a72, int  a73, bool a74, bool a75, int  a76, bool a77, bool a78, int  a79, bool a80, int  a81, int  a82, bool a83, bool a84, bool a85, int  a86, bool a87, bool a88, int  a89, int  a90, int  a91, int  a92, int  a93, int  a94, int  a95, bool a96, bool a97, int  a98, bool a99, bool a100)
+{
+    int a3 = 1000;
+    bool b3 = false;
+    bool c3 = true;
+    int a9 = 1000;
+    bool b9 = false;
+    bool c9 = true;
+    int a1 = 1000;
+    bool b1 = false;
+    bool c1 = true;
+    int a7 = 1000;
+    bool b7 = false;
+    bool c7 = true;
+    int a2 = 1000;
+    bool b2 = false;
+    bool c2 = true;
+    int a8 = 1000;
+    bool b8 = false;
+    bool c8 = true;
+    int a10 = 1000;
+    bool b10 = false;
+    bool c10 = true;
+    int a4 = 1000;
+    bool b4 = false;
+    bool c4 = true;
+    int a6 = 1000;
+    bool b6 = false;
+    bool c6 = true;
+    int a5 = 1000;
+    bool b5 = false;
+    bool c5 = true;
+    return true;
+}
+
+int a4(int  a50, int  a51, int  a52, int  a53, bool a54, bool a55, int  a56, bool a57, bool a58, bool a59, bool a60, int  a61, bool a62, bool a63, int  a64, int  a65, int  a66, int  a67, bool a68, bool a69, bool a70, int  a71, int  a72, int  a73, bool a74, bool a75, int  a76, int  a77, int  a78, bool a79, int  a80, bool a81, int  a82, bool a83, int  a84, int  a85, bool a86, bool a87, bool a88, bool a89, int  a90, int  a91, bool a92, int  a93, int  a94, int  a95, bool a96, int  a97, int  a98, int  a99, int  a100)
+{
+    int a10 = 1000;
+    bool b10 = false;
+    bool c10 = true;
+    int a4 = 1000;
+    bool b4 = false;
+    bool c4 = true;
+    int a7 = 1000;
+    bool b7 = false;
+    bool c7 = true;
+    int a2 = 1000;
+    bool b2 = false;
+    bool c2 = true;
+    int a9 = 1000;
+    bool b9 = false;
+    bool c9 = true;
+    int a5 = 1000;
+    bool b5 = false;
+    bool c5 = true;
+    int a8 = 1000;
+    bool b8 = false;
+    bool c8 = true;
+    int a1 = 1000;
+    bool b1 = false;
+    bool c1 = true;
+    int a6 = 1000;
+    bool b6 = false;
+    bool c6 = true;
+    int a3 = 1000;
+    bool b3 = false;
+    bool c3 = true;
+    return 0;
+}
+
+int a5(bool a50, int  a51, bool a52, bool a53, bool a54, bool a55, bool a56, bool a57, bool a58, int  a59, int  a60, int  a61, int  a62, int  a63, bool a64, bool a65, bool a66, bool a67, bool a68, bool a69, bool a70, int  a71, int  a72, bool a73, int  a74, bool a75, int  a76, bool a77, int  a78, bool a79, int  a80, int  a81, bool a82, int  a83, bool a84, int  a85, int  a86, int  a87, int  a88, int  a89, bool a90, bool a91, int  a92, int  a93, bool a94, bool a95, int  a96, int  a97, int  a98, bool a99, bool a100)
+{
+    int a4 = 1000;
+    bool b4 = false;
+    bool c4 = true;
+    int a1 = 1000;
+    bool b1 = false;
+    bool c1 = true;
+    int a3 = 1000;
+    bool b3 = false;
+    bool c3 = true;
+    int a9 = 1000;
+    bool b9 = false;
+    bool c9 = true;
+    int a7 = 1000;
+    bool b7 = false;
+    bool c7 = true;
+    int a6 = 1000;
+    bool b6 = false;
+    bool c6 = true;
+    int a8 = 1000;
+    bool b8 = false;
+    bool c8 = true;
+    int a2 = 1000;
+    bool b2 = false;
+    bool c2 = true;
+    int a10 = 1000;
+    bool b10 = false;
+    bool c10 = true;
+    int a5 = 1000;
+    bool b5 = false;
+    bool c5 = true;
+    return 0;
+}
+
+int a6(int  a50, bool a51, bool a52, int  a53, int  a54, int  a55, int  a56, bool a57, int  a58, bool a59, bool a60, int  a61, int  a62, bool a63, bool a64, int  a65, bool a66, int  a67, bool a68, int  a69, int  a70, int  a71, bool a72, bool a73, bool a74, int  a75, int  a76, int  a77, bool a78, bool a79, int  a80, int  a81, int  a82, int  a83, bool a84, int  a85, bool a86, int  a87, int  a88, int  a89, bool a90, bool a91, bool a92, bool a93, bool a94, bool a95, bool a96, bool a97, bool a98, bool a99, int  a100)
+{
+    int a2 = 1000;
+    bool b2 = false;
+    bool c2 = true;
+    int a3 = 1000;
+    bool b3 = false;
+    bool c3 = true;
+    int a1 = 1000;
+    bool b1 = false;
+    bool c1 = true;
+    int a9 = 1000;
+    bool b9 = false;
+    bool c9 = true;
+    int a7 = 1000;
+    bool b7 = false;
+    bool c7 = true;
+    int a4 = 1000;
+    bool b4 = false;
+    bool c4 = true;
+    int a6 = 1000;
+    bool b6 = false;
+    bool c6 = true;
+    int a10 = 1000;
+    bool b10 = false;
+    bool c10 = true;
+    int a5 = 1000;
+    bool b5 = false;
+    bool c5 = true;
+    int a8 = 1000;
+    bool b8 = false;
+    bool c8 = true;
+    return 0;
+}
+
+int a7(bool a50, int  a51, int  a52, bool a53, bool a54, int  a55, int  a56, bool a57, bool a58, int  a59, int  a60, bool a61, bool a62, bool a63, bool a64, int  a65, int  a66, int  a67, int  a68, int  a69, int  a70, bool a71, bool a72, int  a73, bool a74, int  a75, bool a76, bool a77, bool a78, int  a79, int  a80, int  a81, bool a82, int  a83, bool a84, int  a85, bool a86, int  a87, bool a88, bool a89, bool a90, int  a91, int  a92, bool a93, int  a94, bool a95, int  a96, int  a97, int  a98, int  a99, bool a100)
+{
+    int a6 = 1000;
+    bool b6 = false;
+    bool c6 = true;
+    int a3 = 1000;
+    bool b3 = false;
+    bool c3 = true;
+    int a2 = 1000;
+    bool b2 = false;
+    bool c2 = true;
+    int a8 = 1000;
+    bool b8 = false;
+    bool c8 = true;
+    int a4 = 1000;
+    bool b4 = false;
+    bool c4 = true;
+    int a1 = 1000;
+    bool b1 = false;
+    bool c1 = true;
+    int a5 = 1000;
+    bool b5 = false;
+    bool c5 = true;
+    int a7 = 1000;
+    bool b7 = false;
+    bool c7 = true;
+    int a9 = 1000;
+    bool b9 = false;
+    bool c9 = true;
+    int a10 = 1000;
+    bool b10 = false;
+    bool c10 = true;
+    return 0;
+}
+
+int a8(int  a50, bool a51, bool a52, bool a53, int  a54, bool a55, int  a56, bool a57, bool a58, int  a59, int  a60, int  a61, bool a62, int  a63, bool a64, int  a65, int  a66, int  a67, int  a68, bool a69, bool a70, int  a71, int  a72, bool a73, int  a74, bool a75, int  a76, int  a77, int  a78, int  a79, int  a80, bool a81, bool a82, int  a83, int  a84, int  a85, int  a86, int  a87, int  a88, int  a89, bool a90, bool a91, bool a92, bool a93, int  a94, int  a95, int  a96, bool a97, bool a98, int  a99, int  a100)
+{
+    int a4 = 1000;
+    bool b4 = false;
+    bool c4 = true;
+    int a8 = 1000;
+    bool b8 = false;
+    bool c8 = true;
+    int a7 = 1000;
+    bool b7 = false;
+    bool c7 = true;
+    int a6 = 1000;
+    bool b6 = false;
+    bool c6 = true;
+    int a3 = 1000;
+    bool b3 = false;
+    bool c3 = true;
+    int a10 = 1000;
+    bool b10 = false;
+    bool c10 = true;
+    int a1 = 1000;
+    bool b1 = false;
+    bool c1 = true;
+    int a2 = 1000;
+    bool b2 = false;
+    bool c2 = true;
+    int a5 = 1000;
+    bool b5 = false;
+    bool c5 = true;
+    int a9 = 1000;
+    bool b9 = false;
+    bool c9 = true;
+    return 0;
+}
+
+bool a9(bool a50, bool a51, bool a52, bool a53, bool a54, bool a55, bool a56, bool a57, bool a58, int  a59, bool a60, bool a61, int  a62, int  a63, int  a64, bool a65, int  a66, int  a67, int  a68, bool a69, bool a70, int  a71, bool a72, bool a73, bool a74, int  a75, int  a76, int  a77, bool a78, int  a79, bool a80, bool a81, int  a82, int  a83, bool a84, int  a85, bool a86, int  a87, int  a88, bool a89, bool a90, bool a91, int  a92, bool a93, bool a94, int  a95, bool a96, bool a97, bool a98, int  a99, int  a100)
+{
+    int a1 = 1000;
+    bool b1 = false;
+    bool c1 = true;
+    int a5 = 1000;
+    bool b5 = false;
+    bool c5 = true;
+    int a9 = 1000;
+    bool b9 = false;
+    bool c9 = true;
+    int a8 = 1000;
+    bool b8 = false;
+    bool c8 = true;
+    int a4 = 1000;
+    bool b4 = false;
+    bool c4 = true;
+    int a2 = 1000;
+    bool b2 = false;
+    bool c2 = true;
+    int a7 = 1000;
+    bool b7 = false;
+    bool c7 = true;
+    int a6 = 1000;
+    bool b6 = false;
+    bool c6 = true;
+    int a10 = 1000;
+    bool b10 = false;
+    bool c10 = true;
+    int a3 = 1000;
+    bool b3 = false;
+    bool c3 = true;
+    return true;
+}
+
+bool a10(int  a50, bool a51, bool a52, int  a53, bool a54, bool a55, int  a56, int  a57, int  a58, bool a59, bool a60, bool a61, int  a62, int  a63, bool a64, bool a65, bool a66, bool a67, bool a68, bool a69, int  a70, int  a71, int  a72, bool a73, bool a74, bool a75, int  a76, int  a77, bool a78, int  a79, bool a80, int  a81, int  a82, bool a83, bool a84, int  a85, bool a86, bool a87, int  a88, bool a89, int  a90, bool a91, bool a92, int  a93, int  a94, int  a95, int  a96, bool a97, bool a98, int  a99, bool a100)
+{
+    int a7 = 1000;
+    bool b7 = false;
+    bool c7 = true;
+    int a4 = 1000;
+    bool b4 = false;
+    bool c4 = true;
+    int a2 = 1000;
+    bool b2 = false;
+    bool c2 = true;
+    int a8 = 1000;
+    bool b8 = false;
+    bool c8 = true;
+    int a5 = 1000;
+    bool b5 = false;
+    bool c5 = true;
+    int a6 = 1000;
+    bool b6 = false;
+    bool c6 = true;
+    int a1 = 1000;
+    bool b1 = false;
+    bool c1 = true;
+    int a10 = 1000;
+    bool b10 = false;
+    bool c10 = true;
+    int a9 = 1000;
+    bool b9 = false;
+    bool c9 = true;
+    int a3 = 1000;
+    bool b3 = false;
+    bool c3 = true;
+    return true;
+}
+
+int main()
+{
+    return 0;
+}

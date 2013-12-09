@@ -1,0 +1,7 @@
+//test error
+/* No void arrays */
+
+int main () {
+  int[] a = alloc_array(void, 1);
+  return 0;
+}

@@ -1,0 +1,93 @@
+//test return 8
+// boring binary search tree
+
+struct node;
+typedef struct node* tree;
+struct node {
+  int value;
+  tree left;
+  tree right;
+};
+
+tree init(int val) {
+  tree n = alloc(struct node);
+  n->value = val;
+  n->left = NULL;
+  n->right = NULL;
+  return n;
+}
+
+bool insert(tree t, int val) {
+  if (t == NULL)
+    return false; // yeah I dunno
+
+  if (val < t->value) {
+    if (t->left == NULL) {
+      t->left = init(val);
+      return true;
+    }
+    else
+      return insert(t->left, val);
+  }
+  if (val > t->value) {
+    if (t->right == NULL) {
+      t->right = init(val);
+      return true;
+    }
+    else
+      return insert(t->right, val);
+  }
+
+  return true;
+}
+
+int inorder(int[] a, tree t, int start) {
+  int r;
+
+  if (t == NULL)
+    return start;
+
+  r = inorder(a, t->left, start);
+  a[r] = t->value;
+  return inorder(a, t->right, r+1);
+}
+
+int main() {
+  tree t = alloc(struct node);
+  int[] a = alloc_array(int, 20);
+  int i = 0;
+
+  t->value = 10;
+
+  insert(t, 13);
+  insert(t, 7);
+  insert(t, 3);
+  insert(t, 11);
+  insert(t, 5);
+  insert(t, 1);
+  insert(t, 2);
+  insert(t, 12);
+  insert(t, 9);
+  insert(t, 8);
+  insert(t, 17);
+  insert(t, 20);
+  insert(t, 16);
+  insert(t, 4);
+  insert(t, 15);
+  insert(t, 12);
+  insert(t, 14);
+  insert(t, 6);
+  insert(t, 19);
+  insert(t, 18);
+
+  inorder(a, t, 0);
+
+  for (; i < 20; i++) {
+    print_int(a[i]);
+    // printchar(32);
+    if (a[i] != i+1) return -1;
+  }
+  // printchar(10);
+
+  return t->left->right->left->value;
+}  

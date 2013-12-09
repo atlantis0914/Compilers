@@ -1,0 +1,11 @@
+//test exception 8
+// Because there's not so much to do with void...
+
+void foo() {
+  1/0;
+}
+
+int main() {
+  foo();
+  return -1;
+}

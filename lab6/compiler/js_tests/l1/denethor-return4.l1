@@ -1,0 +1,34 @@
+//test return 907
+
+int main() {
+   int a; int b; int c; int d; int e; int f; int g; int h; int i; int j; int k; int l; int m; int n; int o; int p; int q; int r; int s; int t;
+   
+   t=1;
+   p=3;
+   p+=7;
+   q=4;
+   r=4;
+   s=4;
+   a=1;
+   p-=5;
+   b=a;
+   c=a+b+b;
+   d=b+c;
+   e=p+b+c+t+d+d;
+   f=b+c+(-d)+p+e+e;
+   g=b+c+d+e+f+f;
+   h=b+(d+p+e)/a+f+g+g;
+   i=b+d+q+e+f+g+h+h;
+   j=b+d+e+f+g+h+i+i;
+   k=b+d+e+f+h+(i+j+j)*q;
+   l=b+d+e+f+g+h+i+j+k+k;
+   m=b+c+d+f+g+h+i+j+k+l+l;
+   n=b+d+e+r+f+g+h+i+j+k+l+m+m;
+   o=b+c+n+d+e+(-f)+l+g+h+s+i+j+k+l+n+n;
+   p=b+c+t+d+f+g+h+i+j+m+k+l+m+n+o+o;
+   
+   a*=i+13442;
+   a-=0xffffffff;
+   
+   return (a+b-c+d-e+f-g+h-i+j-k+l-m+n)%((p*p)/o);
+}

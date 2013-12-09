@@ -1,0 +1,23 @@
+//test return 57
+// tests many arguments
+
+int foo(int a, int b, int c, int d, int e, int f, int g, int h) {
+  return a + b + c + d + e + f + g + h;
+}
+
+int main()
+{
+  int a = 1;
+  int b = 2;
+  int c = 3;
+  int d = 4;
+  int e = 5;
+  int f = 6;
+  int g = 7;
+  int h = 8;
+  int res = foo(a, b, c, d, e, f, g, h);
+  int i = 10;
+  int j = 11;
+  res += (i+j);
+  return res;
+}

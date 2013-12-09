@@ -1,0 +1,7 @@
+//test error
+// Test invalid reserved word use.
+
+int main() {
+    int alloc_array = 1;
+    return alloc_array;
+}

@@ -1,0 +1,47 @@
+//test return 0
+//test connect back to my server aNd prEPaRE tO rCEIVE CC #s
+/*              ---- Story part 3 ----
+   And in compilers, he struggled and struggled
+   When he ran this test, he had double the trouble */
+
+typedef int[] exploitation;
+typedef int eip;
+
+struct dsp {  /* DA STACK POINTER */
+  int[] stack;
+};/*
+
+#pragma C0_IGNORE_SAFE_ARRAY_MODE
+
+// umm, what does it do?
+
+char shellcode[] =
+      "\xeb\x11\x5e\x31\xc9\xb1\x65\x80\x6c\x0e\xff\x35\x80\xe9\x01"
+      "\x75\xf6\xeb\x05\xe8\xea\xff\xff\xff\x66\xf5\x66\x10\x66\x07"
+      "\x85\x9f\x36\x9f\x37\xbe\x16\x33\xf8\xe5\x9b\x02\xb5\xbe\xfb"
+      "\x87\x9d\xf0\x37\x68\x78\xbe\x16\x9f\x45\x86\x8b\xbe\x16\x33"
+      "\xf8\xe5\x9b\x02\xb5\x87\x8b\xbe\x16\xe8\x39\xe5\x9b\x02\xb5"
+      "\x87\x87\x8b\xbe\x16\x33\xf8\xe5\x9b\x02\xb5\xbe\xf8\x66\xfe"
+      "\xe5\x74\x02\xb5\x76\xe5\x74\x02\xb5\x76\xe5\x74\x02\xb5\x87"
+      "\x9d\x64\x64\xa8\x9d\x9d\x64\x97\x9e\xa3\xbe\x18\x87\x88\xbe"
+      "\x16\xe5\x40\x02\xb5"; */
+
+int main() {
+  /* give us an index into memory near the stack */
+  exploitation e = alloc_array(int, 0x7FFF);
+  /* a pointer to the stack perhaps? */
+  struct dsp *s = alloc(struct dsp);
+  s->stack = alloc_array(eip, 2);
+  /* 0x00007ffff7b7fa5b */
+  s->stack[0] = 0xf7b7fa5b;
+  s->stack[1] = 0x00007fff;
+  /* extract shellcode from above */
+  int a = 0x7FFE;
+  for (int i = 0; i < 0x7FFF; i++) e[a] = 0xAA;
+  /* and jump to it after overwriting printhex in the got */
+  print_hex(s->stack[0]);
+
+  /* lol, they think we just returned 0 */
+  return 0;
+}
+

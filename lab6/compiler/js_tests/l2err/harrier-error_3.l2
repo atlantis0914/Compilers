@@ -1,0 +1,9 @@
+//test error
+
+int main()
+{
+    while (int i = 1)
+        for (;;)
+            return 4;
+    return 1;
+}

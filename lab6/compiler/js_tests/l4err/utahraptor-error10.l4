@@ -1,0 +1,24 @@
+//test error
+
+typedef int x;
+
+struct s{
+    int x;
+    int y;
+};
+
+bool True()
+{
+    return true;
+}
+
+int main()
+{
+    x y = 10;
+    x * z = NULL;
+    x * k = alloc(x);
+    z = k;
+    // not lvalue
+    *True() = NULL;
+    return 0;
+}

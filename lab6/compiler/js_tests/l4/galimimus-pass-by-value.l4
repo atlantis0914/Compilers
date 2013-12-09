@@ -1,0 +1,17 @@
+//test return 1000
+
+// Functions are pass by value
+
+int rob_fail(int* bank) {
+  int money = *bank;
+  bank = alloc(int);
+  *bank = 0;
+  return money;
+}
+
+int main() {
+  int* bank = alloc(int);
+  *bank = 1000;
+  if ( rob_fail(bank) != 1000 ) 1/0;
+  return *bank;
+}

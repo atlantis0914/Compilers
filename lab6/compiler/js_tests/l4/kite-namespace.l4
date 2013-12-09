@@ -1,0 +1,13 @@
+//test return 10
+
+struct A {int A;};
+
+int A() {
+    struct A *A = alloc(struct A);
+    A->A = 10;
+    return A->A;
+}
+
+int main() {
+    return A();
+}

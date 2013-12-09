@@ -1,0 +1,5 @@
+//test exception
+int main() {
+  int x = 0xdeadbeef;
+  return 9 / (x & ~x);
+}

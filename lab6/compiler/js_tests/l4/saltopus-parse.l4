@@ -1,0 +1,19 @@
+//test return 0
+
+typedef int baz;
+int main() {
+	int foo = 5;
+	int bar = 1;
+	int *****quux;
+	quux = alloc(int ****);
+	*quux = alloc(int ***);
+	**quux = alloc(int **);
+	***quux = alloc(int *);
+	****quux = alloc(int );
+	*****quux = 5;
+	{
+		baz * whee;
+		foo ****** quux;
+	}
+	return 0;
+}

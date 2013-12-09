@@ -1,0 +1,7 @@
+//test exception 8
+//divide by uninitialized field
+
+int main() {
+    int *a = alloc(int);
+    return 10 / *a;
+}

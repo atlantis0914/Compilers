@@ -1,0 +1,12 @@
+//test error
+//y declared twice inside foo
+
+struct foo { int i; int j; int k; int x; int y; int y; int z; int w; };
+
+typedef struct foo* foostar;
+
+int main()
+{
+  foostar asdf = alloc(struct foo);
+  return foostar->y;
+}

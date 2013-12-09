@@ -1,0 +1,15 @@
+//test return 1
+
+int main()
+{
+	int dummy = 0;
+	
+	if (true) {
+		if (false) {
+			dummy++;
+		}
+		else
+			return 1;
+	}
+	return 0;
+}

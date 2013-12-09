@@ -1,0 +1,10 @@
+//test error
+//multiple mains
+
+int main() {
+  return 1;
+}
+
+bool main() {
+  return false;
+}

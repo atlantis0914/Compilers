@@ -1,0 +1,16 @@
+//test return 10
+// test implicit struct declarations
+
+struct a {
+    int c;
+};
+
+int main() {
+    struct a *b = alloc(struct a);
+
+    b->c = 10;
+
+    return b->c;
+
+}
+

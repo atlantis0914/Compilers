@@ -1,0 +1,47 @@
+//test return 2
+
+int[] merge(int[] arr1, int[] arr2, int count1, int count2){
+      int[] result = alloc_array(int, count1 + count2);
+      int marker1 = 0;
+      int marker2 = 0;
+      int marker3 = 0;
+      while(marker1 < count1 || marker2 < count2){
+          if(marker1 == count1)
+          {
+	      result[marker3] = arr2[marker2];
+              marker3++; marker2++;
+          }
+          else if(marker2 == count2)
+          {
+	      result[marker3] = arr1[marker1];
+              marker3++; marker1++;
+          }
+          else if(arr1[marker1] < arr2[marker2]){
+	      result[marker3] = arr1[marker1];
+	      marker1++;
+      	      marker3++;
+	  }
+	  else{
+	      result[marker3] = arr2[marker2];
+	      marker2++;
+      	      marker3++;
+	  }
+      }    
+      return result; 
+}
+
+int main(){
+    int[] arr1 = alloc_array(int, 10);
+    int[] arr2 = alloc_array(int, 10);
+    int[] arr3;
+    int i;
+    for(i = 0; i < 10; i++){
+    	  arr1[i] = 2*i;
+	  arr2[i] = 2*i+1;
+
+    }
+    arr3 = merge(arr1,arr2,10,10);
+    return  arr3[2];
+
+
+}

@@ -1,0 +1,11 @@
+//test  return 10
+
+int main() {
+  int r = 10;
+  for (int x = 0; x < 10; x++) {
+    for (int y = 0; y < 10; y++) {
+      if (x + y == 20) { int z = 2; }
+    }
+  }
+  return r;
+}

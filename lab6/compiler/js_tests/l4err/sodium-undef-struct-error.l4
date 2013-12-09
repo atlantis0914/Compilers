@@ -1,0 +1,7 @@
+//test error
+struct s;
+struct b { struct s f1; };
+int main() {
+	struct b[] arr = alloc_array(struct b, 1);
+	return 5;
+}

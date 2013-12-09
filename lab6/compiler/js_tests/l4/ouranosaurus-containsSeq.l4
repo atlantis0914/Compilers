@@ -1,0 +1,52 @@
+//test return 1
+
+bool containsSeq( int[] a, int lenA, int[] b, int lenB)
+{
+  int i = 0;
+  int j = 0;
+
+  while( (i < lenA) && (j < lenB)) {
+    if ( a[i] == b[j])  { j++;}
+    i++;
+  }
+  return (j == lenB) ? true : false;
+}
+
+int main() {
+    int lenA; int lenB;
+    bool i;
+    int[] a;
+    int[] b;
+
+    lenA = 16;
+    lenB = 4;
+    a = alloc_array(int, lenA);
+    b = alloc_array(int, lenB);
+
+    // Van der Corput sequence (Implemented from description on wikipedia)
+    a[0] = 0;
+    a[1] = 8;
+    a[2] = 4;
+    a[3] = 12;
+    a[4] = 2;
+    a[5] = 10;
+    a[6] = 6;
+    a[7] = 14;
+    a[8] = 1;
+    a[9] = 9;
+    a[10] = 5;
+    a[11] = 13;
+    a[12] = 3;
+    a[13] = 11;
+    a[14] = 7;
+    a[15] = 15;
+
+    b[0] = 0;
+    b[1] = 12;
+    b[2] = 7;
+    b[3] = 15;
+
+    i = containsSeq(a, lenA, b, lenB);
+
+    if(i == true) { return 1; } else { return 0; }
+}

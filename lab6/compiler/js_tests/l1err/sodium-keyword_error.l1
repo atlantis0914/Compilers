@@ -1,0 +1,5 @@
+//test error
+int main() {
+	int struct = 3;
+	return struct;
+}

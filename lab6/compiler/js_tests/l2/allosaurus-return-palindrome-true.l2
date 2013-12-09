@@ -1,0 +1,40 @@
+//test return 1
+
+/* returns 1 if x is a palindrome */
+int main(){
+  int x = 12321;
+  
+  int pow10 = 10;
+  int n_digits = 1;
+  
+  /* get number of digits in x */
+  while ( x / pow10 != 0 ){
+    pow10 *= 10;
+    n_digits++;
+  }
+  
+  {
+    int i;
+    for (i = n_digits; i > n_digits/2 ; i--){
+      int _i = n_digits - i + 1;
+      int pow10i = 10;
+      int pow10_i = 10;
+      int temp;
+      int digiti;
+      int digit_i;
+
+      for(temp = i; temp>1; temp--)
+        pow10i *= 10;
+      for(temp = _i; temp>1; temp--)
+        pow10_i *= 10;
+      
+      digiti = (x % pow10i) / (pow10i / 10);
+      digit_i = (x % pow10_i) / (pow10_i / 10);
+      
+      if(digiti != digit_i)
+        return 0;
+    }
+    return 1;
+  }
+  
+}

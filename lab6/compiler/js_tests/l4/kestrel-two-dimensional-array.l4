@@ -1,0 +1,13 @@
+//test return 42
+
+int f (int[][] a) {
+  return a[0][0];
+}
+
+int main () {
+  int[][] a = alloc_array(int[], 1);
+  int[] b = alloc_array(int, 1);
+  b[0] = 42;
+  a[0] = b;
+  return f(a);
+}

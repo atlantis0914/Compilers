@@ -1,0 +1,8 @@
+//test error
+// uses a reserved keyword for a variable name
+
+int main() {
+  int for;
+  for = 3;
+  return for;
+}

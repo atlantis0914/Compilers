@@ -1,0 +1,11 @@
+//test error
+
+int main()
+{
+  return func();
+}
+
+int func()
+{
+  return 1;
+}

@@ -1,0 +1,9 @@
+//test error
+//typdef asdf twice
+
+typedef int asdf;
+typedef bool asdf;
+
+asdf main(){
+     return 0;
+}

@@ -1,0 +1,10 @@
+//test return 42
+// simple bool test
+int main()
+{
+  bool j = true;
+  int i;
+  if (j) {i = 42;}
+  else {{{{{{{{{{{{{i = 0;}}}}}}}}}}}}}
+  return i;
+}

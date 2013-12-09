@@ -1,0 +1,5 @@
+//test return -889275714
+
+int main() {
+   return 0xcafebabe;
+}

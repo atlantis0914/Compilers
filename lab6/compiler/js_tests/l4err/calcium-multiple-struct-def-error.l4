@@ -1,0 +1,7 @@
+//test error
+// you can't just poop twice
+struct poop {};
+struct poop {};
+int main() {
+  return 0;
+}

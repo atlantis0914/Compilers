@@ -1,0 +1,7 @@
+//test error
+
+int fun () {
+    return 0;
+    5;
+}
+

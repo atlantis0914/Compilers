@@ -1,0 +1,26 @@
+//test return 1814600481
+/* Computes the sum of values in a sequence a(n) = q with 
+   n = Product p_i^(a_i) -> q = Product (p_i + 1)^(a_i).
+*/
+
+int main () {
+  int x = 37000;
+  int i;
+  int j;
+  int k;
+  int l;
+  int sum = 0;
+         
+  for (i = 0; i <= x; i++) {
+    k = 1;
+    l = i;
+    for (j = 2; j <= l; j++) {
+      while (l % j == 0) {
+        l /= j;
+        k *= (j + 1);
+      }
+    }
+    sum += k;
+  }
+  return sum;
+}

@@ -1,0 +1,6 @@
+//test error
+// tests simple typechecking
+int main()
+{
+  return (0 ? 0 : 1);
+}

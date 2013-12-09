@@ -1,0 +1,9 @@
+//test error
+
+typedef struct s {
+  int x;
+} s_rep;
+
+int main () {
+  return 42;
+}

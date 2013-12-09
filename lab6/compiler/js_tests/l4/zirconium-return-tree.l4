@@ -1,0 +1,59 @@
+//test return 0
+
+struct tree {
+  int data;
+  struct tree* left;
+  struct tree* right;
+  struct tree* parent;
+};
+
+struct tree* node(int data) {
+  struct tree* out = alloc(struct tree);
+  out -> data = data;
+  return out;
+}
+
+struct tree* find(int key, struct tree* ptr) {
+  if(ptr == NULL) return NULL;
+  if(key == ptr->data) return ptr;
+  if(key < ptr->data) return find(key, ptr->left);
+  if(key > ptr->data) return find(key, ptr->right);
+  return NULL;
+}
+
+struct tree* find_leaf(int key, struct tree* ptr) {
+  if(ptr == NULL) return NULL;
+  if(key == ptr->data) return NULL;
+  if(key < ptr->data) {
+    if(ptr->left == NULL) return ptr;
+    return find(key, ptr->left);
+  }
+  if(key > ptr->data) {
+    if(ptr->right == NULL) return ptr;
+    return find(key, ptr->right);
+  }
+  return NULL;
+}
+
+void add(int item, struct tree* ptr) {
+  struct tree* add_to = find_leaf(item, ptr);
+  if(add_to == NULL) return;
+  struct tree* to_add = node(item);
+  if(item < add_to -> data) {
+    add_to -> right = to_add;
+    to_add -> parent = add_to;
+  }
+  else if(item > add_to -> data) {
+    add_to -> left = to_add;
+    to_add -> parent = add_to;
+  }
+}
+
+int main() {
+  struct tree* root = node(10);
+  add(5, root);
+  add(2, root);
+  add(-4, root);
+  if(find(3, root) == NULL) return 0;
+  else return 1;
+}

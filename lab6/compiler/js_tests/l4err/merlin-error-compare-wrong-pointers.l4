@@ -1,0 +1,13 @@
+//test error
+
+int main()
+{
+  int* x = alloc(int);
+  bool* y = alloc(bool);
+  *x = 3;
+  *y = true;
+  if(*y && *x == 3)
+    return x == y;
+  else
+    return *x+3;
+}

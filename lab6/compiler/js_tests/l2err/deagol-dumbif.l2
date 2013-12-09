@@ -1,0 +1,10 @@
+//test exception
+int main() {
+  int sum = 0;
+  int i;
+  for (i = 0; i < 10; i+=1) {
+    if (i%2 == 1)
+      sum += i/0;
+  }
+  return sum;
+}

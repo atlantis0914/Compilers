@@ -1,0 +1,9 @@
+//test error
+
+int foo(int x, int y) {
+    return x + y;
+}
+
+int not_main() {
+    return foo(4,5);
+}

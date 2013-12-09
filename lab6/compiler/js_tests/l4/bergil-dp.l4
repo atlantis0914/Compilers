@@ -1,0 +1,27 @@
+//test return 611966423
+
+int max(int a, int b) { return a > b ? a : b; }
+
+int main() {
+
+  // calculate change
+  int  N = 100;
+  int[] array = alloc_array(int, N);
+  array[0] = 0;
+  for (int i=1; i<N; i++) {
+    // change can be made with pennies, nickels, and dimes
+    array[i] = 0;
+    if (i >= 1) {
+      array[i] += 1 +array[i-1];
+    }
+    if (i >= 5) {
+    array[i] += 1+ array[i-5];
+    }
+    if (i >= 10) {
+      array[i] += 1 + array[i-10];
+    }   
+  }
+
+  return array[N-1];
+
+}

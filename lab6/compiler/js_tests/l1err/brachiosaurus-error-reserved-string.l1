@@ -1,0 +1,8 @@
+//test error
+// reserved keyword: string
+
+int main()
+{
+    int string;
+    return string;
+}

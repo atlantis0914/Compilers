@@ -1,0 +1,24 @@
+//test exception
+
+//results in non termination
+
+struct list_rep {
+  int head;
+  struct list_rep* tail;
+};
+
+typedef struct list_rep list;
+
+int length(list* L)
+{
+  return L == NULL ? 0 : (1 + length(L->tail));
+}
+
+int main()
+{
+  list* L;
+  L = alloc(list);
+  L->head = 1;
+  L->tail = L;
+  return length(L); 
+}

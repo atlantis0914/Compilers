@@ -1,0 +1,11 @@
+//test error
+// dangling break;
+int main()
+{
+   while (true)
+   {
+      
+   }
+   break;
+   return 1;
+}

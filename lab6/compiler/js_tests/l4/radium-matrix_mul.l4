@@ -1,0 +1,93 @@
+//test return 5992664
+
+int[] get_col(int[][] b, int j, int m, int n)
+{
+  assert(j < n);
+  int[] a = alloc_array(int, m);
+  for (int i = 0; i < m; i++)
+  {
+    a[i] = b[i][j];
+  }
+  return a;
+}
+
+int dot_prod(int[] a, int[] b, int n)
+{
+  int sum = 0;
+  for (int i = 0; i < n; i++)
+  {
+    sum += a[i] * b[i];
+  }
+  return sum;
+}
+
+int[][] mul(int[][] a, int[][] b, int am, int an, int bm, int bn)
+{
+  assert(an == bm);
+  int[][] c = alloc_array(int[], am);
+  for (int i = 0; i < am; i++) c[i] = alloc_array(int, bn);
+  for (int i = 0; i < am; i++)
+  {
+    for (int j = 0; j < bn; j++)
+    {
+      c[i][j] = dot_prod(a[i], get_col(b, j, bm, bn), an);
+    }
+  }
+
+  return c;
+}
+
+int rand(int * seed)
+{
+  int s = *seed;
+  int rnd = s * 10 % 1234 + 53 - 6 + 2 - 9 / 2 * 10 - 1 % 50 + 132 / 2;
+  *seed = s + 5 - 10 % 2 - 1 + 531242 / 1 / 4 + 9 - 9 % 7 + 100 * 2 / 4 + 13;
+  return rnd;
+}
+
+int main()
+{
+  int* seed = alloc(int);
+  *seed = 0;
+  int[][] a = alloc_array(int[], 10);
+  for(int i = 0; i < 10; i++)
+  {
+    a[i] = alloc_array(int, 20);
+  }
+  int[][] b = alloc_array(int[], 20);
+  for(int i = 0; i < 20; i++)
+  {
+    b[i] = alloc_array(int, 7);
+  }
+
+  for (int i = 0; i < 10; i++)
+  {
+    for (int j = 0; j < 20; j++)
+    {
+      a[i][j] = rand(seed);
+    }
+  }
+  for (int i = 0; i < 20; i++)
+  {
+    for (int j = 0; j < 7; j++)
+    {
+      b[i][j] = rand(seed);
+    }
+  }
+
+  int[][] c = mul(a, b, 10, 20, 20, 7);
+  for (int i = 0; i < 10; i++)
+  {
+    for (int j = 0; j < 7; j++)
+    {
+      print_hex(c[i][j]);
+    }
+  }
+  int i = rand(seed);
+  int j = rand(seed);
+  if (i < 0) i = -i;
+  if (j < 0) j = -j;
+  i %= 10;
+  j %= 7;
+  return c[i][j];
+}

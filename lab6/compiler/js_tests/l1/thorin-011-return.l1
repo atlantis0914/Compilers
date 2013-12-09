@@ -1,0 +1,12 @@
+//test return 3
+/* Operator precedence */
+int main()
+{
+    int a = 1 + 2 * 3 - 4 / 2;     /* 5 */
+    int b = (1 + 2) * (3 - 4) / 2; /* -1 */
+    return a%3+ -b%2;              /* 3 */
+}
+
+/* Local Variables: */
+/* mode: c          */
+/* End:             */

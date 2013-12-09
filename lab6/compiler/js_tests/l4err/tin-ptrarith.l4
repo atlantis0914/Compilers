@@ -1,0 +1,11 @@
+//test error
+// no dereference of large types
+
+struct Large {
+  int x;
+};
+
+int main() {
+  struct Large* x = alloc(struct Large);
+  return *(*x).x;
+}

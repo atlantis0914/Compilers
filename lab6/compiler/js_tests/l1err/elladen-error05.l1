@@ -1,0 +1,13 @@
+//test error
+// undefined identifier
+int main()
+{
+  int x;
+  int y;
+  int z;
+
+  x = 91;
+  y += x;
+  z = y-x;
+  return z;
+}

@@ -1,0 +1,9 @@
+//test error
+
+int good(int a, bool b) {
+	return a;
+}
+
+int main() {
+	return good(5,6);
+}

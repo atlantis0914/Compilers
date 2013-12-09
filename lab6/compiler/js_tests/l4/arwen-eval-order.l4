@@ -1,0 +1,33 @@
+//test return 1421606573
+//Tests order of evaluation for function with side effects
+int swap(int *x, int *y) {
+  int t = *x;
+  *x = *y;
+  *y = t;
+  return t;
+}
+
+int fun(int *x, int *y) {
+  int v = *x * *y;
+  *x += *y;
+  (*x)++;
+  return swap(x, y);
+}
+
+int *stuff(int *x, int *y) {
+  int *new = alloc(int);
+  int i;
+  for(i=0;i<*x+5;i++) {
+    fun(y, new);
+  }
+  return new;
+}
+
+int main() {
+  int *first = alloc(int);
+  int *second = alloc(int);
+  int *third = alloc(int);
+  *first = fun(second, third) == 1 ? fun(second, first) * fun(third, first) 
+    : fun(third, first) * fun(second, first);
+  return *stuff(stuff(first, second), stuff(second, stuff(first, third)));
+}

@@ -1,0 +1,31 @@
+//test return 92
+
+int main()
+{
+  int f1;
+  int f2;
+  int f3;
+  int f4;
+  int f5;
+  int f6;
+  int f7;
+  int f8;
+  int f9;
+  int f10;
+  int f11;
+  int val;
+
+  f1 = 1;
+  f2 = 1;
+  f3 = f2+f1;
+  f4 = f3+f2;
+  f5 = f4+f3;
+  f6 = f5+f4;
+  f7 = f6+f5;
+  f8 = f7+f6;
+  f9 = f8+f7;
+  f10 = f9+f8;
+  f11 = f10+f9;
+  val = f11+f4;
+  return val;
+}

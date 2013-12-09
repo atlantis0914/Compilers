@@ -1,0 +1,32 @@
+//test error
+// conditionals must have small type
+
+struct s1 {
+  int bar;
+};
+
+struct s2 {
+  int bar;
+};
+
+int main() {
+  struct s1 *a = alloc(struct s1);
+  struct s1 *b = alloc(struct s1);
+  struct s2 *c = alloc(struct s2);
+  struct s2 *d = alloc(struct s2);
+  struct s2[] e = alloc_array(struct s2, 3);
+
+  a->bar = 1;
+  b->bar = 2;
+  c->bar = 3;
+  d->bar = 4;
+  e[0].bar = c->bar;
+  e[1].bar = (true ? *a : *b).bar;
+
+  for (int i = 0; i < 2; i++) {
+    a->bar = e[i].bar + e[i + 1].bar;
+    a->bar = (true ? e[i] : e[i + 1]).bar;
+  }
+
+  return 4;
+}

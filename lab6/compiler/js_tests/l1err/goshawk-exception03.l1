@@ -1,0 +1,8 @@
+//test exception 8
+// division overflow in long expression
+int main()
+{
+    return
+    (2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*2*(-1))
+    / (-1);
+}

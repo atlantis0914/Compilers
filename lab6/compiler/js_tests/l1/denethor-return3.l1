@@ -1,0 +1,15 @@
+//test return -46656
+
+int main() {
+   int a=1;
+   int b=2;
+   int c=3;
+   int d=0;
+   
+   d+=(a*b*(b-c))%c;
+   d-=10;
+   d*=c;
+   d*=d*d;
+   
+   return d;
+}

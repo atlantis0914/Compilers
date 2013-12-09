@@ -1,0 +1,14 @@
+//test exception
+
+int addmultiples (int i, int j, int sum)
+{
+  sum += i * j;
+  j += 1;
+
+  return addmultiples(i, j, sum);
+}
+
+int main()
+{
+  return addmultiples(1,1,0);
+}

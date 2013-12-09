@@ -1,0 +1,11 @@
+//test return 6
+
+int main()
+{
+  int x = 10;
+  (x) *= 2;
+  int y;
+  (y) = 16;
+  int z = 3;
+  return ((x / 2 + 2 * y) % 13) + z;
+}

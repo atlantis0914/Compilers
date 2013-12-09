@@ -1,0 +1,16 @@
+//test exception
+
+int main(){
+  bool[] a;
+  int b;
+
+  a = alloc_array(bool, 100);
+  b = 0;
+  while (true) {
+    a[b % 100] = a[(b+1) % 100];
+    b = b + 1;
+    b = b % 100;
+  }
+
+  return 0;
+}

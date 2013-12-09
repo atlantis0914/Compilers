@@ -1,0 +1,21 @@
+//test error
+// block liveness
+int main()
+{
+    int res = 0;
+    int x = 1 << 5;
+	{
+	    { 
+	        { 
+	            { 
+	                { 
+	                    { 
+	                        int x = 0; x++; x += 0x4; res += x; }
+	                    int x = 1; res += x; }
+	                int x = 1; res += x; }
+	            int x = 1; res += x; }
+	        int x = 1; res += x; }
+	    int x = 1; res += x; }
+	    
+	return res | x;
+}

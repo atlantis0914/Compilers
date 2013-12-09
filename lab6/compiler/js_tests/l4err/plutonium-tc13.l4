@@ -1,0 +1,10 @@
+//test error
+/* not a struct */
+
+int main () {
+  int[] x;
+  x = alloc_array(int, 2);
+  x[0] = 1;
+  x[1] = x[0].x;
+  return -1;
+}

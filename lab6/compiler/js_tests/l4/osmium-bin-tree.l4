@@ -1,0 +1,65 @@
+//test return 3
+
+struct node
+{
+  int key;
+  struct node *left;
+  struct node *right;
+};
+
+struct node *insert(int key, struct node *root)
+{
+    if(root == NULL)
+    {
+        root = alloc(struct node);
+        root->key = key;
+    }
+    else if(key <= root->key)
+    {
+        root->left = insert(key, root->left);
+    }
+    else if(key > root->key)
+    {
+        root->right = insert(key, root->right);
+    }
+	return root;
+}
+
+struct node *search(int key, struct node *root)
+{
+    if(root == NULL) return NULL;
+	
+	if(key == root->key)
+	{
+		return root;
+	}
+	else if(key < root->key)
+	{
+		return search(key, root->left);
+	}
+	else
+	{
+		return search(key, root->right);
+	}
+}
+
+int main() {
+	struct node *root = alloc(struct node);
+	root = insert(5, root);
+	root = insert(2, root);
+	root = insert(1, root);
+	root = insert(9, root);
+	root = insert(11, root);
+	root = insert(112312, root);
+	root = insert(0, root);
+	root = insert(4, root);
+
+	assert(search(1, root)->key == 1);
+	assert(search(11, root)->key == 11);
+	assert(search(4, root)->key == 4);
+	assert(search(112312, root)->right == NULL);
+	assert(search(99, root) == NULL);
+	assert(search(3, root) == NULL);
+	root = insert(3, root);
+	return search(3, root)->key;
+}

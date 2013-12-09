@@ -1,0 +1,12 @@
+//test return 1
+// decl; stmt; decl should work
+int main()
+{
+  int a;
+  a = 1;
+
+  int b;
+  b = a;
+
+  return b;
+}

@@ -1,0 +1,7 @@
+//test error
+//alloc wrong type
+
+int main() {
+    int[] ptr = alloc(int);
+    return 0;
+}

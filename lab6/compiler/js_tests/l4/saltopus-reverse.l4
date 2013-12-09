@@ -1,0 +1,58 @@
+//test return 0
+struct node {
+	int key;
+	struct node *next;
+};
+
+typedef struct node node_t;
+
+node_t *insert_front(node_t *head, int key) {
+	node_t *node = alloc(node_t);
+	node->key = key;
+	node->next = head;
+	return node;
+}
+
+node_t *reverse(node_t *head) {
+	node_t *new_head = NULL;
+	node_t *tmp;
+	while(head != NULL) {
+		tmp = head;
+		head = head->next;
+		tmp->next = new_head;
+		new_head = tmp;
+	}
+	return new_head;
+}
+
+bool verify1(node_t *list) {
+	int i;
+	
+	for(i = 499; i >= 0; i--) {
+		if(list == NULL || list->key != i) return false;
+		list = list->next;
+	}
+	return true;
+}
+
+bool verify2(node_t *list) {
+	int i;
+	for(i = 0; i < 500; i++) {
+		if(list == NULL || list->key != i) return false;
+		list = list->next;
+	}
+	return true;
+}
+
+int main() {
+	int i;
+	node_t *list = NULL;
+	node_t *trav;
+	for(i = 0; i < 500; i++) {
+		list = insert_front(list, i);
+	}
+	if(!verify1(list)) return -1;
+	list = reverse(list);
+	if(!verify2(list)) return -1;
+	return 0;
+}

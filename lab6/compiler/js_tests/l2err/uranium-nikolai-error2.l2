@@ -1,0 +1,9 @@
+//test error
+// tricky braces
+int main() {
+    int x = 0;
+    while() {
+        for(for(x=0;x>0;x+=1); x<0; x +=1) {
+        }
+    }
+}

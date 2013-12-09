@@ -1,0 +1,22 @@
+//test return 125
+// evaluate A(3, 4)
+
+int ackermann(int m, int n) {
+    if (0 == m) {
+       return n+1;
+    }
+    if (0 == n) {
+       return ackermann(m-1, 1);
+    }
+
+    return ackermann(m-1, ackermann(m, n-1));
+}   
+
+int main() {
+    int x = 0;
+    int y = 0;
+    x += 1 + 1 + 1;
+    y += 1 + 1 + 1 + 1;
+
+    return ackermann(x, y);
+}

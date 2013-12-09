@@ -1,0 +1,10 @@
+//test error
+//so about those void pointers...
+
+void* foo() {
+	return alloc(void);
+}
+
+int main() {
+	return 2;
+}

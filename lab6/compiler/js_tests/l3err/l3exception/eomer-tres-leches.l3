@@ -1,0 +1,15 @@
+//test exception 8
+// Declaring a function more than once
+
+int leches(int x);
+int leches(int y);
+int leches(int z);
+
+int main() {
+    return leches(0x80000000); // intmin % -1 causes exception 8
+}
+
+int leches(int tres) {
+    return tres % -1;
+}
+

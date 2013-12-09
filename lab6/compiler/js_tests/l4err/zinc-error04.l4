@@ -1,0 +1,14 @@
+//test error
+
+struct s{
+  int val;
+  bool b1;
+};
+
+typedef struct s s;
+
+int main(){
+    s* s1 = alloc(s);
+    s1->b2 = false;
+    return 0;
+}

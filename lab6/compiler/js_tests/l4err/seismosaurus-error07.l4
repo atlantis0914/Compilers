@@ -1,0 +1,12 @@
+//test error
+//structs can't repeat field names
+
+struct foo{
+	int bar;
+	int baz;
+	bool bar;
+};
+
+int main(){
+	return -100;
+}

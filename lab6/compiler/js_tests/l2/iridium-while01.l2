@@ -1,0 +1,10 @@
+//test return 0
+
+int main()
+{
+    while(false)
+    {
+    }
+
+    return 0;
+}

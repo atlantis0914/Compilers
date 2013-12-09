@@ -1,0 +1,9 @@
+//test return 5
+// shold be able to leave init/step blank
+int main() {
+  int x = 0;
+  for (; x < 5;) {
+    x++;
+  }
+  return x;
+}

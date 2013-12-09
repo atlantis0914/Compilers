@@ -1,0 +1,10 @@
+//test exception 6
+// Test abort
+
+int main() {
+    if (false)
+        if(true) return 0;
+    else return 0;
+    assert(false);
+    return 0;
+}

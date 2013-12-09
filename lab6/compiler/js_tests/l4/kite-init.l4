@@ -1,0 +1,12 @@
+//test return 314
+
+int init(int* a) {
+    *a = 314;
+    return 0;
+}
+
+int main() {
+    int *x = alloc(int);
+    init(x);
+    return *x;
+}

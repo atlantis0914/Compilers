@@ -1,0 +1,11 @@
+//test return 5
+// Simple test of conditionals
+int main() {
+  int x;
+  if (2 > 3) {
+    x = 3;
+  } else {
+    x = 5;
+  }
+  return x;
+}

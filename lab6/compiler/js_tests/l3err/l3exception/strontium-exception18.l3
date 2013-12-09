@@ -1,0 +1,13 @@
+//test exception
+// runtime exception : divide by zero
+
+
+int div(int x, int y)
+{
+    return x / y;
+}
+
+int main()
+{
+    return div(1,0);
+}

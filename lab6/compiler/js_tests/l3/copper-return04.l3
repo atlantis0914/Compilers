@@ -1,0 +1,24 @@
+//test return 381
+// towers of hanoi!
+// computes number of moves need to solve towers with 8 rings
+// thank you David Kosbie
+
+int move(int n, int from, int to, int via) {
+    if (n == 1) {
+        return 0;
+    }
+    else {
+        int m1 = move(n-1, from, via, to);
+        int m2 = move(1, from, to, via);
+        int m3 = move(n-1, via, to, from); 
+        return 3 + m1 + m2 + m3;
+    }
+}
+
+int hanoi(int n) {
+    return move(n, 0, 1, 2);
+}
+
+int main() {
+    return hanoi(8);
+}

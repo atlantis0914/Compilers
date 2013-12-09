@@ -1,0 +1,64 @@
+//test return 237
+
+struct bst {
+    struct bst *left;
+    struct bst *right;
+    int key;
+    int val;
+};
+
+struct bst *insert(struct bst *tree, int key, int val) {
+    struct bst *new;
+
+    if (tree == NULL) {
+        new = alloc(struct bst);
+        new->key = key;
+        new->val = val;
+        return new;
+    }
+
+    if (key < tree->key) {
+        tree->left = insert(tree->left, key, val);
+        return tree;
+    } else if (key > tree->key) {
+        tree->right = insert(tree->right, key, val);
+        return tree;
+    }
+    tree->val = val;
+    return tree;
+}
+
+bool contains(struct bst *tree, int key) {
+    if (tree == NULL)
+        return false;
+
+    if (key < tree->key)
+        return contains(tree->left, key);
+    else if (key > tree->key)
+        return contains(tree->right, key);  
+    return true;
+}
+
+int get(struct bst *tree, int key) {
+    if (key < tree->key)
+        return get(tree->left, key);
+    else if (key > tree->key)
+        return get(tree->right, key);
+    return tree->val;
+}
+
+int main() {
+    struct bst *tree = NULL;
+
+    tree = insert(tree, 7, 2);
+    tree = insert(tree, 1, 5);
+    tree = insert(tree, 10, 49);
+    tree = insert(tree, 3, 237);
+    tree = insert(tree, 5, 55);
+
+    if (contains(tree, 2))
+        return 3;
+    if (contains(tree, 3))
+        return get(tree, 3);
+    return 20;
+}

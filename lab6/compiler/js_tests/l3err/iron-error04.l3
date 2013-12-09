@@ -1,0 +1,7 @@
+//test error
+// main defined with an argument
+
+int main(int a) {
+    return a;
+}
+

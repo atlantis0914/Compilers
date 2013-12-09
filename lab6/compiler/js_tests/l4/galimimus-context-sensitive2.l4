@@ -1,0 +1,10 @@
+//test return 42
+
+typedef int tricky;
+
+int main() {
+  tricky* foo; // This is a declaration
+  foo = alloc(tricky);
+  *foo = 42;
+  return *foo;
+}

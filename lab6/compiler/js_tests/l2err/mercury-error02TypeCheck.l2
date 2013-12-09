@@ -1,0 +1,8 @@
+//test error
+
+int main()
+{
+  bool x = true;
+  return 0;
+  return x;
+}

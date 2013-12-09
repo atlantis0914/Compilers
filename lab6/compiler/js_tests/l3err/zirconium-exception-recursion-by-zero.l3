@@ -1,0 +1,11 @@
+//test exception 8
+
+int fn(int top, int bottom) {
+    int next = top/bottom;
+    int next2 = bottom/top;
+    return fn(next, next2);
+}
+
+int main(){
+  return fn(160000000,500);
+}

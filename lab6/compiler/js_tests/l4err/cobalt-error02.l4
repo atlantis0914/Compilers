@@ -1,0 +1,14 @@
+//test error
+
+int main() {
+  int* temp = alloc(int);
+  int* temp2 = alloc(int);
+
+  (true ? 123 : 12) * (false? temp : temp2);
+
+  return 1;
+}
+
+
+
+

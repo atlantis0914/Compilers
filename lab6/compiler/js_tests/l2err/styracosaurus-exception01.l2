@@ -1,0 +1,23 @@
+//test exception 8
+
+int main()
+{
+    int x;
+	int y;
+
+	y = 9;
+	x = 1024;
+
+	if(true)
+	{
+		x = x >> 12;
+	}
+	else
+	{
+		return 1;
+	}
+
+	y %= x;
+
+    return x;
+}

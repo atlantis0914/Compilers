@@ -1,0 +1,16 @@
+//test return 42
+/* Test that the variables in a for step don't need to be initialized
+ * at loop entrance. */
+
+int main()
+{
+	int x;
+	int y;
+
+	for (x = 0; x < 42; y++) {
+		y = x;
+		x++;
+	}
+
+	return x;
+}

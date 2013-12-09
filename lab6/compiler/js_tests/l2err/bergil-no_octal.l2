@@ -1,0 +1,8 @@
+//test error
+// no octal allowed!
+
+int main() {
+    int a = 020; // actually 24 base 10 expressed in octal
+
+    return a;
+}

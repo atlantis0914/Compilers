@@ -1,0 +1,11 @@
+//test return 2
+
+int main()
+{
+  int d = 4;
+  int e = 5;
+  int f = 1;
+  f -= d;
+  f += e;
+  return f;
+}

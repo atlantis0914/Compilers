@@ -1,0 +1,44 @@
+//test return 14
+// array implementation of a stack
+
+struct stack {
+    int[] arr;
+    int top;
+    int n;
+};
+
+typedef struct stack * pstack;
+
+void push(pstack s, int val) {
+		 s->top += 1;
+		 if(s->top == s->n) {
+		     // double the size of the array;
+				 int newn = (s->n*2)+1;
+				 int[] newa = alloc_array(int, newn);
+				 for(int i = 0; i < s->n; i++) newa[i] = s->arr[i];
+				 s->n = newn;
+				 s->arr = newa;				 
+		 }
+		 s->arr[s->top] = val;
+}
+
+int pop(pstack s) {
+		int val = s->arr[s->top];
+		s->top -= 1;
+		return val;
+}
+
+int main() {
+		pstack s = alloc(struct stack);
+		s->top = -1;
+		s->n = 0;
+		push(s, 2);
+		push(s, 5);
+		push(s, 7);
+		int	a = pop(s);
+		push(s, 2);
+		int	b = pop(s);
+		int	c = pop(s);
+		return a+b+c;
+}
+

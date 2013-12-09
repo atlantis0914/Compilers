@@ -1,0 +1,29 @@
+//test error
+int main() {
+  int *************a1 = alloc(int************);
+  int ************a2 = alloc(int***********);
+  int ***********a3 = alloc(int**********);
+  int **********a4 = alloc(int*********);
+  int *********a5 = alloc(int********);
+  int ********a6 = alloc(int*******);
+  int *******a7 = alloc(int******);
+  int *******a8 = alloc(int*****);
+  int *****a9 = alloc(int****);
+  int ****a10 = alloc(int***);
+  int ***a11 = alloc(int**);
+  int **a12 = alloc(int*);
+  int *a13 = alloc(int);
+  *a1 = a2;
+  *a2 = a3;
+  *a3 = a4;
+  *a4 = a5;
+  *a5 = a6;
+  *a6 = a7;
+  *a7 = a8;
+  *a8 = a9;
+  *a9 = a10;
+  *a10 = a11;
+  *a11 = a12;
+  *a12 = a13;
+  return *************a1;
+}

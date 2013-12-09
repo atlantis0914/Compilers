@@ -1,0 +1,14 @@
+//test error
+// cannot declare struct on stack
+
+struct Foo
+{
+	int b;
+};
+
+int main()
+{
+	struct Foo a;
+	a.b = 42;
+	return a.b;
+}

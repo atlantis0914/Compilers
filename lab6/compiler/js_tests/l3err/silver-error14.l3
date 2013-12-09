@@ -1,0 +1,9 @@
+//test error
+// Test control flow returns
+
+void f() {
+}
+
+int main() {
+    return f();
+}

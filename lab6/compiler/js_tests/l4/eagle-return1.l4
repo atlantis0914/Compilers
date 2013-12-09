@@ -1,0 +1,13 @@
+//test return 10
+
+struct st {
+  bool b;
+  int n;
+};
+
+int main() {
+  struct st *st = alloc(struct st);
+  st->b = true;
+  st->n = 10;
+  return st->b ? st->n : -100;
+}

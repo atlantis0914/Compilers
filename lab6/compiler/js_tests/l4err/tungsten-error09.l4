@@ -1,0 +1,8 @@
+//test error
+// try pointing to array with ptr of type
+
+int main() {
+    int[] a = alloc_array(10);
+    int *b = a;
+    return b[5];
+}

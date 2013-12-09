@@ -1,0 +1,9 @@
+//test return 11
+
+int main ()
+{
+  int x = 5;
+  int x1 = 6;
+  return x1 + x;
+  return x1 / 0;
+}
