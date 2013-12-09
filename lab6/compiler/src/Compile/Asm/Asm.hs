@@ -138,7 +138,7 @@ genMemAllocator =
   "  function memAlloc(size) {" ++ "\n" ++
   "    size = size | 0;" ++ "\n" ++ 
   "    var ret = 0" ++  "\n" ++ 
-  "    if ((g_heapoff | 0) < (H32[0] | 0)) {" ++ "\n" ++ 
+  "    if ((g_heapoff | 0) < (H32[0 | 0] | 0)) {" ++ "\n" ++ 
   "      ret = g_heapoff | 0;" ++ "\n" ++ 
   "      g_heapoff = (g_heapoff | 0) + (size | 0) | 0;" ++ "\n" ++
   "    } else {" ++ "\n" ++ 
@@ -155,7 +155,7 @@ genMemArrAllocator =
   "    size = (size | 0) + (1 | 0) | 0;" ++ "\n" ++ 
   "    numElems = (size | 0) | 0;" ++ "\n" ++ 
   "    var ret = 0;" ++  "\n" ++ 
-  "    if ((g_heapoff | 0) < (H32[0] | 0)) {" ++ "\n" ++ 
+  "    if ((g_heapoff | 0) < (H32[0 | 0] | 0)) {" ++ "\n" ++ 
   "      ret = g_heapoff | 0;" ++ "\n" ++ 
   "      g_heapoff = (g_heapoff | 0) + (size | 0) | 0;" ++ "\n" ++
   "    } else {" ++ "\n" ++ 
@@ -171,7 +171,7 @@ genMemArrAllocator =
 genStackInitialization :: String
 genStackInitialization = 
   "  function stackInit() {" ++ "\n" ++
-  "    g_stackoff = (H32[0] | 0) - 1 | 0;" ++ "\n" ++ 
+  "    g_stackoff = (H32[0 | 0] | 0) - 1 | 0;" ++ "\n" ++ 
   "  }"
 
 genPolyDiv :: String
@@ -224,7 +224,7 @@ genPolyLShift =
 
 genPolyRShift :: String
 genPolyRShift = 
-  "  function polyLShift(l, r) {\n" ++ 
+  "  function polyRShift(l, r) {\n" ++ 
   "    l = l | 0;\n" ++ 
   "    r = r | 0;\n" ++ 
   "    var ret = 0;\n" ++ 
@@ -255,7 +255,7 @@ genPointerLoad =
   "    if ((loc | 0) == (0 | 0)) {\n" ++ 
   "      g_memex = 1;\n" ++ 
   "    }\n" ++ 
-  "    return H32[loc] | 0;\n" ++ 
+  "    return H32[loc | 0] | 0;\n" ++ 
   "  }"
 
 genGenericAccessor :: String
@@ -266,7 +266,7 @@ genGenericAccessor =
   "    if ((loc | 0) == (0 | 0)) {\n" ++ 
   "      g_memex = 1;\n" ++ 
   "    }\n" ++ 
-  "    return H32[loc + off] | 0;\n" ++ 
+  "    return H32[loc + off | 0] | 0;\n" ++ 
   "  }\n"
 
 genArrAccessor :: String
@@ -277,7 +277,7 @@ genArrAccessor =
   "    if ((off | 0) < (0 | 0)) {\n" ++ 
   "      g_memex = 1;\n" ++ 
   "    }\n" ++ 
-  "    if ((off | 0) >= H32[loc | 0]) {\n" ++ 
+  "    if ((off | 0) >= (H32[loc | 0] | 0)) {\n" ++ 
   "      g_memex = 1 | 0;\n" ++ 
   "    }\n" ++ 
   "    if ((loc | 0) == (0 | 0)) {\n" ++ 
@@ -305,7 +305,7 @@ genGenericArrShift =
   "    if ((off | 0) < (0 | 0)) {\n" ++ 
   "      g_memex = 1;\n" ++ 
   "    }\n" ++ 
-  "    if ((off | 0) >= H32[loc | 0]) {\n" ++ 
+  "    if ((off | 0) >= (H32[loc | 0] | 0)) {\n" ++ 
   "      g_memex = 1;\n" ++ 
   "    }\n" ++ 
   "    if ((loc | 0) == (0 | 0)) {\n" ++ 
@@ -322,7 +322,7 @@ genGenericMemSet =
   "    if ((loc | 0) == (0 | 0)) {\n" ++ 
   "      g_memex = 1;\n" ++ 
   "    }\n" ++ 
-  "    H32[loc] = val | 0;\n" ++ 
+  "    H32[loc | 0] = val | 0;\n" ++ 
   "    return;\n" ++ 
   "  }\n"
 

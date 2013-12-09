@@ -85,7 +85,7 @@ processIRExpr e@(IRExpBinOp LShift e1 e2) = do
   let ret = "polyLShift(" ++ s1 ++ " | 0," ++ s2 ++ " | 0) | 0"
   return ret
 
-processIRExpr e@(IRExpBinOp LShift e1 e2) = do
+processIRExpr e@(IRExpBinOp RShift e1 e2) = do
   s1 <- processIRExpr e1
   s2 <- processIRExpr e2
   let ret = "polyRShift(" ++ s1 ++ " | 0," ++ s2 ++ " | 0) | 0"
@@ -115,9 +115,6 @@ processIRExpr (IRExpTernary e1 e2 e3) = do
   e3str <- processIRExpr e3
   let ret = "((" ++ e1str ++ " | 0) ? (" ++ e2str ++ " | 0) : (" ++ e3str ++ " | 0))"
   return ret
-  
-processIRExpr e = do 
-  return ""
 
 processBinaryOperation op e1 e2 = do
   s1 <- processIRExpr e1
@@ -231,8 +228,8 @@ processIROp Lte = "<="
 processIROp Gte = ">="
 processIROp LogicalNot = "!"
 processIROp BitwiseNot = "~"
-processIROp And = "&&"
-processIROp Or = "||"
+processIROp And = "&"
+processIROp Or = "|"
 processIROp BitwiseAnd = "&"
 processIROp BitwiseOr = "|"
 processIROp BitwiseXOr = "^"

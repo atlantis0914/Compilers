@@ -29,7 +29,7 @@ genAsmFnDecl fdef@(IRFuncDef name args argTypes retType body argSizes) =
 
 localVarDecls :: String 
 localVarDecls = 
-  "temp_ptr = 0;\n"
+  "    var temp_ptr = 0;\n"
 
 commaSep :: [String] -> String
 commaSep args = 
@@ -57,13 +57,8 @@ processAST ast@(IRAST stmt) = do
 processStmt :: IRStmt -> AsmState ()
 processStmt (IRBlock stmts) = do 
   indent <- getIndentation
---   (s,i,m) <- get 
---   let s' = s ++ indent ++ "{" ++ "\n"
---   put(s', i, m)
   processStmts stmts 
---   (s'',i', m') <- get
---   let s''' = s'' ++ "\n" ++ indent ++ "}"
---   put(s''', i', m')
+
 
 processStmt (IRNop) = do
   return ()
@@ -115,17 +110,12 @@ processStmt (IRCtrl ctrl) = do
   processCtrl ctrl
 
 processStmt (IRExpr e) = do
+  indent <- getIndentation
   estr <- processIRExpr e
   (s,i,m) <- get
-  let s' = s ++ estr ++ ";\n"
+  let s' = s ++ indent ++ estr ++ ";\n"
   put (s',i,m)
   return ()
-
-processStmt (IRNop) = do
-  return ()
-
-processStmt s = do
-  return (Trace.trace ("fuck : " ++ show s) $ ())
 
 processCtrl :: IRCtrl -> AsmState ()
 processCtrl (Return (Just rval) _) = do
@@ -171,13 +161,8 @@ processCtrl (Assert e _) = do
   indent <- getIndentation
   (s,i,m) <- get
   eStr <- processIRExpr e
-  let s' = s ++ indent ++ "assert(" ++ eStr ++ " | 0)" ++ "\n"
+  let s' = s ++ indent ++ "(assert(" ++ eStr ++ " | 0) | 0);" ++ "\n"
   put(s',i,m)
-
---
---processCtrl (Assert e _) = do
---
---
 
 processStmts :: [IRStmt] -> AsmState ()
 processStmts [] = do
