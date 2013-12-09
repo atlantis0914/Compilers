@@ -101,13 +101,34 @@ JavaScript is as follows:
   \item Emscripten compiles the IR to a portable asm.js module
 \end{compactitem}
 
+\section{Motivation}
+
+There are many reasons for wanting to write a C0 to Asm.js compiler. For one,
+Asm.js is a language that is being actively worked on by researchers at Mozilla.
+The goals of this project are to generate incredibly optimized ahead-of-time 
+compiled code that the Javascript interpreter can then run at native speeds.
+
+From our perspective, our project was a useful experiment because it served 
+as a proof of concept that C0 as a language is strict enough, and well-behaved
+enough to embed into a different language, with different runtime semantics, 
+and still emulate the dynamic semantics of the original language. This shows
+both that C0 is strict enough, and Asm.js is flexible enough to permit the 
+embedding. 
+
+Furthermore, having essentially Javascript that reproduces the behavior of a 
+C0 program is invaluable. As the web is arguably the biggest code deployment 
+platform, and our implementation is compliant with the Ecmascript standards, 
+this means that we can run our C0 code \emph{anywhere}. From the perspective
+of a teacher, this could easily lead to an in-browser editor where students 
+could write C0, compile the code, and run it, all without ever leaving the 
+browser.
 
 %------------------------------------------------
 
 \section{Project Specification}
 
-At a high level, this project will re-target our L4 compiler to JavaScript that
-conforms to Asm.js specifications. In other
+At a high level, this project will re-target our L5 compiler (the L4 language,
+with optimizations) to JavaScript that conforms to Asm.js specifications. In other
 words, all of the following features C0 will be supported: loops, conditionals,
 functions, memory, pointers, arrays, structs, external library functions, and
 exceptions.
@@ -118,7 +139,7 @@ exceptions.
   directive will still compile C0 code to assembly. We guaranteed that all
   normal functionality is maintained, as in L5. 
 
-  Memory is supported as in L4 with no garbage collection. Exceptions are
+  Memory is supported as in L5 with no garbage collection. Exceptions are
   still thrown as they would in previous labs, but execution of the program
   will not halt.
 
@@ -127,8 +148,7 @@ exceptions.
   in a subsequent section. 
 
 As always, correctness is paramount. Our number one goal is to create a correctly
-functioning compiler. How we assess that our compiler is correct is outlined in
-section IV.
+functioning compiler. Finally, we describe how we assess correctness in section V. 
 
 %------------------------------------------------
 
@@ -307,6 +327,21 @@ tests from L1, L2 and L3.
   timeout of 10 seconds - when compiled without the -e flag, any tests that do not
   halt will run indefinitely. 
 
+  \item Heap Tests
+  We segregate L4 tests which require a large amount of heap into the 
+  \texttt{js\_tests/l4heap} directory. In order for these tests to compute
+  the correct result, with no exceptions, they must be instantiated with a fairly
+  large heap. This can be done as follows: Once the test is compiled, using either
+  a command to the compiler, or a simple \texttt{./tester.py -f filename} command,
+  one can open up the \texttt{filename.js} file, and increase the size of the 
+  \texttt{ArrayBuffer} that is initially passed into the asm module. The two lines
+  which need to be modified are in particular: 
+\begin{verbatim}
+var c0arr = new Int32Array(5000000)
+c0arr[0] = 5000000;
+\end{verbatim}
+  We reccommend setting the value to 500 Mb and re-running the test using 
+  \texttt{js filename.js}. 
 \end{enumerate}
 
 We decided to skip the following types of tests:
@@ -354,9 +389,32 @@ skipped with \texttt{CTRL+C}.
 \subsection{Validating Correctness}
 
 Our testing framework does a good job of validating that the compiled JavaScript
-files return the correct result, but it does not check if these JavaScript files
+files return the correct result. It parses the top of the test file to see whether
+the test is a \texttt{return} test, a \texttt{error} test or an \texttt{exception} 
+test. For \texttt{return} tests, we ensure that the answer returned from running 
+the produced \texttt{.js} file is the same as the answer at the top of the C0 file.
+For error tests, we ensure that the compiler produces a compilation error. For 
+exception tests, we ensure that either 1) the dynamic execution of the code times
+out, or 2) the code executes correctly, and produces one of the exception flags
+(numerical exception, memory exception, or assertion exception). 
+
+
+\section{Conforming to Asm.js}
+The spidermonkey engine we used does not check if our produced JavaScript files
 conform to the Asm.js specifications. To do this, we had to manually paste the
-outputted code into http://turtlescript.github.cscott.net/asmjs.html.
+outputted code into http://turtlescript.github.cscott.net/asmjs.html, one of a 
+handful of Asm.js validators. 
+
+We also note that a node.js module is available for validating correctness, 
+but it is buggy and does not meet the spec currently implemented in Firefox 25.0.
+
+Regarding Asm.js correctness, we want to clarify that the compiler we submitted
+meets the Asm.js standard everywhere except in two areas. These areas are:
+
+\begin{enumerate}
+  \item a
+\end{enumerate}
+
 
 %------------------------------------------------
 
