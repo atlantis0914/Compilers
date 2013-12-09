@@ -37,7 +37,7 @@
 %	TITLE SECTION
 %----------------------------------------------------------------------------------------
 
-\title{\vspace{-15mm}\fontsize{20pt}{10pt}\selectfont\textbf{Lab 6 Compiler}} % Article title
+\title{\vspace{-15mm}\fontsize{18pt}{10pt}\selectfont\textbf{An Evaluation of a C0 to Asm.js Compiler}} % Article title
 
 \author{
 \large
@@ -88,8 +88,11 @@ translated native code at near-native speeds. Asm.js is Mozilla's solution to th
 and provides a directive triggered mechanism by which the browser can defer control to a
 self-contained, non-garbage collected module that runs translated C and C++ at near-native speeds. \\
 \\
-As we will shortly see, Asm.js is not a language that is `fun' or `easy' for humans to write in -
-its use is primarily as a compiler target. The current mechanism for compiling C, and C++ to
+As we will shortly see, Asm.js is not a language that is fun or easy for humans to write in -
+its use is primarily as a compiler target. Furthermore, Asm.js is still in a very `alpha' stage. 
+The spec is not formal in the slightest, and important details about what types of expressions can
+be validated are left missing, and can only be discovered by trial and error. A number of these issues
+can be found in the final sections of our report. The current mechanism for compiling C, and C++ to
 JavaScript is as follows:
 
 \begin{compactitem}
@@ -109,11 +112,19 @@ words, all of the following features C0 will be supported: loops, conditionals,
 functions, memory, pointers, arrays, structs, external library functions, and
 exceptions.
 
+  We built our compiler on top of the L5 frontend. This ensures that all 
+  frontend optimizations implemented in L5 carry over to this lab. Invoking
+  the compiler with optimization flags, and not passing the \texttt{--asmjs}
+  directive will still compile C0 code to assembly. We guaranteed that all
+  normal functionality is maintained, as in L5. 
+
   Memory is supported as in L4 with no garbage collection. Exceptions are
   still thrown as they would in previous labs, but execution of the program
   will not halt.
 
-  All of the external libraries in C0 are reimplemented in JS.
+  All of the external libraries in C0 are reimplemented in JS, so that the functions
+  are still callable. We go into further detail regarding the external float library
+  in a subsequent section. 
 
 As always, correctness is paramount. Our number one goal is to create a correctly
 functioning compiler. How we assess that our compiler is correct is outlined in
@@ -128,17 +139,85 @@ section IV.
     This is so that their type will be statically enforced.
 
     Integers are annotated with an \texttt{| 0} appended to the end of any
-    assignment or return.
-  \subsection{Loops and Conditionals}
-    These are very similar to their C0 counterparts.
+    assignment or return. Operations on integers, such as \texttt{+} force
+    the \texttt{Int} from an \texttt{Int} into \texttt{Intish}, a subtype of \texttt{Int}. 
+    This requires an explicit coercion back to \texttt{Int}.
+
+    There are also a number of special operations on ints, which must be
+    wrapped in function calls. Specifically, we have function calls for \texttt{Mul},
+    \texttt{Div}, \texttt{Mod}, \texttt{ShiftL} and \texttt{ShiftR}. 
+    
+    Mul requires a 
+    wrapper because of the a quirk in the way asm.js and firefox handle C-like 32-bit integer 
+    multiplication of two operands. Instead of allowing `*' to do this, they offload the work
+    onto a function the asm.js module expects from stdlib, namely \texttt{stdlib.imul}. In 
+    our implementation, we check whether or not the global environment contains an imul function,
+    and replace imul with a polyfill if it is missing. 
+
+    Div and Mod require wrappers because we must check to see whether the denominators are 0,
+    and set the numerical exception flag to \texttt{1} if this is the case. Furthermore, we have
+    a special case for \texttt{MIN\_INT} divided by, or mod by, \texttt{-1}, as this should raise
+    a numerical exception when using C-like 32-bit ints. 
+
+    Left-Shift and Right-Shift also require wrapper functions, as their safe-mode operation
+    is contingent on the shift-value being strictly between $[0,32)$. The functions check
+    to see whether this is true, and set the numerical exception flag if the shift-operand is
+    not in this range. 
   \subsection{Functions}
     Functions in Asm.js are very similar to their C0 counterparts, but with a
-    slightly different syntax. Function calls require explicit coercions.
+    slightly different syntax. Function calls require explicit coercions. Furthermore,
+    function arguments must have their types be immediately declared. For example, for
+    a function \texttt{mult} which takes two arguments, and returns the result of applying
+    \texttt{stdlib.imul} to them, we have the following code: 
+\begin{verbatim}
+function mult(fst, snd) {
+  fst = fst | 0;
+  snd = snd | 0;
+  return stdlib.imul((fst | 0), 
+                      (snd | 0)) | 0;
+}
+\end{verbatim}
+
+  \subsection{Loops and Conditionals}
+    These are very similar to their C0 counterparts.
+
+  \subsection{Booleans and Boolean Operands}
+    These are simulated by use of 0 and 1. Asm.js has the strange quirk of disallowing 
+    \texttt{\&\&} and \texttt{||} operators. We however, noticed that performance in browsers
+    and engines that do not support Asm.js suffered quite drastically from not using \texttt{\&\&}
+    and selectively used \texttt{\&\&} - this is however, an easy fix (four poly-fill functions we
+    hand-wrote) if we want to produce code that is fully compliant to the Asm.js spec. 
+
   \subsection{Memory}
-    Asm.js provides a large binary heap, in the form of an array called H32, for which we
-    wrote a simple memory allocation function for \texttt{memAlloc}. This function takes the given
-    size and allocates size bytes from the last allocation. There is no way to
-    free this memory.
+    Asm.js provides a large binary heap, in the form of a typed-array (\texttt{ArrayBuffer}). 
+    This can then be cast into any array-view the user desires. For example, we used an integer array view,
+    which is obtained by calling \verb+Int32Array+. Using this, we
+    wrote a simple memory allocation function called \texttt{memAlloc}. This function takes the given
+    size and allocates size bytes from the last allocation. There is currently no way to
+    free this memory, until the program exits and the allocated heap is collected by the JS 
+    garbage collector. 
+
+    Memory is an interesting concept in Asm.js. The language borrows from techniques pioneered by 
+    Emscripten and Mandril, by forcing the programmer to guarantee that any offset into the array
+    is `aligned'. This is done by forcing the user to make all array accesses as follows:
+\begin{verbatim}
+  H32[loc >> 2]
+\end{verbatim}
+    This, however, is hardly mentioned in the spec, and woefully undocumented. We only discovered
+    this necessity late into the final days of our project, through discussing the issue on the
+    asm.js irc. A fix, which we recently thought of, which allows you to meet the dubious Asm.js 
+    spec and still simulate array accesses correctly is as follows: 
+\begin{verbatim}
+  H32[(loc << 2) >> 2]
+\end{verbatim}
+    As after the first left-shift by 2, we transform loc, an \texttt{int} into \texttt{intish}, 
+    we ensure that the array shift by two now both satisfies the Asm.js validator in Firefox,
+    but also maintains the heap-view properties we desire when using pointers. As we wanted
+    to ensure correctness in any engine, we decided to leave this slightly dubious hack out
+    of the submitted project, although we guarantee that applying this tiny bug-fix to all
+    memory accessing functions in the library we provide (there's about 10) will cause Firefox
+    to validate and Ahead-Of-Time compile the Asm.js code we generate. 
+
   \subsection{Pointers}
     Pointers are merely integers that represent the base index at which the
     the memory is stored in the H32 array.
@@ -146,22 +225,41 @@ section IV.
     Since the NULL address exists in the H32 heap array, it is necessary for
     us to check if pointer dereferences are NULL, and setting the correct
     exception flag. We decided to create a JS function that would handle all
-    pointer dereferences that handles this.
+    pointer dereferences that handles this. 
+
+    Furthermore - when compiling pointers - some situations call for actually
+    dereferencing the heap, and other situations call for merely verifying that 
+    the offset into the heap is non-zero. An example of the latter case is when
+    the object we dereference is a struct, and the next operation we wish to do
+    on this struct is to load one of its fields. Because of this need, we provide
+    two functions that operate on pointers - \texttt{pointerLoad} and \texttt{pointerDeref}. 
+    The former actually fetches the value stored in the heap, and the latter
+    merely verifies that the offset into the heap is non-zero, and returns the offset. 
+
   \subsection{Arrays}
     Arrays are allocated with the \texttt{memArrAlloc} JavaScript function. This
     works like \texttt{memAlloc} but checks that the number of elements is
-    positive, setting the exception global variable if not. The number of elements
-    is then stored in the base of the array.
+    positive, setting the memory exception global variable if not. The number of elements
+    is then stored in the base of the array. Once an array has been allocated, we increment
+    a global heap-counter variable, that increases by the size of the allocated array.
 
     All array subscripts check that the index is between 0 and the size of the
     array that is stored at the base of the array. This is handled by the
     \texttt{arrAccess} and \texttt{arrShift} functions, which accesses the array
     and calculates the address of the array respectively.
+
   \subsection{Structs}
-    Similar to how structures are implemented in previous labs.
+    This is identical to how structures are implemented in previous labs. Once a struct
+    is allocated, we return a pointer into the heap where the struct is stored. As with
+    arrays, we increment a global counter heap-counter variable that increases by the 
+    size of the allocated struct. 
+
   \subsection{External Library}
     The external library is implemented in JavaScript, and imported in as foreign
-    imported functions.
+    imported functions. The foreign imports used by default are the implementation 
+    of the function calls defined in \texttt{15411.h0}, the header file for the 
+    standard library introduced in lab3. 
+
   \subsection{Exceptions}
     Unfortunately, Asm.js does not support the \texttt{try} / \texttt{catch}
     statements in JavaScript.
@@ -174,19 +272,46 @@ section IV.
 
 \section{Testing Methodology}
 
+\subsection{Testing Directory}
+Tests are collected into the \texttt{js\_tests} directory. They are organized
+by the lab number they originate from, and whether they are return tests or not. 
+We provide further segregation for labs 3 and 4 for special types of tests that
+we will now elaborate. 
+
 \subsection{Test Selection}
 Since we are merely re-targeting the L4 language to Asm.js, we used the L4 test
 files from Lab 4 to test our compiler. As was in Lab 4, these tests provide a
 wide array of various cases that ensures that our compiler is correct and
-sufficiently fast.
+sufficiently fast. We also ensure backwards compatibility by providing return
+tests from L1, L2 and L3. 
+
+\begin{enumerate}
+
+  \item Return Tests
+
+  We provide return tests for L1, L2, L3 and L4, in the directories: 
+  \texttt{js\_tests/L[1-4]} for each lab respectively. One may run these 
+  tests (the L4 tests, for example) using the following command to \texttt{tester.py}
+\begin{verbatim}
+  ./tester.py -d l4
+\end{verbatim}
+
+  \item Error and Exception Tests
+  We provide error and exception tests for L1, L2, L3 and L4 in the direcotries:
+  \texttt{js\_tests/L[1-4]err} for each lab respectively. One may run these
+  tests (the L4 error tests, for example) using the following command to \texttt{tester.py}
+\begin{verbatim}
+  ./tester.py -e -d l4
+\end{verbatim}
+  The \texttt{-e} flag specifies that these tests should timeout after a default
+  timeout of 10 seconds - when compiled without the -e flag, any tests that do not
+  halt will run indefinitely. 
+
+\end{enumerate}
 
 We decided to skip the following types of tests:
 
 \begin{enumerate}
-  \item Error Tests
-
-    The front-end of our compiler is exactly the same as in Lab 5, so all error
-    cases should be the same. This will simplify our testing framework.
 
   \item Floating Point Library Tests
 
@@ -194,12 +319,17 @@ We decided to skip the following types of tests:
     We know from our other tests that external library functions are called
     correctly, but our library functions themselves are not 100\% correct.
     The library functions themselves are uninteresting from the compiler's
-    aspect.
+    aspect. We have placed these tests into \texttt{js\_tests/fpt}
 
   \item Deep Recursive Calls
 
     A few tests recurse too deep for our build of SpiderMonkey to handle. These
-    tests fail because of SpiderMonkey and not from our code.
+    tests fail because of SpiderMonkey and not from our code. The engine can be 
+    modified in a fairly straightforward manner to support a large stack size (
+    and therefore support these tests - however, we wanted to operate under the 
+    assumption that our engine and browser are all stock). We have placed
+    these tests into \texttt{js\_tests/recur}. 
+
 \end{enumerate}
 
 \subsection{Testing Framework}
@@ -210,9 +340,9 @@ which should be the preferred JavaScript engine to run the compiled Asm.js code.
 We predominantly used the SpiderMonkey engine during the development of our
 compiler.
 
-For each L4 file, \texttt{tester.py} will compile the file using the \texttt{asmjs}
-directive. A compilation error will fail out the test. There should now be a
-compiled \texttt{.js} file of the test.
+For each L4 file, \texttt{tester.py} will compile the file by running \texttt{bin/l4c} 
+using the \texttt{asmjs} directive. A compilation error will fail out the test. There 
+should now be a compiled \texttt{.js} file of the test.
 
 This \texttt{.js} file is then run using the \texttt{js} command. The return
 result is then checked with the expected return result, giving us a test pass
