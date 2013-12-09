@@ -63,8 +63,8 @@
 \begin{abstract}
 
 \noindent We evaluate an experimental compiler that translates C0 code into Asm.js, a strict
-and highly optimizable subset of javascript. We describe the results both holistically and emperically,
-profiling performance using the Spidermonkey and V8 javascript engines. Importantly, in the
+and highly optimizable subset of Javascript. We describe the results both holistically and empirically,
+profiling performance using the Spidermonkey and V8 JavaScript engines. Importantly, in the
 translation, we preserve all dynamic semantics guaranteed by C0 and guarantee deterministic execution.
 
 \end{abstract}
@@ -81,8 +81,8 @@ translation, we preserve all dynamic semantics guaranteed by C0 and guarantee de
 %\lipsum[2-3] % Dummy text
 
 Asm.js is a recent effort by Mozilla to develop a highly optimizable and performant
-subset of javascript. The motivation behind the effort stems from a series of projects which
-compile C and C++ to javascript, most notably the Emscripten compiler. With the availability of such
+subset of JavaScript. The motivation behind the effort stems from a series of projects which
+compile C and C++ to JavaScript, most notably the Emscripten compiler. With the availability of such
 compilers, the only missing features for browsers was an engine which could run the
 translated native code at near-native speeds. Asm.js is Mozilla's solution to this problem,
 and provides a directive triggered mechanism by which the browser can defer control to a
@@ -90,11 +90,11 @@ self-contained, non-garbage collected module that runs translated C and C++ at n
 \\
 As we will shortly see, Asm.js is not a language that is `fun' or `easy' for humans to write in -
 its use is primarily as a compiler target. The current mechanism for compiling C, and C++ to
-javascript is as follows:
+JavaScript is as follows:
 
 \begin{compactitem}
   \item C and C++ is compiled to the LLVM IR
-  \item The LLVM IR is handed to Emscripten, a LLVM to Javascript compiler
+  \item The LLVM IR is handed to Emscripten, a LLVM to JavaScript compiler
   \item Emscripten compiles the IR to a portable asm.js module
 \end{compactitem}
 
@@ -103,25 +103,40 @@ javascript is as follows:
 
 \section{Project Specification}
 
-At a high level, this project will retarget our L4 compiler to Asm.js. In other
-words, the following features C0 will be supported:
+At a high level, this project will re-target our L4 compiler to JavaScript that
+conforms to Asm.js specifications. In other
+words, all of the following features C0 will be supported: loops, conditionals,
+functions, memory, pointers, arrays, structs, external library functions, and
+exceptions.
 
-    Memory is supported as in L4 with no garbage collection.
+  Memory is supported as in L4 with no garbage collection. Exceptions are
+  still thrown as they would in previous labs, but execution of the program
+  will not halt.
 
-    All of the external libraries in C0 are reimplemented in JS.
+  All of the external libraries in C0 are reimplemented in JS.
 
 As always, correctness is paramount. Our number one goal is to create a correctly
-functioning compiler.
+functioning compiler. How we assess that our compiler is correct is outlined in
+section IV.
 
 %------------------------------------------------
 
 \section{Implementation}
 
+  \subsection{Integers}
+    All variables in asm.js must be explicitly annotated with type information.
+    This is so that their type will be statically enforced.
+
+    Integers are annotated with an \texttt{| 0} appended to the end of any
+    assignment or return.
   \subsection{Loops and Conditionals}
+    These are very similar to their C0 counterparts.
   \subsection{Functions}
+    Functions in Asm.js are very similar to their C0 counterparts, but with a
+    slightly different syntax. Function calls require explicit coercions.
   \subsection{Memory}
     Asm.js provides a large binary heap, in the form of an array called H32, for which we
-    wrote a simple memory allocation function for. This function takes the given
+    wrote a simple memory allocation function for \texttt{memAlloc}. This function takes the given
     size and allocates size bytes from the last allocation. There is no way to
     free this memory.
   \subsection{Pointers}
@@ -133,23 +148,46 @@ functioning compiler.
     exception flag. We decided to create a JS function that would handle all
     pointer dereferences that handles this.
   \subsection{Arrays}
+    Arrays are allocated with the \texttt{memArrAlloc} JavaScript function. This
+    works like \texttt{memAlloc} but checks that the number of elements is
+    positive, setting the exception global variable if not. The number of elements
+    is then stored in the base of the array.
+
+    All array subscripts check that the index is between 0 and the size of the
+    array that is stored at the base of the array. This is handled by the
+    \texttt{arrAccess} and \texttt{arrShift} functions, which accesses the array
+    and calculates the address of the array respectively.
   \subsection{Structs}
+    Similar to how structures are implemented in previous labs.
   \subsection{External Library}
+    The external library is implemented in JavaScript, and imported in as foreign
+    imported functions.
   \subsection{Exceptions}
+    Unfortunately, Asm.js does not support the \texttt{try} / \texttt{catch}
+    statements in JavaScript.
+    Instead, exceptions are flagged by setting either the \texttt{g\_memex} global variable
+    for memory exceptions, \texttt{g\_oomex} global variable for out of memory
+    exceptions, \texttt{g\_numex} for number exceptions, and \texttt{g\_assex} for
+    assertion exceptions.
 
 %------------------------------------------------
 
 \section{Testing Methodology}
 
 \subsection{Test Selection}
-Since we are merely retargeting the L4 language to Asm.js, we used the L4 test
+Since we are merely re-targeting the L4 language to Asm.js, we used the L4 test
 files from Lab 4 to test our compiler. As was in Lab 4, these tests provide a
 wide array of various cases that ensures that our compiler is correct and
 sufficiently fast.
 
-We decided to skip a the following types of tests:
+We decided to skip the following types of tests:
 
 \begin{enumerate}
+  \item Error Tests
+
+    The front-end of our compiler is exactly the same as in Lab 5, so all error
+    cases should be the same. This will simplify our testing framework.
+
   \item Floating Point Library Tests
 
     These tests strenuously check that external library functions are correct.
@@ -166,17 +204,72 @@ We decided to skip a the following types of tests:
 
 \subsection{Testing Framework}
 
-We needed to write a new testing framework, tester.py, which takes in either a
-file or a directory of files to test.
+We needed to write a new testing framework, \texttt{tester.py}, which takes in either a
+file or a directory of files to test. This framework makes a call to \texttt{js},
+which should be the preferred JavaScript engine to run the compiled Asm.js code.
+We predominantly used the SpiderMonkey engine during the development of our
+compiler.
 
-For each L4 file, tester.py will compile the file using the \texttt{--asmjs}
-directive.
+For each L4 file, \texttt{tester.py} will compile the file using the \texttt{asmjs}
+directive. A compilation error will fail out the test. There should now be a
+compiled \texttt{.js} file of the test.
+
+This \texttt{.js} file is then run using the \texttt{js} command. The return
+result is then checked with the expected return result, giving us a test pass
+or fail.
+
+There is no timeout limit. Tests will keep running until completion, but can be
+skipped with \texttt{CTRL+C}.
+
+\subsection{Validating Correctness}
+
+Our testing framework does a good job of validating that the compiled JavaScript
+files return the correct result, but it does not check if these JavaScript files
+conform to the Asm.js specifications. To do this, we had to manually paste the
+outputted code into http://turtlescript.github.cscott.net/asmjs.html.
 
 %------------------------------------------------
 
 \section{Analysis}
 
+\subsection{Evaluation of Compiler}
 
+Overall, we were pretty successful with the compiler. Aside from the aforementioned
+tests that we skipped, we pass pretty much every test. This hits our number one
+goal of the project.
+
+There are a few issues, however. Many tests take a significant amount of time to
+complete. It is expected that running JS is slower than running x86 Assembly.
+That said, it's unclear whether the bottleneck lies in our compiled JS or the
+JavaScript engine.
+
+\subsection{Future Improvements}
+
+There are a few additions to the L4 language that would not be that difficult
+to do, but were beyond the scope of this lab:
+
+\begin{enumerate}
+  \item Break / Continue in loops. Asm.js supports these statements natively.
+    This would be simple in the back-end, but may take significant rework in the
+    front-end code. This is a fairly important construct that would be very useful
+    to have in a future iteration.
+  \item Switch Statements. As above, this is supported in Asm.js, and may take
+    reworking on the front-end side. This is not as important as the above break
+    / continue, but could make for more readable / efficient code.
+  \item Native Float Type. Asm.js supports doubles.
+  \item More Library Functions. Asm.js supports various Math standard library
+    calls.
+\end{enumerate}
+
+Other potential improvements not in Asm.js include:
+
+\begin{enumerate}
+  \item Garbage Collection. No memory is recovered at the moment, which means
+    we may run out of memory sooner than we should.
+  \item Optimizations. As mentioned in our evaluation of our compiler, many tests
+    run extremely slowly. A potential improvement is to look into various
+    that we can perform to speed up our compiled JavaScript.
+\end{enumerate}
 
 %----------------------------------------------------------------------------------------
 
