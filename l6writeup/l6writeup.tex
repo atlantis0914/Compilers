@@ -37,7 +37,7 @@
 %	TITLE SECTION
 %----------------------------------------------------------------------------------------
 
-\title{\vspace{-15mm}\fontsize{18pt}{10pt}\selectfont\textbf{An Evaluation of a C0 to Asm.js Compiler}} % Article title
+\title{\vspace{-15mm}\fontsize{18pt}{10pt}\selectfont\textbf{Evaluating a C0 to Asm.js Compiler}} % Article title
 
 \author{
 \large
@@ -76,30 +76,26 @@ translation, we preserve all dynamic semantics guaranteed by C0 and guarantee de
 \begin{multicols}{2} % Two-column layout throughout the main article text
 
 \section{Introduction}
-
-%\lettrine[nindent=0em,lines=3]{L} orem ipsum dolor sit amet, consectetur adipiscing elit.
-%\lipsum[2-3] % Dummy text
-
 Asm.js is a recent effort by Mozilla to develop a highly optimizable and performant
 subset of JavaScript. The motivation behind the effort stems from a series of projects which
 compile C and C++ to JavaScript, most notably the Emscripten compiler. With the availability of such
 compilers, the only missing features for browsers was an engine which could run the
 translated native code at near-native speeds. Asm.js is Mozilla's solution to this problem,
 and provides a directive triggered mechanism by which the browser can defer control to a
-self-contained, non-garbage collected module that runs translated C and C++ at near-native speeds. \\
-\\
-As we will shortly see, Asm.js is not a language that is fun or easy for humans to write in -
-its use is primarily as a compiler target. Furthermore, Asm.js is still in a very `alpha' stage. 
-The spec is not formal in the slightest, and important details about what types of expressions can
-be validated are left missing, and can only be discovered by trial and error. A number of these issues
-can be found in the final sections of our report. The current mechanism for compiling C, and C++ to
-JavaScript is as follows:
+self-contained, non-garbage collected module that runs translated C and C++ at near-native speeds.
+For context, the current mechanism for compiling C, and C++ to JavaScript is as follows:
 
 \begin{compactitem}
   \item C and C++ is compiled to the LLVM IR
   \item The LLVM IR is handed to Emscripten, a LLVM to JavaScript compiler
   \item Emscripten compiles the IR to a portable asm.js module
 \end{compactitem}
+
+As we will shortly see, Asm.js is not a language that is easy or fun for humans to write in -
+its use is primarily as a compiler target. Furthermore, Asm.js is still in a very `alpha' stage. 
+The spec is not formal in the slightest, and important details about what types of expressions can
+be validated are left missing, and can only be discovered by trial and error. A number of these issues
+can be found in the final sections of our report. 
 
 \section{Motivation}
 
@@ -111,17 +107,28 @@ compiled code that the Javascript interpreter can then run at native speeds.
 From our perspective, our project was a useful experiment because it served 
 as a proof of concept that C0 as a language is strict enough, and well-behaved
 enough to embed into a different language, with different runtime semantics, 
-and still emulate the dynamic semantics of the original language. This shows
-both that C0 is strict enough, and Asm.js is flexible enough to permit the 
+and still emulate the dynamic semantics of C0. This shows
+both that C0 is restricted enough, and that Asm.js is flexible enough to permit the 
 embedding. 
 
-Furthermore, having essentially Javascript that reproduces the behavior of a 
+Furthermore, having Javascript code that reproduces the behavior of a 
 C0 program is invaluable. As the web is arguably the biggest code deployment 
-platform, and our implementation is compliant with the Ecmascript standards, 
-this means that we can run our C0 code \emph{anywhere}. From the perspective
-of a teacher, this could easily lead to an in-browser editor where students 
-could write C0, compile the code, and run it, all without ever leaving the 
-browser.
+platform ever concieved of, and our implementation is compliant with the 
+Ecmascript standards, we can run our C0 code \emph{anywhere}. 
+From the perspective of a teacher, this could easily lead to an in-browser editor 
+where students could write C0, compile the code, and run it, all without ever 
+leaving the browser.
+
+As Asm.js is backwards complaint, it will run (albeit much more slowly) on 
+any browser that implements the Ecmascript standard. This portability guarantee
+is one of the major drivers that motivated us to attempt this project - we
+genuinely do think that compiler efforts to port languages into javascript 
+are going to become the norm in the future, as it will take a major effort
+to introduce a genuinely new, highly performant language that all browser 
+manufacturers support. Until this kind of effort is made, the only way compiler
+writers for the web can continue to advance optimization efforts is by 
+mapping languages into strict and optimizable subsets of Javascript, such as 
+Asm.js. 
 
 %------------------------------------------------
 
@@ -154,9 +161,21 @@ functioning compiler. Finally, we describe how we assess correctness in section 
 
 \section{Implementation}
 
+  After the C0 code has been parsed, elaborated and type-checked by our 
+  front-ened, we take the final AST and use it to generate Asm.js. We considered
+  compiling from a 3-operand type IR, which we already have for generating assembly,
+  but ultimately decided against this. Our rationale was that Asm.js, and Javascript
+  are higher level languages, which will perform fairly sophisticated register allocation
+  and elaboration strategies themselves. Thus, translating a simplified, 3-operand 
+  style IR into javascript would greatly inflate the code-size, and could potentially
+  disturb the engine's register allocation or heuristics. 
+
   \subsection{Integers}
     All variables in asm.js must be explicitly annotated with type information.
-    This is so that their type will be statically enforced.
+    This is so that their type will be statically enforced by the engine. Furthermore,
+    if running on an engine not supporting Asm.js, the type annotation we use is 
+    explicitly supported by the Ecmascript standard to map the \texttt{Intish} object
+    into a C-like, 32-bit \texttt{Int}.  
 
     Integers are annotated with an \texttt{| 0} appended to the end of any
     assignment or return. Operations on integers, such as \texttt{+} force
@@ -172,7 +191,7 @@ functioning compiler. Finally, we describe how we assess correctness in section 
     multiplication of two operands. Instead of allowing `*' to do this, they offload the work
     onto a function the asm.js module expects from stdlib, namely \texttt{stdlib.imul}. In 
     our implementation, we check whether or not the global environment contains an imul function,
-    and replace imul with a polyfill if it is missing. 
+    and replace imul with a polyfill function if it is missing. 
 
     Div and Mod require wrappers because we must check to see whether the denominators are 0,
     and set the numerical exception flag to \texttt{1} if this is the case. Furthermore, we have
@@ -205,47 +224,52 @@ function mult(fst, snd) {
     These are simulated by use of 0 and 1. Asm.js has the strange quirk of disallowing 
     \texttt{\&\&} and \texttt{||} operators. We however, noticed that performance in browsers
     and engines that do not support Asm.js suffered quite drastically from not using \texttt{\&\&}
-    and selectively used \texttt{\&\&} - this is however, an easy fix (four poly-fill functions we
-    hand-wrote) if we want to produce code that is fully compliant to the Asm.js spec. 
+    and selectively used \texttt{\&\&} - this is however, an easy fix (we use \texttt{\&\&} in 
+    four poly-fill functions we hand-wrote) if we want to produce code that is fully compliant 
+    to the Asm.js spec. 
 
   \subsection{Memory}
     Asm.js provides a large binary heap, in the form of a typed-array (\texttt{ArrayBuffer}). 
     This can then be cast into any array-view the user desires. For example, we used an integer array view,
     which is obtained by calling \verb+Int32Array+. Using this, we
     wrote a simple memory allocation function called \texttt{memAlloc}. This function takes the given
-    size and allocates size bytes from the last allocation. There is currently no way to
-    free this memory, until the program exits and the allocated heap is collected by the JS 
-    garbage collector. 
+    \texttt{size} and allocates \texttt{size} many ints from the global heap. There is currently no way to
+    free this memory - the array will persist until the program exits and the allocated heap is collected 
+    by the JS garbage collector. 
 
-    Memory is an interesting concept in Asm.js. The language borrows from techniques pioneered by 
+    For memory accesses, Asm.js borrows from techniques pioneered by 
     Emscripten and Mandril, by forcing the programmer to guarantee that any offset into the array
-    is `aligned'. This is done by forcing the user to make all array accesses as follows:
+    is `aligned'. This is done by forcing the user to write all array accesses as follows:
 \begin{verbatim}
-  H32[loc >> 2]
+  (H32[loc >> 2] | 0)
 \end{verbatim}
+    where \texttt{loc} is some integer offset into the heap. The coercion must be explicit because
+    it will coerce an `Undefined' produced by an out of bounds access back into an integer. 
     This, however, is hardly mentioned in the spec, and woefully undocumented. We only discovered
     this necessity late into the final days of our project, through discussing the issue on the
-    asm.js irc. A fix, which we recently thought of, which allows you to meet the dubious Asm.js 
+    Asm.js irc. A fix, which we recently thought of, which allows you to meet the dubious Asm.js 
     spec and still simulate array accesses correctly is as follows: 
 \begin{verbatim}
-  H32[(loc << 2) >> 2]
+  (H32[(loc << 2) >> 2] | 0)
 \end{verbatim}
-    As after the first left-shift by 2, we transform loc, an \texttt{int} into \texttt{intish}, 
+    As after the first left-shift by 2, we transform loc, an \texttt{Int} into \texttt{Intish}, 
     we ensure that the array shift by two now both satisfies the Asm.js validator in Firefox,
-    but also maintains the heap-view properties we desire when using pointers. As we wanted
+    but also maintains the heap-view properties we desire when using pointers. 
+    
+    As we wanted
     to ensure correctness in any engine, we decided to leave this slightly dubious hack out
     of the submitted project, although we guarantee that applying this tiny bug-fix to all
-    memory accessing functions in the library we provide (there's about 10) will cause Firefox
+    memory accessing functions in the library we provide (there's only a handful) will cause Firefox
     to validate and Ahead-Of-Time compile the Asm.js code we generate. 
 
   \subsection{Pointers}
     Pointers are merely integers that represent the base index at which the
     the memory is stored in the H32 array.
 
-    Since the NULL address exists in the H32 heap array, it is necessary for
-    us to check if pointer dereferences are NULL, and setting the correct
+    Since the NULL address (0) exists in the H32 heap array, it is necessary for
+    us to check if pointer dereferences are NULL (0), and set the memory 
     exception flag. We decided to create a JS function that would handle all
-    pointer dereferences that handles this. 
+    pointer dereferences so as to keep the produced javascript code clean. 
 
     Furthermore - when compiling pointers - some situations call for actually
     dereferencing the heap, and other situations call for merely verifying that 
@@ -254,7 +278,8 @@ function mult(fst, snd) {
     on this struct is to load one of its fields. Because of this need, we provide
     two functions that operate on pointers - \texttt{pointerLoad} and \texttt{pointerDeref}. 
     The former actually fetches the value stored in the heap, and the latter
-    merely verifies that the offset into the heap is non-zero, and returns the offset. 
+    merely verifies that the offset into the heap is non-zero, and returns the offset,
+    unmodified. 
 
   \subsection{Arrays}
     Arrays are allocated with the \texttt{memArrAlloc} JavaScript function. This
@@ -367,6 +392,12 @@ We decided to skip the following types of tests:
 
 \end{enumerate}
 
+We also want to note that there are a handful of (about 15-20) frontend error
+tests that have malignantly chased us since L4. These were the reason we never
+fully passed \texttt{tests2}, and unfortunately they continue to be unfinished. 
+However, these tests are \emph{not} indicative of a problem in this compiler effort -
+they just indicate that our frontend could use a little tidying up.
+
 \subsection{Testing Framework}
 
 We needed to write a new testing framework, \texttt{tester.py}, which takes in either a
@@ -411,19 +442,19 @@ but it is buggy and does not meet the spec currently implemented in Firefox 25.0
 Regarding Asm.js correctness, we want to clarify that the compiler we submitted
 meets the Asm.js standard everywhere except in two areas. These areas are:
 
-\begin{enumerate}
-  \item Heap Access: 
+%\begin{enumerate}
+  \subsection {Heap Access}
     We mentioned earlier that heap accesses in Asm.js must be `aligned'. This
     appears to derive from some techniques used in the Emscripten and Mandril
-    compilers. The idea is that all heap accesses must be suffixed by a \texttt{>> 2}.
+    compilers. The idea is that all heap accesses must be suffixed by a \verb+>> 2+.
     We realized that one way to meet this requirement for valid Asm.js while still
     maintaining the overall correctness of our comppiler was to emit heap accesses
-    of the form \texttt{H32[loc << 2] >> 2}. Testing our compiler with the memory
+    of the form \verb+H32[loc << 2] >> 2+. Testing our compiler with the memory
     accessing functions using this version of heap access produced no errors, but
     we decided to leave it out of the final submitted version, and only mention it
-    as it felt like a way to hack around the language spec. 
+    as we wanted to provide javascript that would run correctly on all engines. 
 
-  \item \texttt{\&\&, ||}
+  \subsection {Implementing \texttt{\&\&, ||}}
   Asm.js does not support the \texttt{\&\&} and \texttt{||} operations. Our compiler
   therefore emits \texttt{\&} and \texttt{|} - as booleans are just ints, this 
   works out fine, and correctness is maintained. However, in certain situations, such
@@ -432,59 +463,88 @@ meets the Asm.js standard everywhere except in two areas. These areas are:
   \texttt{\&\&} is actually quite costly, and makes the generated code significantly slower. 
   This is a quick fix, and can easily be fixed in the statically linked javascript to 
   make the code entirely Asm.js compliant. 
-\end{enumerate}
+%\end{enumerate}
 We want to emphasize that aside from these two caveats, our code is fully Asm.js 
 compliant. Our reason for not submitting these two tiny fixes with our compiler is
 that the former feels like a hacky way to get around a poorly explained feature of
 Asm.js, and that the latter causes significant performance regressions on backends
 that do not support Asm.js. 
 
-
 %------------------------------------------------
 
 \section{Analysis}
 
-\subsection{Evaluation of Compiler}
+\subsection{Evaluation Of The Compiler}
 
-Overall, we were pretty successful with the compiler. Aside from the aforementioned
-tests that we skipped, we pass pretty much every test. This hits our number one
-goal of the project.
+Overall, although the project was entirely experimental, and we had no idea about
+the feasability of the project, we were very successful. Aside from the aforementioned
+tests that we skipped, and the two caveats regarding Asm.js, we pass every test. 
+This satisfies our number one goal of the project, which was to maintain correctness
+when translating the L4 language into Asm.js. 
 
-There are a few issues, however. Many tests take a significant amount of time to
-complete. It is expected that running JS is slower than running x86 Assembly.
-That said, it's unclear whether the bottleneck lies in our compiled JS or the
-JavaScript engine.
+There are a few issues, however. A handful of the tests take a significant amount of time to
+complete. It is obviously expected that running JS is slower than running x86 Assembly, 
+however, judging from the slow tests, it seems that javascript has a significantly higher
+function call overhead when compared to raw assembly. That said, it's unclear whether 
+the true bottleneck lies in our compiled JS or the JavaScript engine.
+
+However, some tests are in fact \emph{faster} than their assembly counterparts. One test
+that plagued us over the course of the semester was \texttt{eowyn-jpaulson\_loop\_stress1.l3}. 
+This test effectively tests whether you can generate a heuristic to place variables used
+inside of the innermost for-loop into registers. It took us up until the L5 optimization 
+efforts to pass this test. However, after compiling to Asm.js, this test runs under
+3 seconds in Spidermonkey with the TraceMonkey JIT optimization enabled. This is evidence
+that the good folks at Mozilla are doing some excellent work in optimizing Javascript and
+creating a remarkable suite of tools to speed up the web. 
 
 \subsection{Future Improvements}
 
-There are a few additions to the L4 language that would not be that difficult
+There are a few additions to the L4 language that would not be difficult
 to do, but were beyond the scope of this lab:
 
 \begin{enumerate}
   \item Break / Continue in loops. Asm.js supports these statements natively.
-    This would be simple in the back-end, but may take significant rework in the
+    This would be simple in the back-end, but may require significant reworing of the
     front-end code. This is a fairly important construct that would be very useful
-    to have in a future iteration.
+    to have in a future iteration of the compiler.
   \item Switch Statements. As above, this is supported in Asm.js, and may take
-    reworking on the front-end side. This is not as important as the above break
+    some reworking on the front-end side. This is not as important as the above break
     / continue, but could make for more readable / efficient code.
-  \item Native Float Type. Asm.js supports doubles.
-  \item More Library Functions. Asm.js supports various Math standard library
-    calls.
+  \item Native Float Type. Asm.js supports doubles, but we do not utilize this
+  feature at all. For example, we could use this to implement 
+  \item More Library Functions exposed to the C0 language. Asm.js supports various 
+  Math standard library calls.
 \end{enumerate}
 
 Other potential improvements not in Asm.js include:
 
 \begin{enumerate}
   \item Garbage Collection. No memory is recovered at the moment, which means
-    we may run out of memory sooner than we should.
-  \item Optimizations. As mentioned in our evaluation of our compiler, many tests
-    run extremely slowly. A potential improvement is to look into various
+    we may run out of memory sooner than we would in a garbage collected 
+    environment. 
+  \item Optimizations. As mentioned in our evaluation of our compiler, a handful of tests
+    run very slowly. A potential improvement is to look into various optimizations 
     that we can perform to speed up our compiled JavaScript.
 \end{enumerate}
 
 %----------------------------------------------------------------------------------------
 
+\section{Conclusion}
+
+We have shown an experimental compiler that transforms C0 into Asm.js, a strict
+and performant subset of Javascript. Our primary goal in writing this compiler
+was to preserve the static and dynamic semantics of C0 in the transformation, and
+ensure that correctness is maintained. To this end, our compiler does an excellent
+job and meets this requirement. 
+
+We also produce Javascript that is compliant (modulo the two small tweaks mentioned) 
+with the Asm.js spec. As the specification itself is an evolving body of work, we 
+feel that this effort was very successful in targeting C0 to Asm.js. By creating this
+compiler we had a wonderful opportunity to learn the details of compiling to 
+a real, industry-standard language. The lab ultimately was a great way to learn about
+an effort that is still in progress - we hope that the Asm.js research project will
+be adopted by Ecmascript, and will become the de-facto target when compiling C-like
+languages to run in the browser. 
 \end{multicols}
 
 \end{document}
